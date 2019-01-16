@@ -312,14 +312,9 @@
 
 	<!-- distribution configuration -->
 	<scm>
-		<connection>scm:git:git@github.com:HotelsDotCom/beanutilslightlibrary.git</connection>
-		<developerConnection>scm:git:git@github.com:HotelsDotCom/beanutilslightlibrary.git</developerConnection>
-		<url>https://github.com/HotelsDotCom/beanutilslightlibrary</url>
+		<connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
+		<developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
+		<url>https://github.com/HotelsDotCom/bull</url>
 		<tag>HEAD</tag>
 	</scm>
-	<ciManagement>
-		<url>https://bamboo.hcom/browse/BP-BULL</url>
-		<system>Bamboo</system>
-	</ciManagement>
-
 </project>
