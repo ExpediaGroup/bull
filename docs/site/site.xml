@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+  <publishDate position="right"/>
+  <version position="right"/>
+  <bannerLeft>
+    <name>Bean Utils Light Library</name>
+    <src>images/hotels_com_logo_en_int_wakeuphappy_small.png</src>
+  </bannerLeft>
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>1.7</version>
+  </skin>
+  <custom>
+    <fluidoSkin>
+      <sourceLineNumbersEnabled>false</sourceLineNumbersEnabled>
+      <leftColumnClass>span2</leftColumnClass>
+      <bodyColumnClass>span10</bodyColumnClass>
+    </fluidoSkin>
+  </custom>
+  <body>
+    <breadcrumbs>
+      <item name="DevDocs" href="../"/>
+      <item name="${project.name}" href="${project.url}"/>
+    </breadcrumbs>
+    <menu name="Project info">
+      <item name="Overview" href="/overview.html"/>
+      <item name="Glossary" href="/glossary.html" />
+    </menu>
+    <menu name="Bean Transformer">
+      <item name="Overview" href="/transformer/overview.html" />
+      <item name="Performances" href="/transformer/performance.html" />
+      <item name="Third Party Lib Comparison" href="/transformer/thirdPartyLibComparison.html" />
+    </menu>
+    <menu name="Quality check">
+      <!--<item name="SonarCloud" href="https://sonarcloud.io/dashboard?id=BULL" />-->
+      <item name="Test coverage" href="/jacoco/index.html" />
+    </menu>
+    <menu ref="reports" />
+  </body>
+</project>
