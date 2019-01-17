@@ -4,11 +4,12 @@
 	<name>BULL - Bean Utils Light Library</name>
 	<groupId>com.hotels.beans</groupId>
 	<artifactId>bean-utils-library</artifactId>
-	<version>1.0.4-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<inceptionYear>2019</inceptionYear>
-	<description>This BeanUtils library is a Java Bean to Java Bean transformer that recursively copies data from one object to another, it is generic, flexible, reusable,
-		configurable and incredibly fast. It's the only library able to transform Mutable, Immutable and Mixed bean without any custom configuration.
+	<description>
+		This BeanUtils library is a Java Bean to Java Bean transformer that recursively copies data from one object to another, it is generic, flexible, reusable, configurable	and
+		incredibly fast. It's the only library able to transform Mutable, Immutable and Mixed bean without any custom configuration.
 	</description>
 
 	<parent>
