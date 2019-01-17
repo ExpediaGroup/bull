@@ -7,9 +7,6 @@
 ### Additional Developers
 * [Andrea Marsiglia](https://github.com/AndreaMars94)
 * [Patrizio Munzi](https://github.com/patriziomunzi)
-* [Edoardo Tosca](https://github.com/ed0t)
-* [Francisco Ripoli](https://github.com/fripoli)
-* [Kaushik Patel](https://github.com/kainee)
 
 ### Other Contributors
 

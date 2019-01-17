@@ -8,6 +8,9 @@ This BeanUtils library is It's a Java Bean to Java Bean transformer that recursi
 
 ## Start using
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bean-utils-library/badge.svg?subject=com.hotels.beans:bean-utils-library)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bean-utils-library)
+![GitHub license](https://img.shields.io/github/license/HotelsDotCom/bull.svg)
+
 You can obtain BULL from Maven Central: 
 
 ~~~
