@@ -70,4 +70,13 @@ public interface Transformer {
      * Removes all the configured fields transformer.
      */
     void resetFieldsTransformer();
+
+    /**
+     * It allows to configure the transformer in order to set a default value in case some field is missing in the source object.
+     * If set to true the default value is set, if false if it raises a: {@link com.hotels.beans.error.MissingFieldException} in case of missing fields.
+     * @param useDefaultValue true in case the default value should be set, false if it should raise a: {@link com.hotels.beans.error.MissingFieldException} in case of missing
+     *                        field.
+     * @return the {@link Transformer} instance
+     */
+    Transformer setDefaultValueForMissingField(boolean useDefaultValue);
 }

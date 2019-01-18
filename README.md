@@ -50,6 +50,7 @@ mvn clean install -P relaxed
 * support copy of beans with different field's name
 * support lambda function field transformation
 * easy usage, declarative way to define the property mapping (in case of different names) or simply adding the lombok annotations.
+* allows to set the default value for all objects not existing in the source object.
 
 ### A full Sample:
 
@@ -124,7 +125,7 @@ From class and To class without custom annotation usage:
 	   private final String name;                                  @NotNull                   
 	   private final BigInteger id;                                public BigInteger id;                      
 	   private final List<FromSubBean> subBeanList;                private final String name;                 
-	   private final List<String> list;                            private final List<String> list;                    
+	   private List<String> list;                                  private final List<String> list;                    
 	   private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
                                                                    private ImmutableToSubFoo nestedObject;
     }                                                               
@@ -147,6 +148,23 @@ or
     FieldTransformer<String, Locale> localeTransformer = new FieldTransformer<>("locale", Locale::forLanguageTag)
     beanUtils.getTransformer()
         .withFieldTransformer(localeTransformer).transform(fromBean, ToBean.class);
+~~~
+
+Assign a default value in case of missing field in the source object:
+
+~~~Java
+	@AllArgsConstructor                                         @AllArgsConstructor
+	@Getter                                                     @Getter
+	public class FromBean {                                     public class ToBean {                           
+	   private final String name;                                  @NotNull                   
+	   private final BigInteger id;                                public BigInteger id;                      
+	                                                               private final String name;                 
+                                                                   private String notExistingField; // this will be null and no exceptions will be raised
+    }                                                            }
+~~~
+And one line code as:
+~~~Java
+    ToBean toBean = beanUtils.getTransformer().setDefaultValueForMissingField(true).transform(fromBean, ToBean.class);
 ~~~
        
 More sample beans can be found in the test package: `com.hotels.beans.sample`
