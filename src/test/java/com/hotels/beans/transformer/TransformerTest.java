@@ -24,6 +24,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -31,9 +32,10 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
-import static com.hotels.beans.constant.ClassType.IMMUTABLE;
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
+import static com.hotels.beans.constant.ClassType.IMMUTABLE;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
@@ -54,24 +56,24 @@ import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.error.MissingFieldException;
-import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.model.FieldMapping;
+import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooAdvFields;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
 import com.hotels.beans.sample.FromFooSubClass;
-import com.hotels.beans.sample.FromSubFoo;
 import com.hotels.beans.sample.FromFooWithPrimitiveFields;
+import com.hotels.beans.sample.FromSubFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooAdvFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooDiffFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooInvalid;
+import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooNoConstructors;
 import com.hotels.beans.sample.immutable.ImmutableToFooNotExistingFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
-import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
 import com.hotels.beans.sample.mixed.MixedToFoo;
 import com.hotels.beans.sample.mixed.MixedToFooDiffFields;
 import com.hotels.beans.sample.mixed.MixedToFooMissingAllArgsConstructor;
@@ -106,6 +108,7 @@ public class TransformerTest {
     private static final String AGE_FIELD_NAME = "age";
     private static final String GET_DEST_FIELD_NAME_METHOD_NAME = "getDestFieldName";
     private static final String GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME = "getConstructorValuesFromFields";
+    private static final String GET_SOURCE_FIELD_VALUE_METHOD_NAME = "getSourceFieldValue";
     private static final String DEST_FIELD_NAME = "destFieldName";
     private static final String REFLECTION_UTILS_FIELD_NAME = "reflectionUtils";
     private static final String TRANSFORMER_SETTINGS_FIELD_NAME = "transformerSettings";
@@ -457,11 +460,27 @@ public class TransformerTest {
     }
 
     /**
+     * Test that the copy method sets the default value when the source object does not contain a required field.
+     */
+    @Test
+    public void testMixedBeanWithMissingFieldsReturnsTheDefaultValueWhenTheSourceObjectDoesNotContainARequiredField() {
+        //GIVEN
+        underTest.setDefaultValueForMissingField(true);
+
+        //WHEN
+        MixedToFooMissingField actual = underTest.transform(fromFoo, MixedToFooMissingField.class);
+
+        assertNull(actual.getFooField());
+        underTest.setDefaultValueForMissingField(false);
+    }
+
+    /**
      * Test that the copy method raises an exception when the source object does not contain a required field.
      */
     @Test(expected = MissingFieldException.class)
     public void testMixedBeanWithMissingFieldsThrowsMissingFieldExceptionWhenTheSourceObjectDoesNotContainARequiredField() {
         //GIVEN
+        underTest.setDefaultValueForMissingField(false);
 
         //WHEN
         underTest.transform(fromFoo, MixedToFooMissingField.class);
@@ -611,6 +630,19 @@ public class TransformerTest {
 
         //THEN
         assertThat(actual, sameBeanAs(fromFooSimpleNoGetters));
+    }
+
+    /**
+     * Test that the method: {@code getSourceFieldValue} raises a {@link NullPointerException} in case any of the parameters null.
+     */
+    @Test(expected = Exception.class)
+    public void testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull() throws Exception {
+        //GIVEN
+        Method getSourceFieldValueMethod = underTest.getClass().getDeclaredMethod(GET_SOURCE_FIELD_VALUE_METHOD_NAME, Object.class, String.class, Field.class, boolean.class);
+        getSourceFieldValueMethod.setAccessible(true);
+
+        //WHEN
+        getSourceFieldValueMethod.invoke(underTest, null, null, null, false);
     }
 
     /**

@@ -33,7 +33,6 @@
       <item name="Third Party Lib Comparison" href="/transformer/thirdPartyLibComparison.html" />
     </menu>
     <menu name="Quality check">
-      <!--<item name="SonarCloud" href="https://sonarcloud.io/dashboard?id=BULL" />-->
       <item name="Test coverage" href="/jacoco/index.html" />
     </menu>
     <menu ref="reports" />

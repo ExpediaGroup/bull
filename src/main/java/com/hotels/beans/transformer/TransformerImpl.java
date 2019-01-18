@@ -29,13 +29,13 @@ import static org.apache.commons.lang3.StringUtils.SPACE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.springframework.util.Assert.notNull;
 
-import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
-import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.base.Defaults.defaultValue;
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.ClassType.MIXED;
 import static com.hotels.beans.constant.ClassType.MUTABLE;
 import static com.hotels.beans.constant.Punctuation.DOT;
 import static com.hotels.beans.constant.Punctuation.SEMICOLON;
+import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -51,6 +51,7 @@ import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.constant.ClassType;
 import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.utils.ClassUtils;
@@ -147,6 +148,15 @@ public class TransformerImpl implements Transformer {
     @Override
     public final void resetFieldsTransformer() {
         transformerSettings.getFieldsTransformers().clear();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Transformer setDefaultValueForMissingField(final boolean useDefaultValue) {
+        transformerSettings.setSetDefaultValue(useDefaultValue);
+        return this;
     }
 
     /**
@@ -382,6 +392,10 @@ public class TransformerImpl implements Transformer {
         Object fieldValue = null;
         try {
             fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());
+        } catch (MissingFieldException e) {
+            if (!isFieldTransformerDefined && !transformerSettings.isSetDefaultValue()) {
+                throw e;
+            }
         } catch (Exception e) {
             if (!isFieldTransformerDefined) {
                 throw e;

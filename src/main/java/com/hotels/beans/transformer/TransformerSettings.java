@@ -21,12 +21,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Transformer object configuration.
  * It contains:
  *  1) The field name mapping
  *  2) The lambda function to apply on a field.
+ *  2) Other configurations.
  */
 @Getter
 final class TransformerSettings {
@@ -44,4 +46,11 @@ final class TransformerSettings {
      * }
      */
     private final Map<String, Function<Object, Object>> fieldsTransformers = new ConcurrentHashMap<>();
+
+    /**
+     * It allows to configure the transformer in order to set a default value in case some field is missing in the source object.
+     * If set to true the default value is set, if false if it raises a: {@link com.hotels.beans.error.MissingFieldException} in case of missing fields.
+     */
+    @Setter
+    private boolean setDefaultValue;
 }
