@@ -1,0 +1,14 @@
+<settings>
+  <servers>
+    <server>
+      <id>sonatype-nexus-snapshots</id>
+      <username>${bamboo.sonatypeJiraUsername}</username>
+      <password>${bamboo.sonatypeJiraPassword}</password>
+    </server>
+    <server>
+      <id>sonatype-nexus-staging</id>
+      <username>${bamboo.sonatypeJiraUsername}</username>
+      <password>${bamboo.sonatypeJiraPassword}</password>
+    </server>
+  </servers>
+</settings>
