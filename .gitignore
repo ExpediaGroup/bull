@@ -23,6 +23,7 @@ temp/
 ### NetBeans ###
 nbproject/private/
 build/
+!config/build/
 nbbuild/
 dist/
 nbdist/
