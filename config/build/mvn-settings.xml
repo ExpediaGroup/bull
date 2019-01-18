@@ -2,27 +2,13 @@
   <servers>
     <server>
       <id>sonatype-nexus-snapshots</id>
-      <username>${env.SONATYPE_JIRA_USERNAME}</username>
-      <password>${env.SONATYPE_JIRA_PASSWORD}</password>
+      <username>fborriello</username>
+      <password>{NUhmJdFRWHgH1bgYZ7WJxujxqzyCPrdgABIWrOdl2ps=}</password>
     </server>
     <server>
       <id>sonatype-nexus-staging</id>
-      <username>${env.SONATYPE_JIRA_USERNAME}</username>
-      <password>${env.SONATYPE_JIRA_PASSWORD}</password>
+      <username>fborriello</username>
+      <password>{NUhmJdFRWHgH1bgYZ7WJxujxqzyCPrdgABIWrOdl2ps=}</password>
     </server>
   </servers>
-
-  <profiles>
-    <profile>
-      <id>oss-release</id>
-      <properties>
-        <gpg.executable>gpg2</gpg.executable>
-        <gpg.defaultKeyring>false</gpg.defaultKeyring>
-        <gpg.publicKeyring>${env.GPG_DIR}/pubring.gpg</gpg.publicKeyring>
-        <gpg.secretKeyring>${env.GPG_DIR}/secring.gpg</gpg.secretKeyring>
-        <gpg.keyname>${env.GPG_KEY_NAME}</gpg.keyname>
-        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
-      </properties>
-    </profile>
-  </profiles>
 </settings>
