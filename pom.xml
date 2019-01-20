@@ -328,7 +328,7 @@
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>${github.site.maven.plugin.version}<version>
+				<version>${github.site.maven.plugin.version}</version>
 				<configuration>
 					<message>Creating site for ${project.artifactId} ${project.version}</message>
 				</configuration>
