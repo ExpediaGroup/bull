@@ -60,14 +60,6 @@
 			<id>sonatype-nexus-staging</id>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
-		<!--<site>-->
-			<!--<id>github-site</id>-->
-			<!--<url>https://hotelsdotcom.github.io/bull</url>-->
-		<!--</site>-->
-		<site>
-			<id>devdocs.hcom</id>
-			<url>scp://devdocs.hcom/var/www/html/beanUtilsLightLibrary</url>
-		</site>
 	</distributionManagement>
 
 	<dependencies>
@@ -319,7 +311,6 @@
 				<version>${maven.site.plugin.version}</version>
 				<configuration>
 					<siteDirectory>${project.basedir}/docs/site</siteDirectory>
-					<!--<skipDeploy>true</skipDeploy>-->
 				</configuration>
 				<dependencies>
 					<dependency><!-- add support for ssh/scp -->
@@ -329,22 +320,6 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<!--<plugin>-->
-				<!--<groupId>com.github.github</groupId>-->
-				<!--<artifactId>site-maven-plugin</artifactId>-->
-				<!--<version>${github.site.maven.plugin.version}</version>-->
-				<!--<configuration>-->
-					<!--<message>Creating site for ${project.artifactId} ${project.version}</message>-->
-				<!--</configuration>-->
-				<!--<executions>-->
-					<!--<execution>-->
-						<!--<goals>-->
-							<!--<goal>site</goal>-->
-						<!--</goals>-->
-						<!--<phase>site</phase>-->
-					<!--</execution>-->
-				<!--</executions>-->
-			<!--</plugin>-->
 		</plugins>
 	</build>
 	<reporting>
