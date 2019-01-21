@@ -29,11 +29,13 @@
     </menu>
     <menu name="Bean Transformer">
       <item name="Overview" href="/transformer/overview.html" />
+      <item name="Samples" href="/transformer/samples.html" />
       <item name="Performances" href="/transformer/performance.html" />
       <item name="Third Party Lib Comparison" href="/transformer/thirdPartyLibComparison.html" />
     </menu>
     <menu name="Quality check">
-      <item name="Test coverage" href="/jacoco/index.html" />
+      <item name="Test coverage" href="jacoco/index.html" />
+      <item name="SonarCloud" href="https://sonarcloud.io/dashboard?id=BULL" />
     </menu>
     <menu ref="reports" />
   </body>
