@@ -41,7 +41,27 @@
 		<jacoco.lineRatio>0.80</jacoco.lineRatio>
 		<!-- site properties -->
 		<wagon-ssh.version>3.2.0</wagon-ssh.version>
+		<github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
+		<github.global.server>github</github.global.server>
 	</properties>
+
+	<!-- distribution configuration -->
+	<scm>
+		<connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
+		<developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
+		<url>https://github.com/HotelsDotCom/bull</url>
+	</scm>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -252,6 +272,10 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
 				<version>${cobertura.maven.plugin.version}</version>
+				<configuration>
+					<check>false</check>
+					<skip>true</skip>
+				</configuration>
 				<executions>
 					<execution>
 						<phase>none</phase>
@@ -309,12 +333,4 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
-	<!-- distribution configuration -->
-	<scm>
-		<connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
-		<developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
-		<url>https://github.com/HotelsDotCom/bull</url>
-		<tag>bean-utils-library-1.0.2</tag>
-	</scm>
 </project>
