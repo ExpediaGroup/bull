@@ -57,7 +57,7 @@ public class FromBean {                                     public class ToBean 
 And one line code as:
 
 ~~~Java                                                                
-beanUtils.getTranformer().withFieldMapping(new FieldMapping("id", "identifier")).transform(fromBean, ToBean.class);                                                               
+beanUtils.getTranformer().withFieldMapping(new FieldMapping("name", "differentName")).transform(fromBean, ToBean.class);                                                               
 ~~~
 
 ### Different field names defining constructor args:
@@ -72,7 +72,7 @@ public class FromBean {                                     public class ToBean 
    private final FromSubBean subObject;                        private final ToSubBean subObject;                    
     
    // getters and setters...
-                                                               public ToBean(@ConstructorArg("name") final String name, 
+                                                               public ToBean(@ConstructorArg("name") final String differentName, 
                                                                         @ConstructorArg("id") final int id,
 }                                                                       @ConstructorArg("subBeanList") final List<ToSubBean> subBeanList,
                                                                         @ConstructorArg(fieldName ="list") final List<String> list,
