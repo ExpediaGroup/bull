@@ -4,7 +4,7 @@
 
 ## Bean Utils Light Library
 
-This BeanUtils library is It's a Java Bean to Java Bean transformer that recursively copies data from one object to another, it is generic, flexible, reusable, configurable and incredibly fast.
+This BeanUtils library is a Java Bean to Java Bean transformer that recursively copies data from one object to another, it is generic, flexible, reusable, configurable and incredibly fast.
 It's the only library able to transform Mutable, Immutable and Mixed bean without any custom configuration. 
 
 ## Start using
@@ -52,7 +52,30 @@ mvn clean install -P relaxed
 * easy usage, declarative way to define the property mapping (in case of different names) or simply adding the lombok annotations.
 * allows to set the default value for all objects not existing in the source object.
 
-### A full Sample:
+## Transformation samples
+
+### Simple case:
+
+~~~Java
+@AllArgsConstructor                                         @AllArgsConstructor
+@Getter                                                     @Getter
+@Setter                                                     @Setter
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  @NotNull                   
+   private final BigInteger id;                                public BigInteger id;                      
+   private final List<FromSubBean> subBeanList;                private final String name;                 
+   private List<String> list;                                  private final List<String> list;                    
+   private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
+                                                               private ImmutableToSubFoo nestedObject;
+}                                                               
+                                                            }
+~~~
+And one line code as:
+~~~Java
+ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
+~~~
+
+### Different field names copy:
 
 From class and To class with custom annotation usage and different field names:
 ~~~Java
@@ -87,7 +110,7 @@ And one line code as:
 beanUtils.getTranformer().withFieldMapping(new FieldMapping("id", "identifier")).transform(fromBean, ToBean.class);                                                               
 ~~~
 
-Constructor with Java version <= 8 
+### Different field names defining constructor args:
 
 ~~~Java
 public class FromBean {                                     public class ToBean {                           
@@ -115,7 +138,12 @@ public class FromBean {                                     public class ToBean 
                                               
                                                             }
 ~~~
-From class and To class without custom annotation usage:
+And one line code as:
+~~~Java
+ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
+~~~
+
+### Different field names and types applying transformation through lambda function:
 
 ~~~Java
 @AllArgsConstructor                                         @AllArgsConstructor
@@ -123,32 +151,26 @@ From class and To class without custom annotation usage:
 @Setter                                                     @Setter
 public class FromBean {                                     public class ToBean {                           
    private final String name;                                  @NotNull                   
-   private final BigInteger id;                                public BigInteger id;                      
+   private final BigInteger id;                                public BigInteger identifier;                      
    private final List<FromSubBean> subBeanList;                private final String name;                 
    private List<String> list;                                  private final List<String> list;                    
    private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
+   private final String locale;                                private final Locale locale;                    
                                                                private ImmutableToSubFoo nestedObject;
 }                                                               
-                                                                 }
-~~~
-And one line code as:
-~~~Java
-ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
+                                                            }
 ~~~
 
-Field transformation through lambda function transformation:
 ~~~Java
 FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::negate);
+FieldTransformer<String, Locale> localeTransformer = new FieldTransformer<>("locale", Locale::forLanguageTag);
 beanUtils.getTransformer()
     .withFieldMapping(new FieldMapping("id", "identifier"))
-    .withFieldTransformer(fieldTransformer).transform(fromBean, ToBean.class);
+    .withFieldTransformer(fieldTransformer).transform(fromBean, ToBean.class)
+    .withFieldTransformer(localeTransformer);
 ~~~
-or
-~~~Java
-FieldTransformer<String, Locale> localeTransformer = new FieldTransformer<>("locale", Locale::forLanguageTag)
-beanUtils.getTransformer()
-    .withFieldTransformer(localeTransformer).transform(fromBean, ToBean.class);
-~~~
+
+### Assign a default value in case of missing field in the source object:
 
 Assign a default value in case of missing field in the source object:
 
@@ -164,7 +186,29 @@ public class FromBean {                                     public class ToBean 
 ~~~
 And one line code as:
 ~~~Java
-ToBean toBean = beanUtils.getTransformer().setDefaultValueForMissingField(true).transform(fromBean, ToBean.class);
+ToBean toBean = beanUtils.getTransformer()
+                    .setDefaultValueForMissingField(true).transform(fromBean, ToBean.class);
+~~~
+
+### Applying a transformation function in case of missing fields in the source object:
+
+Assign a default value in case of missing field in the source object:
+
+~~~Java
+@AllArgsConstructor                                         @AllArgsConstructor
+@Getter                                                     @Getter
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  @NotNull                   
+   private final BigInteger id;                                public BigInteger id;                      
+                                                               private final String name;                 
+                                                               private String notExistingField; // this will be null and no exceptions will be raised
+}                                                            }
+~~~
+And one line code as:
+~~~Java
+FieldTransformer<String, String> localeTransformer = new FieldTransformer<>("notExistingField", val -> "sampleVal");
+ToBean toBean = beanUtils.getTransformer()
+                    .setDefaultValueForMissingField(true).transform(fromBean, ToBean.class);
 ~~~
        
 More sample beans can be found in the test package: `com.hotels.beans.sample`
