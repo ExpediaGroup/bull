@@ -158,8 +158,8 @@ And one line code as:
 ~~~Java
 FieldTransformer<String, String> notExistingFieldTransformer = new FieldTransformer<>("notExistingField", val -> "sampleVal");
 ToBean toBean = beanUtils.getTransformer()
-                    .withFieldTransformer(true)
-                    .transform(notExistingFieldTransformer, ToBean.class);
+                    .withFieldTransformer(notExistingFieldTransformer)
+                    .transform(fromBean, ToBean.class);
 ~~~
        
 More sample beans can be found in the test package: `com.hotels.beans.sample`
