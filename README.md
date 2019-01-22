@@ -88,12 +88,12 @@ public class FromBean {                                     public class ToBean 
    private final FromSubBean subObject;                        private final ToSubBean subObject;                    
     
    // getters and setters...
-                                                               public ToBean(final String name, 
+                                                               public ToBean(final String differentName, 
                                                                         final int id,
 }                                                                       final List<ToSubBean> subBeanList,
                                                                         final List<String> list,
                                                                         final ToSubBean subObject) {
-                                                                        this.name = name;
+                                                                        this.differentName = differentName;
                                                                         this.id = id;
                                                                         this.subBeanList = subBeanList;
                                                                         this.list = list;
@@ -107,7 +107,7 @@ public class FromBean {                                     public class ToBean 
 And one line code as:
 
 ~~~Java                                                                
-beanUtils.getTranformer().withFieldMapping(new FieldMapping("name", "differentName")).transform(fromBean, ToBean.class);                                                               
+beanUtils.getTransformer().withFieldMapping(new FieldMapping("name", "differentName")).transform(fromBean, ToBean.class);                                                               
 ~~~
 
 ### Different field names defining constructor args:
@@ -127,7 +127,7 @@ public class FromBean {                                     public class ToBean 
 }                                                                       @ConstructorArg("subBeanList") final List<ToSubBean> subBeanList,
                                                                         @ConstructorArg(fieldName ="list") final List<String> list,
                                                                         @ConstructorArg("subObject") final ToSubBean subObject) {
-                                                                        this.name = name;
+                                                                        this.differentName = differentName;
                                                                         this.id = id;
                                                                         this.subBeanList = subBeanList;
                                                                         this.list = list;
@@ -201,14 +201,15 @@ public class FromBean {                                     public class ToBean 
    private final String name;                                  @NotNull                   
    private final BigInteger id;                                public BigInteger id;                      
                                                                private final String name;                 
-                                                               private String notExistingField; // this will be null and no exceptions will be raised
+                                                               private String notExistingField; // this will be have valued with: sampleVal
 }                                                            }
 ~~~
 And one line code as:
 ~~~Java
-FieldTransformer<String, String> localeTransformer = new FieldTransformer<>("notExistingField", val -> "sampleVal");
+FieldTransformer<String, String> notExistingFieldTransformer = new FieldTransformer<>("notExistingField", val -> "sampleVal");
 ToBean toBean = beanUtils.getTransformer()
-                    .setDefaultValueForMissingField(true).transform(fromBean, ToBean.class);
+                    .withFieldTransformer(true)
+                    .transform(notExistingFieldTransformer, ToBean.class);
 ~~~
        
 More sample beans can be found in the test package: `com.hotels.beans.sample`
