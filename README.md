@@ -201,7 +201,7 @@ public class FromBean {                                     public class ToBean 
    private final String name;                                  @NotNull                   
    private final BigInteger id;                                public BigInteger id;                      
                                                                private final String name;                 
-                                                               private String notExistingField; // this will be have valued with: sampleVal
+                                                               private String notExistingField; // this will have value: sampleVal
 }                                                            }
 ~~~
 And one line code as:
