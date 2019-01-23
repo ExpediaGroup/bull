@@ -1,15 +1,17 @@
 <head>
-    <title>Overview</title>
+    <title>About</title>
 </head>
+
+# ![bull-logo](images/BullBranding_03.png)
 
 # Overview
 
 This BeanUtils library is a utility library for managing Bean objects. The library offers the following components:
 
-
 - #### Bean Transformer: 
 
-    is a Java bean copy utility with powerful functionality and high performance.
+    is a Java Bean to Java Bean transformer that recursively copies data from one object to another, it is generic, flexible, reusable, configurable and incredibly fast.
+    It's the only library able to transform Mutable, Immutable and Mixed bean without any custom configuration.
 
     ##### Features:
     * support copy of immutable beans.
