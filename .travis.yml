@@ -6,3 +6,5 @@ cache:
     - ~/.m2/repository
 install:
   - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
+script:
+  - mvn clean deploy sonar:sonar -Dsonar.projectKey=${sonar.projectKey} -Dsonar.organization=${sonar.organization} -Dsonar.host.url=${sonar.host.url} -Dsonar.login=${sonar.token}
