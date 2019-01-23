@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk11
+  - oraclejdk8
 cache:
   directories:
     - ~/.m2/repository
