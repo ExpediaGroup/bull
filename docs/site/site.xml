@@ -2,10 +2,6 @@
 <project>
   <publishDate position="right"/>
   <version position="right"/>
-  <bannerLeft>
-    <name>Bean Utils Light Library</name>
-    <src>images/hotels_com_logo_en_int_wakeuphappy_small.png</src>
-  </bannerLeft>
   <skin>
     <groupId>org.apache.maven.skins</groupId>
     <artifactId>maven-fluido-skin</artifactId>
@@ -13,18 +9,21 @@
   </skin>
   <custom>
     <fluidoSkin>
-      <sourceLineNumbersEnabled>false</sourceLineNumbersEnabled>
-      <leftColumnClass>span2</leftColumnClass>
-      <bodyColumnClass>span10</bodyColumnClass>
+      <topBarEnabled>false</topBarEnabled>
+      <sideBarEnabled>true</sideBarEnabled>
+      <gitHub>
+        <projectId>BULL</projectId>
+        <ribbonOrientation>right</ribbonOrientation>
+        <ribbonColor>gray</ribbonColor>
+      </gitHub>
     </fluidoSkin>
   </custom>
   <body>
     <breadcrumbs>
-      <item name="DevDocs" href="../"/>
+      <item name="Home" href="../"/>
       <item name="${project.name}" href="${project.url}"/>
     </breadcrumbs>
     <menu name="Project info">
-      <item name="Overview" href="/overview.html"/>
       <item name="Glossary" href="/glossary.html" />
     </menu>
     <menu name="Bean Transformer">
