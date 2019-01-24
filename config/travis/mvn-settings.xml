@@ -1,0 +1,20 @@
+<settings>
+  <servers>
+    <!-- Sonatype config -->
+    <server>
+      <id>sonatype-nexus-snapshots</id>
+      <username>${sonatype_username}</username>
+      <password>${sonatype_password}</password>
+    </server>
+    <server>
+      <id>sonatype-nexus-staging</id>
+      <username>${sonatype_username}</username>
+      <password>${sonatype_password}</password>
+    </server>
+    <!-- GitHub config -->
+    <server>
+      <id>${github_server_id}</id>
+      <password>${github_oauth_token}</password>
+    </server>
+  </servers>
+</settings>
