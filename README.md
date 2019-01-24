@@ -284,6 +284,10 @@ _[*] Immutable types are not supported by Dozer. When a type doesn't have a no-a
   Workaround is introducing the Builder Pattern. An example can be found [here](http://codeslut.blogspot.com/2010/05/mapping-immutable-value-objects-with.html)_
 _[+] Requires a custom configuration_
  
+## Documentation
+
+A detailed project documentation is available [here](https://hotelsdotcom.github.io/bull).
+
 ## Credits
 
 Created by: [Fabio Borriello](https://github.com/fborriello) with the contribution of: [Patrizio Munzi](https://github.com/patriziomunzi), 
