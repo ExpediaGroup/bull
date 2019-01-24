@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.0.15]
+#### Added
+* Added GitHub site build with maven.
+
 ### [1.0.14]
 #### Added
 * Added possibility to configure the transformer in order to set the default value for all destination's object fields that are not existing in the source object.
