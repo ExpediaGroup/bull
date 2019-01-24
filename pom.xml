@@ -4,7 +4,7 @@
 	<name>BULL - Bean Utils Light Library</name>
 	<groupId>com.hotels.beans</groupId>
 	<artifactId>bean-utils-library</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.15</version>
 	<packaging>jar</packaging>
 	<inceptionYear>2019</inceptionYear>
 	<description>
@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>com.hotels</groupId>
 		<artifactId>hotels-oss-parent</artifactId>
-		<version>2.3.5</version>
+		<version>3.0.0</version>
 	</parent>
 
 	<properties>
