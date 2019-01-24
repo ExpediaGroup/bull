@@ -9,4 +9,4 @@ cache:
 install:
   - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
   - mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
-  - mvn site --settings config/travis/mvn-settings.xml
+  - mvn clean install site --settings config/travis/mvn-settings.xml
