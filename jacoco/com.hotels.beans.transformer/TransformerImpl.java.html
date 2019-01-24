@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransformerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Bean Utils Light Library</a> &gt; <a href="index.source.html" class="el_package">com.hotels.beans.transformer</a> &gt; <span class="el_source">TransformerImpl.java</span></div><h1>TransformerImpl.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019 Expedia Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.beans.transformer;
+
+import static java.util.Arrays.stream;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.IntStream.range;
+
+import static javax.validation.Validation.buildDefaultValidatorFactory;
+
+import static org.apache.commons.lang3.StringUtils.SPACE;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static org.springframework.util.Assert.notNull;
+
+import static com.hotels.beans.base.Defaults.defaultValue;
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.beans.constant.ClassType.MIXED;
+import static com.hotels.beans.constant.ClassType.MUTABLE;
+import static com.hotels.beans.constant.Punctuation.DOT;
+import static com.hotels.beans.constant.Punctuation.SEMICOLON;
+import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Parameter;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+
+import com.hotels.beans.annotation.ConstructorArg;
+import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.constant.ClassType;
+import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.beans.error.MissingFieldException;
+import com.hotels.beans.model.FieldMapping;
+import com.hotels.beans.model.FieldTransformer;
+import com.hotels.beans.utils.ClassUtils;
+import com.hotels.beans.utils.ReflectionUtils;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
+ * The implementations are provided by BeanUtils.
+ */
+<span class="fc" id="L66">@Slf4j</span>
+public class TransformerImpl implements Transformer {
+    /**
+     * Reflection utils class {@link ReflectionUtils}.
+     */
+    private final ReflectionUtils reflectionUtils;
+
+    /**
+     * Class reflection utils class {@link ClassUtils}.
+     */
+    private final ClassUtils classUtils;
+
+    /**
+     * CacheManager class {@link CacheManager}.
+     */
+    private final CacheManager cacheManager;
+
+    /**
+     * Contains both the field name mapping and the lambda function to be applied on fields.
+     */
+    private final TransformerSettings transformerSettings;
+
+    /**
+     * Default constructor.
+     */
+<span class="fc" id="L91">    public TransformerImpl() {</span>
+<span class="fc" id="L92">        this.reflectionUtils = new ReflectionUtils();</span>
+<span class="fc" id="L93">        this.classUtils = new ClassUtils();</span>
+<span class="fc" id="L94">        this.transformerSettings = new TransformerSettings();</span>
+<span class="fc" id="L95">        this.cacheManager = getCacheManager(&quot;transformer&quot;);</span>
+<span class="fc" id="L96">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Transformer withFieldMapping(final FieldMapping... fieldMapping) {
+<span class="fc" id="L103">        stream(fieldMapping)</span>
+<span class="fc" id="L104">                .forEach(mapping -&gt; transformerSettings.getFieldsNameMapping().put(mapping.getDestFieldName(), mapping.getSourceFieldName()));</span>
+<span class="fc" id="L105">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void removeFieldMapping(final String destFieldName) {
+<span class="fc" id="L113">        notNull(destFieldName, &quot;The field name for which the mapping has to be removed cannot be null!&quot;);</span>
+<span class="fc" id="L114">        transformerSettings.getFieldsNameMapping().remove(destFieldName);</span>
+<span class="fc" id="L115">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void resetFieldsMapping() {
+<span class="fc" id="L122">        transformerSettings.getFieldsNameMapping().clear();</span>
+<span class="fc" id="L123">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public final Transformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
+<span class="fc" id="L131">        stream(fieldTransformer)</span>
+<span class="fc" id="L132">                .forEach(transformer -&gt; transformerSettings.getFieldsTransformers().put(transformer.getDestFieldName(), transformer.getTransformerFunction()));</span>
+<span class="fc" id="L133">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void removeFieldTransformer(final String destFieldName) {
+<span class="fc" id="L141">        notNull(destFieldName, &quot;The field name for which the transformer function has to be removed cannot be null!&quot;);</span>
+<span class="fc" id="L142">        transformerSettings.getFieldsTransformers().remove(destFieldName);</span>
+<span class="fc" id="L143">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void resetFieldsTransformer() {
+<span class="fc" id="L150">        transformerSettings.getFieldsTransformers().clear();</span>
+<span class="fc" id="L151">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Transformer setDefaultValueForMissingField(final boolean useDefaultValue) {
+<span class="fc" id="L158">        transformerSettings.setSetDefaultValue(useDefaultValue);</span>
+<span class="fc" id="L159">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final &lt;T, K&gt; K transform(final T sourceObj, final Class&lt;? extends K&gt; targetClass) {
+<span class="fc" id="L167">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
+<span class="fc" id="L168">        notNull(targetClass, &quot;The destination class cannot be null!&quot;);</span>
+        final K k;
+<span class="fc" id="L170">        final ClassType classType = classUtils.getClassType(targetClass);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (classType.is(MUTABLE)) {</span>
+            try {
+<span class="fc" id="L173">                k = targetClass.getDeclaredConstructor().newInstance();</span>
+<span class="fc" id="L174">                injectNotFinalFields(sourceObj, k);</span>
+<span class="fc" id="L175">            } catch (NoSuchMethodException e) {</span>
+<span class="fc" id="L176">                throw new InvalidBeanException(&quot;No default constructor defined for class: &quot; + targetClass.getName(), e);</span>
+<span class="fc" id="L177">            } catch (Exception e) {</span>
+<span class="fc" id="L178">                throw new InvalidBeanException(e.getMessage(), e);</span>
+<span class="fc" id="L179">            }</span>
+        } else {
+<span class="fc" id="L181">            k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass));</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">            if (classType.is(MIXED)) {</span>
+<span class="fc" id="L183">                injectNotFinalFields(sourceObj, k);</span>
+            }
+        }
+<span class="fc" id="L186">        validate(k);</span>
+<span class="fc" id="L187">        return k;</span>
+    }
+
+    /**
+     * Inject the values through the all args constructor.
+     * @param sourceObj   sourceObj the source object
+     * @param targetClass the destination object class
+     * @param constructor the all args constructor
+     * @param &lt;T&gt;         the sourceObj object type
+     * @param &lt;K&gt;         the target object type
+     * @return a copy of the source object into the destination object
+     * @throws InvalidBeanException {@link InvalidBeanException} if the target object is not compliant with the requirements
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private &lt;T, K&gt; K injectValues(final T sourceObj, final Class&lt;K&gt; targetClass, final Constructor constructor) {
+        final Object[] constructorArgs;
+<span class="fc bfc" id="L203" title="All 2 branches covered.">        if (canBeInjectedByConstructorParams(constructor, targetClass)) {</span>
+<span class="fc" id="L204">            constructorArgs = getConstructorArgsValues(sourceObj, targetClass, constructor);</span>
+        } else {
+<span class="fc" id="L206">            constructorArgs = getConstructorValuesFromFields(sourceObj, targetClass);</span>
+        }
+        try {
+<span class="fc" id="L209">            return (K) constructor.newInstance(constructorArgs);</span>
+<span class="fc" id="L210">        } catch (final Exception e) {</span>
+<span class="fc" id="L211">            throw new InvalidBeanException(&quot;Source object: &quot; + sourceObj.getClass().getName() + &quot;; Target class: &quot; + targetClass.getName(), e);</span>
+        }
+    }
+
+    /**
+     * Checks if the source class field names can be retrieved from the constructor parameters.
+     * @param constructor the all args constructor
+     * @param targetClass the destination object class
+     * @param &lt;K&gt; the target object type
+     * @return true if the parameter names are defined or the parameters are annotated with: {@link ConstructorArg}
+     */
+    private &lt;K&gt; boolean canBeInjectedByConstructorParams(final Constructor constructor, final Class&lt;K&gt; targetClass) {
+<span class="fc" id="L223">        final String cacheKey = &quot;CanBeInjectedByConstructorParams-&quot; + constructor.getDeclaringClass().getCanonicalName();</span>
+<span class="fc" id="L224">        return ofNullable(cacheManager.getFromCache(cacheKey, Boolean.class)).orElseGet(() -&gt; {</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">            final boolean res = classUtils.getPrivateFinalFields(targetClass).size() == constructor.getParameterCount()</span>
+<span class="pc bpc" id="L226" title="3 of 4 branches missed.">                    &amp;&amp; (classUtils.areParameterNamesAvailable(constructor) || classUtils.allParameterAnnotatedWith(constructor, ConstructorArg.class));</span>
+<span class="fc" id="L227">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L228">            return res;</span>
+        });
+    }
+
+    /**
+     * Retrieves all the constructor argument values.
+     * This methods uses the {@link ConstructorArg} to retrieve the argument values
+     * @param sourceObj   sourceObj the source object
+     * @param targetClass the destination object class
+     * @param constructor the all args constructor
+     * @param &lt;T&gt;         the sourceObj object type
+     * @param &lt;K&gt;         the target object type
+     * @return a list containing the values for the destination constructor.
+     * @throws InvalidBeanException {@link InvalidBeanException} if there is an error while retrieving the constructor args parameter
+     */
+    private &lt;T, K&gt; Object[] getConstructorArgsValues(final T sourceObj, final Class&lt;K&gt; targetClass, final Constructor constructor) {
+<span class="fc" id="L244">        final Parameter[] constructorParameters = classUtils.getConstructorParameters(constructor);</span>
+<span class="fc" id="L245">        final Object[] constructorArgsValues = new Object[constructorParameters.length];</span>
+<span class="fc" id="L246">        range(0, constructorParameters.length)</span>
+                //.parallel()
+<span class="fc" id="L248">                .forEach(i -&gt; {</span>
+<span class="fc" id="L249">                    String destFieldName = getDestFieldName(constructorParameters[i], targetClass.getCanonicalName());</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">                    if (isNull(destFieldName)) {</span>
+<span class="nc" id="L251">                        constructorArgsValues[i] =  classUtils.getDefaultTypeValue(constructorParameters[i].getType());</span>
+                    } else {
+<span class="fc" id="L253">                        String sourceFieldName = getSourceFieldName(destFieldName);</span>
+<span class="fc" id="L254">                        constructorArgsValues[i] = ofNullable(getFieldValue(sourceObj, sourceFieldName, targetClass, classUtils.getDeclaredField(targetClass, destFieldName)))</span>
+<span class="fc" id="L255">                                .orElse(classUtils.getDefaultTypeValue(constructorParameters[i].getType()));</span>
+                    }
+<span class="fc" id="L257">                });</span>
+<span class="fc" id="L258">        return constructorArgsValues;</span>
+    }
+
+    /**
+     * Returns the field name in the source object.
+     * @param field the field that has to be valorized.
+     * @return the source field name.
+     */
+    private String getSourceFieldName(final Field field) {
+<span class="fc" id="L267">        return getSourceFieldName(field.getName());</span>
+    }
+
+    /**
+     * Returns the field name in the source object.
+     * @param fieldName the field name that has to be valorized.
+     * @return the source field name.
+     */
+    private String getSourceFieldName(final String fieldName) {
+<span class="fc" id="L276">        return ofNullable(transformerSettings.getFieldsNameMapping().get(fieldName)).orElse(fieldName);</span>
+    }
+
+    /**
+     * Returns the field name in the destination object.
+     * @param constructorParameter the constructor parameter.
+     * @param declaringClassName the class containing the constructor.
+     * @return the source field name.
+     */
+    private String getDestFieldName(final Parameter constructorParameter, final String declaringClassName) {
+<span class="fc" id="L286">        String cacheKey = &quot;DestFieldName-&quot; + declaringClassName + &quot;-&quot; + constructorParameter.getName();</span>
+<span class="fc" id="L287">        return ofNullable(cacheManager.getFromCache(cacheKey, String.class))</span>
+<span class="fc" id="L288">                .orElseGet(() -&gt; {</span>
+                    String destFieldName;
+<span class="fc bfc" id="L290" title="All 2 branches covered.">                    if (constructorParameter.isNamePresent()) {</span>
+<span class="fc" id="L291">                        destFieldName = constructorParameter.getName();</span>
+                    } else {
+<span class="fc" id="L293">                        destFieldName = ofNullable(reflectionUtils.getParameterAnnotation(constructorParameter, ConstructorArg.class, declaringClassName))</span>
+<span class="fc" id="L294">                                .map(ConstructorArg::value)</span>
+<span class="fc" id="L295">                                .orElse(null);</span>
+                    }
+<span class="fc" id="L297">                    cacheManager.cacheObject(cacheKey, destFieldName);</span>
+<span class="fc" id="L298">                    return destFieldName;</span>
+                });
+    }
+
+    /**
+     * Retrieves all the constructor argument values.
+     * This methods retrieves the values from the declared class field into the target object.
+     * @param sourceObj   sourceObj the source object
+     * @param targetClass the destination object class
+     * @param &lt;T&gt;         the sourceObj object type
+     * @param &lt;K&gt;         the target object type
+     * @return a list containing the values for the destination constructor.
+     * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
+     */
+    private &lt;T, K&gt; Object[] getConstructorValuesFromFields(final T sourceObj, final Class&lt;K&gt; targetClass) {
+<span class="fc" id="L313">        final List&lt;Field&gt; declaredFields = classUtils.getDeclaredFields(targetClass, true);</span>
+<span class="fc" id="L314">        return declaredFields.stream()</span>
+<span class="fc" id="L315">                .map(field -&gt; getFieldValue(sourceObj, targetClass, field))</span>
+<span class="fc" id="L316">                .toArray(Object[]::new);</span>
+    }
+
+    /**
+     * Retrieves all the constructor argument values.
+     * This methods retrieves the values from the declared class field into the target object.
+     * @param sourceObj sourceObj the source object
+     * @param targetObject the destination object instance
+     * @param &lt;T&gt;  the sourceObj object type
+     * @param &lt;K&gt; the target object type
+     * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
+     */
+    private &lt;T, K&gt; void injectNotFinalFields(final T sourceObj, final K targetObject) {
+<span class="fc" id="L329">        final Class&lt;?&gt; targetObjectClass = targetObject.getClass();</span>
+<span class="fc" id="L330">        classUtils.getNotFinalFields(targetObjectClass, true)</span>
+                //.parallelStream()
+<span class="fc" id="L332">                .forEach(field -&gt; reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field)));</span>
+<span class="fc" id="L333">    }</span>
+
+    /**
+     * Retrieves the value of a field. In case it is not a primitive type it recursively inject the values inside the object.
+     * @param sourceObj sourceObj the source object
+     * @param targetClass the destination object class
+     * @param field The field for which the value has to be retrieved
+     * @param &lt;T&gt; the sourceObj object type
+     * @param &lt;K&gt; the target object type
+     * @return the field value
+     * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
+     */
+    private &lt;T, K&gt; Object getFieldValue(final T sourceObj, final Class&lt;K&gt; targetClass, final Field field) {
+<span class="fc" id="L346">        String sourceFieldName = getSourceFieldName(field);</span>
+<span class="fc" id="L347">        return getFieldValue(sourceObj, sourceFieldName, targetClass, field);</span>
+    }
+
+    /**
+     * Retrieves the value of a field. In case it is not a primitive type it recursively inject the values inside the object.
+     * @param sourceObj sourceObj the source object
+     * @param sourceFieldName sourceFieldName the field name in the source object (if different from the target one)
+     * @param targetClass the destination object class
+     * @param field The field for which the value has to be retrieved
+     * @param &lt;T&gt; the sourceObj object type
+     * @param &lt;K&gt; the target object type
+     * @return the field value
+     * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
+     */
+    private &lt;T, K&gt; Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class&lt;K&gt; targetClass, final Field field) {
+<span class="fc" id="L362">        Object fieldValue = null;</span>
+<span class="pc bpc" id="L363" title="1 of 2 branches missed.">        if (isNotEmpty(sourceFieldName)) {</span>
+<span class="fc" id="L364">            boolean primitiveType = classUtils.isPrimitiveType(field.getType());</span>
+<span class="fc" id="L365">            boolean isFieldTransformerDefined = transformerSettings.getFieldsTransformers().containsKey(field.getName());</span>
+<span class="fc" id="L366">            fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);</span>
+<span class="fc bfc" id="L367" title="All 2 branches covered.">            if (nonNull(fieldValue)) {</span>
+                // is not a primitive type or an optional &amp;&amp; there are no transformer function
+                // defined it recursively evaluate the value
+<span class="fc bfc" id="L370" title="All 4 branches covered.">                boolean notPrimitiveAndNotSpecialType = !primitiveType &amp;&amp; !classUtils.isSpecialType(field.getType());</span>
+<span class="pc bpc" id="L371" title="1 of 6 branches missed.">                if ((notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))</span>
+                        &amp;&amp; !isFieldTransformerDefined) {
+<span class="fc" id="L373">                    fieldValue = getFieldValue(targetClass, field, fieldValue);</span>
+                }
+<span class="fc bfc" id="L375" title="All 2 branches covered.">            } else if (primitiveType) {</span>
+<span class="fc" id="L376">                fieldValue = defaultValue(field.getType()); // assign the default value</span>
+            }
+        }
+<span class="fc" id="L379">        return getTransformedField(field, fieldValue);</span>
+    }
+
+    /**
+     * Gets the source field value. If a field transformer function is defined and the field does not exists in the source object it raises an exception.
+     * @param sourceObj sourceObj the source object
+     * @param sourceFieldName sourceFieldName the field name in the source object (if different from the target one)
+     * @param field The field for which the value has to be retrieved
+     * @param isFieldTransformerDefined indicates if a tranformer function is implemented for this field
+     * @param &lt;T&gt; the sourceObj object type
+     * @return the source field value
+     */
+    private &lt;T&gt; Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final Field field, final boolean isFieldTransformerDefined) {
+<span class="fc" id="L392">        Object fieldValue = null;</span>
+        try {
+<span class="fc" id="L394">            fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());</span>
+<span class="fc" id="L395">        } catch (MissingFieldException e) {</span>
+<span class="fc bfc" id="L396" title="All 4 branches covered.">            if (!isFieldTransformerDefined &amp;&amp; !transformerSettings.isSetDefaultValue()) {</span>
+<span class="fc" id="L397">                throw e;</span>
+            }
+<span class="fc" id="L399">        } catch (Exception e) {</span>
+<span class="pc bpc" id="L400" title="1 of 2 branches missed.">            if (!isFieldTransformerDefined) {</span>
+<span class="fc" id="L401">                throw e;</span>
+            }
+<span class="fc" id="L403">        }</span>
+<span class="fc" id="L404">        return fieldValue;</span>
+    }
+
+    /**
+     * It executes the lambda function defined to the field.
+     * @param field The field on which the transformation should be applied.
+     * @param fieldValue The field value.
+     * @return the transformed field.
+     */
+    private Object getTransformedField(final Field field, final Object fieldValue) {
+<span class="fc" id="L414">        return ofNullable(transformerSettings.getFieldsTransformers().get(field.getName()))</span>
+<span class="fc" id="L415">                .map(fieldTransformer -&gt; fieldTransformer.apply(fieldValue))</span>
+<span class="fc" id="L416">                .orElse(fieldValue);</span>
+    }
+
+    /**
+     * Retrieves the value of a field.
+     * @param targetClass the destination object class
+     * @param field The field for which the value has to be retrieved
+     * @param fieldValue The current object value.
+     * @param &lt;K&gt; the target object type
+     * @return the field value
+     * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private &lt;K&gt; Object getFieldValue(final Class&lt;K&gt; targetClass, final Field field, final Object fieldValue) {
+<span class="fc" id="L430">        return getPopulator(field.getType(), fieldValue.getClass(), this)</span>
+<span class="fc" id="L431">                .map(populator -&gt; populator.getPopulatedObject(targetClass, field.getName(), fieldValue))</span>
+<span class="fc" id="L432">                .orElseGet(() -&gt;</span>
+                        // recursively inject object
+<span class="fc" id="L434">                        transform(fieldValue, field.getType())</span>
+                );
+    }
+
+    /**
+     * Checks if an object is valid.
+     * @param k the object to check
+     * @param &lt;K&gt; the object class
+     * @throws InvalidBeanException {@link InvalidBeanException} if the validation fails
+     */
+    private &lt;K&gt; void validate(final K k) {
+<span class="fc" id="L445">        final Set&lt;ConstraintViolation&lt;Object&gt;&gt; constraintViolations = getValidator().validate(k);</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">        if (!constraintViolations.isEmpty()) {</span>
+<span class="fc" id="L447">            final String errors = constraintViolations.stream()</span>
+<span class="fc" id="L448">                    .map(cv -&gt; cv.getRootBeanClass().getCanonicalName()</span>
+<span class="fc" id="L449">                            + DOT.getSymbol()</span>
+<span class="fc" id="L450">                            + cv.getPropertyPath()</span>
+                            + SPACE
+<span class="fc" id="L452">                            + cv.getMessage())</span>
+<span class="fc" id="L453">                    .collect(joining(SEMICOLON.getSymbol()));</span>
+<span class="fc" id="L454">            throw new InvalidBeanException(errors);</span>
+        }
+<span class="fc" id="L456">    }</span>
+
+    /**
+     * Creates the validator.
+     * @return a {@link Validator} instance.
+     */
+    private Validator getValidator() {
+<span class="fc" id="L463">        String cacheKey = &quot;BeanValidator&quot;;</span>
+<span class="fc" id="L464">        return ofNullable(cacheManager.getFromCache(cacheKey, Validator.class))</span>
+<span class="fc" id="L465">                .orElseGet(() -&gt; {</span>
+<span class="fc" id="L466">                    Validator validator = buildDefaultValidatorFactory().getValidator();</span>
+<span class="fc" id="L467">                    cacheManager.cacheObject(cacheKey, validator);</span>
+<span class="fc" id="L468">                    return validator;</span>
+                });
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

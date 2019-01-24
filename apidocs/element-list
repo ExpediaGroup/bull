@@ -1,0 +1,11 @@
+com.hotels.beans
+com.hotels.beans.annotation
+com.hotels.beans.application
+com.hotels.beans.base
+com.hotels.beans.cache
+com.hotels.beans.constant
+com.hotels.beans.error
+com.hotels.beans.model
+com.hotels.beans.populator
+com.hotels.beans.transformer
+com.hotels.beans.utils
