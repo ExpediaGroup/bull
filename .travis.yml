@@ -1,10 +1,13 @@
 language: java
 jdk:
+  - oraclejdk8
   - oraclejdk11
+os:
+  - linux
 cache:
   directories:
     - ~/.m2/repository
 install:
   - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
 script:
-  - mvn deploy sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+  - mvn test deploy sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
