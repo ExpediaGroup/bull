@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - openjdk11
+  - oraclejdk8
 os:
   - linux
 cache:
@@ -22,6 +22,9 @@ jobs:
       if: branch = master
       name: "Sonar check"
       install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+    - stage: "Site Build"
+      name: "GitHub Site Build and Publish"
+      install: travis_wait 50 mvn clean install site --settings config/travis/mvn-settings.xml -DskipTests=true
 #    - stage: "Deploy"
 #      if: branch = master
 #      name: "Deploy"
