@@ -8,17 +8,17 @@ cache:
     - ~/.m2/repository
 jobs:
   include:
-    - stage: "Build"
-      name: "Build"
-      install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
-    - stage: "Test"
-      name: "Test"
-      install: mvn test -Dmaven.javadoc.skip=true
-    - stage: "Quality Check"
-      if: branch = master
-      name: "Sonar check"
-      install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+#    - stage: "Build"
+#      name: "Build"
+#      install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
+#    - stage: "Test"
+#      name: "Test"
+#      install: mvn test -Dmaven.javadoc.skip=true
+#    - stage: "Quality Check"
+#      if: branch = master
+#      name: "Sonar check"
+#      install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
     - stage: "Site Build"
 #      if: branch = master
       name: "GitHub Site Build and Publish"
-      install: travis_wait 60 mvn clean install site --settings config/travis/mvn-settings.xml -DskipTests=true
+      install: travis_wait mvn install site --settings config/travis/mvn-settings.xml -DskipTests=true
