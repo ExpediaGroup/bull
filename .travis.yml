@@ -21,4 +21,4 @@ jobs:
     - stage: "Site Build"
 #      if: branch = master
       name: "GitHub Site Build and Publish"
-      install: travis_wait mvn install site --settings config/travis/mvn-settings.xml -DskipTests=true
+      script: travis_wait mvn site --settings config/travis/mvn-settings.xml -DskipTests=true
