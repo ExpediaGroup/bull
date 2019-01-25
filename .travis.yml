@@ -18,7 +18,11 @@ jobs:
     - stage: "Test"
       name: "Test"
       install: mvn test -Dmaven.javadoc.skip=true
-    - stage: "QualityCheck"
+    - stage: "Quality Check"
       if: branch = master
-      name: "Quality check"
+      name: "Sonar check"
       install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+#    - stage: "Deploy"
+#      if: branch = master
+#      name: "Deploy"
+#      install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
