@@ -31,4 +31,4 @@ deploy:
   github-token: ${github_oauth_token}
   keep-history: true
   on:
-    branch: master
+    branch: feature/travis-configuration
