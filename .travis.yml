@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk8
+  - openjdk11
 os:
   - linux
 cache:
@@ -21,6 +21,8 @@ jobs:
     - stage: "Site Build"
 #      if: branch = master
       name: "GitHub Site Build and Publish"
+      jdk:
+        - oraclejdk8
       install: travis_wait 60 mvn clean install site --settings config/travis/mvn-settings.xml -DskipTests=true
 #    - stage: "Deploy"
 #      if: branch = master
