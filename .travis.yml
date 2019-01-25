@@ -14,7 +14,8 @@ jobs:
   include:
     - stage: "Build"
       name: "Build"
-      install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
+#      install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
+      install: travis_wait clean install -DskipTests=true -Dmaven.javadoc.skip=true
     - stage: "Test"
       name: "Test"
       install: mvn test -Dmaven.javadoc.skip=true
