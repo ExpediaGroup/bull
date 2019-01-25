@@ -12,7 +12,7 @@ cache:
 #  - mvn clean install site --settings config/travis/mvn-settings.xml
 jobs:
   include:
-    - stage: "Build"
+    - stage: "Build & Test"
       name: "Build"
       install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
     - stage: "Test"
@@ -24,7 +24,7 @@ jobs:
       install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
     - stage: "Site Build"
       name: "GitHub Site Build and Publish"
-      install: travis_wait 50 mvn clean install site --settings config/travis/mvn-settings.xml -DskipTests=true
+      install: mvn clean install site --settings config/travis/mvn-settings.xml -DskipTests=true
 #    - stage: "Deploy"
 #      if: branch = master
 #      name: "Deploy"
