@@ -34,7 +34,7 @@ jobs:
       # git push origin --tags
     - stage: "Release"
       name: "Releasing artifacts on Maven central"
-      if: branch = master
+#      if: branch = master
       jdk: oraclejdk8
       install: mvn clean -B
       deploy:
