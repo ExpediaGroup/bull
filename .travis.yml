@@ -31,7 +31,11 @@ jobs:
     - stage: "Release"
       name: "Releasing artifacts on Maven central"
       jdk: oraclejdk8
-      script: mvn deploy --settings config/travis/mvn-settings.xml -DskipTests=true -B -DskipTests
+      deploy:
+        provider: script
+        script: mvn versions:set -DnewVersion=${TRAVIS_TAG} && mvn clean deploy -B -U -P -DskipTests=true release --settings config/travis/mvn-settings.xml
+        on:
+          tags: true
 #    - stage: "Release"
 #      name: "Releasing artifacts on Maven central"
 #      "https://blog.travis-ci.com/2017-03-30-deploy-maven-travis-ci-packagecloud/"
