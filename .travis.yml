@@ -24,7 +24,7 @@ jobs:
 #      script: travis_wait 50 mvn site --settings config/travis/mvn-settings.xml --quiet -DskipTests=true
     - stage: "Site Build and Publish"
       name: "Publish site on GitHub pages"
-      install: mvn clean site:site
+      install: mvn clean site:site -DskipTests=true
       deploy:
         provider: pages
         local-dir: target/site
