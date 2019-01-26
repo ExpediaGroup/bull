@@ -1,5 +1,5 @@
 language: java
-jdk: oraclejdk11
+#jdk: oraclejdk11
 os:
   - linux
 cache:
@@ -29,9 +29,13 @@ jobs:
 #        keep-history: true
 #        on:
 #          branch: master
+      # To Trigger the deploy the following commands needs to be executed
+      # git tag -a x.y.z -m 'bean-utils-library.x.y.z' e.g. git tag -a bean-utils-library.1.0.4 -m 'bean-utils-library.1.0.4'
+      # git push origin --tags
     - stage: "Release"
       name: "Releasing artifacts on Maven central"
 #      if: branch = master
+      jdk: oraclejdk8
       deploy:
         provider: script
         script: mvn clean deploy -B --settings config/travis/mvn-settings.xml -DforceTags -DpushImageTag -DdeployAtEnd -Dshortname=BULL -DreleaseVersion=${TRAVIS_TAG} -Dbuild.number=${TRAVIS_TAG} -Dbuildlabel=bean-utils.library.${TRAVIS_TAG}
