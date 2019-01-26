@@ -40,6 +40,6 @@ jobs:
       deploy:
         skip_cleanup: true
         provider: script
-        script: mvn deploy -B
+        script: mvn deploy -B -DskipTests=true
         on:
           tags: true
