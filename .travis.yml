@@ -36,10 +36,5 @@ jobs:
       name: "Releasing artifacts on Maven central"
 #      if: branch = master
       jdk: oraclejdk8
-      before_install: "cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml"
-      deploy:
-        skip_cleanup: true
-        provider: script
-        script: mvn deploy -B -DskipTests=true
-        on:
-          tags: true
+      before_script: "cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml"
+      script: mvn deploy -B -DskipTests=true
