@@ -271,13 +271,13 @@ public final class ReflectionUtils {
 
     /**
      * Check if a field is accessible or not.
-     * To make the project compiling with Java version > 8, replace the following line with: {@code field.canAccess(target);}
+     * To make the project compiling with Java version <= 8, replace the following line with: {@code field.isAccessible();}
      * @param field the field to check
      * @param target the field's class
      * @return true id is accessible, false otherwise
      */
     private boolean isFieldAccessible(final Field field, final Object target) {
-        return field.isAccessible();
+        return field.canAccess(target);
     }
 
     /**
