@@ -30,6 +30,7 @@ jobs:
           branch: feature/travis-configuration
     - stage: "Release"
       name: "Releasing artifacts on Maven central"
+      jdk: oraclejdk11
       script: mvn deploy --settings config/travis/mvn-settings.xml -DskipTests=true -B
 #    - stage: "Release"
 #      name: "Releasing artifacts on Maven central"
