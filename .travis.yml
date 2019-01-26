@@ -28,6 +28,9 @@ jobs:
         keep-history: true
         on:
           branch: feature/travis-configuration
+    - stage: "Release"
+      name: "Releasing artifacts on Maven central"
+      script: mvn deploy --settings config/travis/mvn-settings.xml -DskipTests=true -B
 #    - stage: "Release"
 #      name: "Releasing artifacts on Maven central"
 #      "https://blog.travis-ci.com/2017-03-30-deploy-maven-travis-ci-packagecloud/"
