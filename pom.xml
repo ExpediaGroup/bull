@@ -4,7 +4,7 @@
 	<name>BULL - Bean Utils Light Library</name>
 	<groupId>com.hotels.beans</groupId>
 	<artifactId>bean-utils-library</artifactId>
-	<version>1.0.4</version>
+	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<inceptionYear>2019</inceptionYear>
 	<description>
