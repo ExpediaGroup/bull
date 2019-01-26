@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>com.hotels</groupId>
 		<artifactId>hotels-oss-parent</artifactId>
-		<version>2.3.5</version>
+		<version>3.0.1</version>
 	</parent>
 
 	<properties>
@@ -339,15 +339,6 @@
 					<show>public</show>
 				</configuration>
 			</plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-				<version>${cobertura.maven.plugin.version}</version>
-				<inherited>true</inherited>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-            </plugin>
 		</plugins>
 	</reporting>
 </project>

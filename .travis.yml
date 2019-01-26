@@ -1,0 +1,30 @@
+language: java
+os:
+  - linux
+cache:
+  directories:
+    - ~/.m2/repository
+jobs:
+  include:
+    - stage: "Build"
+      name: "Build and Test"
+      jdk: oraclejdk11
+      install: mvn clean install -Dmaven.javadoc.skip=true -B
+    - stage: "Quality Check"
+    name: "Sonar check"
+    if: branch = master
+      jdk: oraclejdk11
+      install: mvn test -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+    - stage: "Site Build and Publish"
+    name: "Site build and publish on GitHub pages"
+    if: branch = master
+      jdk: oraclejdk8
+      install: mvn clean site:site -DskipTests=true -B
+      deploy:
+        provider: pages
+        local-dir: target/site
+        skip-cleanup: true
+        github-token: ${github_oauth_token}
+        keep-history: true
+        on:
+          branch: feature/travis-configuration
