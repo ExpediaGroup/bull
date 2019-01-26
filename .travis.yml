@@ -19,7 +19,7 @@ jobs:
       name: "Sonar check"
       install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
     - stage: "Site Build and Publish"
-      if: branch = master
+#      if: branch = master
       name: "Build site and publish on GitHub pages"
       install: mvn clean site:site -DskipTests=true
       deploy:
