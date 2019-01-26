@@ -7,28 +7,28 @@ cache:
     - ~/.m2/repository
 jobs:
   include:
-    - stage: "Build"
-      name: "Build and Test"
-      jdk: oraclejdk11
-      install: mvn clean install -Dmaven.javadoc.skip=true -B
-    - stage: "Quality Check"
-      name: "Sonar check"
-      if: branch = master
-      jdk: oraclejdk11
-      install: mvn test -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
-    - stage: "Site Build and Publish"
-      name: "Site build and publish on GitHub pages"
-      if: branch = master
-      jdk: oraclejdk8
-      install: mvn clean site:site -DskipTests=true -B
-      deploy:
-        provider: pages
-        local-dir: target/site
-        skip-cleanup: true
-        github-token: ${github_oauth_token}
-        keep-history: true
-        on:
-          branch: master
+#    - stage: "Build"
+#      name: "Build and Test"
+#      jdk: oraclejdk11
+#      install: mvn clean install -Dmaven.javadoc.skip=true -B
+#    - stage: "Quality Check"
+#      name: "Sonar check"
+#      if: branch = master
+#      jdk: oraclejdk11
+#      install: mvn test -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+#    - stage: "Site Build and Publish"
+#      name: "Site build and publish on GitHub pages"
+#      if: branch = master
+#      jdk: oraclejdk8
+#      install: mvn clean site:site -DskipTests=true -B
+#      deploy:
+#        provider: pages
+#        local-dir: target/site
+#        skip-cleanup: true
+#        github-token: ${github_oauth_token}
+#        keep-history: true
+#        on:
+#          branch: master
       # To Trigger the deploy the following commands needs to be executed
       # git tag -a x.y.z -m 'bean-utils-library.x.y.z' e.g. git tag -a bean-utils-library.1.0.4 -m 'bean-utils-library.1.0.4'
       # git push origin --tags
@@ -36,10 +36,13 @@ jobs:
       name: "Releasing artifacts on Maven central"
 #      if: branch = master
       jdk: oraclejdk8
-      install: mvn clean -B
-      deploy:
-        provider: script
+      before_install: "git clone -b travis `git config --get remote.origin.url` target/config/travis"
+      script: mvn deploy --settings target/travis/mvn-settings.xml
+#      install: mvn clean -B
+#      deploy:
+#        provider: script
 #        script: mvn clean deploy -B -DskipTests  -DforceTags -DpushImageTag -DdeployAtEnd -Dshortname=BULL -DreleaseVersion=${TRAVIS_TAG} -Dbuild.number=${TRAVIS_TAG} -Dbuildlabel=bean-utils.library.${TRAVIS_TAG}
-        script: cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml && mvn deploy -B --settings config/travis/mvn-settings.xml
-        on:
-          tags: true
+#        script: cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml && mvn deploy -B --settings config/travis/mvn-settings.xml
+#        script: mvn deploy --settings target/travis/mvn-settings.xml
+#        on:
+#          tags: true
