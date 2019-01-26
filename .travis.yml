@@ -36,6 +36,7 @@ jobs:
       name: "Releasing artifacts on Maven central"
 #      if: branch = master
       jdk: oraclejdk8
+      install: mvn clean -B
       deploy:
         provider: script
         script: mvn clean deploy -B --settings config/travis/mvn-settings.xml -DforceTags -DpushImageTag -DdeployAtEnd -Dshortname=BULL -DreleaseVersion=${TRAVIS_TAG} -Dbuild.number=${TRAVIS_TAG} -Dbuildlabel=bean-utils.library.${TRAVIS_TAG}
