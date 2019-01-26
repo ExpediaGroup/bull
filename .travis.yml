@@ -34,6 +34,6 @@ jobs:
 #      if: branch = master
       deploy:
         provider: script
-        script: mvn clean deploy -B --settings config/travis/mvn-settings.xml -DforceTags -DpushImageTag -DdeployAtEnd -Dshortname=BULL -DreleaseVersion=${TRAVIS_TAG} -Dbuild.number=${TRAVIS_TAG} -Dbuildlabel=bean-utils.library.${TRAVIS_TAG}
+        script: mvn clean deploy -B --settings config/travis/mvn-settings.xml -DforceTags -DpushImageTag -DdeployAtEnd -Dshortname=BULL -DreleaseVersion=1.0.15 -Dbuild.number=1.0.15 -Dbuildlabel=bean-utils.library.1.0.15
         on:
           tags: true
