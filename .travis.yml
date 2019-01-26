@@ -32,8 +32,11 @@ jobs:
     - stage: "Release"
       name: "Releasing artifacts on Maven central"
 #      if: branch = master
+      before_script:
+        - git tag -a ${TRAVIS_TAG} -m 'bean-utils.library.${TRAVIS_TAG}'
+        - git push origin --tags
       deploy:
         provider: script
-        script: mvn clean deploy -B --settings config/travis/mvn-settings.xml -DforceTags -DpushImageTag -DdeployAtEnd -Dshortname=BULL -DreleaseVersion=1.0.15 -Dbuild.number=1.0.15 -Dbuildlabel=bean-utils.library.1.0.15
+        script: mvn clean deploy -B --settings config/travis/mvn-settings.xml -DforceTags -DpushImageTag -DdeployAtEnd -Dshortname=BULL -DreleaseVersion=${TRAVIS_TAG} -Dbuild.number=${TRAVIS_TAG} -Dbuildlabel=bean-utils.library.${TRAVIS_TAG}
         on:
           tags: true
