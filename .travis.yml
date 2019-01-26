@@ -22,11 +22,9 @@ jobs:
 #      if: branch = master
 #      name: "GitHub Site Build and Publish"
 #      script: travis_wait 50 mvn site --settings config/travis/mvn-settings.xml --quiet -DskipTests=true
-    - stage: "Site Build"
-      name: "Site Build"
-      script: mvn clean site:site
-    - stage: "Site Publish"
+    - stage: "Site Build and Publish"
       name: "Publish site on GitHub pages"
+      install: mvn clean site:site
       deploy:
         provider: pages
         local-dir: target/site
