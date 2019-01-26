@@ -33,6 +33,7 @@ jobs:
       jdk: oraclejdk8
       deploy:
         provider: script
+        skip_cleanup: true
         script: mvn versions:set -DnewVersion=${TRAVIS_TAG} && mvn clean deploy -B -U -P -DskipTests=true release --settings config/travis/mvn-settings.xml
         on:
           tags: true
