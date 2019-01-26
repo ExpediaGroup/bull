@@ -39,7 +39,7 @@ jobs:
       install: mvn clean -B
       deploy:
         provider: script
-#        script: cp --settings config/travis/mvn-settings.xml $HOME/.m2/settings.xml && mvn clean deploy -B -DskipTests  -DforceTags -DpushImageTag -DdeployAtEnd -Dshortname=BULL -DreleaseVersion=${TRAVIS_TAG} -Dbuild.number=${TRAVIS_TAG} -Dbuildlabel=bean-utils.library.${TRAVIS_TAG}
-        script: cp --settings config/travis/mvn-settings.xml $HOME/.m2/settings.xml && mvn deploy -B --settings config/travis/mvn-settings.xml
+#        script: mvn clean deploy -B -DskipTests  -DforceTags -DpushImageTag -DdeployAtEnd -Dshortname=BULL -DreleaseVersion=${TRAVIS_TAG} -Dbuild.number=${TRAVIS_TAG} -Dbuildlabel=bean-utils.library.${TRAVIS_TAG}
+        script: cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml && mvn deploy -B --settings config/travis/mvn-settings.xml
         on:
           tags: true
