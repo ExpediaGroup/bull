@@ -279,13 +279,13 @@
 <a class="jxr_linenumber" name="L271" href="#L271">271</a> 
 <a class="jxr_linenumber" name="L272" href="#L272">272</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L273" href="#L273">273</a> <em class="jxr_javadoccomment">     * Check if a field is accessible or not.</em>
-<a class="jxr_linenumber" name="L274" href="#L274">274</a> <em class="jxr_javadoccomment">     * To make the project compiling with Java version &gt; 8, replace the following line with: {@code field.canAccess(target);}</em>
+<a class="jxr_linenumber" name="L274" href="#L274">274</a> <em class="jxr_javadoccomment">     * To make the project compiling with Java version &lt;= 8, replace the following line with: {@code field.isAccessible();}</em>
 <a class="jxr_linenumber" name="L275" href="#L275">275</a> <em class="jxr_javadoccomment">     * @param field the field to check</em>
 <a class="jxr_linenumber" name="L276" href="#L276">276</a> <em class="jxr_javadoccomment">     * @param target the field's class</em>
 <a class="jxr_linenumber" name="L277" href="#L277">277</a> <em class="jxr_javadoccomment">     * @return true id is accessible, false otherwise</em>
 <a class="jxr_linenumber" name="L278" href="#L278">278</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L279" href="#L279">279</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> isFieldAccessible(<strong class="jxr_keyword">final</strong> Field field, <strong class="jxr_keyword">final</strong> Object target) {
-<a class="jxr_linenumber" name="L280" href="#L280">280</a>         <strong class="jxr_keyword">return</strong> field.isAccessible();
+<a class="jxr_linenumber" name="L280" href="#L280">280</a>         <strong class="jxr_keyword">return</strong> field.canAccess(target);
 <a class="jxr_linenumber" name="L281" href="#L281">281</a>     }
 <a class="jxr_linenumber" name="L282" href="#L282">282</a> 
 <a class="jxr_linenumber" name="L283" href="#L283">283</a>     <em class="jxr_javadoccomment">/**</em>
