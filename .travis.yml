@@ -32,7 +32,7 @@ jobs:
       name: "Releasing artifacts on Maven central"
       #      if: branch = master
       jdk: oraclejdk8
-      script: mvn versions:set -DnewVersion=${TRAVIS_TAG} && mvn clean deploy -B -U -P -DskipTests=true release --settings config/travis/mvn-settings.xml
+      script: mvn versions:set -DnewVersion=${TRAVIS_TAG} && mvn clean deploy -DforceTags -DpushImageTag -B -U -P -DskipTests=true release --settings config/travis/mvn-settings.xml
       on:
         tags: true
 #    - stage: "Release"
