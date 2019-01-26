@@ -36,8 +36,8 @@ jobs:
       name: "Releasing artifacts on Maven central"
 #      if: branch = master
       jdk: oraclejdk8
-      before_install: "git clone -b travis `git config --get remote.origin.url` target/config/travis"
-      script: mvn deploy --settings target/travis/mvn-settings.xml
+      before_install: "cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml"
+      script: mvn deploy
 #      install: mvn clean -B
 #      deploy:
 #        provider: script
