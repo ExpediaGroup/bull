@@ -1,6 +1,4 @@
 language: java
-#jdk:
-#  - oraclejdk11
 os:
   - linux
 cache:
@@ -9,23 +7,19 @@ cache:
 jobs:
   include:
     - stage: "Build"
-      name: "Build"
+      name: "Build and Test"
       jdk: oraclejdk11
-      install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
-    - stage: "Test"
-      name: "Test"
-      jdk: oraclejdk11
-      install: mvn test -Dmaven.javadoc.skip=true
+      install: mvn clean install -Dmaven.javadoc.skip=true -B
     - stage: "Quality Check"
       if: branch = master
       name: "Sonar check"
       jdk: oraclejdk11
-      install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+      install: mvn test -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
     - stage: "Site Build and Publish"
-#      if: branch = master
-      name: "Build site and publish on GitHub pages"
+      if: branch = master
+      name: "Site build and publish on GitHub pages"
       jdk: oraclejdk8
-      install: mvn clean site:site -DskipTests=true
+      install: mvn clean site:site -DskipTests=true -B
       deploy:
         provider: pages
         local-dir: target/site
