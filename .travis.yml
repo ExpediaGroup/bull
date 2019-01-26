@@ -37,6 +37,4 @@ jobs:
 #      if: branch = master
       jdk: oraclejdk8
       before_script: "cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml"
-      script: mvn deploy -B -DskipTests=true
-      on:
-        tags: true
+      script: mvn clean install deploy -B -DskipTests=true
