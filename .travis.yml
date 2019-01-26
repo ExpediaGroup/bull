@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk8
+  - oraclejdk11
 os:
   - linux
 cache:
@@ -8,22 +8,19 @@ cache:
     - ~/.m2/repository
 jobs:
   include:
-#    - stage: "Build"
-#      name: "Build"
-#      install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
-#    - stage: "Test"
-#      name: "Test"
-#      install: mvn test -Dmaven.javadoc.skip=true
-#    - stage: "Quality Check"
-#      if: branch = master
-#      name: "Sonar check"
-#      install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
-#    - stage: "Site Build"
-#      if: branch = master
-#      name: "GitHub Site Build and Publish"
-#      script: travis_wait 50 mvn site --settings config/travis/mvn-settings.xml --quiet -DskipTests=true
+    - stage: "Build"
+      name: "Build"
+      install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
+    - stage: "Test"
+      name: "Test"
+      install: mvn test -Dmaven.javadoc.skip=true
+    - stage: "Quality Check"
+      if: branch = master
+      name: "Sonar check"
+      install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
     - stage: "Site Build and Publish"
-      name: "Publish site on GitHub pages"
+      if: branch = master
+      name: "Build site and publish on GitHub pages"
       install: mvn clean site:site -DskipTests=true
       deploy:
         provider: pages
