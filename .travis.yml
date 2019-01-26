@@ -29,12 +29,14 @@ jobs:
 #        keep-history: true
 #        on:
 #          branch: master
-      # To Trigger the deploy the following commands needs to be executed
-      # git tag -a x.y.z -m 'bean-utils-library.x.y.z' e.g. git tag -a bean-utils-library.1.0.4 -m 'bean-utils-library.1.0.4'
-      # git push origin --tags
+    # To Trigger the deploy the following commands needs to be executed
+    # git tag -a x.y.z -m 'bean-utils-library.x.y.z' e.g. git tag -a bean-utils-library.1.0.4 -m 'bean-utils-library.1.0.4'
+    # git push origin --tags
     - stage: "Release"
       name: "Releasing artifacts on Maven central"
 #      if: branch = master
       jdk: oraclejdk8
       before_script: "cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml"
       script: mvn deploy -B -DskipTests=true
+      on:
+        tags: true
