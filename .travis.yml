@@ -8,17 +8,30 @@ cache:
     - ~/.m2/repository
 jobs:
   include:
-    - stage: "Build"
-      name: "Build"
-      install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
-    - stage: "Test"
-      name: "Test"
-      install: mvn test -Dmaven.javadoc.skip=true
-    - stage: "Quality Check"
-      if: branch = master
-      name: "Sonar check"
-      install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+#    - stage: "Build"
+#      name: "Build"
+#      install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
+#    - stage: "Test"
+#      name: "Test"
+#      install: mvn test -Dmaven.javadoc.skip=true
+#    - stage: "Quality Check"
+#      if: branch = master
+#      name: "Sonar check"
+#      install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+#    - stage: "Site Build"
+#      if: branch = master
+#      name: "GitHub Site Build and Publish"
+#      script: travis_wait 50 mvn site --settings config/travis/mvn-settings.xml --quiet -DskipTests=true
     - stage: "Site Build"
-      if: branch = master
-      name: "GitHub Site Build and Publish"
-      script: travis_wait 50 mvn site --settings config/travis/mvn-settings.xml --quiet -DskipTests=true
+      name: "Site Build"
+      script: mvn clean site:site
+    - stage: "Site Publish"
+      name: "Publish site on GitHub pages"
+      deploy:
+        provider: pages
+        local-dir: target/site
+        skip-cleanup: true
+        github-token: ${github_oauth_token}
+        keep-history: true
+        on:
+          branch: feature/travis-configuration
