@@ -1,6 +1,6 @@
 language: java
-jdk:
-  - oraclejdk11
+#jdk:
+#  - oraclejdk11
 os:
   - linux
 cache:
@@ -10,17 +10,21 @@ jobs:
   include:
     - stage: "Build"
       name: "Build"
+      jdk: oraclejdk11
       install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
     - stage: "Test"
       name: "Test"
+      jdk: oraclejdk11
       install: mvn test -Dmaven.javadoc.skip=true
     - stage: "Quality Check"
       if: branch = master
       name: "Sonar check"
+      jdk: oraclejdk11
       install: mvn test sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
     - stage: "Site Build and Publish"
 #      if: branch = master
       name: "Build site and publish on GitHub pages"
+      jdk: oraclejdk8
       install: mvn clean site:site -DskipTests=true
       deploy:
         provider: pages
@@ -30,3 +34,6 @@ jobs:
         keep-history: true
         on:
           branch: feature/travis-configuration
+#    - stage: "Release"
+#      name: "Releasing artifacts on Maven central"
+#      "https://blog.travis-ci.com/2017-03-30-deploy-maven-travis-ci-packagecloud/"
