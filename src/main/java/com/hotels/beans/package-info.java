@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * Main package.
+ * Base application package.
  */
 package com.hotels.beans;
