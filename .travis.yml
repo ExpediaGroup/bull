@@ -7,17 +7,20 @@ cache:
     - ~/.m2/repository
 jobs:
   include:
+    # If the branch is not master it just builds the application
     - stage: "Build"
       name: "Build and Test"
+      if: NOT branch = master
       jdk: oraclejdk11
       install: mvn clean install -Dmaven.javadoc.skip=true -B
-    - stage: "Quality Check"
-      name: "Sonar check"
+    # If the branch is master it sends the quality report to SonarCloud
+    - stage: "Build, Test and Quality Check"
+      name: "Building, testing and sending a quality report to SonarCloud"
       if: branch = master
       jdk: oraclejdk11
-      install: mvn test -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+      install: mvn clean install -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
     - stage: "Site Build and Publish"
-      name: "Site build and publish on GitHub pages"
+      name: "Building site and publishing on GitHub pages"
       if: branch = master
       jdk: oraclejdk8
       install: mvn clean site:site -DskipTests=true -B
