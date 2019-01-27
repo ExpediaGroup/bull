@@ -1,5 +1,5 @@
 language: java
-#jdk: oraclejdk11
+jdk: oraclejdk11
 os:
   - linux
 cache:
@@ -11,7 +11,6 @@ jobs:
     - stage: "Build"
       name: "Build and Test"
       if: NOT branch = master
-      jdk: oraclejdk11
       install: mvn clean install -Dmaven.javadoc.skip=true -B
     # If the branch is master it sends the quality report to SonarCloud
     - stage: "Build, Test and Quality Check"
@@ -22,7 +21,6 @@ jobs:
     - stage: "Site Build and Publish"
       name: "Building site and publishing on GitHub pages"
       if: branch = master
-      jdk: oraclejdk8
       install: mvn clean site:site -DskipTests=true -B
       deploy:
         provider: pages
@@ -35,6 +33,5 @@ jobs:
     - stage: "Release"
       name: "Releasing artifacts on Maven central"
       if: NOT branch = master
-      jdk: oraclejdk8
       before_install: "cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml"
       install: mvn deploy -B -DskipTests=true
