@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Base package.
+ * Default objects support classes.
  */
 
 package com.hotels.beans.base;
