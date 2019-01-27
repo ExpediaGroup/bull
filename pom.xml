@@ -4,6 +4,7 @@
 	<name>BULL - Bean Utils Light Library</name>
 	<groupId>com.hotels.beans</groupId>
 	<artifactId>bean-utils-library</artifactId>
+	<url>https://github.com/HotelsDotCom/bull</url>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<inceptionYear>2019</inceptionYear>
@@ -50,8 +51,8 @@
 		<connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
 		<developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
 		<url>https://github.com/HotelsDotCom/bull</url>
-	  <tag>HEAD</tag>
-  </scm>
+	  	<tag>HEAD</tag>
+  	</scm>
 
 	<dependencies>
 		<dependency>
