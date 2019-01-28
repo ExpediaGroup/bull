@@ -16,7 +16,6 @@ jobs:
     - stage: "Build, Test and Quality Check"
       name: "Building, testing and sending a quality report to SonarCloud"
       if: branch = master
-      jdk: oraclejdk11
       install: mvn clean install -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
     - stage: "Site Build and Publish"
       name: "Building site and publishing on GitHub pages"
@@ -33,5 +32,5 @@ jobs:
     - stage: "Release"
       name: "Releasing artifacts on Maven central"
       if: NOT branch = master
-#      before_install: "cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml"
-      install: mvn deploy --settings config/travis/mvn-settings.xml -B -U -P sonatype-oss-release -DskipTests=true
+      before_install: "cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml"
+      install: mvn deploy -B -DskipTests=true
