@@ -33,5 +33,5 @@ jobs:
     - stage: "Release"
       name: "Releasing artifacts on Maven central"
       if: NOT branch = master
-      before_install: "cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml"
-      install: mvn deploy -B -DskipTests=true
+#      before_install: "cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml"
+      install: mvn deploy --settings config/travis/mvn-settings.xml -B -U -P sonatype-oss-release -DskipTests=true
