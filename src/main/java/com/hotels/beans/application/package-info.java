@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Spring boot starter package.
+ * Spring boot starter package (not included into jar file).
  */
 
 package com.hotels.beans.application;
