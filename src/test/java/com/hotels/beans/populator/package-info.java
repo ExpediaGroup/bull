@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Populator objects test package.
+ * Populator objects package.
  */
 
 package com.hotels.beans.populator;
