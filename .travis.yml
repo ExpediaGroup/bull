@@ -32,16 +32,14 @@ jobs:
         keep-history: true
         on:
           branch: master
-    - stage: "Release"
-      name: "Releasing artifacts on Maven central"
-      deploy:
-        - provider: script
-          script: config/travis/deploy.sh
-          skip_cleanup: true
-          on:
-            branch: master
-        - provider: script
-          script: config/travis/deploy.sh
-          skip_cleanup: true
-          on:
-            tags: true
+deploy:
+  - provider: script
+    script: config/travis/deploy.sh
+    skip_cleanup: true
+    on:
+      branch: master
+  - provider: script
+    script: config/travis/deploy.sh
+    skip_cleanup: true
+    on:
+      tags: true
