@@ -433,8 +433,8 @@ public final class ReflectionUtils {
      */
     public Class&lt;?&gt; getArgumentTypeClass(final Object argument, final String declaringClass, final String fieldName, final boolean getNestedGenericClass) {
 <span class="fc" id="L435">        final boolean argumentIsTypeClass = argument instanceof Class;</span>
-<span class="fc" id="L436">        final String cacheKey = &quot;ArgumentTypeClass-&quot; + declaringClass + &quot;-&quot; + fieldName + &quot;-&quot; + getNestedGenericClass + &quot;-&quot;</span>
-<span class="fc bfc" id="L437" title="All 4 branches covered.">                + &quot;-&quot; + (argumentIsTypeClass || !List.class.isAssignableFrom(argument.getClass()) ? argument : argument.getClass());</span>
+<span class="fc bfc" id="L436" title="All 2 branches covered.">        final String cacheKey = &quot;ArgumentTypeClass-&quot; + declaringClass + &quot;-&quot; + fieldName + &quot;-&quot; + getNestedGenericClass + &quot;-&quot;</span>
+<span class="fc bfc" id="L437" title="All 2 branches covered.">                + &quot;-&quot; + (argumentIsTypeClass || !List.class.isAssignableFrom(argument.getClass()) ? argument : argument.getClass());</span>
 <span class="fc" id="L438">        Class&lt;?&gt; argumentTypeClass = cacheManager.getFromCache(cacheKey, Class.class);</span>
 <span class="fc bfc" id="L439" title="All 2 branches covered.">        if (nonNull(argumentTypeClass)) {</span>
 <span class="fc bfc" id="L440" title="All 2 branches covered.">            if (argumentTypeClass == EmptyValue.class) {</span>
