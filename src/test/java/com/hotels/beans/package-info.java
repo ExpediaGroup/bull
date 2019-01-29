@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * Test package.
+ * Base test package.
  */
 package com.hotels.beans;
