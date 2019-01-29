@@ -16,12 +16,12 @@ jobs:
     # If the branch is master it sends the quality report to SonarCloud
     - stage: "Build, Test and Quality Check"
       name: "Building, testing and sending a quality report to SonarCloud"
-      if: branch = master
+      if: branch = master AND type NOT IN (pull_request)
       jdk: oraclejdk11
       install: travis_retry mvn clean install -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
     - stage: "Site Build and Publish"
       name: "Building site and publishing on GitHub pages"
-      if: branch = master
+      if: branch = master AND type NOT IN (pull_request)
       jdk: oraclejdk8
       before_deploy: mvn install site:site -DskipTests=true -B
       deploy:
