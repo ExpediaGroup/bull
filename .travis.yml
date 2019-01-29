@@ -4,8 +4,7 @@ os:
 cache:
   directories:
     - ~/.m2/repository
-install:
-  -
+install: skip
 jobs:
   include:
     # If the branch is not master it just builds the application
