@@ -11,16 +11,16 @@ jobs:
     - stage: "Build"
       name: "Build and Test"
       if: NOT branch = master
-      install: mvn clean install -Dmaven.javadoc.skip=true -B
+      install: travis_retry mvn clean install -Dmaven.javadoc.skip=true -B
     # If the branch is master it sends the quality report to SonarCloud
     - stage: "Build, Test and Quality Check"
       name: "Building, testing and sending a quality report to SonarCloud"
       if: branch = master
-      install: mvn clean install -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+      install: travis_retry mvn clean install -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
     - stage: "Site Build and Publish"
       name: "Building site and publishing on GitHub pages"
       if: branch = master
-      before_deploy: mvn clean install site:site -DskipTests=true -B
+      before_deploy: mvn install site:site -DskipTests=true -B
       deploy:
         provider: pages
         local-dir: target/site
