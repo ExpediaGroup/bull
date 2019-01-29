@@ -20,7 +20,7 @@ jobs:
     - stage: "Site Build and Publish"
       name: "Building site and publishing on GitHub pages"
       if: branch = master
-      install: mvn clean site:site -DskipTests=true -B
+      before_deploy: mvn clean install site:site -DskipTests=true -B
       deploy:
         provider: pages
         local-dir: target/site
