@@ -75,8 +75,8 @@
       <properties>
         <gpg.executable>gpg2</gpg.executable>
         <gpg.defaultKeyring>false</gpg.defaultKeyring>
-        <gpg.publicKeyring>${env.GPG_DIR}/pubring.kbx</gpg.publicKeyring>
-        <gpg.secretKeyring>${env.GPG_DIR}/secring.kbx</gpg.secretKeyring>
+        <gpg.publicKeyring>pubring.kbx</gpg.publicKeyring>
+        <gpg.secretKeyring>secring.kbx</gpg.secretKeyring>
         <gpg.keyname>${env.GPG_KEY_NAME}</gpg.keyname>
         <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
       </properties>
