@@ -5,6 +5,9 @@ os:
 cache:
   directories:
     - ~/.m2/repository
+env:
+  global:
+  - secure: USuExW6ln+ylYqnHYHM8UlOmlgp3p67mo80Ld6AQt6Asvj60axvarUAaNfw9HlEGpCXGgwkrMwXsmdXIjJNv56LzxvEkNmTRhrhHvR/3nfGLK0E4fm6Y3V0abii5d3Lw/qSu9iwLv+Sv9ZbPidj0pbm7kuID7CzetGmv+Ux8aUOLhInifCHujby2LUCsUzupghtcsoVkOdKICqsTMajfbbQBIo4q2/huan1q5bh37BDSwIkvhwJg6hwhAZ5Zf0MKvWxAfjv/PYe0+MntJGtZUAHog0irzMhoi/Od7ffhIUr3M0LCs1lzKBUiVloh7nrZRVPpdbkau4i6CUfvmfnz/l6Ruh22tvAHA/fKynvF84q/Qf9sQEKkWKR++y0OS7WwV85J9GfAEiaORa4JYuqHPtsSAacB9QcDMJkZM2HbDIqn5q3air/smZZCHI3yJ73xozgmU5Woxyu6YbiM6lJ5KHUbE8kl5xikFidadSyRDYUnQf3Y4YOBwUqgOZFMTNcFwBz/J0arV3x3BX3NFtc5+8rypm6M10tVHEqu1Qej65jkP59Pp/m8bM8FWJdxqQ8mNm8ulG7BO+SSdglhqyHQ9pp0ZuTclYvjIOrr866+pgh93aEHaTbZCCGes1U8K00qaCDloFiZULxM502IVTc/kupsL9R12nJ+L8hpEdZR99g=
 #jobs:
 #  include:
 #    # If the branch is not master it just builds the application
@@ -49,7 +52,7 @@ cache:
 
 before_install: openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/secrets.tar.enc -out config/travis/secrets.tar -d
 install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --global-settings config/travis/mvn-settings.xml
-script: mvn deploy -B --global-settings config/travis/mvn-settings.xml -Psonatype-oss-release
+script: mvn deploy -B --settings config/travis/mvn-settings.xml -Psonatype-oss-release
 
 #before_install:
 #  - if [ "${TRAVIS_PULL_REQUEST}" = "true" ] ; then
