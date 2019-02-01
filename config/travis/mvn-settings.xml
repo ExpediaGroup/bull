@@ -11,6 +11,11 @@
       <username>${sonatype_username}</username>
       <password>${sonatype_password}</password>
     </server>
+    <server>
+      <id>ossrh</id>
+      <username>${sonatype_username}</username>
+      <password>${sonatype_password}</password>
+    </server>
     <!-- GitHub config -->
     <server>
       <id>${github_server_id}</id>
@@ -69,15 +74,27 @@
       <!--</properties>-->
     <!--</profile>-->
   <!--</profiles>-->
+  <!--<profiles>-->
+    <!--<profile>-->
+      <!--<id>sonatype-oss-release</id>-->
+      <!--<properties>-->
+        <!--<gpg.executable>gpg2</gpg.executable>-->
+        <!--<gpg.defaultKeyring>false</gpg.defaultKeyring>-->
+        <!--<gpg.publicKeyring>pubring.kbx</gpg.publicKeyring>-->
+        <!--<gpg.secretKeyring>secring.kbx</gpg.secretKeyring>-->
+        <!--<gpg.keyname>${env.GPG_KEY_NAME}</gpg.keyname>-->
+        <!--<gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>-->
+      <!--</properties>-->
+    <!--</profile>-->
+  <!--</profiles>-->
   <profiles>
     <profile>
-      <id>sonatype-oss-release</id>
+      <id>ossrh</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <properties>
         <gpg.executable>gpg2</gpg.executable>
-        <gpg.defaultKeyring>false</gpg.defaultKeyring>
-        <gpg.publicKeyring>pubring.kbx</gpg.publicKeyring>
-        <gpg.secretKeyring>secring.kbx</gpg.secretKeyring>
-        <gpg.keyname>${env.GPG_KEY_NAME}</gpg.keyname>
         <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
       </properties>
     </profile>
