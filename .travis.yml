@@ -1,4 +1,3 @@
-sudo: false
 language: java
 #jdk: oraclejdk11
 os:
@@ -48,21 +47,21 @@ cache:
 #          on:
 #            tags: true
 
-#before_install: openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in secrets.tar.enc -out secrets.tar -d  && tar xvf secrets.tar
-#install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --global-settings config/travis/mvn-settings.xml
-#script: mvn deploy -B --global-settings config/travis/mvn-settings.xml -Psonatype-oss-release
+before_install: openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/secrets.tar.enc -out config/travis/secrets.tar -d
+install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --global-settings config/travis/mvn-settings.xml
+script: mvn deploy -B --global-settings config/travis/mvn-settings.xml -Psonatype-oss-release
 
-before_install:
-  - if [ "${TRAVIS_PULL_REQUEST}" = "true" ] ; then
-    openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in secrets.tar.enc -out secrets.tar -d  && tar xvf secrets.tar
-    && tar xvf secrets.tar ;
-    fi
-install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --global-settings
-  config/travis/mvn-settings.xml
-script:
-  - if [ "${TRAVIS_PULL_REQUEST}" = "true" ] ; then
-    mvn deploy -B --global-settings settings-4-travis.xml -Prelease ;
-    fi
+#before_install:
+#  - if [ "${TRAVIS_PULL_REQUEST}" = "true" ] ; then
+#    openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in secrets.tar.enc -out secrets.tar -d  && tar xvf secrets.tar
+#    && tar xvf secrets.tar ;
+#    fi
+#install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --global-settings
+#  config/travis/mvn-settings.xml
+#script:
+#  - if [ "${TRAVIS_PULL_REQUEST}" = "true" ] ; then
+#    mvn deploy -B --global-settings settings-4-travis.xml -Prelease ;
+#    fi
 
 notifications:
   email:
