@@ -1,20 +1,9 @@
 <settings>
   <servers>
-    <!-- Sonatype config -->
-    <server>
-      <id>sonatype-nexus-snapshots</id>
-      <username>${sonatype_username}</username>
-      <password>${sonatype_password}</password>
-    </server>
-    <server>
-      <id>sonatype-nexus-staging</id>
-      <username>${sonatype_username}</username>
-      <password>${sonatype_password}</password>
-    </server>
     <server>
       <id>ossrh</id>
-      <username>${sonatype_username}</username>
-      <password>${sonatype_password}</password>
+      <username>${env.OSSRH_USERNAME}</username>
+      <password>${env.OSSRH_PASSWORD}</password>
     </server>
     <!-- GitHub config -->
     <server>
@@ -22,81 +11,78 @@
       <password>${github_oauth_token}</password>
     </server>
   </servers>
+  <profiles>
+    <profile>
+      <id>travis-profile</id>
+      <!--
+      It seems that the settings.xml that is used by default when building using Travis CI includes the codehaus
+      repository. This repository does not exist any more so this can cause builds to fail during dependency resolution.
+      By configuring this repository, we seem to be able to override this repo, setting the enabled properties to false.
+      -->
+      <repositories>
+        <repository>
+          <releases>
+            <enabled>false</enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>warn</checksumPolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+            <updatePolicy>never</updatePolicy>
+            <checksumPolicy>fail</checksumPolicy>
+          </snapshots>
+          <id>codehaus-snapshots</id>
+          <name>Codehaus (snapshots)</name>
+          <url>https://nexus.codehaus.org/snapshots/</url>
+        </repository>
+      </repositories>
 
+      <properties>
+        <gpg.executable>gpg2</gpg.executable>
+        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+      </properties>
+
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>travis-profile</activeProfile>
+  </activeProfiles>
+
+  <!--<servers>-->
+    <!--&lt;!&ndash; Sonatype config &ndash;&gt;-->
+    <!--<server>-->
+      <!--<id>sonatype-nexus-snapshots</id>-->
+      <!--<username>${sonatype_username}</username>-->
+      <!--<password>${sonatype_password}</password>-->
+    <!--</server>-->
+    <!--<server>-->
+      <!--<id>sonatype-nexus-staging</id>-->
+      <!--<username>${sonatype_username}</username>-->
+      <!--<password>${sonatype_password}</password>-->
+    <!--</server>-->
+    <!--<server>-->
+      <!--<id>ossrh</id>-->
+      <!--<username>${sonatype_username}</username>-->
+      <!--<password>${sonatype_password}</password>-->
+    <!--</server>-->
+    <!--&lt;!&ndash; GitHub config &ndash;&gt;-->
+    <!--<server>-->
+      <!--<id>${github_server_id}</id>-->
+      <!--<password>${github_oauth_token}</password>-->
+    <!--</server>-->
+  <!--</servers>-->
+
+  <!---->
   <!--<profiles>-->
-    <!--<profile>-->
-      <!--<id>travis-profile</id>-->
-      <!--<repositories>-->
-        <!--<repository>-->
-          <!--<releases>-->
-            <!--<enabled>false</enabled>-->
-            <!--<updatePolicy>always</updatePolicy>-->
-            <!--<checksumPolicy>warn</checksumPolicy>-->
-          <!--</releases>-->
-          <!--<snapshots>-->
-            <!--<enabled>false</enabled>-->
-            <!--<updatePolicy>never</updatePolicy>-->
-            <!--<checksumPolicy>fail</checksumPolicy>-->
-          <!--</snapshots>-->
-          <!--<id>codehaus-snapshots</id>-->
-          <!--<name>Codehaus (snapshots)</name>-->
-          <!--<url>https://nexus.codehaus.org/snapshots/</url>-->
-        <!--</repository>-->
-      <!--</repositories>-->
-    <!--</profile>-->
-  <!--</profiles>-->
-  <!--<activeProfiles>-->
-    <!--<activeProfile>travis-profile</activeProfile>-->
-  <!--</activeProfiles>-->
-
-  <!--<profiles>-->
-    <!--<profile>-->
-      <!--<id>sonatype-oss-release</id>-->
-      <!--<properties>-->
-        <!--<gpg.executable>gpg2</gpg.executable>-->
-        <!--<gpg.defaultKeyring>false</gpg.defaultKeyring>-->
-        <!--<gpg.publicKeyring>${env.GPG_DIR}/pubring.gpg</gpg.publicKeyring>-->
-        <!--<gpg.secretKeyring>${env.GPG_DIR}/secring.gpg</gpg.secretKeyring>-->
-        <!--<gpg.keyname>${env.GPG_KEY_NAME}</gpg.keyname>-->
-        <!--<gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>-->
-      <!--</properties>-->
-    <!--</profile>-->
-
     <!--<profile>-->
       <!--<id>ossrh</id>-->
       <!--<activation>-->
         <!--<activeByDefault>true</activeByDefault>-->
       <!--</activation>-->
       <!--<properties>-->
-        <!--<gpg.executable>gpg</gpg.executable>-->
-        <!--<gpg.keyname>${env.GPG_KEY_NAME}</gpg.keyname>-->
-        <!--<gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>-->
-      <!--</properties>-->
-    <!--</profile>-->
-  <!--</profiles>-->
-  <!--<profiles>-->
-    <!--<profile>-->
-      <!--<id>sonatype-oss-release</id>-->
-      <!--<properties>-->
         <!--<gpg.executable>gpg2</gpg.executable>-->
-        <!--<gpg.defaultKeyring>false</gpg.defaultKeyring>-->
-        <!--<gpg.publicKeyring>pubring.kbx</gpg.publicKeyring>-->
-        <!--<gpg.secretKeyring>secring.kbx</gpg.secretKeyring>-->
-        <!--<gpg.keyname>${env.GPG_KEY_NAME}</gpg.keyname>-->
         <!--<gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>-->
       <!--</properties>-->
     <!--</profile>-->
   <!--</profiles>-->
-  <profiles>
-    <profile>
-      <id>ossrh</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <gpg.executable>gpg2</gpg.executable>
-        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
-      </properties>
-    </profile>
-  </profiles>
 </settings>
