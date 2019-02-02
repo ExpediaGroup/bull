@@ -10,7 +10,6 @@ if [ "$TRAVIS_PULL_REQUEST" == 'false' ]; then
     mvn clean deploy --settings config/travis/mvn-settings.xml -P release -DskipTests=true
   else
     echo "Deploying snapshot"
-    echo ${TRAVIS_TAG}
     gpg --import config/travis/private-key.gpg
     mvn clean deploy --settings config/travis/mvn-settings.xml -B -U -P -DskipTests=true
   fi
