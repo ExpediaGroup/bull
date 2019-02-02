@@ -44,7 +44,7 @@ jobs:
     - stage: "Release"
       name: "Releasing artifacts on Maven central"
       before_deploy:
-        - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in private-key.gpg.enc -out private-key.gpg -d
+        - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
       deploy:
         - provider: script
           script: config/travis/deploy.sh
@@ -54,5 +54,5 @@ jobs:
         - provider: script
           script: config/travis/deploy.sh
           skip_cleanup: true
-          on:
-            tags: true
+#          on:
+#            tags: true
