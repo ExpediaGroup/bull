@@ -184,12 +184,6 @@
 				</plugins>
 			</build>
 		</profile>
-		<profile>
-			<id>tez</id>
-			<properties>
-				<hive.execution.engine>tez</hive.execution.engine>
-			</properties>
-		</profile>
 	</profiles>
 
 	<!-- build configuration -->
