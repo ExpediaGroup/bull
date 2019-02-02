@@ -21,8 +21,8 @@ before_install:
     openssl aes-256-cbc -K $encrypted_4e2bc30042f9_key -iv $encrypted_4e2bc30042f9_iv -in secrets.tar.enc -out secrets.tar -d
     && tar xvf secrets.tar ;
   fi
-install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --global-settings config/travis/mvn-settings.xml
-script: mvn deploy -B --global-settings config/travis/mvn-settings.xml -Prelease -DskipTests
+install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --global-settings mvn-settings.xml
+script: mvn deploy -B --global-settings mvn-settings.xml -Prelease -DskipTests
 notifications:
   email:
   - borriello.fabio@gmail.com
