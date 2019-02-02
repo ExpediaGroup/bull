@@ -23,7 +23,7 @@ env:
 #  fi
 #install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --settings config/travis/mvn-settings.xml
 #script: mvn deploy -B --settings config/travis/mvn-settings.xml -Prelease -DskipTests
-script: make build
+#script: make build
 
 deploy:
   provider: script
