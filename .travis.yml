@@ -14,8 +14,13 @@ env:
   - secure: ZsM0GO/A6vCklSVdzBwma8XD2AWeWOtinnBLwtoLAp/EEpaNOKpFd9gUocI48+zq+5WAOxczXEIb5/qwpg7IhSSUDniit+yg9Nr7J6imUKGQAzGYtJn2iroYeK6qdHF1uLYPiMK2u7BhE81XoUc6Pml2HC2QnTus5yNXsKjj44IrESDoxnsdchvYrZAdTxWdAOUI1vU0Kapx8sbYpNCMe9pI07SzOQXsZSb/hwMQSE2RI5pTrwlpusSkzsVRFnC8W0tS2bgxSPfMylIywOPWbmolsSIrBsYksk+IsteR8KisK09/suerTeUW2XJOz/PLiAd5zZobV22SIG4T3VzbJU2a021NJpKa06Tw+e0fPr7coBmcJ7l6v6IS6bCTPGCDA3CLBlfZpYxXaZ1IrAY0EOzuafaef9javxfosuQFwRwifLoNSgZDWdADC0AHwK2ungiTwRjmNKSuEd0SgCnHH3PeGQDoh2u/MKn531Rf8Q+/aZXAFV4Gkklfpyw1Y3RJvtlr4ZTXOn2/vFCzVMVYYeuqLPT0IJtV2mt8SXheeubMWSAWJfQ/eQny+9LIN0q0Y4uqsHwLlqwnXL+oYQtMlHy5Cy4cv5DI1XsV5eyvCfpINJbs5/+54DT9+EWg1BIqGFXLaV/XmRffJgn6SFGxL1tEGurj2Db6xLGy1+ttNng=
   # GPG_PASSPHRASE
   - secure: bFylqtr43v1wetXH/b1RJDmsDzwn6ILfFnw0rVFVKdpYndoyL3J05A3qYdZ+K1cePP7cYnetfOlMnv/e1LDGSzQ/C2RmPgEZIPRozxg0t9S+QU/G+Ro5m1VhrEDOpJv2A7IxY7WBgWEhChIKTZlDK4c2rzXDJ/Z799QQRmiOu04zGVBUjPcbU01QlFF71e3Vf5sovBPSWPifmqyKHZPquqXbY5Jo36MDAO5b3aD/rk/6nkzB+b10fAEJ/9sXX14S0ItTc7CWkjGdqjMsu9lMYUZ8Au2YgBtGAU3XBG30+uhKk7Z2XZj8Ne9QJhPbzzt53bB0loa8pQ+k6NGcCPRoTZOI3tAKKPxXf1sRolE3gYmje1GcREvsXRnZbwfZuayCOBdEXFFZzmijz/H5UgNS5rUwrY+FH6Dl4AZsQvDJdC4nJ4IVo6knRM4yx4ooI47tJBLLQS5cFOTmpYnQdZZLr5s4EPRhFpqSa61a2ZoBzTDl4Jj3M/zZ9xtIajYEdYSZ/wGpErsA/KJbHnP32lukTVG86Ndh4E2xLVVo1U5iwTZA6EsvarHKvEqLGtOYMyC2TqxuTlgzsfuGkonAlj9jx8I51Hjc5NMuamqWl4uLY2nC2BpTY1Gaufb0AJkTfp0W1/yPxaS2SGYo18UDobOGQfDniEe4CiVUkpACj0Jq7kY=
+#before_install:
+#  - openssl aes-256-cbc -K $encrypted_4e2bc30042f9_key -iv $encrypted_4e2bc30042f9_iv -in secrets.tar.enc -out secrets.tar -d && tar xvf secrets.tar
 before_install:
-  - openssl aes-256-cbc -K $encrypted_4e2bc30042f9_key -iv $encrypted_4e2bc30042f9_iv -in secrets.tar.enc -out secrets.tar -d && tar xvf secrets.tar
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ] ; then
+    openssl aes-256-cbc -K $encrypted_4e2bc30042f9_key -iv $encrypted_4e2bc30042f9_iv -in secrets.tar.enc -out secrets.tar -d
+    && tar xvf secrets.tar ;
+  fi
 install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --settings config/travis/mvn-settings.xml
 script: mvn deploy -B --settings config/travis/mvn-settings.xml -Prelease -DskipTests
 notifications:
