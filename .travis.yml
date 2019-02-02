@@ -47,7 +47,7 @@ jobs:
         on:
           branch: master
     - stage: "Release"
-      name: "Releasing artifacts on Maven central"
+      name: "Releasing artifacts"
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
       deploy:
