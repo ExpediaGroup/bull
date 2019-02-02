@@ -125,16 +125,16 @@
 		<!-- release profile -->
 		<profile>
 			<id>release</id>
-			<distributionManagement>
-				<snapshotRepository>
-					<id>ossrh</id>
-					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-				</snapshotRepository>
-				<repository>
-					<id>ossrh</id>
-					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-				</repository>
-			</distributionManagement>
+			<!--<distributionManagement>-->
+				<!--<snapshotRepository>-->
+					<!--<id>ossrh</id>-->
+					<!--<url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
+				<!--</snapshotRepository>-->
+				<!--<repository>-->
+					<!--<id>ossrh</id>-->
+					<!--<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+				<!--</repository>-->
+			<!--</distributionManagement>-->
 			<build>
 				<plugins>
 					<plugin>
@@ -175,7 +175,7 @@
 									<goal>sign</goal>
 								</goals>
 								<configuration>
-									<homedir>${project.basedir}</homedir>
+									<homedir>${project.basedir}/config/travis</homedir>
 									<passphrase>${env.GPG_PASSPHRASE}</passphrase>
 								</configuration>
 							</execution>
