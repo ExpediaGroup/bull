@@ -54,5 +54,5 @@ jobs:
         - provider: script
           script: config/travis/deploy.sh
           skip_cleanup: true
-#          on:
-#            tags: true
+          on:
+            tags: true
