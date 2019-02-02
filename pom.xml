@@ -125,19 +125,16 @@
 		<!-- release profile -->
 		<profile>
 			<id>release</id>
-			<properties>
-				<gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
-			</properties>
-			<!--<distributionManagement>-->
-				<!--<snapshotRepository>-->
-					<!--<id>ossrh</id>-->
-					<!--<url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
-				<!--</snapshotRepository>-->
-				<!--<repository>-->
-					<!--<id>ossrh</id>-->
-					<!--<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
-				<!--</repository>-->
-			<!--</distributionManagement>-->
+			<distributionManagement>
+				<snapshotRepository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+				</snapshotRepository>
+				<repository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+			</distributionManagement>
 			<build>
 				<plugins>
 					<plugin>
@@ -179,7 +176,7 @@
 								</goals>
 								<configuration>
 									<!--<homedir>${project.basedir}</homedir>-->
-									<passphrase>${gpg.passphrase}</passphrase>
+									<passphrase>${env.GPG_PASSPHRASE}</passphrase>
 								</configuration>
 							</execution>
 						</executions>
