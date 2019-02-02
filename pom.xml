@@ -175,7 +175,7 @@
 									<goal>sign</goal>
 								</goals>
 								<configuration>
-									<homedir>${project.basedir}/config/travis</homedir>
+									<!--<homedir>${project.basedir}</homedir>-->
 									<passphrase>${env.GPG_PASSPHRASE}</passphrase>
 								</configuration>
 							</execution>
