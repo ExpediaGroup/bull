@@ -49,6 +49,13 @@
         <!--<gpg.secretKeyring>../../secring.gpg</gpg.secretKeyring>-->
       <!--</properties>-->
 
+      <properties>
+        <!--<gpg.executable>gpg</gpg.executable>-->
+        <gpg.keyname>${env.GPG_KEYNAME}</gpg.keyname>
+        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+        <gpg.publicKeyring>pubring.gpg</gpg.publicKeyring>
+        <gpg.secretKeyring>pubring.gpg</gpg.secretKeyring>
+      </properties>
     </profile>
     <profile>
       <id>ossrh</id>
@@ -59,6 +66,8 @@
         <!--<gpg.executable>gpg</gpg.executable>-->
         <gpg.keyname>${env.GPG_KEYNAME}</gpg.keyname>
         <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+        <gpg.publicKeyring>pubring.gpg</gpg.publicKeyring>
+        <gpg.secretKeyring>pubring.gpg</gpg.secretKeyring>
       </properties>
     </profile>
   </profiles>
