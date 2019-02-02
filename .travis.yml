@@ -10,38 +10,10 @@ env:
   - secure: nawOdRhJ1DX86SZhcS5JeHncU049DVvlG3m7OHkHrldwbL+jOIHCzjl7wBL0LnqdwqFXbntfPLnigLQFZ1eFNgXVesZKDQbyzazGF3nZoJWSIGtuAt0GbORxyzW96TwowE1AP4og0FLpdCCwQJ1cRjTiaPnZFl6yJ2gwdaQBmf50IH+WrEWvkphd2feB8uqSv0GgKtVCwJnBwhHrPQrE2DAuA98lSDGhWJYASdRRVJ8NXJ+1CtvCTUacaEiiRev7JK15Wz7HS3GGyDdcxg9mBoYFs2HhOn0nXMiZqa66VbVSJWGroCve4qngri7DnBzeeJUguuBKQzHOYtfbyNgxyxlQrT6PKxs7YBcfMCcszR6vTlI3qb6tsMS6BWyLvGOgJNRoGa1iw/+Uc1hKBOf+Wtq4q4EeJ27c6i4pv4aVCTEP26rvT/CYXi05wTYkH0PtZaPuKpCqZgp+kIAo2LpdrhMXf6QbsBCWP0431T7r+d79f//D/IBr4S00iQBukPxU4shujCdbsKIet7hBcAhjbGUkx1odMNiaSn2JTs3KJTYq2adK5zC5ufkK+rTDCAgaYeuMIgZwuSopNpXTAV17OavJQ2v+iP/3+lINpKI7kHuT3qYF0rFyTX0ZBApZE9XMscozuLWKW3aIlqvuiPPULPY1mZHBPBHc/LPG3GlNXeg=
   # sonatype jira password: OSSRH_PASSWORD
   - secure: OqOKGAvbqC1uQurrPAVknHxSZKzgcXoKPXvgJMPcito2PFe3jRZuCXWWDAPnEPNjtH/O/jC37Ne07VQBq3KJ3d83WPniC+d6MXwsh4cP9tvIGT0cwAB+iEv+BkAkTHAGVDqdDYUJCJfvq+XMDujpR7ijNKt9HbSu3BPMUZlNovmY7WL+4Ei+KTj2bi/5jb8SkBKqGEpvL245r5w9+/NUPY7ifY0F+c8elvtJ44U65BSvBBw9LFrzYvcS812e1L5iRswTDGbqcXCaqVsP21S+SsjXBmtFsy2IVutmGnTEfLSZ5Y9JbR96ux/49YfBp3FRDwqIwztm4Y4cTij1J5dC/bpCAElOPhFaRk/luGHr44Sz90ZxqsqDH1XSmjDNNlpxUHSg9bhuZRqdseomokFHR9mGKxGBQYe5+MyciyGM/9AmTW87FdqNuNKNpJvhBuaPoJR1IqVmCgPYfOEyKHbPNapr42NgrmnXnDQvGjCcuEbk1WSTHe0Mp8n+0FVlk2cRSwd5juniOz4k9FKeTp8CCqQz3XR+x811z7HUMROSg6IKIA/XC35HIqfAGYfqUXktWobGiTbyngoBE4feTqtCHtoZAEcuzlWtGmTlVGm4ELJJ8pf6hhjWCihFeY62XNAcPeAUg8o5WE9MQV32rjCHVE2AW0iV6UWRh8XJwUFCX/I=
-    # GPG_KEYNAME
-  - secure: ZsM0GO/A6vCklSVdzBwma8XD2AWeWOtinnBLwtoLAp/EEpaNOKpFd9gUocI48+zq+5WAOxczXEIb5/qwpg7IhSSUDniit+yg9Nr7J6imUKGQAzGYtJn2iroYeK6qdHF1uLYPiMK2u7BhE81XoUc6Pml2HC2QnTus5yNXsKjj44IrESDoxnsdchvYrZAdTxWdAOUI1vU0Kapx8sbYpNCMe9pI07SzOQXsZSb/hwMQSE2RI5pTrwlpusSkzsVRFnC8W0tS2bgxSPfMylIywOPWbmolsSIrBsYksk+IsteR8KisK09/suerTeUW2XJOz/PLiAd5zZobV22SIG4T3VzbJU2a021NJpKa06Tw+e0fPr7coBmcJ7l6v6IS6bCTPGCDA3CLBlfZpYxXaZ1IrAY0EOzuafaef9javxfosuQFwRwifLoNSgZDWdADC0AHwK2ungiTwRjmNKSuEd0SgCnHH3PeGQDoh2u/MKn531Rf8Q+/aZXAFV4Gkklfpyw1Y3RJvtlr4ZTXOn2/vFCzVMVYYeuqLPT0IJtV2mt8SXheeubMWSAWJfQ/eQny+9LIN0q0Y4uqsHwLlqwnXL+oYQtMlHy5Cy4cv5DI1XsV5eyvCfpINJbs5/+54DT9+EWg1BIqGFXLaV/XmRffJgn6SFGxL1tEGurj2Db6xLGy1+ttNng=
+  # GPG_KEYNAME
+  - secure: VGoLyHHb4exm8mw1OSS+zUWGqxcDOx9F2GF5q7TKr5uiqhMkBCz1Y4hTgBakYWfJLdhQl8F/UkUpjqVPN6NHz3q87aLeZtc5GB9D+kXhTuoMIZ34p0U5HEk63v06VvfmoMUfahEVZVeb3RWUAQGuliGokyiMRS3u4hK9UDTx91x4RRx/83pHn4o6NRAzIXyOoQIYwuLbCIleNVe35Ok2LKdk7NQ2i+nDVLdnjeuHWoF27R33CeiRRV+GvF7aJRksqKwPPS63nn6aGtEmlzemyYbiwDZ1wQbf9nuSZLaU78unTGq6qyVrYbpxegWHclPsM5EKxO34uqi3m0GLRuy/W+u0R9dRaCMk4aEPmz56ClDPrmjssMXn+pyumsKU4932aVA1Q/IP14H19P/3eH2FvJLnO00eGdKgqvVRbomOyRqlRWCI/mUsR0aAr+Go+32Orf88v79EAT0WmXBYgGiJR7d2Ig7YZxY5KnM+rto59J9tZbWQJRYr+jkw5W8dPTMVQ+a4T6kGcOR4e54KIqkW1BVa/I+aaiZSP0BrIGEbk2b1UmoYGOuxOBjs0ESDHaj6KFQK026WAoedQ/bYa8J+j7JRIg/ivlvH5eycXSFTXLt4Qym/iZ8SOnJr1mWTF4xCaOmyUBqSHS2tOPJiGuNdRpFep8QT9vBEXpej2yOLyDA=
   # GPG_PASSPHRASE
   - secure: bFylqtr43v1wetXH/b1RJDmsDzwn6ILfFnw0rVFVKdpYndoyL3J05A3qYdZ+K1cePP7cYnetfOlMnv/e1LDGSzQ/C2RmPgEZIPRozxg0t9S+QU/G+Ro5m1VhrEDOpJv2A7IxY7WBgWEhChIKTZlDK4c2rzXDJ/Z799QQRmiOu04zGVBUjPcbU01QlFF71e3Vf5sovBPSWPifmqyKHZPquqXbY5Jo36MDAO5b3aD/rk/6nkzB+b10fAEJ/9sXX14S0ItTc7CWkjGdqjMsu9lMYUZ8Au2YgBtGAU3XBG30+uhKk7Z2XZj8Ne9QJhPbzzt53bB0loa8pQ+k6NGcCPRoTZOI3tAKKPxXf1sRolE3gYmje1GcREvsXRnZbwfZuayCOBdEXFFZzmijz/H5UgNS5rUwrY+FH6Dl4AZsQvDJdC4nJ4IVo6knRM4yx4ooI47tJBLLQS5cFOTmpYnQdZZLr5s4EPRhFpqSa61a2ZoBzTDl4Jj3M/zZ9xtIajYEdYSZ/wGpErsA/KJbHnP32lukTVG86Ndh4E2xLVVo1U5iwTZA6EsvarHKvEqLGtOYMyC2TqxuTlgzsfuGkonAlj9jx8I51Hjc5NMuamqWl4uLY2nC2BpTY1Gaufb0AJkTfp0W1/yPxaS2SGYo18UDobOGQfDniEe4CiVUkpACj0Jq7kY=
-#before_install:
-#  - openssl aes-256-cbc -K $encrypted_4e2bc30042f9_key -iv $encrypted_4e2bc30042f9_iv -in secrets.tar.enc -out secrets.tar -d && tar xvf secrets.tar
-#before_install:
-#- if [ "${TRAVIS_PULL_REQUEST}" = "false" ] ; then
-#    openssl aes-256-cbc -K $encrypted_4e2bc30042f9_key -iv $encrypted_4e2bc30042f9_iv -in config/travis/secrets.tar.enc -out config/travis/secrets.tar -d
-#    && tar xvf config/travis/secrets.tar ;
-#  fi
-#install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --settings config/travis/mvn-settings.xml
-#script: mvn deploy -B --settings config/travis/mvn-settings.xml -Prelease -DskipTests
-#script: make build
-
-#deploy:
-#  provider: script
-#  script:
-#    gpg --import config/travis/private-key.gpg
-#    mvn versions:set -DnewVersion=${TRAVIS_TAG}
-#    mvn clean deploy -P release --settings config/travis/mvn-settings.xml
-#build:
-#  mvn clean install
-
-#travis-deploy:
-#  gpg --import config/travis/private-key.gpg
-#  mvn versions:set -DnewVersion=${TRAVIS_TAG}
-#  mvn clean deploy -P release --settings config/travis/mvn-settings.xml
-notifications:
-  email:
-  - borriello.fabio@gmail.com
-
 jobs:
   include:
     # If the branch is not master it just builds the application
@@ -71,6 +43,8 @@ jobs:
 #          branch: master
     - stage: "Release"
       name: "Releasing artifacts on Maven central"
+      before_deploy:
+        - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in private-key.gpg.enc -out private-key.gpg -d
       deploy:
         - provider: script
           script: config/travis/deploy.sh
