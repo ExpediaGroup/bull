@@ -25,14 +25,14 @@ env:
 #script: mvn deploy -B --settings config/travis/mvn-settings.xml -Prelease -DskipTests
 #script: make build
 
-deploy:
-  provider: script
-  script:
-    gpg --import config/travis/private-key.gpg
-    mvn versions:set -DnewVersion=${TRAVIS_TAG}
-    mvn clean deploy -P release --settings config/travis/mvn-settings.xml
-build:
-  mvn clean install
+#deploy:
+#  provider: script
+#  script:
+#    gpg --import config/travis/private-key.gpg
+#    mvn versions:set -DnewVersion=${TRAVIS_TAG}
+#    mvn clean deploy -P release --settings config/travis/mvn-settings.xml
+#build:
+#  mvn clean install
 
 #travis-deploy:
 #  gpg --import config/travis/private-key.gpg
@@ -42,9 +42,9 @@ notifications:
   email:
   - borriello.fabio@gmail.com
 
-#jobs:
-#  include:
-#    # If the branch is not master it just builds the application
+jobs:
+  include:
+    # If the branch is not master it just builds the application
 #    - stage: "Build"
 #      name: "Build and Test"
 #      if: NOT branch = master
@@ -69,17 +69,16 @@ notifications:
 #        keep-history: true
 #        on:
 #          branch: master
-#    - stage: "Release"
-#      name: "Releasing artifacts on Maven central"
-#      before_install: openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in secrets.tar.enc -out secrets.tar -d
-#      deploy:
-#        - provider: script
-#          script: config/travis/deploy.sh
-#          skip_cleanup: true
-#          on:
-#            branch: master
-#        - provider: script
-#          script: config/travis/deploy.sh
-#          skip_cleanup: true
-#          on:
-#            tags: true
+    - stage: "Release"
+      name: "Releasing artifacts on Maven central"
+      deploy:
+        - provider: script
+          script: config/travis/deploy.sh
+          skip_cleanup: true
+          on:
+            branch: master
+        - provider: script
+          script: config/travis/deploy.sh
+          skip_cleanup: true
+          on:
+            tags: true
