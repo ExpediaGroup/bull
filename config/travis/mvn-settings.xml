@@ -43,20 +43,20 @@
       </properties>
 
     </profile>
-    <profile>
-      <id>ossrh</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <gpg.executable>gpg</gpg.executable>
-        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
-      </properties>
-    </profile>
+    <!--<profile>-->
+      <!--<id>ossrh</id>-->
+      <!--<activation>-->
+        <!--<activeByDefault>true</activeByDefault>-->
+      <!--</activation>-->
+      <!--<properties>-->
+        <!--<gpg.executable>gpg</gpg.executable>-->
+        <!--<gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>-->
+      <!--</properties>-->
+    <!--</profile>-->
   </profiles>
-  <!--<activeProfiles>-->
-    <!--<activeProfile>travis-profile</activeProfile>-->
-  <!--</activeProfiles>-->
+  <activeProfiles>
+    <activeProfile>travis-profile</activeProfile>
+  </activeProfiles>
 
   <!--<servers>-->
     <!--&lt;!&ndash; Sonatype config &ndash;&gt;-->
