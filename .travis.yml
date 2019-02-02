@@ -27,16 +27,17 @@ script: make build
 
 deploy:
   provider: script
-  script: make travis-deploy
-  on:
-    tags: true
+  script:
+    gpg --import config/travis/private-key.gpg
+    mvn versions:set -DnewVersion=${TRAVIS_TAG}
+    mvn clean deploy -P release --settings config/travis/mvn-settings.xml
 build:
   mvn clean install
 
-travis-deploy:
-  gpg --import config/travis/private-key.gpg
-  mvn versions:set -DnewVersion=${TRAVIS_TAG}
-  mvn clean deploy -P release --settings config/travis/mvn-settings.xml
+#travis-deploy:
+#  gpg --import config/travis/private-key.gpg
+#  mvn versions:set -DnewVersion=${TRAVIS_TAG}
+#  mvn clean deploy -P release --settings config/travis/mvn-settings.xml
 notifications:
   email:
   - borriello.fabio@gmail.com
