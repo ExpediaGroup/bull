@@ -49,7 +49,7 @@ jobs:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
       script:
         - gpg --import config/travis/private-key.gpg
-        - mvn clean deploy --settings config/travis/mvn-settings.xml -P release -DskipTests=true
+        - mvn clean deploy --settings config/travis/mvn-settings.xml -B -U -Prelease -DskipTests=true
 #      deploy:
 #        - provider: script
 #          script: config/travis/deploy.sh
