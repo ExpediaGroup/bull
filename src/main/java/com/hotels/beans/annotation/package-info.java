@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Support package for annotation-driven bean configuration.
+ * Annotations package.
  */
 
 package com.hotels.beans.annotation;

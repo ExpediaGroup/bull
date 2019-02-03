@@ -1,15 +1,9 @@
 <settings>
   <servers>
-    <!-- Sonatype config -->
     <server>
-      <id>sonatype-nexus-snapshots</id>
-      <username>${sonatype_username}</username>
-      <password>${sonatype_password}</password>
-    </server>
-    <server>
-      <id>sonatype-nexus-staging</id>
-      <username>${sonatype_username}</username>
-      <password>${sonatype_password}</password>
+      <id>ossrh</id>
+      <username>${env.OSSRH_USERNAME}</username>
+      <password>${env.OSSRH_PASSWORD}</password>
     </server>
     <!-- GitHub config -->
     <server>
@@ -17,4 +11,18 @@
       <password>${github_oauth_token}</password>
     </server>
   </servers>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <gpg.executable>gpg</gpg.executable>
+        <gpg.keyname>${env.GPG_KEYNAME}</gpg.keyname>
+        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+      </properties>
+    </profile>
+  </profiles>
 </settings>

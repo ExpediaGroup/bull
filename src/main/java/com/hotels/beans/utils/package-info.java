@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Utilities classes.
+ * utilities package.
  */
 
 package com.hotels.beans.utils;

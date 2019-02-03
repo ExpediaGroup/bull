@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Classes for declarative cache management test.
+ * cache package.
  */
 
 package com.hotels.beans.cache;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Bean transformer test package.
+ * Bean transformer package.
  */
 
 package com.hotels.beans.transformer;

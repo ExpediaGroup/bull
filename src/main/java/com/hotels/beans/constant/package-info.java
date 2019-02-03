@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Constants container package.
+ * Constants package.
  */
 
 package com.hotels.beans.constant;

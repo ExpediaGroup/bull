@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Spring boot starter test package.
+ * Spring boot starter package.
  */
 
 package com.hotels.beans.application;
