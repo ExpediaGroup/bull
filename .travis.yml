@@ -50,10 +50,10 @@ jobs:
         - provider: script
           script: config/travis/deploy.sh
           skip_cleanup: true
-          on:
-            branch: master
-        - provider: script
-          script: config/travis/deploy.sh
-          skip_cleanup: true
-          on:
-            tags: true
+#          on:
+#            branch: master
+#        - provider: script
+#          script: config/travis/deploy.sh
+#          skip_cleanup: true
+#          on:
+#            tags: true
