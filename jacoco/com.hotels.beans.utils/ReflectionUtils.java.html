@@ -241,8 +241,8 @@ public final class ReflectionUtils {
     public void setFieldValue(final Object target, final Field field, final Object fieldValue) {
         try {
 <span class="fc" id="L243">            setFieldValueWithoutSetterMethod(target, field, fieldValue);</span>
-<span class="fc" id="L244">        } catch (final Exception e) {</span>
-<span class="fc" id="L245">            invokeMethod(getSetterMethodForField(target.getClass(), field.getName(), field.getType()), target, fieldValue);</span>
+<span class="nc" id="L244">        } catch (final Exception e) {</span>
+<span class="nc" id="L245">            invokeMethod(getSetterMethodForField(target.getClass(), field.getName(), field.getType()), target, fieldValue);</span>
 <span class="fc" id="L246">        }</span>
 <span class="fc" id="L247">    }</span>
 
@@ -255,15 +255,15 @@ public final class ReflectionUtils {
     private void setFieldValueWithoutSetterMethod(final Object target, final Field field, final Object fieldValue) {
 <span class="fc" id="L256">        final boolean isAccessible = isFieldAccessible(field, target);</span>
         try {
-<span class="fc bfc" id="L258" title="All 2 branches covered.">            if (!isAccessible) {</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">            if (!isAccessible) {</span>
 <span class="fc" id="L259">                field.setAccessible(true);</span>
             }
 <span class="fc" id="L261">            field.set(target, fieldValue);</span>
-<span class="fc" id="L262">        } catch (final Exception e) {</span>
+<span class="nc" id="L262">        } catch (final Exception e) {</span>
 <span class="nc" id="L263">            handleReflectionException(e);</span>
 <span class="nc" id="L264">            throw new IllegalStateException(e);</span>
         } finally {
-<span class="fc bfc" id="L266" title="All 2 branches covered.">            if (!isAccessible) {</span>
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">            if (!isAccessible) {</span>
 <span class="fc" id="L267">                field.setAccessible(false);</span>
             }
         }
