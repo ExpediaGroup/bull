@@ -18,43 +18,43 @@ install: skip
 jobs:
   include:
     # If the branch is not master it just builds the application
-    - stage: "Build"
-      name: "Build and Test"
-      if: NOT branch = master
-      jdk: oraclejdk11
-      install: travis_retry mvn clean install -Dmaven.javadoc.skip=true -B
-    # If the branch is master it sends the quality report to SonarCloud
-    - stage: "Build, Test and Quality Check"
-      name: "Building, testing and sending a quality report to SonarCloud"
-      if: branch = master AND type NOT IN (pull_request)
-      jdk: oraclejdk11
-      install: travis_retry mvn clean install -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
-    - stage: "Site Build and Publish"
-      name: "Building site and publishing on GitHub pages"
-      if: branch = master AND type NOT IN (pull_request)
-      jdk: oraclejdk8
-      before_deploy: mvn install site:site -DskipTests=true -B
-      deploy:
-        provider: pages
-        local-dir: target/site
-        skip-cleanup: true
-        github-token: ${github_oauth_token}
-        keep-history: true
-        on:
-          branch: master
+#    - stage: "Build"
+#      name: "Build and Test"
+#      if: NOT branch = master
+#      jdk: oraclejdk11
+#      install: travis_retry mvn clean install -Dmaven.javadoc.skip=true -B
+#    # If the branch is master it sends the quality report to SonarCloud
+#    - stage: "Build, Test and Quality Check"
+#      name: "Building, testing and sending a quality report to SonarCloud"
+#      if: branch = master AND type NOT IN (pull_request)
+#      jdk: oraclejdk11
+#      install: travis_retry mvn clean install -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
+#    - stage: "Site Build and Publish"
+#      name: "Building site and publishing on GitHub pages"
+#      if: branch = master AND type NOT IN (pull_request)
+#      jdk: oraclejdk8
+#      before_deploy: mvn install site:site -DskipTests=true -B
+#      deploy:
+#        provider: pages
+#        local-dir: target/site
+#        skip-cleanup: true
+#        github-token: ${github_oauth_token}
+#        keep-history: true
+#        on:
+#          branch: master
     - stage: "Release"
       name: "Releasing artifacts"
-      if: branch = master AND type NOT IN (pull_request)
+#      if: branch = master AND type NOT IN (pull_request)
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
       deploy:
         - provider: script
           script: config/travis/deploy.sh
           skip_cleanup: true
-          on:
-            branch: master
-        - provider: script
-          script: config/travis/deploy.sh
-          skip_cleanup: true
-          on:
-            tags: true
+#          on:
+#            branch: master
+#        - provider: script
+#          script: config/travis/deploy.sh
+#          skip_cleanup: true
+#          on:
+#            tags: true
