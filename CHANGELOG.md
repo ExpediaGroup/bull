@@ -2,11 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.0.18] 2019.02.04
+#### Changed
+* Improved travis configuration
+#### Added
+* Added dependency to: `slf4j-api` as no longer available from Spring.
+- Added ValidationUtils class for raising an `IllegalArgumentException` in case any parameter is null.
+#### Removed
+* Removed dependency: `spring-boot-starter-validation` and imported one by one the required validation dependencies
+* Removed dependency: `spring-boot-starter-cache` and imported one by one the required validation dependencies
+
 ### [1.0.17] 2019.02.03
 #### Changed
 * Improved package-info comments
 #### Added
-* Configured Travis in order to automatically release artifacts 
+* Configured Travis in order to automatically release artifacts
 
 ### [1.0.16] 2019.01.26
 #### Changed
