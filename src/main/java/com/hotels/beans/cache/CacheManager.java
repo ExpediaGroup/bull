@@ -19,7 +19,7 @@ package com.hotels.beans.cache;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
-import static org.springframework.util.Assert.notNull;
+import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
