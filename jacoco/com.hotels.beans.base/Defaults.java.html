@@ -18,7 +18,7 @@ package com.hotels.beans.base;
 
 import static java.lang.Boolean.FALSE;
 
-import static org.springframework.util.Assert.notNull;
+import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import static com.hotels.beans.utils.ClassUtils.isBoolean;
 import static com.hotels.beans.utils.ClassUtils.isByte;

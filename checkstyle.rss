@@ -25,9 +25,9 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2019 Hotels.com (Data Platform Team)</copyright>
     <item>
-      <title>File: 42,
+      <title>File: 41,
              Errors: 0,
-             Warnings: 966,
+             Warnings: 973,
              Infos: 0
       </title>
             <link>https://github.com/HotelsDotCom/bull/checkstyle.html</link>
@@ -207,20 +207,6 @@ under the License.
                 </td>
                 <td>
                   6
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.application.BeanUtilsApplication.java">com/hotels/beans/application/BeanUtilsApplication.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
                 </td>
                 <td>
                   0
@@ -438,20 +424,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.application.package-info.java">com/hotels/beans/application/package-info.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.populator.CollectionPopulator.java">com/hotels/beans/populator/CollectionPopulator.java</a>
                 </td>
                 <td>
@@ -523,6 +495,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.cache.CacheManagerFactory.java">com/hotels/beans/cache/CacheManagerFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  11
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.utils.ValidationUtils.java">com/hotels/beans/utils/ValidationUtils.java</a>
                 </td>
                 <td>
                   0

@@ -27,8 +27,8 @@ import static javax.validation.Validation.buildDefaultValidatorFactory;
 
 import static org.apache.commons.lang3.StringUtils.SPACE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
-import static org.springframework.util.Assert.notNull;
 
+import static com.hotels.beans.utils.ValidationUtils.notNull;
 import static com.hotels.beans.base.Defaults.defaultValue;
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.ClassType.MIXED;
