@@ -43,10 +43,12 @@ jobs:
         on:
           branch: master
     - stage: "Release"
-      name: "Releasing ${TRAVIS_TAG} artifact on Maven central"
+      name: "Releasing SNAPSHOT artifact on Maven central"
       if: NOT branch = master AND tag IS present
       jdk: oraclejdk8
-      before_install: "cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml"
+      before_install:
+        - cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml
+        - mvn versions:set -D newVersion=${TRAVIS_TAG}
       install: mvn deploy -B -DskipTests=true
     - stage: "Release"
       name: "Releasing artifacts"
