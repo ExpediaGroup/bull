@@ -43,19 +43,11 @@ jobs:
         on:
           branch: master
     - stage: "Release"
-      name: "Releasing SNAPSHOT artifact on Maven central"
-      if: NOT branch = master AND tag IS present
-      jdk: oraclejdk8
-      before_install:
-        - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
-        - mvn versions:set -D newVersion=${TRAVIS_TAG}
-        - gpg --import config/travis/private-key.gpg
-      install: mvn deploy --settings config/travis/mvn-settings.xml -B -U -Prelease
-    - stage: "Release"
       name: "Releasing artifacts"
-      if: branch = master AND type NOT IN (pull_request) AND tag IS present
+      if: type NOT IN (pull_request) AND tag IS present
       before_script:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
+        - mvn versions:set -D newVersion=${TRAVIS_TAG}
       deploy:
         - provider: script
           script: config/travis/deploy.sh
