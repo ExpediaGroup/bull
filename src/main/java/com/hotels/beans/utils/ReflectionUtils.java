@@ -22,8 +22,8 @@ import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
 import static org.apache.commons.text.WordUtils.capitalize;
-import static org.springframework.util.Assert.notNull;
 
+import static com.hotels.beans.utils.ValidationUtils.notNull;
 import static com.hotels.beans.constant.MethodPrefix.GET;
 import static com.hotels.beans.constant.MethodPrefix.IS;
 import static com.hotels.beans.constant.MethodPrefix.SET;
