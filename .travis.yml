@@ -47,9 +47,9 @@ jobs:
       if: NOT branch = master AND tag IS present
       jdk: oraclejdk8
       before_install:
-        - cp config/travis/mvn-settings.xml $HOME/.m2/settings.xml
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
-      install: mvn deploy -B -DskipTests=true
+        - gpg --import config/travis/private-key.gpg
+      install: mvn deploy --settings config/travis/mvn-settings.xml -B -U -Prelease
     - stage: "Release"
       name: "Releasing artifacts"
       if: branch = master AND type NOT IN (pull_request) AND tag IS present
