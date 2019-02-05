@@ -16,6 +16,7 @@
 
 package com.hotels.beans.transformer;
 
+import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
@@ -74,6 +75,7 @@ import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooNoConstructors;
 import com.hotels.beans.sample.immutable.ImmutableToFooNotExistingFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
+import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
 import com.hotels.beans.sample.mixed.MixedToFoo;
 import com.hotels.beans.sample.mixed.MixedToFooDiffFields;
 import com.hotels.beans.sample.mixed.MixedToFooMissingAllArgsConstructor;
@@ -115,6 +117,7 @@ public class TransformerTest {
     private static final String CONSTRUCTOR_PARAMETER_NAME = "constructorParameterName";
     private static final ReflectionUtils REFLECTION_UTILS = new ReflectionUtils();
     private static FromFoo fromFoo;
+    private static FromFooSimple fromFooSimple;
     private static FromFooWithPrimitiveFields fromFooWithPrimitiveFields;
     private static List<FromSubFoo> fromSubFooList;
     private static List<String> sourceFooSimpleList;
@@ -351,7 +354,7 @@ public class TransformerTest {
         assertThat(actual, sameBeanAs(fromFoo));
     }
 
-     /**
+    /**
      * Test mutable beans are correctly copied.
      */
     @Test
@@ -442,7 +445,7 @@ public class TransformerTest {
      * Test that a bean containing a field not existing in the source object, but with a transformer function defined for such object is correctly copied.
      */
     @Test
-    public void testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopyedThroughTransformerFunctions() {
+    public void testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions() {
         //GIVEN
         FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID);
         FieldTransformer<Object, Integer> ageFieldTransformer = new FieldTransformer<>(AGE_FIELD_NAME, val -> AGE);
@@ -646,6 +649,30 @@ public class TransformerTest {
     }
 
     /**
+     * Test that a meaningful exception is returned when a constructor is invoked with wrong arguments.
+     */
+    @Test
+    public void testTransformationReturnsAMeaningfulException() {
+        //GIVEN
+        final String expectedExceptionMessageFormat =
+                "Wrong constructor arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String)";
+        String targetClassName = ImmutableToFooSimpleWrongTypes.class.getCanonicalName();
+
+        //WHEN
+        Exception raisedException = null;
+        try {
+            underTest.transform(fromFooSimple, ImmutableToFooSimpleWrongTypes.class);
+        } catch (final Exception e) {
+            raisedException = e;
+        }
+
+        //THEN
+        assertNotNull(raisedException);
+        assertEquals(InvalidBeanException.class, raisedException.getClass());
+        assertEquals(format(expectedExceptionMessageFormat, targetClassName, targetClassName), raisedException.getMessage());
+    }
+
+    /**
      * Initializes the mocks required for testing method: {@code getDestFieldName}.
      * @param declaringClassName the declaring class name
      * @param constructorParameter the constructor parameter
@@ -682,6 +709,7 @@ public class TransformerTest {
         fromSubFooList = singletonList(fromSubFoo);
         sourceFooSimpleList = asList(ITEM_1, ITEM_2);
         fromFoo = createFromFoo();
+        fromFooSimple = createFromFooSimple();
         fromFooWithPrimitiveFields = createFromFooWithPrimitiveFields();
         fromFooSubClass = createFromFooSubClass();
         fromFooAdvFields = createFromFooAdvFields();
@@ -694,6 +722,15 @@ public class TransformerTest {
     private static FromFoo createFromFoo() {
         return new FromFoo(NAME, ID, fromSubFooList, sourceFooSimpleList, fromSubFoo);
     }
+
+    /**
+     * Creates a {@link FromFooSimple} instance.
+     * @return the {@link FromFooSimple} instance.
+     */
+    private static FromFooSimple createFromFooSimple() {
+        return new FromFooSimple(NAME, ID);
+    }
+
 
     /**
      * Creates a {@link FromFooWithPrimitiveFields} instance.
@@ -718,5 +755,4 @@ public class TransformerTest {
     private static FromFooAdvFields createFromFooAdvFields() {
         return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage());
     }
-
 }
