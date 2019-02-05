@@ -28,13 +28,16 @@ import static javax.validation.Validation.buildDefaultValidatorFactory;
 import static org.apache.commons.lang3.StringUtils.SPACE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
+import static com.hotels.beans.constant.Punctuation.DOT;
+import static com.hotels.beans.constant.Punctuation.SEMICOLON;
+import static com.hotels.beans.constant.Punctuation.COMMA;
+import static com.hotels.beans.constant.Punctuation.LPAREN;
+import static com.hotels.beans.constant.Punctuation.RPAREN;
+import static com.hotels.beans.constant.ClassType.MIXED;
+import static com.hotels.beans.constant.ClassType.MUTABLE;
 import static com.hotels.beans.utils.ValidationUtils.notNull;
 import static com.hotels.beans.base.Defaults.defaultValue;
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
-import static com.hotels.beans.constant.ClassType.MIXED;
-import static com.hotels.beans.constant.ClassType.MUTABLE;
-import static com.hotels.beans.constant.Punctuation.DOT;
-import static com.hotels.beans.constant.Punctuation.SEMICOLON;
 import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 
 import java.lang.reflect.Constructor;
@@ -208,8 +211,21 @@ public class TransformerImpl implements Transformer {
         try {
             return (K) constructor.newInstance(constructorArgs);
         } catch (final Exception e) {
-            throw new InvalidBeanException("Source object: " + sourceObj.getClass().getName() + "; Target class: " + targetClass.getName(), e);
+            throw new InvalidBeanException("Wrong constructor arguments. Expected: " + constructor + "; Found: " + getFormattedConstructorArgs(targetClass, constructorArgs), e);
         }
+    }
+
+    /**
+     * Creates a string containing the arguments used to invoke the given class constructor.
+     * @param targetClass the class containing the constructor
+     * @param constructorArgs the passed arguments
+     * @param <K> he target object type
+     * @return the formatted constructor arguments
+     */
+    private <K> String getFormattedConstructorArgs(final Class<K> targetClass, final Object[] constructorArgs) {
+        return stream(constructorArgs)
+                .map(obj -> obj.getClass().getCanonicalName())
+                .collect(joining(COMMA.getSymbol(), targetClass.getCanonicalName() + LPAREN.getSymbol(), RPAREN.getSymbol()));
     }
 
     /**
