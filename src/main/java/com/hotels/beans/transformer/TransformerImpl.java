@@ -60,13 +60,10 @@ import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
  * The implementations are provided by BeanUtils.
  */
-@Slf4j
 public class TransformerImpl implements Transformer {
     /**
      * Reflection utils class {@link ReflectionUtils}.
@@ -212,7 +209,9 @@ public class TransformerImpl implements Transformer {
             return (K) constructor.newInstance(constructorArgs);
         } catch (final Exception e) {
             throw new InvalidBeanException("Constructor invoked with arguments. Expected: " + constructor + "; Found: "
-                    + getFormattedConstructorArgs(targetClass, constructorArgs), e);
+                    + getFormattedConstructorArgs(targetClass, constructorArgs)
+                    + ". Double check that each " + targetClass.getSimpleName() + "'s field have the same type and name than the source object: "
+                    + sourceObj.getClass().getCanonicalName() + " otherwise specify a transformer configuration.", e);
         }
     }
 
