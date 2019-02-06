@@ -654,14 +654,18 @@ public class TransformerTest {
     @Test
     public void testTransformationReturnsAMeaningfulException() {
         //GIVEN
+        Class<ImmutableToFooSimpleWrongTypes> targetClass = ImmutableToFooSimpleWrongTypes.class;
         final String expectedExceptionMessageFormat =
-                "Constructor invoked with arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String)";
-        String targetClassName = ImmutableToFooSimpleWrongTypes.class.getCanonicalName();
+                "Constructor invoked with arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String). "
+                +  "Double check that each %s's field have the same type and name than the source object: %s otherwise specify a transformer configuration.";
+        String targetClassName = targetClass.getCanonicalName();
+        String expectedExceptionMessage =
+                format(expectedExceptionMessageFormat, targetClassName, targetClassName, targetClass.getSimpleName(), fromFooSimple.getClass().getCanonicalName());
 
         //WHEN
         Exception raisedException = null;
         try {
-            underTest.transform(fromFooSimple, ImmutableToFooSimpleWrongTypes.class);
+            underTest.transform(fromFooSimple, targetClass);
         } catch (final Exception e) {
             raisedException = e;
         }
@@ -669,7 +673,7 @@ public class TransformerTest {
         //THEN
         assertNotNull(raisedException);
         assertEquals(InvalidBeanException.class, raisedException.getClass());
-        assertEquals(format(expectedExceptionMessageFormat, targetClassName, targetClassName), raisedException.getMessage());
+        assertEquals(expectedExceptionMessage, raisedException.getMessage());
     }
 
     /**

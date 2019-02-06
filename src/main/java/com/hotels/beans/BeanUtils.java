@@ -19,12 +19,9 @@ package com.hotels.beans;
 import com.hotels.beans.transformer.TransformerImpl;
 import com.hotels.beans.transformer.Transformer;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Set of Bean utilities.
  */
-@Slf4j
 public class BeanUtils {
 
     /**
