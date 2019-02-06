@@ -211,7 +211,8 @@ public class TransformerImpl implements Transformer {
         try {
             return (K) constructor.newInstance(constructorArgs);
         } catch (final Exception e) {
-            throw new InvalidBeanException("Wrong constructor arguments. Expected: " + constructor + "; Found: " + getFormattedConstructorArgs(targetClass, constructorArgs), e);
+            throw new InvalidBeanException("Constructor invoked with arguments. Expected: " + constructor + "; Found: "
+                    + getFormattedConstructorArgs(targetClass, constructorArgs), e);
         }
     }
 
