@@ -655,7 +655,7 @@ public class TransformerTest {
     public void testTransformationReturnsAMeaningfulException() {
         //GIVEN
         final String expectedExceptionMessageFormat =
-                "Wrong constructor arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String)";
+                "Constructor invoked with arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String)";
         String targetClassName = ImmutableToFooSimpleWrongTypes.class.getCanonicalName();
 
         //WHEN
