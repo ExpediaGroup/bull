@@ -58,7 +58,7 @@
 		<connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
 		<developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
 		<url>https://github.com/HotelsDotCom/bull</url>
-		<tag>bean-utils-library-${project.version}</tag>
+		<tag>HEAD</tag>
   	</scm>
 
 	<dependencies>
