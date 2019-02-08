@@ -60,9 +60,6 @@ mvn clean install -P relaxed
 ### Simple case:
 
 ~~~Java
-@AllArgsConstructor                                         @AllArgsConstructor
-@Getter                                                     @Getter
-@Setter                                                     @Setter
 public class FromBean {                                     public class ToBean {                           
    private final String name;                                  @NotNull                   
    private final BigInteger id;                                public BigInteger id;                      
@@ -70,8 +67,12 @@ public class FromBean {                                     public class ToBean 
    private List<String> list;                                  private final List<String> list;                    
    private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
                                                                private ImmutableToSubFoo nestedObject;
-}                                                               
-                                                            }
+        
+   // constructors...                                          // constructors...
+   
+   // getters and setters...                                   // getters and setters...
+                                                                
+}                                                           }
 ~~~
 And one line code as:
 ~~~Java
@@ -89,23 +90,12 @@ public class FromBean {                                     public class ToBean 
    private final List<FromSubBean> subBeanList;                private final List<ToSubBean> subBeanList;                 
    private final List<String> list;                            private final List<String> list;                    
    private final FromSubBean subObject;                        private final ToSubBean subObject;                    
-    
-   // getters and setters...
-                                                               public ToBean(final String differentName, 
-                                                                        final int id,
-}                                                                       final List<ToSubBean> subBeanList,
-                                                                        final List<String> list,
-                                                                        final ToSubBean subObject) {
-                                                                        this.differentName = differentName;
-                                                                        this.id = id;
-                                                                        this.subBeanList = subBeanList;
-                                                                        this.list = list;
-                                                                        this.subObject = subObject; 
-                                                                    }
-                                                                
-                                                                    // getters and setters...           
-                                              
-                                                                }
+   
+   // all args constructor                                     // all args constructor
+   
+   // getters...                                               // getters... 
+   
+}                                                           }
 ~~~
 And one line code as:
 
@@ -123,11 +113,12 @@ public class FromBean {                                     public class ToBean 
    private final List<FromSubBean> subBeanList;                private final List<ToSubBean> subBeanList;                 
    private final List<String> list;                            private final List<String> list;                    
    private final FromSubBean subObject;                        private final ToSubBean subObject;                    
-    
-   // getters and setters...
+   
+   // all args constructor
+   // getters...
                                                                public ToBean(@ConstructorArg("name") final String differentName, 
-                                                                        @ConstructorArg("id") final int id,
-}                                                                       @ConstructorArg("subBeanList") final List<ToSubBean> subBeanList,
+}                                                                        @ConstructorArg("id") final int id,
+                                                                       @ConstructorArg("subBeanList") final List<ToSubBean> subBeanList,
                                                                         @ConstructorArg(fieldName ="list") final List<String> list,
                                                                         @ConstructorArg("subObject") final ToSubBean subObject) {
                                                                         this.differentName = differentName;
@@ -137,7 +128,7 @@ public class FromBean {                                     public class ToBean 
                                                                         this.subObject = subObject; 
                                                                     }
                                                                 
-                                                                    // getters and setters...           
+                                                                    // getters...           
                                               
                                                             }
 ~~~
@@ -149,9 +140,6 @@ ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
 ### Different field names and types applying transformation through lambda function:
 
 ~~~Java
-@AllArgsConstructor                                         @AllArgsConstructor
-@Getter                                                     @Getter
-@Setter                                                     @Setter
 public class FromBean {                                     public class ToBean {                           
    private final String name;                                  @NotNull                   
    private final BigInteger id;                                public BigInteger identifier;                      
@@ -160,8 +148,12 @@ public class FromBean {                                     public class ToBean 
    private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
    private final String locale;                                private final Locale locale;                    
                                                                private ImmutableToSubFoo nestedObject;
-}                                                               
-                                                            }
+       
+   // constructors...                                          // constructors...
+   
+   // getters and setters...                                   // getters and setters...
+                                                                                                                              
+}                                                           }
 ~~~
 
 ~~~Java
@@ -185,7 +177,12 @@ public class FromBean {                                     public class ToBean 
    private final BigInteger id;                                public BigInteger id;                      
                                                                private final String name;                 
                                                                private String notExistingField; // this will be null and no exceptions will be raised
-}                                                            }
+
+   // constructors...                                          // constructors...
+   
+   // getters...                                              // getters and setters...
+
+}                                                           }
 ~~~
 And one line code as:
 ~~~Java
@@ -205,7 +202,11 @@ public class FromBean {                                     public class ToBean 
    private final BigInteger id;                                public BigInteger id;                      
                                                                private final String name;                 
                                                                private String notExistingField; // this will have value: sampleVal
-}                                                            }
+                                                               
+   // all args constructor                                     // constructors...
+   
+   // getters...                                               // getters and setters...
+}                                                           }
 ~~~
 And one line code as:
 ~~~Java
@@ -217,6 +218,37 @@ ToBean toBean = beanUtils.getTransformer()
        
 More sample beans can be found in the test package: `com.hotels.beans.sample`
 
+## Third party library comparison
+
+Following a comparison between the BULL functionalities and the following Third-Party libraries:
+
+* [Apache BeanUtils](http://commons.apache.org/proper/commons-beanutils/)
+* [Jackson Data Bind](https://github.com/FasterXML/jackson-databind)
+* [Dozer](http://dozer.sourceforge.net/)
+
+| | **BULL**      | **Apache Bean Utils** | **Jackson**       | **Dozer** |
+| :----------- | :-----------: | :-----------: | :-----------: | :-----------: |
+| Mutable bean copy | X | X | X | X+ |
+| Mutable bean with nested objects | X | - | X | X+ |
+| Mutable bean extending classes | X | - | X | X+ |
+| Immutable bean copy | X | - | - | X* |
+| Mixed bean copy | X | - | - | X+ |
+| Copy of beans without getter and setter methods defined | X | - | - | - |
+| Mutable Bean with different field's name  | X | - | - | X+ |
+| Mixed with different field's type | X | - | - | X+ |
+| Immutable with different field's type | X | - | - | X+ |
+| Mutable Bean containing collection type fields containing complex objects | X | - | X | X |
+| Mixed Bean containing collection type fields containing complex objects | X | - | - | X+ |
+| Immutable Bean containing collection type fields containing complex objects | X | - | - | X+ |
+| Mutable Bean containing containing Map type fields with nested Maps inside.  e.g. `Map<String, Map<String, Integer>>` | X | - | X | X |
+| Mixed Bean containing containing Map type fields with nested Maps inside.  e.g. `Map<String, Map<String, Integer>>` | X | - | - | X+ |
+| Immutable Bean containing containing Map type fields with nested Maps inside.  e.g. `Map<String, Map<String, Integer>>` | X | - | - | X+ |
+| Annotation field validation | X | - | X | - |
+
+_[*] Immutable types are not supported by Dozer. When a type doesn't have a no-arg constructor and all fields are final, Dozer can't perform the mapping.
+  Workaround is introducing the Builder Pattern. An example can be found [here](http://codeslut.blogspot.com/2010/05/mapping-immutable-value-objects-with.html)_
+_[+] Requires a custom configuration_
+ 
 ## Performance
 
 Let's have a look to the performance library performance. The test has been executed on the following objects:
@@ -256,37 +288,6 @@ Following the obtained results:
 * the class's fields that have to be copied must not be static
 * the class must not contain builders
 
-## Third party library comparison
-
-Following a comparison between the BULL functionalities and the following Third-Party libraries:
-
-* [Apache BeanUtils](http://commons.apache.org/proper/commons-beanutils/)
-* [Jackson Data Bind](https://github.com/FasterXML/jackson-databind)
-* [Dozer](http://dozer.sourceforge.net/)
-
-| | **BULL**      | **Apache Bean Utils** | **Jackson**       | **Dozer** |
-| :----------- | :-----------: | :-----------: | :-----------: | :-----------: |
-| Mutable bean copy | X | X | X | X+ |
-| Mutable bean with nested objects | X | - | X | X+ |
-| Mutable bean extending classes | X | - | X | X+ |
-| Immutable bean copy | X | - | - | X* |
-| Mixed bean copy | X | - | - | X+ |
-| Copy of beans without getter and setter methods defined | X | - | - | - |
-| Mutable Bean with different field's name  | X | - | - | X+ |
-| Mixed with different field's type | X | - | - | X+ |
-| Immutable with different field's type | X | - | - | X+ |
-| Mutable Bean containing collection type fields containing complex objects | X | - | X | X |
-| Mixed Bean containing collection type fields containing complex objects | X | - | - | X+ |
-| Immutable Bean containing collection type fields containing complex objects | X | - | - | X+ |
-| Mutable Bean containing containing Map type fields with nested Maps inside.  e.g. `Map<String, Map<String, Integer>>` | X | - | X | X |
-| Mixed Bean containing containing Map type fields with nested Maps inside.  e.g. `Map<String, Map<String, Integer>>` | X | - | - | X+ |
-| Immutable Bean containing containing Map type fields with nested Maps inside.  e.g. `Map<String, Map<String, Integer>>` | X | - | - | X+ |
-| Annotation field validation | X | - | X | - |
-
-_[*] Immutable types are not supported by Dozer. When a type doesn't have a no-arg constructor and all fields are final, Dozer can't perform the mapping.
-  Workaround is introducing the Builder Pattern. An example can be found [here](http://codeslut.blogspot.com/2010/05/mapping-immutable-value-objects-with.html)_
-_[+] Requires a custom configuration_
- 
 ## Documentation
 
 A detailed project documentation is available [here](https://hotelsdotcom.github.io/bull).
