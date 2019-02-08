@@ -16,16 +16,18 @@
 
 package com.hotels.beans.utils;
 
+import static java.lang.reflect.Modifier.isPublic;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
+
+import static org.apache.commons.text.WordUtils.capitalize;
+
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.MethodPrefix.GET;
 import static com.hotels.beans.constant.MethodPrefix.IS;
 import static com.hotels.beans.constant.MethodPrefix.SET;
 import static com.hotels.beans.utils.ValidationUtils.notNull;
-import static java.lang.reflect.Modifier.isPublic;
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-import static java.util.Optional.ofNullable;
-import static org.apache.commons.text.WordUtils.capitalize;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -40,7 +42,6 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.hotels.beans.cache.CacheManager;
-import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.error.MissingMethodException;
 import com.hotels.beans.model.EmptyValue;
