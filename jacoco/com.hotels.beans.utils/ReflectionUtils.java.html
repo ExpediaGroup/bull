@@ -243,8 +243,8 @@ public final class ReflectionUtils {
 <span class="fc" id="L243">            setFieldValueWithoutSetterMethod(target, field, fieldValue);</span>
 <span class="nc" id="L244">        } catch (final IllegalArgumentException e) {</span>
 <span class="nc" id="L245">            throw e;</span>
-<span class="nc" id="L246">        } catch (final Exception e) {</span>
-<span class="nc" id="L247">            invokeMethod(getSetterMethodForField(target.getClass(), field.getName(), field.getType()), target, fieldValue);</span>
+<span class="fc" id="L246">        } catch (final Exception e) {</span>
+<span class="fc" id="L247">            invokeMethod(getSetterMethodForField(target.getClass(), field.getName(), field.getType()), target, fieldValue);</span>
 <span class="fc" id="L248">        }</span>
 <span class="fc" id="L249">    }</span>
 
@@ -261,7 +261,7 @@ public final class ReflectionUtils {
 <span class="fc" id="L261">                field.setAccessible(true);</span>
             }
 <span class="fc" id="L263">            field.set(target, fieldValue);</span>
-<span class="nc" id="L264">        } catch (final Exception e) {</span>
+<span class="fc" id="L264">        } catch (final Exception e) {</span>
 <span class="nc" id="L265">            handleReflectionException(e);</span>
 <span class="nc" id="L266">            throw new IllegalStateException(e);</span>
         } finally {
