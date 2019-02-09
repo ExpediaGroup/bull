@@ -12,9 +12,9 @@
       <topBarEnabled>false</topBarEnabled>
       <sideBarEnabled>true</sideBarEnabled>
       <gitHub>
-        <projectId>BULL</projectId>
+        <projectId>HotelsDotCom/bull</projectId>
         <ribbonOrientation>right</ribbonOrientation>
-        <ribbonColor>gray</ribbonColor>
+        <ribbonColor>#cf2d35</ribbonColor>
       </gitHub>
     </fluidoSkin>
   </custom>

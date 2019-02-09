@@ -14,42 +14,19 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.constant;
-
-import static lombok.AccessLevel.PRIVATE;
+package com.hotels.beans.sample.immutable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
- * Punctuation constants.
+ * Sample immutable object with different field than the source object.
  */
-@AllArgsConstructor(access = PRIVATE)
+@AllArgsConstructor
 @Getter
-public enum Punctuation {
-    /**
-     * Dot symbol. ".".
-     */
-    DOT("."),
-    /**
-     * Semicolon symbol. ";".
-     */
-    SEMICOLON(";"),
-    /**
-     * Left parenthesis symbol. "(".
-     */
-    LPAREN("("),
-    /**
-     * Right parenthesis symbol. ")".
-     */
-    RPAREN(")"),
-    /**
-     * Comma symbol. ",".
-     */
-    COMMA(",");
-
-    /**
-     * Punctuation character.
-     */
-    private final String symbol;
+@ToString
+public class ImmutableToFooSimpleWrongTypes {
+    private final Integer id;
+    private final String name;
 }
