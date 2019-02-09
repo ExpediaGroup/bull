@@ -23,11 +23,11 @@ import static java.util.Optional.ofNullable;
 
 import static org.apache.commons.text.WordUtils.capitalize;
 
-import static com.hotels.beans.utils.ValidationUtils.notNull;
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.MethodPrefix.GET;
 import static com.hotels.beans.constant.MethodPrefix.IS;
 import static com.hotels.beans.constant.MethodPrefix.SET;
-import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -241,6 +241,8 @@ public final class ReflectionUtils {
     public void setFieldValue(final Object target, final Field field, final Object fieldValue) {
         try {
             setFieldValueWithoutSetterMethod(target, field, fieldValue);
+        } catch (final IllegalArgumentException e) {
+            throw e;
         } catch (final Exception e) {
             invokeMethod(getSetterMethodForField(target.getClass(), field.getName(), field.getType()), target, fieldValue);
         }

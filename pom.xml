@@ -57,16 +57,10 @@
 		<connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
 		<developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
 		<url>https://github.com/HotelsDotCom/bull</url>
-		<tag>bean-utils-library-${project.version}</tag>
+		<tag>HEAD</tag>
   	</scm>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<version>${spring-boot.version}</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -83,11 +77,6 @@
 			<artifactId>commons-text</artifactId>
 			<version>${apache.common.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j-api.version}</version>
-		</dependency>
 		<!-- validation dependencies -->
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -100,16 +89,28 @@
 			<version>${javax.el-api.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>${hibernate-validator.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.glassfish.web</groupId>
 			<artifactId>javax.el</artifactId>
 			<version>${glassfish.javax.el.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>
 		<!-- test dependencies -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>${spring-boot.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-api.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.shazam</groupId>
 			<artifactId>shazamcrest</artifactId>
