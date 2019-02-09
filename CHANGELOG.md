@@ -2,12 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.1.1] TBD
+### [1.1.1] 2019.02.09
 #### Changed
 * Improved exception messaging in order to simplify the troubleshooting process
 * Improved readme file
-#### Added
-* Added `maven-shade-plugin` in order to package dependencies 
 
 ### [1.1.0] 2019.02.04
 #### Changed
