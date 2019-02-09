@@ -19,20 +19,17 @@ package com.hotels.beans;
 import com.hotels.beans.transformer.TransformerImpl;
 import com.hotels.beans.transformer.Transformer;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Set of Bean utilities.
  */
-<span class="fc" id="L27">@Slf4j</span>
-<span class="fc" id="L28">public class BeanUtils {</span>
+<span class="fc" id="L25">public class BeanUtils {</span>
 
     /**
      * Returns a Bean Transformer.
      * @return a Bean Transformer instance.
      */
     public final Transformer getTransformer() {
-<span class="fc" id="L35">        return new TransformerImpl();</span>
+<span class="fc" id="L32">        return new TransformerImpl();</span>
     }
 
 }
