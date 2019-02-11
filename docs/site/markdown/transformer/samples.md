@@ -60,6 +60,44 @@ And one line code as:
 beanUtils.getTransformer().withFieldMapping(new FieldMapping("name", "differentName")).transform(fromBean, ToBean.class);                                                               
 ~~~
 
+### Mapping destination fields with correspondent fields contained inside one of the nested object in the source object:
+
+Assuming that the object `FromSubBean` is declared as follow:
+~~~Java
+public class FromSubBean {                         
+                                                                                       
+   private String serialNumber;                 
+   private Date creationDate;                    
+   
+   // getters and setters... 
+   
+}
+~~~
+and our source object and destination object are described as follow:
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+                                                                                       
+   private final int id;                                       private final int id;                      
+   private final String name;                                  private final String name;                   
+   private final FromSubBean subObject;                        private final String serialNumber;                 
+                                                               private final Date creationDate;                    
+   
+   // all args constructor                                     // all args constructor
+   
+   // getters...                                               // getters... 
+   
+}                                                           }
+~~~
+the fields: `serialNumber` and `creationDate` needs to be retrieved from `subObject`, this can be done defining the whole path to the end property:
+~~~Java  
+FieldMapping serialNumberMapping = new FieldMapping("subObject.serialNumber", "serialNumber");                                                             
+FieldMapping creationDateMapping = new FieldMapping("subObject.creationDate", "creationDate");
+                                                             
+beanUtils.getTransformer()
+         .withFieldMapping(serialNumberMapping, creationDateMapping)
+         .transform(fromBean, ToBean.class);                                                               
+~~~
+
 ### Different field names defining constructor args:
 
 ~~~Java

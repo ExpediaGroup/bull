@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ### [1.1.2] TBD
 #### Added
-* Added possiblity to define fields name mappings ...
+* Made the field name mapping more flexible adding the possibility to map destination object field with field contained into nested objects 
+* Added samples for the above functionality 
 
 ### [1.1.1] 2019.02.09
 #### Changed

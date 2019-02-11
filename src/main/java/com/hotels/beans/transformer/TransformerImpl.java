@@ -103,8 +103,9 @@ public class TransformerImpl implements Transformer {
     @Override
     public final Transformer withFieldMapping(final FieldMapping... fieldMapping) {
         final Map<String, String> fieldsNameMapping = transformerSettings.getFieldsNameMapping();
-        stream(fieldMapping)
-                .forEach(mapping -> fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName()));
+        for (FieldMapping mapping : fieldMapping) {
+            fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());
+        }
         return this;
     }
 
@@ -132,8 +133,9 @@ public class TransformerImpl implements Transformer {
     @SuppressWarnings("unchecked")
     public final Transformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
         Map<String, Function<Object, Object>> fieldsTransformers = transformerSettings.getFieldsTransformers();
-        stream(fieldTransformer)
-                .forEach(transformer -> fieldsTransformers.put(transformer.getDestFieldName(), transformer.getTransformerFunction()));
+        for (FieldTransformer transformer : fieldTransformer) {
+            fieldsTransformers.put(transformer.getDestFieldName(), transformer.getTransformerFunction());
+        }
         return this;
     }
 
