@@ -66,6 +66,7 @@ import com.hotels.beans.sample.FromFooSimpleNoGetters;
 import com.hotels.beans.sample.FromFooSubClass;
 import com.hotels.beans.sample.FromFooWithPrimitiveFields;
 import com.hotels.beans.sample.FromSubFoo;
+import com.hotels.beans.sample.immutable.ImmutableFlatToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooAdvFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
@@ -74,8 +75,8 @@ import com.hotels.beans.sample.immutable.ImmutableToFooInvalid;
 import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooNoConstructors;
 import com.hotels.beans.sample.immutable.ImmutableToFooNotExistingFields;
-import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
+import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
 import com.hotels.beans.sample.mixed.MixedToFoo;
 import com.hotels.beans.sample.mixed.MixedToFooDiffFields;
 import com.hotels.beans.sample.mixed.MixedToFooMissingAllArgsConstructor;
@@ -250,6 +251,25 @@ public class TransformerTest {
 
         //THEN
         assertThat(actual, sameBeanAs(fromFoo));
+    }
+
+    /**
+     * Test that, in case a destination object field is contained into a nested object of the source field, defining a composite {@link FieldMapping} the field is correctly
+     * valorized.
+     */
+    @Test
+    public void testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected() {
+        //GIVEN
+        FieldMapping phoneNumbersMapping = new FieldMapping("nestedObject.phoneNumbers", "phoneNumbers");
+
+        //WHEN
+        ImmutableFlatToFoo actual = underTest.withFieldMapping(phoneNumbersMapping).transform(fromFoo, ImmutableFlatToFoo.class);
+
+        //THEN
+        assertEquals(fromFoo.getName(), actual.getName());
+        assertEquals(fromFoo.getId(), actual.getId());
+        assertEquals(fromFoo.getNestedObject().getPhoneNumbers(), actual.getPhoneNumbers());
+        underTest.resetFieldsMapping();
     }
 
     /**
