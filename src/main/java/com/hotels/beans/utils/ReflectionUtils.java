@@ -137,6 +137,7 @@ public final class ReflectionUtils {
     public Object getFieldValue(final Object target, final String fieldName, final Class<?> fieldType) {
         Object fieldValue = getRealTarget(target);
         for (String currFieldName : fieldName.split(DOT_SPLIT_REGEX)) {
+            if (fieldValue == null) break;
             try {
                 fieldValue = getFieldValue(fieldValue, currFieldName);
             } catch (final Exception e) {

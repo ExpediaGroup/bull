@@ -118,6 +118,7 @@ public class TransformerTest {
     private static final String CONSTRUCTOR_PARAMETER_NAME = "constructorParameterName";
     private static final ReflectionUtils REFLECTION_UTILS = new ReflectionUtils();
     private static FromFoo fromFoo;
+    private static FromFoo fromFooWithNullProperties;
     private static FromFooSimple fromFooSimple;
     private static FromFooWithPrimitiveFields fromFooWithPrimitiveFields;
     private static List<FromSubFoo> fromSubFooList;
@@ -269,6 +270,25 @@ public class TransformerTest {
         assertEquals(fromFoo.getName(), actual.getName());
         assertEquals(fromFoo.getId(), actual.getId());
         assertEquals(fromFoo.getNestedObject().getPhoneNumbers(), actual.getPhoneNumbers());
+        underTest.resetFieldsMapping();
+    }
+
+    /**
+     * Test that, in case a destination object field is contained into a nested object of the source field, defining a composite {@link FieldMapping} the field is correctly
+     * valorized even if some of them are null.
+     */
+    @Test
+    public void testTransformationWithCompositeFieldNameWorksEvenWithNullObjects() {
+        //GIVEN
+        FieldMapping phoneNumbersMapping = new FieldMapping("nestedObject.phoneNumbers", "phoneNumbers");
+
+        //WHEN
+        ImmutableFlatToFoo actual = underTest.withFieldMapping(phoneNumbersMapping).transform(fromFooWithNullProperties, ImmutableFlatToFoo.class);
+
+        //THEN
+        assertEquals(fromFooWithNullProperties.getName(), actual.getName());
+        assertEquals(fromFooWithNullProperties.getId(), actual.getId());
+        assertEquals(fromFooWithNullProperties.getNestedObject(), actual.getPhoneNumbers());
         underTest.resetFieldsMapping();
     }
 
@@ -715,7 +735,7 @@ public class TransformerTest {
     }
 
     /**
-     * Restored the initail object status before testing method: {@code getDestFieldName}.
+     * Restored the initial object status before testing method: {@code getDestFieldName}.
      */
     private void restoreObjects(final Method getDestFieldNameMethod) {
         getDestFieldNameMethod.setAccessible(false);
@@ -732,7 +752,8 @@ public class TransformerTest {
         fromSubFoo = new FromSubFoo(SUB_FOO_NAME, SUB_FOO_PHONE_NUMBERS, SUB_FOO_SAMPLE_MAP, SUB_FOO_COMPLEX_MAP, SUB_FOO_VERY_COMPLEX_MAP);
         fromSubFooList = singletonList(fromSubFoo);
         sourceFooSimpleList = asList(ITEM_1, ITEM_2);
-        fromFoo = createFromFoo();
+        fromFoo = createFromFoo(fromSubFoo);
+        fromFooWithNullProperties = createFromFoo(null);
         fromFooSimple = createFromFooSimple();
         fromFooWithPrimitiveFields = createFromFooWithPrimitiveFields();
         fromFooSubClass = createFromFooSubClass();
@@ -741,9 +762,10 @@ public class TransformerTest {
 
     /**
      * Creates a {@link FromFoo} instance.
+     * @param fromSubFoo the {@link FromSubFoo} instance
      * @return the {@link FromFoo} instance.
      */
-    private static FromFoo createFromFoo() {
+    private static FromFoo createFromFoo(final FromSubFoo fromSubFoo) {
         return new FromFoo(NAME, ID, fromSubFooList, sourceFooSimpleList, fromSubFoo);
     }
 
