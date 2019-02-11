@@ -44,8 +44,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
@@ -100,8 +102,9 @@ public class TransformerImpl implements Transformer {
      */
     @Override
     public final Transformer withFieldMapping(final FieldMapping... fieldMapping) {
+        final Map<String, String> fieldsNameMapping = transformerSettings.getFieldsNameMapping();
         stream(fieldMapping)
-                .forEach(mapping -> transformerSettings.getFieldsNameMapping().put(mapping.getDestFieldName(), mapping.getSourceFieldName()));
+                .forEach(mapping -> fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName()));
         return this;
     }
 
@@ -128,8 +131,9 @@ public class TransformerImpl implements Transformer {
     @Override
     @SuppressWarnings("unchecked")
     public final Transformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
+        Map<String, Function<Object, Object>> fieldsTransformers = transformerSettings.getFieldsTransformers();
         stream(fieldTransformer)
-                .forEach(transformer -> transformerSettings.getFieldsTransformers().put(transformer.getDestFieldName(), transformer.getTransformerFunction()));
+                .forEach(transformer -> fieldsTransformers.put(transformer.getDestFieldName(), transformer.getTransformerFunction()));
         return this;
     }
 
