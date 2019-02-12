@@ -33,6 +33,7 @@ jobs:
       if: branch = master AND type NOT IN (pull_request)
       jdk: oraclejdk8
       before_deploy:
+        - mvn versions:set -D newVersion=${TRAVIS_TAG} AND tag IS present
         - travis_retry mvn install site:site -DskipTests=true -B
       deploy:
         provider: pages

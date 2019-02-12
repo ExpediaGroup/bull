@@ -58,7 +58,8 @@ class CollectionPopulator<K> extends Populator<Collection> implements ICollectio
             res = (Collection) fieldValue;
         } else {
             res = ((Collection<K>) fieldValue)
-                    .parallelStream()
+                    .stream()
+//                    .parallelStream()
                     .map(elem -> transform(elem, (Class<K>) genericFieldType))
                     .collect(toList());
         }

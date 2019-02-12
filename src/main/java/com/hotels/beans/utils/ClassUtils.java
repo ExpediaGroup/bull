@@ -234,7 +234,7 @@ public final class ClassUtils {
                 res.addAll(getPrivateFinalFields(clazz.getSuperclass()));
             }
             res.addAll(stream(getDeclaredFields(clazz))
-                    .parallel()
+                    //.parallel()
                     .filter(IS_FINAL_AND_NOT_STATIC_FIELD)
                     .collect(toList()));
             cacheManager.cacheObject(cacheKey, res);
@@ -286,7 +286,7 @@ public final class ClassUtils {
                 res.addAll(getPrivateFields(clazz.getSuperclass(), skipFinal));
             }
             res.addAll(stream(getDeclaredFields(clazz))
-                    .parallel()
+                    //.parallel()
                     .filter(field -> isPrivate(field.getModifiers())
                             && (!skipFinal || !isFinal(field.getModifiers()))
                             && !isStatic(field.getModifiers()))
@@ -313,7 +313,8 @@ public final class ClassUtils {
             }
             Stream<Field> fieldStream = stream(getDeclaredFields(clazz));
             if (skipStatic) {
-                fieldStream = fieldStream.parallel().filter(field -> !isStatic(field.getModifiers()));
+//                fieldStream = fieldStream.parallel().filter(field -> !isStatic(field.getModifiers()));
+                fieldStream = fieldStream.filter(field -> !isStatic(field.getModifiers()));
             }
             res.addAll(fieldStream.collect(toList()));
             cacheManager.cacheObject(cacheKey, res);
