@@ -63,7 +63,9 @@ class MapPopulator extends Populator<Map<?, ?>> {
         if (keyIsPrimitive && elemIsPrimitive) {
             populatedObject = fieldValue;
         } else {
-            populatedObject = fieldValue.keySet().parallelStream()
+            populatedObject = fieldValue.keySet()
+                    .stream()
+//                    .parallelStream()
                     .collect(toMap(
                         key -> getElemValue(keyType, keyIsPrimitive, key),
                         key -> getElemValue(elemType, elemIsPrimitive, fieldValue.get(key))));
