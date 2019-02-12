@@ -30,7 +30,7 @@ jobs:
       install: travis_retry mvn clean install -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
     - stage: "Site Build and Publish"
       name: "Building site and publishing on GitHub pages"
-      if: branch = master AND type NOT IN (pull_request) AND tag IS present
+      if: branch = master AND type NOT IN (pull_request) AND tag = true
       jdk: oraclejdk8
       before_deploy:
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
@@ -45,7 +45,7 @@ jobs:
           branch: master
     - stage: "Release"
       name: "Releasing artifacts"
-      if: type NOT IN (pull_request) AND tag IS present
+      if: type NOT IN (pull_request) AND tag = true
       install: skip
       before_script:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
