@@ -55,7 +55,7 @@ class ArrayPopulator extends Populator<Object> implements ICollectionPopulator<O
             res = fieldValue;
         } else {
             res = stream((Object[]) fieldValue)
-                    .parallel()
+                    //.parallel()
                     .map(o -> classUtils.isPrimitiveOrSpecialType(genericFieldType) ? o : transform(o, genericFieldType)).toArray();
         }
         return res;
