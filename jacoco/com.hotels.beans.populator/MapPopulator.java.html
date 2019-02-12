@@ -63,12 +63,14 @@ class MapPopulator extends Populator&lt;Map&lt;?, ?&gt;&gt; {
 <span class="pc bpc" id="L63" title="1 of 4 branches missed.">        if (keyIsPrimitive &amp;&amp; elemIsPrimitive) {</span>
 <span class="fc" id="L64">            populatedObject = fieldValue;</span>
         } else {
-<span class="fc" id="L66">            populatedObject = fieldValue.keySet().parallelStream()</span>
-<span class="fc" id="L67">                    .collect(toMap(</span>
-<span class="fc" id="L68">                        key -&gt; getElemValue(keyType, keyIsPrimitive, key),</span>
-<span class="fc" id="L69">                        key -&gt; getElemValue(elemType, elemIsPrimitive, fieldValue.get(key))));</span>
+<span class="fc" id="L66">            populatedObject = fieldValue.keySet()</span>
+<span class="fc" id="L67">                    .stream()</span>
+//                    .parallelStream()
+<span class="fc" id="L69">                    .collect(toMap(</span>
+<span class="fc" id="L70">                        key -&gt; getElemValue(keyType, keyIsPrimitive, key),</span>
+<span class="fc" id="L71">                        key -&gt; getElemValue(elemType, elemIsPrimitive, fieldValue.get(key))));</span>
         }
-<span class="fc" id="L71">        return populatedObject;</span>
+<span class="fc" id="L73">        return populatedObject;</span>
     }
 
     /**
@@ -82,16 +84,16 @@ class MapPopulator extends Populator&lt;Map&lt;?, ?&gt;&gt; {
     @SuppressWarnings(&quot;unchecked&quot;)
     private &lt;T&gt; T getElemValue(final MapElemType mapElemType, final boolean elemIsPrimitiveType, final T value) {
         final T elemValue;
-<span class="pc bpc" id="L85" title="1 of 4 branches missed.">        if (elemIsPrimitiveType || getClassUtils().isPrimitiveOrSpecialType(value.getClass())) {</span>
-<span class="fc" id="L86">            elemValue = value;</span>
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">        if (elemIsPrimitiveType || getClassUtils().isPrimitiveOrSpecialType(value.getClass())) {</span>
+<span class="fc" id="L88">            elemValue = value;</span>
         } else {
-<span class="fc bfc" id="L88" title="All 2 branches covered.">            if (mapElemType.getClass().equals(ItemType.class)) {</span>
-<span class="fc" id="L89">                elemValue = (T) transform(value, ((ItemType) mapElemType).getObjectClass(), ((ItemType) mapElemType).getGenericClass());</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            if (mapElemType.getClass().equals(ItemType.class)) {</span>
+<span class="fc" id="L91">                elemValue = (T) transform(value, ((ItemType) mapElemType).getObjectClass(), ((ItemType) mapElemType).getGenericClass());</span>
             } else {
-<span class="fc" id="L91">                elemValue = (T) getPopulatedObject((Map) value, (MapType) mapElemType);</span>
+<span class="fc" id="L93">                elemValue = (T) getPopulatedObject((Map) value, (MapType) mapElemType);</span>
             }
         }
-<span class="fc" id="L94">        return elemValue;</span>
+<span class="fc" id="L96">        return elemValue;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

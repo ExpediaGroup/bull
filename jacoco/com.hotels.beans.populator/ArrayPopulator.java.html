@@ -55,7 +55,7 @@ class ArrayPopulator extends Populator&lt;Object&gt; implements ICollectionPopul
 <span class="fc" id="L55">            res = fieldValue;</span>
         } else {
 <span class="fc" id="L57">            res = stream((Object[]) fieldValue)</span>
-<span class="fc" id="L58">                    .parallel()</span>
+                    //.parallel()
 <span class="pc bpc" id="L59" title="1 of 2 branches missed.">                    .map(o -&gt; classUtils.isPrimitiveOrSpecialType(genericFieldType) ? o : transform(o, genericFieldType)).toArray();</span>
         }
 <span class="fc" id="L61">        return res;</span>
