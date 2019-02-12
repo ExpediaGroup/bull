@@ -2,10 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.1.2] TBD
+### [1.1.2] 2019.02
 #### Added
-* Made the field name mapping more flexible adding the possibility to map destination object field with field contained into nested objects 
-* Added samples for the above functionality 
+* Made the field name mapping more flexible adding the possibility to map destination object field with field contained into nested objects. 
+* Added samples and tests for the above functionality.
+#### Changed
+* Updated hibernate dependency: `org.hibernate.validator` (was `org.hibernate.validator`).
+* Removed `parallel` execution where not needed because this could cause performance degradation.
 
 ### [1.1.1] 2019.02.09
 #### Changed
