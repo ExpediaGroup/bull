@@ -19,12 +19,12 @@ jobs:
     # If the branch is not master it just builds the application
     - stage: "Build"
       name: "Build and Test"
-      if: branch = master
+      if: NOT branch = master
       jdk: oraclejdk11
-      install: travis_retry mvn clean install -Dmaven.javadoc.skip=true -B
+      install: travis_retry mvn clean install -DskipTests -Dmaven.javadoc.skip=true -B
     # If the branch is master it sends the quality report to SonarCloud
-    - stage: "Quality Check"
-      name: "Performing quality check and sending a quality report to SonarCloud"
+    - stage: "Build and Quality Check"
+      name: "Building, testing and performing quality check"
       if: branch = master AND type NOT IN (pull_request)
       jdk: oraclejdk11
       install: travis_retry mvn clean install -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
@@ -33,6 +33,7 @@ jobs:
       if: branch = master AND type NOT IN (pull_request)
       jdk: oraclejdk8
       before_deploy:
+        - mvn versions:set -D newVersion=${TRAVIS_TAG} AND tag IS present
         - travis_retry mvn install site:site -DskipTests=true -B
       deploy:
         provider: pages

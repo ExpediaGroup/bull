@@ -64,6 +64,11 @@ public final class ReflectionUtils {
     private static final String SETTER_METHOD_NAME_REGEX = "^set[A-Z].*";
 
     /**
+     * Regex for identify dots into a string.
+     */
+    private static final String DOT_SPLIT_REGEX = "\\.";
+
+    /**
      * CacheManager class {@link CacheManager}.
      */
     private final CacheManager cacheManager;
@@ -130,12 +135,14 @@ public final class ReflectionUtils {
      * @return the field value
      */
     public Object getFieldValue(final Object target, final String fieldName, final Class<?> fieldType) {
-        Object fieldValue;
-        Object realTarget = getRealTarget(target);
-        try {
-            fieldValue = getFieldValue(realTarget, fieldName);
-        } catch (final Exception e) {
-            fieldValue = invokeMethod(getGetterMethod(realTarget.getClass(), fieldName, fieldType), realTarget);
+        Object fieldValue = getRealTarget(target);
+        for (String currFieldName : fieldName.split(DOT_SPLIT_REGEX)) {
+            if (fieldValue == null) break;
+            try {
+                fieldValue = getFieldValue(fieldValue, currFieldName);
+            } catch (final Exception e) {
+                fieldValue = invokeMethod(getGetterMethod(fieldValue.getClass(), currFieldName, fieldType), fieldValue);
+            }
         }
         return fieldValue;
     }
