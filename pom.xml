@@ -204,7 +204,6 @@
 						<exclude>**/logback*.xml</exclude>
 						<exclude>**/banner.txt</exclude>
 						<exclude>**/*.yml</exclude>
-						<exclude>**/application/**</exclude>
 						<exclude>**/stats/**</exclude>
 					</excludes>
 				</configuration>
