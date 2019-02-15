@@ -26,9 +26,9 @@
 		<maven.compiler.source>${jdk.version}</maven.compiler.source>
 		<maven.compiler.target>${jdk.version}</maven.compiler.target>
 		<maven.pmd.plugin.version>3.11.0</maven.pmd.plugin.version>
+		<!--<maven.shade.plugin.version>3.2.1</maven.shade.plugin.version>-->
 		<spring-boot.version>2.1.2.RELEASE</spring-boot.version>
 		<lombok.version>1.18.4</lombok.version>
-		<apache.common.version>1.3</apache.common.version>
 		<apache.commons-lang3.version>3.8.1</apache.commons-lang3.version>
 		<shazamcrest.version>0.11</shazamcrest.version>
 		<gson.version>2.8.5</gson.version>
@@ -82,12 +82,6 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>${apache.commons-lang3.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-text</artifactId>
-			<version>${apache.common.version}</version>
-		</dependency>
-		<!-- validation dependencies -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -234,6 +228,64 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-shade-plugin</artifactId>-->
+				<!--<version>${maven.shade.plugin.version}</version>-->
+				<!--<configuration>-->
+					<!--<createDependencyReducedPom>false</createDependencyReducedPom>-->
+					<!--<artifactSet>-->
+						<!--<includes>-->
+							<!--<include>javax.el:javax.el-api:jar:</include>-->
+							<!--<include>javax.validation:validation-api:jar:</include>-->
+							<!--<include>org.glassfish.web:javax.el:jar:</include>-->
+							<!--<include>org.shaded.hibernate.validator:hibernate-validator:jar:</include>-->
+							<!--<include>org.apache.commons:commons-lang3:jar:</include>-->
+							<!--<include>org.apache.commons:commons-text:jar:</include>-->
+							<!--<include>org.jboss.logging:jboss-logging:jar:</include>-->
+							<!--<include>com.fasterxml:classmate:jar:</include>-->
+						<!--</includes>-->
+					<!--</artifactSet>-->
+					<!--<relocations>-->
+						<!--<relocation>-->
+							<!--<pattern>org.hibernate.validator</pattern>-->
+							<!--<shadedPattern>org.shaded.hibernate.validator</shadedPattern>-->
+						<!--</relocation>-->
+						<!--<relocation>-->
+							<!--<pattern>javax.validation</pattern>-->
+							<!--<shadedPattern>javax.shaded.validation</shadedPattern>-->
+						<!--</relocation>-->
+						<!--<relocation>-->
+							<!--<pattern>javax.el</pattern>-->
+							<!--<shadedPattern>javax.shaded.el</shadedPattern>-->
+						<!--</relocation>-->
+						<!--<relocation>-->
+							<!--<pattern>org.glassfish</pattern>-->
+							<!--<shadedPattern>org.shaded.glassfish</shadedPattern>-->
+						<!--</relocation>-->
+						<!--<relocation>-->
+							<!--<pattern>org.apache.commons</pattern>-->
+							<!--<shadedPattern>org.shaded.apache.commons</shadedPattern>-->
+						<!--</relocation>-->
+						<!--<relocation>-->
+							<!--<pattern>org.jboss.logging</pattern>-->
+							<!--<shadedPattern>org.shaded.jboss.logging</shadedPattern>-->
+						<!--</relocation>-->
+						<!--<relocation>-->
+							<!--<pattern>com.fasterxml</pattern>-->
+							<!--<shadedPattern>com.shaded.fasterxml</shadedPattern>-->
+						<!--</relocation>-->
+					<!--</relocations>-->
+				<!--</configuration>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<phase>package</phase>-->
+						<!--<goals>-->
+							<!--<goal>shade</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
