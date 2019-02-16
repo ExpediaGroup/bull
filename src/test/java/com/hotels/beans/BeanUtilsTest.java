@@ -17,19 +17,34 @@
 package com.hotels.beans;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
+
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
+import com.hotels.beans.sample.FromFooSimple;
+import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
 import com.hotels.beans.transformer.Transformer;
 
 /**
  * Unit test for {@link BeanUtils}.
  */
 public class BeanUtilsTest {
-        /**
+    private static final BigInteger ID = new BigInteger("1234");
+    private static final String NAME = "Goofy";
+
+    /**
      * The class to be tested.
      */
     @InjectMocks
@@ -44,7 +59,7 @@ public class BeanUtilsTest {
     }
 
     /**
-     * Test that a Tranformer is returned.
+     * Test that a Transformer is returned.
      */
     @Test
     public void testGetTransformerWorksProperly() {
@@ -55,5 +70,34 @@ public class BeanUtilsTest {
 
         //THEN
         assertNotNull(transformer);
+    }
+
+    /**
+     * Test that the transformer function returned is able to transform the given object.
+     */
+    @Test
+    public void testGetTransformerFunctionWorksProperly() {
+        //GIVEN
+        FromFooSimple fromFooSimple = createFromFooSimple();
+        List<FromFooSimple> fromFooSimpleList = Arrays.asList(fromFooSimple, fromFooSimple);
+
+        //WHEN
+        Function<FromFooSimple, ImmutableToFooSimple> transformerFunction = underTest.getTransformer(ImmutableToFooSimple.class);
+        List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
+                .map(transformerFunction)
+                .collect(Collectors.toList());
+
+        //THEN
+        assertNotNull(transformerFunction);
+        IntStream.range(0, actual.size())
+                .forEach(i -> assertThat(actual.get(i), sameBeanAs(fromFooSimpleList.get(i))));
+    }
+
+    /**
+     * Creates a {@link FromFooSimple} instance.
+     * @return the {@link FromFooSimple} instance.
+     */
+    private FromFooSimple createFromFooSimple() {
+        return new FromFooSimple(NAME, ID);
     }
 }
