@@ -65,7 +65,7 @@ public class FromBean {                                     public class ToBean 
    private final BigInteger id;                                public BigInteger id;                      
    private final List<FromSubBean> subBeanList;                private final String name;                 
    private List<String> list;                                  private final List<String> list;                    
-   private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
+   private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> subBeanList;                    
                                                                private ImmutableToSubFoo nestedObject;
         
    // constructors...                                          // constructors...
@@ -252,6 +252,19 @@ FieldTransformer<String, String> notExistingFieldTransformer = new FieldTransfor
 ToBean toBean = beanUtils.getTransformer()
                     .withFieldTransformer(notExistingFieldTransformer)
                     .transform(fromBean, ToBean.class);
+~~~
+
+### Static transformer function:
+
+~~~Java
+List<FromFooSimple> fromFooSimpleList = Arrays.asList(fromFooSimple, fromFooSimple);
+~~~
+can be transformed as follow:
+~~~Java
+Function<FromFooSimple, ImmutableToFooSimple> transformerFunction = BeanUtils.getTransformer(ImmutableToFooSimple.class);
+        List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
+                .map(transformerFunction)
+                .collect(Collectors.toList());
 ~~~
        
 More sample beans can be found in the test package: `com.hotels.beans.sample`
