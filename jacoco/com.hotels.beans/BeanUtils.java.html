@@ -16,20 +16,34 @@
 
 package com.hotels.beans;
 
+import java.util.function.Function;
+
 import com.hotels.beans.transformer.TransformerImpl;
 import com.hotels.beans.transformer.Transformer;
 
 /**
  * Set of Bean utilities.
  */
-<span class="fc" id="L25">public class BeanUtils {</span>
+<span class="fc" id="L27">public class BeanUtils {</span>
+
+    /**
+     * Returns a function that transforms an object T in an object K.
+     * @param targetClass the destination object class
+     * @param &lt;T&gt; the Source object type
+     * @param &lt;K&gt; the target object type
+     * @return a function that copies of the source object into the destination object
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    public static &lt;T, K&gt; Function&lt;T, K&gt; getTransformer(final Class&lt;K&gt; targetClass) {
+<span class="fc" id="L38">        return fromBean -&gt; new TransformerImpl().transform(fromBean, targetClass);</span>
+    }
 
     /**
      * Returns a Bean Transformer.
      * @return a Bean Transformer instance.
      */
     public final Transformer getTransformer() {
-<span class="fc" id="L32">        return new TransformerImpl();</span>
+<span class="fc" id="L46">        return new TransformerImpl();</span>
     }
 
 }
