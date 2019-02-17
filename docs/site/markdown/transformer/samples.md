@@ -199,5 +199,18 @@ ToBean toBean = beanUtils.getTransformer()
                     .withFieldTransformer(notExistingFieldTransformer)
                     .transform(fromBean, ToBean.class);
 ~~~
-       
+
+### Static transformer function:
+
+~~~Java
+List<FromFooSimple> fromFooSimpleList = Arrays.asList(fromFooSimple, fromFooSimple);
+~~~
+can be transformed as follow:
+~~~Java
+Function<FromFooSimple, ImmutableToFooSimple> transformerFunction = BeanUtils.getTransformer(ImmutableToFooSimple.class);
+        List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
+                .map(transformerFunction)
+                .collect(Collectors.toList());
+~~~
+
 More sample beans can be found in the test package: `com.hotels.beans.sample`
