@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.3] 2019.17
+#### Added
+* Added static transformation functionality (see: [Issue 25](https://github.com/HotelsDotCom/bull/issues/25)).
+
 ### [1.1.2] 2019.02
 #### Added
 * Made the field name mapping more flexible adding the possibility to map destination object field with field contained into nested objects. 
