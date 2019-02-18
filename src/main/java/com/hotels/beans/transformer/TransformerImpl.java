@@ -429,7 +429,10 @@ public class TransformerImpl implements Transformer {
      * @return the updated breadcrumb
      */
     private String evalBreadcrumb(final String fieldName, final String breadcrumb) {
-        return (nonNull(breadcrumb) ? (breadcrumb + DOT.getSymbol()) : "") + fieldName;
+        if (breadcrumb != null) {
+            return breadcrumb + DOT.getSymbol() + fieldName;
+        }
+        return fieldName;
     }
 
     /**
