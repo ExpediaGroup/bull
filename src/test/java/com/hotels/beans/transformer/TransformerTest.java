@@ -48,6 +48,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import com.hotels.beans.sample.mutable.MutableToFooBreadcrumb;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -403,6 +404,20 @@ public class TransformerTest {
 
         //WHEN
         MutableToFoo actual = underTest.transform(fromFoo, MutableToFoo.class);
+
+        //THEN
+        assertThat(actual, sameBeanAs(fromFoo));
+    }
+
+    /**
+     * Test mutable beans are correctly copied.
+     */
+    @Test
+    public void testMutableBeanIsCorrectlyCopied2() {
+        //GIVEN
+
+        //WHEN
+        MutableToFooBreadcrumb actual = underTest.transform(fromFoo, MutableToFooBreadcrumb.class);
 
         //THEN
         assertThat(actual, sameBeanAs(fromFoo));
