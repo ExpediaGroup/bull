@@ -48,7 +48,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import com.hotels.beans.sample.mutable.MutableToFooBreadcrumb;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -410,17 +409,24 @@ public class TransformerTest {
     }
 
     /**
-     * Test mutable beans are correctly copied.
+     * Test that a given field transformer function is applied only to a specific field even if there are other ones with same name.
      */
     @Test
-    public void testMutableBeanIsCorrectlyCopied2() {
+    public void testFieldTransformationIsAppliedOnlyToASpecificField() {
         //GIVEN
+        String namePrefix = "prefix-";
+        String expectedTransformedName = namePrefix + fromFoo.getNestedObject().getName();
+        FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("nestedObject.name", val -> namePrefix + val);
 
         //WHEN
-        MutableToFooBreadcrumb actual = underTest.transform(fromFoo, MutableToFooBreadcrumb.class);
+        MutableToFoo actual = underTest
+                .withFieldTransformer(nameTransformer)
+                .transform(fromFoo, MutableToFoo.class);
 
         //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
+        assertEquals(fromFoo.getName(), actual.getName());
+        assertEquals(expectedTransformedName, actual.getNestedObject().getName());
+        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -637,9 +643,10 @@ public class TransformerTest {
         underTest.withFieldTransformer(new FieldTransformer<>("locale", Locale::forLanguageTag));
 
         //WHEN
-        final Method getConstructorValuesFromFieldsMethod = underTest.getClass().getDeclaredMethod(GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME, Object.class, Class.class);
+        final Method getConstructorValuesFromFieldsMethod =
+                underTest.getClass().getDeclaredMethod(GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME, Object.class, Class.class, String.class);
         getConstructorValuesFromFieldsMethod.setAccessible(true);
-        Object[] actual = (Object[]) getConstructorValuesFromFieldsMethod.invoke(underTest, fromFooAdvFields, ImmutableToFooAdvFields.class);
+        Object[] actual = (Object[]) getConstructorValuesFromFieldsMethod.invoke(underTest, fromFooAdvFields, ImmutableToFooAdvFields.class, "");
 
         //THEN
         assertNotNull(actual);
