@@ -1,5 +1,5 @@
 <head>
-    <title>Bean Transformer</title>
+    <title>Samples</title>
 </head>
 
 # Transformation samples
@@ -198,6 +198,35 @@ FieldTransformer<String, String> notExistingFieldTransformer = new FieldTransfor
 ToBean toBean = beanUtils.getTransformer()
                     .withFieldTransformer(notExistingFieldTransformer)
                     .transform(fromBean, ToBean.class);
+~~~
+
+### Apply a transformation function on a field contained in a nested object:
+
+This example shows of a lambda transformation function can be applied on a nested object field.
+
+Given:
+
+~~~Java
+@AllArgsConstructor                                         @AllArgsConstructor
+@Getter                                                     @Getter
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  private final String name;                   
+   private final FromSubBean nestedObject;                     private final ToSubBean nestedObject;                    
+}                                                           }
+~~~
+and
+~~~Java
+@AllArgsConstructor                                         @AllArgsConstructor
+@Getter                                                     @Getter
+public class FromSubBean {                                  public class ToSubBean {                           
+   private final String name;                                  private final String name;                   
+   private final long index;                                   private final long index;                    
+}                                                           }
+~~~
+Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as 
+follow:
+~~~Java
+FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("nestedObject.name", StringUtils::capitalize);
 ~~~
 
 ### Static transformer function:

@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
  * Validation utils for Class objects.
  */
 @NoArgsConstructor(access = PRIVATE)
-public class ValidationUtils {
+public final class ValidationUtils {
     /**
      * Validate that the specified argument is not {@code null};
      * otherwise throws an {@link IllegalArgumentException} with the specified message.
