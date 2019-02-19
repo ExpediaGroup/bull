@@ -184,12 +184,12 @@ public class ReflectionUtilsTest {
         // WHEN
         String stringGetterMethodPrefix = (String) method.invoke(underTest, String.class);
         String booleanGetterMethodPrefix = (String) method.invoke(underTest, Boolean.class);
-        String primitiveBbooleanGetterMethodPrefix = (String) method.invoke(underTest, booleanField.getType());
+        String primitiveBooleanGetterMethodPrefix = (String) method.invoke(underTest, booleanField.getType());
 
         // THEN
         assertEquals(GET.getPrefix(), stringGetterMethodPrefix);
         assertEquals(IS.getPrefix(), booleanGetterMethodPrefix);
-        assertEquals(IS.getPrefix(), primitiveBbooleanGetterMethodPrefix);
+        assertEquals(IS.getPrefix(), primitiveBooleanGetterMethodPrefix);
     }
 
     /**

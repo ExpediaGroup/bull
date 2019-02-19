@@ -288,7 +288,7 @@ public class TransformerTest {
         //THEN
         assertEquals(fromFooWithNullProperties.getName(), actual.getName());
         assertEquals(fromFooWithNullProperties.getId(), actual.getId());
-        assertEquals(fromFooWithNullProperties.getNestedObject(), actual.getPhoneNumbers());
+        assertNull(actual.getPhoneNumbers());
         underTest.resetFieldsMapping();
     }
 
