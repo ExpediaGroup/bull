@@ -14,7 +14,7 @@ extent to which the component or system under test:
 * can be installed and run in its intended environments
 * achieves the general result its stakeholders desire.
 
-This page will show how to test BULL into a simple project. All the examples utilizes [JUnit](https://github.com/junit-team)
+This page will show how to test BULL into a simple project. All the examples utilizes [JUnit](https://github.com/junit-team) and [Mockito](https://site.mockito.org/).
 
 The Java Bean transformation function can be tested in two different ways that depends on the following scenarios:
 
@@ -31,15 +31,14 @@ Assuming that our source object and our destination object have been defined as 
 @AllArgsConstructor                                         @AllArgsConstructor
 @Getter                                                     @Getter
 @Setter                                                     @Setter
-public class FromFoo {                                public class ToFoo {                           
-   private final String name;                                  @NotNull                   
-   private final BigInteger id;                                public BigInteger id;                      
-   private final List<FromSubBean> subBeanList;                private final String name;                 
+public class SampleRequest {                                public class DestObject {                           
+   private final BigInteger x;                                 @NotNull                   
+   private final BigInteger y;                                 private BigInteger x;                      
+   private final List<FromSubBean> subBeanList;                private final BigInteger y;                 
    private List<String> list;                                  private final List<String> list;                    
    private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
-                                                               private ImmutableToSubFoo nestedObject;
-}                                                               
-                                                            }
+   
+}                                                           }
 ~~~
 And this is the class containing the `BeanUtils` library:
 ~~~Java
@@ -53,9 +52,14 @@ public class SampleClass {
         this.beanUtils = new BeanUtils();
     }
 
-    public SampleResponse doSomething(final SampleRequest request) {
+    public BigInteger doSomething(final SampleRequest request) {
         final Transformer beanTransformer = beanUtils.getTransformer();
-        return beanTransformer.transform(request, SampleResponse.class);
+        DestObject destObject = beanTransformer.transform(request, DestObject.class);
+        return multiplyValues(destObject.getX(), destObject.getY());
+    }
+    
+    private BigInteger multiplyValues(final BigInteger x, final BigInteger y) {
+         return x * y;
     }
 }
 ~~~
@@ -89,7 +93,6 @@ public class SampleClassTest {
     @Before
     public void beforeMethod() {
         initMocks(this);
-        ReflectionTestUtils.setField(underTest, "beanUtils", beanUtils);
     }
 
     /**

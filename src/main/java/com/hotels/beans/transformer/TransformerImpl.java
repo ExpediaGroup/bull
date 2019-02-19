@@ -23,13 +23,8 @@ import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.range;
 
-import static javax.validation.Validation.buildDefaultValidatorFactory;
-
-import static org.apache.commons.lang3.StringUtils.SPACE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
-import static com.hotels.beans.constant.Punctuation.DOT;
-import static com.hotels.beans.constant.Punctuation.SEMICOLON;
 import static com.hotels.beans.constant.Punctuation.COMMA;
 import static com.hotels.beans.constant.Punctuation.LPAREN;
 import static com.hotels.beans.constant.Punctuation.RPAREN;
@@ -46,11 +41,7 @@ import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
 
 import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.cache.CacheManager;
@@ -61,6 +52,7 @@ import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
+import com.hotels.beans.utils.ValidationUtils;
 
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
@@ -78,6 +70,11 @@ public class TransformerImpl implements Transformer {
     private final ClassUtils classUtils;
 
     /**
+     * Class reflection utils class {@link ValidationUtils}.
+     */
+    private final ValidationUtils validationUtils;
+
+    /**
      * CacheManager class {@link CacheManager}.
      */
     private final CacheManager cacheManager;
@@ -93,6 +90,7 @@ public class TransformerImpl implements Transformer {
     public TransformerImpl() {
         this.reflectionUtils = new ReflectionUtils();
         this.classUtils = new ClassUtils();
+        this.validationUtils = new ValidationUtils();
         this.transformerSettings = new TransformerSettings();
         this.cacheManager = getCacheManager("transformer");
     }
@@ -189,7 +187,7 @@ public class TransformerImpl implements Transformer {
                 injectNotFinalFields(sourceObj, k);
             }
         }
-        validate(k);
+        validationUtils.validate(k);
         return k;
     }
 
@@ -455,39 +453,5 @@ public class TransformerImpl implements Transformer {
                         // recursively inject object
                         transform(fieldValue, field.getType())
                 );
-    }
-
-    /**
-     * Checks if an object is valid.
-     * @param k the object to check
-     * @param <K> the object class
-     * @throws InvalidBeanException {@link InvalidBeanException} if the validation fails
-     */
-    private <K> void validate(final K k) {
-        final Set<ConstraintViolation<Object>> constraintViolations = getValidator().validate(k);
-        if (!constraintViolations.isEmpty()) {
-            final String errors = constraintViolations.stream()
-                    .map(cv -> cv.getRootBeanClass().getCanonicalName()
-                            + DOT.getSymbol()
-                            + cv.getPropertyPath()
-                            + SPACE
-                            + cv.getMessage())
-                    .collect(joining(SEMICOLON.getSymbol()));
-            throw new InvalidBeanException(errors);
-        }
-    }
-
-    /**
-     * Creates the validator.
-     * @return a {@link Validator} instance.
-     */
-    private Validator getValidator() {
-        String cacheKey = "BeanValidator";
-        return ofNullable(cacheManager.getFromCache(cacheKey, Validator.class))
-                .orElseGet(() -> {
-                    Validator validator = buildDefaultValidatorFactory().getValidator();
-                    cacheManager.cacheObject(cacheKey, validator);
-                    return validator;
-                });
     }
 }
