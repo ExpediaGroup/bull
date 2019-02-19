@@ -402,7 +402,7 @@ public class TransformerImpl implements Transformer {
      */
     private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
         Object fieldValue = null;
-        String realBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
+        String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
         if (isNotEmpty(sourceFieldName)) {
             boolean primitiveType = classUtils.isPrimitiveType(field.getType());
             boolean isFieldTransformerDefined = transformerSettings.getFieldsTransformers().containsKey(field.getName());
@@ -413,13 +413,13 @@ public class TransformerImpl implements Transformer {
                 boolean notPrimitiveAndNotSpecialType = !primitiveType && !classUtils.isSpecialType(field.getType());
                 if ((notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))
                         && !isFieldTransformerDefined) {
-                    fieldValue = getFieldValue(targetClass, field, fieldValue, realBreadcrumb);
+                    fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
                 }
             } else if (primitiveType) {
                 fieldValue = defaultValue(field.getType()); // assign the default value
             }
         }
-        return getTransformedField(realBreadcrumb, fieldValue);
+        return getTransformedField(fieldBreadcrumb, fieldValue);
     }
 
     /**
