@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 * Added possibility to apply a transformation function on all fields matching with the given name without evaluating the full field path.
 * Added samples and tests for the above functionality
 #### Fixed
-* Fixed issue that was preventing the `Set` tranformation
+* Fixed issue that was preventing the `Set` transformation
 
 ### [1.1.3] 2019.02.17
 #### Added
