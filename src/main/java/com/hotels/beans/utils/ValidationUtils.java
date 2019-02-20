@@ -17,16 +17,41 @@
 package com.hotels.beans.utils;
 
 import static java.util.Objects.isNull;
+import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.joining;
 
-import static lombok.AccessLevel.PRIVATE;
+import static javax.validation.Validation.buildDefaultValidatorFactory;
 
-import lombok.NoArgsConstructor;
+import static org.apache.commons.lang3.StringUtils.SPACE;
+
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.beans.constant.Punctuation.DOT;
+import static com.hotels.beans.constant.Punctuation.SEMICOLON;
+
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+
+import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.error.InvalidBeanException;
 
 /**
  * Validation utils for Class objects.
  */
-@NoArgsConstructor(access = PRIVATE)
-public final class ValidationUtils {
+public class ValidationUtils {
+    /**
+     * CacheManager class {@link CacheManager}.
+     */
+    private final CacheManager cacheManager;
+
+    /**
+     * Default constructor.
+     */
+    public ValidationUtils() {
+        this.cacheManager = getCacheManager("validationUtils");
+    }
+
     /**
      * Validate that the specified argument is not {@code null};
      * otherwise throws an {@link IllegalArgumentException} with the specified message.
@@ -52,5 +77,39 @@ public final class ValidationUtils {
         if (isNull(object)) {
             throw new IllegalArgumentException(message);
         }
+    }
+
+    /**
+     * Checks if an object is valid.
+     * @param k the object to check
+     * @param <K> the object class
+     * @throws InvalidBeanException {@link InvalidBeanException} if the validation fails
+     */
+    public final <K> void validate(final K k) {
+        final Set<ConstraintViolation<Object>> constraintViolations = getValidator().validate(k);
+        if (!constraintViolations.isEmpty()) {
+            final String errors = constraintViolations.stream()
+                    .map(cv -> cv.getRootBeanClass().getCanonicalName()
+                            + DOT.getSymbol()
+                            + cv.getPropertyPath()
+                            + SPACE
+                            + cv.getMessage())
+                    .collect(joining(SEMICOLON.getSymbol()));
+            throw new InvalidBeanException(errors);
+        }
+    }
+
+    /**
+     * Creates the validator.
+     * @return a {@link Validator} instance.
+     */
+    private Validator getValidator() {
+        String cacheKey = "BeanValidator";
+        return ofNullable(cacheManager.getFromCache(cacheKey, Validator.class))
+                .orElseGet(() -> {
+                    Validator validator = buildDefaultValidatorFactory().getValidator();
+                    cacheManager.cacheObject(cacheKey, validator);
+                    return validator;
+                });
     }
 }

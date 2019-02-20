@@ -415,7 +415,6 @@ public class TransformerTest {
     public void testFieldTransformationIsAppliedOnlyToASpecificField() {
         //GIVEN
         String namePrefix = "prefix-";
-        String expectedTransformedName = namePrefix + fromFoo.getNestedObject().getName();
         FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("nestedObject.name", val -> namePrefix + val);
 
         //WHEN
@@ -425,7 +424,28 @@ public class TransformerTest {
 
         //THEN
         assertEquals(fromFoo.getName(), actual.getName());
-        assertEquals(expectedTransformedName, actual.getNestedObject().getName());
+        assertEquals(namePrefix + fromFoo.getNestedObject().getName(), actual.getNestedObject().getName());
+        underTest.resetFieldsTransformer();
+    }
+
+    /**
+     * Test that a given field transformer function is applied to all field matching the given name when {@code flatFieldNameTransformation} is set to true.
+     */
+    @Test
+    public void testFieldTransformationIsAppliedToAllMatchingFields() {
+        //GIVEN
+        String namePrefix = "prefix-";
+        FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("name", val -> namePrefix + val);
+
+        //WHEN
+        MutableToFoo actual = underTest
+                .setFlatFieldNameTransformation(true)
+                .withFieldTransformer(nameTransformer)
+                .transform(fromFoo, MutableToFoo.class);
+
+        //THEN
+        assertEquals(namePrefix + fromFoo.getName(), actual.getName());
+        assertEquals(namePrefix + fromFoo.getNestedObject().getName(), actual.getNestedObject().getName());
         underTest.resetFieldsTransformer();
     }
 
