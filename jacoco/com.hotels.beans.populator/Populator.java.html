@@ -111,7 +111,7 @@ public abstract class Populator&lt;O&gt; {
         } else {
 <span class="fc" id="L112">            final Optional&lt;Populator&gt; optPopulator = getPopulator(targetClass, sourceObj.getClass(), transformer);</span>
 <span class="fc" id="L113">            res = (K) optPopulator</span>
-<span class="fc" id="L114">                    .map(populator -&gt; ((ICollectionPopulator&lt;Object&gt;) populator).getPopulatedObject(targetClass, sourceObj, nestedGenericClass))</span>
+<span class="fc" id="L114">                    .map(populator -&gt; ((ICollectionPopulator&lt;Object&gt;) populator).getPopulatedObject(targetClass, targetClass, sourceObj, nestedGenericClass))</span>
 <span class="fc" id="L115">                    .orElseGet(() -&gt; transformer.transform(sourceObj, targetClass));</span>
         }
 <span class="fc" id="L117">        return res;</span>

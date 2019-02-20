@@ -103,7 +103,7 @@
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>          when(transformer.transform(any(), eq(MixedToFooStaticField.<strong class="jxr_keyword">class</strong>))).thenReturn(MIXED_TO_FOO_STATIC_FIELDS_OBJECTS);
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>  
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>          <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>          Object actual = underTest.getPopulatedObject(genericFieldType, array, nestedGenericClass);
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          Object actual = underTest.getPopulatedObject(<strong class="jxr_keyword">null</strong>, genericFieldType, array, nestedGenericClass);
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>  
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>         <em class="jxr_comment">// THEN</em>
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>         <strong class="jxr_keyword">if</strong> (genericFieldType == Character.<strong class="jxr_keyword">class</strong>) {

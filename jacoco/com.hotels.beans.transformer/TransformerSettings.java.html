@@ -28,7 +28,7 @@ import lombok.Setter;
  * It contains:
  *  1) The field name mapping
  *  2) The lambda function to apply on a field.
- *  2) Other configurations.
+ *  3) Other configurations.
  */
 @Getter
 <span class="fc" id="L34">final class TransformerSettings {</span>
@@ -53,5 +53,12 @@ import lombok.Setter;
      */
 <span class="fc" id="L54">    @Setter</span>
 <span class="fc" id="L55">    private boolean setDefaultValue;</span>
+
+    /**
+     * It allows to apply a transformation to all fields matching with the provided name without using their whole path.
+     * If set to true the transformation function is applied to all fields that have a name matching with the given one without evaluating their full path.
+     */
+<span class="fc" id="L61">    @Setter</span>
+<span class="fc" id="L62">    private boolean flatFieldNameTransformation;</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

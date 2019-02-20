@@ -21,7 +21,7 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
-import static org.apache.commons.text.WordUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.capitalize;
 
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.MethodPrefix.GET;

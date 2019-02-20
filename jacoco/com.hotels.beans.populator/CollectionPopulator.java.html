@@ -18,9 +18,12 @@ package com.hotels.beans.populator;
 
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collector;
 
 import com.hotels.beans.transformer.Transformer;
 
@@ -35,16 +38,16 @@ class CollectionPopulator&lt;K&gt; extends Populator&lt;Collection&gt; implement
      * @param beanTransformer the bean transformer containing the field name mapping and transformation functions
      */
     CollectionPopulator(final Transformer beanTransformer) {
-<span class="fc" id="L38">        super(beanTransformer);</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L41">        super(beanTransformer);</span>
+<span class="fc" id="L42">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Collection&lt;K&gt; getPopulatedObject(final Field field, final Collection fieldValue) {
-<span class="fc" id="L46">        final Class&lt;?&gt; genericClass = getReflectionUtils().getArgumentTypeClass(fieldValue, field.getDeclaringClass().getName(), field.getName(), true);</span>
-<span class="fc" id="L47">        return getPopulatedObject(getReflectionUtils().getGenericFieldType(field), fieldValue, genericClass);</span>
+<span class="fc" id="L49">        final Class&lt;?&gt; genericClass = getReflectionUtils().getArgumentTypeClass(fieldValue, field.getDeclaringClass().getName(), field.getName(), true);</span>
+<span class="fc" id="L50">        return getPopulatedObject(field.getType(), getReflectionUtils().getGenericFieldType(field), fieldValue, genericClass);</span>
     }
 
     /**
@@ -52,18 +55,19 @@ class CollectionPopulator&lt;K&gt; extends Populator&lt;Collection&gt; implement
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
-    public Collection&lt;K&gt; getPopulatedObject(final Class&lt;?&gt; genericFieldType, final Object fieldValue, final Class&lt;?&gt; nestedGenericClass) {
+    public Collection&lt;K&gt; getPopulatedObject(final Class&lt;?&gt; fieldType, final Class&lt;?&gt; genericFieldType, final Object fieldValue, final Class&lt;?&gt; nestedGenericClass) {
         final Collection res;
-<span class="fc bfc" id="L57" title="All 4 branches covered.">        if (getClassUtils().isPrimitiveOrSpecialType(isNull(nestedGenericClass) ? genericFieldType : nestedGenericClass)) {</span>
-<span class="fc" id="L58">            res = (Collection) fieldValue;</span>
+<span class="fc bfc" id="L60" title="All 4 branches covered.">        if (getClassUtils().isPrimitiveOrSpecialType(isNull(nestedGenericClass) ? genericFieldType : nestedGenericClass)) {</span>
+<span class="fc" id="L61">            res = (Collection) fieldValue;</span>
         } else {
-<span class="fc" id="L60">            res = ((Collection&lt;K&gt;) fieldValue)</span>
-<span class="fc" id="L61">                    .stream()</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">            Collector&lt;Object, ?, ? extends Collection&lt;Object&gt;&gt; collector = Set.class.isAssignableFrom(fieldType) ? toSet() : toList();</span>
+<span class="fc" id="L64">            res = ((Collection&lt;K&gt;) fieldValue)</span>
+<span class="fc" id="L65">                    .stream()</span>
 //                    .parallelStream()
-<span class="fc" id="L63">                    .map(elem -&gt; transform(elem, (Class&lt;K&gt;) genericFieldType))</span>
-<span class="fc" id="L64">                    .collect(toList());</span>
+<span class="fc" id="L67">                    .map(elem -&gt; transform(elem, (Class&lt;K&gt;) genericFieldType))</span>
+<span class="fc" id="L68">                    .collect(collector);</span>
         }
-<span class="fc" id="L66">        return res;</span>
+<span class="fc" id="L70">        return res;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
