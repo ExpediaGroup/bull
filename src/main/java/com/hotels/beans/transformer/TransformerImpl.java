@@ -114,7 +114,7 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <K> String getFormattedConstructorArgs(final Class<K> targetClass, final Object[] constructorArgs) {
         return stream(constructorArgs)
-                .map(obj -> obj.getClass().getCanonicalName())
+                .map(arg -> isNull(arg) ? "null" : arg.getClass().getCanonicalName())
                 .collect(joining(COMMA.getSymbol(), targetClass.getCanonicalName() + LPAREN.getSymbol(), RPAREN.getSymbol()));
     }
 
