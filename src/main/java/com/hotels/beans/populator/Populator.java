@@ -111,7 +111,7 @@ public abstract class Populator<O> {
         } else {
             final Optional<Populator> optPopulator = getPopulator(targetClass, sourceObj.getClass(), transformer);
             res = (K) optPopulator
-                    .map(populator -> ((ICollectionPopulator<Object>) populator).getPopulatedObject(targetClass, sourceObj, nestedGenericClass))
+                    .map(populator -> ((ICollectionPopulator<Object>) populator).getPopulatedObject(targetClass, targetClass, sourceObj, nestedGenericClass))
                     .orElseGet(() -> transformer.transform(sourceObj, targetClass));
         }
         return res;

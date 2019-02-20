@@ -95,7 +95,7 @@ public class ArrayPopulatorTest {
         when(transformer.transform(any(), eq(MixedToFooStaticField.class))).thenReturn(MIXED_TO_FOO_STATIC_FIELDS_OBJECTS);
 
         // WHEN
-        Object actual = underTest.getPopulatedObject(genericFieldType, array, nestedGenericClass);
+        Object actual = underTest.getPopulatedObject(null, genericFieldType, array, nestedGenericClass);
 
         // THEN
         if (genericFieldType == Character.class) {
