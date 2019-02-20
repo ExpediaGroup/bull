@@ -56,7 +56,7 @@ final class TransformerSettings {
 
     /**
      * It allows to apply a transformation to all fields matching with the provided name without using their whole path.
-     * If set to true the transformation function is applied to all fields without evaluating their full path.
+     * If set to true the transformation function is applied to all fields that have a name matching with the given one without evaluating their full path.
      */
     @Setter
     private boolean flatFieldNameTransformation;

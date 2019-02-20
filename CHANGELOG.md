@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### [1.1.4] TBD
 #### Added
 * Added possibility to apply a transformation function only on a specific field (see: [Issue 27](https://github.com/HotelsDotCom/bull/issues/27)).
+* Added possibility to apply a transformation function on all fields matching with the given name without evaluating the full field path.
 * Added samples and tests for the above functionality
 
 ### [1.1.3] 2019.17
