@@ -18,6 +18,7 @@ package com.hotels.beans.utils;
 
 import static java.lang.reflect.Modifier.isFinal;
 import static java.lang.reflect.Modifier.isPrivate;
+import static java.lang.reflect.Modifier.isPublic;
 import static java.lang.reflect.Modifier.isStatic;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
@@ -29,6 +30,7 @@ import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
 import static org.apache.commons.lang3.ArrayUtils.isEmpty;
+import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 
 import static com.hotels.beans.utils.ValidationUtils.notNull;
 import static com.hotels.beans.base.Defaults.defaultValue;
@@ -362,6 +364,37 @@ public final class ClassUtils {
             }
             cacheManager.cacheObject(cacheKey, field);
             return field;
+        });
+    }
+
+    /**
+     * Checks if the destination class has accessible constructor.
+     * @param targetClass the destination object class
+     * @param <K> the target object type
+     * @return true if the target class uses the builder pattern
+     */
+    public <K> boolean hasAccessibleConstructors(final Class<K> targetClass) {
+        final String cacheKey = "HasAccessibleConstructors-" + targetClass.getCanonicalName();
+        return ofNullable(cacheManager.getFromCache(cacheKey, Boolean.class)).orElseGet(() -> {
+            final boolean res = stream(targetClass.getDeclaredConstructors()).anyMatch(constructor -> isPublic(constructor.getModifiers()));
+            cacheManager.cacheObject(cacheKey, res);
+            return res;
+        });
+    }
+
+    /**
+     * Checks if the destination class uses the Builder pattern.
+     * @param constructor the all args constructor
+     * @param targetClass the destination object class
+     * @param <K> the target object type
+     * @return true if the target class uses the builder pattern
+     */
+    public <K> boolean usesBuilderPattern(final Constructor constructor, final Class<K> targetClass) {
+        final String cacheKey = "UsesBuilderPattern-" + constructor.getDeclaringClass().getCanonicalName();
+        return ofNullable(cacheManager.getFromCache(cacheKey, Boolean.class)).orElseGet(() -> {
+            final boolean res = !isPublic(constructor.getModifiers()) && isNotEmpty(targetClass.getDeclaredClasses());
+            cacheManager.cacheObject(cacheKey, res);
+            return res;
         });
     }
 
