@@ -18,9 +18,12 @@ package com.hotels.beans.populator;
 
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collector;
 
 import com.hotels.beans.transformer.Transformer;
 
@@ -44,7 +47,7 @@ class CollectionPopulator<K> extends Populator<Collection> implements ICollectio
     @Override
     public Collection<K> getPopulatedObject(final Field field, final Collection fieldValue) {
         final Class<?> genericClass = getReflectionUtils().getArgumentTypeClass(fieldValue, field.getDeclaringClass().getName(), field.getName(), true);
-        return getPopulatedObject(getReflectionUtils().getGenericFieldType(field), fieldValue, genericClass);
+        return getPopulatedObject(field.getType(), getReflectionUtils().getGenericFieldType(field), fieldValue, genericClass);
     }
 
     /**
@@ -52,16 +55,17 @@ class CollectionPopulator<K> extends Populator<Collection> implements ICollectio
      */
     @SuppressWarnings("unchecked")
     @Override
-    public Collection<K> getPopulatedObject(final Class<?> genericFieldType, final Object fieldValue, final Class<?> nestedGenericClass) {
+    public Collection<K> getPopulatedObject(final Class<?> fieldType, final Class<?> genericFieldType, final Object fieldValue, final Class<?> nestedGenericClass) {
         final Collection res;
         if (getClassUtils().isPrimitiveOrSpecialType(isNull(nestedGenericClass) ? genericFieldType : nestedGenericClass)) {
             res = (Collection) fieldValue;
         } else {
+            Collector<Object, ?, ? extends Collection<Object>> collector = Set.class.isAssignableFrom(fieldType) ? toSet() : toList();
             res = ((Collection<K>) fieldValue)
                     .stream()
 //                    .parallelStream()
                     .map(elem -> transform(elem, (Class<K>) genericFieldType))
-                    .collect(toList());
+                    .collect(collector);
         }
         return res;
     }
