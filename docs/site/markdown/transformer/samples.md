@@ -1,5 +1,5 @@
 <head>
-    <title>Bean Transformer</title>
+    <title>Samples</title>
 </head>
 
 # Transformation samples
@@ -108,8 +108,9 @@ public class FromBean {                                     public class ToBean 
    private final List<FromSubBean> subBeanList;                private final List<ToSubBean> subBeanList;                 
    private final List<String> list;                            private final List<String> list;                    
    private final FromSubBean subObject;                        private final ToSubBean subObject;                    
-    
-   // getters and setters...
+   
+   // all args constructor
+   // getters...
                                                                public ToBean(@ConstructorArg("name") final String differentName, 
                                                                         @ConstructorArg("id") final int id,
 }                                                                       @ConstructorArg("subBeanList") final List<ToSubBean> subBeanList,
@@ -122,7 +123,7 @@ public class FromBean {                                     public class ToBean 
                                                                         this.subObject = subObject; 
                                                                     }
                                                                 
-                                                                    // getters and setters...           
+                                                                    // getters...           
                                               
                                                             }
 ~~~
@@ -145,8 +146,12 @@ public class FromBean {                                     public class ToBean 
    private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
    private final String locale;                                private final Locale locale;                    
                                                                private ImmutableToSubFoo nestedObject;
-}                                                               
-                                                            }
+       
+   // constructors...                                          // constructors...
+   
+   // getters and setters...                                   // getters and setters...
+                                                                                                                              
+}                                                           }
 ~~~
 
 ~~~Java
@@ -170,7 +175,12 @@ public class FromBean {                                     public class ToBean 
    private final BigInteger id;                                public BigInteger id;                      
                                                                private final String name;                 
                                                                private String notExistingField; // this will be null and no exceptions will be raised
-}                                                            }
+
+   // constructors...                                          // constructors...
+   
+   // getters...                                              // getters and setters...
+
+}                                                           }
 ~~~
 And one line code as:
 ~~~Java
@@ -190,13 +200,82 @@ public class FromBean {                                     public class ToBean 
    private final BigInteger id;                                public BigInteger id;                      
                                                                private final String name;                 
                                                                private String notExistingField; // this will have value: sampleVal
-}                                                            }
+                                                               
+   // all args constructor                                     // constructors...
+   
+   // getters...                                               // getters and setters...
+}                                                           }
 ~~~
 And one line code as:
 ~~~Java
 FieldTransformer<String, String> notExistingFieldTransformer = new FieldTransformer<>("notExistingField", val -> "sampleVal");
 ToBean toBean = beanUtils.getTransformer()
                     .withFieldTransformer(notExistingFieldTransformer)
+                    .transform(fromBean, ToBean.class);
+~~~
+
+### Apply a transformation function on a field contained in a nested object:
+
+This example shows of a lambda transformation function can be applied on a nested object field.
+
+Given:
+
+~~~Java
+@AllArgsConstructor                                         @AllArgsConstructor
+@Getter                                                     @Getter
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  private final String name;                   
+   private final FromSubBean nestedObject;                     private final ToSubBean nestedObject;                    
+}                                                           }
+~~~
+and
+~~~Java
+@AllArgsConstructor                                         @AllArgsConstructor
+@Getter                                                     @Getter
+public class FromSubBean {                                  public class ToSubBean {                           
+   private final String name;                                  private final String name;                   
+   private final long index;                                   private final long index;                    
+}                                                           }
+~~~
+Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as 
+follow:
+~~~Java
+FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("nestedObject.name", StringUtils::capitalize);
+ToBean toBean = beanUtils.getTransformer()
+                    .withFieldTransformer(nameTransformer)
+                    .transform(fromBean, ToBean.class);
+~~~
+
+### Apply a transformation function on all fields matching with the given one:
+
+This example shows of a lambda transformation function can be applied on all fields matching with the given one independently from their position.
+
+Given:
+
+~~~Java
+@AllArgsConstructor                                         @AllArgsConstructor
+@Getter                                                     @Getter
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  private final String name;                   
+   private final FromSubBean nestedObject;                     private final ToSubBean nestedObject;                    
+}                                                           }
+~~~
+and
+~~~Java
+@AllArgsConstructor                                         @AllArgsConstructor
+@Getter                                                     @Getter
+public class FromSubBean {                                  public class ToSubBean {                           
+   private final String name;                                  private final String name;                   
+   private final long index;                                   private final long index;                    
+}                                                           }
+~~~
+Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as 
+follow:
+~~~Java
+FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("name", StringUtils::capitalize);
+ToBean toBean = beanUtils.getTransformer()
+                    .setFlatFieldNameTransformation(true)
+                    .withFieldTransformer(nameTransformer)
                     .transform(fromBean, ToBean.class);
 ~~~
 
