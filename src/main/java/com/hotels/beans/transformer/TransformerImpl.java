@@ -419,7 +419,7 @@ public class TransformerImpl implements Transformer {
                 fieldValue = defaultValue(field.getType()); // assign the default value
             }
         }
-        return getTransformedField(fieldBreadcrumb, fieldValue);
+        return getTransformedField(field, fieldBreadcrumb, fieldValue);
     }
 
     /**
@@ -459,12 +459,14 @@ public class TransformerImpl implements Transformer {
 
     /**
      * It executes the lambda function defined to the field.
+     * @param field The field on which the transformation should be applied.
      * @param breadcrumb The full field path on which the transformation should be applied.
      * @param fieldValue The field value.
      * @return the transformed field.
      */
-    private Object getTransformedField(final String breadcrumb, final Object fieldValue) {
-        return ofNullable(transformerSettings.getFieldsTransformers().get(breadcrumb))
+    private Object getTransformedField(final Field field, final String breadcrumb, final Object fieldValue) {
+        String fieldName = transformerSettings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;
+        return ofNullable(transformerSettings.getFieldsTransformers().get(fieldName))
                 .map(fieldTransformer -> fieldTransformer.apply(fieldValue))
                 .orElse(fieldValue);
     }

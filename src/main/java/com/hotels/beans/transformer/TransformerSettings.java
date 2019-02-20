@@ -28,7 +28,7 @@ import lombok.Setter;
  * It contains:
  *  1) The field name mapping
  *  2) The lambda function to apply on a field.
- *  2) Other configurations.
+ *  3) Other configurations.
  */
 @Getter
 final class TransformerSettings {
@@ -53,4 +53,11 @@ final class TransformerSettings {
      */
     @Setter
     private boolean setDefaultValue;
+
+    /**
+     * It allows to apply a transformation to all fields matching with the provided name without using their whole path.
+     * If set to true the transformation function is applied to all fields without evaluating their full path.
+     */
+    @Setter
+    private boolean flatFieldNameTransformation;
 }
