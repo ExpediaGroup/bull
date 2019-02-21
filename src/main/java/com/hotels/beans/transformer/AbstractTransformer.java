@@ -18,6 +18,7 @@ package com.hotels.beans.transformer;
 
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
+
 import static javax.validation.Validation.buildDefaultValidatorFactory;
 
 import static org.apache.commons.lang3.StringUtils.SPACE;
@@ -29,6 +30,7 @@ import static com.hotels.beans.utils.ValidationUtils.notNull;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+
 import javax.validation.Validator;
 import javax.validation.ConstraintViolation;
 
@@ -39,37 +41,34 @@ import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
-import com.hotels.beans.utils.ValidationUtils;
+
+import lombok.Getter;
 
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
  * Contains all method implementation that will be common to any {@link Transformer} implementation.
  */
+@Getter
 abstract class AbstractTransformer implements Transformer {
     /**
      * Reflection utils class {@link ReflectionUtils}.
      */
-    final ReflectionUtils reflectionUtils;
+    private final ReflectionUtils reflectionUtils;
 
     /**
      * Class reflection utils class {@link ClassUtils}.
      */
-    final ClassUtils classUtils;
-
-    /**
-     * Validation utils class {@link ValidationUtils}.
-     */
-    final ValidationUtils validationUtils;
+    private final ClassUtils classUtils;
 
     /**
      * CacheManager class {@link CacheManager}.
      */
-    final CacheManager cacheManager;
+    private final CacheManager cacheManager;
 
     /**
      * Contains both the field name mapping and the lambda function to be applied on fields.
      */
-    final TransformerSettings transformerSettings;
+    private final TransformerSettings transformerSettings;
 
     /**
      * Default constructor.
@@ -77,7 +76,6 @@ abstract class AbstractTransformer implements Transformer {
     AbstractTransformer() {
         this.reflectionUtils = new ReflectionUtils();
         this.classUtils = new ClassUtils();
-        this.validationUtils = new ValidationUtils();
         this.transformerSettings = new TransformerSettings();
         this.cacheManager = CacheManagerFactory.getCacheManager("transformer");
     }
