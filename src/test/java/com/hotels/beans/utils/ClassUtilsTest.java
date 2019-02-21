@@ -43,6 +43,7 @@ import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.constant.ClassType;
 import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.sample.FromFoo;
+import com.hotels.beans.sample.FromFooWithBuilder;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
@@ -460,4 +461,37 @@ public class ClassUtilsTest {
         assertEquals(EXPECTED_DEFAULT_VALUE, actual);
     }
 
+    /**
+     * Tests that the method {@code getDefaultTypeValue} works as expected.
+     */
+    @Test
+    public void testUsesBuilderPatternWorksAsExpected() {
+        // GIVEN
+        final Constructor constructorWithBuilder = underTest.getAllArgsConstructor(FromFooWithBuilder.class);
+        final Constructor constructorWithoutBuilder = underTest.getAllArgsConstructor(FromFoo.class);
+
+        // WHEN
+        final boolean usesBuilderPattern = underTest.usesBuilderPattern(constructorWithBuilder, FromFooWithBuilder.class);
+        final boolean notUseBuilderPattern = underTest.usesBuilderPattern(constructorWithoutBuilder, FromFoo.class);
+
+        // THEN
+        assertTrue(usesBuilderPattern);
+        assertFalse(notUseBuilderPattern);
+    }
+
+    /**
+     * Tests that the method {@code hasAccessibleConstructors} works as expected.
+     */
+    @Test
+    public void testHasAccessibleConstructorsWorksAsExpected() {
+        // GIVEN
+
+        // WHEN
+        final boolean notAccessibleConstructors = underTest.hasAccessibleConstructors(FromFooWithBuilder.class);
+        final boolean accessibleConstructors = underTest.hasAccessibleConstructors(FromFoo.class);
+
+        // THEN
+        assertFalse(notAccessibleConstructors);
+        assertTrue(accessibleConstructors);
+    }
 }

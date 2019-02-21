@@ -25,169 +25,54 @@ import static java.util.stream.IntStream.range;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
+import static com.hotels.beans.constant.Punctuation.DOT;
 import static com.hotels.beans.constant.Punctuation.COMMA;
 import static com.hotels.beans.constant.Punctuation.LPAREN;
 import static com.hotels.beans.constant.Punctuation.RPAREN;
 import static com.hotels.beans.constant.ClassType.MIXED;
 import static com.hotels.beans.constant.ClassType.MUTABLE;
-import static com.hotels.beans.utils.ValidationUtils.notNull;
 import static com.hotels.beans.base.Defaults.defaultValue;
-import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 
 import com.hotels.beans.annotation.ConstructorArg;
-import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.constant.ClassType;
 import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.error.MissingFieldException;
-import com.hotels.beans.model.FieldMapping;
-import com.hotels.beans.model.FieldTransformer;
-import com.hotels.beans.utils.ClassUtils;
-import com.hotels.beans.utils.ReflectionUtils;
-import com.hotels.beans.utils.ValidationUtils;
 
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
  * The implementations are provided by BeanUtils.
  */
-public class TransformerImpl implements Transformer {
-    /**
-     * Reflection utils class {@link ReflectionUtils}.
-     */
-    private final ReflectionUtils reflectionUtils;
-
-    /**
-     * Class reflection utils class {@link ClassUtils}.
-     */
-    private final ClassUtils classUtils;
-
-    /**
-     * Class reflection utils class {@link ValidationUtils}.
-     */
-    private final ValidationUtils validationUtils;
-
-    /**
-     * CacheManager class {@link CacheManager}.
-     */
-    private final CacheManager cacheManager;
-
-    /**
-     * Contains both the field name mapping and the lambda function to be applied on fields.
-     */
-    private final TransformerSettings transformerSettings;
-
-    /**
-     * Default constructor.
-     */
-    public TransformerImpl() {
-        this.reflectionUtils = new ReflectionUtils();
-        this.classUtils = new ClassUtils();
-        this.validationUtils = new ValidationUtils();
-        this.transformerSettings = new TransformerSettings();
-        this.cacheManager = getCacheManager("transformer");
-    }
-
+public class TransformerImpl extends AbstractTransformer {
     /**
      * {@inheritDoc}
      */
     @Override
-    public final Transformer withFieldMapping(final FieldMapping... fieldMapping) {
-        final Map<String, String> fieldsNameMapping = transformerSettings.getFieldsNameMapping();
-        for (FieldMapping mapping : fieldMapping) {
-            fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());
-        }
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void removeFieldMapping(final String destFieldName) {
-        notNull(destFieldName, "The field name for which the mapping has to be removed cannot be null!");
-        transformerSettings.getFieldsNameMapping().remove(destFieldName);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void resetFieldsMapping() {
-        transformerSettings.getFieldsNameMapping().clear();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public final Transformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
-        Map<String, Function<Object, Object>> fieldsTransformers = transformerSettings.getFieldsTransformers();
-        for (FieldTransformer transformer : fieldTransformer) {
-            fieldsTransformers.put(transformer.getDestFieldName(), transformer.getTransformerFunction());
-        }
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void removeFieldTransformer(final String destFieldName) {
-        notNull(destFieldName, "The field name for which the transformer function has to be removed cannot be null!");
-        transformerSettings.getFieldsTransformers().remove(destFieldName);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void resetFieldsTransformer() {
-        transformerSettings.getFieldsTransformers().clear();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final Transformer setDefaultValueForMissingField(final boolean useDefaultValue) {
-        transformerSettings.setSetDefaultValue(useDefaultValue);
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass) {
-        notNull(sourceObj, "The object to copy cannot be null!");
-        notNull(targetClass, "The destination class cannot be null!");
+    protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
         final ClassType classType = classUtils.getClassType(targetClass);
         if (classType.is(MUTABLE)) {
             try {
                 k = targetClass.getDeclaredConstructor().newInstance();
-                injectNotFinalFields(sourceObj, k);
+                injectNotFinalFields(sourceObj, k, breadcrumb);
             } catch (NoSuchMethodException e) {
                 throw new InvalidBeanException("No default constructor defined for class: " + targetClass.getName(), e);
             } catch (Exception e) {
                 throw new InvalidBeanException(e.getMessage(), e);
             }
         } else {
-            k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass));
+            k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass), breadcrumb);
             if (classType.is(MIXED)) {
-                injectNotFinalFields(sourceObj, k);
+                injectNotFinalFields(sourceObj, k, breadcrumb);
             }
         }
-        validationUtils.validate(k);
+        validate(k);
         return k;
     }
 
@@ -196,18 +81,19 @@ public class TransformerImpl implements Transformer {
      * @param sourceObj   sourceObj the source object
      * @param targetClass the destination object class
      * @param constructor the all args constructor
+     * @param breadcrumb  the full path of the current field starting from his ancestor
      * @param <T>         the sourceObj object type
      * @param <K>         the target object type
      * @return a copy of the source object into the destination object
      * @throws InvalidBeanException {@link InvalidBeanException} if the target object is not compliant with the requirements
      */
     @SuppressWarnings("unchecked")
-    private <T, K> K injectValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor) {
+    private <T, K> K injectValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
         final Object[] constructorArgs;
         if (canBeInjectedByConstructorParams(constructor, targetClass)) {
-            constructorArgs = getConstructorArgsValues(sourceObj, targetClass, constructor);
+            constructorArgs = getConstructorArgsValues(sourceObj, targetClass, constructor, breadcrumb);
         } else {
-            constructorArgs = getConstructorValuesFromFields(sourceObj, targetClass);
+            constructorArgs = getConstructorValuesFromFields(sourceObj, targetClass, breadcrumb);
         }
         try {
             return (K) constructor.newInstance(constructorArgs);
@@ -228,7 +114,7 @@ public class TransformerImpl implements Transformer {
      */
     private <K> String getFormattedConstructorArgs(final Class<K> targetClass, final Object[] constructorArgs) {
         return stream(constructorArgs)
-                .map(obj -> obj.getClass().getCanonicalName())
+                .map(arg -> isNull(arg) ? "null" : arg.getClass().getCanonicalName())
                 .collect(joining(COMMA.getSymbol(), targetClass.getCanonicalName() + LPAREN.getSymbol(), RPAREN.getSymbol()));
     }
 
@@ -255,12 +141,13 @@ public class TransformerImpl implements Transformer {
      * @param sourceObj   sourceObj the source object
      * @param targetClass the destination object class
      * @param constructor the all args constructor
+     * @param breadcrumb  the full path of the current field starting from his ancestor
      * @param <T>         the sourceObj object type
      * @param <K>         the target object type
      * @return a list containing the values for the destination constructor.
      * @throws InvalidBeanException {@link InvalidBeanException} if there is an error while retrieving the constructor args parameter
      */
-    private <T, K> Object[] getConstructorArgsValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor) {
+    private <T, K> Object[] getConstructorArgsValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
         final Parameter[] constructorParameters = classUtils.getConstructorParameters(constructor);
         final Object[] constructorArgsValues = new Object[constructorParameters.length];
         range(0, constructorParameters.length)
@@ -271,7 +158,8 @@ public class TransformerImpl implements Transformer {
                         constructorArgsValues[i] =  classUtils.getDefaultTypeValue(constructorParameters[i].getType());
                     } else {
                         String sourceFieldName = getSourceFieldName(destFieldName);
-                        constructorArgsValues[i] = ofNullable(getFieldValue(sourceObj, sourceFieldName, targetClass, classUtils.getDeclaredField(targetClass, destFieldName)))
+                        constructorArgsValues[i] =
+                                ofNullable(getFieldValue(sourceObj, sourceFieldName, targetClass, classUtils.getDeclaredField(targetClass, destFieldName), breadcrumb))
                                 .orElse(classUtils.getDefaultTypeValue(constructorParameters[i].getType()));
                     }
                 });
@@ -324,15 +212,16 @@ public class TransformerImpl implements Transformer {
      * This methods retrieves the values from the declared class field into the target object.
      * @param sourceObj   sourceObj the source object
      * @param targetClass the destination object class
+     * @param breadcrumb  the full path of the current field starting from his ancestor
      * @param <T>         the sourceObj object type
      * @param <K>         the target object type
      * @return a list containing the values for the destination constructor.
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
-    private <T, K> Object[] getConstructorValuesFromFields(final T sourceObj, final Class<K> targetClass) {
+    private <T, K> Object[] getConstructorValuesFromFields(final T sourceObj, final Class<K> targetClass, final String breadcrumb) {
         final List<Field> declaredFields = classUtils.getDeclaredFields(targetClass, true);
         return declaredFields.stream()
-                .map(field -> getFieldValue(sourceObj, targetClass, field))
+                .map(field -> getFieldValue(sourceObj, targetClass, field, breadcrumb))
                 .toArray(Object[]::new);
     }
 
@@ -341,15 +230,16 @@ public class TransformerImpl implements Transformer {
      * This methods retrieves the values from the declared class field into the target object.
      * @param sourceObj sourceObj the source object
      * @param targetObject the destination object instance
+     * @param breadcrumb  the full path of the current field starting from his ancestor
      * @param <T>  the sourceObj object type
      * @param <K> the target object type
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
-    private <T, K> void injectNotFinalFields(final T sourceObj, final K targetObject) {
+    private <T, K> void injectNotFinalFields(final T sourceObj, final K targetObject, final String breadcrumb) {
         final Class<?> targetObjectClass = targetObject.getClass();
         classUtils.getNotFinalFields(targetObjectClass, true)
                 //.parallelStream()
-                .forEach(field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field)));
+                .forEach(field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));
     }
 
     /**
@@ -357,14 +247,15 @@ public class TransformerImpl implements Transformer {
      * @param sourceObj sourceObj the source object
      * @param targetClass the destination object class
      * @param field The field for which the value has to be retrieved
+     * @param breadcrumb  the full path of the current field starting from his ancestor
      * @param <T> the sourceObj object type
      * @param <K> the target object type
      * @return the field value
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
-    private <T, K> Object getFieldValue(final T sourceObj, final Class<K> targetClass, final Field field) {
+    private <T, K> Object getFieldValue(final T sourceObj, final Class<K> targetClass, final Field field, final String breadcrumb) {
         String sourceFieldName = getSourceFieldName(field);
-        return getFieldValue(sourceObj, sourceFieldName, targetClass, field);
+        return getFieldValue(sourceObj, sourceFieldName, targetClass, field, breadcrumb);
     }
 
     /**
@@ -373,13 +264,15 @@ public class TransformerImpl implements Transformer {
      * @param sourceFieldName sourceFieldName the field name in the source object (if different from the target one)
      * @param targetClass the destination object class
      * @param field The field for which the value has to be retrieved
+     * @param breadcrumb  the full path of the current field starting from his ancestor
      * @param <T> the sourceObj object type
      * @param <K> the target object type
      * @return the field value
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
-    private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field) {
+    private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
         Object fieldValue = null;
+        String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
         if (isNotEmpty(sourceFieldName)) {
             boolean primitiveType = classUtils.isPrimitiveType(field.getType());
             boolean isFieldTransformerDefined = transformerSettings.getFieldsTransformers().containsKey(field.getName());
@@ -390,13 +283,23 @@ public class TransformerImpl implements Transformer {
                 boolean notPrimitiveAndNotSpecialType = !primitiveType && !classUtils.isSpecialType(field.getType());
                 if ((notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))
                         && !isFieldTransformerDefined) {
-                    fieldValue = getFieldValue(targetClass, field, fieldValue);
+                    fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
                 }
             } else if (primitiveType) {
                 fieldValue = defaultValue(field.getType()); // assign the default value
             }
         }
-        return getTransformedField(field, fieldValue);
+        return getTransformedField(field, fieldBreadcrumb, fieldValue);
+    }
+
+    /**
+     * Build the current field breadcrumb.
+     * @param fieldName the field name
+     * @param breadcrumb the existing breadcrumb
+     * @return the updated breadcrumb
+     */
+    private String evalBreadcrumb(final String fieldName, final String breadcrumb) {
+        return (breadcrumb != null ? breadcrumb + DOT.getSymbol() : "") + fieldName;
     }
 
     /**
@@ -404,7 +307,7 @@ public class TransformerImpl implements Transformer {
      * @param sourceObj sourceObj the source object
      * @param sourceFieldName sourceFieldName the field name in the source object (if different from the target one)
      * @param field The field for which the value has to be retrieved
-     * @param isFieldTransformerDefined indicates if a tranformer function is implemented for this field
+     * @param isFieldTransformerDefined indicates if a transformer function is implemented for this field
      * @param <T> the sourceObj object type
      * @return the source field value
      */
@@ -427,11 +330,13 @@ public class TransformerImpl implements Transformer {
     /**
      * It executes the lambda function defined to the field.
      * @param field The field on which the transformation should be applied.
+     * @param breadcrumb The full field path on which the transformation should be applied.
      * @param fieldValue The field value.
      * @return the transformed field.
      */
-    private Object getTransformedField(final Field field, final Object fieldValue) {
-        return ofNullable(transformerSettings.getFieldsTransformers().get(field.getName()))
+    private Object getTransformedField(final Field field, final String breadcrumb, final Object fieldValue) {
+        String fieldName = transformerSettings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;
+        return ofNullable(transformerSettings.getFieldsTransformers().get(fieldName))
                 .map(fieldTransformer -> fieldTransformer.apply(fieldValue))
                 .orElse(fieldValue);
     }
@@ -441,17 +346,18 @@ public class TransformerImpl implements Transformer {
      * @param targetClass the destination object class
      * @param field The field for which the value has to be retrieved
      * @param fieldValue The current object value.
+     * @param breadcrumb The full field path on which the transformation should be applied
      * @param <K> the target object type
      * @return the field value
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     @SuppressWarnings("unchecked")
-    private <K> Object getFieldValue(final Class<K> targetClass, final Field field, final Object fieldValue) {
+    private <K> Object getFieldValue(final Class<K> targetClass, final Field field, final Object fieldValue, final String breadcrumb) {
         return getPopulator(field.getType(), fieldValue.getClass(), this)
                 .map(populator -> populator.getPopulatedObject(targetClass, field.getName(), fieldValue))
                 .orElseGet(() ->
                         // recursively inject object
-                        transform(fieldValue, field.getType())
+                        transform(fieldValue, field.getType(), breadcrumb)
                 );
     }
 }

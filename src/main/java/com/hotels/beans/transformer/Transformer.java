@@ -79,4 +79,13 @@ public interface Transformer {
      * @return the {@link Transformer} instance
      */
     Transformer setDefaultValueForMissingField(boolean useDefaultValue);
+
+    /**
+     * It allows to configure the transformer in order to apply a transformation function on all fields matching the given name without keeping in consideration their full path.
+     * If set to true the default value is set, if false if it raises a: {@link com.hotels.beans.error.MissingFieldException} in case of missing fields.
+     * @param useFlatTransformation indicates if the transformer function has to be performed on all fields matching the given name without keeping in consideration their full
+     *                              path.
+     * @return the {@link Transformer} instance
+     */
+    Transformer setFlatFieldNameTransformation(boolean useFlatTransformation);
 }

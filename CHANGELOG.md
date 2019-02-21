@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.1.3] 2019.17
+### [1.1.4] 2019.02.20
+#### Added
+* Added possibility to apply a transformation function only on a specific field (see: [Issue 27](https://github.com/HotelsDotCom/bull/issues/27)).
+* Added possibility to apply a transformation function on all fields matching with the given name without evaluating the full field path.
+* Added samples and tests for the above functionality
+#### Fixed
+* Fixed issue that was preventing the `Set` transformation
+
+### [1.1.3] 2019.02.17
 #### Added
 * Added static transformation functionality (see: [Issue 25](https://github.com/HotelsDotCom/bull/issues/25)).
 

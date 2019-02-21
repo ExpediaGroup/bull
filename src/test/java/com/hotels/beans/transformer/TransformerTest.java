@@ -288,7 +288,7 @@ public class TransformerTest {
         //THEN
         assertEquals(fromFooWithNullProperties.getName(), actual.getName());
         assertEquals(fromFooWithNullProperties.getId(), actual.getId());
-        assertEquals(fromFooWithNullProperties.getNestedObject(), actual.getPhoneNumbers());
+        assertNull(actual.getPhoneNumbers());
         underTest.resetFieldsMapping();
     }
 
@@ -406,6 +406,47 @@ public class TransformerTest {
 
         //THEN
         assertThat(actual, sameBeanAs(fromFoo));
+    }
+
+    /**
+     * Test that a given field transformer function is applied only to a specific field even if there are other ones with same name.
+     */
+    @Test
+    public void testFieldTransformationIsAppliedOnlyToASpecificField() {
+        //GIVEN
+        String namePrefix = "prefix-";
+        FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("nestedObject.name", val -> namePrefix + val);
+
+        //WHEN
+        MutableToFoo actual = underTest
+                .withFieldTransformer(nameTransformer)
+                .transform(fromFoo, MutableToFoo.class);
+
+        //THEN
+        assertEquals(fromFoo.getName(), actual.getName());
+        assertEquals(namePrefix + fromFoo.getNestedObject().getName(), actual.getNestedObject().getName());
+        underTest.resetFieldsTransformer();
+    }
+
+    /**
+     * Test that a given field transformer function is applied to all field matching the given name when {@code flatFieldNameTransformation} is set to true.
+     */
+    @Test
+    public void testFieldTransformationIsAppliedToAllMatchingFields() {
+        //GIVEN
+        String namePrefix = "prefix-";
+        FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("name", val -> namePrefix + val);
+
+        //WHEN
+        MutableToFoo actual = underTest
+                .setFlatFieldNameTransformation(true)
+                .withFieldTransformer(nameTransformer)
+                .transform(fromFoo, MutableToFoo.class);
+
+        //THEN
+        assertEquals(namePrefix + fromFoo.getName(), actual.getName());
+        assertEquals(namePrefix + fromFoo.getNestedObject().getName(), actual.getNestedObject().getName());
+        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -622,9 +663,10 @@ public class TransformerTest {
         underTest.withFieldTransformer(new FieldTransformer<>("locale", Locale::forLanguageTag));
 
         //WHEN
-        final Method getConstructorValuesFromFieldsMethod = underTest.getClass().getDeclaredMethod(GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME, Object.class, Class.class);
+        final Method getConstructorValuesFromFieldsMethod =
+                underTest.getClass().getDeclaredMethod(GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME, Object.class, Class.class, String.class);
         getConstructorValuesFromFieldsMethod.setAccessible(true);
-        Object[] actual = (Object[]) getConstructorValuesFromFieldsMethod.invoke(underTest, fromFooAdvFields, ImmutableToFooAdvFields.class);
+        Object[] actual = (Object[]) getConstructorValuesFromFieldsMethod.invoke(underTest, fromFooAdvFields, ImmutableToFooAdvFields.class, "");
 
         //THEN
         assertNotNull(actual);
