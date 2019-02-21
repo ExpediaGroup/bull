@@ -42,7 +42,7 @@ jobs:
         github-token: ${github_oauth_token}
         keep-history: true
         on:
-          branch: master
+          tags: true
     - stage: "Release"
       name: "Releasing artifacts"
       if: type NOT IN (pull_request) AND tag IS present
