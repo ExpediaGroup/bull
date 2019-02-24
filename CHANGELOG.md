@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.5] TBD
+#### Added
+* Upgraded to Java 11
+* Added possibility to skip the object validation
+
 ### [1.1.4] 2019.02.20
 #### Added
 * Added possibility to apply a transformation function only on a specific field (see: [Issue 27](https://github.com/HotelsDotCom/bull/issues/27)).
