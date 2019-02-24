@@ -18,26 +18,10 @@ package com.hotels.beans.utils;
 
 import static java.util.Objects.isNull;
 
-import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
-
-import com.hotels.beans.cache.CacheManager;
-
 /**
  * Validation utils for Class objects.
  */
 public class ValidationUtils {
-    /**
-     * CacheManager class {@link CacheManager}.
-     */
-    private final CacheManager cacheManager;
-
-    /**
-     * Default constructor.
-     */
-    public ValidationUtils() {
-        this.cacheManager = getCacheManager("validationUtils");
-    }
-
     /**
      * Validate that the specified argument is not {@code null};
      * otherwise throws an {@link IllegalArgumentException} with the specified message.
