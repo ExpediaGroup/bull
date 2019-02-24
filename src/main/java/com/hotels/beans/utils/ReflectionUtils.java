@@ -233,7 +233,7 @@ public final class ReflectionUtils {
             handleReflectionException(e);
             throw new IllegalStateException(e);
         } finally {
-            if (nonNull(field) && !isAccessible) {
+            if (!isAccessible) {
                 field.setAccessible(false);
             }
         }

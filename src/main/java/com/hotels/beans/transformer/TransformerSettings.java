@@ -60,4 +60,11 @@ final class TransformerSettings {
      */
     @Setter
     private boolean flatFieldNameTransformation;
+
+    /**
+     * It allows to disable the object validation.
+     * If set to true the validation is skipped.
+     */
+    @Setter
+    private boolean validationDisabled;
 }

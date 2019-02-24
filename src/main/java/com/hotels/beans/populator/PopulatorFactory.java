@@ -18,6 +18,9 @@ package com.hotels.beans.populator;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
+import static java.util.Optional.ofNullable;
+
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -25,6 +28,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
+import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.transformer.Transformer;
 
 import lombok.NoArgsConstructor;
@@ -34,6 +38,11 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = PRIVATE)
 public final class PopulatorFactory {
+    /**
+     * The Cache manager for this class.
+     */
+    private static final CacheManager CACHE_MANAGER = getCacheManager("populatorFactory");
+
     /**
      * Creates an instance of the populator object based on the given class.
      * @param <O> the generic type of the contained object in the destination object
@@ -55,5 +64,26 @@ public final class PopulatorFactory {
             populator = of(new OptionalPopulator(transformer));
         }
         return populator;
+    }
+
+    /**
+     * Creates an instance of the populator object based on the given class for the given field.
+     * @param <O> the generic type of the contained object in the destination object
+     * @param <T> the generic type of the contained object in the source object
+     * @param destObjectClass the destination object class
+     * @param sourceObjectClass the source object class
+     * @param transformer the bean transformer containing the field name mapping and transformation functions
+     * @param fieldName the name of the field to transform
+     * @return the populator instance
+     */
+    @SuppressWarnings("unchecked")
+    public static <O, T> Optional<Populator> getPopulator(final Class<O> destObjectClass, final Class<T> sourceObjectClass, final Transformer transformer, final String fieldName) {
+        String cacheKey = "FieldPopulator-" + destObjectClass.getCanonicalName() + "-" + fieldName;
+        return ofNullable(CACHE_MANAGER.getFromCache(cacheKey, Optional.class))
+                .orElseGet(() -> {
+                    Optional<Populator> populator = PopulatorFactory.getPopulator(destObjectClass, sourceObjectClass, transformer);
+                    CACHE_MANAGER.cacheObject(cacheKey, populator);
+                    return populator;
+                });
     }
 }

@@ -85,12 +85,13 @@ public abstract class Populator<O> {
      * Wrapper method for BeanUtil transform method.
      * @param sourceObj the source object
      * @param targetClass the destination object class
+     * @param fieldName the name of field under process
      * @param <T> the Source object type
      * @param <K> the target object type
      * @return a copy of the source object into the destination object
      */
-    final <T, K> K transform(final T sourceObj, final Class<K> targetClass) {
-        return transform(sourceObj, targetClass, null);
+    final <T, K> K transform(final T sourceObj, final Class<K> targetClass, final String fieldName) {
+        return transform(sourceObj, targetClass, null, fieldName);
     }
 
     /**
@@ -99,19 +100,20 @@ public abstract class Populator<O> {
      * @param targetClass the destination object class
      * @param nestedGenericClass the nested generic object class. i.e. in case of object like this:
      *                           {@code List<List<String>>} the value is: String
+     * @param fieldName the name of field under process
      * @param <T> the Source object type
      * @param <K> the target object type
      * @return a copy of the source object into the destination object
      */
     @SuppressWarnings("unchecked")
-    final <T, K> K transform(final T sourceObj, final Class<K> targetClass, final Class<?> nestedGenericClass) {
+    final <T, K> K transform(final T sourceObj, final Class<K> targetClass, final Class<?> nestedGenericClass, final String fieldName) {
         final K res;
         if (classUtils.isPrimitiveOrSpecialType(sourceObj.getClass())) {
             res = (K) sourceObj;
         } else {
-            final Optional<Populator> optPopulator = getPopulator(targetClass, sourceObj.getClass(), transformer);
+            final Optional<Populator> optPopulator = getPopulator(targetClass, sourceObj.getClass(), transformer, fieldName);
             res = (K) optPopulator
-                    .map(populator -> ((ICollectionPopulator<Object>) populator).getPopulatedObject(targetClass, targetClass, sourceObj, nestedGenericClass))
+                    .map(populator -> ((ICollectionPopulator<Object>) populator).getPopulatedObject(targetClass, targetClass, sourceObj, nestedGenericClass, fieldName))
                     .orElseGet(() -> transformer.transform(sourceObj, targetClass));
         }
         return res;

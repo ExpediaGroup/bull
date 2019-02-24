@@ -47,7 +47,7 @@ class CollectionPopulator<K> extends Populator<Collection> implements ICollectio
     @Override
     public Collection<K> getPopulatedObject(final Field field, final Collection fieldValue) {
         final Class<?> genericClass = getReflectionUtils().getArgumentTypeClass(fieldValue, field.getDeclaringClass().getName(), field.getName(), true);
-        return getPopulatedObject(field.getType(), getReflectionUtils().getGenericFieldType(field), fieldValue, genericClass);
+        return getPopulatedObject(field.getType(), getReflectionUtils().getGenericFieldType(field), fieldValue, genericClass, field.getName());
     }
 
     /**
@@ -55,7 +55,8 @@ class CollectionPopulator<K> extends Populator<Collection> implements ICollectio
      */
     @SuppressWarnings("unchecked")
     @Override
-    public Collection<K> getPopulatedObject(final Class<?> fieldType, final Class<?> genericFieldType, final Object fieldValue, final Class<?> nestedGenericClass) {
+    public Collection<K> getPopulatedObject(final Class<?> fieldType, final Class<?> genericFieldType, final Object fieldValue,
+        final Class<?> nestedGenericClass, final String fieldName) {
         final Collection res;
         if (getClassUtils().isPrimitiveOrSpecialType(isNull(nestedGenericClass) ? genericFieldType : nestedGenericClass)) {
             res = (Collection) fieldValue;
@@ -64,7 +65,7 @@ class CollectionPopulator<K> extends Populator<Collection> implements ICollectio
             res = ((Collection<K>) fieldValue)
                     .stream()
 //                    .parallelStream()
-                    .map(elem -> transform(elem, (Class<K>) genericFieldType))
+                    .map(elem -> transform(elem, (Class<K>) genericFieldType, fieldName))
                     .collect(collector);
         }
         return res;
