@@ -183,7 +183,9 @@ abstract class AbstractTransformer implements Transformer {
      * @throws InvalidBeanException {@link InvalidBeanException} if the validation fails
      */
     final <K> void validate(final K k) {
-        if (transformerSettings.isValidationDisabled()) return;
+        if (transformerSettings.isValidationDisabled()) {
+            return;
+        }
         final Set<ConstraintViolation<Object>> constraintViolations = getValidator().validate(k);
         if (!constraintViolations.isEmpty()) {
             final String errors = constraintViolations.stream()
