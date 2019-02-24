@@ -51,6 +51,7 @@ public class ArrayPopulatorTest {
     private static final int ZERO = 0;
     private static final int[] INT_ARRAY = new int[] {ZERO};
     private static final MixedToFooStaticField MIXED_TO_FOO_STATIC_FIELDS_OBJECTS = new MixedToFooStaticField();
+    private static final String FIELD_NAME = "testField";
 
     private final Class<?> genericFieldType;
     private final Class<?> nestedGenericClass;
@@ -95,7 +96,7 @@ public class ArrayPopulatorTest {
         when(transformer.transform(any(), eq(MixedToFooStaticField.class))).thenReturn(MIXED_TO_FOO_STATIC_FIELDS_OBJECTS);
 
         // WHEN
-        Object actual = underTest.getPopulatedObject(null, genericFieldType, array, nestedGenericClass);
+        Object actual = underTest.getPopulatedObject(null, genericFieldType, array, nestedGenericClass, FIELD_NAME);
 
         // THEN
         if (genericFieldType == Character.class) {

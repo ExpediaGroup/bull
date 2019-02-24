@@ -44,7 +44,7 @@ class OptionalPopulator extends Populator<Object> {
         Object res = null;
         Optional optionalFieldValue = (Optional) fieldValue;
         if (optionalFieldValue.isPresent()) {
-            res = transform(optionalFieldValue.get(), field.getType());
+            res = transform(optionalFieldValue.get(), field.getType(), field.getName());
         }
         // if the field type in the target class is not an optional it puts the value inside an optional
         if (field.getType() == Optional.class) {
