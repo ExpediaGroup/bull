@@ -7,9 +7,6 @@
 ### Simple case:
 
 ~~~Java
-@AllArgsConstructor                                         @AllArgsConstructor
-@Getter                                                     @Getter
-@Setter                                                     @Setter
 public class FromBean {                                     public class ToBean {                           
    private final String name;                                  @NotNull                   
    private final BigInteger id;                                public BigInteger id;                      
@@ -17,6 +14,9 @@ public class FromBean {                                     public class ToBean 
    private List<String> list;                                  private final List<String> list;                    
    private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
                                                                private ImmutableToSubFoo nestedObject;
+   
+   // all constructors                                         // all args constructor
+   // getters and setters...                                   // getters... 
 }                                                               
                                                             }
 ~~~
@@ -83,7 +83,6 @@ public class FromBean {                                     public class ToBean 
                                                                private final Date creationDate;                    
    
    // all args constructor                                     // all args constructor
-   
    // getters...                                               // getters... 
    
 }                                                           }
@@ -102,7 +101,6 @@ beanUtils.getTransformer()
 
 ~~~Java
 public class FromBean {                                     public class ToBean {                           
-                                                                                       
    private final String name;                                  private final String differentName;                   
    private final int id;                                       private final int id;                      
    private final List<FromSubBean> subBeanList;                private final List<ToSubBean> subBeanList;                 
@@ -135,9 +133,6 @@ ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
 ### Different field names and types applying transformation through lambda function:
 
 ~~~Java
-@AllArgsConstructor                                         @AllArgsConstructor
-@Getter                                                     @Getter
-@Setter                                                     @Setter
 public class FromBean {                                     public class ToBean {                           
    private final String name;                                  @NotNull                   
    private final BigInteger id;                                public BigInteger identifier;                      
@@ -148,7 +143,6 @@ public class FromBean {                                     public class ToBean 
                                                                private ImmutableToSubFoo nestedObject;
        
    // constructors...                                          // constructors...
-   
    // getters and setters...                                   // getters and setters...
                                                                                                                               
 }                                                           }
@@ -168,8 +162,6 @@ beanUtils.getTransformer()
 Assign a default value in case of missing field in the source object:
 
 ~~~Java
-@AllArgsConstructor                                         @AllArgsConstructor
-@Getter                                                     @Getter
 public class FromBean {                                     public class ToBean {                           
    private final String name;                                  @NotNull                   
    private final BigInteger id;                                public BigInteger id;                      
@@ -177,8 +169,7 @@ public class FromBean {                                     public class ToBean 
                                                                private String notExistingField; // this will be null and no exceptions will be raised
 
    // constructors...                                          // constructors...
-   
-   // getters...                                              // getters and setters...
+   // getters...                                               // getters and setters...
 
 }                                                           }
 ~~~
@@ -193,8 +184,6 @@ ToBean toBean = beanUtils.getTransformer()
 Assign a default value in case of missing field in the source object:
 
 ~~~Java
-@AllArgsConstructor                                         @AllArgsConstructor
-@Getter                                                     @Getter
 public class FromBean {                                     public class ToBean {                           
    private final String name;                                  @NotNull                   
    private final BigInteger id;                                public BigInteger id;                      
@@ -202,7 +191,6 @@ public class FromBean {                                     public class ToBean 
                                                                private String notExistingField; // this will have value: sampleVal
                                                                
    // all args constructor                                     // constructors...
-   
    // getters...                                               // getters and setters...
 }                                                           }
 ~~~
@@ -221,17 +209,16 @@ This example shows of a lambda transformation function can be applied on a neste
 Given:
 
 ~~~Java
-@AllArgsConstructor                                         @AllArgsConstructor
-@Getter                                                     @Getter
 public class FromBean {                                     public class ToBean {                           
    private final String name;                                  private final String name;                   
    private final FromSubBean nestedObject;                     private final ToSubBean nestedObject;                    
+
+   // all args constructor                                     // all args constructor
+   // getters...                                               // getters...
 }                                                           }
 ~~~
 and
 ~~~Java
-@AllArgsConstructor                                         @AllArgsConstructor
-@Getter                                                     @Getter
 public class FromSubBean {                                  public class ToSubBean {                           
    private final String name;                                  private final String name;                   
    private final long index;                                   private final long index;                    
@@ -253,20 +240,22 @@ This example shows of a lambda transformation function can be applied on all fie
 Given:
 
 ~~~Java
-@AllArgsConstructor                                         @AllArgsConstructor
-@Getter                                                     @Getter
 public class FromBean {                                     public class ToBean {                           
    private final String name;                                  private final String name;                   
    private final FromSubBean nestedObject;                     private final ToSubBean nestedObject;                    
+
+   // all args constructor                                     // all args constructor
+   // getters...                                               // getters...
 }                                                           }
 ~~~
 and
 ~~~Java
-@AllArgsConstructor                                         @AllArgsConstructor
-@Getter                                                     @Getter
 public class FromSubBean {                                  public class ToSubBean {                           
    private final String name;                                  private final String name;                   
    private final long index;                                   private final long index;                    
+   
+   // all args constructor                                     // all args constructor
+   // getters...                                               // getters...
 }                                                           }
 ~~~
 Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as 
@@ -290,6 +279,26 @@ Function<FromFooSimple, ImmutableToFooSimple> transformerFunction = BeanUtils.ge
         List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
                 .map(transformerFunction)
                 .collect(Collectors.toList());
+~~~
+
+### Disable Java Beans validation:
+
+Assuming that the field: `id` in the fromBean instance is null.
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  @NotNull                   
+   private final BigInteger id;                                public BigInteger id;                      
+                                                               private final String name;
+
+   // all args constructor                                     // all args constructor
+   // getters...                                               // getters and setters...
+}                                                            }
+~~~
+adding the following configuration no exception will be thrown:
+~~~Java
+ToBean toBean = beanUtils.getTransformer()
+                     .setValidationDisabled(true)
+                     .transform(fromBean, ToBean.class);
 ~~~
 
 More sample beans can be found in the test package: `com.hotels.beans.sample`

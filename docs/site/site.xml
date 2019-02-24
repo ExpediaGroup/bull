@@ -28,7 +28,6 @@
     </menu>
     <menu name="Bean Transformer">
       <item name="Samples" href="/transformer/samples.html" />
-      <item name="How to test" href="/transformer/testing.html" />
       <item name="Performances" href="/transformer/performance.html" />
       <item name="Third Party Lib Comparison" href="/transformer/thirdPartyLibComparison.html" />
     </menu>
