@@ -16,31 +16,18 @@
 
 package com.hotels.beans.transformer;
 
-import static java.util.Optional.ofNullable;
-import static java.util.stream.Collectors.joining;
-
-import static javax.validation.Validation.buildDefaultValidatorFactory;
-
-import static org.apache.commons.lang3.StringUtils.SPACE;
-
-import static com.hotels.beans.constant.Punctuation.DOT;
-import static com.hotels.beans.constant.Punctuation.SEMICOLON;
 import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
-
-import javax.validation.Validator;
-import javax.validation.ConstraintViolation;
 
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.cache.CacheManagerFactory;
-import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
+import com.hotels.beans.utils.ValidationUtils;
 
 import lombok.Getter;
 
@@ -61,6 +48,11 @@ abstract class AbstractTransformer implements Transformer {
     private final ClassUtils classUtils;
 
     /**
+     * Validation utils class {@link ValidationUtils}.
+     */
+    private final ValidationUtils validationUtils;
+
+    /**
      * CacheManager class {@link CacheManager}.
      */
     private final CacheManager cacheManager;
@@ -76,6 +68,7 @@ abstract class AbstractTransformer implements Transformer {
     AbstractTransformer() {
         this.reflectionUtils = new ReflectionUtils();
         this.classUtils = new ClassUtils();
+        this.validationUtils = new ValidationUtils();
         this.transformerSettings = new TransformerSettings();
         this.cacheManager = CacheManagerFactory.getCacheManager("transformer");
     }
@@ -174,40 +167,6 @@ abstract class AbstractTransformer implements Transformer {
         notNull(sourceObj, "The object to copy cannot be null!");
         notNull(targetClass, "The destination class cannot be null!");
         return transform(sourceObj, targetClass, null);
-    }
-
-    /**
-     * Checks if an object is valid.
-     * @param k the object to check
-     * @param <K> the object class
-     * @throws InvalidBeanException {@link InvalidBeanException} if the validation fails
-     */
-    final <K> void validate(final K k) {
-        final Set<ConstraintViolation<Object>> constraintViolations = getValidator().validate(k);
-        if (!constraintViolations.isEmpty()) {
-            final String errors = constraintViolations.stream()
-                    .map(cv -> cv.getRootBeanClass().getCanonicalName()
-                            + DOT.getSymbol()
-                            + cv.getPropertyPath()
-                            + SPACE
-                            + cv.getMessage())
-                    .collect(joining(SEMICOLON.getSymbol()));
-            throw new InvalidBeanException(errors);
-        }
-    }
-
-    /**
-     * Creates the validator.
-     * @return a {@link Validator} instance.
-     */
-    private Validator getValidator() {
-        String cacheKey = "BeanValidator";
-        return ofNullable(cacheManager.getFromCache(cacheKey, Validator.class))
-                .orElseGet(() -> {
-                    Validator validator = buildDefaultValidatorFactory().getValidator();
-                    cacheManager.cacheObject(cacheKey, validator);
-                    return validator;
-                });
     }
 
     /**

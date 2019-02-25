@@ -23,13 +23,13 @@ import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.range;
 
-import static com.hotels.beans.base.Defaults.defaultValue;
-import static com.hotels.beans.constant.ClassType.MIXED;
-import static com.hotels.beans.constant.ClassType.MUTABLE;
-import static com.hotels.beans.constant.Punctuation.COMMA;
 import static com.hotels.beans.constant.Punctuation.DOT;
+import static com.hotels.beans.constant.Punctuation.COMMA;
 import static com.hotels.beans.constant.Punctuation.LPAREN;
 import static com.hotels.beans.constant.Punctuation.RPAREN;
+import static com.hotels.beans.constant.ClassType.MIXED;
+import static com.hotels.beans.constant.ClassType.MUTABLE;
+import static com.hotels.beans.base.Defaults.defaultValue;
 import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 
 import java.lang.reflect.Constructor;
@@ -71,7 +71,7 @@ public class TransformerImpl extends AbstractTransformer {
             }
         }
         if (!getTransformerSettings().isValidationDisabled()) {
-            validate(k);
+            getValidationUtils().validate(k);
         }
         return k;
     }
