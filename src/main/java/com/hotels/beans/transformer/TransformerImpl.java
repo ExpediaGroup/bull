@@ -70,7 +70,9 @@ public class TransformerImpl extends AbstractTransformer {
                 injectNotFinalFields(sourceObj, k, breadcrumb);
             }
         }
-        validate(k);
+        if (!getTransformerSettings().isValidationDisabled()) {
+            validate(k);
+        }
         return k;
     }
 

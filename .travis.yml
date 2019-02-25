@@ -19,8 +19,7 @@ jobs:
     - stage: "Build"
       name: "Build and Test"
       if: NOT branch = master
-#      install: travis_retry mvn clean install -DskipTests -Dmaven.javadoc.skip=true -B
-      install: travis_retry mvn clean install -DskipTests site:site -B
+      install: travis_retry mvn clean install -DskipTests -Dmaven.javadoc.skip=true -B
     # If the branch is master it sends the quality report to SonarCloud
     - stage: "Build and Quality Check"
       name: "Building, testing and performing quality check"
