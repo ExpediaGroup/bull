@@ -154,10 +154,19 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
+    public Transformer setValidationDisabled(final boolean validationDisabled) {
+<span class="fc" id="L158">        transformerSettings.setValidationDisabled(validationDisabled);</span>
+<span class="fc" id="L159">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final &lt;T, K&gt; K transform(final T sourceObj, final Class&lt;? extends K&gt; targetClass) {
-<span class="fc" id="L158">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
-<span class="fc" id="L159">        notNull(targetClass, &quot;The destination class cannot be null!&quot;);</span>
-<span class="fc" id="L160">        return transform(sourceObj, targetClass, null);</span>
+<span class="fc" id="L167">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
+<span class="fc" id="L168">        notNull(targetClass, &quot;The destination class cannot be null!&quot;);</span>
+<span class="fc" id="L169">        return transform(sourceObj, targetClass, null);</span>
     }
 
     /**
