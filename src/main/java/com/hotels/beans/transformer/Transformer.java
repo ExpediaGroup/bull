@@ -88,4 +88,11 @@ public interface Transformer {
      * @return the {@link Transformer} instance
      */
     Transformer setFlatFieldNameTransformation(boolean useFlatTransformation);
+
+    /**
+     * It allows to disable the object validation.
+     * @param validationDisabled if true the validation is skipped.
+     * @return the {@link Transformer} instance
+     */
+    Transformer setValidationDisabled(boolean validationDisabled);
 }

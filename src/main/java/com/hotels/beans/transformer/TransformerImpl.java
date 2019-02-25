@@ -23,8 +23,6 @@ import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.range;
 
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
-
 import static com.hotels.beans.constant.Punctuation.DOT;
 import static com.hotels.beans.constant.Punctuation.COMMA;
 import static com.hotels.beans.constant.Punctuation.LPAREN;
@@ -72,7 +70,9 @@ public class TransformerImpl extends AbstractTransformer {
                 injectNotFinalFields(sourceObj, k, breadcrumb);
             }
         }
-        getValidationUtils().validate(k);
+        if (!getTransformerSettings().isValidationDisabled()) {
+            getValidationUtils().validate(k);
+        }
         return k;
     }
 
@@ -271,23 +271,20 @@ public class TransformerImpl extends AbstractTransformer {
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
-        Object fieldValue = null;
         String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
-        if (isNotEmpty(sourceFieldName)) {
-            boolean primitiveType = getClassUtils().isPrimitiveType(field.getType());
-            boolean isFieldTransformerDefined = getTransformerSettings().getFieldsTransformers().containsKey(field.getName());
-            fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);
-            if (nonNull(fieldValue)) {
-                // is not a primitive type or an optional && there are no transformer function
-                // defined it recursively evaluate the value
-                boolean notPrimitiveAndNotSpecialType = !primitiveType && !getClassUtils().isSpecialType(field.getType());
-                if ((notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))
-                        && !isFieldTransformerDefined) {
-                    fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
-                }
-            } else if (primitiveType) {
-                fieldValue = defaultValue(field.getType()); // assign the default value
+        boolean primitiveType = getClassUtils().isPrimitiveType(field.getType());
+        boolean isFieldTransformerDefined = getTransformerSettings().getFieldsTransformers().containsKey(field.getName());
+        Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);
+        if (nonNull(fieldValue)) {
+            // is not a primitive type or an optional && there are no transformer function
+            // defined it recursively evaluate the value
+            boolean notPrimitiveAndNotSpecialType = !primitiveType && !getClassUtils().isSpecialType(field.getType());
+            if ((notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))
+                    && !isFieldTransformerDefined) {
+                fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
             }
+        } else if (primitiveType) {
+            fieldValue = defaultValue(field.getType()); // assign the default value
         }
         return getTransformedField(field, fieldBreadcrumb, fieldValue);
     }
@@ -299,7 +296,7 @@ public class TransformerImpl extends AbstractTransformer {
      * @return the updated breadcrumb
      */
     private String evalBreadcrumb(final String fieldName, final String breadcrumb) {
-        return (breadcrumb != null ? breadcrumb + DOT.getSymbol() : "") + fieldName;
+        return (nonNull(breadcrumb) ? breadcrumb + DOT.getSymbol() : "") + fieldName;
     }
 
     /**
