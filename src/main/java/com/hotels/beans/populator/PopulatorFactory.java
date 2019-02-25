@@ -52,38 +52,22 @@ public final class PopulatorFactory {
      * @param transformer the bean transformer containing the field name mapping and transformation functions
      * @return the populator instance
      */
-    public static <O, T> Optional<Populator> getPopulator(final Class<O> destObjectClass, final Class<T> sourceObjectClass, final Transformer transformer) {
-        Optional<Populator> populator = empty();
-        if (destObjectClass.isArray()) {
-            populator = of(new ArrayPopulator(transformer));
-        } else if (Collection.class.isAssignableFrom(destObjectClass)) {
-            populator = of(new CollectionPopulator(transformer));
-        } else if (Map.class.isAssignableFrom(destObjectClass)) {
-            populator = of(new MapPopulator(transformer));
-        } else if (Optional.class == sourceObjectClass || Optional.class == destObjectClass) {
-            populator = of(new OptionalPopulator(transformer));
-        }
-        return populator;
-    }
-
-    /**
-     * Creates an instance of the populator object based on the given class for the given field.
-     * @param <O> the generic type of the contained object in the destination object
-     * @param <T> the generic type of the contained object in the source object
-     * @param destObjectClass the destination object class
-     * @param sourceObjectClass the source object class
-     * @param transformer the bean transformer containing the field name mapping and transformation functions
-     * @param fieldName the name of the field to transform
-     * @return the populator instance
-     */
     @SuppressWarnings("unchecked")
-    public static <O, T> Optional<Populator> getPopulator(final Class<O> destObjectClass, final Class<T> sourceObjectClass, final Transformer transformer, final String fieldName) {
-        String cacheKey = "FieldPopulator-" + destObjectClass.getCanonicalName() + "-" + fieldName;
+    public static <O, T> Optional<Populator> getPopulator(final Class<O> destObjectClass, final Class<T> sourceObjectClass, final Transformer transformer) {
+        String cacheKey = "FieldPopulator-" + destObjectClass.getCanonicalName();
         return ofNullable(CACHE_MANAGER.getFromCache(cacheKey, Optional.class))
                 .orElseGet(() -> {
-                    Optional<Populator> populator = PopulatorFactory.getPopulator(destObjectClass, sourceObjectClass, transformer);
-                    CACHE_MANAGER.cacheObject(cacheKey, populator);
+                    Optional<Populator> populator = empty();
+                    if (destObjectClass.isArray()) {
+                        populator = of(new ArrayPopulator(transformer));
+                    } else if (Collection.class.isAssignableFrom(destObjectClass)) {
+                        populator = of(new CollectionPopulator(transformer));
+                    } else if (Map.class.isAssignableFrom(destObjectClass)) {
+                        populator = of(new MapPopulator(transformer));
+                    } else if (Optional.class == sourceObjectClass || Optional.class == destObjectClass) {
+                        populator = of(new OptionalPopulator(transformer));
+                    }
                     return populator;
-                });
+            });
     }
 }
