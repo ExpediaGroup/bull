@@ -32,6 +32,7 @@ import com.hotels.beans.utils.ReflectionUtils;
  */
 public class AbstractTransformerTest {
     private static final String SOURCE_FIELD_NAME = "sourceFieldName";
+    private static final String SOURCE_FIELD_NAME_2 = "sourceFieldName2";
     private static final String DEST_FIELD_NAME = "destFieldName";
     private static final String TRANSFORMER_SETTINGS_FIELD_NAME = "transformerSettings";
     private static final ReflectionUtils REFLECTION_UTILS = new ReflectionUtils();
@@ -72,7 +73,7 @@ public class AbstractTransformerTest {
     @Test(expected = IllegalArgumentException.class)
     public void testRemoveFieldMappingRaisesExceptionIfItsCalledWithNullParam() {
         //GIVEN
-        Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping("sourceFieldName", DEST_FIELD_NAME));
+        Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(SOURCE_FIELD_NAME, DEST_FIELD_NAME));
 
         //WHEN
         beanTransformer.removeFieldMapping(null);
@@ -85,7 +86,7 @@ public class AbstractTransformerTest {
     public void testResetFieldsMappingWorksProperly() {
         //GIVEN
         Transformer beanTransformer = underTest
-                .withFieldMapping(new FieldMapping("sourceFieldName", DEST_FIELD_NAME), new FieldMapping("sourceFieldName2", DEST_FIELD_NAME));
+                .withFieldMapping(new FieldMapping(SOURCE_FIELD_NAME, DEST_FIELD_NAME), new FieldMapping(SOURCE_FIELD_NAME_2, DEST_FIELD_NAME));
 
         //WHEN
         beanTransformer.resetFieldsMapping();
