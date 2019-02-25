@@ -2,10 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.1.5] TBD
+### [1.2.0] 2019.02.25
 #### Added
-* Upgraded to Java 11
-* Added possibility to skip the object validation
+* Added possibility to skip the object validation (see: [Issue 31](https://github.com/HotelsDotCom/bull/issues/31))
+* Added documentation and samples for the above functionality
+### Changed
+- Updated `jdk` version to 11 (was 1.8).
+- Updated Travis configuration in order to work with java 11
+- Modified Travis configuration in order to automatically create the GitHub site as soon as a tag is created
 
 ### [1.1.4] 2019.02.20
 #### Added
