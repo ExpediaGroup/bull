@@ -18,9 +18,6 @@ package com.hotels.beans.populator;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
-import static java.util.Optional.ofNullable;
-
-import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -28,7 +25,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
-import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.transformer.Transformer;
 
 import lombok.NoArgsConstructor;
@@ -39,11 +35,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PRIVATE)
 public final class PopulatorFactory {
     /**
-     * The Cache manager for this class.
-     */
-    private static final CacheManager CACHE_MANAGER = getCacheManager("populatorFactory");
-
-    /**
      * Creates an instance of the populator object based on the given class.
      * @param <O> the generic type of the contained object in the destination object
      * @param <T> the generic type of the contained object in the source object
@@ -52,22 +43,17 @@ public final class PopulatorFactory {
      * @param transformer the bean transformer containing the field name mapping and transformation functions
      * @return the populator instance
      */
-    @SuppressWarnings("unchecked")
     public static <O, T> Optional<Populator> getPopulator(final Class<O> destObjectClass, final Class<T> sourceObjectClass, final Transformer transformer) {
-        String cacheKey = "FieldPopulator-" + destObjectClass.getCanonicalName();
-        return ofNullable(CACHE_MANAGER.getFromCache(cacheKey, Optional.class))
-                .orElseGet(() -> {
-                    Optional<Populator> populator = empty();
-                    if (destObjectClass.isArray()) {
-                        populator = of(new ArrayPopulator(transformer));
-                    } else if (Collection.class.isAssignableFrom(destObjectClass)) {
-                        populator = of(new CollectionPopulator(transformer));
-                    } else if (Map.class.isAssignableFrom(destObjectClass)) {
-                        populator = of(new MapPopulator(transformer));
-                    } else if (Optional.class == sourceObjectClass || Optional.class == destObjectClass) {
-                        populator = of(new OptionalPopulator(transformer));
-                    }
-                    return populator;
-            });
+        Optional<Populator> populator = empty();
+        if (destObjectClass.isArray()) {
+            populator = of(new ArrayPopulator(transformer));
+        } else if (Collection.class.isAssignableFrom(destObjectClass)) {
+            populator = of(new CollectionPopulator(transformer));
+        } else if (Map.class.isAssignableFrom(destObjectClass)) {
+            populator = of(new MapPopulator(transformer));
+        } else if (Optional.class == sourceObjectClass || Optional.class == destObjectClass) {
+            populator = of(new OptionalPopulator(transformer));
+        }
+        return populator;
     }
 }
