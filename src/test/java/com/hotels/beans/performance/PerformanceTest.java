@@ -51,6 +51,7 @@ import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
 import com.hotels.beans.sample.mixed.MixedToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooSimple;
 import com.hotels.beans.sample.mutable.MutableToFooSubClass;
+import com.hotels.beans.transformer.Transformer;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -90,6 +91,7 @@ public class PerformanceTest {
     private final Object sourceObject;
     private final Class<Object> destObjectClass;
     private final double maxTransformationTime;
+    private final boolean disableValidation;
 
     /**
      * The class to be tested.
@@ -103,14 +105,16 @@ public class PerformanceTest {
      * @param waitInterval time between one transformation and the other
      * @param sourceObject the Source object to copy
      * @param destObjectClass the total destination object
+     * @param disableValidation disables the java bean validation
      * @param maxTransformationTime expected maximum transformation time
      */
-    public PerformanceTest(final double totalTransformation, final int waitInterval,
-        final Object sourceObject, final Class<Object> destObjectClass, final double maxTransformationTime) {
+    public PerformanceTest(final double totalTransformation, final int waitInterval, final Object sourceObject,
+        final Class<Object> destObjectClass, final boolean disableValidation, final double maxTransformationTime) {
         this.totalTransformation = totalTransformation;
         this.waitInterval = waitInterval;
         this.sourceObject = sourceObject;
         this.destObjectClass = destObjectClass;
+        this.disableValidation = disableValidation;
         this.maxTransformationTime = maxTransformationTime;
     }
 
@@ -134,11 +138,12 @@ public class PerformanceTest {
         //WHEN
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
+        Transformer beanTransformer = underTest.getTransformer().setValidationDisabled(disableValidation);
         for (int i = 0; i <= totalTransformation; i++) {
             stopWatch.suspend();
             sleep(waitInterval);
             stopWatch.resume();
-            underTest.getTransformer().transform(sourceObject, destObjectClass);
+            beanTransformer.transform(sourceObject, destObjectClass);
         }
         stopWatch.stop();
         double avgTransformationTime = stopWatch.getTime(MILLISECONDS) / totalTransformation;
@@ -209,11 +214,11 @@ public class PerformanceTest {
     public static Collection<Object[]> dataProvider() {
         initObjects();
         return asList(new Object[][]{
-                {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSimple, MutableToFooSimple.class, SIMPLE_OBJECTS_MAX_TRANSFORMATION_TIME},
-                {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSubClass, MutableToFooSubClass.class, COMPLEX_OBJECTS_MAX_TRANSFORMATION_TIME},
-                {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSimple, ImmutableToFooSimple.class, SIMPLE_OBJECTS_MAX_TRANSFORMATION_TIME},
-                {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSubClass, ImmutableToFooSubClass.class, COMPLEX_OBJECTS_MAX_TRANSFORMATION_TIME},
-                {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFoo, MixedToFoo.class, COMPLEX_OBJECTS_MAX_TRANSFORMATION_TIME}
+                {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSimple, MutableToFooSimple.class, true, SIMPLE_OBJECTS_MAX_TRANSFORMATION_TIME},
+                {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSubClass, MutableToFooSubClass.class, true, COMPLEX_OBJECTS_MAX_TRANSFORMATION_TIME},
+                {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSimple, ImmutableToFooSimple.class, true, SIMPLE_OBJECTS_MAX_TRANSFORMATION_TIME},
+                {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSubClass, ImmutableToFooSubClass.class, true, COMPLEX_OBJECTS_MAX_TRANSFORMATION_TIME},
+                {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFoo, MixedToFoo.class, false, COMPLEX_OBJECTS_MAX_TRANSFORMATION_TIME}
         });
     }
 }
