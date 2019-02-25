@@ -21,14 +21,16 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Sample immutable object.
  */
 @AllArgsConstructor
 @Getter
+@Setter
 public class FromFoo {
-    private final String name;
+    private String name;
     private final BigInteger id;
     private final List<FromSubFoo> nestedObjectList;
     private final List<String> list;

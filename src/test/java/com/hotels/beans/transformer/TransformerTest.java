@@ -23,7 +23,6 @@ import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -149,79 +148,6 @@ public class TransformerTest {
         initMocks(this);
     }
 
-
-    /**
-     * Test that is possible to remove a field mapping for a given field.
-     */
-    @Test
-    public void testRemoveFieldMappingWorksProperly() {
-        //GIVEN
-        Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping("sourceFieldName", DEST_FIELD_NAME));
-
-        //WHEN
-        beanTransformer.removeFieldMapping(DEST_FIELD_NAME);
-        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
-
-        //THEN
-        assertFalse(transformerSettings.getFieldsNameMapping().containsKey(DEST_FIELD_NAME));
-    }
-
-    /**
-     * Test that the method {@code removeFieldMapping} raises an {@link IllegalArgumentException} if the parameter is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void testRemoveFieldMappingRaisesExceptionIfItsCalledWithNullParam() {
-        //GIVEN
-        Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping("sourceFieldName", DEST_FIELD_NAME));
-
-        //WHEN
-        beanTransformer.removeFieldMapping(null);
-    }
-
-    /**
-     * Test that is possible to remove all the fields mappings defined.
-     */
-    @Test
-    public void testResetFieldsMappingWorksProperly() {
-        //GIVEN
-        Transformer beanTransformer = underTest
-                .withFieldMapping(new FieldMapping("sourceFieldName", DEST_FIELD_NAME), new FieldMapping("sourceFieldName2", DEST_FIELD_NAME));
-
-        //WHEN
-        beanTransformer.resetFieldsMapping();
-        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
-
-        //THEN
-        assertTrue(transformerSettings.getFieldsNameMapping().isEmpty());
-    }
-
-    /**
-     * Test that is possible to remove a field transformer for a given field.
-     */
-    @Test
-    public void testRemoveFieldTransformerWorksProperly() {
-        //GIVEN
-        Transformer beanTransformer = underTest.withFieldTransformer(new FieldTransformer<>(DEST_FIELD_NAME, val -> val));
-
-        //WHEN
-        beanTransformer.removeFieldTransformer(DEST_FIELD_NAME);
-        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
-
-        //THEN
-        assertFalse(transformerSettings.getFieldsTransformers().containsKey(DEST_FIELD_NAME));
-    }
-
-    /**
-     * Test that the method {@code removeFieldTransformer} raises an {@link IllegalArgumentException} if the parameter is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void testRemoveFieldTransformerRaisesExceptionIfItsCalledWithNullParam() {
-        //GIVEN
-        Transformer beanTransformer = underTest.withFieldTransformer(new FieldTransformer<>(DEST_FIELD_NAME, val -> val));
-
-        //WHEN
-        beanTransformer.removeFieldTransformer(null);
-    }
 
     /**
      * Test that is possible to remove all the fields transformer defined.
@@ -378,6 +304,39 @@ public class TransformerTest {
 
         //WHEN
         underTest.transform(fromFoo, ImmutableToFooInvalid.class);
+    }
+
+    /**
+     * Test that an exception is thrown if the destination object don't met the constraints.
+     */
+    @Test(expected = InvalidBeanException.class)
+    public void testTransformThrowsExceptionIfTheDestinationObjectValuesAreNotValid() {
+        //GIVEN
+        fromFoo.setName(null);
+
+        //WHEN
+        underTest.transform(fromFoo, ImmutableToFoo.class);
+
+        // THEN
+        fromFoo.setName(NAME);
+    }
+
+    /**
+     * Test that no exception is thrown if the destination object don't met the constraints and the validation is disabled.
+     */
+    @Test
+    public void testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled() {
+        //GIVEN
+        fromFoo.setName(null);
+        underTest.setValidationDisabled(true);
+
+        //WHEN
+        ImmutableToFoo actual = underTest.transform(fromFoo, ImmutableToFoo.class);
+
+        // THEN
+        assertThat(actual, sameBeanAs(fromFoo));
+        fromFoo.setName(NAME);
+        underTest.setValidationDisabled(false);
     }
 
     /**
