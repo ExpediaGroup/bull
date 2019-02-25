@@ -27,8 +27,7 @@ interface ICollectionPopulator<O> {
      * @param genericFieldType the field to be populated class
      * @param fieldValue the source object from which extract the values
      * @param nestedGenericClass the nested generic object class. i.e. in case of object like this: {@code List<List<String>>} the value is: String
-     * @param fieldName the field name under process
      * @return a populated list of elements
      */
-    O getPopulatedObject(Class<?> fieldType, Class<?> genericFieldType, Object fieldValue, Class<?> nestedGenericClass, String fieldName);
+    O getPopulatedObject(Class<?> fieldType, Class<?> genericFieldType, Object fieldValue, Class<?> nestedGenericClass);
 }

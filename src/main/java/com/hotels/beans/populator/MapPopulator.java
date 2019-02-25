@@ -45,17 +45,16 @@ class MapPopulator extends Populator<Map<?, ?>> {
     @Override
     public Map<?, ?> getPopulatedObject(final Field field, final Map<?, ?> fieldValue) {
         final MapType mapGenericType = getReflectionUtils().getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
-        return getPopulatedObject(fieldValue, mapGenericType, field.getName());
+        return getPopulatedObject(fieldValue, mapGenericType);
     }
 
     /**
      * Populates the Map objects.
      * @param fieldValue the source Map.
      * @param mapType the map key, elem types {@link MapType}
-     * @param fieldName the name of the field under process
      * @return the populated map
      */
-    private Map<?, ?> getPopulatedObject(final Map<?, ?> fieldValue, final MapType mapType, final String fieldName) {
+    private Map<?, ?> getPopulatedObject(final Map<?, ?> fieldValue, final MapType mapType) {
         final MapElemType keyType = mapType.getKeyType();
         final MapElemType elemType = mapType.getElemType();
         final boolean keyIsPrimitive = keyType.getClass().equals(ItemType.class) && getClassUtils().isPrimitiveOrSpecialType(((ItemType) keyType).getObjectClass());
@@ -68,8 +67,8 @@ class MapPopulator extends Populator<Map<?, ?>> {
                     .stream()
 //                    .parallelStream()
                     .collect(toMap(
-                        key -> getElemValue(keyType, keyIsPrimitive, key, fieldName),
-                        key -> getElemValue(elemType, elemIsPrimitive, fieldValue.get(key), fieldName)));
+                        key -> getElemValue(keyType, keyIsPrimitive, key),
+                        key -> getElemValue(elemType, elemIsPrimitive, fieldValue.get(key))));
         }
         return populatedObject;
     }
@@ -80,19 +79,18 @@ class MapPopulator extends Populator<Map<?, ?>> {
      * @param mapElemType the map key, elem types {@link MapElemType}
      * @param elemIsPrimitiveType true if the elem map is primitive type, false otherwise.
      * @param value the elem value
-     * @param fieldName the name of the field under process
      * @return the element value
      */
     @SuppressWarnings("unchecked")
-    private <T> T getElemValue(final MapElemType mapElemType, final boolean elemIsPrimitiveType, final T value, final String fieldName) {
+    private <T> T getElemValue(final MapElemType mapElemType, final boolean elemIsPrimitiveType, final T value) {
         final T elemValue;
         if (elemIsPrimitiveType || getClassUtils().isPrimitiveOrSpecialType(value.getClass())) {
             elemValue = value;
         } else {
             if (mapElemType.getClass().equals(ItemType.class)) {
-                elemValue = (T) transform(value, ((ItemType) mapElemType).getObjectClass(), ((ItemType) mapElemType).getGenericClass(), fieldName);
+                elemValue = (T) transform(value, ((ItemType) mapElemType).getObjectClass(), ((ItemType) mapElemType).getGenericClass());
             } else {
-                elemValue = (T) getPopulatedObject((Map) value, (MapType) mapElemType, fieldName);
+                elemValue = (T) getPopulatedObject((Map) value, (MapType) mapElemType);
             }
         }
         return elemValue;
