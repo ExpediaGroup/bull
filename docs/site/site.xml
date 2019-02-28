@@ -30,6 +30,7 @@
       <item name="Samples" href="/transformer/samples.html" />
       <item name="Performances" href="/transformer/performance.html" />
       <item name="Third Party Lib Comparison" href="/transformer/thirdPartyLibComparison.html" />
+      <item name="How to test" href="/transformer/testing.html" />
     </menu>
     <menu name="Quality check">
       <item name="Test coverage" href="jacoco/index.html" />
