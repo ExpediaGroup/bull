@@ -4,8 +4,8 @@ BULL - Bean Utils Light Library,com.hotels.beans.transformer,TransformerSettings
 BULL - Bean Utils Light Library,com.hotels.beans.transformer,TransformerImpl,19,545,7,37,1,98,6,43,0,27
 BULL - Bean Utils Light Library,com.hotels.beans.constant,MethodPrefix,0,38,0,0,0,5,0,2,0,2
 BULL - Bean Utils Light Library,com.hotels.beans.constant,Punctuation,0,70,0,0,0,7,0,3,0,3
-BULL - Bean Utils Light Library,com.hotels.beans.constant,Filters,0,40,1,7,0,8,1,7,0,4
 BULL - Bean Utils Light Library,com.hotels.beans.constant,ClassType,0,41,0,2,0,5,0,3,0,2
+BULL - Bean Utils Light Library,com.hotels.beans.constant,Filters,0,40,1,7,0,8,1,7,0,4
 BULL - Bean Utils Light Library,com.hotels.beans.utils,ReflectionUtils,68,777,11,55,17,145,11,55,0,33
 BULL - Bean Utils Light Library,com.hotels.beans.utils,ClassUtils,8,1357,13,109,2,213,13,118,0,70
 BULL - Bean Utils Light Library,com.hotels.beans.utils,ValidationUtils,0,86,0,6,0,25,0,10,0,7
