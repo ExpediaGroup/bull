@@ -431,7 +431,7 @@ Following the obtained results:
 
 ## Documentation
 
-A detailed project documentation is available [here](https://hotelsdotcom.github.io/bull).
+A detailed project documentation is available [here](https://hotelsdotcom.github.io/bull), including some samples for [testing the library](https://hotelsdotcom.github.io/bull/transformer/testing.html) inside your project.
 
 ## Credits
 
