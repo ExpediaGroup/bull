@@ -247,7 +247,7 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <T, K> void injectAllFields(final T sourceObj, final K targetObject, final String breadcrumb) {
         final Class<?> targetObjectClass = targetObject.getClass();
-        getClassUtils().getFields(targetObjectClass, true)
+        getClassUtils().getDeclaredFields(targetObjectClass, true)
                 //.parallelStream()
                 .forEach(field -> getReflectionUtils().setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));
     }
