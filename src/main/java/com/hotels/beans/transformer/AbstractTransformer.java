@@ -179,4 +179,24 @@ abstract class AbstractTransformer implements Transformer {
      * @return a copy of the source object into the destination object
      */
     protected abstract <T, K> K transform(T sourceObj, Class<? extends K> targetClass, String breadcrumb);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final <T, K> void transform(final T sourceObj, final K targetObject) {
+        notNull(sourceObj, "The object to copy cannot be null!");
+        notNull(targetObject, "The destination object cannot be null!");
+        transform(sourceObj, targetObject, null);
+    }
+
+    /**
+     * Copies all properties from an object to a new one.
+     * @param sourceObj the source object
+     * @param targetObject the destination object
+     * @param breadcrumb the full path of the current field starting from his ancestor
+     * @param <T> the Source object type
+     * @param <K> the target object type
+     */
+    protected abstract <T, K> void transform(T sourceObj, K targetObject, String breadcrumb);
 }

@@ -58,7 +58,7 @@ public class TransformerImpl extends AbstractTransformer {
         if (classType.is(MUTABLE)) {
             try {
                 k = targetClass.getDeclaredConstructor().newInstance();
-                injectNotFinalFields(sourceObj, k, breadcrumb);
+                injectAllFields(sourceObj, k, breadcrumb);
             } catch (NoSuchMethodException e) {
                 throw new InvalidBeanException("No default constructor defined for class: " + targetClass.getName(), e);
             } catch (Exception e) {
@@ -74,6 +74,17 @@ public class TransformerImpl extends AbstractTransformer {
             getValidationUtils().validate(k);
         }
         return k;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected final <T, K> void transform(final T sourceObj, final K targetObject, final String breadcrumb) {
+        injectAllFields(sourceObj, targetObject, breadcrumb);
+        if (!getTransformerSettings().isValidationDisabled()) {
+            getValidationUtils().validate(targetObject);
+        }
     }
 
     /**
@@ -226,8 +237,23 @@ public class TransformerImpl extends AbstractTransformer {
     }
 
     /**
-     * Retrieves all the constructor argument values.
-     * This methods retrieves the values from the declared class field into the target object.
+     * Injects the values for all class fields.
+     * @param sourceObj sourceObj the source object
+     * @param targetObject the destination object instance
+     * @param breadcrumb  the full path of the current field starting from his ancestor
+     * @param <T>  the sourceObj object type
+     * @param <K> the target object type
+     * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
+     */
+    private <T, K> void injectAllFields(final T sourceObj, final K targetObject, final String breadcrumb) {
+        final Class<?> targetObjectClass = targetObject.getClass();
+        getClassUtils().getFields(targetObjectClass, true)
+                //.parallelStream()
+                .forEach(field -> getReflectionUtils().setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));
+    }
+
+    /**
+     * Injects the values for all the not final fields.
      * @param sourceObj sourceObj the source object
      * @param targetObject the destination object instance
      * @param breadcrumb  the full path of the current field starting from his ancestor

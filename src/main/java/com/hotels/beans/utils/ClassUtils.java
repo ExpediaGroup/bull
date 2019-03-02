@@ -651,6 +651,22 @@ public final class ClassUtils {
     }
 
     /**
+     * Returns all class fields.
+     * @param clazz the class containing fields.
+     * @param skipStatic if true the static fields are skipped.
+     * @return a list containing all the not final fields.
+     */
+    @SuppressWarnings("unchecked")
+    public List<Field> getFields(final Class<?> clazz, final Boolean skipStatic) {
+        final String cacheKey = "ClassFields-" + clazz.getCanonicalName() + "-" + skipStatic;
+        return ofNullable(cacheManager.getFromCache(cacheKey, List.class)).orElseGet(() -> {
+            List<Field> notFinalFields = new ArrayList<>(getDeclaredFields(clazz, skipStatic));
+            cacheManager.cacheObject(cacheKey, notFinalFields);
+            return notFinalFields;
+        });
+    }
+
+    /**
      * Returns all the not final fields.
      * @param clazz the class containing fields.
      * @param skipStatic if true the static fields are skipped.

@@ -76,6 +76,7 @@ import com.hotels.beans.sample.immutable.ImmutableToFooNoConstructors;
 import com.hotels.beans.sample.immutable.ImmutableToFooNotExistingFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
+import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
 import com.hotels.beans.sample.mixed.MixedToFoo;
 import com.hotels.beans.sample.mixed.MixedToFooDiffFields;
 import com.hotels.beans.sample.mixed.MixedToFooMissingAllArgsConstructor;
@@ -85,6 +86,7 @@ import com.hotels.beans.sample.mutable.MutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooInvalid;
 import com.hotels.beans.sample.mutable.MutableToFooNotExistingFields;
 import com.hotels.beans.sample.mutable.MutableToFooSimpleNoSetters;
+import com.hotels.beans.sample.mutable.MutableToFooSubClass;
 import com.hotels.beans.utils.ReflectionUtils;
 
 /**
@@ -147,7 +149,6 @@ public class TransformerTest {
     public void beforeMethod() {
         initMocks(this);
     }
-
 
     /**
      * Test that is possible to remove all the fields transformer defined.
@@ -715,6 +716,24 @@ public class TransformerTest {
         assertNotNull(raisedException);
         assertEquals(InvalidBeanException.class, raisedException.getClass());
         assertEquals(expectedExceptionMessage, raisedException.getMessage());
+    }
+
+    /**
+     * Test transformation on an existing bean is correctly copied.
+     */
+    @Test
+    public void testTransformationOnAnExistingDestinationWorksProperly() {
+        //GIVEN
+        MutableToFooSubClass mutableToFoo = new MutableToFooSubClass();
+        ImmutableToFooSimple immutableToFoo = new ImmutableToFooSimple(null, null);
+
+        //WHEN
+        underTest.transform(fromFooSubClass, mutableToFoo);
+        underTest.transform(fromFooSimple, immutableToFoo);
+
+        //THEN
+        assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
+        assertThat(immutableToFoo, sameBeanAs(fromFooSimple));
     }
 
     /**
