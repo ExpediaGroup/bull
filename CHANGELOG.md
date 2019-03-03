@@ -14,6 +14,10 @@ All notable changes to this project will be documented in this file.
 - Updated Travis configuration in order to work with java 11
 - Modified Travis configuration in order to automatically create the GitHub site as soon as a tag is created
 
+### [1.1.5] 2019.03.03
+#### Added
+* Added all new features into the java 8 project version.
+
 ### [1.1.4] 2019.02.20
 #### Added
 * Added possibility to apply a transformation function only on a specific field (see: [Issue 27](https://github.com/HotelsDotCom/bull/issues/27)).
