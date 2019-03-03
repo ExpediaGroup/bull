@@ -69,7 +69,7 @@ public final class ReflectionUtils {
     private static final String DOT_SPLIT_REGEX = "\\.";
 
     /**
-     * CacheManager class {@link CacheManager}.
+     * CacheManager instance {@link CacheManager}.
      */
     private final CacheManager cacheManager;
 
@@ -137,7 +137,9 @@ public final class ReflectionUtils {
     public Object getFieldValue(final Object target, final String fieldName, final Class<?> fieldType) {
         Object fieldValue = getRealTarget(target);
         for (String currFieldName : fieldName.split(DOT_SPLIT_REGEX)) {
-            if (fieldValue == null) break;
+            if (fieldValue == null) {
+                break;
+            }
             try {
                 fieldValue = getFieldValue(fieldValue, currFieldName);
             } catch (final Exception e) {
@@ -221,13 +223,13 @@ public final class ReflectionUtils {
         boolean isAccessible = true;
         Field field = null;
         try {
-            field = target.getClass().getDeclaredField(fieldName);
+            field = getDeclaredField(fieldName, target);
             isAccessible = isFieldAccessible(field, target);
             if (!isAccessible) {
                 field.setAccessible(true);
             }
             return field.get(target);
-        } catch (NoSuchFieldException e) {
+        } catch (MissingFieldException e) {
             throw new MissingFieldException(target.getClass().getCanonicalName() + " does not contain field: " + fieldName);
         } catch (final Exception e) {
             handleReflectionException(e);
@@ -237,6 +239,32 @@ public final class ReflectionUtils {
                 field.setAccessible(false);
             }
         }
+    }
+
+    /**
+     * Return the field of the given class.
+     * @param fieldName the name of the filed to retrieve.
+     * @param target the field's class
+     * @return the field corresponding to the given name.
+     */
+    private Field getDeclaredField(final String fieldName, final Object target) {
+        final AtomicReference<Class<?>> targetClass = new AtomicReference<>(target.getClass());
+        final String cacheKey = "DeclaredField-" + targetClass.get().getCanonicalName() + "-fieldName-" + fieldName;
+        return ofNullable(cacheManager.getFromCache(cacheKey, Field.class)).orElseGet(() -> {
+            Field field = null;
+            while (isNull(field) && !targetClass.get().equals(Object.class)) {
+                try {
+                    field = targetClass.get().getDeclaredField(fieldName);
+                } catch (NoSuchFieldException e) {
+                    targetClass.set(targetClass.get().getSuperclass());
+                }
+            }
+            if (isNull(field)) {
+                throw new MissingFieldException(targetClass.get().getCanonicalName() + " does not contain field: " + fieldName);
+            }
+            cacheManager.cacheObject(cacheKey, field);
+            return field;
+        });
     }
 
     /**

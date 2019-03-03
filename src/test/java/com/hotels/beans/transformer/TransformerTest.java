@@ -115,7 +115,7 @@ public class TransformerTest {
     private static final String GET_SOURCE_FIELD_VALUE_METHOD_NAME = "getSourceFieldValue";
     private static final String DEST_FIELD_NAME = "destFieldName";
     private static final String REFLECTION_UTILS_FIELD_NAME = "reflectionUtils";
-    private static final String TRANSFORMER_SETTINGS_FIELD_NAME = "transformerSettings";
+    private static final String TRANSFORMER_SETTINGS_FIELD_NAME = "settings";
     private static final String CONSTRUCTOR_PARAMETER_NAME = "constructorParameterName";
     private static final ReflectionUtils REFLECTION_UTILS = new ReflectionUtils();
     private static FromFoo fromFoo;

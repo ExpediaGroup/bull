@@ -29,38 +29,35 @@ import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
 import com.hotels.beans.utils.ValidationUtils;
 
-import lombok.Getter;
-
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
  * Contains all method implementation that will be common to any {@link Transformer} implementation.
  */
-@Getter
 abstract class AbstractTransformer implements Transformer {
     /**
-     * Reflection utils class {@link ReflectionUtils}.
+     * Reflection utils instance {@link ReflectionUtils}.
      */
-    private final ReflectionUtils reflectionUtils;
+    final ReflectionUtils reflectionUtils;
 
     /**
-     * Class reflection utils class {@link ClassUtils}.
+     * Class uttils instance {@link ClassUtils}.
      */
-    private final ClassUtils classUtils;
+    final ClassUtils classUtils;
 
     /**
-     * Validation utils class {@link ValidationUtils}.
+     * Validation utils instance {@link ValidationUtils}.
      */
-    private final ValidationUtils validationUtils;
+    final ValidationUtils validationUtils;
 
     /**
-     * CacheManager class {@link CacheManager}.
+     * CacheManager instance {@link CacheManager}.
      */
-    private final CacheManager cacheManager;
+    final CacheManager cacheManager;
 
     /**
      * Contains both the field name mapping and the lambda function to be applied on fields.
      */
-    private final TransformerSettings transformerSettings;
+    final TransformerSettings settings;
 
     /**
      * Default constructor.
@@ -69,7 +66,7 @@ abstract class AbstractTransformer implements Transformer {
         this.reflectionUtils = new ReflectionUtils();
         this.classUtils = new ClassUtils();
         this.validationUtils = new ValidationUtils();
-        this.transformerSettings = new TransformerSettings();
+        this.settings = new TransformerSettings();
         this.cacheManager = CacheManagerFactory.getCacheManager("transformer");
     }
 
@@ -78,7 +75,7 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final Transformer withFieldMapping(final FieldMapping... fieldMapping) {
-        final Map<String, String> fieldsNameMapping = transformerSettings.getFieldsNameMapping();
+        final Map<String, String> fieldsNameMapping = settings.getFieldsNameMapping();
         for (FieldMapping mapping : fieldMapping) {
             fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());
         }
@@ -91,7 +88,7 @@ abstract class AbstractTransformer implements Transformer {
     @Override
     public final void removeFieldMapping(final String destFieldName) {
         notNull(destFieldName, "The field name for which the mapping has to be removed cannot be null!");
-        transformerSettings.getFieldsNameMapping().remove(destFieldName);
+        settings.getFieldsNameMapping().remove(destFieldName);
     }
 
     /**
@@ -99,7 +96,7 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final void resetFieldsMapping() {
-        transformerSettings.getFieldsNameMapping().clear();
+        settings.getFieldsNameMapping().clear();
     }
 
     /**
@@ -108,7 +105,7 @@ abstract class AbstractTransformer implements Transformer {
     @Override
     @SuppressWarnings("unchecked")
     public final Transformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
-        Map<String, Function<Object, Object>> fieldsTransformers = transformerSettings.getFieldsTransformers();
+        Map<String, Function<Object, Object>> fieldsTransformers = settings.getFieldsTransformers();
         for (FieldTransformer transformer : fieldTransformer) {
             fieldsTransformers.put(transformer.getDestFieldName(), transformer.getTransformerFunction());
         }
@@ -121,7 +118,7 @@ abstract class AbstractTransformer implements Transformer {
     @Override
     public final void removeFieldTransformer(final String destFieldName) {
         notNull(destFieldName, "The field name for which the transformer function has to be removed cannot be null!");
-        transformerSettings.getFieldsTransformers().remove(destFieldName);
+        settings.getFieldsTransformers().remove(destFieldName);
     }
 
     /**
@@ -129,7 +126,7 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final void resetFieldsTransformer() {
-        transformerSettings.getFieldsTransformers().clear();
+        settings.getFieldsTransformers().clear();
     }
 
     /**
@@ -137,7 +134,7 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final Transformer setDefaultValueForMissingField(final boolean useDefaultValue) {
-        transformerSettings.setSetDefaultValue(useDefaultValue);
+        settings.setSetDefaultValue(useDefaultValue);
         return this;
     }
 
@@ -146,7 +143,7 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final Transformer setFlatFieldNameTransformation(final boolean useFlatTransformation) {
-        transformerSettings.setFlatFieldNameTransformation(useFlatTransformation);
+        settings.setFlatFieldNameTransformation(useFlatTransformation);
         return this;
     }
 
@@ -155,7 +152,7 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public Transformer setValidationDisabled(final boolean validationDisabled) {
-        transformerSettings.setValidationDisabled(validationDisabled);
+        settings.setValidationDisabled(validationDisabled);
         return this;
     }
 

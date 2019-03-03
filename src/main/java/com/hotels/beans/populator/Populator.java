@@ -18,8 +18,6 @@ package com.hotels.beans.populator;
 
 import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 
-import static lombok.AccessLevel.NONE;
-
 import java.lang.reflect.Field;
 import java.util.Optional;
 
@@ -27,29 +25,25 @@ import com.hotels.beans.transformer.Transformer;
 import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
 
-import lombok.Getter;
-
 /**
  * Populator for collection or map objects.
  * @param <O> the type of the object to get populated.
  */
-@Getter
 public abstract class Populator<O> {
+    /**
+     * Reflection utils instance {@link ReflectionUtils}.
+     */
+    final ReflectionUtils reflectionUtils;
+
+    /**
+     * Class reflection utils instance {@link ClassUtils}.
+     */
+    final ClassUtils classUtils;
+
     /**
      * Transformer class instance {@link Transformer} containing the field mapping and transformation functions.
      */
-    @Getter(NONE)
     private final Transformer transformer;
-
-    /**
-     * Reflection utils class {@link ReflectionUtils}.
-     */
-    private final ReflectionUtils reflectionUtils;
-
-    /**
-     * Class reflection utils class {@link ClassUtils}.
-     */
-    private final ClassUtils classUtils;
 
     /**
      * Default constructor.
