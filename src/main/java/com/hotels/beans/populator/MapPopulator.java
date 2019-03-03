@@ -44,7 +44,7 @@ class MapPopulator extends Populator<Map<?, ?>> {
      */
     @Override
     public Map<?, ?> getPopulatedObject(final Field field, final Map<?, ?> fieldValue) {
-        final MapType mapGenericType = getReflectionUtils().getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
+        final MapType mapGenericType = reflectionUtils.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
         return getPopulatedObject(fieldValue, mapGenericType);
     }
 
@@ -57,8 +57,8 @@ class MapPopulator extends Populator<Map<?, ?>> {
     private Map<?, ?> getPopulatedObject(final Map<?, ?> fieldValue, final MapType mapType) {
         final MapElemType keyType = mapType.getKeyType();
         final MapElemType elemType = mapType.getElemType();
-        final boolean keyIsPrimitive = keyType.getClass().equals(ItemType.class) && getClassUtils().isPrimitiveOrSpecialType(((ItemType) keyType).getObjectClass());
-        final boolean elemIsPrimitive = elemType.getClass().equals(ItemType.class) && getClassUtils().isPrimitiveOrSpecialType(((ItemType) elemType).getObjectClass());
+        final boolean keyIsPrimitive = keyType.getClass().equals(ItemType.class) && classUtils.isPrimitiveOrSpecialType(((ItemType) keyType).getObjectClass());
+        final boolean elemIsPrimitive = elemType.getClass().equals(ItemType.class) && classUtils.isPrimitiveOrSpecialType(((ItemType) elemType).getObjectClass());
         Map<?, ?> populatedObject;
         if (keyIsPrimitive && elemIsPrimitive) {
             populatedObject = fieldValue;
@@ -84,7 +84,7 @@ class MapPopulator extends Populator<Map<?, ?>> {
     @SuppressWarnings("unchecked")
     private <T> T getElemValue(final MapElemType mapElemType, final boolean elemIsPrimitiveType, final T value) {
         final T elemValue;
-        if (elemIsPrimitiveType || getClassUtils().isPrimitiveOrSpecialType(value.getClass())) {
+        if (elemIsPrimitiveType || classUtils.isPrimitiveOrSpecialType(value.getClass())) {
             elemValue = value;
         } else {
             if (mapElemType.getClass().equals(ItemType.class)) {

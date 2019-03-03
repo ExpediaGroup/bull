@@ -70,7 +70,7 @@ public final class ClassUtils {
     private static final String CLAZZ_CANNOT_BE_NULL = "clazz cannot be null!";
 
     /**
-     * Reflection utils class {@link ReflectionUtils}.
+     * Reflection utils instance {@link ReflectionUtils}.
      */
     private final ReflectionUtils reflectionUtils;
 

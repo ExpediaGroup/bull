@@ -34,7 +34,7 @@ public class AbstractTransformerTest {
     private static final String SOURCE_FIELD_NAME = "sourceFieldName";
     private static final String SOURCE_FIELD_NAME_2 = "sourceFieldName2";
     private static final String DEST_FIELD_NAME = "destFieldName";
-    private static final String TRANSFORMER_SETTINGS_FIELD_NAME = "transformerSettings";
+    private static final String TRANSFORMER_SETTINGS_FIELD_NAME = "settings";
     private static final ReflectionUtils REFLECTION_UTILS = new ReflectionUtils();
 
     /**
