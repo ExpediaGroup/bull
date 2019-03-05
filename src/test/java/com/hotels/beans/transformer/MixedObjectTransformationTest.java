@@ -176,4 +176,19 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
         //THEN
         assertThat(mixedObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
     }
+
+    /**
+     * Test transformation on an existing bean is correctly copied.
+     */
+    @Test
+    public void testTransformationOnAnExistingDestinationWorksProperly() {
+        //GIVEN
+        MixedToFoo mixedToFoo = new MixedToFoo(null, null, null, null, null);
+
+        //WHEN
+        underTest.transform(fromFoo, mixedToFoo);
+
+        //THEN
+        assertThat(mixedToFoo, sameBeanAs(fromFoo));
+    }
 }
