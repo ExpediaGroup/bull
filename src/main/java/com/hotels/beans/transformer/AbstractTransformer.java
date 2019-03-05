@@ -187,11 +187,6 @@ abstract class AbstractTransformer implements Transformer {
         transform(sourceObj, targetObject, null);
     }
 
-    @Override
-    public void resetFieldsTransformationSkip() {
-        settings.getFieldsToSkip().clear();
-    }
-
     /**
      * Copies all properties from an object to a new one.
      * @param sourceObj the source object

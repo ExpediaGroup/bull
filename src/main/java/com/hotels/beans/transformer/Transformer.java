@@ -105,9 +105,4 @@ public interface Transformer {
      * @return the {@link Transformer} instance
      */
     Transformer setValidationDisabled(boolean validationDisabled);
-
-    /**
-     * Removes all the configured fields to skip.
-     */
-    void resetFieldsTransformationSkip();
 }
