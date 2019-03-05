@@ -48,6 +48,11 @@ final class TransformerSettings {
     private final Map<String, Function<Object, Object>> fieldsTransformers = new ConcurrentHashMap<>();
 
     /**
+     * Contains the list of fields that don't need to be transformed.
+     */
+    private final Map<String, String> fieldsToSkip = new ConcurrentHashMap<>();
+
+    /**
      * It allows to configure the transformer in order to set a default value in case some field is missing in the source object.
      * If set to true the default value is set, if false if it raises a: {@link com.hotels.beans.error.MissingFieldException} in case of missing fields.
      */

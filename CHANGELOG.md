@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.2.1] TBD
+### [1.2.1] 2019.03.05
 #### Added
 * Implemented new feature that allows the copy on an existing object instance (see: [Issue 24](https://github.com/HotelsDotCom/bull/issues/24))
 * Added profile: `fast` that skips the following plugin execution: `javadoc`, `checkstyle`, `pmd` and `jacoco`

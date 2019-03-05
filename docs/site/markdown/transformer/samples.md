@@ -301,4 +301,23 @@ ToBean toBean = beanUtils.getTransformer()
                      .transform(fromBean, ToBean.class);
 ~~~
 
+### Copy on an existing instance:
+
+Given:
+
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  private String name;                   
+   private final FromSubBean nestedObject;                     private ToSubBean nestedObject;                    
+
+   // all args constructor                                     // constructor
+   // getters...                                               // getters and setters...
+}                                                           }
+~~~
+if you need to perform the copy on an already existing object, just do:
+~~~Java
+ToBean toBean = new ToBean();
+beanUtils.getTransformer().transform(fromBean, toBean);
+~~~
+
 More sample beans can be found in the test package: `com.hotels.beans.sample`
