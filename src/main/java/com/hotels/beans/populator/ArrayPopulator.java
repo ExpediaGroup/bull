@@ -21,7 +21,6 @@ import static java.util.Arrays.stream;
 import java.lang.reflect.Field;
 
 import com.hotels.beans.transformer.Transformer;
-import com.hotels.beans.utils.ClassUtils;
 
 /**
  * Populator for primitive types array.
@@ -41,7 +40,7 @@ class ArrayPopulator extends Populator<Object> implements ICollectionPopulator<O
      */
     @Override
     public Object getPopulatedObject(final Field field, final Object fieldValue) {
-        return getPopulatedObject(field.getType(), getReflectionUtils().getArrayType(field), fieldValue, null);
+        return getPopulatedObject(field.getType(), reflectionUtils.getArrayType(field), fieldValue, null);
     }
 
     /**
@@ -50,7 +49,6 @@ class ArrayPopulator extends Populator<Object> implements ICollectionPopulator<O
     @Override
     public Object getPopulatedObject(final Class<?> fieldType, final Class<?> genericFieldType, final Object fieldValue, final Class<?> nestedGenericClass) {
         final Object res;
-        final ClassUtils classUtils = getClassUtils();
         if (classUtils.isPrimitiveTypeArray(fieldValue) || classUtils.isPrimitiveOrSpecialType(genericFieldType)) {
             res = fieldValue;
         } else {
