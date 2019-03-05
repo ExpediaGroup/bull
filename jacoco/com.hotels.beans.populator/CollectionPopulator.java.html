@@ -46,8 +46,8 @@ class CollectionPopulator&lt;K&gt; extends Populator&lt;Collection&gt; implement
      */
     @Override
     public Collection&lt;K&gt; getPopulatedObject(final Field field, final Collection fieldValue) {
-<span class="fc" id="L49">        final Class&lt;?&gt; genericClass = getReflectionUtils().getArgumentTypeClass(fieldValue, field.getDeclaringClass().getName(), field.getName(), true);</span>
-<span class="fc" id="L50">        return getPopulatedObject(field.getType(), getReflectionUtils().getGenericFieldType(field), fieldValue, genericClass);</span>
+<span class="fc" id="L49">        final Class&lt;?&gt; genericClass = reflectionUtils.getArgumentTypeClass(fieldValue, field.getDeclaringClass().getName(), field.getName(), true);</span>
+<span class="fc" id="L50">        return getPopulatedObject(field.getType(), reflectionUtils.getGenericFieldType(field), fieldValue, genericClass);</span>
     }
 
     /**
@@ -57,7 +57,7 @@ class CollectionPopulator&lt;K&gt; extends Populator&lt;Collection&gt; implement
     @Override
     public Collection&lt;K&gt; getPopulatedObject(final Class&lt;?&gt; fieldType, final Class&lt;?&gt; genericFieldType, final Object fieldValue, final Class&lt;?&gt; nestedGenericClass) {
         final Collection res;
-<span class="fc bfc" id="L60" title="All 4 branches covered.">        if (getClassUtils().isPrimitiveOrSpecialType(isNull(nestedGenericClass) ? genericFieldType : nestedGenericClass)) {</span>
+<span class="fc bfc" id="L60" title="All 4 branches covered.">        if (classUtils.isPrimitiveOrSpecialType(isNull(nestedGenericClass) ? genericFieldType : nestedGenericClass)) {</span>
 <span class="fc" id="L61">            res = (Collection) fieldValue;</span>
         } else {
 <span class="pc bpc" id="L63" title="1 of 2 branches missed.">            Collector&lt;Object, ?, ? extends Collection&lt;Object&gt;&gt; collector = Set.class.isAssignableFrom(fieldType) ? toSet() : toList();</span>

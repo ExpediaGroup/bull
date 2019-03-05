@@ -21,7 +21,6 @@ import static java.util.Arrays.stream;
 import java.lang.reflect.Field;
 
 import com.hotels.beans.transformer.Transformer;
-import com.hotels.beans.utils.ClassUtils;
 
 /**
  * Populator for primitive types array.
@@ -33,15 +32,15 @@ class ArrayPopulator extends Populator&lt;Object&gt; implements ICollectionPopul
      * @param beanTransformer the bean transformer containing the field name mapping and transformation functions
      */
     ArrayPopulator(final Transformer beanTransformer) {
-<span class="fc" id="L36">        super(beanTransformer);</span>
-<span class="fc" id="L37">    }</span>
+<span class="fc" id="L35">        super(beanTransformer);</span>
+<span class="fc" id="L36">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Object getPopulatedObject(final Field field, final Object fieldValue) {
-<span class="fc" id="L44">        return getPopulatedObject(field.getType(), getReflectionUtils().getArrayType(field), fieldValue, null);</span>
+<span class="fc" id="L43">        return getPopulatedObject(field.getType(), reflectionUtils.getArrayType(field), fieldValue, null);</span>
     }
 
     /**
@@ -50,15 +49,14 @@ class ArrayPopulator extends Populator&lt;Object&gt; implements ICollectionPopul
     @Override
     public Object getPopulatedObject(final Class&lt;?&gt; fieldType, final Class&lt;?&gt; genericFieldType, final Object fieldValue, final Class&lt;?&gt; nestedGenericClass) {
         final Object res;
-<span class="fc" id="L53">        final ClassUtils classUtils = getClassUtils();</span>
-<span class="fc bfc" id="L54" title="All 4 branches covered.">        if (classUtils.isPrimitiveTypeArray(fieldValue) || classUtils.isPrimitiveOrSpecialType(genericFieldType)) {</span>
-<span class="fc" id="L55">            res = fieldValue;</span>
+<span class="fc bfc" id="L52" title="All 4 branches covered.">        if (classUtils.isPrimitiveTypeArray(fieldValue) || classUtils.isPrimitiveOrSpecialType(genericFieldType)) {</span>
+<span class="fc" id="L53">            res = fieldValue;</span>
         } else {
-<span class="fc" id="L57">            res = stream((Object[]) fieldValue)</span>
+<span class="fc" id="L55">            res = stream((Object[]) fieldValue)</span>
                     //.parallel()
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">                    .map(o -&gt; classUtils.isPrimitiveOrSpecialType(genericFieldType) ? o : transform(o, genericFieldType)).toArray();</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">                    .map(o -&gt; classUtils.isPrimitiveOrSpecialType(genericFieldType) ? o : transform(o, genericFieldType)).toArray();</span>
         }
-<span class="fc" id="L61">        return res;</span>
+<span class="fc" id="L59">        return res;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

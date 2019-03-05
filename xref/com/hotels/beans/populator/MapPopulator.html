@@ -52,7 +52,7 @@
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>      @Override
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">public</strong> Map&lt;?, ?&gt; getPopulatedObject(<strong class="jxr_keyword">final</strong> Field field, <strong class="jxr_keyword">final</strong> Map&lt;?, ?&gt; fieldValue) {
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/model/MapType.html">MapType</a> mapGenericType = getReflectionUtils().getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/model/MapType.html">MapType</a> mapGenericType = reflectionUtils.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>          <strong class="jxr_keyword">return</strong> getPopulatedObject(fieldValue, mapGenericType);
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      }
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  
@@ -65,8 +65,8 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">private</strong> Map&lt;?, ?&gt; getPopulatedObject(<strong class="jxr_keyword">final</strong> Map&lt;?, ?&gt; fieldValue, <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/model/MapType.html">MapType</a> mapType) {
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/model/MapElemType.html">MapElemType</a> keyType = mapType.getKeyType();
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/model/MapElemType.html">MapElemType</a> elemType = mapType.getElemType();
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> keyIsPrimitive = keyType.getClass().equals(ItemType.<strong class="jxr_keyword">class</strong>) &amp;&amp; getClassUtils().isPrimitiveOrSpecialType(((ItemType) keyType).getObjectClass());
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>          <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> elemIsPrimitive = elemType.getClass().equals(ItemType.<strong class="jxr_keyword">class</strong>) &amp;&amp; getClassUtils().isPrimitiveOrSpecialType(((ItemType) elemType).getObjectClass());
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> keyIsPrimitive = keyType.getClass().equals(ItemType.<strong class="jxr_keyword">class</strong>) &amp;&amp; classUtils.isPrimitiveOrSpecialType(((ItemType) keyType).getObjectClass());
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> elemIsPrimitive = elemType.getClass().equals(ItemType.<strong class="jxr_keyword">class</strong>) &amp;&amp; classUtils.isPrimitiveOrSpecialType(((ItemType) elemType).getObjectClass());
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          Map&lt;?, ?&gt; populatedObject;
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">if</strong> (keyIsPrimitive &amp;&amp; elemIsPrimitive) {
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>              populatedObject = fieldValue;
@@ -92,7 +92,7 @@
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>      @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>      <strong class="jxr_keyword">private</strong> &lt;T&gt; T getElemValue(<strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/model/MapElemType.html">MapElemType</a> mapElemType, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> elemIsPrimitiveType, <strong class="jxr_keyword">final</strong> T value) {
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">final</strong> T elemValue;
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">if</strong> (elemIsPrimitiveType || getClassUtils().isPrimitiveOrSpecialType(value.getClass())) {
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">if</strong> (elemIsPrimitiveType || classUtils.isPrimitiveOrSpecialType(value.getClass())) {
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>              elemValue = value;
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>              <strong class="jxr_keyword">if</strong> (mapElemType.getClass().equals(ItemType.<strong class="jxr_keyword">class</strong>)) {

@@ -69,7 +69,7 @@ public final class ReflectionUtils {
     private static final String DOT_SPLIT_REGEX = &quot;\\.&quot;;
 
     /**
-     * CacheManager class {@link CacheManager}.
+     * CacheManager instance {@link CacheManager}.
      */
     private final CacheManager cacheManager;
 
@@ -88,10 +88,10 @@ public final class ReflectionUtils {
      * @return the method result
      */
     private Object invokeMethod(final Method method, final Object target, final Object... args) {
-<span class="fc" id="L91">        notNull(method, &quot;method cannot be null!&quot;);</span>
-<span class="fc" id="L92">        notNull(target, &quot;target cannot be null!&quot;);</span>
+<span class="nc" id="L91">        notNull(method, &quot;method cannot be null!&quot;);</span>
+<span class="nc" id="L92">        notNull(target, &quot;target cannot be null!&quot;);</span>
         try {
-<span class="fc" id="L94">            return method.invoke(target, args);</span>
+<span class="nc" id="L94">            return method.invoke(target, args);</span>
 <span class="nc" id="L95">        } catch (MissingFieldException | MissingMethodException e) {</span>
 <span class="nc" id="L96">            throw e;</span>
 <span class="nc" id="L97">        } catch (final Exception e) {</span>
@@ -137,14 +137,16 @@ public final class ReflectionUtils {
     public Object getFieldValue(final Object target, final String fieldName, final Class&lt;?&gt; fieldType) {
 <span class="fc" id="L138">        Object fieldValue = getRealTarget(target);</span>
 <span class="fc bfc" id="L139" title="All 2 branches covered.">        for (String currFieldName : fieldName.split(DOT_SPLIT_REGEX)) {</span>
-<span class="fc bfc" id="L140" title="All 2 branches covered.">            if (fieldValue == null) break;</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">            if (fieldValue == null) {</span>
+<span class="fc" id="L141">                break;</span>
+            }
             try {
-<span class="fc" id="L142">                fieldValue = getFieldValue(fieldValue, currFieldName);</span>
-<span class="fc" id="L143">            } catch (final Exception e) {</span>
-<span class="fc" id="L144">                fieldValue = invokeMethod(getGetterMethod(fieldValue.getClass(), currFieldName, fieldType), fieldValue);</span>
-<span class="fc" id="L145">            }</span>
+<span class="fc" id="L144">                fieldValue = getFieldValue(fieldValue, currFieldName);</span>
+<span class="fc" id="L145">            } catch (final Exception e) {</span>
+<span class="nc" id="L146">                fieldValue = invokeMethod(getGetterMethod(fieldValue.getClass(), currFieldName, fieldType), fieldValue);</span>
+<span class="fc" id="L147">            }</span>
         }
-<span class="fc" id="L147">        return fieldValue;</span>
+<span class="fc" id="L149">        return fieldValue;</span>
     }
 
     /**
@@ -155,18 +157,18 @@ public final class ReflectionUtils {
      * @return the getter method
      */
     private Method getGetterMethod(final Class&lt;?&gt; fieldClass, final String fieldName, final Class&lt;?&gt; fieldType) {
-<span class="fc" id="L158">        final String cacheKey = &quot;GetterMethod-&quot; + fieldClass.getCanonicalName() + '-' + fieldName;</span>
-<span class="fc" id="L159">        return ofNullable(cacheManager.getFromCache(cacheKey, Method.class)).orElseGet(() -&gt; {</span>
+<span class="fc" id="L160">        final String cacheKey = &quot;GetterMethod-&quot; + fieldClass.getCanonicalName() + '-' + fieldName;</span>
+<span class="nc" id="L161">        return ofNullable(cacheManager.getFromCache(cacheKey, Method.class)).orElseGet(() -&gt; {</span>
             try {
-<span class="fc" id="L161">                Method method = fieldClass.getMethod(getGetterMethodPrefix(fieldType) + capitalize(fieldName));</span>
-<span class="fc" id="L162">                cacheManager.cacheObject(cacheKey, method);</span>
-<span class="fc" id="L163">                return method;</span>
-<span class="fc" id="L164">            } catch (NoSuchMethodException e) {</span>
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">                if (new ClassUtils().hasField(fieldClass, fieldName)) {</span>
-<span class="nc" id="L166">                    throw new MissingMethodException(fieldClass.getCanonicalName() + &quot; does not allow to get value for field: &quot; + fieldName</span>
+<span class="nc" id="L163">                Method method = fieldClass.getMethod(getGetterMethodPrefix(fieldType) + capitalize(fieldName));</span>
+<span class="nc" id="L164">                cacheManager.cacheObject(cacheKey, method);</span>
+<span class="nc" id="L165">                return method;</span>
+<span class="fc" id="L166">            } catch (NoSuchMethodException e) {</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">                if (new ClassUtils().hasField(fieldClass, fieldName)) {</span>
+<span class="nc" id="L168">                    throw new MissingMethodException(fieldClass.getCanonicalName() + &quot; does not allow to get value for field: &quot; + fieldName</span>
                             + &quot;. Is a getter method defined?&quot;);
                 } else {
-<span class="fc" id="L169">                    throw new MissingFieldException(fieldClass.getCanonicalName() + &quot; hasn't a field called: &quot; + fieldName + &quot;.&quot;);</span>
+<span class="fc" id="L171">                    throw new MissingFieldException(fieldClass.getCanonicalName() + &quot; hasn't a field called: &quot; + fieldName + &quot;.&quot;);</span>
                 }
             }
         });
@@ -180,14 +182,14 @@ public final class ReflectionUtils {
      * @return the annotation
      */
     public &lt;A extends Annotation&gt; A getFieldAnnotation(final Field field, final Class&lt;A&gt; annotationClazz) {
-<span class="fc" id="L183">        final String cacheKey = &quot;FieldAnnotation-&quot; + field.getDeclaringClass().getCanonicalName() + &quot;-&quot; + field.getName() + &quot;-&quot; + annotationClazz.getName();</span>
-<span class="fc" id="L184">        return ofNullable(cacheManager.getFromCache(cacheKey, annotationClazz)).orElseGet(() -&gt; {</span>
-<span class="fc" id="L185">            A annotation = null;</span>
-<span class="fc bfc" id="L186" title="All 2 branches covered.">            if (field.isAnnotationPresent(annotationClazz)) {</span>
-<span class="fc" id="L187">                annotation = field.getAnnotation(annotationClazz);</span>
+<span class="fc" id="L185">        final String cacheKey = &quot;FieldAnnotation-&quot; + field.getDeclaringClass().getCanonicalName() + &quot;-&quot; + field.getName() + &quot;-&quot; + annotationClazz.getName();</span>
+<span class="fc" id="L186">        return ofNullable(cacheManager.getFromCache(cacheKey, annotationClazz)).orElseGet(() -&gt; {</span>
+<span class="fc" id="L187">            A annotation = null;</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">            if (field.isAnnotationPresent(annotationClazz)) {</span>
+<span class="fc" id="L189">                annotation = field.getAnnotation(annotationClazz);</span>
             }
-<span class="fc" id="L189">            cacheManager.cacheObject(cacheKey, annotation);</span>
-<span class="fc" id="L190">            return annotation;</span>
+<span class="fc" id="L191">            cacheManager.cacheObject(cacheKey, annotation);</span>
+<span class="fc" id="L192">            return annotation;</span>
         });
     }
 
@@ -200,14 +202,14 @@ public final class ReflectionUtils {
      * @return the annotation
      */
     public &lt;A extends Annotation&gt; A getParameterAnnotation(final Parameter parameter, final Class&lt;A&gt; annotationClazz, final String declaringClassName) {
-<span class="fc" id="L203">        final String cacheKey = &quot;ParameterAnnotation-&quot; + declaringClassName + &quot;-&quot; + parameter.getName() + &quot;-&quot; + annotationClazz.getName();</span>
-<span class="fc" id="L204">        return ofNullable(cacheManager.getFromCache(cacheKey, annotationClazz)).orElseGet(() -&gt; {</span>
-<span class="fc" id="L205">            A annotation = null;</span>
-<span class="fc bfc" id="L206" title="All 2 branches covered.">            if (parameter.isAnnotationPresent(annotationClazz)) {</span>
-<span class="fc" id="L207">                annotation = parameter.getAnnotation(annotationClazz);</span>
+<span class="fc" id="L205">        final String cacheKey = &quot;ParameterAnnotation-&quot; + declaringClassName + &quot;-&quot; + parameter.getName() + &quot;-&quot; + annotationClazz.getName();</span>
+<span class="fc" id="L206">        return ofNullable(cacheManager.getFromCache(cacheKey, annotationClazz)).orElseGet(() -&gt; {</span>
+<span class="fc" id="L207">            A annotation = null;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">            if (parameter.isAnnotationPresent(annotationClazz)) {</span>
+<span class="fc" id="L209">                annotation = parameter.getAnnotation(annotationClazz);</span>
             }
-<span class="fc" id="L209">            cacheManager.cacheObject(cacheKey, annotation);</span>
-<span class="fc" id="L210">            return annotation;</span>
+<span class="fc" id="L211">            cacheManager.cacheObject(cacheKey, annotation);</span>
+<span class="fc" id="L212">            return annotation;</span>
         });
     }
 
@@ -218,25 +220,51 @@ public final class ReflectionUtils {
      * @return the field value
      */
     private Object getFieldValue(final Object target, final String fieldName) {
-<span class="fc" id="L221">        boolean isAccessible = true;</span>
-<span class="fc" id="L222">        Field field = null;</span>
+<span class="fc" id="L223">        boolean isAccessible = true;</span>
+<span class="fc" id="L224">        Field field = null;</span>
         try {
-<span class="fc" id="L224">            field = target.getClass().getDeclaredField(fieldName);</span>
-<span class="fc" id="L225">            isAccessible = isFieldAccessible(field, target);</span>
-<span class="pc bpc" id="L226" title="1 of 2 branches missed.">            if (!isAccessible) {</span>
-<span class="fc" id="L227">                field.setAccessible(true);</span>
+<span class="fc" id="L226">            field = getDeclaredField(fieldName, target);</span>
+<span class="fc" id="L227">            isAccessible = isFieldAccessible(field, target);</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">            if (!isAccessible) {</span>
+<span class="fc" id="L229">                field.setAccessible(true);</span>
             }
-<span class="fc" id="L229">            return field.get(target);</span>
-<span class="fc" id="L230">        } catch (NoSuchFieldException e) {</span>
-<span class="fc" id="L231">            throw new MissingFieldException(target.getClass().getCanonicalName() + &quot; does not contain field: &quot; + fieldName);</span>
-<span class="nc" id="L232">        } catch (final Exception e) {</span>
-<span class="nc" id="L233">            handleReflectionException(e);</span>
-<span class="nc" id="L234">            throw new IllegalStateException(e);</span>
+<span class="fc" id="L231">            return field.get(target);</span>
+<span class="fc" id="L232">        } catch (MissingFieldException e) {</span>
+<span class="fc" id="L233">            throw new MissingFieldException(target.getClass().getCanonicalName() + &quot; does not contain field: &quot; + fieldName);</span>
+<span class="nc" id="L234">        } catch (final Exception e) {</span>
+<span class="nc" id="L235">            handleReflectionException(e);</span>
+<span class="nc" id="L236">            throw new IllegalStateException(e);</span>
         } finally {
-<span class="pc bpc" id="L236" title="1 of 4 branches missed.">            if (nonNull(field) &amp;&amp; !isAccessible) {</span>
-<span class="fc" id="L237">                field.setAccessible(false);</span>
+<span class="pc bpc" id="L238" title="1 of 4 branches missed.">            if (nonNull(field) &amp;&amp; !isAccessible) {</span>
+<span class="fc" id="L239">                field.setAccessible(false);</span>
             }
         }
+    }
+
+    /**
+     * Return the field of the given class.
+     * @param fieldName the name of the filed to retrieve.
+     * @param target the field's class
+     * @return the field corresponding to the given name.
+     */
+    private Field getDeclaredField(final String fieldName, final Object target) {
+<span class="fc" id="L251">        final AtomicReference&lt;Class&lt;?&gt;&gt; targetClass = new AtomicReference&lt;&gt;(target.getClass());</span>
+<span class="fc" id="L252">        final String cacheKey = &quot;DeclaredField-&quot; + targetClass.get().getCanonicalName() + &quot;-fieldName-&quot; + fieldName;</span>
+<span class="fc" id="L253">        return ofNullable(cacheManager.getFromCache(cacheKey, Field.class)).orElseGet(() -&gt; {</span>
+<span class="fc" id="L254">            Field field = null;</span>
+<span class="fc bfc" id="L255" title="All 4 branches covered.">            while (isNull(field) &amp;&amp; !targetClass.get().equals(Object.class)) {</span>
+                try {
+<span class="fc" id="L257">                    field = targetClass.get().getDeclaredField(fieldName);</span>
+<span class="fc" id="L258">                } catch (NoSuchFieldException e) {</span>
+<span class="fc" id="L259">                    targetClass.set(targetClass.get().getSuperclass());</span>
+<span class="fc" id="L260">                }</span>
+            }
+<span class="fc bfc" id="L262" title="All 2 branches covered.">            if (isNull(field)) {</span>
+<span class="fc" id="L263">                throw new MissingFieldException(targetClass.get().getCanonicalName() + &quot; does not contain field: &quot; + fieldName);</span>
+            }
+<span class="fc" id="L265">            cacheManager.cacheObject(cacheKey, field);</span>
+<span class="fc" id="L266">            return field;</span>
+        });
     }
 
     /**
@@ -247,13 +275,13 @@ public final class ReflectionUtils {
      */
     public void setFieldValue(final Object target, final Field field, final Object fieldValue) {
         try {
-<span class="fc" id="L250">            setFieldValueWithoutSetterMethod(target, field, fieldValue);</span>
-<span class="nc" id="L251">        } catch (final IllegalArgumentException e) {</span>
-<span class="nc" id="L252">            throw e;</span>
-<span class="nc" id="L253">        } catch (final Exception e) {</span>
-<span class="nc" id="L254">            invokeMethod(getSetterMethodForField(target.getClass(), field.getName(), field.getType()), target, fieldValue);</span>
-<span class="fc" id="L255">        }</span>
-<span class="fc" id="L256">    }</span>
+<span class="fc" id="L278">            setFieldValueWithoutSetterMethod(target, field, fieldValue);</span>
+<span class="nc" id="L279">        } catch (final IllegalArgumentException e) {</span>
+<span class="nc" id="L280">            throw e;</span>
+<span class="nc" id="L281">        } catch (final Exception e) {</span>
+<span class="nc" id="L282">            invokeMethod(getSetterMethodForField(target.getClass(), field.getName(), field.getType()), target, fieldValue);</span>
+<span class="fc" id="L283">        }</span>
+<span class="fc" id="L284">    }</span>
 
     /**
      * Sets the value of a field through {@link Field#set} method.
@@ -262,21 +290,21 @@ public final class ReflectionUtils {
      * @param fieldValue the value to set
      */
     private void setFieldValueWithoutSetterMethod(final Object target, final Field field, final Object fieldValue) {
-<span class="fc" id="L265">        final boolean isAccessible = isFieldAccessible(field, target);</span>
+<span class="fc" id="L293">        final boolean isAccessible = isFieldAccessible(field, target);</span>
         try {
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">            if (!isAccessible) {</span>
-<span class="fc" id="L268">                field.setAccessible(true);</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">            if (!isAccessible) {</span>
+<span class="fc" id="L296">                field.setAccessible(true);</span>
             }
-<span class="fc" id="L270">            field.set(target, fieldValue);</span>
-<span class="nc" id="L271">        } catch (final Exception e) {</span>
-<span class="nc" id="L272">            handleReflectionException(e);</span>
-<span class="nc" id="L273">            throw new IllegalStateException(e);</span>
+<span class="fc" id="L298">            field.set(target, fieldValue);</span>
+<span class="nc" id="L299">        } catch (final Exception e) {</span>
+<span class="nc" id="L300">            handleReflectionException(e);</span>
+<span class="nc" id="L301">            throw new IllegalStateException(e);</span>
         } finally {
-<span class="pc bpc" id="L275" title="1 of 2 branches missed.">            if (!isAccessible) {</span>
-<span class="fc" id="L276">                field.setAccessible(false);</span>
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">            if (!isAccessible) {</span>
+<span class="fc" id="L304">                field.setAccessible(false);</span>
             }
         }
-<span class="fc" id="L279">    }</span>
+<span class="fc" id="L307">    }</span>
 
     /**
      * Check if a field is accessible or not.
@@ -286,7 +314,7 @@ public final class ReflectionUtils {
      * @return true id is accessible, false otherwise
      */
     private boolean isFieldAccessible(final Field field, final Object target) {
-<span class="fc" id="L289">        return field.isAccessible();</span>
+<span class="fc" id="L317">        return field.isAccessible();</span>
     }
 
     /**
@@ -295,11 +323,11 @@ public final class ReflectionUtils {
      * @return the encapsulated object (if any)
      */
     private Object getRealTarget(final Object target) {
-<span class="fc" id="L298">        AtomicReference&lt;Object&gt; realTarget = new AtomicReference&lt;&gt;(target);</span>
-<span class="pc bpc" id="L299" title="1 of 2 branches missed.">        if (isOptionalType(target)) {</span>
-<span class="nc" id="L300">            ((Optional&lt;?&gt;) target).ifPresent(realTarget::set);</span>
+<span class="fc" id="L326">        AtomicReference&lt;Object&gt; realTarget = new AtomicReference&lt;&gt;(target);</span>
+<span class="pc bpc" id="L327" title="1 of 2 branches missed.">        if (isOptionalType(target)) {</span>
+<span class="nc" id="L328">            ((Optional&lt;?&gt;) target).ifPresent(realTarget::set);</span>
         }
-<span class="fc" id="L302">        return realTarget.get();</span>
+<span class="fc" id="L330">        return realTarget.get();</span>
     }
 
     /**
@@ -308,7 +336,7 @@ public final class ReflectionUtils {
      * @return true if the given object is an Optional, false otherwise.
      */
     private boolean isOptionalType(final Object object) {
-<span class="fc" id="L311">        return object instanceof Optional;</span>
+<span class="fc" id="L339">        return object instanceof Optional;</span>
     }
 
     /**
@@ -317,11 +345,11 @@ public final class ReflectionUtils {
      * @return the method prefix (get or is)
      */
     private String getGetterMethodPrefix(final Class&lt;?&gt; fieldType) {
-<span class="fc" id="L320">        final String cacheKey = &quot;GetterMethodPrefix-&quot; + fieldType.getCanonicalName();</span>
-<span class="fc" id="L321">        return ofNullable(cacheManager.getFromCache(cacheKey, String.class)).orElseGet(() -&gt; {</span>
-<span class="fc bfc" id="L322" title="All 4 branches covered.">            String res = Boolean.class.equals(fieldType) || fieldType.getCanonicalName().equals(BOOLEAN) ? IS.getPrefix() : GET.getPrefix();</span>
-<span class="fc" id="L323">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L324">            return res;</span>
+<span class="fc" id="L348">        final String cacheKey = &quot;GetterMethodPrefix-&quot; + fieldType.getCanonicalName();</span>
+<span class="fc" id="L349">        return ofNullable(cacheManager.getFromCache(cacheKey, String.class)).orElseGet(() -&gt; {</span>
+<span class="fc bfc" id="L350" title="All 4 branches covered.">            String res = Boolean.class.equals(fieldType) || fieldType.getCanonicalName().equals(BOOLEAN) ? IS.getPrefix() : GET.getPrefix();</span>
+<span class="fc" id="L351">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L352">            return res;</span>
         });
     }
 
@@ -334,14 +362,14 @@ public final class ReflectionUtils {
      * @throws MissingMethodException if the method does not exists
      */
     public Method getSetterMethodForField(final Class&lt;?&gt; fieldClass, final String fieldName, final Class&lt;?&gt; fieldType) {
-<span class="fc" id="L337">        final String cacheKey = &quot;SetterMethod-&quot; + fieldClass.getCanonicalName() + '-' + fieldName;</span>
-<span class="fc" id="L338">        return ofNullable(cacheManager.getFromCache(cacheKey, Method.class)).orElseGet(() -&gt; {</span>
+<span class="fc" id="L365">        final String cacheKey = &quot;SetterMethod-&quot; + fieldClass.getCanonicalName() + '-' + fieldName;</span>
+<span class="fc" id="L366">        return ofNullable(cacheManager.getFromCache(cacheKey, Method.class)).orElseGet(() -&gt; {</span>
             try {
-<span class="fc" id="L340">                Method method = fieldClass.getMethod(SET.getPrefix() + capitalize(fieldName), fieldType);</span>
-<span class="fc" id="L341">                cacheManager.cacheObject(cacheKey, method);</span>
-<span class="fc" id="L342">                return method;</span>
-<span class="fc" id="L343">            } catch (NoSuchMethodException e) {</span>
-<span class="fc" id="L344">                throw new MissingMethodException(e.getMessage());</span>
+<span class="fc" id="L368">                Method method = fieldClass.getMethod(SET.getPrefix() + capitalize(fieldName), fieldType);</span>
+<span class="fc" id="L369">                cacheManager.cacheObject(cacheKey, method);</span>
+<span class="fc" id="L370">                return method;</span>
+<span class="fc" id="L371">            } catch (NoSuchMethodException e) {</span>
+<span class="fc" id="L372">                throw new MissingMethodException(e.getMessage());</span>
             }
         });
     }
@@ -352,17 +380,17 @@ public final class ReflectionUtils {
      * @return the generic type class
      */
     public Class&lt;?&gt; getGenericFieldType(final Field field) {
-<span class="fc" id="L355">        final String cacheKey = &quot;GenericFieldType-&quot; + field.getDeclaringClass().getCanonicalName() + '-' + field.getName();</span>
-<span class="fc" id="L356">        return ofNullable(cacheManager.getFromCache(cacheKey, Class.class)).orElseGet(() -&gt; {</span>
-<span class="fc" id="L357">            Class&lt;?&gt; res = null;</span>
-<span class="pc bpc" id="L358" title="1 of 2 branches missed.">            if (ParameterizedType.class.isAssignableFrom(field.getGenericType().getClass())) {</span>
-<span class="fc" id="L359">                final Type[] fieldArgTypes = ((ParameterizedType) field.getGenericType()).getActualTypeArguments();</span>
-<span class="pc bpc" id="L360" title="1 of 2 branches missed.">                if (fieldArgTypes.length != 0) {</span>
-<span class="fc" id="L361">                    res = (Class&lt;?&gt;) fieldArgTypes[0];</span>
+<span class="fc" id="L383">        final String cacheKey = &quot;GenericFieldType-&quot; + field.getDeclaringClass().getCanonicalName() + '-' + field.getName();</span>
+<span class="fc" id="L384">        return ofNullable(cacheManager.getFromCache(cacheKey, Class.class)).orElseGet(() -&gt; {</span>
+<span class="fc" id="L385">            Class&lt;?&gt; res = null;</span>
+<span class="pc bpc" id="L386" title="1 of 2 branches missed.">            if (ParameterizedType.class.isAssignableFrom(field.getGenericType().getClass())) {</span>
+<span class="fc" id="L387">                final Type[] fieldArgTypes = ((ParameterizedType) field.getGenericType()).getActualTypeArguments();</span>
+<span class="pc bpc" id="L388" title="1 of 2 branches missed.">                if (fieldArgTypes.length != 0) {</span>
+<span class="fc" id="L389">                    res = (Class&lt;?&gt;) fieldArgTypes[0];</span>
                 }
             }
-<span class="fc" id="L364">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L365">            return res;</span>
+<span class="fc" id="L392">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L393">            return res;</span>
         });
     }
 
@@ -374,22 +402,22 @@ public final class ReflectionUtils {
      * @return the generic type class
      */
     public MapType getMapGenericType(final Type fieldType, final String declaringClass, final String fieldName) {
-<span class="fc" id="L377">        notNull(fieldType, &quot;fieldType cannot be null!&quot;);</span>
-<span class="fc" id="L378">        notNull(fieldName, &quot;fieldName cannot be null!&quot;);</span>
-<span class="fc" id="L379">        final Class&lt;?&gt; fieldClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);</span>
-<span class="pc bpc" id="L380" title="1 of 4 branches missed.">        if (isNull(fieldClass) || !Map.class.isAssignableFrom(fieldClass)) {</span>
-<span class="fc" id="L381">            throw new IllegalArgumentException(</span>
+<span class="fc" id="L405">        notNull(fieldType, &quot;fieldType cannot be null!&quot;);</span>
+<span class="fc" id="L406">        notNull(fieldName, &quot;fieldName cannot be null!&quot;);</span>
+<span class="fc" id="L407">        final Class&lt;?&gt; fieldClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);</span>
+<span class="pc bpc" id="L408" title="1 of 4 branches missed.">        if (isNull(fieldClass) || !Map.class.isAssignableFrom(fieldClass)) {</span>
+<span class="fc" id="L409">            throw new IllegalArgumentException(</span>
                     &quot;Type for object: &quot; + fieldName + &quot; is invalid. &quot;
-<span class="fc" id="L383">                            + &quot;It cannot be assigned from: &quot; + Map.class.getCanonicalName() + &quot;.&quot;);</span>
+<span class="fc" id="L411">                            + &quot;It cannot be assigned from: &quot; + Map.class.getCanonicalName() + &quot;.&quot;);</span>
         }
-<span class="fc" id="L385">        final String cacheKey = &quot;MapGenericFieldType-&quot; + fieldClass.getCanonicalName() + '-' + fieldName;</span>
-<span class="fc" id="L386">        return ofNullable(cacheManager.getFromCache(cacheKey, MapType.class)).orElseGet(() -&gt; {</span>
-<span class="fc" id="L387">            final ParameterizedType genericType = (ParameterizedType) fieldType;</span>
-<span class="fc" id="L388">            final MapElemType keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);</span>
-<span class="fc" id="L389">            final MapElemType elemType = getMapElemType(genericType.getActualTypeArguments()[1], declaringClass, fieldName);</span>
-<span class="fc" id="L390">            final MapType mapType = new MapType(keyType, elemType);</span>
-<span class="fc" id="L391">            cacheManager.cacheObject(cacheKey, mapType);</span>
-<span class="fc" id="L392">            return mapType;</span>
+<span class="fc" id="L413">        final String cacheKey = &quot;MapGenericFieldType-&quot; + fieldClass.getCanonicalName() + '-' + fieldName;</span>
+<span class="fc" id="L414">        return ofNullable(cacheManager.getFromCache(cacheKey, MapType.class)).orElseGet(() -&gt; {</span>
+<span class="fc" id="L415">            final ParameterizedType genericType = (ParameterizedType) fieldType;</span>
+<span class="fc" id="L416">            final MapElemType keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);</span>
+<span class="fc" id="L417">            final MapElemType elemType = getMapElemType(genericType.getActualTypeArguments()[1], declaringClass, fieldName);</span>
+<span class="fc" id="L418">            final MapType mapType = new MapType(keyType, elemType);</span>
+<span class="fc" id="L419">            cacheManager.cacheObject(cacheKey, mapType);</span>
+<span class="fc" id="L420">            return mapType;</span>
         });
     }
 
@@ -403,17 +431,17 @@ public final class ReflectionUtils {
      * @return the generic class of the objects contained in the map.
      */
     private MapElemType getMapElemType(final Type fieldType, final String declaringClass, final String fieldName) {
-<span class="fc" id="L406">        final String cacheKey = &quot;MapElemType-&quot; + declaringClass + &quot;-&quot; + fieldType.getTypeName() + '-' + fieldName;</span>
-<span class="fc" id="L407">        return ofNullable(cacheManager.getFromCache(cacheKey, MapElemType.class)).orElseGet(() -&gt; {</span>
-<span class="fc" id="L408">            final Class&lt;?&gt; argumentTypeClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);</span>
+<span class="fc" id="L434">        final String cacheKey = &quot;MapElemType-&quot; + declaringClass + &quot;-&quot; + fieldType.getTypeName() + '-' + fieldName;</span>
+<span class="fc" id="L435">        return ofNullable(cacheManager.getFromCache(cacheKey, MapElemType.class)).orElseGet(() -&gt; {</span>
+<span class="fc" id="L436">            final Class&lt;?&gt; argumentTypeClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);</span>
             final MapElemType res;
-<span class="fc bfc" id="L410" title="All 2 branches covered.">            if (Map.class.isAssignableFrom(argumentTypeClass)) {</span>
-<span class="fc" id="L411">                res = getMapGenericType(fieldType, declaringClass, fieldName);</span>
+<span class="fc bfc" id="L438" title="All 2 branches covered.">            if (Map.class.isAssignableFrom(argumentTypeClass)) {</span>
+<span class="fc" id="L439">                res = getMapGenericType(fieldType, declaringClass, fieldName);</span>
             } else {
-<span class="fc" id="L413">                res = buildItemType(fieldType, declaringClass, fieldName);</span>
+<span class="fc" id="L441">                res = buildItemType(fieldType, declaringClass, fieldName);</span>
             }
-<span class="fc" id="L415">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L416">            return res;</span>
+<span class="fc" id="L443">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L444">            return res;</span>
         });
     }
 
@@ -425,10 +453,10 @@ public final class ReflectionUtils {
      * @return the {@link ItemType} object
      */
     private ItemType buildItemType(final Object argument, final String declaringClass, final String fieldName) {
-<span class="fc" id="L428">        return ItemType.builder()</span>
-<span class="fc" id="L429">                .objectClass(getArgumentTypeClass(argument, declaringClass, fieldName, false))</span>
-<span class="fc" id="L430">                .genericClass(getArgumentTypeClass(argument, declaringClass, fieldName, true))</span>
-<span class="fc" id="L431">                .build();</span>
+<span class="fc" id="L456">        return ItemType.builder()</span>
+<span class="fc" id="L457">                .objectClass(getArgumentTypeClass(argument, declaringClass, fieldName, false))</span>
+<span class="fc" id="L458">                .genericClass(getArgumentTypeClass(argument, declaringClass, fieldName, true))</span>
+<span class="fc" id="L459">                .build();</span>
     }
 
     /**
@@ -441,25 +469,25 @@ public final class ReflectionUtils {
      * @return the given argument class type
      */
     public Class&lt;?&gt; getArgumentTypeClass(final Object argument, final String declaringClass, final String fieldName, final boolean getNestedGenericClass) {
-<span class="fc" id="L444">        final boolean argumentIsTypeClass = argument instanceof Class;</span>
-<span class="fc" id="L445">        final String cacheKey = &quot;ArgumentTypeClass-&quot; + declaringClass + &quot;-&quot; + fieldName + &quot;-&quot; + getNestedGenericClass + &quot;-&quot;</span>
-<span class="fc bfc" id="L446" title="All 4 branches covered.">                + &quot;-&quot; + (argumentIsTypeClass || !List.class.isAssignableFrom(argument.getClass()) ? argument : argument.getClass());</span>
-<span class="fc" id="L447">        Class&lt;?&gt; argumentTypeClass = cacheManager.getFromCache(cacheKey, Class.class);</span>
-<span class="fc bfc" id="L448" title="All 2 branches covered.">        if (nonNull(argumentTypeClass)) {</span>
-<span class="fc bfc" id="L449" title="All 2 branches covered.">            if (argumentTypeClass == EmptyValue.class) {</span>
-<span class="fc" id="L450">                argumentTypeClass = null;</span>
+<span class="fc" id="L472">        final boolean argumentIsTypeClass = argument instanceof Class;</span>
+<span class="fc" id="L473">        final String cacheKey = &quot;ArgumentTypeClass-&quot; + declaringClass + &quot;-&quot; + fieldName + &quot;-&quot; + getNestedGenericClass + &quot;-&quot;</span>
+<span class="fc bfc" id="L474" title="All 4 branches covered.">                + &quot;-&quot; + (argumentIsTypeClass || !List.class.isAssignableFrom(argument.getClass()) ? argument : argument.getClass());</span>
+<span class="fc" id="L475">        Class&lt;?&gt; argumentTypeClass = cacheManager.getFromCache(cacheKey, Class.class);</span>
+<span class="fc bfc" id="L476" title="All 2 branches covered.">        if (nonNull(argumentTypeClass)) {</span>
+<span class="fc bfc" id="L477" title="All 2 branches covered.">            if (argumentTypeClass == EmptyValue.class) {</span>
+<span class="fc" id="L478">                argumentTypeClass = null;</span>
             }
         } else {
-<span class="fc bfc" id="L453" title="All 2 branches covered.">            if (argumentIsTypeClass) {</span>
-<span class="fc bfc" id="L454" title="All 2 branches covered.">                argumentTypeClass = getNestedGenericClass ? null : (Class&lt;?&gt;) argument;</span>
-<span class="fc bfc" id="L455" title="All 2 branches covered.">            } else if (ParameterizedType.class.isAssignableFrom(argument.getClass())) {</span>
-<span class="fc bfc" id="L456" title="All 2 branches covered.">                argumentTypeClass = getNestedGenericClass</span>
-<span class="fc" id="L457">                        ? getArgumentTypeClass(((ParameterizedType) argument).getActualTypeArguments()[0], declaringClass, fieldName, false)</span>
-<span class="fc" id="L458">                        : (Class&lt;?&gt;) ((ParameterizedType) argument).getRawType();</span>
+<span class="fc bfc" id="L481" title="All 2 branches covered.">            if (argumentIsTypeClass) {</span>
+<span class="fc bfc" id="L482" title="All 2 branches covered.">                argumentTypeClass = getNestedGenericClass ? null : (Class&lt;?&gt;) argument;</span>
+<span class="fc bfc" id="L483" title="All 2 branches covered.">            } else if (ParameterizedType.class.isAssignableFrom(argument.getClass())) {</span>
+<span class="fc bfc" id="L484" title="All 2 branches covered.">                argumentTypeClass = getNestedGenericClass</span>
+<span class="fc" id="L485">                        ? getArgumentTypeClass(((ParameterizedType) argument).getActualTypeArguments()[0], declaringClass, fieldName, false)</span>
+<span class="fc" id="L486">                        : (Class&lt;?&gt;) ((ParameterizedType) argument).getRawType();</span>
             }
-<span class="fc" id="L460">            cacheManager.cacheObject(cacheKey, argumentTypeClass, EmptyValue.class);</span>
+<span class="fc" id="L488">            cacheManager.cacheObject(cacheKey, argumentTypeClass, EmptyValue.class);</span>
         }
-<span class="fc" id="L462">        return argumentTypeClass;</span>
+<span class="fc" id="L490">        return argumentTypeClass;</span>
     }
 
     /**
@@ -468,11 +496,11 @@ public final class ReflectionUtils {
      * @return the array class
      */
     public Class&lt;?&gt; getArrayType(final Field arrayField) {
-<span class="fc" id="L471">        final String cacheKey = &quot;ArrayType-&quot; + arrayField.getDeclaringClass().getCanonicalName();</span>
-<span class="fc" id="L472">        return ofNullable(cacheManager.getFromCache(cacheKey, Class.class)).orElseGet(() -&gt; {</span>
-<span class="fc" id="L473">            final Class&lt;?&gt; arrayType = arrayField.getType().getComponentType();</span>
-<span class="fc" id="L474">            cacheManager.cacheObject(cacheKey, arrayType);</span>
-<span class="fc" id="L475">            return arrayType;</span>
+<span class="fc" id="L499">        final String cacheKey = &quot;ArrayType-&quot; + arrayField.getDeclaringClass().getCanonicalName();</span>
+<span class="fc" id="L500">        return ofNullable(cacheManager.getFromCache(cacheKey, Class.class)).orElseGet(() -&gt; {</span>
+<span class="fc" id="L501">            final Class&lt;?&gt; arrayType = arrayField.getType().getComponentType();</span>
+<span class="fc" id="L502">            cacheManager.cacheObject(cacheKey, arrayType);</span>
+<span class="fc" id="L503">            return arrayType;</span>
         });
     }
 
@@ -481,15 +509,15 @@ public final class ReflectionUtils {
      * @param ex the exception
      */
     void handleReflectionException(final Exception ex) {
-<span class="fc bfc" id="L484" title="All 2 branches covered.">        if (ex instanceof NoSuchMethodException) {</span>
-<span class="fc" id="L485">            throw new IllegalStateException(&quot;Method not found: &quot; + ex.getMessage());</span>
-<span class="fc bfc" id="L486" title="All 2 branches covered.">        } else if (ex instanceof IllegalAccessException) {</span>
-<span class="fc" id="L487">            throw new IllegalStateException(&quot;Could not access method: &quot; + ex.getMessage());</span>
+<span class="fc bfc" id="L512" title="All 2 branches covered.">        if (ex instanceof NoSuchMethodException) {</span>
+<span class="fc" id="L513">            throw new IllegalStateException(&quot;Method not found: &quot; + ex.getMessage());</span>
+<span class="fc bfc" id="L514" title="All 2 branches covered.">        } else if (ex instanceof IllegalAccessException) {</span>
+<span class="fc" id="L515">            throw new IllegalStateException(&quot;Could not access method: &quot; + ex.getMessage());</span>
         } else {
-<span class="fc bfc" id="L489" title="All 2 branches covered.">            if (ex instanceof RuntimeException) {</span>
-<span class="fc" id="L490">                throw (RuntimeException) ex;</span>
+<span class="fc bfc" id="L517" title="All 2 branches covered.">            if (ex instanceof RuntimeException) {</span>
+<span class="fc" id="L518">                throw (RuntimeException) ex;</span>
             } else {
-<span class="fc" id="L492">                throw new UndeclaredThrowableException(ex);</span>
+<span class="fc" id="L520">                throw new UndeclaredThrowableException(ex);</span>
             }
         }
     }
