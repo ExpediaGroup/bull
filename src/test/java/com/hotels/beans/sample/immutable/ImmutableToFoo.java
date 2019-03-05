@@ -30,7 +30,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class ImmutableToFoo {
-    @NotNull
     private final String name;
     @NotNull
     private final BigInteger id;

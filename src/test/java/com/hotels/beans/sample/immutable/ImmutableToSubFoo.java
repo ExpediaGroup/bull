@@ -19,8 +19,6 @@ package com.hotels.beans.sample.immutable;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -32,7 +30,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public class ImmutableToSubFoo {
-    @NotNull
     private final String name;
     private final int[] phoneNumbers;
     private final Map<String, String> sampleMap;

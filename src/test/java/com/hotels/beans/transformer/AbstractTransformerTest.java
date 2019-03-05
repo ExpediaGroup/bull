@@ -16,111 +16,127 @@
 
 package com.hotels.beans.transformer;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
-import org.junit.Before;
-import org.junit.Test;
+import static com.hotels.beans.constant.ClassType.IMMUTABLE;
 
-import com.hotels.beans.model.FieldMapping;
-import com.hotels.beans.model.FieldTransformer;
-import com.hotels.beans.utils.ReflectionUtils;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+
+import org.junit.BeforeClass;
+
+import com.hotels.beans.sample.FromFoo;
+import com.hotels.beans.sample.FromFooAdvFields;
+import com.hotels.beans.sample.FromFooSimple;
+import com.hotels.beans.sample.FromFooSubClass;
+import com.hotels.beans.sample.FromFooWithPrimitiveFields;
+import com.hotels.beans.sample.FromSubFoo;
 
 /**
- * Unit test for class: {@link AbstractTransformer}.
+ * Unit test for {@link Transformer}.
  */
 public class AbstractTransformerTest {
-    private static final String SOURCE_FIELD_NAME = "sourceFieldName";
-    private static final String SOURCE_FIELD_NAME_2 = "sourceFieldName2";
-    private static final String DEST_FIELD_NAME = "destFieldName";
-    private static final String TRANSFORMER_SETTINGS_FIELD_NAME = "settings";
-    private static final ReflectionUtils REFLECTION_UTILS = new ReflectionUtils();
+    protected static final BigInteger ID = new BigInteger("1234");
+    protected static final String NAME = "Goofy";
+    protected static FromFoo fromFoo;
+    protected static FromFoo fromFooWithNullProperties;
+    protected static FromFooSimple fromFooSimple;
+    protected static FromFooWithPrimitiveFields fromFooWithPrimitiveFields;
+    protected static List<FromSubFoo> fromSubFooList;
+    protected static List<String> sourceFooSimpleList;
+    protected static FromSubFoo fromSubFoo;
+    protected static FromFooSubClass fromFooSubClass;
+    protected static FromFooAdvFields fromFooAdvFields;
+    protected static final int AGE = 34;
+    protected static final String AGE_FIELD_NAME = "age";
+    protected static final String DEST_FIELD_NAME = "destFieldName";
+    protected static final String CONSTRUCTOR_PARAMETER_NAME = "constructorParameterName";
+    protected static final String REFLECTION_UTILS_FIELD_NAME = "reflectionUtils";
+
+    private static final String ITEM_1 = "donald";
+    private static final String ITEM_2 = "duck";
+    private static final String SURNAME = "surname";
+    private static final int PHONE = 123;
+    private static final String INDEX_NUMBER = null;
+    private static final boolean CHECK = true;
+    private static final BigDecimal AMOUNT = new BigDecimal(10);
+    private static final String SUB_FOO_NAME = "Smith";
+    private static final int[] SUB_FOO_PHONE_NUMBERS = {12345, 6892, 10873};
+    private static final Map<String, String> SUB_FOO_SAMPLE_MAP = new HashMap<>();
+    private static final Map<String, List<String>> SUB_FOO_COMPLEX_MAP = new HashMap<>();
+    private static final Map<String, Map<String, String>> SUB_FOO_VERY_COMPLEX_MAP = new HashMap<>();
 
     /**
-     * The class to be tested.
+     * Initializes the arguments and objects.
      */
-    private AbstractTransformer underTest;
-
-    /**
-     * Initialized mocks.
-     */
-    @Before
-    public void beforeMethod() {
-        underTest = new TransformerImpl();
-        initMocks(this);
+    @BeforeClass
+    public static void beforeClass() {
+        initObjects();
     }
 
     /**
-     * Test that is possible to remove a field mapping for a given field.
+     * Create an instance of two objects: one without custom annotation and another one with custom annotations then execute the copy into a specular immutable object.
      */
-    @Test
-    public void testRemoveFieldMappingWorksProperly() {
-        //GIVEN
-        Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(SOURCE_FIELD_NAME, DEST_FIELD_NAME));
-
-        //WHEN
-        beanTransformer.removeFieldMapping(DEST_FIELD_NAME);
-        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
-
-        //THEN
-        assertFalse(transformerSettings.getFieldsNameMapping().containsKey(DEST_FIELD_NAME));
+    private static void initObjects() {
+        SUB_FOO_SAMPLE_MAP.put(ITEM_1, ITEM_2);
+        SUB_FOO_COMPLEX_MAP.put(ITEM_1, singletonList(ITEM_2));
+        SUB_FOO_VERY_COMPLEX_MAP.put(ITEM_1, SUB_FOO_SAMPLE_MAP);
+        fromSubFoo = new FromSubFoo(SUB_FOO_NAME, SUB_FOO_PHONE_NUMBERS, SUB_FOO_SAMPLE_MAP, SUB_FOO_COMPLEX_MAP, SUB_FOO_VERY_COMPLEX_MAP);
+        fromSubFooList = singletonList(fromSubFoo);
+        sourceFooSimpleList = asList(ITEM_1, ITEM_2);
+        fromFoo = createFromFoo(fromSubFoo);
+        fromFooWithNullProperties = createFromFoo(null);
+        fromFooSimple = createFromFooSimple();
+        fromFooWithPrimitiveFields = createFromFooWithPrimitiveFields();
+        fromFooSubClass = createFromFooSubClass();
+        fromFooAdvFields = createFromFooAdvFields();
     }
 
     /**
-     * Test that the method {@code removeFieldMapping} raises an {@link IllegalArgumentException} if the parameter is null.
+     * Creates a {@link FromFoo} instance.
+     * @param fromSubFoo the {@link FromSubFoo} instance
+     * @return the {@link FromFoo} instance.
      */
-    @Test(expected = IllegalArgumentException.class)
-    public void testRemoveFieldMappingRaisesExceptionIfItsCalledWithNullParam() {
-        //GIVEN
-        Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(SOURCE_FIELD_NAME, DEST_FIELD_NAME));
-
-        //WHEN
-        beanTransformer.removeFieldMapping(null);
+    private static FromFoo createFromFoo(final FromSubFoo fromSubFoo) {
+        return new FromFoo(NAME, ID, fromSubFooList, sourceFooSimpleList, fromSubFoo);
     }
 
     /**
-     * Test that is possible to remove all the fields mappings defined.
+     * Creates a {@link FromFooSimple} instance.
+     * @return the {@link FromFooSimple} instance.
      */
-    @Test
-    public void testResetFieldsMappingWorksProperly() {
-        //GIVEN
-        Transformer beanTransformer = underTest
-                .withFieldMapping(new FieldMapping(SOURCE_FIELD_NAME, DEST_FIELD_NAME), new FieldMapping(SOURCE_FIELD_NAME_2, DEST_FIELD_NAME));
+    private static FromFooSimple createFromFooSimple() {
+        return new FromFooSimple(NAME, ID);
+    }
 
-        //WHEN
-        beanTransformer.resetFieldsMapping();
-        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
 
-        //THEN
-        assertTrue(transformerSettings.getFieldsNameMapping().isEmpty());
+    /**
+     * Creates a {@link FromFooWithPrimitiveFields} instance.
+     * @return the {@link FromFooWithPrimitiveFields} instance.
+     */
+    private static FromFooWithPrimitiveFields createFromFooWithPrimitiveFields() {
+        return new FromFooWithPrimitiveFields(NAME, ID.intValue(), AGE, fromSubFooList, sourceFooSimpleList, fromSubFoo);
     }
 
     /**
-     * Test that is possible to remove a field transformer for a given field.
+     * Creates a {@link FromFooSubClass} instance.
+     * @return the {@link FromFooSubClass} instance.
      */
-    @Test
-    public void testRemoveFieldTransformerWorksProperly() {
-        //GIVEN
-        Transformer beanTransformer = underTest.withFieldTransformer(new FieldTransformer<>(DEST_FIELD_NAME, val -> val));
-
-        //WHEN
-        beanTransformer.removeFieldTransformer(DEST_FIELD_NAME);
-        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
-
-        //THEN
-        assertFalse(transformerSettings.getFieldsTransformers().containsKey(DEST_FIELD_NAME));
+    private static FromFooSubClass createFromFooSubClass() {
+        return new FromFooSubClass(fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObjectList(), fromFoo.getList(), fromFoo.getNestedObject(), SURNAME, PHONE, CHECK, AMOUNT);
     }
 
     /**
-     * Test that the method {@code removeFieldTransformer} raises an {@link IllegalArgumentException} if the parameter is null.
+     * Creates a {@link FromFooAdvFields} instance.
+     * @return the {@link FromFooAdvFields} instance.
      */
-    @Test(expected = IllegalArgumentException.class)
-    public void testRemoveFieldTransformerRaisesExceptionIfItsCalledWithNullParam() {
-        //GIVEN
-        Transformer beanTransformer = underTest.withFieldTransformer(new FieldTransformer<>(DEST_FIELD_NAME, val -> val));
-
-        //WHEN
-        beanTransformer.removeFieldTransformer(null);
+    private static FromFooAdvFields createFromFooAdvFields() {
+        return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage());
     }
 }
