@@ -60,7 +60,6 @@ import com.hotels.beans.sample.immutable.ImmutableToFooNotExistingFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
-import com.hotels.beans.sample.mutable.MutableToFooSubClass;
 import com.hotels.beans.utils.ReflectionUtils;
 
 /**
@@ -428,15 +427,12 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     @Test
     public void testTransformationOnAnExistingDestinationWorksProperly() {
         //GIVEN
-        MutableToFooSubClass mutableToFoo = new MutableToFooSubClass();
         ImmutableToFooSimple immutableToFoo = new ImmutableToFooSimple(null, null);
 
         //WHEN
-        underTest.transform(fromFooSubClass, mutableToFoo);
         underTest.transform(fromFooSimple, immutableToFoo);
 
         //THEN
-        assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
         assertThat(immutableToFoo, sameBeanAs(fromFooSimple));
     }
 
