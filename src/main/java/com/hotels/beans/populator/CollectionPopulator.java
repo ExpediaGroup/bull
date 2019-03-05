@@ -46,8 +46,8 @@ class CollectionPopulator<K> extends Populator<Collection> implements ICollectio
      */
     @Override
     public Collection<K> getPopulatedObject(final Field field, final Collection fieldValue) {
-        final Class<?> genericClass = getReflectionUtils().getArgumentTypeClass(fieldValue, field.getDeclaringClass().getName(), field.getName(), true);
-        return getPopulatedObject(field.getType(), getReflectionUtils().getGenericFieldType(field), fieldValue, genericClass);
+        final Class<?> genericClass = reflectionUtils.getArgumentTypeClass(fieldValue, field.getDeclaringClass().getName(), field.getName(), true);
+        return getPopulatedObject(field.getType(), reflectionUtils.getGenericFieldType(field), fieldValue, genericClass);
     }
 
     /**
@@ -57,7 +57,7 @@ class CollectionPopulator<K> extends Populator<Collection> implements ICollectio
     @Override
     public Collection<K> getPopulatedObject(final Class<?> fieldType, final Class<?> genericFieldType, final Object fieldValue, final Class<?> nestedGenericClass) {
         final Collection res;
-        if (getClassUtils().isPrimitiveOrSpecialType(isNull(nestedGenericClass) ? genericFieldType : nestedGenericClass)) {
+        if (classUtils.isPrimitiveOrSpecialType(isNull(nestedGenericClass) ? genericFieldType : nestedGenericClass)) {
             res = (Collection) fieldValue;
         } else {
             Collector<Object, ?, ? extends Collection<Object>> collector = Set.class.isAssignableFrom(fieldType) ? toSet() : toList();

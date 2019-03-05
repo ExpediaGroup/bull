@@ -140,6 +140,8 @@
 				<checkstyle.check.skip>false</checkstyle.check.skip>
 				<checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
 				<jacoco.check.skip>false</jacoco.check.skip>
+				<pmd.check.skip>false</pmd.check.skip>
+				<javadoc.skip>false</javadoc.skip>
 			</properties>
 		</profile>
 		<profile>
@@ -148,6 +150,18 @@
 				<checkstyle.check.skip>true</checkstyle.check.skip>
 				<checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
 				<jacoco.check.skip>true</jacoco.check.skip>
+				<pmd.check.skip>true</pmd.check.skip>
+				<javadoc.skip>false</javadoc.skip>
+			</properties>
+		</profile>
+		<profile>
+			<id>fast</id>
+			<properties>
+				<checkstyle.check.skip>true</checkstyle.check.skip>
+				<checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
+				<jacoco.check.skip>true</jacoco.check.skip>
+				<pmd.check.skip>true</pmd.check.skip>
+				<javadoc.skip>true</javadoc.skip>
 			</properties>
 		</profile>
 		<!-- release profile -->
@@ -219,6 +233,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${maven.javadoc.plugin.version}</version>
+				<configuration>
+					<skip>${javadoc.skip}</skip>
+				</configuration>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -361,6 +378,7 @@
 					<failOnViolation>false</failOnViolation>
 					<includeTests>false</includeTests>
 					<language>java</language>
+					<skip>${pmd.check.skip}</skip>
 				</configuration>
 				<executions>
 					<execution>

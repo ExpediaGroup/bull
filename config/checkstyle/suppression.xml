@@ -13,7 +13,7 @@
     <suppress checks="JavadocVariable" files="Filters.java"/>
 
     <!-- Checks for Braces into online instructions. -->
-    <suppress checks="NeedBraces" files=".*.java"/>
+    <suppress checks="VisibilityModifier" files=".*.java"/>
 
     <!-- Checks for class design  -->
     <suppress checks="DesignForExtension" files=".*[\\/]src[\\/](test|it)[\\/]|.*Test.java"/>
