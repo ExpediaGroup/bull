@@ -58,7 +58,6 @@ public class ReflectionUtilsTest {
     private static final String LIST_FIELD_NAME = "list";
     private static final String GETTER_METHOD_PREFIX_METHOD_NAME = "getGetterMethodPrefix";
     private static final String CHECK_FIELD_NAME = "check";
-    private static final String NAME_FIELD = "name";
     private static final String EXPECTED_SETTER_METHOD_NAME = "setId";
 
     /**
@@ -198,7 +197,7 @@ public class ReflectionUtilsTest {
     @Test
     public void testGetFieldAnnotationWorksProperly() throws NoSuchFieldException {
         // GIVEN
-        Field nameField = ImmutableToFoo.class.getDeclaredField(NAME_FIELD);
+        Field nameField = ImmutableToFoo.class.getDeclaredField(ID_FIELD_NAME);
 
         // WHEN
         final NotNull notNullFieldAnnotation = underTest.getFieldAnnotation(nameField, NotNull.class);
