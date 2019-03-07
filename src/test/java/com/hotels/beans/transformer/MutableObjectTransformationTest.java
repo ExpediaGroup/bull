@@ -37,6 +37,7 @@ import com.hotels.beans.sample.mutable.MutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooInvalid;
 import com.hotels.beans.sample.mutable.MutableToFooNotExistingFields;
 import com.hotels.beans.sample.mutable.MutableToFooSimpleNoSetters;
+import com.hotels.beans.sample.mutable.MutableToFooSubClass;
 
 /**
  * Unit test for all {@link Transformer} functions related to Mutable type Java Beans.
@@ -170,5 +171,20 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
         assertNull(actual.getName());
         assertNull(actual.getNestedObject().getPhoneNumbers());
         underTest.resetFieldsTransformationSkip();
+    }
+
+    /**
+     * Test transformation on an existing bean is correctly copied.
+     */
+    @Test
+    public void testTransformationOnAnExistingDestinationWorksProperly() {
+        //GIVEN
+        MutableToFooSubClass mutableToFoo = new MutableToFooSubClass();
+
+        //WHEN
+        underTest.transform(fromFooSubClass, mutableToFoo);
+
+        //THEN
+        assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
     }
 }
