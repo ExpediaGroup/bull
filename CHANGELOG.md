@@ -2,9 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.2.1] TBD
+### [1.2.2] TBD
+* Implemented possibility to skip properties transformation
+
+### [1.2.1] 2019.03.05
 #### Added
-* Implemented new feature that allows the copy on an existing object instance (see: [Issue 24](https://github.com/HotelsDotCom/bull/issues/24))
+* Implemented a new feature that allows the copy on an existing object instance (see: [Issue 24](https://github.com/HotelsDotCom/bull/issues/24))
 * Added profile: `fast` that skips the following plugin execution: `javadoc`, `checkstyle`, `pmd` and `jacoco`
 
 ### [1.2.0] 2019.02.25
@@ -15,6 +18,11 @@ All notable changes to this project will be documented in this file.
 - Updated `jdk` version to 11 (was 1.8).
 - Updated Travis configuration in order to work with java 11
 - Modified Travis configuration in order to automatically create the GitHub site as soon as a tag is created
+
+### [1.1.6] 2019.03.05
+#### Added
+* Implemented a new feature that allows the copy on an existing object instance (see: [Issue 24](https://github.com/HotelsDotCom/bull/issues/24)) for project compiled with `jdk` 8.
+* Added profile: `fast` that skips the following plugin execution: `javadoc`, `checkstyle`, `pmd` and `jacoco`
 
 ### [1.1.5] 2019.03.03
 #### Added
