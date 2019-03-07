@@ -30,8 +30,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FromFoo {
-    private String name;
-    private final BigInteger id;
+    private final String name;
+    private BigInteger id;
     private final List<FromSubFoo> nestedObjectList;
     private final List<String> list;
     private final FromSubFoo nestedObject;

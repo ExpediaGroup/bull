@@ -188,6 +188,23 @@ abstract class AbstractTransformer implements Transformer {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Transformer skipTransformationForField(final String... fieldName) {
+        final Map<String, String> fieldsToSkip = settings.getFieldsToSkip();
+        for (String tmpField: fieldName) {
+            fieldsToSkip.put(tmpField, tmpField);
+        }
+        return this;
+    }
+
+    @Override
+    public void resetFieldsTransformationSkip() {
+        settings.getFieldsToSkip().clear();
+    }
+
+    /**
      * Copies all properties from an object to a new one.
      * @param sourceObj the source object
      * @param targetObject the destination object

@@ -178,6 +178,15 @@ public class TransformerImpl extends AbstractTransformer {
     }
 
     /**
+     * Checks if a field has to be transformed or not.
+     * @param breadcrumb the field path
+     * @return true if the transformation has to be applied on this field, false in it has to be skipped.
+     */
+    private boolean isAFieldToTransform(final String breadcrumb) {
+        return isNull(breadcrumb) || !settings.getFieldsToSkip().containsKey(breadcrumb);
+    }
+
+    /**
      * Returns the field name in the source object.
      * @param field the field that has to be valorized.
      * @return the source field name.
@@ -299,6 +308,9 @@ public class TransformerImpl extends AbstractTransformer {
     private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
         String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
         boolean primitiveType = classUtils.isPrimitiveType(field.getType());
+        if (!isAFieldToTransform(fieldBreadcrumb)) {
+            return !primitiveType ? null : defaultValue(field.getType());
+        }
         boolean isFieldTransformerDefined = settings.getFieldsTransformers().containsKey(field.getName());
         Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);
         if (nonNull(fieldValue)) {
