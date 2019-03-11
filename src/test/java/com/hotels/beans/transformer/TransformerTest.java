@@ -23,9 +23,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
@@ -50,7 +50,7 @@ public class TransformerTest extends AbstractTransformerTest {
     /**
      * Initialized mocks.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
@@ -74,7 +74,7 @@ public class TransformerTest extends AbstractTransformerTest {
     /**
      * Test that the method {@code removeFieldMapping} raises an {@link IllegalArgumentException} if the parameter is null.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testRemoveFieldMappingRaisesExceptionIfItsCalledWithNullParam() {
         //GIVEN
         Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(SOURCE_FIELD_NAME, DEST_FIELD_NAME));
@@ -136,7 +136,7 @@ public class TransformerTest extends AbstractTransformerTest {
     /**
      * Test that the method {@code removeFieldTransformer} raises an {@link IllegalArgumentException} if the parameter is null.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testRemoveFieldTransformerRaisesExceptionIfItsCalledWithNullParam() {
         //GIVEN
         Transformer beanTransformer = underTest.withFieldTransformer(new FieldTransformer<>(DEST_FIELD_NAME, val -> val));
@@ -148,7 +148,7 @@ public class TransformerTest extends AbstractTransformerTest {
     /**
      * Test that the method: {@code getSourceFieldValue} raises a {@link NullPointerException} in case any of the parameters null.
      */
-    @Test(expected = Exception.class)
+    @Test(expectedExceptions = Exception.class)
     public void testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull() throws Exception {
         //GIVEN
         Method getSourceFieldValueMethod = underTest.getClass().getDeclaredMethod(GET_SOURCE_FIELD_VALUE_METHOD_NAME, Object.class, String.class, Field.class, boolean.class);

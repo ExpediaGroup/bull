@@ -34,13 +34,16 @@ import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.math.BigInteger;
 import java.util.Locale;
 import java.util.stream.IntStream;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
+import com.hotels.beans.BeanUtils;
 import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.error.InvalidBeanException;
@@ -70,6 +73,21 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     private static final String GET_DEST_FIELD_NAME_METHOD_NAME = "getDestFieldName";
     private static final String GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME = "getConstructorValuesFromFields";
 
+    private static final String FIRST_COMPOSITE_TRANSFORMATION_TEST_DESCRIPTION = "Test that, in case a destination object field is contained into a nested object of the source "
+            + "field, defining a composite FieldMapping the field is correctly valorized.";
+    private static final String SECOND_COMPOSITE_TRANSFORMATION_TEST_DESCRIPTION = "Test that, in case a destination object field is contained into a nested object of the source "
+            + "field, defining a composite {@link FieldMapping} the field is correctly  valorized even if some of them are null.";
+
+    private static final String FIRST_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION = "Test that immutable beans without constructor arguments parameter annotated with: @ConstructorArg "
+            + "are correctly copied.";
+    private static final String SECOND_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION = "Test that immutable beans without custom field mapping are correctly transformed.";
+    private static final String THIRD_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION = "Test that immutable beans with constructor arguments parameter annotated with: @ConstructorArg "
+            + "are correctly copied.";
+    private static final String FOURTH_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION = "Test that bean that extends another class are correctly copied";
+
+    private static final String FIRST_CONSTRUCTOR_EXCEPTION_TEST_DESCRIPTION = "Test that an exception is thrown if the constructor invocation throws exception";
+    private static final String SECOND_CONSTRUCTOR_EXCEPTION_TEST_DESCRIPTION = "Test that an exception is thrown if no constructors are defined";
+
     /**
      * The class to be tested.
      */
@@ -79,134 +97,128 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     /**
      * Initialized mocks.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
 
     /**
-     * Test that immutable beans without constructor arguments parameter annotated with: @ConstructorArg {@link com.hotels.beans.annotation.ConstructorArg} are correctly copied.
+     * Test that default transformation of immutable beans works properly.
+     * @param testCaseDescription the test case description
+     * @param transformer the transform to use
+     * @param sourceObject the object to transform
+     * @param targetObjectClass the target object class
      */
-    @Test
-    public void testBeanWithoutCustomAnnotationIsCorrectlyCopied() {
+    @Test(dataProvider = "dataDefaultTransformationTesting")
+    public void testImmutableBeanIsCorrectlyCopied(final String testCaseDescription, final Transformer transformer, final Object sourceObject,
+        final Class<?> targetObjectClass) {
         //GIVEN
 
         //WHEN
-        ImmutableToFoo actual = underTest.transform(fromFoo, ImmutableToFoo.class);
+        Object actual = transformer.transform(sourceObject, targetObjectClass);
 
         //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
+        assertThat(actual, sameBeanAs(sourceObject));
     }
 
     /**
-     * Test that, in case a destination object field is contained into a nested object of the source field, defining a composite {@link FieldMapping} the field is correctly
-     * valorized.
+     * Creates the parameters to be used for testing the default transformation operations.
+     * @return parameters to be used for testing the default transformation operations.
+     */
+    @DataProvider(parallel = true)
+    private Object[][] dataDefaultTransformationTesting() {
+        BeanUtils beanUtils = new BeanUtils();
+        return new Object[][] {
+                {FIRST_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION, beanUtils.getTransformer(), fromFoo, ImmutableToFoo.class},
+                {SECOND_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION, beanUtils.getTransformer().withFieldMapping(), fromFoo, ImmutableToFoo.class},
+                {THIRD_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION, beanUtils.getTransformer(), fromFoo, ImmutableToFooCustomAnnotation.class},
+                {FOURTH_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION, beanUtils.getTransformer(), fromFooSubClass, ImmutableToFooSubClass.class},
+        };
+    }
+
+    /**
+     * Test transformation on an existing bean is correctly copied.
      */
     @Test
-    public void testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected() {
+    public void testTransformationOnAnExistingDestinationWorksProperly() {
+        //GIVEN
+        ImmutableToFooSimple immutableToFoo = new ImmutableToFooSimple(null, null);
+
+        //WHEN
+        underTest.transform(fromFooSimple, immutableToFoo);
+
+        //THEN
+        assertThat(immutableToFoo, sameBeanAs(fromFooSimple));
+    }
+
+    /**
+     * Test transformation field with composite field name mapping.
+     * @param testCaseDescription the test case description
+     * @param sourceObject the object to transform
+     * @param expectedName the expected name
+     * @param expectedId the expected id
+     * @param expectedPhoneNumbers the expected phone number
+     */
+    @Test(dataProvider = "dataCompositeFieldNameTesting")
+    public void testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected(final String testCaseDescription, final Object sourceObject, final String expectedName,
+        final BigInteger expectedId, final int[] expectedPhoneNumbers) {
         //GIVEN
         FieldMapping phoneNumbersMapping = new FieldMapping("nestedObject.phoneNumbers", "phoneNumbers");
 
         //WHEN
-        ImmutableFlatToFoo actual = underTest.withFieldMapping(phoneNumbersMapping).transform(fromFoo, ImmutableFlatToFoo.class);
+        ImmutableFlatToFoo actual = underTest.withFieldMapping(phoneNumbersMapping).transform(sourceObject, ImmutableFlatToFoo.class);
 
         //THEN
-        assertEquals(fromFoo.getName(), actual.getName());
-        assertEquals(fromFoo.getId(), actual.getId());
-        assertEquals(fromFoo.getNestedObject().getPhoneNumbers(), actual.getPhoneNumbers());
+        assertEquals(expectedName, actual.getName());
+        assertEquals(expectedId, actual.getId());
+        assertEquals(expectedPhoneNumbers, actual.getPhoneNumbers());
         underTest.resetFieldsMapping();
     }
 
     /**
-     * Test that, in case a destination object field is contained into a nested object of the source field, defining a composite {@link FieldMapping} the field is correctly
-     * valorized even if some of them are null.
+     * Creates the parameters to be used for testing the transformation with composite field name mapping.
+     * @return parameters to be used for testing the transformation with composite field name mapping.
      */
-    @Test
-    public void testTransformationWithCompositeFieldNameWorksEvenWithNullObjects() {
-        //GIVEN
-        FieldMapping phoneNumbersMapping = new FieldMapping("nestedObject.phoneNumbers", "phoneNumbers");
-
-        //WHEN
-        ImmutableFlatToFoo actual = underTest.withFieldMapping(phoneNumbersMapping).transform(fromFooWithNullProperties, ImmutableFlatToFoo.class);
-
-        //THEN
-        assertEquals(fromFooWithNullProperties.getName(), actual.getName());
-        assertEquals(fromFooWithNullProperties.getId(), actual.getId());
-        assertNull(actual.getPhoneNumbers());
-        underTest.resetFieldsMapping();
-    }
-
-    /**
-     * Test that immutable beans without custom field mapping.
-     */
-    @Test
-    public void testBeanWithEmptyFieldMappingIsCorrectlyCopied() {
-        //GIVEN
-
-        //WHEN
-        ImmutableToFoo actual = underTest.withFieldMapping().transform(fromFoo, ImmutableToFoo.class);
-
-        //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
-    }
-
-    /**
-     * Test that immutable beans without custom field mapping.
-     */
-    @Test
-    public void testBeanWithEmptyFieldTransformerIsCorrectlyCopied() {
-        //GIVEN
-
-        //WHEN
-        ImmutableToFoo actual = underTest.withFieldMapping().transform(fromFoo, ImmutableToFoo.class);
-
-        //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
-    }
-
-    /**
-     * Test that immutable beans with constructor arguments parameter annotated with: @ConstructorArg {@link com.hotels.beans.annotation.ConstructorArg} are correctly copied.
-     */
-    @Test
-    public void testBeanWithCustomAnnotationIsCorrectlyCopied() {
-        //GIVEN
-
-        //WHEN
-        ImmutableToFooCustomAnnotation actual = underTest.transform(fromFoo, ImmutableToFooCustomAnnotation.class);
-
-        //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
+    @DataProvider(parallel = true)
+    private Object[][] dataCompositeFieldNameTesting() {
+        return new Object[][] {
+                {FIRST_COMPOSITE_TRANSFORMATION_TEST_DESCRIPTION, fromFoo, fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObject().getPhoneNumbers()},
+                {SECOND_COMPOSITE_TRANSFORMATION_TEST_DESCRIPTION, fromFooWithNullProperties, fromFooWithNullProperties.getName(), fromFooWithNullProperties.getId(), null}
+        };
     }
 
     /**
      * Test that an exception is thrown if the constructor invocation throws exception.
+     * @param testCaseDescription the test case description
+     * @param sourceObject the object to transform
+     * @param targetObjectClass the target object class
      */
-    @Test(expected = InvalidBeanException.class)
-    public void testTransformThrowsExceptionIfTheConstructorInvocationThrowsException() {
+    @Test(dataProvider = "dataConstructorErrorTesting", expectedExceptions = InvalidBeanException.class)
+    public void testTransformThrowsExceptionIfTheConstructorInvocationThrowsException(final String testCaseDescription, final Object sourceObject,
+        final Class<?> targetObjectClass) {
         //GIVEN
-        FromFoo actual = new FromFoo(NAME, ID, null, null, null);
 
         //WHEN
-        underTest.transform(actual, ImmutableToFooCustomAnnotation.class);
+        underTest.transform(sourceObject, targetObjectClass);
     }
 
     /**
-     * Test that an exception is thrown if no constructors are defined.
+     * Creates the parameters to be used for testing the exception raised in case of error during the constructor invocation.
+     * @return parameters to be used for testing the transformation with composite field name mapping.
      */
-    @Test(expected = InvalidBeanException.class)
-    public void testTransformThrowsExceptionWhenParameterAreNull() {
-        //GIVEN
+    @DataProvider(parallel = true)
+    private Object[][] dataConstructorErrorTesting() {
         FromFoo actual = new FromFoo(NAME, ID, null, null, null);
-
-        //WHEN
-        underTest.transform(actual, ImmutableToFooNoConstructors.class);
+        return new Object[][] {
+                {FIRST_CONSTRUCTOR_EXCEPTION_TEST_DESCRIPTION, actual, ImmutableToFooCustomAnnotation.class},
+                {SECOND_CONSTRUCTOR_EXCEPTION_TEST_DESCRIPTION, actual, ImmutableToFooNoConstructors.class},
+        };
     }
-
 
     /**
      * Test that an exception is thrown if there the constructor args parameters have a different order for the mutable bean object.
      */
-    @Test(expected = InvalidBeanException.class)
+    @Test(expectedExceptions = InvalidBeanException.class)
     public void testTransformThrowsExceptionWhenImmutableBeanHasAWrongConstructor() {
         //GIVEN
 
@@ -217,7 +229,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     /**
      * Test that an exception is thrown if the destination object don't met the constraints.
      */
-    @Test(expected = InvalidBeanException.class)
+    @Test(expectedExceptions = InvalidBeanException.class)
     public void testTransformThrowsExceptionIfTheDestinationObjectValuesAreNotValid() {
         //GIVEN
         fromFoo.setId(null);
@@ -245,20 +257,6 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         assertThat(actual, sameBeanAs(fromFoo));
         fromFoo.setId(ID);
         underTest.setValidationDisabled(false);
-    }
-
-    /**
-     * Test that bean that extends another class are correctly copied.
-     */
-    @Test
-    public void testBeanWithoutCustomAnnotationAndWithSuperclassIsCorrectlyCopied() {
-        //GIVEN
-
-        //WHEN
-        ImmutableToFooSubClass actual = underTest.transform(fromFooSubClass, ImmutableToFooSubClass.class);
-
-        //THEN
-        assertThat(actual, sameBeanAs(fromFooSubClass));
     }
 
     /**
@@ -321,6 +319,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
 
     /**
      * Test that method: {@code getDestFieldName} retrieves the param name from the {@link ConstructorArg} if it is not provided from jvm directly.
+     * @throws Exception the thrown exception
      */
     @Test
     public void testGetDestFieldNameIsRetrievedFromConstructorArgIfTheParamNameIsNotProvidedFromJVM() throws Exception {
@@ -347,6 +346,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
 
     /**
      * Test that the method: {@code getConstructorValuesFromFields} works properly.
+     * @throws Exception the thrown exception
      */
     @Test
     public void testGetConstructorValuesFromFieldsWorksProperly() throws Exception {
@@ -369,6 +369,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
 
     /**
      * Test that method: {@code getDestFieldName} returns null if the constructor's parameter name is not provided from jvm directly and the {@link ConstructorArg} is not defined.
+     * @throws Exception the thrown exception
      */
     @Test
     public void testGetDestFieldNameReturnsNullIfConstructorParamHasNoNameProvidedFromJVMAndNoConstructorArgIsDefined() throws Exception {
@@ -402,7 +403,8 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         Class<ImmutableToFooSimpleWrongTypes> targetClass = ImmutableToFooSimpleWrongTypes.class;
         final String expectedExceptionMessageFormat =
                 "Constructor invoked with arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String). "
-                        +  "Double check that each %s's field have the same type and name than the source object: %s otherwise specify a transformer configuration.";
+                        + "Double check that each %s's field have the same type and name than the source object: %s otherwise specify a transformer configuration. "
+                        + "Error message: argument type mismatch";
         String targetClassName = targetClass.getCanonicalName();
         String expectedExceptionMessage =
                 format(expectedExceptionMessageFormat, targetClassName, targetClassName, targetClass.getSimpleName(), fromFooSimple.getClass().getCanonicalName());
@@ -419,21 +421,6 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         assertNotNull(raisedException);
         assertEquals(InvalidBeanException.class, raisedException.getClass());
         assertEquals(expectedExceptionMessage, raisedException.getMessage());
-    }
-
-    /**
-     * Test transformation on an existing bean is correctly copied.
-     */
-    @Test
-    public void testTransformationOnAnExistingDestinationWorksProperly() {
-        //GIVEN
-        ImmutableToFooSimple immutableToFoo = new ImmutableToFooSimple(null, null);
-
-        //WHEN
-        underTest.transform(fromFooSimple, immutableToFoo);
-
-        //THEN
-        assertThat(immutableToFoo, sameBeanAs(fromFooSimple));
     }
 
     /**

@@ -28,9 +28,9 @@ import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import java.math.BigInteger;
 import java.util.stream.IntStream;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.model.FieldMapping;
@@ -55,7 +55,7 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
     /**
      * Initialized mocks.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
@@ -151,7 +151,7 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
     /**
      * Test that the copy method raises an exception when the source object does not contain a required field.
      */
-    @Test(expected = MissingFieldException.class)
+    @Test(expectedExceptions = MissingFieldException.class)
     public void testMixedBeanWithMissingFieldsThrowsMissingFieldExceptionWhenTheSourceObjectDoesNotContainARequiredField() {
         //GIVEN
         underTest.setDefaultValueForMissingField(false);

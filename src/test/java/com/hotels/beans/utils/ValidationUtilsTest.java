@@ -18,9 +18,9 @@ package com.hotels.beans.utils;
 
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 /**
  * Unit test for {@link ValidationUtils}.
@@ -45,7 +45,7 @@ public class ValidationUtilsTest {
     /**
      * Initialized mocks.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
@@ -53,7 +53,7 @@ public class ValidationUtilsTest {
     /**
      * Test that an exception is thrown when the given parameter is null.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testNotNullRaisesAnExceptionWhenTheGivenObjectIsNull() {
         //GIVEN
 
@@ -75,7 +75,7 @@ public class ValidationUtilsTest {
     /**
      * Test that an exception is thrown when the given parameter is null.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testNotNullRaisesAnExceptionWhenTheGivenObjectIsNullEvenWithoutACustomMessage() {
         //GIVEN
 
