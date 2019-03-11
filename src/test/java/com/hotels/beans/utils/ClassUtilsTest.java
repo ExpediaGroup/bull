@@ -35,9 +35,9 @@ import java.util.function.Predicate;
 
 import javax.validation.constraints.NotNull;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.constant.ClassType;
@@ -93,7 +93,7 @@ public class ClassUtilsTest {
     /**
      * Initializes mock.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
@@ -302,7 +302,7 @@ public class ClassUtilsTest {
     /**
      * Tests that the method {@code getAllArgsConstructor} throws exception if the class has no all args constructor.
      */
-    @Test(expected = InvalidBeanException.class)
+    @Test(expectedExceptions = InvalidBeanException.class)
     public void testGetAllArgsConstructorThrowsExceptionIfTheConstructorIsMissing() {
         // GIVEN
 

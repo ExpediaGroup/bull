@@ -25,9 +25,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.model.FieldTransformer;
@@ -52,7 +52,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     /**
      * Initialized mocks.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
@@ -60,7 +60,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     /**
      * Test that an exception is thrown if there is no default constructor defined for the mutable bean object.
      */
-    @Test(expected = InvalidBeanException.class)
+    @Test(expectedExceptions = InvalidBeanException.class)
     public void testTransformThrowsExceptionWhenMutableBeanHasNoDefaultConstructor() {
         //GIVEN
 
@@ -131,6 +131,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     public void testTransformerIsAbleToCopyObjectsWithoutRequiredMethods() {
         //GIVEN
         FromFooSimpleNoGetters fromFooSimpleNoGetters = new FromFooSimpleNoGetters(NAME, ID);
+
         //WHEN
         MutableToFooSimpleNoSetters actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.class);
 

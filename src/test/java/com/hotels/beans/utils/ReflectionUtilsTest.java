@@ -39,9 +39,9 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
 
 import com.hotels.beans.error.MissingMethodException;
 import com.hotels.beans.error.MissingFieldException;
@@ -69,7 +69,7 @@ public class ReflectionUtilsTest {
     /**
      * Initializes mock.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
@@ -96,7 +96,7 @@ public class ReflectionUtilsTest {
     /**
      * Tests that the method {@code getFieldValue} throws Exception if the field does not exists.
      */
-    @Test(expected = MissingFieldException.class)
+    @Test(expectedExceptions = MissingFieldException.class)
     public void testGetFieldValueThrowsExceptionIfTheFieldDoesNotExists() {
         // GIVEN
         MutableToFoo mutableToFoo = new MutableToFoo();
@@ -112,7 +112,7 @@ public class ReflectionUtilsTest {
     /**
      * Tests that the method {@code handleReflectionException} raises the expected exception.
      */
-    @Test(expected = IllegalStateException.class)
+    @Test(expectedExceptions = IllegalStateException.class)
     public void testHandleReflectionExceptionThrowsIllegalStateExceptionWhenGivenExceptionIsNoSuchMethodException() {
         // GIVEN
         NoSuchMethodException noSuchMethodException = new NoSuchMethodException();
@@ -124,7 +124,7 @@ public class ReflectionUtilsTest {
     /**
      * Tests that the method {@code handleReflectionException} raises the expected exception.
      */
-    @Test(expected = IllegalStateException.class)
+    @Test(expectedExceptions = IllegalStateException.class)
     public void testHandleReflectionExceptionThrowsIllegalStateExceptionWhenGivenExceptionIsIllegalAccessException() {
         // GIVEN
         IllegalAccessException illegalAccessException = new IllegalAccessException();
@@ -136,7 +136,7 @@ public class ReflectionUtilsTest {
     /**
      * Tests that the method {@code handleReflectionException} raises the expected exception.
      */
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testHandleReflectionExceptionThrowsRuntimeExceptionWhenGivenExceptionIsRuntimeException() {
         // GIVEN
         RuntimeException runtimeException = new RuntimeException();
@@ -148,7 +148,7 @@ public class ReflectionUtilsTest {
     /**
      * Tests that the method {@code handleReflectionException} raises the expected exception.
      */
-    @Test(expected = UndeclaredThrowableException.class)
+    @Test(expectedExceptions = UndeclaredThrowableException.class)
     public void testHandleReflectionExceptionThrowsUndeclaredThrowableExceptionWhenGivenExceptionIsInvalidBeanException() {
         // GIVEN
         Exception exception = new Exception();
@@ -160,7 +160,7 @@ public class ReflectionUtilsTest {
     /**
      * Tests that the method {@code getMapGenericType} throws Exception when the given type is not a map.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testGetMapGenericTypeThrowsIllegalArgumentExceptionWhenTheGivenTypeIsNotAMap() {
         // GIVEN
 
@@ -226,7 +226,7 @@ public class ReflectionUtilsTest {
     /**
      * Tests that the method {@code getSetterMethodForField} raises a MissingMethodException if the setter method for the given field does not exists.
      */
-    @Test(expected = MissingMethodException.class)
+    @Test(expectedExceptions = MissingMethodException.class)
     public void testGetSetterMethodForFieldThrowsExceptionIfTheMethodDoesNotExists() {
         // GIVEN
 

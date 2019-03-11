@@ -112,7 +112,7 @@ public class TransformerImpl extends AbstractTransformer {
             throw new InvalidBeanException("Constructor invoked with arguments. Expected: " + constructor + "; Found: "
                     + getFormattedConstructorArgs(targetClass, constructorArgs)
                     + ". Double check that each " + targetClass.getSimpleName() + "'s field have the same type and name than the source object: "
-                    + sourceObj.getClass().getCanonicalName() + " otherwise specify a transformer configuration.", e);
+                    + sourceObj.getClass().getCanonicalName() + " otherwise specify a transformer configuration. Error message: " + e.getMessage(), e);
         }
     }
 

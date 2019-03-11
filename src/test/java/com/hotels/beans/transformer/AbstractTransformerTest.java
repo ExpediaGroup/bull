@@ -29,7 +29,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-import org.junit.BeforeClass;
+import org.testng.annotations.BeforeClass;
 
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooAdvFields;
@@ -76,14 +76,14 @@ public class AbstractTransformerTest {
      * Initializes the arguments and objects.
      */
     @BeforeClass
-    public static void beforeClass() {
+    public void beforeClass() {
         initObjects();
     }
 
     /**
      * Create an instance of two objects: one without custom annotation and another one with custom annotations then execute the copy into a specular immutable object.
      */
-    private static void initObjects() {
+    private void initObjects() {
         SUB_FOO_SAMPLE_MAP.put(ITEM_1, ITEM_2);
         SUB_FOO_COMPLEX_MAP.put(ITEM_1, singletonList(ITEM_2));
         SUB_FOO_VERY_COMPLEX_MAP.put(ITEM_1, SUB_FOO_SAMPLE_MAP);
@@ -103,7 +103,7 @@ public class AbstractTransformerTest {
      * @param fromSubFoo the {@link FromSubFoo} instance
      * @return the {@link FromFoo} instance.
      */
-    private static FromFoo createFromFoo(final FromSubFoo fromSubFoo) {
+    private FromFoo createFromFoo(final FromSubFoo fromSubFoo) {
         return new FromFoo(NAME, ID, fromSubFooList, sourceFooSimpleList, fromSubFoo);
     }
 
@@ -111,7 +111,7 @@ public class AbstractTransformerTest {
      * Creates a {@link FromFooSimple} instance.
      * @return the {@link FromFooSimple} instance.
      */
-    private static FromFooSimple createFromFooSimple() {
+    private FromFooSimple createFromFooSimple() {
         return new FromFooSimple(NAME, ID);
     }
 
@@ -120,7 +120,7 @@ public class AbstractTransformerTest {
      * Creates a {@link FromFooWithPrimitiveFields} instance.
      * @return the {@link FromFooWithPrimitiveFields} instance.
      */
-    private static FromFooWithPrimitiveFields createFromFooWithPrimitiveFields() {
+    private FromFooWithPrimitiveFields createFromFooWithPrimitiveFields() {
         return new FromFooWithPrimitiveFields(NAME, ID.intValue(), AGE, fromSubFooList, sourceFooSimpleList, fromSubFoo);
     }
 
@@ -128,7 +128,7 @@ public class AbstractTransformerTest {
      * Creates a {@link FromFooSubClass} instance.
      * @return the {@link FromFooSubClass} instance.
      */
-    private static FromFooSubClass createFromFooSubClass() {
+    private FromFooSubClass createFromFooSubClass() {
         return new FromFooSubClass(fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObjectList(), fromFoo.getList(), fromFoo.getNestedObject(), SURNAME, PHONE, CHECK, AMOUNT);
     }
 
@@ -136,7 +136,7 @@ public class AbstractTransformerTest {
      * Creates a {@link FromFooAdvFields} instance.
      * @return the {@link FromFooAdvFields} instance.
      */
-    private static FromFooAdvFields createFromFooAdvFields() {
+    private FromFooAdvFields createFromFooAdvFields() {
         return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage());
     }
 }
