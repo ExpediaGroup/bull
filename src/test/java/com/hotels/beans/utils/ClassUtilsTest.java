@@ -57,8 +57,6 @@ import com.hotels.beans.sample.mutable.MutableToFoo;
  * Unit test for {@link ClassUtils}.
  */
 public class ClassUtilsTest {
-    private static final Class<BigDecimal> PRIMITIVE_CLASS = BigDecimal.class;
-    private static final Class<FromFoo> NOT_PRIMITIVE_CLASS = FromFoo.class;
     private static final Class<MutableToFoo> CLASS_WITHOUT_PRIVATE_FINAL_FIELDS = MutableToFoo.class;
     private static final Class<ImmutableToFoo> CLASS_WITH_PRIVATE_FINAL_FIELDS = ImmutableToFoo.class;
     private static final int EXPECTED_PRIVATE_FINAL_FIELDS = 5;
@@ -84,6 +82,7 @@ public class ClassUtilsTest {
     private static final double[] PRIMITIVE_DOUBLE_ARRAY = {};
     private static final float[] PRIMITIVE_FLOAT_ARRAY = {};
     private static final long[] PRIMITIVE_LONG_ARRAY = {};
+    private static final FromFoo[] NOT_PRIMITIVE_ARRAY = {};
 
     /**
      * The class to be tested.
@@ -130,158 +129,224 @@ public class ClassUtilsTest {
 
     /**
      * Tests that the method {@code isSpecialType} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testIsSpecialTypeWorksAsExpected() {
+    @Test(dataProvider = "dataSpecialTypeObjectTesting")
+    public void testIsSpecialTypeWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
         // GIVEN
 
         // WHEN
-        boolean actualSpecialClass = underTest.isSpecialType(Locale.class);
-        boolean actualNotSpecialClass = underTest.isSpecialType(PRIMITIVE_CLASS);
+        boolean actual = underTest.isSpecialType(testClass);
 
         // THEN
-        assertTrue(actualSpecialClass);
-        assertFalse(actualNotSpecialClass);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isSpecialType}.
+     * @return parameters to be used for testing the the method {@code isSpecialType}.
+     */
+    @DataProvider
+    private Object[][] dataSpecialTypeObjectTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class is a special type object", Locale.class, true},
+                {"Tests that the method returns false if the class is not a special type object", BigDecimal.class, false}
+        };
     }
 
     /**
      * Tests that the method {@code isPrimitiveOrSpecialType} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testIsPrimitiveOrSpecialTypeWorksAsExpected() {
+    @Test(dataProvider = "dataPrimitiveOrSpecialTypeObjectTesting")
+    public void testIsPrimitiveOrSpecialTypeWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
         // GIVEN
 
         // WHEN
-        boolean actualPrimitiveOrSpecialClass = underTest.isPrimitiveOrSpecialType(Locale.class);
-        boolean actualPrimitiveOrSpecialClass2 = underTest.isPrimitiveOrSpecialType(BigDecimal.class);
-        boolean actualNotPrimitiveOrSpecialClass = underTest.isPrimitiveOrSpecialType(NOT_PRIMITIVE_CLASS);
+        boolean actual = underTest.isPrimitiveOrSpecialType(testClass);
 
         // THEN
-        assertTrue(actualPrimitiveOrSpecialClass);
-        assertTrue(actualPrimitiveOrSpecialClass2);
-        assertFalse(actualNotPrimitiveOrSpecialClass);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isPrimitiveOrSpecialType}.
+     * @return parameters to be used for testing the the method {@code isPrimitiveOrSpecialType}.
+     */
+    @DataProvider
+    private Object[][] dataPrimitiveOrSpecialTypeObjectTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class is a primitive or special type object", Locale.class, true},
+                {"Tests that the method returns false if the class is a primitive nor a special type object", BigDecimal.class, true},
+                {"Tests that the method returns false if the class is not a primitive nor a special type object", FromFoo.class, false}
+        };
     }
 
     /**
      * Tests that the method {@code isPrimitiveArrayType} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testArray the array to test
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testIsPrimitiveArrayTypeWorksAsExpected() {
+    @Test(dataProvider = "dataPrimitiveArrayTypeTesting")
+    public void testIsPrimitiveArrayTypeWorksAsExpected(final String testCaseDescription, final Object testArray, final boolean expectedResult) {
         // GIVEN
 
         // WHEN
-        boolean actualPrimitiveIntArrayClass = underTest.isPrimitiveTypeArray(PRIMITIVE_INT_ARRAY);
-        boolean actualPrimitiveShortArrayClass = underTest.isPrimitiveTypeArray(PRIMITIVE_SHORT_ARRAY);
-        boolean actualPrimitiveCharArrayClass = underTest.isPrimitiveTypeArray(PRIMITIVE_CHAR_ARRAY);
-        boolean actualPrimitiveByteArrayClass = underTest.isPrimitiveTypeArray(PRIMITIVE_BYTE_ARRAY);
-        boolean actualPrimitiveDoubleArrayClass = underTest.isPrimitiveTypeArray(PRIMITIVE_DOUBLE_ARRAY);
-        boolean actualPrimitiveFloatArrayClass = underTest.isPrimitiveTypeArray(PRIMITIVE_FLOAT_ARRAY);
-        boolean actualPrimitiveLongArrayClass = underTest.isPrimitiveTypeArray(PRIMITIVE_LONG_ARRAY);
+        boolean actual = underTest.isPrimitiveTypeArray(testArray);
 
         // THEN
-        assertTrue(actualPrimitiveIntArrayClass);
-        assertTrue(actualPrimitiveShortArrayClass);
-        assertTrue(actualPrimitiveCharArrayClass);
-        assertTrue(actualPrimitiveByteArrayClass);
-        assertTrue(actualPrimitiveDoubleArrayClass);
-        assertTrue(actualPrimitiveFloatArrayClass);
-        assertTrue(actualPrimitiveLongArrayClass);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isPrimitiveArrayType}.
+     * @return parameters to be used for testing the the method {@code isPrimitiveArrayType}.
+     */
+    @DataProvider
+    private Object[][] dataPrimitiveArrayTypeTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the array is of type int[]", PRIMITIVE_INT_ARRAY, true},
+                {"Tests that the method returns true if the array is of type short[]", PRIMITIVE_SHORT_ARRAY, true},
+                {"Tests that the method returns true if the array is of type char[]", PRIMITIVE_CHAR_ARRAY, true},
+                {"Tests that the method returns true if the array is of type byte[]", PRIMITIVE_BYTE_ARRAY, true},
+                {"Tests that the method returns true if the array is of type double[]", PRIMITIVE_DOUBLE_ARRAY, true},
+                {"Tests that the method returns true if the array is of type float[]", PRIMITIVE_FLOAT_ARRAY, true},
+                {"Tests that the method returns true if the array is of type long[]", PRIMITIVE_LONG_ARRAY, true},
+                {"Tests that the method returns false if the array is of type FromFoo[]", NOT_PRIMITIVE_ARRAY, false}
+        };
     }
 
     /**
      * Tests that the method {@code getPrivateFinalFields} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testGetPrivateFinalFieldsWorksAsExpected() {
+    @Test(dataProvider = "dataGetPrivateFinalFieldsTesting")
+    public void testGetPrivateFinalFieldsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final int expectedResult) {
         // GIVEN
 
         // WHEN
-        List<Field> mutableClassPrivateFinalFields = underTest.getPrivateFinalFields(CLASS_WITHOUT_PRIVATE_FINAL_FIELDS);
-        List<Field> immutableClassPrivateFinalFields = underTest.getPrivateFinalFields(CLASS_WITH_PRIVATE_FINAL_FIELDS);
+        List<Field> actual = underTest.getPrivateFinalFields(testClass);
 
         // THEN
-        assertTrue(mutableClassPrivateFinalFields.isEmpty());
-        assertEquals(EXPECTED_PRIVATE_FINAL_FIELDS, immutableClassPrivateFinalFields.size());
+        assertEquals(expectedResult, actual.size());
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getPrivateFinalFields}.
+     * @return parameters to be used for testing the the method {@code getPrivateFinalFields}.
+     */
+    @DataProvider
+    private Object[][] dataGetPrivateFinalFieldsTesting() {
+        return new Object[][] {
+                {"Tests that the method returns 0 if the given class has no private final fields", CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, ZERO},
+                {"Tests that the method returns the expected value if the class has private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, EXPECTED_PRIVATE_FINAL_FIELDS}
+        };
     }
 
     /**
      * Tests that the method {@code getTotalFields} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param fieldPredicate the  predicate to apply
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testGetTotalFieldsWorksAsExpected() {
+    @Test(dataProvider = "dataGetTotalFieldsTesting")
+    public void testGetTotalFieldsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final Predicate<Field> fieldPredicate, final int expectedResult) {
         // GIVEN
 
         // WHEN
-        long mutableClassTotPrivateFinalFields = underTest.getTotalFields(CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, IS_FINAL_FIELD_PREDICATE);
-        long immutableClassPrivateFinalFields = underTest.getTotalFields(CLASS_WITH_PRIVATE_FINAL_FIELDS, IS_FINAL_FIELD_PREDICATE);
+        long actual = underTest.getTotalFields(testClass, fieldPredicate);
 
         // THEN
-        assertEquals(ZERO, mutableClassTotPrivateFinalFields);
-        assertEquals(EXPECTED_PRIVATE_FINAL_FIELDS, immutableClassPrivateFinalFields);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getTotalFields}.
+     * @return parameters to be used for testing the the method {@code getTotalFields}.
+     */
+    @DataProvider
+    private Object[][] dataGetTotalFieldsTesting() {
+        return new Object[][] {
+                {"Tests that the method returns 0 if the given class has no private final fields", CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, IS_FINAL_FIELD_PREDICATE, ZERO},
+                {"Tests that the method returns the expected value if the class has private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, IS_FINAL_FIELD_PREDICATE,
+                        EXPECTED_PRIVATE_FINAL_FIELDS}
+        };
     }
 
     /**
      * Tests that the method {@code getPrivateFields} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param skipFinal if true the final fields are skipped
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testGetPrivateFieldsWorksAsExpected() {
+    @Test(dataProvider = "dataGetPrivateFieldsTesting")
+    public void testGetPrivateFieldsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean skipFinal, final int expectedResult) {
         // GIVEN
 
         // WHEN
-        List<Field> mixedToFooPrivateFields = underTest.getPrivateFields(CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS);
-        List<Field> immutableClassPrivateFields = underTest.getPrivateFields(CLASS_WITH_PRIVATE_FINAL_FIELDS);
+        List<Field> actual = underTest.getPrivateFields(testClass, skipFinal);
 
         // THEN
-        assertEquals(EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS, mixedToFooPrivateFields.size());
-        assertEquals(EXPECTED_PRIVATE_FINAL_FIELDS, immutableClassPrivateFields.size());
+        assertEquals(expectedResult, actual.size());
     }
 
     /**
-     * Tests that the method {@code getPrivateFields} works as expected with sub classes.
+     * Creates the parameters to be used for testing the method {@code getPrivateFields}.
+     * @return parameters to be used for testing the the method {@code getPrivateFields}.
      */
-    @Test
-    public void testGetPrivateFieldsWorksAsExpectedOnSubLasses() {
-        // GIVEN
-
-        // WHEN
-        List<Field> immutableClassPrivateFinalFields = underTest.getPrivateFields(ImmutableToFooSubClass.class);
-
-        // THEN
-        assertEquals(EXPECTED_SUB_CLASS_PRIVATE_FIELDS, immutableClassPrivateFinalFields.size());
-    }
-
-
-    /**
-     * Tests that the method {@code getPrivateFields} with the skipFinal option one works as expected.
-     */
-    @Test
-    public void testGetPrivateFieldsSkippingFinalWorksAsExpected() {
-        // GIVEN
-
-        // WHEN
-        List<Field> mixedToFooPrivateFieldsNotFinal = underTest.getPrivateFields(CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, true);
-        List<Field> immutableClassPrivateOrFinalFields = underTest.getPrivateFields(CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, false);
-
-        // THEN
-        assertEquals(EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_NOT_FINAL_FIELDS, mixedToFooPrivateFieldsNotFinal.size());
-        assertEquals(EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS, immutableClassPrivateOrFinalFields.size());
+    @DataProvider
+    private Object[][] dataGetPrivateFieldsTesting() {
+        return new Object[][] {
+                {"Tests that the method returns the expected value if the class has private and public fields", CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, false,
+                        EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS},
+                {"Tests that the method returns the expected value if the class has private final fields only", CLASS_WITH_PRIVATE_FINAL_FIELDS, false,
+                        EXPECTED_PRIVATE_FINAL_FIELDS},
+                {"Tests that the method returns the expected value if the class extends another class", ImmutableToFooSubClass.class, false,
+                        EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
+                {"Tests that the method returns the expected value if the skipFinal is enabled", CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, true,
+                        EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_NOT_FINAL_FIELDS}
+        };
     }
 
     /**
      * Tests that the method {@code getDeclaredFields} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param skipStatic if true the static fields are skipped
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testGetDeclaredFieldsWorksAsExpected() {
+    @Test(dataProvider = "dataGetDeclaredFieldsTesting")
+    public void testGetDeclaredFieldsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean skipStatic, final int expectedResult) {
         // GIVEN
-        final int totalClassFields = CLASS_WITH_STATIC_FIELDS.getDeclaredFields().length;
 
         // WHEN
-        List<Field> notStaticFields = underTest.getDeclaredFields(CLASS_WITH_STATIC_FIELDS, true);
-        List<Field> allFields = underTest.getDeclaredFields(CLASS_WITH_STATIC_FIELDS, false);
+        List<Field> actual = underTest.getDeclaredFields(testClass, skipStatic);
 
         // THEN
-        assertEquals(EXPECTED_NOT_STATIC_FIELDS, notStaticFields.size());
-        assertEquals(totalClassFields, allFields.size());
+        assertEquals(expectedResult, actual.size());
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getDeclaredFields}.
+     * @return parameters to be used for testing the the method {@code getDeclaredFields}.
+     */
+    @DataProvider
+    private Object[][] dataGetDeclaredFieldsTesting() {
+        return new Object[][] {
+                {"Tests that the method returns the expected total number of fields when the skipStatic param is true", CLASS_WITH_STATIC_FIELDS, true,
+                        EXPECTED_NOT_STATIC_FIELDS},
+                {"Tests that the method returns the expected value if the class has private final fields only", CLASS_WITH_STATIC_FIELDS, false,
+                        CLASS_WITH_STATIC_FIELDS.getDeclaredFields().length},
+        };
     }
 
     /**
