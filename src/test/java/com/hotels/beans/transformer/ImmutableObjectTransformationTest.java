@@ -125,7 +125,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * Creates the parameters to be used for testing the default transformation operations.
      * @return parameters to be used for testing the default transformation operations.
      */
-    @DataProvider(parallel = true)
+    @DataProvider
     private Object[][] dataDefaultTransformationTesting() {
         BeanUtils beanUtils = new BeanUtils();
         return new Object[][] {
@@ -179,7 +179,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * Creates the parameters to be used for testing the transformation with composite field name mapping.
      * @return parameters to be used for testing the transformation with composite field name mapping.
      */
-    @DataProvider(parallel = true)
+    @DataProvider
     private Object[][] dataCompositeFieldNameTesting() {
         return new Object[][] {
                 {FIRST_COMPOSITE_TRANSFORMATION_TEST_DESCRIPTION, fromFoo, fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObject().getPhoneNumbers()},
@@ -206,7 +206,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * Creates the parameters to be used for testing the exception raised in case of error during the constructor invocation.
      * @return parameters to be used for testing the transformation with composite field name mapping.
      */
-    @DataProvider(parallel = true)
+    @DataProvider
     private Object[][] dataConstructorErrorTesting() {
         FromFoo actual = new FromFoo(NAME, ID, null, null, null);
         return new Object[][] {
