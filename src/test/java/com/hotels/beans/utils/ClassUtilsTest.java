@@ -37,6 +37,7 @@ import javax.validation.constraints.NotNull;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.annotation.ConstructorArg;
@@ -100,18 +101,31 @@ public class ClassUtilsTest {
 
     /**
      * Tests that the method {@code isPrimitiveType} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testIsPrimitiveTypeWorksAsExpected() {
+    @Test(dataProvider = "dataIsPrimitiveTypeObjectTesting")
+    public void testIsPrimitiveTypeWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
         // GIVEN
 
         // WHEN
-        boolean actualPrimitiveClass = underTest.isPrimitiveType(PRIMITIVE_CLASS);
-        boolean actualNotPrimitiveClass = underTest.isPrimitiveType(NOT_PRIMITIVE_CLASS);
+        boolean actual = underTest.isPrimitiveType(testClass);
 
         // THEN
-        assertTrue(actualPrimitiveClass);
-        assertFalse(actualNotPrimitiveClass);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isPrimitiveType}.
+     * @return parameters to be used for testing the the method {@code isPrimitiveType}.
+     */
+    @DataProvider
+    private Object[][] dataIsPrimitiveTypeObjectTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class is a primitive type object", BigDecimal.class, true},
+                {"Tests that the method returns false if the class is not a primitive type object", FromFoo.class, false}
+        };
     }
 
     /**

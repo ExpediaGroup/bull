@@ -98,7 +98,7 @@ public class ArrayPopulatorTest {
      * Data provider for the required test cases.
      * @return the test cases.
      */
-    @DataProvider(parallel = true)
+    @DataProvider
     public Object[][] dataProvider() {
         return new Object[][]{
                 {String.class, STRING_ARRAY, null},
@@ -114,6 +114,5 @@ public class ArrayPopulatorTest {
      */
     private static MixedToFooStaticField[] createMixedToFooArray() {
         return new MixedToFooStaticField[] {MIXED_TO_FOO_STATIC_FIELDS_OBJECTS};
-
     }
 }

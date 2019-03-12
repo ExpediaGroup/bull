@@ -82,7 +82,7 @@ public class PopulatorFactoryTest {
      * Data provider for the required test cases.
      * @return the test cases.
      */
-    @DataProvider(parallel = true)
+    @DataProvider
     public Object[][] dataProvider() {
         return new Object[][]{
                 {String[].class, ArrayPopulator.class},
