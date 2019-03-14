@@ -19,11 +19,10 @@ package com.hotels.beans.utils;
 import static java.lang.reflect.Modifier.isFinal;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -345,7 +344,7 @@ public class ClassUtilsTest {
                 {"Tests that the method returns the expected total number of fields when the skipStatic param is true", CLASS_WITH_STATIC_FIELDS, true,
                         EXPECTED_NOT_STATIC_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields only", CLASS_WITH_STATIC_FIELDS, false,
-                        CLASS_WITH_STATIC_FIELDS.getDeclaredFields().length},
+                        CLASS_WITH_STATIC_FIELDS.getDeclaredFields().length}
         };
     }
 
@@ -407,123 +406,212 @@ public class ClassUtilsTest {
 
     /**
      * Tests that the method {@code hasField} works as expected.
+     * @param testCaseDescription the test case description
+     * @param fieldName the field's name to retrieve
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testHasFieldWorksAsExpected() {
+    @Test(dataProvider = "dataHasFieldTesting")
+    public void testHasFieldWorksAsExpected(final String testCaseDescription, final String fieldName, final boolean expectedResult) {
         // GIVEN
         final ImmutableToFooSubClass immutableToFooSubClass =
                 new ImmutableToFooSubClass(null, null, null, null, null, null, 0, false, null);
 
         // WHEN
-        boolean classContainsNotExistingField = underTest.hasField(immutableToFooSubClass, NOT_EXISTING_FIELD_NAME);
-        boolean classContainsExistingField = underTest.hasField(immutableToFooSubClass, NAME);
+        boolean actual = underTest.hasField(immutableToFooSubClass, fieldName);
 
         // THEN
-        assertFalse(classContainsNotExistingField);
-        assertTrue(classContainsExistingField);
+        assertEquals(expectedResult, actual);
     }
 
     /**
-     * Tests that the method {@code hasSetterMethods} works as expected.
+     * Creates the parameters to be used for testing the method {@code hasField}.
+     * @return parameters to be used for testing the the method {@code hasField}.
      */
-    @Test
-    public void testHasSetterMethodsWorksAsExpected() {
-        // GIVEN
-
-        // WHEN
-        boolean mixedFooStaticFieldHasSetterMethods = underTest.hasSetterMethods(CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS);
-        boolean immutableClassHasSetterMethods = underTest.hasSetterMethods(CLASS_WITH_PRIVATE_FINAL_FIELDS);
-
-        // THEN
-        assertTrue(mixedFooStaticFieldHasSetterMethods);
-        assertFalse(immutableClassHasSetterMethods);
+    @DataProvider
+    private Object[][] dataHasFieldTesting() {
+        return new Object[][] {
+                {"Tests that the method returns false if the given field does not exists", NOT_EXISTING_FIELD_NAME, false},
+                {"Tests that the method returns true if the given field exists", NAME, true}
+        };
     }
 
     /**
      * Tests that the method {@code hasFinalFields} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testHasPrivateFinalFieldsWorksAsExpected() {
+    @Test(dataProvider = "dataHasFinalFieldTesting")
+    public void testHasPrivateFinalFieldsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
         // GIVEN
 
-
         // WHEN
-        boolean immutableClassHasPrivateFinalFields = underTest.hasFinalFields(CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS);
-        boolean mutableClassHasPrivateFinalFields = underTest.hasFinalFields(CLASS_WITHOUT_PRIVATE_FINAL_FIELDS);
+        boolean actual = underTest.hasFinalFields(testClass);
 
         // THEN
-        assertTrue(immutableClassHasPrivateFinalFields);
-        assertFalse(mutableClassHasPrivateFinalFields);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code hasFinalFields}.
+     * @return parameters to be used for testing the the method {@code hasFinalFields}.
+     */
+    @DataProvider
+    private Object[][] dataHasFinalFieldTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the given class has private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, true},
+                {"Tests that the method returns true if the given class has no private final fields", CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code hasSetterMethods} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataHasSetterMethodsTesting")
+    public void testHasSetterMethodsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.hasSetterMethods(testClass);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code hasSetterMethods}.
+     * @return parameters to be used for testing the the method {@code hasSetterMethods}.
+     */
+    @DataProvider
+    private Object[][] dataHasSetterMethodsTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the given class has private final fields", CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, true},
+                {"Tests that the method returns true if the given class has no private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, false},
+        };
     }
 
     /**
      * Tests that the method {@code containsAnnotation} works as expected.
+     * @param testCaseDescription the test case description
+     * @param annotationClass the annotation to search
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testContainsAnnotationWorksAsExpected() {
+    @Test(dataProvider = "dataContainsAnnotationTesting")
+    public void testContainsAnnotationWorksAsExpected(final String testCaseDescription, final Class<? extends Annotation> annotationClass, final boolean expectedResult) {
         // GIVEN
         Constructor<?> constructor = ImmutableToFooCustomAnnotation.class.getConstructors()[0];
 
 
         // WHEN
-        boolean containsExistingAnnotation = underTest.containsAnnotation(constructor, ConstructorArg.class);
-        boolean containsNotExistingAnnotation = underTest.containsAnnotation(constructor, NotNull.class);
+        boolean actual = underTest.containsAnnotation(constructor, annotationClass);
 
         // THEN
-        assertTrue(containsExistingAnnotation);
-        assertFalse(containsNotExistingAnnotation);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code containsAnnotation}.
+     * @return parameters to be used for testing the the method {@code containsAnnotation}.
+     */
+    @DataProvider
+    private Object[][] dataContainsAnnotationTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the constructor contains parameters annotated with @ConstructorArg", ConstructorArg.class, true},
+                {"Tests that the method returns false if the constructor does not contain parameters annotated with @NotNull", NotNull.class, false},
+        };
     }
 
     /**
      * Tests that the method {@code notAllParameterAnnotatedWith} works as expected.
+     * @param testCaseDescription the test case description
+     * @param annotationClass the annotation to search
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testAllParameterAnnotatedWithWorksAsExpected() {
+    @Test(dataProvider = "dataNotAllParameterAnnotatedWithTesting")
+    public void testAllParameterAnnotatedWithWorksAsExpected(final String testCaseDescription, final Class<? extends Annotation> annotationClass, final boolean expectedResult) {
         // GIVEN
         Constructor<?> constructor = ImmutableToFooCustomAnnotation.class.getConstructors()[0];
 
 
         // WHEN
-        boolean allParamContainsExistingAnnotation = underTest.allParameterAnnotatedWith(constructor, ConstructorArg.class);
-        boolean allParamContainsNotExistingAnnotation = underTest.allParameterAnnotatedWith(constructor, NotNull.class);
+        boolean actual = underTest.allParameterAnnotatedWith(constructor, annotationClass);
 
         // THEN
-        assertTrue(allParamContainsExistingAnnotation);
-        assertFalse(allParamContainsNotExistingAnnotation);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code notAllParameterAnnotatedWith}.
+     * @return parameters to be used for testing the the method {@code notAllParameterAnnotatedWith}.
+     */
+    @DataProvider
+    private Object[][] dataNotAllParameterAnnotatedWithTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if all constructor's parameter are annotated with @ConstructorArg", ConstructorArg.class, true},
+                {"Tests that the method returns false if not all constructor's parameter are annotated with @NotNull", NotNull.class, false},
+        };
     }
 
     /**
      * Tests that the method {@code getClassType} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testGetClassTypeWorksAsExpected() {
+    @Test(dataProvider = "dataGetClassTypeTesting")
+    public void testGetClassTypeWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final ClassType expectedResult) {
         // GIVEN
 
         // WHEN
-        final ClassType immutableToFooClassType = underTest.getClassType(ImmutableToFoo.class);
-        final ClassType mutableToFooClassType = underTest.getClassType(MutableToFoo.class);
-        final ClassType mixedToFooClassType = underTest.getClassType(MixedToFoo.class);
+        final ClassType actual = underTest.getClassType(testClass);
 
         // THEN
-        assertEquals(ClassType.IMMUTABLE, immutableToFooClassType);
-        assertEquals(ClassType.MUTABLE, mutableToFooClassType);
-        assertEquals(ClassType.MIXED, mixedToFooClassType);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getClassType}.
+     * @return parameters to be used for testing the the method {@code getClassType}.
+     */
+    @DataProvider
+    private Object[][] dataGetClassTypeTesting() {
+        return new Object[][] {
+                {"Tests that the method returns immutable if the given class is immutable", ImmutableToFoo.class, ClassType.IMMUTABLE},
+                {"Tests that the method returns mutable if the given class is mutable", MutableToFoo.class, ClassType.MUTABLE},
+                {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED}
+        };
     }
 
     /**
      * Tests that the method {@code getSetterMethods} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testGetSetterMethodsWorksAsExpected() {
+    @Test(dataProvider = "dataGetSetterMethodsTesting")
+    public void testGetSetterMethodsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
         // GIVEN
 
         // WHEN
-        final List<Method> immutableClassSetterMethods = underTest.getSetterMethods(ImmutableToFooSubClass.class);
-        final List<Method> mutableClassSetterMethods = underTest.getSetterMethods(MutableToFoo.class);
+        final List<Method> actual = underTest.getSetterMethods(testClass);
 
         // THEN
-        assertTrue(immutableClassSetterMethods.isEmpty());
-        assertFalse(mutableClassSetterMethods.isEmpty());
+        assertEquals(expectedResult, actual.isEmpty());
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getSetterMethods}.
+     * @return parameters to be used for testing the the method {@code getSetterMethods}.
+     */
+    @DataProvider
+    private Object[][] dataGetSetterMethodsTesting() {
+        return new Object[][] {
+                {"Tests that the method returns an empty list if the class has no setter methods", ImmutableToFooSubClass.class, true},
+                {"Tests that the method returns a not empty list if the class has setter methods", MutableToFoo.class, false}
+        };
     }
 
     /**
@@ -541,36 +629,61 @@ public class ClassUtilsTest {
     }
 
     /**
-     * Tests that the method {@code getDefaultTypeValue} works as expected.
+     * Tests that the method {@code usesBuilderPattern} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testUsesBuilderPatternWorksAsExpected() {
+    @Test(dataProvider = "dataUsesBuilderPatternTesting")
+    public void testUsesBuilderPatternWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
         // GIVEN
-        final Constructor constructorWithBuilder = underTest.getAllArgsConstructor(FromFooWithBuilder.class);
-        final Constructor constructorWithoutBuilder = underTest.getAllArgsConstructor(FromFoo.class);
+        final Constructor constructor = underTest.getAllArgsConstructor(testClass);
 
         // WHEN
-        final boolean usesBuilderPattern = underTest.usesBuilderPattern(constructorWithBuilder, FromFooWithBuilder.class);
-        final boolean notUseBuilderPattern = underTest.usesBuilderPattern(constructorWithoutBuilder, FromFoo.class);
+        final boolean usesBuilderPattern = underTest.usesBuilderPattern(constructor, testClass);
 
         // THEN
-        assertTrue(usesBuilderPattern);
-        assertFalse(notUseBuilderPattern);
+        assertEquals(expectedResult, usesBuilderPattern);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code usesBuilderPattern}.
+     * @return parameters to be used for testing the the method {@code usesBuilderPattern}.
+     */
+    @DataProvider
+    private Object[][] dataUsesBuilderPatternTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class has a builder", FromFooWithBuilder.class, true},
+                {"Tests that the method returns false if the class hasn't a builder", FromFoo.class, false}
+        };
     }
 
     /**
      * Tests that the method {@code hasAccessibleConstructors} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
      */
-    @Test
-    public void testHasAccessibleConstructorsWorksAsExpected() {
+    @Test(dataProvider = "dataHasAccessibleConstructorsTesting")
+    public void testHasAccessibleConstructorsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
         // GIVEN
 
         // WHEN
-        final boolean notAccessibleConstructors = underTest.hasAccessibleConstructors(FromFooWithBuilder.class);
-        final boolean accessibleConstructors = underTest.hasAccessibleConstructors(FromFoo.class);
+        final boolean actual = underTest.hasAccessibleConstructors(testClass);
 
         // THEN
-        assertFalse(notAccessibleConstructors);
-        assertTrue(accessibleConstructors);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code hasAccessibleConstructors}.
+     * @return parameters to be used for testing the the method {@code hasAccessibleConstructors}.
+     */
+    @DataProvider
+    private Object[][] dataHasAccessibleConstructorsTesting() {
+        return new Object[][] {
+                {"Tests that the method returns false if the constructor is private", FromFooWithBuilder.class, false},
+                {"Tests that the method returns false if the constructor is public", FromFoo.class, true}
+        };
     }
 }
