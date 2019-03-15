@@ -40,7 +40,7 @@ abstract class AbstractTransformer implements Transformer {
     final ReflectionUtils reflectionUtils;
 
     /**
-     * Class uttils instance {@link ClassUtils}.
+     * Class utils instance {@link ClassUtils}.
      */
     final ClassUtils classUtils;
 
