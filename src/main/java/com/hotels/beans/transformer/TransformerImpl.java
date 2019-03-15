@@ -307,10 +307,10 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
         String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
-        boolean primitiveType = classUtils.isPrimitiveType(field.getType());
         if (!isAFieldToTransform(fieldBreadcrumb)) {
-            return !primitiveType ? null : defaultValue(field.getType());
+            return defaultValue(field.getType());
         }
+        boolean primitiveType = classUtils.isPrimitiveType(field.getType());
         boolean isFieldTransformerDefined = settings.getFieldsTransformers().containsKey(field.getName());
         Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);
         if (nonNull(fieldValue)) {

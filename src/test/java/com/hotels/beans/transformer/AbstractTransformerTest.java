@@ -41,7 +41,7 @@ import com.hotels.beans.sample.FromSubFoo;
 /**
  * Unit test for {@link Transformer}.
  */
-public class AbstractTransformerTest {
+public abstract class AbstractTransformerTest {
     protected static final BigInteger ID = new BigInteger("1234");
     protected static final String NAME = "Goofy";
     protected static FromFoo fromFoo;
