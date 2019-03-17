@@ -16,6 +16,8 @@
 
 package com.hotels.beans.transformer;
 
+import static java.util.Arrays.asList;
+
 import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import java.util.Map;
@@ -192,10 +194,7 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public Transformer skipTransformationForField(final String... fieldName) {
-        final Map<String, String> fieldsToSkip = settings.getFieldsToSkip();
-        for (String tmpField: fieldName) {
-            fieldsToSkip.put(tmpField, tmpField);
-        }
+        settings.getFieldsToSkip().addAll(asList(fieldName));
         return this;
     }
 

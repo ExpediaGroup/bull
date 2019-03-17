@@ -17,6 +17,7 @@
 package com.hotels.beans.utils;
 
 import static java.lang.reflect.Modifier.isFinal;
+import static java.util.Objects.nonNull;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -288,11 +289,11 @@ public class ClassUtilsTest {
      * @param expectedResult the expected result
      */
     @Test(dataProvider = "dataGetPrivateFieldsTesting")
-    public void testGetPrivateFieldsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean skipFinal, final int expectedResult) {
+    public void testGetPrivateFieldsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final Boolean skipFinal, final int expectedResult) {
         // GIVEN
 
         // WHEN
-        List<Field> actual = underTest.getPrivateFields(testClass, skipFinal);
+        List<Field> actual = nonNull(skipFinal) ? underTest.getPrivateFields(testClass, skipFinal) : underTest.getPrivateFields(testClass);
 
         // THEN
         assertEquals(expectedResult, actual.size());
@@ -307,10 +308,16 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns the expected value if the class has private and public fields", CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, false,
                         EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS},
+                {"Tests that the method returns the expected value if the class has private and public fields and skipFinal is not passed as param",
+                        CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, null, EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields only", CLASS_WITH_PRIVATE_FINAL_FIELDS, false,
                         EXPECTED_PRIVATE_FINAL_FIELDS},
+                {"Tests that the method returns the expected value if the class has private final fields only and skipFinal is not passed as param",
+                        CLASS_WITH_PRIVATE_FINAL_FIELDS, null, EXPECTED_PRIVATE_FINAL_FIELDS},
                 {"Tests that the method returns the expected value if the class extends another class", ImmutableToFooSubClass.class, false,
                         EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
+                {"Tests that the method returns the expected value if the class extends another class and skipFinal is not passed as param",
+                        ImmutableToFooSubClass.class, null, EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
                 {"Tests that the method returns the expected value if the skipFinal is enabled", CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, true,
                         EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_NOT_FINAL_FIELDS}
         };

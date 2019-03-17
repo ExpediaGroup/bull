@@ -182,8 +182,8 @@ public class TransformerImpl extends AbstractTransformer {
      * @param breadcrumb the field path
      * @return true if the transformation has to be applied on this field, false in it has to be skipped.
      */
-    private boolean isAFieldToTransform(final String breadcrumb) {
-        return isNull(breadcrumb) || !settings.getFieldsToSkip().containsKey(breadcrumb);
+    private boolean doSkipTransformation(final String breadcrumb) {
+        return settings.getFieldsToSkip().contains(breadcrumb);
     }
 
     /**
@@ -307,7 +307,7 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
         String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
-        if (!isAFieldToTransform(fieldBreadcrumb)) {
+        if (doSkipTransformation(fieldBreadcrumb)) {
             return defaultValue(field.getType());
         }
         boolean primitiveType = classUtils.isPrimitiveType(field.getType());

@@ -96,12 +96,12 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
         //GIVEN
 
         //WHEN
-        final Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping("id", "identifier"));
+        final Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         MixedToFooDiffFields actual = beanTransformer.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN
-        assertThat(actual, hasProperty("name", equalTo(actual.getName())));
-        assertThat(actual, hasProperty("identifier", equalTo(fromFoo.getId())));
+        assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
+        assertThat(actual, hasProperty(IDENTIFIER_FIELD_NAME, equalTo(fromFoo.getId())));
         assertEquals(actual.getList(), fromFoo.getList());
         IntStream.range(0, actual.getNestedObjectList().size())
                 .forEach(i -> assertThat(actual.getNestedObjectList().get(i), sameBeanAs(fromFoo.getNestedObjectList().get(i))));
@@ -118,15 +118,15 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
          * Function<BigInteger, BigInteger> idTransformer = value -> value.negate();
          * FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", idTransformer);
          */
-        FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::negate);
+        FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>(IDENTIFIER_FIELD_NAME, BigInteger::negate);
 
         //WHEN
-        underTest.withFieldMapping(new FieldMapping("id", "identifier")).withFieldTransformer(fieldTransformer);
+        underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME)).withFieldTransformer(fieldTransformer);
         MixedToFooDiffFields actual = underTest.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN
-        assertThat(actual, hasProperty("name", equalTo(actual.getName())));
-        assertThat(actual, hasProperty("identifier", equalTo(fromFoo.getId().negate())));
+        assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
+        assertThat(actual, hasProperty(IDENTIFIER_FIELD_NAME, equalTo(fromFoo.getId().negate())));
         assertEquals(actual.getList(), fromFoo.getList());
         IntStream.range(0, actual.getNestedObjectList().size())
                 .forEach(i -> assertThat(actual.getNestedObjectList().get(i), sameBeanAs(fromFoo.getNestedObjectList().get(i))));
@@ -183,7 +183,7 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
     @Test
     public void testFieldTransformationSkipWorksProperly() {
         //GIVEN
-        underTest.skipTransformationForField("name", "nestedObject.phoneNumbers");
+        underTest.skipTransformationForField(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
 
         //WHEN
         MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.class);

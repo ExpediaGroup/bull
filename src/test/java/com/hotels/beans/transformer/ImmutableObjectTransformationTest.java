@@ -73,21 +73,6 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     private static final String GET_DEST_FIELD_NAME_METHOD_NAME = "getDestFieldName";
     private static final String GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME = "getConstructorValuesFromFields";
 
-    private static final String FIRST_COMPOSITE_TRANSFORMATION_TEST_DESCRIPTION = "Test that, in case a destination object field is contained into a nested object of the source "
-            + "field, defining a composite FieldMapping the field is correctly valorized.";
-    private static final String SECOND_COMPOSITE_TRANSFORMATION_TEST_DESCRIPTION = "Test that, in case a destination object field is contained into a nested object of the source "
-            + "field, defining a composite {@link FieldMapping} the field is correctly  valorized even if some of them are null.";
-
-    private static final String FIRST_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION = "Test that immutable beans without constructor arguments parameter annotated with: @ConstructorArg "
-            + "are correctly copied.";
-    private static final String SECOND_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION = "Test that immutable beans without custom field mapping are correctly transformed.";
-    private static final String THIRD_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION = "Test that immutable beans with constructor arguments parameter annotated with: @ConstructorArg "
-            + "are correctly copied.";
-    private static final String FOURTH_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION = "Test that bean that extends another class are correctly copied";
-
-    private static final String FIRST_CONSTRUCTOR_EXCEPTION_TEST_DESCRIPTION = "Test that an exception is thrown if the constructor invocation throws exception";
-    private static final String SECOND_CONSTRUCTOR_EXCEPTION_TEST_DESCRIPTION = "Test that an exception is thrown if no constructors are defined";
-
     /**
      * The class to be tested.
      */
@@ -129,10 +114,13 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     private Object[][] dataDefaultTransformationTesting() {
         BeanUtils beanUtils = new BeanUtils();
         return new Object[][] {
-                {FIRST_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION, beanUtils.getTransformer(), fromFoo, ImmutableToFoo.class},
-                {SECOND_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION, beanUtils.getTransformer().withFieldMapping(), fromFoo, ImmutableToFoo.class},
-                {THIRD_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION, beanUtils.getTransformer(), fromFoo, ImmutableToFooCustomAnnotation.class},
-                {FOURTH_DEFAULT_TRANSFORMATION_TEST_DESCRIPTION, beanUtils.getTransformer(), fromFooSubClass, ImmutableToFooSubClass.class},
+                {"Test that immutable beans without constructor arguments parameter annotated with: @ConstructorArg are correctly copied.",
+                        beanUtils.getTransformer(), fromFoo, ImmutableToFoo.class},
+                {"Test that immutable beans without custom field mapping are correctly transformed.",
+                        beanUtils.getTransformer().withFieldMapping(), fromFoo, ImmutableToFoo.class},
+                {"Test that immutable beans with constructor arguments parameter annotated with: @ConstructorArg are correctly copied.",
+                        beanUtils.getTransformer(), fromFoo, ImmutableToFooCustomAnnotation.class},
+                {"Test that bean that extends another class are correctly copied", beanUtils.getTransformer(), fromFooSubClass, ImmutableToFooSubClass.class},
         };
     }
 
@@ -163,7 +151,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     public void testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected(final String testCaseDescription, final Object sourceObject, final String expectedName,
         final BigInteger expectedId, final int[] expectedPhoneNumbers) {
         //GIVEN
-        FieldMapping phoneNumbersMapping = new FieldMapping("nestedObject.phoneNumbers", "phoneNumbers");
+        FieldMapping phoneNumbersMapping = new FieldMapping(PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME, PHONE_NUMBER_DEST_FIELD_NAME);
 
         //WHEN
         ImmutableFlatToFoo actual = underTest.withFieldMapping(phoneNumbersMapping).transform(sourceObject, ImmutableFlatToFoo.class);
@@ -182,8 +170,11 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     @DataProvider
     private Object[][] dataCompositeFieldNameTesting() {
         return new Object[][] {
-                {FIRST_COMPOSITE_TRANSFORMATION_TEST_DESCRIPTION, fromFoo, fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObject().getPhoneNumbers()},
-                {SECOND_COMPOSITE_TRANSFORMATION_TEST_DESCRIPTION, fromFooWithNullProperties, fromFooWithNullProperties.getName(), fromFooWithNullProperties.getId(), null}
+                {"Test that, in case a destination object field is contained into a nested object of the source field, defining a composite FieldMapping"
+                        + "the field is correctly valorized.", fromFoo, fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObject().getPhoneNumbers()},
+                {"Test that, in case a destination object field is contained into a nested object of the source field, defining a composite {@link FieldMapping}"
+                        + " the field is correctly  valorized even if some of them are null.", fromFooWithNullProperties, fromFooWithNullProperties.getName(),
+                        fromFooWithNullProperties.getId(), null}
         };
     }
 
@@ -210,8 +201,8 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     private Object[][] dataConstructorErrorTesting() {
         FromFoo actual = new FromFoo(NAME, ID, null, null, null);
         return new Object[][] {
-                {FIRST_CONSTRUCTOR_EXCEPTION_TEST_DESCRIPTION, actual, ImmutableToFooCustomAnnotation.class},
-                {SECOND_CONSTRUCTOR_EXCEPTION_TEST_DESCRIPTION, actual, ImmutableToFooNoConstructors.class},
+                {"Test that an exception is thrown if the constructor invocation throws exception", actual, ImmutableToFooCustomAnnotation.class},
+                {"Test that an exception is thrown if no constructors are defined", actual, ImmutableToFooNoConstructors.class},
         };
     }
 
@@ -267,7 +258,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         //GIVEN
 
         //WHEN
-        final Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping("id", "identifier"));
+        final Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         ImmutableToFooDiffFields actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.class);
 
         //THEN
@@ -288,8 +279,8 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
 
         //WHEN
         final Transformer beanTransformer = underTest
-                .withFieldMapping(new FieldMapping("id", "identifier"))
-                .withFieldTransformer(new FieldTransformer<>("locale", Locale::forLanguageTag));
+                .withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
+                .withFieldTransformer(new FieldTransformer<>(LOCALE_FIELD_NAME, Locale::forLanguageTag));
         ImmutableToFooAdvFields actual = beanTransformer.transform(fromFooAdvFields, ImmutableToFooAdvFields.class);
 
         //THEN
@@ -351,7 +342,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     @Test
     public void testGetConstructorValuesFromFieldsWorksProperly() throws Exception {
         //GIVEN
-        underTest.withFieldTransformer(new FieldTransformer<>("locale", Locale::forLanguageTag));
+        underTest.withFieldTransformer(new FieldTransformer<>(LOCALE_FIELD_NAME, Locale::forLanguageTag));
 
         //WHEN
         final Method getConstructorValuesFromFieldsMethod =
