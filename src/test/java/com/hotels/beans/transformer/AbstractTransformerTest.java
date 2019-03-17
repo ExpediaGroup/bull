@@ -33,6 +33,7 @@ import org.testng.annotations.BeforeClass;
 
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooAdvFields;
+import com.hotels.beans.sample.FromFooMap;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSubClass;
 import com.hotels.beans.sample.FromFooWithPrimitiveFields;
@@ -50,6 +51,7 @@ public abstract class AbstractTransformerTest {
     static FromFooWithPrimitiveFields fromFooWithPrimitiveFields;
     static FromFooSubClass fromFooSubClass;
     static FromFooAdvFields fromFooAdvFields;
+    static FromFooMap fromFooMap;
     static final int AGE = 34;
     static final String AGE_FIELD_NAME = "age";
     static final String DEST_FIELD_NAME = "destFieldName";
@@ -71,9 +73,10 @@ public abstract class AbstractTransformerTest {
     private static final BigDecimal AMOUNT = new BigDecimal(10);
     private static final String SUB_FOO_NAME = "Smith";
     private static final int[] SUB_FOO_PHONE_NUMBERS = {12345, 6892, 10873};
-    private static final Map<String, String> SUB_FOO_SAMPLE_MAP = new HashMap<>();
-    private static final Map<String, List<String>> SUB_FOO_COMPLEX_MAP = new HashMap<>();
-    private static final Map<String, Map<String, String>> SUB_FOO_VERY_COMPLEX_MAP = new HashMap<>();
+    private static final Map<String, String> SAMPLE_MAP = new HashMap<>();
+    private static final Map<String, List<String>> COMPLEX_MAP = new HashMap<>();
+    private static final Map<String, Map<String, String>> VERY_COMPLEX_MAP = new HashMap<>();
+    private static final Map<FromFooSimple, Map<String, String>> EXTREME_COMPLEX_MAP = new HashMap<>();
     private static List<FromSubFoo> fromSubFooList;
     private static List<String> sourceFooSimpleList;
     private static FromSubFoo fromSubFoo;
@@ -90,10 +93,10 @@ public abstract class AbstractTransformerTest {
      * Create an instance of two objects: one without custom annotation and another one with custom annotations then execute the copy into a specular immutable object.
      */
     private void initObjects() {
-        SUB_FOO_SAMPLE_MAP.put(ITEM_1, ITEM_2);
-        SUB_FOO_COMPLEX_MAP.put(ITEM_1, singletonList(ITEM_2));
-        SUB_FOO_VERY_COMPLEX_MAP.put(ITEM_1, SUB_FOO_SAMPLE_MAP);
-        fromSubFoo = new FromSubFoo(SUB_FOO_NAME, SUB_FOO_PHONE_NUMBERS, SUB_FOO_SAMPLE_MAP, SUB_FOO_COMPLEX_MAP, SUB_FOO_VERY_COMPLEX_MAP);
+        SAMPLE_MAP.put(ITEM_1, ITEM_2);
+        COMPLEX_MAP.put(ITEM_1, singletonList(ITEM_2));
+        VERY_COMPLEX_MAP.put(ITEM_1, SAMPLE_MAP);
+        fromSubFoo = new FromSubFoo(SUB_FOO_NAME, SUB_FOO_PHONE_NUMBERS, SAMPLE_MAP, COMPLEX_MAP, VERY_COMPLEX_MAP);
         fromSubFooList = singletonList(fromSubFoo);
         sourceFooSimpleList = asList(ITEM_1, ITEM_2);
         fromFoo = createFromFoo(fromSubFoo);
@@ -102,6 +105,8 @@ public abstract class AbstractTransformerTest {
         fromFooWithPrimitiveFields = createFromFooWithPrimitiveFields();
         fromFooSubClass = createFromFooSubClass();
         fromFooAdvFields = createFromFooAdvFields();
+        EXTREME_COMPLEX_MAP.put(fromFooSimple, SAMPLE_MAP);
+        fromFooMap = new FromFooMap(SAMPLE_MAP, COMPLEX_MAP, VERY_COMPLEX_MAP, EXTREME_COMPLEX_MAP);
     }
 
     /**

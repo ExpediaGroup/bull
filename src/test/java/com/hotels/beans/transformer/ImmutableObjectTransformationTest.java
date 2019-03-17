@@ -58,6 +58,7 @@ import com.hotels.beans.sample.immutable.ImmutableToFooAdvFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooDiffFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooInvalid;
+import com.hotels.beans.sample.immutable.ImmutableToFooMap;
 import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooNoConstructors;
 import com.hotels.beans.sample.immutable.ImmutableToFooNotExistingFields;
@@ -122,6 +123,8 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
                 {"Test that immutable beans with constructor arguments parameter annotated with: @ConstructorArg are correctly copied.",
                         beanUtils.getTransformer(), fromFoo, ImmutableToFooCustomAnnotation.class},
                 {"Test that bean that extends another class are correctly copied", beanUtils.getTransformer(), fromFooSubClass, ImmutableToFooSubClass.class},
+                {"Test that immutable beans with extremely complex map are correctly transformed.",
+                        beanUtils.getTransformer(), fromFooMap, ImmutableToFooMap.class},
         };
     }
 
