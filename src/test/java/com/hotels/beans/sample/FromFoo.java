@@ -29,12 +29,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class FromFoo {
+public class FromFoo implements Cloneable {
     private final String name;
     private BigInteger id;
     private final List<FromSubFoo> nestedObjectList;
     private final List<String> list;
     private final FromSubFoo nestedObject;
+
+    public FromFoo clone() throws CloneNotSupportedException {
+        return (FromFoo) super.clone();
+    }
 
     @Override
     public String toString() {
