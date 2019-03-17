@@ -22,6 +22,7 @@ import com.hotels.beans.constant.ClassType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -29,11 +30,16 @@ import lombok.ToString;
  */
 @AllArgsConstructor
 @Getter
+@Setter
 @ToString
-public class FromFooAdvFields {
-    private final Optional<String> name;
+public class FromFooAdvFields implements Cloneable {
+    private Optional<String> name;
     private final Optional<Integer> age;
     private final String indexNumber;
     private final ClassType classType;
     private final String locale;
+
+    public FromFooAdvFields clone() throws CloneNotSupportedException {
+        return (FromFooAdvFields) super.clone();
+    }
 }

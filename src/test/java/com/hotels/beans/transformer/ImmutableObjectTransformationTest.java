@@ -24,7 +24,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -36,6 +35,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.math.BigInteger;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.mockito.InjectMocks;
@@ -50,6 +50,7 @@ import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFoo;
+import com.hotels.beans.sample.FromFooAdvFields;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableFlatToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
@@ -207,29 +208,34 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     }
 
     /**
-     * Test that an exception is thrown if there the constructor args parameters have a different order for the mutable bean object.
+     * Test that an {@link InvalidBeanException} is thrown if the bean is not valid.
+     * @param testCaseDescription the test case description
+     * @param sourceObject the object to transform
+     * @param targetObjectClass the target object class
      */
-    @Test(expectedExceptions = InvalidBeanException.class)
-    public void testTransformThrowsExceptionWhenImmutableBeanHasAWrongConstructor() {
+    @Test(dataProvider = "dataInvalidBeanExceptionTesting", expectedExceptions = InvalidBeanException.class)
+    public void testTransformThrowsExceptionWhenImmutableIsInvalid(final String testCaseDescription, final FromFoo sourceObject,
+        final Class<?> targetObjectClass) {
         //GIVEN
 
         //WHEN
-        underTest.transform(fromFoo, ImmutableToFooInvalid.class);
+        underTest.transform(sourceObject, targetObjectClass);
     }
 
     /**
-     * Test that an exception is thrown if the destination object don't met the constraints.
+     * Creates the parameters to be used for testing the exception raised in case of error during the constructor invocation.
+     * @return parameters to be used for testing the exception raised in case of error during the constructor invocation.
+     * @throws CloneNotSupportedException if the clone fails
      */
-    @Test(expectedExceptions = InvalidBeanException.class)
-    public void testTransformThrowsExceptionIfTheDestinationObjectValuesAreNotValid() {
-        //GIVEN
-        fromFoo.setId(null);
-
-        //WHEN
-        underTest.transform(fromFoo, ImmutableToFoo.class);
-
-        // THEN
-        fromFoo.setId(ID);
+    @DataProvider
+    private Object[][] dataInvalidBeanExceptionTesting() throws CloneNotSupportedException {
+        FromFoo fromFooNullId = AbstractTransformerTest.fromFoo.clone();
+        fromFooNullId.setId(null);
+        return new Object[][] {
+                {"Test that an exception is thrown if there the constructor args parameters have a different order for the mutable bean object.",
+                        fromFoo, ImmutableToFooInvalid.class},
+                {"Test that an exception is thrown if the destination object don't met the constraints.", fromFooNullId, ImmutableToFoo.class},
+        };
     }
 
     /**
@@ -262,8 +268,8 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         ImmutableToFooDiffFields actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.class);
 
         //THEN
-        assertThat(actual, hasProperty("name", equalTo(actual.getName())));
-        assertThat(actual, hasProperty("identifier", equalTo(fromFoo.getId())));
+        assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
+        assertThat(actual, hasProperty(IDENTIFIER_FIELD_NAME, equalTo(fromFoo.getId())));
         assertEquals(actual.getList(), fromFoo.getList());
         IntStream.range(0, actual.getNestedObjectList().size())
                 .forEach(i -> assertThat(actual.getNestedObjectList().get(i), sameBeanAs(fromFoo.getNestedObjectList().get(i))));
@@ -272,24 +278,44 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
 
     /**
      * Test that bean containing advanced final fields are correctly copied.
+     * @param testCaseDescription the test case description
+     * @param sourceObject the object to transform
+     * @param targetObjectClass the target object class
+     * @param isNameFieldEmpty true if the name field should contain a value, false otherwise
      */
-    @Test
-    public void testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied() {
+    @Test(dataProvider = "dataCAdvancedFieldsCopyTesting")
+    public void testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied(final String testCaseDescription, final FromFooAdvFields sourceObject,
+        final Class<?> targetObjectClass, final boolean isNameFieldEmpty) {
         //GIVEN
 
         //WHEN
         final Transformer beanTransformer = underTest
                 .withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
                 .withFieldTransformer(new FieldTransformer<>(LOCALE_FIELD_NAME, Locale::forLanguageTag));
-        ImmutableToFooAdvFields actual = beanTransformer.transform(fromFooAdvFields, ImmutableToFooAdvFields.class);
+        ImmutableToFooAdvFields actual = (ImmutableToFooAdvFields) beanTransformer.transform(sourceObject, targetObjectClass);
 
         //THEN
         assertNotNull(actual.getName());
-        assertTrue(actual.getName().isPresent());
-        assertEquals(fromFooAdvFields.getName().get(), actual.getName().get());
-        assertEquals(fromFooAdvFields.getAge().get(), actual.getAge());
-        assertEquals(fromFooAdvFields.getClassType(), actual.getClassType());
-        assertEquals(fromFooAdvFields.getLocale(), actual.getLocale().getLanguage());
+        assertEquals(isNameFieldEmpty, actual.getName().isPresent());
+        sourceObject.getName().ifPresent(name -> assertEquals(name, actual.getName().get()));
+        assertEquals(sourceObject.getAge().get(), actual.getAge());
+        assertEquals(sourceObject.getClassType(), actual.getClassType());
+        assertEquals(sourceObject.getLocale(), actual.getLocale().getLanguage());
+    }
+
+    /**
+     * Creates the parameters to be used for testing the transformation of advanced type fields.
+     * @return parameters to be used for testing the transformation of advanced type fields.
+     * @throws CloneNotSupportedException if the clone fails
+     */
+    @DataProvider
+    private Object[][] dataCAdvancedFieldsCopyTesting() throws CloneNotSupportedException {
+        FromFooAdvFields emptyOptionalSourceObject = fromFooAdvFields.clone();
+        emptyOptionalSourceObject.setName(Optional.empty());
+        return new Object[][] {
+                {"Test that bean containing advanced final fields are correctly copied", fromFooAdvFields, ImmutableToFooAdvFields.class, true},
+                {"Test that bean containing advanced final fields (with empty optional) are correctly copied", emptyOptionalSourceObject, ImmutableToFooAdvFields.class, false}
+        };
     }
 
     /**
