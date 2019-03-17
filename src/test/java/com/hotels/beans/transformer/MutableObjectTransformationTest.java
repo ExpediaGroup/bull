@@ -83,6 +83,21 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     }
 
     /**
+     * Test transformation on an existing bean is correctly copied.
+     */
+    @Test
+    public void testTransformationOnAnExistingDestinationWorksProperly() {
+        //GIVEN
+        MutableToFooSubClass mutableToFoo = new MutableToFooSubClass();
+
+        //WHEN
+        underTest.transform(fromFooSubClass, mutableToFoo);
+
+        //THEN
+        assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
+    }
+
+    /**
      * Test that a given field transformer function is applied only to a specific field even if there are other ones with same name.
      */
     @Test
@@ -109,7 +124,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     public void testFieldTransformationIsAppliedToAllMatchingFields() {
         //GIVEN
         String namePrefix = "prefix-";
-        FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("name", val -> namePrefix + val);
+        FieldTransformer<String, String> nameTransformer = new FieldTransformer<>(NAME_FIELD_NAME, val -> namePrefix + val);
 
         //WHEN
         MutableToFoo actual = underTest
@@ -162,7 +177,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     @Test
     public void testFieldTransformationSkipWorksProperly() {
         //GIVEN
-        underTest.skipTransformationForField("name", "nestedObject.phoneNumbers");
+        underTest.skipTransformationForField(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
 
         //WHEN
         MutableToFoo actual = underTest.transform(fromFoo, MutableToFoo.class);
@@ -172,20 +187,5 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
         assertNull(actual.getName());
         assertNull(actual.getNestedObject().getPhoneNumbers());
         underTest.resetFieldsTransformationSkip();
-    }
-
-    /**
-     * Test transformation on an existing bean is correctly copied.
-     */
-    @Test
-    public void testTransformationOnAnExistingDestinationWorksProperly() {
-        //GIVEN
-        MutableToFooSubClass mutableToFoo = new MutableToFooSubClass();
-
-        //WHEN
-        underTest.transform(fromFooSubClass, mutableToFoo);
-
-        //THEN
-        assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
     }
 }

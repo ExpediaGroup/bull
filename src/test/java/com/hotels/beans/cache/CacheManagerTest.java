@@ -95,9 +95,9 @@ public class CacheManagerTest {
 
         // WHEN
         underTest.removeFromCache(CACHE_KEY);
+        Object actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        Object actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
         assertNull(actual);
     }
 }

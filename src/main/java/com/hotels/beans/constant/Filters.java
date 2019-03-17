@@ -32,16 +32,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PRIVATE)
 public final class Filters {
     /**
-     * Returns only the final field.
-     */
-    public static final Predicate<Field> IS_FINAL_FIELD = field -> isFinal(field.getModifiers());
-
-    /**
-     * Returns only the not final field.
-     */
-    public static final Predicate<Field> IS_NOT_FINAL_FIELD = IS_FINAL_FIELD.negate();
-
-    /**
      * Returns only the final not static field.
      */
     public static final Predicate<Field> IS_FINAL_AND_NOT_STATIC_FIELD = field -> {
@@ -56,5 +46,15 @@ public final class Filters {
         int modifiers = field.getModifiers();
         return !isFinal(modifiers) && !isStatic(modifiers);
     };
+
+    /**
+     * Returns only the final field.
+     */
+    private static final Predicate<Field> IS_FINAL_FIELD = field -> isFinal(field.getModifiers());
+
+    /**
+     * Returns only the not final field.
+     */
+    public static final Predicate<Field> IS_NOT_FINAL_FIELD = IS_FINAL_FIELD.negate();
 
 }
