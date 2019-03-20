@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -457,6 +458,24 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(immutableObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
+    }
+
+    /**
+     * Test that, given a set of fields for which the transformation has to be skipped, they are actually skipped.
+     */
+    @Test
+    public void testFieldTransformationSkipWorksProperly() {
+        //GIVEN
+        underTest.skipTransformationForField("name", "nestedObject.phoneNumbers");
+
+        //WHEN
+        ImmutableToFoo actual = underTest.transform(fromFoo, ImmutableToFoo.class);
+
+        //THEN
+        assertEquals(fromFoo.getId(), actual.getId());
+        assertNull(actual.getName());
+        assertNull(actual.getNestedObject().getPhoneNumbers());
+        underTest.resetFieldsTransformationSkip();
     }
 
     /**
