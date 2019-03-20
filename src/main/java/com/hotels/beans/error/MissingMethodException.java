@@ -30,16 +30,4 @@ public class MissingMethodException extends RuntimeException {
     public MissingMethodException(final String message) {
         super(message);
     }
-
-    /**
-     * Constructs a new invalid bean exception with the specified detail message.
-     * The cause is not initialized, and may subsequently be initialized by a
-     * call to {@link #initCause}.
-     * @param message the detail message. The detail message is saved for later
-     *                retrieval by the {@link #getMessage()} method.
-     * @param cause the given bean is not valid and caused an exception while copying the properties.
-     */
-    public MissingMethodException(final String message, final Throwable cause) {
-        super(message, cause);
-    }
 }
