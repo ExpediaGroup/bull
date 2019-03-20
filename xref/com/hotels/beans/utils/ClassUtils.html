@@ -524,7 +524,7 @@
 <a class="jxr_linenumber" name="L516" href="#L516">516</a> <em class="jxr_javadoccomment">     * @param clazz class from which gets the field</em>
 <a class="jxr_linenumber" name="L517" href="#L517">517</a> <em class="jxr_javadoccomment">     * @return true if it has private final field, false otherwise.</em>
 <a class="jxr_linenumber" name="L518" href="#L518">518</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L519" href="#L519">519</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> hasNotFinalFields(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; clazz) {
+<a class="jxr_linenumber" name="L519" href="#L519">519</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> hasNotFinalFields(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; clazz) {
 <a class="jxr_linenumber" name="L520" href="#L520">520</a>         notNull(clazz, CLAZZ_CANNOT_BE_NULL);
 <a class="jxr_linenumber" name="L521" href="#L521">521</a>         <strong class="jxr_keyword">return</strong> hasFieldsMatchingCondition(clazz, IS_NOT_FINAL_AND_NOT_STATIC_FIELD, <span class="jxr_string">"HasNotFinalNotStaticFields-"</span>);
 <a class="jxr_linenumber" name="L522" href="#L522">522</a>     }

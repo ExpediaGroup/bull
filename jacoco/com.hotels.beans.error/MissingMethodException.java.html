@@ -30,17 +30,5 @@ public class MissingMethodException extends RuntimeException {
     public MissingMethodException(final String message) {
 <span class="fc" id="L31">        super(message);</span>
 <span class="fc" id="L32">    }</span>
-
-    /**
-     * Constructs a new invalid bean exception with the specified detail message.
-     * The cause is not initialized, and may subsequently be initialized by a
-     * call to {@link #initCause}.
-     * @param message the detail message. The detail message is saved for later
-     *                retrieval by the {@link #getMessage()} method.
-     * @param cause the given bean is not valid and caused an exception while copying the properties.
-     */
-    public MissingMethodException(final String message, final Throwable cause) {
-<span class="nc" id="L43">        super(message, cause);</span>
-<span class="nc" id="L44">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

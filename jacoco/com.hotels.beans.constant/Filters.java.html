@@ -32,30 +32,30 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PRIVATE)
 public final class Filters {
     /**
-     * Returns only the final field.
-     */
-<span class="fc" id="L37">    public static final Predicate&lt;Field&gt; IS_FINAL_FIELD = field -&gt; isFinal(field.getModifiers());</span>
-
-    /**
-     * Returns only the not final field.
-     */
-<span class="fc" id="L42">    public static final Predicate&lt;Field&gt; IS_NOT_FINAL_FIELD = IS_FINAL_FIELD.negate();</span>
-
-    /**
      * Returns only the final not static field.
      */
-<span class="fc" id="L47">    public static final Predicate&lt;Field&gt; IS_FINAL_AND_NOT_STATIC_FIELD = field -&gt; {</span>
-<span class="fc" id="L48">        int modifiers = field.getModifiers();</span>
-<span class="pc bpc" id="L49" title="1 of 4 branches missed.">        return isFinal(modifiers) &amp;&amp; !isStatic(modifiers);</span>
+<span class="fc" id="L37">    public static final Predicate&lt;Field&gt; IS_FINAL_AND_NOT_STATIC_FIELD = field -&gt; {</span>
+<span class="fc" id="L38">        int modifiers = field.getModifiers();</span>
+<span class="pc bpc" id="L39" title="1 of 4 branches missed.">        return isFinal(modifiers) &amp;&amp; !isStatic(modifiers);</span>
     };
 
     /**
      * Returns only the not final not static field.
      */
-<span class="fc" id="L55">    public static final Predicate&lt;Field&gt; IS_NOT_FINAL_AND_NOT_STATIC_FIELD = field -&gt; {</span>
-<span class="fc" id="L56">        int modifiers = field.getModifiers();</span>
-<span class="fc bfc" id="L57" title="All 4 branches covered.">        return !isFinal(modifiers) &amp;&amp; !isStatic(modifiers);</span>
+<span class="fc" id="L45">    public static final Predicate&lt;Field&gt; IS_NOT_FINAL_AND_NOT_STATIC_FIELD = field -&gt; {</span>
+<span class="fc" id="L46">        int modifiers = field.getModifiers();</span>
+<span class="fc bfc" id="L47" title="All 4 branches covered.">        return !isFinal(modifiers) &amp;&amp; !isStatic(modifiers);</span>
     };
+
+    /**
+     * Returns only the final field.
+     */
+<span class="fc" id="L53">    private static final Predicate&lt;Field&gt; IS_FINAL_FIELD = field -&gt; isFinal(field.getModifiers());</span>
+
+    /**
+     * Returns only the not final field.
+     */
+<span class="fc" id="L58">    public static final Predicate&lt;Field&gt; IS_NOT_FINAL_FIELD = IS_FINAL_FIELD.negate();</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

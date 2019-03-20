@@ -225,7 +225,7 @@ public final class ReflectionUtils {
         try {
 <span class="fc" id="L226">            field = getDeclaredField(fieldName, target);</span>
 <span class="fc" id="L227">            isAccessible = isFieldAccessible(field, target);</span>
-<span class="pc bpc" id="L228" title="1 of 2 branches missed.">            if (!isAccessible) {</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">            if (!isAccessible) {</span>
 <span class="fc" id="L229">                field.setAccessible(true);</span>
             }
 <span class="fc" id="L231">            return field.get(target);</span>
@@ -235,7 +235,7 @@ public final class ReflectionUtils {
 <span class="nc" id="L235">            handleReflectionException(e);</span>
 <span class="nc" id="L236">            throw new IllegalStateException(e);</span>
         } finally {
-<span class="pc bpc" id="L238" title="1 of 4 branches missed.">            if (nonNull(field) &amp;&amp; !isAccessible) {</span>
+<span class="fc bfc" id="L238" title="All 4 branches covered.">            if (nonNull(field) &amp;&amp; !isAccessible) {</span>
 <span class="fc" id="L239">                field.setAccessible(false);</span>
             }
         }
