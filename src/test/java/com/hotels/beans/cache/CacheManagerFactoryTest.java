@@ -19,9 +19,9 @@ package com.hotels.beans.cache;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 /**
  * Unit test for class: {@link CacheManagerFactory}.
@@ -41,7 +41,7 @@ public class CacheManagerFactoryTest {
     /**
      * Initializes mock.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
@@ -49,7 +49,7 @@ public class CacheManagerFactoryTest {
     /**
      * Tests that the method: {@code getCacheManager} returns a {@link CacheManager} instance.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testGetCacheThrowsExceptionIfTheCacheNameIsNull() {
         // GIVEN
 

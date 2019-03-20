@@ -18,7 +18,6 @@ package com.hotels.beans.performance;
 
 import static java.lang.String.valueOf;
 import static java.lang.Thread.sleep;
-import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
@@ -28,18 +27,17 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.time.StopWatch;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import com.hotels.beans.BeanUtils;
 import com.hotels.beans.sample.FromFoo;
@@ -58,7 +56,6 @@ import lombok.extern.slf4j.Slf4j;
  * Unit test for {@link BeanUtils}.
  */
 @Slf4j
-@RunWith(value = Parameterized.class)
 public class PerformanceTest {
     private static final BigInteger ID = new BigInteger("1234");
     private static final String ITEM_1 = "donald";
@@ -85,12 +82,6 @@ public class PerformanceTest {
     private static FromSubFoo fromSubFoo;
     private static FromFooSubClass fromFooSubClass;
 
-    private final double totalTransformation;
-    private final int waitInterval;
-    private final Object sourceObject;
-    private final Class<Object> destObjectClass;
-    private final double maxTransformationTime;
-
     /**
      * The class to be tested.
      */
@@ -98,38 +89,35 @@ public class PerformanceTest {
     private BeanUtils underTest;
 
     /**
-     * All args constructor.
-     * @param totalTransformation Total transformation to be performed
-     * @param waitInterval time between one transformation and the other
-     * @param sourceObject the Source object to copy
-     * @param destObjectClass the total destination object
-     * @param maxTransformationTime expected maximum transformation time
+     * Initialized data provider objects.
      */
-    public PerformanceTest(final double totalTransformation, final int waitInterval,
-        final Object sourceObject, final Class<Object> destObjectClass, final double maxTransformationTime) {
-        this.totalTransformation = totalTransformation;
-        this.waitInterval = waitInterval;
-        this.sourceObject = sourceObject;
-        this.destObjectClass = destObjectClass;
-        this.maxTransformationTime = maxTransformationTime;
+    @BeforeClass
+    public void beforeClass() {
+        initObjects();
     }
 
     /**
      * Initialized mocks.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
-        warmUp();
     }
 
     /**
      * Test that the bean copy gets completed by the expected time.
+     * @param totalTransformation Total transformation to be performed
+     * @param waitInterval time between one transformation and the other
+     * @param sourceObject the Source object to copy
+     * @param destObjectClass the total destination object
+     * @param maxTransformationTime expected maximum transformation time
      * @throws InterruptedException
      */
-    @Test
-    public void testCopyPropertiesGetsCompletedInTheExpectedTime() throws InterruptedException {
+    @Test(dataProvider = "dataPerformanceTest")
+    public void testCopyPropertiesGetsCompletedInTheExpectedTime(final double totalTransformation, final int waitInterval,
+        final Object sourceObject, final Class<Object> destObjectClass, final double maxTransformationTime) throws InterruptedException {
         //GIVEN
+        warmUp(sourceObject, destObjectClass);
 
         //WHEN
         StopWatch stopWatch = new StopWatch();
@@ -150,15 +138,17 @@ public class PerformanceTest {
 
     /**
      * Warm up transformation.
+     * @param sourceObject the Source object to copy
+     * @param destObjectClass the total destination object
      */
-    private void warmUp() {
+    private void warmUp(final Object sourceObject, final Class<Object> destObjectClass) {
         underTest.getTransformer().transform(sourceObject, destObjectClass);
     }
 
     /**
      * Create an instance of two objects: one without custom annotation and another one with custom annotations then execute the copy into a specular immutable object.
      */
-    private static void initObjects() {
+    private void initObjects() {
         Map<String, String> subFooSampleMap = new HashMap<>();
         Map<String, List<String>> subFooComplexMap = new HashMap<>();
         Map<String, Map<String, String>> subFooVeryComplexMap = new HashMap<>();
@@ -180,7 +170,7 @@ public class PerformanceTest {
      * Creates a {@link FromFoo} instance.
      * @return the {@link FromFoo} instance.
      */
-    private static FromFoo createFromFoo() {
+    private FromFoo createFromFoo() {
         return new FromFoo(NAME, ID, fromSubFooList, sourceFooSimpleList, fromSubFoo);
     }
 
@@ -188,7 +178,7 @@ public class PerformanceTest {
      * Creates a {@link FromFooSimple} instance.
      * @return the {@link FromFooSimple} instance.
      */
-    private static FromFooSimple createFromFooSimple() {
+    private FromFooSimple createFromFooSimple() {
         return new FromFooSimple(NAME, ID);
     }
 
@@ -196,7 +186,7 @@ public class PerformanceTest {
      * Creates a {@link FromFooSubClass} instance.
      * @return the {@link FromFooSubClass} instance.
      */
-    private static FromFooSubClass createFromFooSubClass() {
+    private FromFooSubClass createFromFooSubClass() {
         return new FromFooSubClass(fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObjectList(), fromFoo.getList(), fromFoo.getNestedObject(), SURNAME, PHONE, CHECK, AMOUNT);
     }
 
@@ -204,16 +194,14 @@ public class PerformanceTest {
      * Data provider for the required test cases.
      * @return the test cases.
      */
-    @Parameterized.Parameters(name = "{index}. Number of iterations:{0}, Wait interval: {1}, Expected max transformation time: {2},"
-            + " Source object:{3}, Destination object: {4}.")
-    public static Collection<Object[]> dataProvider() {
-        initObjects();
-        return asList(new Object[][]{
+    @DataProvider
+    public Object[][] dataPerformanceTest() {
+        return new Object[][]{
                 {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSimple, MutableToFooSimple.class, SIMPLE_OBJECTS_MAX_TRANSFORMATION_TIME},
                 {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSubClass, MutableToFooSubClass.class, COMPLEX_OBJECTS_MAX_TRANSFORMATION_TIME},
                 {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSimple, ImmutableToFooSimple.class, SIMPLE_OBJECTS_MAX_TRANSFORMATION_TIME},
                 {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFooSubClass, ImmutableToFooSubClass.class, COMPLEX_OBJECTS_MAX_TRANSFORMATION_TIME},
                 {TOTAL_TRANSFORMATIONS, NO_WAIT_INTERVAL, fromFoo, MixedToFoo.class, COMPLEX_OBJECTS_MAX_TRANSFORMATION_TIME}
-        });
+        };
     }
 }

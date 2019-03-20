@@ -16,30 +16,22 @@
 
 package com.hotels.beans.sample;
 
-import java.util.Optional;
-
-import com.hotels.beans.constant.ClassType;
+import java.util.List;
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Sample object containing java advanced fields.
+ * Sample immutable object containing extremely complex map.
  */
 @AllArgsConstructor
 @Getter
-@Setter
 @ToString
-public class FromFooAdvFields implements Cloneable {
-    private Optional<String> name;
-    private final Optional<Integer> age;
-    private final String indexNumber;
-    private final ClassType classType;
-    private final String locale;
-
-    public FromFooAdvFields clone() throws CloneNotSupportedException {
-        return (FromFooAdvFields) super.clone();
-    }
+public class FromFooMap {
+    private final Map<String, String> sampleMap;
+    private final Map<String, List<String>> complexMap;
+    private final Map<String, Map<String, String>> veryComplexMap;
+    private final Map<FromFooSimple, Map<String, String>> extremeComplexMap;
 }

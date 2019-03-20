@@ -16,23 +16,20 @@
 
 package com.hotels.beans.populator;
 
-import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.transformer.Transformer;
@@ -40,18 +37,7 @@ import com.hotels.beans.transformer.Transformer;
 /**
  * Unit test for class: {@link PopulatorFactory}.
  */
-@RunWith(value = Parameterized.class)
 public class PopulatorFactoryTest {
-    /**
-     * The class type.
-     */
-    private final Class<?> type;
-
-    /**
-     * The expected result.
-     */
-    private final Class<? extends Populator> expectedResult;
-
     /**
      * The class to be tested.
      */
@@ -65,28 +51,20 @@ public class PopulatorFactoryTest {
     private Transformer transformer;
 
     /**
-     * All args constructor.
-     * @param type the type for wich a populator needs to be found
-     * @param expectedResult the expected populator
-     */
-    public PopulatorFactoryTest(final Class type, final Class<? extends Populator> expectedResult) {
-        this.type = type;
-        this.expectedResult = expectedResult;
-    }
-
-    /**
      * Initializes mock.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
 
     /**
      * Tests that the method: {@code defaultValue} returns the expected result for the given type.
+     * @param type the type for wich a populator needs to be found
+     * @param expectedResult the expected populator
      */
-    @Test
-    public void testGetPopulatorReturnsTheExpectedResult() {
+    @Test(dataProvider = "dataProvider")
+    public void testGetPopulatorReturnsTheExpectedResult(final Class type, final Class<? extends Populator> expectedResult) {
         // GIVEN
 
         // WHEN
@@ -104,14 +82,14 @@ public class PopulatorFactoryTest {
      * Data provider for the required test cases.
      * @return the test cases.
      */
-    @Parameterized.Parameters(name = "{index}. Type: {0}, Expected populator: {1}.")
-    public static Collection<Object[]> dataProvider() {
-        return asList(new Object[][]{
+    @DataProvider
+    public Object[][] dataProvider() {
+        return new Object[][]{
                 {String[].class, ArrayPopulator.class},
                 {List.class, CollectionPopulator.class},
                 {Map.class, MapPopulator.class},
                 {FromFoo.class, null},
                 {Optional.class, OptionalPopulator.class}
-        });
+        };
     }
 }

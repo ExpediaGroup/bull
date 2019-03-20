@@ -516,7 +516,7 @@ public final class ClassUtils {
      * @param clazz class from which gets the field
      * @return true if it has private final field, false otherwise.
      */
-    public boolean hasNotFinalFields(final Class<?> clazz) {
+    private boolean hasNotFinalFields(final Class<?> clazz) {
         notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         return hasFieldsMatchingCondition(clazz, IS_NOT_FINAL_AND_NOT_STATIC_FIELD, "HasNotFinalNotStaticFields-");
     }
