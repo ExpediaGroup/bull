@@ -16,9 +16,7 @@
 
 package com.hotels.beans.transformer;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -48,11 +46,6 @@ final class TransformerSettings {
      * }
      */
     private final Map<String, Function<Object, Object>> fieldsTransformers = new ConcurrentHashMap<>();
-
-    /**
-     * Contains the list of fields that don't need to be transformed.
-     */
-    private final Set<String> fieldsToSkip = new HashSet<>();
 
     /**
      * It allows to configure the transformer in order to set a default value in case some field is missing in the source object.

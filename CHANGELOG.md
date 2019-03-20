@@ -2,8 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.2.2] TBD
-* Implemented possibility to skip properties transformation
+### [1.2.2] 2019.03.20
+#### Changed
+* Replaced `junit` test with `testng`
 
 ### [1.2.1] 2019.03.05
 #### Added

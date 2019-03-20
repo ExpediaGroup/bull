@@ -22,7 +22,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -112,7 +111,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * Creates the parameters to be used for testing the default transformation operations.
      * @return parameters to be used for testing the default transformation operations.
      */
-    @DataProvider
+    @DataProvider(parallel = true)
     private Object[][] dataDefaultTransformationTesting() {
         BeanUtils beanUtils = new BeanUtils();
         return new Object[][] {
@@ -171,7 +170,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * Creates the parameters to be used for testing the transformation with composite field name mapping.
      * @return parameters to be used for testing the transformation with composite field name mapping.
      */
-    @DataProvider
+    @DataProvider(parallel = true)
     private Object[][] dataCompositeFieldNameTesting() {
         return new Object[][] {
                 {"Test that, in case a destination object field is contained into a nested object of the source field, defining a composite FieldMapping"
@@ -201,7 +200,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * Creates the parameters to be used for testing the exception raised in case of error during the constructor invocation.
      * @return parameters to be used for testing the transformation with composite field name mapping.
      */
-    @DataProvider
+    @DataProvider(parallel = true)
     private Object[][] dataConstructorErrorTesting() {
         FromFoo actual = new FromFoo(NAME, ID, null, null, null);
         return new Object[][] {
@@ -230,7 +229,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * @return parameters to be used for testing the exception raised in case of error during the constructor invocation.
      * @throws CloneNotSupportedException if the clone fails
      */
-    @DataProvider
+    @DataProvider(parallel = true)
     private Object[][] dataInvalidBeanExceptionTesting() throws CloneNotSupportedException {
         FromFoo fromFooNullId = AbstractTransformerTest.fromFoo.clone();
         fromFooNullId.setId(null);
@@ -311,7 +310,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * @return parameters to be used for testing the transformation of advanced type fields.
      * @throws CloneNotSupportedException if the clone fails
      */
-    @DataProvider
+    @DataProvider(parallel = true)
     private Object[][] dataCAdvancedFieldsCopyTesting() throws CloneNotSupportedException {
         FromFooAdvFields emptyOptionalSourceObject = fromFooAdvFields.clone();
         emptyOptionalSourceObject.setName(Optional.empty());
@@ -458,24 +457,6 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(immutableObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
-    }
-
-    /**
-     * Test that, given a set of fields for which the transformation has to be skipped, they are actually skipped.
-     */
-    @Test
-    public void testFieldTransformationSkipWorksProperly() {
-        //GIVEN
-        underTest.skipTransformationForField("name", "nestedObject.phoneNumbers");
-
-        //WHEN
-        ImmutableToFoo actual = underTest.transform(fromFoo, ImmutableToFoo.class);
-
-        //THEN
-        assertEquals(fromFoo.getId(), actual.getId());
-        assertNull(actual.getName());
-        assertNull(actual.getNestedObject().getPhoneNumbers());
-        underTest.resetFieldsTransformationSkip();
     }
 
     /**
