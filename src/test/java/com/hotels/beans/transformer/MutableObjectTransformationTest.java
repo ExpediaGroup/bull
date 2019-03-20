@@ -24,9 +24,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.model.FieldTransformer;
@@ -51,7 +51,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     /**
      * Initialized mocks.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
@@ -59,7 +59,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     /**
      * Test that an exception is thrown if there is no default constructor defined for the mutable bean object.
      */
-    @Test(expected = InvalidBeanException.class)
+    @Test(expectedExceptions = InvalidBeanException.class)
     public void testTransformThrowsExceptionWhenMutableBeanHasNoDefaultConstructor() {
         //GIVEN
 
@@ -79,6 +79,21 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(actual, sameBeanAs(fromFoo));
+    }
+
+    /**
+     * Test transformation on an existing bean is correctly copied.
+     */
+    @Test
+    public void testTransformationOnAnExistingDestinationWorksProperly() {
+        //GIVEN
+        MutableToFooSubClass mutableToFoo = new MutableToFooSubClass();
+
+        //WHEN
+        underTest.transform(fromFooSubClass, mutableToFoo);
+
+        //THEN
+        assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
     }
 
     /**
@@ -108,7 +123,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     public void testFieldTransformationIsAppliedToAllMatchingFields() {
         //GIVEN
         String namePrefix = "prefix-";
-        FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("name", val -> namePrefix + val);
+        FieldTransformer<String, String> nameTransformer = new FieldTransformer<>(NAME_FIELD_NAME, val -> namePrefix + val);
 
         //WHEN
         MutableToFoo actual = underTest
@@ -130,6 +145,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     public void testTransformerIsAbleToCopyObjectsWithoutRequiredMethods() {
         //GIVEN
         FromFooSimpleNoGetters fromFooSimpleNoGetters = new FromFooSimpleNoGetters(NAME, ID);
+
         //WHEN
         MutableToFooSimpleNoSetters actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.class);
 
@@ -152,20 +168,5 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(mutableObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
-    }
-
-    /**
-     * Test transformation on an existing bean is correctly copied.
-     */
-    @Test
-    public void testTransformationOnAnExistingDestinationWorksProperly() {
-        //GIVEN
-        MutableToFooSubClass mutableToFoo = new MutableToFooSubClass();
-
-        //WHEN
-        underTest.transform(fromFooSubClass, mutableToFoo);
-
-        //THEN
-        assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
     }
 }

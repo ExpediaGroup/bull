@@ -23,8 +23,8 @@ import static org.junit.Assert.assertSame;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 /**
  * Unit test for {@link CacheManager}.
@@ -41,7 +41,7 @@ public class CacheManagerTest {
     /**
      * Initializes mock.
      */
-    @Before
+    @BeforeMethod
     public void before() {
         underTest = new CacheManager(new ConcurrentHashMap<>());
     }
@@ -66,7 +66,7 @@ public class CacheManagerTest {
     /**
      * Tests that the method {@code getFromCache} throw exception when the cache key.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testGetFromCacheThrowsExceptionWhenTheCacheKeyIsNull() {
         // GIVEN
 
@@ -77,7 +77,7 @@ public class CacheManagerTest {
     /**
      * Tests that the method {@code getFromCache} throw exception when the cached value class is null.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testGetFromCacheThrowsExceptionWhenTheCachedValueClassIsNull() {
         // GIVEN
 
@@ -95,9 +95,9 @@ public class CacheManagerTest {
 
         // WHEN
         underTest.removeFromCache(CACHE_KEY);
+        Object actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        Object actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
         assertNull(actual);
     }
 }

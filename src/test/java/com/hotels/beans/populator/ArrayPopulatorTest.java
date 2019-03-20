@@ -16,8 +16,6 @@
 
 package com.hotels.beans.populator;
 
-import static java.util.Arrays.asList;
-
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,15 +23,13 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.Collection;
 import java.util.stream.IntStream;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import com.hotels.beans.sample.mixed.MixedToFooStaticField;
 import com.hotels.beans.transformer.Transformer;
@@ -41,7 +37,6 @@ import com.hotels.beans.transformer.Transformer;
 /**
  * Unit test for class: {@link ArrayPopulator}.
  */
-@RunWith(value = Parameterized.class)
 public class ArrayPopulatorTest {
     private static final String VAL_1 = "val1";
     private static final String VAL_2 = "val2";
@@ -51,10 +46,6 @@ public class ArrayPopulatorTest {
     private static final int ZERO = 0;
     private static final int[] INT_ARRAY = new int[] {ZERO};
     private static final MixedToFooStaticField MIXED_TO_FOO_STATIC_FIELDS_OBJECTS = new MixedToFooStaticField();
-
-    private final Class<?> genericFieldType;
-    private final Class<?> nestedGenericClass;
-    private final Object array;
 
     @Mock
     private Transformer transformer;
@@ -66,31 +57,22 @@ public class ArrayPopulatorTest {
     private ArrayPopulator underTest;
 
     /**
-     * All args constructor.
-     * @param genericFieldType the field to be populated class
-     * @param array the source object from which extract the values
-     * @param nestedGenericClass the nested generic object class.
+     * Initializes mock.
      */
-    public ArrayPopulatorTest(final Class<?> genericFieldType, final Object array, final Class<?> nestedGenericClass) {
-        this.genericFieldType = genericFieldType;
-        this.array = array;
-        this.nestedGenericClass = nestedGenericClass;
+    @BeforeMethod
+    public void beforeMethod() {
+        initMocks(this);
         MIXED_TO_FOO_STATIC_FIELDS_OBJECTS.setNormalField(VAL_1);
     }
 
     /**
-     * Initializes mock.
-     */
-    @Before
-    public void beforeMethod() {
-        initMocks(this);
-    }
-
-    /**
      * Tests that the method {@code getPopulatedObject} works as expected.
+     * @param genericFieldType the field to be populated class
+     * @param array the source object from which extract the values
+     * @param nestedGenericClass the nested generic object class.
      */
-    @Test
-    public void testGetPopulatedObjectWorksProperly() {
+    @Test(dataProvider = "dataProvider")
+    public void testGetPopulatedObjectWorksProperly(final Class<?> genericFieldType, final Object array, final Class<?> nestedGenericClass) {
         // GIVEN
         when(transformer.transform(any(), eq(MixedToFooStaticField.class))).thenReturn(MIXED_TO_FOO_STATIC_FIELDS_OBJECTS);
 
@@ -116,14 +98,14 @@ public class ArrayPopulatorTest {
      * Data provider for the required test cases.
      * @return the test cases.
      */
-    @Parameterized.Parameters(name = "{index}. Type: {0}, Expected value: {1}.")
-    public static Collection<Object[]> dataProvider() {
-        return asList(new Object[][]{
+    @DataProvider
+    public Object[][] dataProvider() {
+        return new Object[][]{
                 {String.class, STRING_ARRAY, null},
                 {Character.class, CHAR_ARRAY, null},
                 {Integer.class, INT_ARRAY, null},
                 {MixedToFooStaticField.class, createMixedToFooArray(), null}
-        });
+        };
     }
 
     /**
@@ -132,6 +114,5 @@ public class ArrayPopulatorTest {
      */
     private static MixedToFooStaticField[] createMixedToFooArray() {
         return new MixedToFooStaticField[] {MIXED_TO_FOO_STATIC_FIELDS_OBJECTS};
-
     }
 }

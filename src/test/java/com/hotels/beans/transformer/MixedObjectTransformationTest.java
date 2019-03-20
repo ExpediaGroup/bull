@@ -28,9 +28,9 @@ import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import java.math.BigInteger;
 import java.util.stream.IntStream;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.model.FieldMapping;
@@ -55,7 +55,7 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
     /**
      * Initialized mocks.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
@@ -96,12 +96,12 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
         //GIVEN
 
         //WHEN
-        final Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping("id", "identifier"));
+        final Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         MixedToFooDiffFields actual = beanTransformer.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN
-        assertThat(actual, hasProperty("name", equalTo(actual.getName())));
-        assertThat(actual, hasProperty("identifier", equalTo(fromFoo.getId())));
+        assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
+        assertThat(actual, hasProperty(IDENTIFIER_FIELD_NAME, equalTo(fromFoo.getId())));
         assertEquals(actual.getList(), fromFoo.getList());
         IntStream.range(0, actual.getNestedObjectList().size())
                 .forEach(i -> assertThat(actual.getNestedObjectList().get(i), sameBeanAs(fromFoo.getNestedObjectList().get(i))));
@@ -118,15 +118,15 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
          * Function<BigInteger, BigInteger> idTransformer = value -> value.negate();
          * FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", idTransformer);
          */
-        FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::negate);
+        FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>(IDENTIFIER_FIELD_NAME, BigInteger::negate);
 
         //WHEN
-        underTest.withFieldMapping(new FieldMapping("id", "identifier")).withFieldTransformer(fieldTransformer);
+        underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME)).withFieldTransformer(fieldTransformer);
         MixedToFooDiffFields actual = underTest.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN
-        assertThat(actual, hasProperty("name", equalTo(actual.getName())));
-        assertThat(actual, hasProperty("identifier", equalTo(fromFoo.getId().negate())));
+        assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
+        assertThat(actual, hasProperty(IDENTIFIER_FIELD_NAME, equalTo(fromFoo.getId().negate())));
         assertEquals(actual.getList(), fromFoo.getList());
         IntStream.range(0, actual.getNestedObjectList().size())
                 .forEach(i -> assertThat(actual.getNestedObjectList().get(i), sameBeanAs(fromFoo.getNestedObjectList().get(i))));
@@ -151,7 +151,7 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
     /**
      * Test that the copy method raises an exception when the source object does not contain a required field.
      */
-    @Test(expected = MissingFieldException.class)
+    @Test(expectedExceptions = MissingFieldException.class)
     public void testMixedBeanWithMissingFieldsThrowsMissingFieldExceptionWhenTheSourceObjectDoesNotContainARequiredField() {
         //GIVEN
         underTest.setDefaultValueForMissingField(false);

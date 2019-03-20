@@ -23,6 +23,8 @@ import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.range;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
 import static com.hotels.beans.constant.Punctuation.DOT;
 import static com.hotels.beans.constant.Punctuation.COMMA;
 import static com.hotels.beans.constant.Punctuation.LPAREN;
@@ -112,7 +114,7 @@ public class TransformerImpl extends AbstractTransformer {
             throw new InvalidBeanException("Constructor invoked with arguments. Expected: " + constructor + "; Found: "
                     + getFormattedConstructorArgs(targetClass, constructorArgs)
                     + ". Double check that each " + targetClass.getSimpleName() + "'s field have the same type and name than the source object: "
-                    + sourceObj.getClass().getCanonicalName() + " otherwise specify a transformer configuration.", e);
+                    + sourceObj.getClass().getCanonicalName() + " otherwise specify a transformer configuration. Error message: " + e.getMessage(), e);
         }
     }
 
@@ -322,7 +324,7 @@ public class TransformerImpl extends AbstractTransformer {
      * @return the updated breadcrumb
      */
     private String evalBreadcrumb(final String fieldName, final String breadcrumb) {
-        return (nonNull(breadcrumb) ? breadcrumb + DOT.getSymbol() : "") + fieldName;
+        return (nonNull(breadcrumb) ? breadcrumb + DOT.getSymbol() : EMPTY) + fieldName;
     }
 
     /**

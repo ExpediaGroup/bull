@@ -16,11 +16,14 @@
 
 package com.hotels.beans.utils;
 
+import static java.util.Objects.nonNull;
+
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 /**
  * Unit test for {@link ValidationUtils}.
@@ -45,52 +48,69 @@ public class ValidationUtilsTest {
     /**
      * Initialized mocks.
      */
-    @Before
+    @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
     }
 
     /**
      * Test that an exception is thrown when the given parameter is null.
+     * @param testCaseDescription the test case description
+     * @param elemToCheck the element to check
+     * @param exceptionMessage the exception message
      */
-    @Test(expected = IllegalArgumentException.class)
-    public void testNotNullRaisesAnExceptionWhenTheGivenObjectIsNull() {
+    @Test(dataProvider = "dataIllegalArgumentExceptionTesting", expectedExceptions = IllegalArgumentException.class)
+    public void testNotNullRaisesAnExceptionWhenTheGivenObjectIsNull(final String testCaseDescription, final Object elemToCheck, final String exceptionMessage) {
         //GIVEN
 
         //WHEN
-        underTest.notNull(null, EXCEPTION_MESSAGE);
+        if (nonNull(exceptionMessage)) {
+            underTest.notNull(elemToCheck, exceptionMessage);
+        } else {
+            underTest.notNull(elemToCheck);
+        }
+    }
+
+    /**
+     * Creates the parameters to be used for testing tat the method {@code notNull} raises an {@link IllegalArgumentException}.
+     * @return parameters to be used for testing tat the method {@code notNull} raises an {@link IllegalArgumentException}.
+     */
+    @DataProvider
+    private Object[][] dataIllegalArgumentExceptionTesting() {
+        return new Object[][] {
+                {"Tests that the method raise an exception if the given parameter is null and a description message is defined", null, EXCEPTION_MESSAGE},
+                {"Tests that the method raise an exception if the given parameter is null and a description message is not defined", null, null}
+        };
     }
 
     /**
      * Test that no exception are throw when the given parameter is not null.
+     * @param testCaseDescription the test case description
+     * @param elemToCheck the element to check
+     * @param exceptionMessage the exception message
      */
-    @Test
-    public void testThatNoExceptionAreThrownWhenTheGivenObjectIsNotNull() {
+    @Test(dataProvider = "dataNoExceptionAreRaisedTesting")
+    public void testThatNoExceptionAreThrownWhenTheGivenObjectIsNotNullEvenWithoutACustomMessage(final String testCaseDescription, final Object elemToCheck,
+        final String exceptionMessage) {
         //GIVEN
 
         //WHEN
-        underTest.notNull(VALUE, EXCEPTION_MESSAGE);
+        if (nonNull(exceptionMessage)) {
+            underTest.notNull(elemToCheck, exceptionMessage);
+        } else {
+            underTest.notNull(elemToCheck);
+        }
     }
 
     /**
-     * Test that an exception is thrown when the given parameter is null.
+     * Creates the parameters to be used for testing tat the method {@code notNull} raises an {@link IllegalArgumentException}.
+     * @return parameters to be used for testing tat the method {@code notNull} raises an {@link IllegalArgumentException}.
      */
-    @Test(expected = IllegalArgumentException.class)
-    public void testNotNullRaisesAnExceptionWhenTheGivenObjectIsNullEvenWithoutACustomMessage() {
-        //GIVEN
-
-        //WHEN
-        underTest.notNull(null);
-    }
-
-    /**
-     * Test that no exception are throw when the given parameter is not null.
-     */
-    @Test
-    public void testThatNoExceptionAreThrownWhenTheGivenObjectIsNotNullEvenWithoutACustomMessage() {
-        //GIVEN
-
-        //WHEN
-        underTest.notNull(VALUE);
+    @DataProvider
+    private Object[][] dataNoExceptionAreRaisedTesting() {
+        return new Object[][] {
+                {"Tests that the method does not raise an exception if the given parameter is not null and a description message is defined", VALUE, EXCEPTION_MESSAGE},
+                {"Tests that the method does not raise an exception if the given parameter is not null and a description message is not defined", VALUE, null}
+        };
     }
 }

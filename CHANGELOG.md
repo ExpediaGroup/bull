@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.2.2] 2019.03.20
+#### Changed
+* Replaced `junit` test with `testng`
+
 ### [1.2.1] 2019.03.05
 #### Added
 * Implemented a new feature that allows the copy on an existing object instance (see: [Issue 24](https://github.com/HotelsDotCom/bull/issues/24))
