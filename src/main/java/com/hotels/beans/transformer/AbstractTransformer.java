@@ -16,8 +16,6 @@
 
 package com.hotels.beans.transformer;
 
-import static java.util.Arrays.asList;
-
 import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import java.util.Map;
@@ -187,20 +185,6 @@ abstract class AbstractTransformer implements Transformer {
         notNull(sourceObj, "The object to copy cannot be null!");
         notNull(targetObject, "The destination object cannot be null!");
         transform(sourceObj, targetObject, null);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Transformer skipTransformationForField(final String... fieldName) {
-        settings.getFieldsToSkip().addAll(asList(fieldName));
-        return this;
-    }
-
-    @Override
-    public void resetFieldsTransformationSkip() {
-        settings.getFieldsToSkip().clear();
     }
 
     /**
