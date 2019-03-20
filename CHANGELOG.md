@@ -20,6 +20,10 @@ All notable changes to this project will be documented in this file.
 - Updated Travis configuration in order to work with java 11
 - Modified Travis configuration in order to automatically create the GitHub site as soon as a tag is created
 
+### [1.1.7] 2019.03.20
+#### Changed
+* Replaced `junit` test with `testng`
+
 ### [1.1.6] 2019.03.05
 #### Added
 * Implemented a new feature that allows the copy on an existing object instance (see: [Issue 24](https://github.com/HotelsDotCom/bull/issues/24)) for project compiled with `jdk` 8.
