@@ -105,4 +105,16 @@ public interface Transformer {
      * @return the {@link Transformer} instance
      */
     Transformer setValidationDisabled(boolean validationDisabled);
+
+    /**
+     * Allows to specify all the fields for which the transformation have to be skipped.
+     * @param fieldName the destination object's fields names
+     * @return the {@link Transformer} instance
+     */
+    Transformer skipTransformationForField(String... fieldName);
+
+    /**
+     * Removes all the configured fields to skip.
+     */
+    void resetFieldsTransformationSkip();
 }
