@@ -58,7 +58,6 @@ import java.util.stream.Stream;
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.constant.ClassType;
 import com.hotels.beans.error.InvalidBeanException;
-import com.hotels.beans.error.MissingFieldException;
 
 /**
  * Reflection utils for Class objects.
@@ -335,35 +334,6 @@ public final class ClassUtils {
             Field[] res = clazz.getDeclaredFields();
             cacheManager.cacheObject(cacheKey, res);
             return res;
-        });
-    }
-
-    /**
-     * Returns the class field.
-     * @param targetClass the class containing the field.
-     * @param fieldName the field name
-     * @param <K> the object type
-     * @return the class or superclass field
-     * @throws IllegalArgumentException {@link IllegalArgumentException} if the target class doesn't have such field
-     */
-    public <K> Field getDeclaredField(final Class<K> targetClass, final String fieldName) {
-        final String cacheKey = "ClassDeclaredField-" + targetClass.getCanonicalName() + '-' + fieldName;
-        return ofNullable(cacheManager.getFromCache(cacheKey, Field.class)).orElseGet(() -> {
-            Field field;
-            try {
-                field = targetClass.getDeclaredField(fieldName);
-            } catch (final NoSuchFieldException e) {
-                if (nonNull(targetClass.getSuperclass()) && !targetClass.getSuperclass().equals(Object.class)) {
-                    field = getDeclaredField(targetClass.getSuperclass(), fieldName);
-                } else {
-                    throw new MissingFieldException(
-                            "The field " + fieldName + " not exists in class: + " + targetClass.getCanonicalName()
-                                    + ". If the field in the source object has a different name please specify the "
-                                    + "transformation mapping.");
-                }
-            }
-            cacheManager.cacheObject(cacheKey, field);
-            return field;
         });
     }
 

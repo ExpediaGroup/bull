@@ -356,21 +356,6 @@ public class ClassUtilsTest {
     }
 
     /**
-     * Tests that the method {@code getDeclaredFields} returns the expected field.
-     */
-    @Test
-    public void testGetDeclaredFieldReturnsTheExpectedField() {
-        // GIVEN
-
-        // WHEN
-        Field actual = underTest.getDeclaredField(CLASS_WITH_STATIC_FIELDS, NORMAL_FIELD);
-
-        // THEN
-        assertNotNull(actual);
-        assertEquals(NORMAL_FIELD, actual.getName());
-    }
-
-    /**
      * Tests that the method {@code getAllArgsConstructor} returns the class constructor.
      */
     @Test

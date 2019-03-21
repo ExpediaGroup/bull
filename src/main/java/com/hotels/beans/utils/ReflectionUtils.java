@@ -223,7 +223,7 @@ public final class ReflectionUtils {
         boolean isAccessible = true;
         Field field = null;
         try {
-            field = getDeclaredField(fieldName, target);
+            field = getDeclaredField(fieldName, target.getClass());
             isAccessible = isFieldAccessible(field, target);
             if (!isAccessible) {
                 field.setAccessible(true);
@@ -244,12 +244,11 @@ public final class ReflectionUtils {
     /**
      * Return the field of the given class.
      * @param fieldName the name of the filed to retrieve.
-     * @param target    the field's class
+     * @param targetClass the field's class
      * @return the field corresponding to the given name.
      */
-    private Field getDeclaredField(final String fieldName, final Object target) {
+    public Field getDeclaredField(final String fieldName, final Class<?> targetClass) {
         Field field;
-        Class<?> targetClass = target instanceof Class ? (Class<?>) target : target.getClass();
         try {
             field = targetClass.getDeclaredField(fieldName);
         } catch (NoSuchFieldException e) {
