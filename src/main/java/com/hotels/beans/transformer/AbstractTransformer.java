@@ -194,7 +194,9 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public Transformer skipTransformationForField(final String... fieldName) {
-        settings.getFieldsToSkip().addAll(asList(fieldName));
+        if (fieldName.length != 0) {
+            settings.getFieldsToSkip().addAll(asList(fieldName));
+        }
         return this;
     }
 
