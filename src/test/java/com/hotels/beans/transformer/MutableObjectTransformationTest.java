@@ -19,6 +19,7 @@ package com.hotels.beans.transformer;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -168,5 +169,23 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(mutableObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
+    }
+
+    /**
+     * Test that, given a set of fields for which the transformation has to be skipped, they are actually skipped.
+     */
+    @Test
+    public void testFieldTransformationSkipWorksProperly() {
+        //GIVEN
+        underTest.skipTransformationForField(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
+
+        //WHEN
+        MutableToFoo actual = underTest.transform(fromFoo, MutableToFoo.class);
+
+        //THEN
+        assertEquals(fromFoo.getId(), actual.getId());
+        assertNull(actual.getName());
+        assertNull(actual.getNestedObject().getPhoneNumbers());
+        underTest.resetFieldsTransformationSkip();
     }
 }

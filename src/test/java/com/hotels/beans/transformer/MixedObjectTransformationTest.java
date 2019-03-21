@@ -178,6 +178,24 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
     }
 
     /**
+     * Test that, given a set of fields for which the transformation has to be skipped, they are actually skipped.
+     */
+    @Test
+    public void testFieldTransformationSkipWorksProperly() {
+        //GIVEN
+        underTest.skipTransformationForField(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
+
+        //WHEN
+        MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.class);
+
+        //THEN
+        assertEquals(fromFoo.getId(), actual.getId());
+        assertNull(actual.getName());
+        assertNull(actual.getNestedObject().getPhoneNumbers());
+        underTest.resetFieldsTransformationSkip();
+    }
+
+    /**
      * Test transformation on an existing bean is correctly copied.
      */
     @Test

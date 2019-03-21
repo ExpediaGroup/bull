@@ -21,15 +21,6 @@ package com.hotels.beans.error;
  */
 public class InvalidBeanException extends RuntimeException {
     /**
-     * Constructs a new runtime exception with the specified detail message and
-     * cause.
-     * @param cause the given bean is not valid and caused an exception while copying the properties.
-     */
-    public InvalidBeanException(final Throwable cause) {
-        super(cause);
-    }
-
-    /**
      * Constructs a new invalid bean exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.

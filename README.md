@@ -51,12 +51,13 @@ mvn clean install -P relaxed
 * support copy with array containing primitive types. e.g. `String[]` => `String[]`
 * support copy with array type. e.g. `BeanA[]` => `BeanB[]`
 * support copy with property name mapping. e.g. `int id => int userId`
-* support copy with recursion copy
-* support validation through annotations
-* support copy of beans with different field's name
-* support lambda function field transformation
+* support copy with recursion copy.
+* support validation through annotations.
+* support copy of beans with different field's name.
+* support lambda function field transformation.
 * easy usage, declarative way to define the property mapping (in case of different names) or simply adding the lombok annotations.
 * allows to set the default value for all objects not existing in the source object.
+* allows to skip transformation for a given set of fields.
 
 # Transformation samples
 
@@ -374,6 +375,59 @@ if you need to perform the copy on an already existing object, just do:
 ~~~Java
 ToBean toBean = new ToBean();
 beanUtils.getTransformer().transform(fromBean, toBean);
+~~~
+
+### Skip transformation on a given set of fields:
+
+Given:
+
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  private String name;                   
+   private final FromSubBean nestedObject;                     private ToSubBean nestedObject;                    
+
+   // all args constructor                                     // constructor
+   // getters...                                               // getters and setters...
+}                                                           }
+
+public class FromBean2 {                   
+   private final int index;             
+   private final FromSubBean nestedObject;
+                                          
+   // all args constructor                
+   // getters...                          
+}                                         
+~~~
+if you need to skip the transformation for a given field, just do:
+~~~Java
+ToBean toBean = new ToBean();
+beanUtils.getTransformer()
+    .skipTransformationForField("nestedObject")
+    .transform(fromBean, toBean);
+~~~
+
+where `nestedObject` is the name of the field in the destination object.
+
+This feature allows to **transform an object keeping the data from different sources**.
+
+To better explain this function let's assume that the `ToBean` (defined above) should be transformed as follow:
+- `name` field value has be taken from the `FromBean` object
+- `nestedObject` field value has be taken from the `FromBean2` object
+
+the objective can be reached by doing:
+~~~Java
+// create the destination object
+ToBean toBean = new ToBean();
+
+// execute the first transformation skipping the copy of: 'nestedObject' field that should come from the other source object
+beanUtils.getTransformer()
+    .skipTransformationForField("nestedObject")
+    .transform(fromBean, toBean);
+
+// then execute the transformation skipping the copy of: 'name' field that should come from the other source object
+beanUtils.getTransformer()
+    .skipTransformationForField("name")
+    .transform(fromBean2, toBean);
 ~~~
 
 More sample beans can be found in the test package: `com.hotels.beans.sample`
