@@ -24,9 +24,11 @@ This BeanUtils library is a utility library for managing Bean objects. The libra
     * support copy with array containing primitive types. e.g. `String[]` => `String[]`
     * support copy with array type. e.g. `BeanA[]` => `BeanB[]`
     * support copy with property name mapping. e.g. `int id => int userId`
-    * support copy with recursion copy
-    * support validation through annotations
-    * support copy of beans with different field's name
-    * support lambda function field transformation
+    * support copy with recursion copy.
+    * support validation through annotations.
+    * support copy of beans with different field's name.
+    * support lambda function field transformation.
     * easy usage, declarative way to define the property mapping (in case of different names) or simply adding the lombok annotations.
     * allows to set the default value for all objects not existing in the source object.
+    * allows to skip transformation for a given set of fields.
+
