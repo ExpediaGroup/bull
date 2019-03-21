@@ -108,7 +108,7 @@ public interface Transformer {
 
     /**
      * Allows to specify all the fields for which the transformation have to be skipped.
-     * @param fieldName the destination object's fields names
+     * @param fieldName the destination object's field(s) name that have to be skipped
      * @return the {@link Transformer} instance
      */
     Transformer skipTransformationForField(String... fieldName);
