@@ -72,7 +72,7 @@ public abstract class Populator<O> {
      * @return a populated list of elements
      */
     public final <K> O getPopulatedObject(final Class<K> targetClass, final String fieldName, final O fieldValue) {
-        return getPopulatedObject(classUtils.getDeclaredField(targetClass, fieldName), fieldValue);
+        return getPopulatedObject(reflectionUtils.getDeclaredField(fieldName, targetClass), fieldValue);
     }
 
     /**
