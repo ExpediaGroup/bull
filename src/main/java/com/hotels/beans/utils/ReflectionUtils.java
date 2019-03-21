@@ -248,20 +248,24 @@ public final class ReflectionUtils {
      * @return the field corresponding to the given name.
      */
     public Field getDeclaredField(final String fieldName, final Class<?> targetClass) {
+        final String cacheKey = "ClassDeclaredField-" + targetClass.getCanonicalName() + '-' + fieldName;
+        return ofNullable(cacheManager.getFromCache(cacheKey, Field.class)).orElseGet(() -> {
         Field field;
-        try {
-            field = targetClass.getDeclaredField(fieldName);
-        } catch (NoSuchFieldException e) {
-            if (!targetClass.getSuperclass().equals(Object.class)) {
-                field = getDeclaredField(fieldName, targetClass.getSuperclass());
-            } else {
-                throw new MissingFieldException(targetClass.getCanonicalName() + " does not contain field: " + fieldName);
+            try {
+                field = targetClass.getDeclaredField(fieldName);
+            } catch (NoSuchFieldException e) {
+                if (!targetClass.getSuperclass().equals(Object.class)) {
+                    field = getDeclaredField(fieldName, targetClass.getSuperclass());
+                } else {
+                    throw new MissingFieldException(targetClass.getCanonicalName() + " does not contain field: " + fieldName);
+                }
+            } catch (final Exception e) {
+                handleReflectionException(e);
+                throw new IllegalStateException(e);
             }
-        } catch (final Exception e) {
-            handleReflectionException(e);
-            throw new IllegalStateException(e);
-        }
-        return field;
+                cacheManager.cacheObject(cacheKey, field);
+            return field;
+        });
     }
 
     /**
