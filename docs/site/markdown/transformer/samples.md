@@ -320,4 +320,57 @@ ToBean toBean = new ToBean();
 beanUtils.getTransformer().transform(fromBean, toBean);
 ~~~
 
+### Skip transformation on a given set of fields:
+
+Given:
+
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  private String name;                   
+   private final FromSubBean nestedObject;                     private ToSubBean nestedObject;                    
+
+   // all args constructor                                     // constructor
+   // getters...                                               // getters and setters...
+}                                                           }
+
+public class FromBean2 {                   
+   private final int index;             
+   private final FromSubBean nestedObject;
+                                          
+   // all args constructor                
+   // getters...                          
+}                                         
+~~~
+if you need to skip the transformation for a given field, just do:
+~~~Java
+ToBean toBean = new ToBean();
+beanUtils.getTransformer()
+    .skipTransformationForField("nestedObject")
+    .transform(fromBean, toBean);
+~~~
+
+where `nestedObject` is the name of the field in the destination object.
+
+This feature allows to **transform an object keeping the data from different sources**.
+
+To better explain this function let's assume that the `ToBean` (defined above) should be transformed as follow:
+- `name` field value has be taken from the `FromBean` object
+- `nestedObject` field value has be taken from the `FromBean2` object
+
+the objective can be reached by doing:
+~~~Java
+// create the destination object
+ToBean toBean = new ToBean();
+
+// execute the first transformation skipping the copy of: 'nestedObject' field that should come from the other source object
+beanUtils.getTransformer()
+    .skipTransformationForField("nestedObject")
+    .transform(fromBean, toBean);
+
+// then execute the transformation skipping the copy of: 'name' field that should come from the other source object
+beanUtils.getTransformer()
+    .skipTransformationForField("name")
+    .transform(fromBean2, toBean);
+~~~
+
 More sample beans can be found in the test package: `com.hotels.beans.sample`

@@ -172,11 +172,20 @@ public class TransformerImpl extends AbstractTransformer {
                     } else {
                         String sourceFieldName = getSourceFieldName(destFieldName);
                         constructorArgsValues[i] =
-                                ofNullable(getFieldValue(sourceObj, sourceFieldName, targetClass, classUtils.getDeclaredField(targetClass, destFieldName), breadcrumb))
+                                ofNullable(getFieldValue(sourceObj, sourceFieldName, targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb))
                                 .orElse(classUtils.getDefaultTypeValue(constructorParameters[i].getType()));
                     }
                 });
         return constructorArgsValues;
+    }
+
+    /**
+     * Checks if a field has to be transformed or not.
+     * @param breadcrumb the field path
+     * @return true if the transformation has to be applied on this field, false in it has to be skipped.
+     */
+    private boolean doSkipTransformation(final String breadcrumb) {
+        return settings.getFieldsToSkip().contains(breadcrumb);
     }
 
     /**
@@ -300,6 +309,9 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
         String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
+        if (doSkipTransformation(fieldBreadcrumb)) {
+            return defaultValue(field.getType());
+        }
         boolean primitiveType = classUtils.isPrimitiveType(field.getType());
         boolean isFieldTransformerDefined = settings.getFieldsTransformers().containsKey(field.getName());
         Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);
