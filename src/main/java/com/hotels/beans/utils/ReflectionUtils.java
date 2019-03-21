@@ -230,7 +230,7 @@ public final class ReflectionUtils {
             }
             return field.get(target);
         } catch (MissingFieldException e) {
-            throw new MissingFieldException(target.getClass().getCanonicalName() + " does not contain field: " + fieldName);
+            throw e;
         } catch (final Exception e) {
             handleReflectionException(e);
             throw new IllegalStateException(e);
@@ -244,27 +244,25 @@ public final class ReflectionUtils {
     /**
      * Return the field of the given class.
      * @param fieldName the name of the filed to retrieve.
-     * @param target the field's class
+     * @param target    the field's class
      * @return the field corresponding to the given name.
      */
     private Field getDeclaredField(final String fieldName, final Object target) {
-        final AtomicReference<Class<?>> targetClass = new AtomicReference<>(target.getClass());
-        final String cacheKey = "DeclaredField-" + targetClass.get().getCanonicalName() + "-fieldName-" + fieldName;
-        return ofNullable(cacheManager.getFromCache(cacheKey, Field.class)).orElseGet(() -> {
-            Field field = null;
-            while (isNull(field) && !targetClass.get().equals(Object.class)) {
-                try {
-                    field = targetClass.get().getDeclaredField(fieldName);
-                } catch (NoSuchFieldException e) {
-                    targetClass.set(targetClass.get().getSuperclass());
-                }
+        Field field;
+        Class<?> targetClass = target instanceof Class ? (Class<?>) target : target.getClass();
+        try {
+            field = targetClass.getDeclaredField(fieldName);
+        } catch (NoSuchFieldException e) {
+            if (!targetClass.getSuperclass().equals(Object.class)) {
+                field = getDeclaredField(fieldName, targetClass.getSuperclass());
+            } else {
+                throw new MissingFieldException(targetClass.getCanonicalName() + " does not contain field: " + fieldName);
             }
-            if (isNull(field)) {
-                throw new MissingFieldException(targetClass.get().getCanonicalName() + " does not contain field: " + fieldName);
-            }
-            cacheManager.cacheObject(cacheKey, field);
-            return field;
-        });
+        } catch (final Exception e) {
+            handleReflectionException(e);
+            throw new IllegalStateException(e);
+        }
+        return field;
     }
 
     /**
