@@ -248,8 +248,6 @@ public final class ReflectionUtils {
      * @return the field corresponding to the given name.
      */
     public Field getDeclaredField(final String fieldName, final Class<?> targetClass) {
-//        final String cacheKey = "ClassDeclaredField-" + targetClass.getCanonicalName() + '-' + fieldName;
-//        return ofNullable(cacheManager.getFromCache(cacheKey, Field.class)).orElseGet(() -> {
         Field field;
         try {
             field = targetClass.getDeclaredField(fieldName);
@@ -263,9 +261,7 @@ public final class ReflectionUtils {
             handleReflectionException(e);
             throw new IllegalStateException(e);
         }
-//            cacheManager.cacheObject(cacheKey, field);
         return field;
-//        });
     }
 
     /**
