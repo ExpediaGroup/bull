@@ -172,11 +172,20 @@ import com.hotels.beans.error.MissingFieldException;
                     } else {
 <span class="fc" id="L173">                        String sourceFieldName = getSourceFieldName(destFieldName);</span>
 <span class="fc" id="L174">                        constructorArgsValues[i] =</span>
-<span class="fc" id="L175">                                ofNullable(getFieldValue(sourceObj, sourceFieldName, targetClass, classUtils.getDeclaredField(targetClass, destFieldName), breadcrumb))</span>
+<span class="fc" id="L175">                                ofNullable(getFieldValue(sourceObj, sourceFieldName, targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb))</span>
 <span class="fc" id="L176">                                .orElse(classUtils.getDefaultTypeValue(constructorParameters[i].getType()));</span>
                     }
 <span class="fc" id="L178">                });</span>
 <span class="fc" id="L179">        return constructorArgsValues;</span>
+    }
+
+    /**
+     * Checks if a field has to be transformed or not.
+     * @param breadcrumb the field path
+     * @return true if the transformation has to be applied on this field, false in it has to be skipped.
+     */
+    private boolean doSkipTransformation(final String breadcrumb) {
+<span class="fc" id="L188">        return settings.getFieldsToSkip().contains(breadcrumb);</span>
     }
 
     /**
@@ -185,7 +194,7 @@ import com.hotels.beans.error.MissingFieldException;
      * @return the source field name.
      */
     private String getSourceFieldName(final Field field) {
-<span class="fc" id="L188">        return getSourceFieldName(field.getName());</span>
+<span class="fc" id="L197">        return getSourceFieldName(field.getName());</span>
     }
 
     /**
@@ -194,7 +203,7 @@ import com.hotels.beans.error.MissingFieldException;
      * @return the source field name.
      */
     private String getSourceFieldName(final String fieldName) {
-<span class="fc" id="L197">        return ofNullable(settings.getFieldsNameMapping().get(fieldName)).orElse(fieldName);</span>
+<span class="fc" id="L206">        return ofNullable(settings.getFieldsNameMapping().get(fieldName)).orElse(fieldName);</span>
     }
 
     /**
@@ -204,19 +213,19 @@ import com.hotels.beans.error.MissingFieldException;
      * @return the source field name.
      */
     private String getDestFieldName(final Parameter constructorParameter, final String declaringClassName) {
-<span class="fc" id="L207">        String cacheKey = &quot;DestFieldName-&quot; + declaringClassName + &quot;-&quot; + constructorParameter.getName();</span>
-<span class="fc" id="L208">        return ofNullable(cacheManager.getFromCache(cacheKey, String.class))</span>
-<span class="fc" id="L209">                .orElseGet(() -&gt; {</span>
+<span class="fc" id="L216">        String cacheKey = &quot;DestFieldName-&quot; + declaringClassName + &quot;-&quot; + constructorParameter.getName();</span>
+<span class="fc" id="L217">        return ofNullable(cacheManager.getFromCache(cacheKey, String.class))</span>
+<span class="fc" id="L218">                .orElseGet(() -&gt; {</span>
                     String destFieldName;
-<span class="fc bfc" id="L211" title="All 2 branches covered.">                    if (constructorParameter.isNamePresent()) {</span>
-<span class="fc" id="L212">                        destFieldName = constructorParameter.getName();</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">                    if (constructorParameter.isNamePresent()) {</span>
+<span class="fc" id="L221">                        destFieldName = constructorParameter.getName();</span>
                     } else {
-<span class="fc" id="L214">                        destFieldName = ofNullable(reflectionUtils.getParameterAnnotation(constructorParameter, ConstructorArg.class, declaringClassName))</span>
-<span class="fc" id="L215">                                .map(ConstructorArg::value)</span>
-<span class="fc" id="L216">                                .orElse(null);</span>
+<span class="fc" id="L223">                        destFieldName = ofNullable(reflectionUtils.getParameterAnnotation(constructorParameter, ConstructorArg.class, declaringClassName))</span>
+<span class="fc" id="L224">                                .map(ConstructorArg::value)</span>
+<span class="fc" id="L225">                                .orElse(null);</span>
                     }
-<span class="fc" id="L218">                    cacheManager.cacheObject(cacheKey, destFieldName);</span>
-<span class="fc" id="L219">                    return destFieldName;</span>
+<span class="fc" id="L227">                    cacheManager.cacheObject(cacheKey, destFieldName);</span>
+<span class="fc" id="L228">                    return destFieldName;</span>
                 });
     }
 
@@ -232,10 +241,10 @@ import com.hotels.beans.error.MissingFieldException;
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private &lt;T, K&gt; Object[] getConstructorValuesFromFields(final T sourceObj, final Class&lt;K&gt; targetClass, final String breadcrumb) {
-<span class="fc" id="L235">        final List&lt;Field&gt; declaredFields = classUtils.getDeclaredFields(targetClass, true);</span>
-<span class="fc" id="L236">        return declaredFields.stream()</span>
-<span class="fc" id="L237">                .map(field -&gt; getFieldValue(sourceObj, targetClass, field, breadcrumb))</span>
-<span class="fc" id="L238">                .toArray(Object[]::new);</span>
+<span class="fc" id="L244">        final List&lt;Field&gt; declaredFields = classUtils.getDeclaredFields(targetClass, true);</span>
+<span class="fc" id="L245">        return declaredFields.stream()</span>
+<span class="fc" id="L246">                .map(field -&gt; getFieldValue(sourceObj, targetClass, field, breadcrumb))</span>
+<span class="fc" id="L247">                .toArray(Object[]::new);</span>
     }
 
     /**
@@ -248,11 +257,11 @@ import com.hotels.beans.error.MissingFieldException;
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private &lt;T, K&gt; void injectAllFields(final T sourceObj, final K targetObject, final String breadcrumb) {
-<span class="fc" id="L251">        final Class&lt;?&gt; targetObjectClass = targetObject.getClass();</span>
-<span class="fc" id="L252">        classUtils.getDeclaredFields(targetObjectClass, true)</span>
+<span class="fc" id="L260">        final Class&lt;?&gt; targetObjectClass = targetObject.getClass();</span>
+<span class="fc" id="L261">        classUtils.getDeclaredFields(targetObjectClass, true)</span>
                 //.parallelStream()
-<span class="fc" id="L254">                .forEach(field -&gt; reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));</span>
-<span class="fc" id="L255">    }</span>
+<span class="fc" id="L263">                .forEach(field -&gt; reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));</span>
+<span class="fc" id="L264">    }</span>
 
     /**
      * Injects the values for all the not final fields.
@@ -264,11 +273,11 @@ import com.hotels.beans.error.MissingFieldException;
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private &lt;T, K&gt; void injectNotFinalFields(final T sourceObj, final K targetObject, final String breadcrumb) {
-<span class="fc" id="L267">        final Class&lt;?&gt; targetObjectClass = targetObject.getClass();</span>
-<span class="fc" id="L268">        classUtils.getNotFinalFields(targetObjectClass, true)</span>
+<span class="fc" id="L276">        final Class&lt;?&gt; targetObjectClass = targetObject.getClass();</span>
+<span class="fc" id="L277">        classUtils.getNotFinalFields(targetObjectClass, true)</span>
                 //.parallelStream()
-<span class="fc" id="L270">                .forEach(field -&gt; reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));</span>
-<span class="fc" id="L271">    }</span>
+<span class="fc" id="L279">                .forEach(field -&gt; reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));</span>
+<span class="fc" id="L280">    }</span>
 
     /**
      * Retrieves the value of a field. In case it is not a primitive type it recursively inject the values inside the object.
@@ -282,8 +291,8 @@ import com.hotels.beans.error.MissingFieldException;
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private &lt;T, K&gt; Object getFieldValue(final T sourceObj, final Class&lt;K&gt; targetClass, final Field field, final String breadcrumb) {
-<span class="fc" id="L285">        String sourceFieldName = getSourceFieldName(field);</span>
-<span class="fc" id="L286">        return getFieldValue(sourceObj, sourceFieldName, targetClass, field, breadcrumb);</span>
+<span class="fc" id="L294">        String sourceFieldName = getSourceFieldName(field);</span>
+<span class="fc" id="L295">        return getFieldValue(sourceObj, sourceFieldName, targetClass, field, breadcrumb);</span>
     }
 
     /**
@@ -299,22 +308,25 @@ import com.hotels.beans.error.MissingFieldException;
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private &lt;T, K&gt; Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class&lt;K&gt; targetClass, final Field field, final String breadcrumb) {
-<span class="fc" id="L302">        String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);</span>
-<span class="fc" id="L303">        boolean primitiveType = classUtils.isPrimitiveType(field.getType());</span>
-<span class="fc" id="L304">        boolean isFieldTransformerDefined = settings.getFieldsTransformers().containsKey(field.getName());</span>
-<span class="fc" id="L305">        Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);</span>
-<span class="fc bfc" id="L306" title="All 2 branches covered.">        if (nonNull(fieldValue)) {</span>
+<span class="fc" id="L311">        String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">        if (doSkipTransformation(fieldBreadcrumb)) {</span>
+<span class="fc" id="L313">            return defaultValue(field.getType());</span>
+        }
+<span class="fc" id="L315">        boolean primitiveType = classUtils.isPrimitiveType(field.getType());</span>
+<span class="fc" id="L316">        boolean isFieldTransformerDefined = settings.getFieldsTransformers().containsKey(field.getName());</span>
+<span class="fc" id="L317">        Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">        if (nonNull(fieldValue)) {</span>
             // is not a primitive type or an optional &amp;&amp; there are no transformer function
             // defined it recursively evaluate the value
-<span class="fc bfc" id="L309" title="All 4 branches covered.">            boolean notPrimitiveAndNotSpecialType = !primitiveType &amp;&amp; !classUtils.isSpecialType(field.getType());</span>
-<span class="pc bpc" id="L310" title="1 of 6 branches missed.">            if ((notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))</span>
+<span class="fc bfc" id="L321" title="All 4 branches covered.">            boolean notPrimitiveAndNotSpecialType = !primitiveType &amp;&amp; !classUtils.isSpecialType(field.getType());</span>
+<span class="pc bpc" id="L322" title="1 of 6 branches missed.">            if ((notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))</span>
                     &amp;&amp; !isFieldTransformerDefined) {
-<span class="fc" id="L312">                fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);</span>
+<span class="fc" id="L324">                fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);</span>
             }
-<span class="fc bfc" id="L314" title="All 2 branches covered.">        } else if (primitiveType) {</span>
-<span class="fc" id="L315">            fieldValue = defaultValue(field.getType()); // assign the default value</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">        } else if (primitiveType) {</span>
+<span class="fc" id="L327">            fieldValue = defaultValue(field.getType()); // assign the default value</span>
         }
-<span class="fc" id="L317">        return getTransformedField(field, fieldBreadcrumb, fieldValue);</span>
+<span class="fc" id="L329">        return getTransformedField(field, fieldBreadcrumb, fieldValue);</span>
     }
 
     /**
@@ -324,7 +336,7 @@ import com.hotels.beans.error.MissingFieldException;
      * @return the updated breadcrumb
      */
     private String evalBreadcrumb(final String fieldName, final String breadcrumb) {
-<span class="fc bfc" id="L327" title="All 2 branches covered.">        return (nonNull(breadcrumb) ? breadcrumb + DOT.getSymbol() : EMPTY) + fieldName;</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">        return (nonNull(breadcrumb) ? breadcrumb + DOT.getSymbol() : EMPTY) + fieldName;</span>
     }
 
     /**
@@ -337,19 +349,19 @@ import com.hotels.beans.error.MissingFieldException;
      * @return the source field value
      */
     private &lt;T&gt; Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final Field field, final boolean isFieldTransformerDefined) {
-<span class="fc" id="L340">        Object fieldValue = null;</span>
+<span class="fc" id="L352">        Object fieldValue = null;</span>
         try {
-<span class="fc" id="L342">            fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());</span>
-<span class="fc" id="L343">        } catch (MissingFieldException e) {</span>
-<span class="fc bfc" id="L344" title="All 4 branches covered.">            if (!isFieldTransformerDefined &amp;&amp; !settings.isSetDefaultValue()) {</span>
-<span class="fc" id="L345">                throw e;</span>
+<span class="fc" id="L354">            fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());</span>
+<span class="fc" id="L355">        } catch (MissingFieldException e) {</span>
+<span class="fc bfc" id="L356" title="All 4 branches covered.">            if (!isFieldTransformerDefined &amp;&amp; !settings.isSetDefaultValue()) {</span>
+<span class="fc" id="L357">                throw e;</span>
             }
-<span class="fc" id="L347">        } catch (Exception e) {</span>
-<span class="pc bpc" id="L348" title="1 of 2 branches missed.">            if (!isFieldTransformerDefined) {</span>
-<span class="fc" id="L349">                throw e;</span>
+<span class="fc" id="L359">        } catch (Exception e) {</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">            if (!isFieldTransformerDefined) {</span>
+<span class="fc" id="L361">                throw e;</span>
             }
-<span class="fc" id="L351">        }</span>
-<span class="fc" id="L352">        return fieldValue;</span>
+<span class="fc" id="L363">        }</span>
+<span class="fc" id="L364">        return fieldValue;</span>
     }
 
     /**
@@ -360,10 +372,10 @@ import com.hotels.beans.error.MissingFieldException;
      * @return the transformed field.
      */
     private Object getTransformedField(final Field field, final String breadcrumb, final Object fieldValue) {
-<span class="fc bfc" id="L363" title="All 2 branches covered.">        String fieldName = settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;</span>
-<span class="fc" id="L364">        return ofNullable(settings.getFieldsTransformers().get(fieldName))</span>
-<span class="fc" id="L365">                .map(fieldTransformer -&gt; fieldTransformer.apply(fieldValue))</span>
-<span class="fc" id="L366">                .orElse(fieldValue);</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">        String fieldName = settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;</span>
+<span class="fc" id="L376">        return ofNullable(settings.getFieldsTransformers().get(fieldName))</span>
+<span class="fc" id="L377">                .map(fieldTransformer -&gt; fieldTransformer.apply(fieldValue))</span>
+<span class="fc" id="L378">                .orElse(fieldValue);</span>
     }
 
     /**
@@ -378,11 +390,11 @@ import com.hotels.beans.error.MissingFieldException;
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     private &lt;K&gt; Object getFieldValue(final Class&lt;K&gt; targetClass, final Field field, final Object fieldValue, final String breadcrumb) {
-<span class="fc" id="L381">        return getPopulator(field.getType(), fieldValue.getClass(), this)</span>
-<span class="fc" id="L382">                .map(populator -&gt; populator.getPopulatedObject(targetClass, field.getName(), fieldValue))</span>
-<span class="fc" id="L383">                .orElseGet(() -&gt;</span>
+<span class="fc" id="L393">        return getPopulator(field.getType(), fieldValue.getClass(), this)</span>
+<span class="fc" id="L394">                .map(populator -&gt; populator.getPopulatedObject(targetClass, field.getName(), fieldValue))</span>
+<span class="fc" id="L395">                .orElseGet(() -&gt;</span>
                         // recursively inject object
-<span class="fc" id="L385">                        transform(fieldValue, field.getType(), breadcrumb)</span>
+<span class="fc" id="L397">                        transform(fieldValue, field.getType(), breadcrumb)</span>
                 );
     }
 }

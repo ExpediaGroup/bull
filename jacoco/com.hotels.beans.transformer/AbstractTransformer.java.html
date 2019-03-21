@@ -16,6 +16,8 @@
 
 package com.hotels.beans.transformer;
 
+import static java.util.Arrays.asList;
+
 import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import java.util.Map;
@@ -62,24 +64,24 @@ abstract class AbstractTransformer implements Transformer {
     /**
      * Default constructor.
      */
-<span class="fc" id="L65">    AbstractTransformer() {</span>
-<span class="fc" id="L66">        this.reflectionUtils = new ReflectionUtils();</span>
-<span class="fc" id="L67">        this.classUtils = new ClassUtils();</span>
-<span class="fc" id="L68">        this.validationUtils = new ValidationUtils();</span>
-<span class="fc" id="L69">        this.settings = new TransformerSettings();</span>
-<span class="fc" id="L70">        this.cacheManager = CacheManagerFactory.getCacheManager(&quot;transformer&quot;);</span>
-<span class="fc" id="L71">    }</span>
+<span class="fc" id="L67">    AbstractTransformer() {</span>
+<span class="fc" id="L68">        this.reflectionUtils = new ReflectionUtils();</span>
+<span class="fc" id="L69">        this.classUtils = new ClassUtils();</span>
+<span class="fc" id="L70">        this.validationUtils = new ValidationUtils();</span>
+<span class="fc" id="L71">        this.settings = new TransformerSettings();</span>
+<span class="fc" id="L72">        this.cacheManager = CacheManagerFactory.getCacheManager(&quot;transformer&quot;);</span>
+<span class="fc" id="L73">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public final Transformer withFieldMapping(final FieldMapping... fieldMapping) {
-<span class="fc" id="L78">        final Map&lt;String, String&gt; fieldsNameMapping = settings.getFieldsNameMapping();</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">        for (FieldMapping mapping : fieldMapping) {</span>
-<span class="fc" id="L80">            fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());</span>
+<span class="fc" id="L80">        final Map&lt;String, String&gt; fieldsNameMapping = settings.getFieldsNameMapping();</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        for (FieldMapping mapping : fieldMapping) {</span>
+<span class="fc" id="L82">            fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());</span>
         }
-<span class="fc" id="L82">        return this;</span>
+<span class="fc" id="L84">        return this;</span>
     }
 
     /**
@@ -87,17 +89,17 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final void removeFieldMapping(final String destFieldName) {
-<span class="fc" id="L90">        notNull(destFieldName, &quot;The field name for which the mapping has to be removed cannot be null!&quot;);</span>
-<span class="fc" id="L91">        settings.getFieldsNameMapping().remove(destFieldName);</span>
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L92">        notNull(destFieldName, &quot;The field name for which the mapping has to be removed cannot be null!&quot;);</span>
+<span class="fc" id="L93">        settings.getFieldsNameMapping().remove(destFieldName);</span>
+<span class="fc" id="L94">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public final void resetFieldsMapping() {
-<span class="fc" id="L99">        settings.getFieldsNameMapping().clear();</span>
-<span class="fc" id="L100">    }</span>
+<span class="fc" id="L101">        settings.getFieldsNameMapping().clear();</span>
+<span class="fc" id="L102">    }</span>
 
     /**
      * {@inheritDoc}
@@ -105,11 +107,11 @@ abstract class AbstractTransformer implements Transformer {
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public final Transformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
-<span class="fc" id="L108">        Map&lt;String, Function&lt;Object, Object&gt;&gt; fieldsTransformers = settings.getFieldsTransformers();</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">        for (FieldTransformer transformer : fieldTransformer) {</span>
-<span class="fc" id="L110">            fieldsTransformers.put(transformer.getDestFieldName(), transformer.getTransformerFunction());</span>
+<span class="fc" id="L110">        Map&lt;String, Function&lt;Object, Object&gt;&gt; fieldsTransformers = settings.getFieldsTransformers();</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        for (FieldTransformer transformer : fieldTransformer) {</span>
+<span class="fc" id="L112">            fieldsTransformers.put(transformer.getDestFieldName(), transformer.getTransformerFunction());</span>
         }
-<span class="fc" id="L112">        return this;</span>
+<span class="fc" id="L114">        return this;</span>
     }
 
     /**
@@ -117,25 +119,25 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final void removeFieldTransformer(final String destFieldName) {
-<span class="fc" id="L120">        notNull(destFieldName, &quot;The field name for which the transformer function has to be removed cannot be null!&quot;);</span>
-<span class="fc" id="L121">        settings.getFieldsTransformers().remove(destFieldName);</span>
-<span class="fc" id="L122">    }</span>
+<span class="fc" id="L122">        notNull(destFieldName, &quot;The field name for which the transformer function has to be removed cannot be null!&quot;);</span>
+<span class="fc" id="L123">        settings.getFieldsTransformers().remove(destFieldName);</span>
+<span class="fc" id="L124">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public final void resetFieldsTransformer() {
-<span class="fc" id="L129">        settings.getFieldsTransformers().clear();</span>
-<span class="fc" id="L130">    }</span>
+<span class="fc" id="L131">        settings.getFieldsTransformers().clear();</span>
+<span class="fc" id="L132">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public final Transformer setDefaultValueForMissingField(final boolean useDefaultValue) {
-<span class="fc" id="L137">        settings.setSetDefaultValue(useDefaultValue);</span>
-<span class="fc" id="L138">        return this;</span>
+<span class="fc" id="L139">        settings.setSetDefaultValue(useDefaultValue);</span>
+<span class="fc" id="L140">        return this;</span>
     }
 
     /**
@@ -143,8 +145,8 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final Transformer setFlatFieldNameTransformation(final boolean useFlatTransformation) {
-<span class="fc" id="L146">        settings.setFlatFieldNameTransformation(useFlatTransformation);</span>
-<span class="fc" id="L147">        return this;</span>
+<span class="fc" id="L148">        settings.setFlatFieldNameTransformation(useFlatTransformation);</span>
+<span class="fc" id="L149">        return this;</span>
     }
 
     /**
@@ -152,8 +154,8 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public Transformer setValidationDisabled(final boolean validationDisabled) {
-<span class="fc" id="L155">        settings.setValidationDisabled(validationDisabled);</span>
-<span class="fc" id="L156">        return this;</span>
+<span class="fc" id="L157">        settings.setValidationDisabled(validationDisabled);</span>
+<span class="fc" id="L158">        return this;</span>
     }
 
     /**
@@ -161,9 +163,9 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final &lt;T, K&gt; K transform(final T sourceObj, final Class&lt;? extends K&gt; targetClass) {
-<span class="fc" id="L164">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
-<span class="fc" id="L165">        notNull(targetClass, &quot;The destination class cannot be null!&quot;);</span>
-<span class="fc" id="L166">        return transform(sourceObj, targetClass, null);</span>
+<span class="fc" id="L166">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
+<span class="fc" id="L167">        notNull(targetClass, &quot;The destination class cannot be null!&quot;);</span>
+<span class="fc" id="L168">        return transform(sourceObj, targetClass, null);</span>
     }
 
     /**
@@ -182,10 +184,26 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final &lt;T, K&gt; void transform(final T sourceObj, final K targetObject) {
-<span class="fc" id="L185">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
-<span class="fc" id="L186">        notNull(targetObject, &quot;The destination object cannot be null!&quot;);</span>
-<span class="fc" id="L187">        transform(sourceObj, targetObject, null);</span>
-<span class="fc" id="L188">    }</span>
+<span class="fc" id="L187">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
+<span class="fc" id="L188">        notNull(targetObject, &quot;The destination object cannot be null!&quot;);</span>
+<span class="fc" id="L189">        transform(sourceObj, targetObject, null);</span>
+<span class="fc" id="L190">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Transformer skipTransformationForField(final String... fieldName) {
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">        if (fieldName.length != 0) {</span>
+<span class="fc" id="L198">            settings.getFieldsToSkip().addAll(asList(fieldName));</span>
+        }
+<span class="fc" id="L200">        return this;</span>
+    }
+
+    @Override
+    public void resetFieldsTransformationSkip() {
+<span class="fc" id="L205">        settings.getFieldsToSkip().clear();</span>
+<span class="fc" id="L206">    }</span>
 
     /**
      * Copies all properties from an object to a new one.

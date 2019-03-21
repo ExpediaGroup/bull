@@ -21,15 +21,6 @@ package com.hotels.beans.error;
  */
 public class InvalidBeanException extends RuntimeException {
     /**
-     * Constructs a new runtime exception with the specified detail message and
-     * cause.
-     * @param cause the given bean is not valid and caused an exception while copying the properties.
-     */
-    public InvalidBeanException(final Throwable cause) {
-<span class="nc" id="L29">        super(cause);</span>
-<span class="nc" id="L30">    }</span>
-
-    /**
      * Constructs a new invalid bean exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
@@ -37,8 +28,8 @@ public class InvalidBeanException extends RuntimeException {
      *                retrieval by the {@link #getMessage()} method.
      */
     public InvalidBeanException(final String message) {
-<span class="fc" id="L40">        super(message);</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L31">        super(message);</span>
+<span class="fc" id="L32">    }</span>
 
     /**
      * Constructs a new invalid bean exception with the specified detail message.
@@ -49,7 +40,7 @@ public class InvalidBeanException extends RuntimeException {
      * @param cause the given bean is not valid and caused an exception while copying the properties.
      */
     public InvalidBeanException(final String message, final Throwable cause) {
-<span class="fc" id="L52">        super(message, cause);</span>
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L43">        super(message, cause);</span>
+<span class="fc" id="L44">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

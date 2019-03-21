@@ -1,16 +1,16 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-BULL - Bean Utils Light Library,com.hotels.beans.transformer,AbstractTransformer,0,157,0,4,0,38,0,14,0,12
-BULL - Bean Utils Light Library,com.hotels.beans.transformer,TransformerSettings,0,40,0,0,0,9,0,9,0,9
-BULL - Bean Utils Light Library,com.hotels.beans.transformer,TransformerImpl,19,589,8,38,1,106,7,46,0,30
+BULL - Bean Utils Light Library,com.hotels.beans.transformer,AbstractTransformer,0,174,1,5,0,43,1,16,0,14
+BULL - Bean Utils Light Library,com.hotels.beans.transformer,TransformerSettings,0,48,0,0,0,10,0,10,0,10
+BULL - Bean Utils Light Library,com.hotels.beans.transformer,TransformerImpl,19,603,8,40,1,109,7,48,0,31
 BULL - Bean Utils Light Library,com.hotels.beans.constant,MethodPrefix,0,38,0,0,0,5,0,2,0,2
 BULL - Bean Utils Light Library,com.hotels.beans.constant,Punctuation,0,70,0,0,0,7,0,3,0,3
 BULL - Bean Utils Light Library,com.hotels.beans.constant,Filters,0,40,1,7,0,8,1,7,0,4
 BULL - Bean Utils Light Library,com.hotels.beans.constant,ClassType,0,41,0,2,0,5,0,3,0,2
-BULL - Bean Utils Light Library,com.hotels.beans.utils,ReflectionUtils,125,794,9,63,25,151,10,61,1,34
-BULL - Bean Utils Light Library,com.hotels.beans.utils,ClassUtils,8,1357,13,109,2,213,13,118,0,70
+BULL - Bean Utils Light Library,com.hotels.beans.utils,ReflectionUtils,134,768,11,57,28,148,12,57,1,34
+BULL - Bean Utils Light Library,com.hotels.beans.utils,ClassUtils,0,1308,11,107,0,204,11,116,0,68
 BULL - Bean Utils Light Library,com.hotels.beans.utils,ValidationUtils,0,86,0,6,0,25,0,10,0,7
 BULL - Bean Utils Light Library,com.hotels.beans.error,MissingMethodException,0,4,0,0,0,2,0,1,0,1
-BULL - Bean Utils Light Library,com.hotels.beans.error,InvalidBeanException,4,9,0,0,2,4,1,2,1,2
+BULL - Bean Utils Light Library,com.hotels.beans.error,InvalidBeanException,0,9,0,0,0,4,0,2,0,2
 BULL - Bean Utils Light Library,com.hotels.beans.error,MissingFieldException,0,4,0,0,0,2,0,1,0,1
 BULL - Bean Utils Light Library,com.hotels.beans.model,MapType,0,15,0,0,0,3,0,3,0,3
 BULL - Bean Utils Light Library,com.hotels.beans.model,FieldMapping,6,15,0,0,1,3,1,3,1,3

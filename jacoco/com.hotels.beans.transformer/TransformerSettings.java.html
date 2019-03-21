@@ -16,7 +16,9 @@
 
 package com.hotels.beans.transformer;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -31,11 +33,11 @@ import lombok.Setter;
  *  3) Other configurations.
  */
 @Getter
-<span class="fc" id="L34">final class TransformerSettings {</span>
+<span class="fc" id="L36">final class TransformerSettings {</span>
     /**
      * Contains the mapping between fields's name in the source object and the destination one.
      */
-<span class="fc" id="L38">    private final Map&lt;String, String&gt; fieldsNameMapping = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L40">    private final Map&lt;String, String&gt; fieldsNameMapping = new ConcurrentHashMap&lt;&gt;();</span>
 
     /**
      * Contains the lambda functions to be applied on a given fields.
@@ -45,27 +47,32 @@ import lombok.Setter;
      *      FieldTransformer&lt;BigInteger, BigInteger&gt; fieldTransformer = new FieldTransformer&lt;&gt;(&quot;identifier&quot;, BigInteger::negate);
      * }
      */
-<span class="fc" id="L48">    private final Map&lt;String, Function&lt;Object, Object&gt;&gt; fieldsTransformers = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L50">    private final Map&lt;String, Function&lt;Object, Object&gt;&gt; fieldsTransformers = new ConcurrentHashMap&lt;&gt;();</span>
+
+    /**
+     * Contains the list of fields that don't need to be transformed.
+     */
+<span class="fc" id="L55">    private final Set&lt;String&gt; fieldsToSkip = new HashSet&lt;&gt;();</span>
 
     /**
      * It allows to configure the transformer in order to set a default value in case some field is missing in the source object.
      * If set to true the default value is set, if false if it raises a: {@link com.hotels.beans.error.MissingFieldException} in case of missing fields.
      */
-<span class="fc" id="L54">    @Setter</span>
-<span class="fc" id="L55">    private boolean setDefaultValue;</span>
+<span class="fc" id="L61">    @Setter</span>
+<span class="fc" id="L62">    private boolean setDefaultValue;</span>
 
     /**
      * It allows to apply a transformation to all fields matching with the provided name without using their whole path.
      * If set to true the transformation function is applied to all fields that have a name matching with the given one without evaluating their full path.
      */
-<span class="fc" id="L61">    @Setter</span>
-<span class="fc" id="L62">    private boolean flatFieldNameTransformation;</span>
+<span class="fc" id="L68">    @Setter</span>
+<span class="fc" id="L69">    private boolean flatFieldNameTransformation;</span>
 
     /**
      * It allows to disable the object validation.
      * If set to true the validation is skipped.
      */
-<span class="fc" id="L68">    @Setter</span>
-<span class="fc" id="L69">    private boolean validationDisabled;</span>
+<span class="fc" id="L75">    @Setter</span>
+<span class="fc" id="L76">    private boolean validationDisabled;</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

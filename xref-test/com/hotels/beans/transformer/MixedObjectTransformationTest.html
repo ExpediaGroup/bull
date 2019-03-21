@@ -186,20 +186,38 @@
 <a class="jxr_linenumber" name="L178" href="#L178">178</a>     }
 <a class="jxr_linenumber" name="L179" href="#L179">179</a> 
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L181" href="#L181">181</a> <em class="jxr_javadoccomment">     * Test transformation on an existing bean is correctly copied.</em>
+<a class="jxr_linenumber" name="L181" href="#L181">181</a> <em class="jxr_javadoccomment">     * Test that, given a set of fields for which the transformation has to be skipped, they are actually skipped.</em>
 <a class="jxr_linenumber" name="L182" href="#L182">182</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L183" href="#L183">183</a>     @Test
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformationOnAnExistingDestinationWorksProperly() {
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFieldTransformationSkipWorksProperly() {
 <a class="jxr_linenumber" name="L185" href="#L185">185</a>         <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>         <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a> mixedToFoo = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a>(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>         underTest.skipTransformationForField(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
 <a class="jxr_linenumber" name="L187" href="#L187">187</a> 
 <a class="jxr_linenumber" name="L188" href="#L188">188</a>         <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>         underTest.transform(fromFoo, mixedToFoo);
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>         <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a> actual = underTest.transform(fromFoo, MixedToFoo.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L190" href="#L190">190</a> 
 <a class="jxr_linenumber" name="L191" href="#L191">191</a>         <em class="jxr_comment">//THEN</em>
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>         assertThat(mixedToFoo, sameBeanAs(fromFoo));
-<a class="jxr_linenumber" name="L193" href="#L193">193</a>     }
-<a class="jxr_linenumber" name="L194" href="#L194">194</a> }
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>         assertEquals(fromFoo.getId(), actual.getId());
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>         assertNull(actual.getName());
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>         assertNull(actual.getNestedObject().getPhoneNumbers());
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>         underTest.resetFieldsTransformationSkip();
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>     }
+<a class="jxr_linenumber" name="L197" href="#L197">197</a> 
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L199" href="#L199">199</a> <em class="jxr_javadoccomment">     * Test transformation on an existing bean is correctly copied.</em>
+<a class="jxr_linenumber" name="L200" href="#L200">200</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>     @Test
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformationOnAnExistingDestinationWorksProperly() {
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>         <em class="jxr_comment">//GIVEN</em>
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>         <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a> mixedToFoo = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a>(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L205" href="#L205">205</a> 
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>         <em class="jxr_comment">//WHEN</em>
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>         underTest.transform(fromFoo, mixedToFoo);
+<a class="jxr_linenumber" name="L208" href="#L208">208</a> 
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>         <em class="jxr_comment">//THEN</em>
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>         assertThat(mixedToFoo, sameBeanAs(fromFoo));
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>     }
+<a class="jxr_linenumber" name="L212" href="#L212">212</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2019 <a href="http://hotels.com">Hotels.com (Data Platform Team)</a>. All rights reserved.</div>
