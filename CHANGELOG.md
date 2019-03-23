@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.2.4] 2019.03.23
+#### Changed
+* Updated `spring-boot-starter-test` version to `2.1.3.RELEASE` (was `2.1.2.RELEASE`).
+* Added caching for method: `getDeclaredField`
+
 ### [1.2.3] 2019.03.22
 #### Added
 * Implemented a new feature that allows to skip the transformation for a given set of fields (see: [Issue 38](https://github.com/HotelsDotCom/bull/issues/38))
@@ -24,6 +29,11 @@ All notable changes to this project will be documented in this file.
 - Updated `jdk` version to 11 (was 1.8).
 - Updated Travis configuration in order to work with java 11
 - Modified Travis configuration in order to automatically create the GitHub site as soon as a tag is created
+
+### [1.1.9] 2019.03.23
+#### Changed
+* Updated `spring-boot-starter-test` version to `2.1.3.RELEASE` (was `2.1.2.RELEASE`).
+* Added caching for method: `getDeclaredField`
 
 ### [1.1.8] 2019.03.22
 #### Added
