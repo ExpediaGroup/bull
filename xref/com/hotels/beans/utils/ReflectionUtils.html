@@ -256,9 +256,9 @@
 <a class="jxr_linenumber" name="L248" href="#L248">248</a> <em class="jxr_javadoccomment">     * @return the field corresponding to the given name.</em>
 <a class="jxr_linenumber" name="L249" href="#L249">249</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L250" href="#L250">250</a>     <strong class="jxr_keyword">public</strong> Field getDeclaredField(<strong class="jxr_keyword">final</strong> String fieldName, <strong class="jxr_keyword">final</strong> Class&lt;?&gt; targetClass) {
-<a class="jxr_linenumber" name="L251" href="#L251">251</a>         <strong class="jxr_keyword">final</strong> String cacheKey = <span class="jxr_string">"ClassDeclaredField-"</span> + targetClass.getCanonicalName() + '-' + fieldName;
+<a class="jxr_linenumber" name="L251" href="#L251">251</a>         <strong class="jxr_keyword">final</strong> String cacheKey = <span class="jxr_string">"ClassDeclaredField-"</span> + targetClass.getName() + <span class="jxr_string">"-"</span> + fieldName;
 <a class="jxr_linenumber" name="L252" href="#L252">252</a>         <strong class="jxr_keyword">return</strong> ofNullable(cacheManager.getFromCache(cacheKey, Field.<strong class="jxr_keyword">class</strong>)).orElseGet(() -&gt; {
-<a class="jxr_linenumber" name="L253" href="#L253">253</a>         Field field;
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>             Field field;
 <a class="jxr_linenumber" name="L254" href="#L254">254</a>             <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L255" href="#L255">255</a>                 field = targetClass.getDeclaredField(fieldName);
 <a class="jxr_linenumber" name="L256" href="#L256">256</a>             } <strong class="jxr_keyword">catch</strong> (NoSuchFieldException e) {
@@ -271,7 +271,7 @@
 <a class="jxr_linenumber" name="L263" href="#L263">263</a>                 handleReflectionException(e);
 <a class="jxr_linenumber" name="L264" href="#L264">264</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(e);
 <a class="jxr_linenumber" name="L265" href="#L265">265</a>             }
-<a class="jxr_linenumber" name="L266" href="#L266">266</a>                 cacheManager.cacheObject(cacheKey, field);
+<a class="jxr_linenumber" name="L266" href="#L266">266</a>             cacheManager.cacheObject(cacheKey, field);
 <a class="jxr_linenumber" name="L267" href="#L267">267</a>             <strong class="jxr_keyword">return</strong> field;
 <a class="jxr_linenumber" name="L268" href="#L268">268</a>         });
 <a class="jxr_linenumber" name="L269" href="#L269">269</a>     }

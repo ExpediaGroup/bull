@@ -248,9 +248,9 @@ public final class ReflectionUtils {
      * @return the field corresponding to the given name.
      */
     public Field getDeclaredField(final String fieldName, final Class&lt;?&gt; targetClass) {
-<span class="fc" id="L251">        final String cacheKey = &quot;ClassDeclaredField-&quot; + targetClass.getCanonicalName() + '-' + fieldName;</span>
+<span class="fc" id="L251">        final String cacheKey = &quot;ClassDeclaredField-&quot; + targetClass.getName() + &quot;-&quot; + fieldName;</span>
 <span class="fc" id="L252">        return ofNullable(cacheManager.getFromCache(cacheKey, Field.class)).orElseGet(() -&gt; {</span>
-        Field field;
+            Field field;
             try {
 <span class="fc" id="L255">                field = targetClass.getDeclaredField(fieldName);</span>
 <span class="fc" id="L256">            } catch (NoSuchFieldException e) {</span>
@@ -263,7 +263,7 @@ public final class ReflectionUtils {
 <span class="nc" id="L263">                handleReflectionException(e);</span>
 <span class="nc" id="L264">                throw new IllegalStateException(e);</span>
 <span class="fc" id="L265">            }</span>
-<span class="fc" id="L266">                cacheManager.cacheObject(cacheKey, field);</span>
+<span class="fc" id="L266">            cacheManager.cacheObject(cacheKey, field);</span>
 <span class="fc" id="L267">            return field;</span>
         });
     }
