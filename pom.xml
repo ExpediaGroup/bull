@@ -22,11 +22,11 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<jdk.version>11</jdk.version>
+		<jdk.version>1.8</jdk.version>
 		<maven.compiler.source>${jdk.version}</maven.compiler.source>
 		<maven.compiler.target>${jdk.version}</maven.compiler.target>
 		<maven.pmd.plugin.version>3.11.0</maven.pmd.plugin.version>
-		<spring-boot.version>2.1.2.RELEASE</spring-boot.version>
+		<spring-boot.version>2.1.3.RELEASE</spring-boot.version>
 		<lombok.version>1.18.4</lombok.version>
 		<apache.commons-lang3.version>3.8.1</apache.commons-lang3.version>
 		<shazamcrest.version>0.11</shazamcrest.version>
