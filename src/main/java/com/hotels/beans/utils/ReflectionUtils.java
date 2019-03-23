@@ -248,7 +248,7 @@ public final class ReflectionUtils {
      * @return the field corresponding to the given name.
      */
     public Field getDeclaredField(final String fieldName, final Class<?> targetClass) {
-        final String cacheKey = "getDeclaredField-" + targetClass.getName() + "-" + fieldName;
+        final String cacheKey = "ClassDeclaredField-" + targetClass.getName() + "-" + fieldName;
         return ofNullable(cacheManager.getFromCache(cacheKey, Field.class)).orElseGet(() -> {
             Field field;
             try {
