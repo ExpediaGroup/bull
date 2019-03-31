@@ -350,15 +350,19 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <T> Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final Field field, final boolean isFieldTransformerDefined) {
         Object fieldValue = null;
-        try {
-            fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());
-        } catch (MissingFieldException e) {
-            if (!isFieldTransformerDefined && !settings.isSetDefaultValue()) {
-                throw e;
-            }
-        } catch (Exception e) {
-            if (!isFieldTransformerDefined) {
-                throw e;
+        if (classUtils.isPrimitiveType(sourceObj.getClass())) {
+            fieldValue = sourceObj;
+        } else {
+            try {
+                fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());
+            } catch (MissingFieldException e) {
+                if (!isFieldTransformerDefined && !settings.isSetDefaultValue()) {
+                    throw e;
+                }
+            } catch (Exception e) {
+                if (!isFieldTransformerDefined) {
+                    throw e;
+                }
             }
         }
         return fieldValue;
