@@ -34,7 +34,7 @@ All notable changes to this project will be documented in this file.
 - Updated Travis configuration in order to work with java 11
 - Modified Travis configuration in order to automatically create the GitHub site as soon as a tag is created
 
-### [1.2.10] 2019.03.31
+### [1.1.10] 2019.03.31
 #### Added
 * Improved field value retrieval function.
 
