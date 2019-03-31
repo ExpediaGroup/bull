@@ -1,7 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 BULL - Bean Utils Light Library,com.hotels.beans.transformer,AbstractTransformer,0,174,1,5,0,43,1,16,0,14
 BULL - Bean Utils Light Library,com.hotels.beans.transformer,TransformerSettings,0,48,0,0,0,10,0,10,0,10
-BULL - Bean Utils Light Library,com.hotels.beans.transformer,TransformerImpl,19,603,8,40,1,109,7,48,0,31
+BULL - Bean Utils Light Library,com.hotels.beans.transformer,TransformerImpl,27,604,10,40,5,107,8,48,0,31
 BULL - Bean Utils Light Library,com.hotels.beans.constant,MethodPrefix,0,38,0,0,0,5,0,2,0,2
 BULL - Bean Utils Light Library,com.hotels.beans.constant,Punctuation,0,70,0,0,0,7,0,3,0,3
 BULL - Bean Utils Light Library,com.hotels.beans.constant,Filters,0,40,1,7,0,8,1,7,0,4
