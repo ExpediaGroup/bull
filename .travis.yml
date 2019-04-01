@@ -43,6 +43,7 @@ jobs:
       name: "Releasing artifacts"
       if: type NOT IN (pull_request) AND tag IS present
       install: skip
+      after_deploy: false
       before_script:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
