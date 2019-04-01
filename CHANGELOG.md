@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.2.6] TBD
 #### Added
-* Implemented possibility to use static transformation with a given transformer.
+* Implemented possibility to use static transformation with a given transformer (see: [Issue 44](https://github.com/HotelsDotCom/bull/issues/44)).
 
 ### [1.2.5] 2019.03.31
 #### Added
@@ -40,7 +40,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.1.11] TBD
 #### Added
-* Implemented possibility to use static transformation with a given transformer.
+* Implemented possibility to use static transformation with a given transformer (see: [Issue 44](https://github.com/HotelsDotCom/bull/issues/44)).
 
 ### [1.1.10] 2019.03.31
 #### Added
