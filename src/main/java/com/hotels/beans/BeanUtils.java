@@ -39,6 +39,20 @@ public class BeanUtils {
     }
 
     /**
+     * Returns a function that transforms an object T in an object K.
+     * @param beanTransformer the transformer to be used.
+     * @param targetClass the destination object class
+     * @param <T> the Source object type
+     * @param <K> the target object type
+     * @return a function that copies of the source object into the destination object
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    public static <T, K> Function<T, K> getTransformer(final Transformer beanTransformer, final Class<K> targetClass) {
+        return fromBean -> beanTransformer.transform(fromBean, targetClass);
+    }
+
+
+    /**
      * Returns a Bean Transformer.
      * @return a Bean Transformer instance.
      */
