@@ -334,14 +334,7 @@ List<FromFooSimple> fromFooSimpleList = Arrays.asList(fromFooSimple, fromFooSimp
 can be transformed as follow:
 ~~~Java
 Function<FromFooSimple, ImmutableToFooSimple> transformerFunction = BeanUtils.getTransformer(ImmutableToFooSimple.class);
-List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
-                .map(transformerFunction)
-                .collect(Collectors.toList());
-~~~
-or if you have a pre-configured transformer:
-~~~Java
-Function<FromFooSimple, ImmutableToFooSimple> transformerFunction = BeanUtils.getTransformer(<yourPreconfiguredTransformer>, ImmutableToFooSimple.class);
-List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
+        List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
                 .map(transformerFunction)
                 .collect(Collectors.toList());
 ~~~

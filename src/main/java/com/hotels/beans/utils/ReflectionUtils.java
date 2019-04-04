@@ -92,7 +92,7 @@ public final class ReflectionUtils {
         notNull(target, "target cannot be null!");
         try {
             return method.invoke(target, args);
-        } catch (MissingMethodException e) {
+        } catch (MissingFieldException | MissingMethodException e) {
             throw e;
         } catch (final Exception e) {
             handleReflectionException(e);
