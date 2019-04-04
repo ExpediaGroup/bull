@@ -31,7 +31,6 @@ import java.util.stream.IntStream;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.sample.FromFooSimple;
@@ -75,16 +74,15 @@ public class BeanUtilsTest {
 
     /**
      * Test that the transformer function returned is able to transform the given object.
-     * @param testCaseDescription the test case description
-     * @param transformerFunction the transform function to use
      */
-    @Test(dataProvider = "dataStaticTransformationTesting")
-    public void testGetTransformerFunctionWorksProperly(final String testCaseDescription, final Function<FromFooSimple, ImmutableToFooSimple> transformerFunction) {
+    @Test
+    public void testGetTransformerFunctionWorksProperly() {
         //GIVEN
         FromFooSimple fromFooSimple = createFromFooSimple();
         List<FromFooSimple> fromFooSimpleList = Arrays.asList(fromFooSimple, fromFooSimple);
 
         //WHEN
+        Function<FromFooSimple, ImmutableToFooSimple> transformerFunction = underTest.getTransformer(ImmutableToFooSimple.class);
         List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
                 .map(transformerFunction)
                 .collect(Collectors.toList());
@@ -93,21 +91,6 @@ public class BeanUtilsTest {
         assertNotNull(transformerFunction);
         IntStream.range(0, actual.size())
                 .forEach(i -> assertThat(actual.get(i), sameBeanAs(fromFooSimpleList.get(i))));
-    }
-
-    /**
-     * Creates the parameters to be used for testing the default transformation operations.
-     * @return parameters to be used for testing the default transformation operations.
-     */
-    @DataProvider(parallel = true)
-    private Object[][] dataStaticTransformationTesting() {
-        BeanUtils beanUtils = new BeanUtils();
-        return new Object[][] {
-                {"Test that the transformer function returned is able to transform the given object.",
-                        beanUtils.getTransformer(ImmutableToFooSimple.class)},
-                {"Test that the transformer function returned is able to transform the given object with the given transformer.",
-                        beanUtils.getTransformer(beanUtils.getTransformer(), ImmutableToFooSimple.class)}
-        };
     }
 
     /**

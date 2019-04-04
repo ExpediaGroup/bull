@@ -32,7 +32,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class ImmutableFlatToFoo {
-    public final String name;
+    private final String name;
     private final BigInteger id;
     private final int[] phoneNumbers;
 
