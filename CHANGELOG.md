@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 ### [1.2.5] 2019.03.31
 #### Added
 * Improved field value retrieval function.
+* Added ling to Gitter channel for BULL.
+* Integrated Gitter notification in order to keep up to date BULL community
 
 ### [1.2.4] 2019.03.23
 #### Changed
@@ -37,6 +39,8 @@ All notable changes to this project will be documented in this file.
 ### [1.1.10] 2019.03.31
 #### Added
 * Improved field value retrieval function.
+* Added ling to Gitter channel for BULL.
+* Integrated Gitter notification in order to keep up to date BULL community
 
 ### [1.1.9] 2019.03.23
 #### Changed

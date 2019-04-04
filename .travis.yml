@@ -19,7 +19,7 @@ jobs:
     - stage: "Build"
       name: "Build and Test"
       if: NOT branch = master
-      install: travis_retry mvn clean install -DskipTests -Dmaven.javadoc.skip=true -B
+      install: travis_retry mvn clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -B
     # If the branch is master it sends the quality report to SonarCloud
     - stage: "Build and Quality Check"
       name: "Building, testing and performing quality check"
@@ -30,7 +30,7 @@ jobs:
       if: type NOT IN (pull_request) AND tag IS present
       before_deploy:
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
-        - travis_retry mvn install site:site -DskipTests=true -B
+        - travis_retry mvn install site:site -Dmaven.test.skip=true -B
       deploy:
         provider: pages
         local-dir: target/site
@@ -43,6 +43,7 @@ jobs:
       name: "Releasing artifacts"
       if: type NOT IN (pull_request) AND tag IS present
       install: skip
+      after_deploy: skip
       before_script:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
@@ -52,3 +53,12 @@ jobs:
           skip_cleanup: true
           on:
             tags: true
+# Gitter notification
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/${gitter_webhook_id}
+    on_success: always  # options: [always|never|change] default: always
+    on_failure: never  # options: [always|never|change] default: always
+    on_start: never     # options: [always|never|change] default: always
+
