@@ -147,7 +147,7 @@
 				<checkstyle.check.skip>false</checkstyle.check.skip>
 				<checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
 				<jacoco.check.skip>false</jacoco.check.skip>
-				<pmd.check.skip>false</pmd.check.skip>
+				<pmd.check.skip>true</pmd.check.skip>
 				<javadoc.skip>false</javadoc.skip>
 			</properties>
 		</profile>
