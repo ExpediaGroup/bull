@@ -40,7 +40,7 @@ All notable changes to this project will be documented in this file.
 - Updated Travis configuration in order to work with java 11
 - Modified Travis configuration in order to automatically create the GitHub site as soon as a tag is created
 
-### [1.1.11] 2019.04.06
+### [1.1.12] 2019.04.06
 #### Added
 * Implemented possibility to use static transformation with a given transformer (see: [Issue 44](https://github.com/HotelsDotCom/bull/issues/44)).
 
