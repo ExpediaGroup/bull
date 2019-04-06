@@ -81,7 +81,7 @@ public class BeanUtilsTest {
         //GIVEN
 
         //WHEN
-        new BeanUtils().getTransformer(null, ImmutableToFooSimple.class);
+        underTest.getTransformer(null, ImmutableToFooSimple.class);
     }
 
     /**
