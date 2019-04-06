@@ -74,6 +74,17 @@ public class BeanUtilsTest {
     }
 
     /**
+     * Test that an exception is returned if the given transformer is null.
+     */
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testGetTransformerThrowsExceptionIfTheBeanTransformerIsNull() {
+        //GIVEN
+
+        //WHEN
+        new BeanUtils().getTransformer(null, ImmutableToFooSimple.class);
+    }
+
+    /**
      * Test that the transformer function returned is able to transform the given object.
      * @param testCaseDescription the test case description
      * @param transformerFunction the transform function to use

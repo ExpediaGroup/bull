@@ -16,6 +16,8 @@
 
 package com.hotels.beans;
 
+import static com.hotels.beans.utils.ValidationUtils.notNull;
+
 import java.util.function.Function;
 
 import com.hotels.beans.transformer.TransformerImpl;
@@ -48,6 +50,7 @@ public class BeanUtils {
      * @throws IllegalArgumentException if any parameter is invalid
      */
     public static <T, K> Function<T, K> getTransformer(final Transformer beanTransformer, final Class<K> targetClass) {
+        notNull(beanTransformer, "beanTransformer cannot be null!");
         return fromBean -> beanTransformer.transform(fromBean, targetClass);
     }
 
