@@ -16,8 +16,6 @@
 
 package com.hotels.beans.cache;
 
-import static java.util.Objects.isNull;
-
 import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -35,7 +33,7 @@ public final class CacheManagerFactory {
     /**
      * Cache store.
      */
-<span class="fc" id="L38">    private static final Map&lt;String, Map&lt;String, Object&gt;&gt; CACHE_MAP = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L36">    private static final Map&lt;String, Map&lt;String, Object&gt;&gt; CACHE_MAP = new ConcurrentHashMap&lt;&gt;();</span>
 
     /**
      * Creates a new {@link CacheManager} instance.
@@ -43,13 +41,8 @@ public final class CacheManagerFactory {
      * @return a cache manager instance
      */
     public static CacheManager getCacheManager(final String cacheName) {
-<span class="fc" id="L46">        notNull(cacheName, &quot;cacheName cannot be null!&quot;);</span>
-<span class="fc" id="L47">        Map&lt;String, Object&gt; cacheMap = CACHE_MAP.get(cacheName);</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (isNull(cacheMap)) {</span>
-<span class="fc" id="L49">            cacheMap = new ConcurrentHashMap&lt;&gt;();</span>
-<span class="fc" id="L50">            CACHE_MAP.put(cacheName, cacheMap);</span>
-        }
-<span class="fc" id="L52">        return new CacheManager(cacheMap);</span>
+<span class="fc" id="L44">        notNull(cacheName, &quot;cacheName cannot be null!&quot;);</span>
+<span class="fc" id="L45">        return new CacheManager(CACHE_MAP.computeIfAbsent(cacheName, k -&gt; new ConcurrentHashMap&lt;&gt;()));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
