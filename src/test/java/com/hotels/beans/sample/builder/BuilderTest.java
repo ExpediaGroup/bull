@@ -26,7 +26,7 @@ public class BuilderTest {
 
     /**
      * Test that we can get the Builder from a class created with Lombok
-     * Expected name for the Builder is "OriginalClassName" + "Builder
+     * Expected name for the Builder created from Lombok  is "OriginalClassName" + "Builder" without any character in between
      * see https://projectlombok.org/features/Builder
      */
 
