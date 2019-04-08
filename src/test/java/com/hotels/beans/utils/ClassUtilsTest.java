@@ -29,6 +29,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
@@ -152,7 +153,8 @@ public class ClassUtilsTest {
     private Object[][] dataSpecialTypeObjectTesting() {
         return new Object[][] {
                 {"Tests that the method returns true if the class is a special type object", Locale.class, true},
-                {"Tests that the method returns false if the class is not a special type object", BigDecimal.class, false}
+                {"Tests that the method returns false if the class is not a special type object", BigDecimal.class, false},
+                {"Tests that the method returns true if the class is an instance of Temporal interface", Instant.class, true}
         };
     }
 

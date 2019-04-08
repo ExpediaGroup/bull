@@ -47,6 +47,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.LinkedList;
@@ -142,7 +143,8 @@ public final class ClassUtils {
         notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "isSpecial-" + clazz.getCanonicalName();
         return ofNullable(cacheManager.getFromCache(cacheKey, Boolean.class)).orElseGet(() -> {
-            final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || clazz.isSynthetic() || clazz.isAnonymousClass();
+            final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || Temporal.class.isAssignableFrom(clazz)
+                    || clazz.isSynthetic() || clazz.isAnonymousClass();
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
