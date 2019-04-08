@@ -17,6 +17,9 @@
 package com.hotels.beans.cache;
 
 import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
+
+import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
@@ -69,9 +72,10 @@ public final class CacheManager {
      * @param <T> the class object type.
      * @return the cached object.
      */
-    @SuppressWarnings("unchecked")
     public <T> T getFromCache(final String cacheKey, final Class<? extends T> objectClass) {
-        return (T) cacheMap.computeIfPresent(cacheKey, (k, v) -> objectClass.cast(v));
+        notNull(cacheKey, "cacheKey cannot be null!");
+        notNull(objectClass, "objectClass cannot be null!");
+        return ofNullable(cacheMap.get(cacheKey)).map(objectClass::cast).orElse(null);
     }
 
     /**
@@ -79,6 +83,6 @@ public final class CacheManager {
      * @param cacheKey the cache key.
      */
     public void removeFromCache(final String cacheKey) {
-        cacheMap.computeIfPresent(cacheKey, (k, v) -> cacheMap.remove(k));
+        ofNullable(cacheKey).ifPresent(cacheMap::remove);
     }
 }
