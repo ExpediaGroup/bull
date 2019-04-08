@@ -143,7 +143,8 @@ public final class ClassUtils {
         notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "isSpecial-" + clazz.getCanonicalName();
         return ofNullable(cacheManager.getFromCache(cacheKey, Boolean.class)).orElseGet(() -> {
-            final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || clazz.isInstance(Temporal.class) || clazz.isSynthetic() || clazz.isAnonymousClass();
+            final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || Temporal.class.isAssignableFrom(clazz)
+                    || clazz.isSynthetic() || clazz.isAnonymousClass();
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
