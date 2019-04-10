@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
@@ -42,8 +42,8 @@ public class CacheManagerTest {
     /**
      * Initializes mock.
      */
-    @BeforeMethod
-    public void before() {
+    @BeforeClass
+    public void beforeClass() {
         underTest = new CacheManager(new ConcurrentHashMap<>());
     }
 

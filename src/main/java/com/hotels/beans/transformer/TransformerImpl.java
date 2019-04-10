@@ -114,7 +114,7 @@ public class TransformerImpl extends AbstractTransformer {
             throw new InvalidBeanException("Constructor invoked with arguments. Expected: " + constructor + "; Found: "
                     + getFormattedConstructorArgs(targetClass, constructorArgs)
                     + ". Double check that each " + targetClass.getSimpleName() + "'s field have the same type and name than the source object: "
-                    + sourceObj.getClass().getCanonicalName() + " otherwise specify a transformer configuration. Error message: " + e.getMessage(), e);
+                    + sourceObj.getClass().getName() + " otherwise specify a transformer configuration. Error message: " + e.getMessage(), e);
         }
     }
 
@@ -127,8 +127,8 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <K> String getFormattedConstructorArgs(final Class<K> targetClass, final Object[] constructorArgs) {
         return stream(constructorArgs)
-                .map(arg -> isNull(arg) ? "null" : arg.getClass().getCanonicalName())
-                .collect(joining(COMMA.getSymbol(), targetClass.getCanonicalName() + LPAREN.getSymbol(), RPAREN.getSymbol()));
+                .map(arg -> isNull(arg) ? "null" : arg.getClass().getName())
+                .collect(joining(COMMA.getSymbol(), targetClass.getName() + LPAREN.getSymbol(), RPAREN.getSymbol()));
     }
 
     /**
@@ -139,7 +139,7 @@ public class TransformerImpl extends AbstractTransformer {
      * @return true if the parameter names are defined or the parameters are annotated with: {@link ConstructorArg}
      */
     private <K> boolean canBeInjectedByConstructorParams(final Constructor constructor, final Class<K> targetClass) {
-        final String cacheKey = "CanBeInjectedByConstructorParams-" + constructor.getDeclaringClass().getCanonicalName();
+        final String cacheKey = "CanBeInjectedByConstructorParams-" + constructor.getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final boolean res = classUtils.getPrivateFinalFields(targetClass).size() == constructor.getParameterCount()
                     && (classUtils.areParameterNamesAvailable(constructor) || classUtils.allParameterAnnotatedWith(constructor, ConstructorArg.class));
@@ -166,7 +166,7 @@ public class TransformerImpl extends AbstractTransformer {
         range(0, constructorParameters.length)
                 //.parallel()
                 .forEach(i -> {
-                    String destFieldName = getDestFieldName(constructorParameters[i], targetClass.getCanonicalName());
+                    String destFieldName = getDestFieldName(constructorParameters[i], targetClass.getName());
                     if (isNull(destFieldName)) {
                         constructorArgsValues[i] = classUtils.getDefaultTypeValue(constructorParameters[i].getType());
                     } else {
@@ -190,7 +190,7 @@ public class TransformerImpl extends AbstractTransformer {
 
     /**
      * Returns the field name in the source object.
-     * @param field the field that has to be valorized.
+     * @param field the field that has to be set.
      * @return the source field name.
      */
     private String getSourceFieldName(final Field field) {
@@ -199,7 +199,7 @@ public class TransformerImpl extends AbstractTransformer {
 
     /**
      * Returns the field name in the source object.
-     * @param fieldName the field name that has to be valorized.
+     * @param fieldName the field name that has to be set.
      * @return the source field name.
      */
     private String getSourceFieldName(final String fieldName) {

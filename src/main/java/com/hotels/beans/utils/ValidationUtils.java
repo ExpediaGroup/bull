@@ -88,7 +88,7 @@ public class ValidationUtils {
         final Set<ConstraintViolation<Object>> constraintViolations = getValidator().validate(k);
         if (!constraintViolations.isEmpty()) {
             final String errors = constraintViolations.stream()
-                    .map(cv -> cv.getRootBeanClass().getCanonicalName()
+                    .map(cv -> cv.getRootBeanClass().getName()
                             + DOT.getSymbol()
                             + cv.getPropertyPath()
                             + SPACE
