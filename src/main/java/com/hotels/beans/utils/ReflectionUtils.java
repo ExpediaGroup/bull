@@ -247,24 +247,25 @@ public final class ReflectionUtils {
      * @return the field corresponding to the given name.
      */
     public Field getDeclaredField(final String fieldName, final Class<?> targetClass) {
-//        final String cacheKey = "ClassDeclaredField-" + targetClass.getName() + "-" + fieldName;
-//        return cacheManager.getFromCache(cacheKey, Field.class).orElseGet(() -> {
-        Field field;
-        try {
-            field = targetClass.getDeclaredField(fieldName);
-        } catch (NoSuchFieldException e) {
-            if (!targetClass.getSuperclass().equals(Object.class)) {
-                field = getDeclaredField(fieldName, targetClass.getSuperclass());
-            } else {
-                throw new MissingFieldException(targetClass.getName() + " does not contain field: " + fieldName);
+        final String cacheKey = "ClassDeclaredField-" + targetClass.getName() + "-" + fieldName;
+        return cacheManager.getFromCache(cacheKey, Field.class).orElseGet(() -> {
+            Field field;
+            try {
+                field = targetClass.getDeclaredField(fieldName);
+            } catch (NoSuchFieldException e) {
+                Class<?> superclass = targetClass.getSuperclass();
+                if (!superclass.equals(Object.class)) {
+                    field = getDeclaredField(fieldName, superclass);
+                } else {
+                    throw new MissingFieldException(targetClass.getName() + " does not contain field: " + fieldName);
+                }
+            } catch (final Exception e) {
+                handleReflectionException(e);
+                throw new IllegalStateException(e);
             }
-        } catch (final Exception e) {
-            handleReflectionException(e);
-            throw new IllegalStateException(e);
-        }
-//            cacheManager.cacheObject(cacheKey, field);
-        return field;
-//        });
+            cacheManager.cacheObject(cacheKey, field);
+            return field;
+        });
     }
 
     /**
