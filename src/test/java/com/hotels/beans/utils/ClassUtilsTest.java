@@ -16,31 +16,6 @@
 
 package com.hotels.beans.utils;
 
-import static java.lang.reflect.Modifier.isFinal;
-import static java.util.Objects.nonNull;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.MockitoAnnotations.initMocks;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.List;
-import java.util.Locale;
-import java.util.function.Predicate;
-
-import javax.validation.constraints.NotNull;
-
-import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-
 import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.constant.ClassType;
 import com.hotels.beans.error.InvalidBeanException;
@@ -53,6 +28,28 @@ import com.hotels.beans.sample.mixed.MixedToFoo;
 import com.hotels.beans.sample.mixed.MixedToFooMissingConstructor;
 import com.hotels.beans.sample.mixed.MixedToFooStaticField;
 import com.hotels.beans.sample.mutable.MutableToFoo;
+import org.mockito.InjectMocks;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import javax.validation.constraints.NotNull;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.List;
+import java.util.Locale;
+import java.util.function.Predicate;
+
+import static java.lang.reflect.Modifier.isFinal;
+import static java.util.Objects.nonNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Unit test for {@link ClassUtils}.
@@ -568,14 +565,15 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getClassType}.
-     * @return parameters to be used for testing the the method {@code getClassType}.
+     * @return parameters to be used for testing the the method {@code getClassType}.     FromFooWithBuilder
      */
     @DataProvider
     private Object[][] dataGetClassTypeTesting() {
         return new Object[][] {
                 {"Tests that the method returns immutable if the given class is immutable", ImmutableToFoo.class, ClassType.IMMUTABLE},
                 {"Tests that the method returns mutable if the given class is mutable", MutableToFoo.class, ClassType.MUTABLE},
-                {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED}
+                {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED},
+                {"Test that the method returns builder if the given class is a Builder",FromFooWithBuilder.class, ClassType.BUILDER }
         };
     }
 
