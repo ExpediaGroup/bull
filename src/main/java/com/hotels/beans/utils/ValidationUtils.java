@@ -17,7 +17,6 @@
 package com.hotels.beans.utils;
 
 import static java.util.Objects.isNull;
-import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 
 import static javax.validation.Validation.buildDefaultValidatorFactory;
@@ -105,7 +104,7 @@ public class ValidationUtils {
      */
     private Validator getValidator() {
         String cacheKey = "BeanValidator";
-        return ofNullable(cacheManager.getFromCache(cacheKey, Validator.class))
+        return cacheManager.getFromCache(cacheKey, Validator.class)
                 .orElseGet(() -> {
                     Validator validator = buildDefaultValidatorFactory().getValidator();
                     cacheManager.cacheObject(cacheKey, validator);
