@@ -168,7 +168,7 @@ public class TransformerImpl extends AbstractTransformer {
                 .forEach(i -> {
                     String destFieldName = getDestFieldName(constructorParameters[i], targetClass.getCanonicalName());
                     if (isNull(destFieldName)) {
-                        constructorArgsValues[i] =  classUtils.getDefaultTypeValue(constructorParameters[i].getType());
+                        constructorArgsValues[i] = classUtils.getDefaultTypeValue(constructorParameters[i].getType());
                     } else {
                         String sourceFieldName = getSourceFieldName(destFieldName);
                         constructorArgsValues[i] =
