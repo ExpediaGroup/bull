@@ -140,7 +140,7 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <K> boolean canBeInjectedByConstructorParams(final Constructor constructor, final Class<K> targetClass) {
         final String cacheKey = "CanBeInjectedByConstructorParams-" + constructor.getDeclaringClass().getCanonicalName();
-        return ofNullable(cacheManager.getFromCache(cacheKey, Boolean.class)).orElseGet(() -> {
+        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final boolean res = classUtils.getPrivateFinalFields(targetClass).size() == constructor.getParameterCount()
                     && (classUtils.areParameterNamesAvailable(constructor) || classUtils.allParameterAnnotatedWith(constructor, ConstructorArg.class));
             cacheManager.cacheObject(cacheKey, res);
@@ -214,7 +214,7 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private String getDestFieldName(final Parameter constructorParameter, final String declaringClassName) {
         String cacheKey = "DestFieldName-" + declaringClassName + "-" + constructorParameter.getName();
-        return ofNullable(cacheManager.getFromCache(cacheKey, String.class))
+        return cacheManager.getFromCache(cacheKey, String.class)
                 .orElseGet(() -> {
                     String destFieldName;
                     if (constructorParameter.isNamePresent()) {

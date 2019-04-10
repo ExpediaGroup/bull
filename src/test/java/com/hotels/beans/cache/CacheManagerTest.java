@@ -17,10 +17,11 @@
 package com.hotels.beans.cache;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.testng.annotations.BeforeMethod;
@@ -55,12 +56,12 @@ public class CacheManagerTest {
         underTest.cacheObject(CACHE_KEY, CACHED_VALUE);
 
         // WHEN
-        Object actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
+        Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        assertNotNull(actual);
-        assertEquals(CACHED_OBJECT_CLASS, actual.getClass());
-        assertSame(CACHED_VALUE, actual);
+        assertFalse(actual.isEmpty());
+        assertEquals(CACHED_OBJECT_CLASS, actual.get().getClass());
+        assertSame(CACHED_VALUE, actual.get());
     }
 
     /**
@@ -95,9 +96,9 @@ public class CacheManagerTest {
 
         // WHEN
         underTest.removeFromCache(CACHE_KEY);
-        Object actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
+        Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        assertNull(actual);
+        assertTrue(actual.isEmpty());
     }
 }

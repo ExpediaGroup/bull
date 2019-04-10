@@ -25,6 +25,7 @@ import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import java.util.Map;
+import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -70,12 +71,12 @@ public final class CacheManager {
      * @param cacheKey the cache key.
      * @param objectClass the class of the object to return.
      * @param <T> the class object type.
-     * @return the cached object.
+     * @return the cached object or {@code Optional.empty()} if not existing.
      */
-    public <T> T getFromCache(final String cacheKey, final Class<? extends T> objectClass) {
+    public <T> Optional<T> getFromCache(final String cacheKey, final Class<? extends T> objectClass) {
         notNull(cacheKey, "cacheKey cannot be null!");
         notNull(objectClass, "objectClass cannot be null!");
-        return ofNullable(cacheMap.get(cacheKey)).map(objectClass::cast).orElse(null);
+        return ofNullable(cacheMap.get(cacheKey)).map(objectClass::cast);
     }
 
     /**
