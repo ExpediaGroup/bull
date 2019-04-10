@@ -35,7 +35,6 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.time.StopWatch;
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -94,13 +93,6 @@ public class PerformanceTest {
     @BeforeClass
     public void beforeClass() {
         initObjects();
-    }
-
-    /**
-     * Initialized mocks.
-     */
-    @BeforeMethod
-    public void beforeMethod() {
         initMocks(this);
     }
 

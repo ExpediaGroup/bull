@@ -105,7 +105,7 @@ public final class ReflectionUtils {
      * @return true if the method is a setter method, false otherwise
      */
     public boolean isSetter(final Method method) {
-        final String cacheKey = "IsSetter-" + method.getDeclaringClass().getCanonicalName() + '-' + method.getName();
+        final String cacheKey = "IsSetter-" + method.getDeclaringClass().getName() + '-' + method.getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             boolean res = isPublic(method.getModifiers())
                     && method.getName().matches(SETTER_METHOD_NAME_REGEX)
@@ -156,7 +156,7 @@ public final class ReflectionUtils {
      * @return the getter method
      */
     private Method getGetterMethod(final Class<?> fieldClass, final String fieldName, final Class<?> fieldType) {
-        final String cacheKey = "GetterMethod-" + fieldClass.getCanonicalName() + '-' + fieldName;
+        final String cacheKey = "GetterMethod-" + fieldClass.getName() + '-' + fieldName;
         return cacheManager.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
                 Method method = fieldClass.getMethod(getGetterMethodPrefix(fieldType) + capitalize(fieldName));
@@ -164,10 +164,10 @@ public final class ReflectionUtils {
                 return method;
             } catch (NoSuchMethodException e) {
                 if (new ClassUtils().hasField(fieldClass, fieldName)) {
-                    throw new MissingMethodException(fieldClass.getCanonicalName() + " does not allow to get value for field: " + fieldName
+                    throw new MissingMethodException(fieldClass.getName() + " does not allow to get value for field: " + fieldName
                             + ". Is a getter method defined?");
                 } else {
-                    throw new MissingFieldException(fieldClass.getCanonicalName() + " hasn't a field called: " + fieldName + ".");
+                    throw new MissingFieldException(fieldClass.getName() + " hasn't a field called: " + fieldName + ".");
                 }
             }
         });
@@ -181,7 +181,7 @@ public final class ReflectionUtils {
      * @return the annotation
      */
     public <A extends Annotation> A getFieldAnnotation(final Field field, final Class<A> annotationClazz) {
-        final String cacheKey = "FieldAnnotation-" + field.getDeclaringClass().getCanonicalName() + "-" + field.getName() + "-" + annotationClazz.getName();
+        final String cacheKey = "FieldAnnotation-" + field.getDeclaringClass().getName() + "-" + field.getName() + "-" + annotationClazz.getName();
         return cacheManager.getFromCache(cacheKey, annotationClazz).orElseGet(() -> {
             A annotation = null;
             if (field.isAnnotationPresent(annotationClazz)) {
@@ -247,24 +247,24 @@ public final class ReflectionUtils {
      * @return the field corresponding to the given name.
      */
     public Field getDeclaredField(final String fieldName, final Class<?> targetClass) {
-        final String cacheKey = "ClassDeclaredField-" + targetClass.getName() + "-" + fieldName;
-        return cacheManager.getFromCache(cacheKey, Field.class).orElseGet(() -> {
-            Field field;
-            try {
-                field = targetClass.getDeclaredField(fieldName);
-            } catch (NoSuchFieldException e) {
-                if (!targetClass.getSuperclass().equals(Object.class)) {
-                    field = getDeclaredField(fieldName, targetClass.getSuperclass());
-                } else {
-                    throw new MissingFieldException(targetClass.getCanonicalName() + " does not contain field: " + fieldName);
-                }
-            } catch (final Exception e) {
-                handleReflectionException(e);
-                throw new IllegalStateException(e);
+//        final String cacheKey = "ClassDeclaredField-" + targetClass.getName() + "-" + fieldName;
+//        return cacheManager.getFromCache(cacheKey, Field.class).orElseGet(() -> {
+        Field field;
+        try {
+            field = targetClass.getDeclaredField(fieldName);
+        } catch (NoSuchFieldException e) {
+            if (!targetClass.getSuperclass().equals(Object.class)) {
+                field = getDeclaredField(fieldName, targetClass.getSuperclass());
+            } else {
+                throw new MissingFieldException(targetClass.getName() + " does not contain field: " + fieldName);
             }
-            cacheManager.cacheObject(cacheKey, field);
-            return field;
-        });
+        } catch (final Exception e) {
+            handleReflectionException(e);
+            throw new IllegalStateException(e);
+        }
+//            cacheManager.cacheObject(cacheKey, field);
+        return field;
+//        });
     }
 
     /**
@@ -345,9 +345,9 @@ public final class ReflectionUtils {
      * @return the method prefix (get or is)
      */
     private String getGetterMethodPrefix(final Class<?> fieldType) {
-        final String cacheKey = "GetterMethodPrefix-" + fieldType.getCanonicalName();
+        final String cacheKey = "GetterMethodPrefix-" + fieldType.getName();
         return cacheManager.getFromCache(cacheKey, String.class).orElseGet(() -> {
-            String res = Boolean.class.equals(fieldType) || fieldType.getCanonicalName().equals(BOOLEAN) ? IS.getPrefix() : GET.getPrefix();
+            String res = Boolean.class.equals(fieldType) || fieldType.getName().equals(BOOLEAN) ? IS.getPrefix() : GET.getPrefix();
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
@@ -362,7 +362,7 @@ public final class ReflectionUtils {
      * @throws MissingMethodException if the method does not exists
      */
     public Method getSetterMethodForField(final Class<?> fieldClass, final String fieldName, final Class<?> fieldType) {
-        final String cacheKey = "SetterMethod-" + fieldClass.getCanonicalName() + '-' + fieldName;
+        final String cacheKey = "SetterMethod-" + fieldClass.getName() + '-' + fieldName;
         return cacheManager.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
                 Method method = fieldClass.getMethod(SET.getPrefix() + capitalize(fieldName), fieldType);
@@ -380,7 +380,7 @@ public final class ReflectionUtils {
      * @return the generic type class
      */
     public Class<?> getGenericFieldType(final Field field) {
-        final String cacheKey = "GenericFieldType-" + field.getDeclaringClass().getCanonicalName() + '-' + field.getName();
+        final String cacheKey = "GenericFieldType-" + field.getDeclaringClass().getName() + '-' + field.getName();
         return cacheManager.getFromCache(cacheKey, Class.class).orElseGet(() -> {
             Class<?> res = null;
             if (ParameterizedType.class.isAssignableFrom(field.getGenericType().getClass())) {
@@ -408,9 +408,9 @@ public final class ReflectionUtils {
         if (isNull(fieldClass) || !Map.class.isAssignableFrom(fieldClass)) {
             throw new IllegalArgumentException(
                     "Type for object: " + fieldName + " is invalid. "
-                            + "It cannot be assigned from: " + Map.class.getCanonicalName() + ".");
+                            + "It cannot be assigned from: " + Map.class.getName() + ".");
         }
-        final String cacheKey = "MapGenericFieldType-" + fieldClass.getCanonicalName() + '-' + fieldName;
+        final String cacheKey = "MapGenericFieldType-" + fieldClass.getName() + '-' + fieldName;
         return cacheManager.getFromCache(cacheKey, MapType.class).orElseGet(() -> {
             final ParameterizedType genericType = (ParameterizedType) fieldType;
             final MapElemType keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);
@@ -494,7 +494,7 @@ public final class ReflectionUtils {
      * @return the array class
      */
     public Class<?> getArrayType(final Field arrayField) {
-        final String cacheKey = "ArrayType-" + arrayField.getDeclaringClass().getCanonicalName();
+        final String cacheKey = "ArrayType-" + arrayField.getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Class.class).orElseGet(() -> {
             final Class<?> arrayType = arrayField.getType().getComponentType();
             cacheManager.cacheObject(cacheKey, arrayType);

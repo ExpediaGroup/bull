@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
@@ -41,8 +41,8 @@ public class CacheManagerFactoryTest {
     /**
      * Initializes mock.
      */
-    @BeforeMethod
-    public void beforeMethod() {
+    @BeforeClass
+    public void beforeClass() {
         initMocks(this);
     }
 

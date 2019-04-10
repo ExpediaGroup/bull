@@ -37,7 +37,7 @@ import java.util.function.Predicate;
 import javax.validation.constraints.NotNull;
 
 import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -94,8 +94,8 @@ public class ClassUtilsTest {
     /**
      * Initializes mock.
      */
-    @BeforeMethod
-    public void beforeMethod() {
+    @BeforeClass
+    public void beforeClass() {
         initMocks(this);
     }
 

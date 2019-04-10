@@ -27,7 +27,7 @@ import java.util.Optional;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -53,14 +53,14 @@ public class PopulatorFactoryTest {
     /**
      * Initializes mock.
      */
-    @BeforeMethod
-    public void beforeMethod() {
+    @BeforeClass
+    public void beforeClass() {
         initMocks(this);
     }
 
     /**
      * Tests that the method: {@code defaultValue} returns the expected result for the given type.
-     * @param type the type for wich a populator needs to be found
+     * @param type the type for which a populator needs to be found
      * @param expectedResult the expected populator
      */
     @Test(dataProvider = "dataProvider")
