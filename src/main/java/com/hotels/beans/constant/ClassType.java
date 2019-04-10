@@ -31,7 +31,11 @@ public enum ClassType {
     /**
      * The class contains both final and not final fields.
      */
-    MIXED;
+    MIXED,
+    /**
+     * The class could be instantiated with a Builder
+     */
+    BUILDER;
 
     /**
      * Checks if a the class type  instance is equal to the given one.

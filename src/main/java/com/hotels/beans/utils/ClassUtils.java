@@ -38,6 +38,7 @@ import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.ClassType.IMMUTABLE;
 import static com.hotels.beans.constant.ClassType.MIXED;
 import static com.hotels.beans.constant.ClassType.MUTABLE;
+import static com.hotels.beans.constant.ClassType.BUILDER;
 import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_FIELD;
 import static com.hotels.beans.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
 import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
@@ -49,6 +50,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Currency;
 import java.util.LinkedList;
 import java.util.List;
@@ -364,9 +366,46 @@ public final class ClassUtils {
     public <K> boolean usesBuilderPattern(final Constructor constructor, final Class<K> targetClass) {
         final String cacheKey = "UsesBuilderPattern-" + constructor.getDeclaringClass().getCanonicalName();
         return ofNullable(cacheManager.getFromCache(cacheKey, Boolean.class)).orElseGet(() -> {
-            final boolean res = !isPublic(constructor.getModifiers()) && isNotEmpty(targetClass.getDeclaredClasses());
+            final boolean res = !isPublic(constructor.getModifiers()) && !getNestedClass(targetClass).isEmpty()
+                    && isValidBuildMethod(targetClass);
             cacheManager.cacheObject(cacheKey, res);
             return res;
+        });
+    }
+
+    /**
+     * Check if in nested class of @superclass is present a valid build method
+     * @param superclass
+     * @return true if in the nested class is present a valid build method
+     */
+    private boolean isValidBuildMethod(final Class superclass) {
+        final String build = "build";
+        String cacheKey = "build-method-" + superclass.getCanonicalName();
+        Method[] declaredMethods = getDeclaredMethods(getNestedClass(superclass).get(0));
+        return ofNullable(cacheManager.getFromCache(cacheKey, Boolean.class)).orElseGet(() -> {
+            Method buildMethod = (stream(declaredMethods)
+                    .filter(method -> method.getName().equals(build))
+                    .filter(method -> method.getReturnType().equals(superclass))
+                    .findFirst())
+                    .orElse(null);
+            cacheManager.cacheObject(cacheKey, buildMethod);
+            boolean res = buildMethod != null ? true : false;
+            return res;
+        });
+    }
+
+    /**
+     * Get Nested Class defined inside the clazz parameter
+     * @param clazz
+     * @return Nested class if present or an empty List
+     */
+    public List<Class> getNestedClass(Class<?> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        String cacheKey = "nested-classes-" + clazz.getCanonicalName();
+        return ofNullable(cacheManager.getFromCache(cacheKey, List.class)).orElseGet(() -> {
+            List<Class<?>> declaredClasses = Arrays.asList(clazz.getDeclaredClasses());
+            cacheManager.cacheObject(cacheKey, declaredClasses);
+            return declaredClasses;
         });
     }
 
@@ -570,8 +609,11 @@ public final class ClassUtils {
         final String cacheKey = "ClassType-" + clazz.getCanonicalName();
         return ofNullable(cacheManager.getFromCache(cacheKey, ClassType.class)).orElseGet(() -> {
             final ClassType classType;
+
             boolean hasFinalFields = hasFinalFields(clazz);
-            if (!hasFinalFields) {
+            if (usesBuilderPattern(getAllArgsConstructor(clazz), clazz)) {
+                classType = BUILDER;
+            } else if (!hasFinalFields) {
                 classType = MUTABLE;
             } else {
                 boolean hasNotFinalFields = hasNotFinalFields(clazz);
@@ -585,6 +627,7 @@ public final class ClassUtils {
             return classType;
         });
     }
+
 
     /**
      * Retrieves all the setters method for the given class.
