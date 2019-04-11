@@ -15,24 +15,38 @@
  */
 package com.hotels.beans.sample.builder;
 
+import com.hotels.beans.sample.mutable.MutableToSubFoo;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @Getter
 @Setter
-public class ToFoo {
+public class BuilderToFoo {
     private String name;
     private BigInteger id;
+    private List<String> list;
+    private List<MutableToSubFoo> nestedObjectList;
+    private MutableToSubFoo nestedObject;
 
-    private ToFoo() {}
+
+
+    private BuilderToFoo() {}
 
     // getters
 
-    public static class Builder {
-        private String name;
-        private BigInteger id;
+      static class Builder {
+
+        public Builder(){};
+
+         private String name;
+         private BigInteger id;
+         private List<String> list;
+         private List<MutableToSubFoo> nestedObjectList;
+         private MutableToSubFoo nestedObject;
+
 
         public Builder withName(String name) {
             this.name = name;
@@ -44,11 +58,14 @@ public class ToFoo {
             return this;
         }
 
-        public ToFoo build() {
-            ToFoo toFoo = new ToFoo();
-            toFoo.id = this.id;
-            toFoo.name = this.name;
-            return toFoo;
+        public BuilderToFoo build() {
+            BuilderToFoo builderToFoo = new BuilderToFoo();
+            builderToFoo.id = this.id;
+            builderToFoo.name = this.name;
+            builderToFoo.list = this.list;
+            builderToFoo.nestedObjectList = this.nestedObjectList;
+            builderToFoo.nestedObject = this.nestedObject;
+            return builderToFoo;
         }
     }
 }
