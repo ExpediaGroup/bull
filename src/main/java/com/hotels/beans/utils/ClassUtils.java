@@ -16,32 +16,9 @@
 
 package com.hotels.beans.utils;
 
-import static java.lang.reflect.Modifier.isFinal;
-import static java.lang.reflect.Modifier.isPrivate;
-import static java.lang.reflect.Modifier.isPublic;
-import static java.lang.reflect.Modifier.isStatic;
-import static java.util.Arrays.asList;
-import static java.util.Arrays.stream;
-import static java.util.Collections.max;
-import static java.util.Comparator.comparing;
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-import static java.util.Optional.ofNullable;
-import static java.util.stream.Collectors.toList;
-
-import static org.apache.commons.lang3.ArrayUtils.isEmpty;
-import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
-
-import static com.hotels.beans.utils.ValidationUtils.notNull;
-import static com.hotels.beans.base.Defaults.defaultValue;
-import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
-import static com.hotels.beans.constant.ClassType.IMMUTABLE;
-import static com.hotels.beans.constant.ClassType.MIXED;
-import static com.hotels.beans.constant.ClassType.MUTABLE;
-import static com.hotels.beans.constant.ClassType.BUILDER;
-import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_FIELD;
-import static com.hotels.beans.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
-import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
+import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.constant.ClassType;
+import com.hotels.beans.error.InvalidBeanException;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -58,9 +35,29 @@ import java.util.Locale;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import com.hotels.beans.cache.CacheManager;
-import com.hotels.beans.constant.ClassType;
-import com.hotels.beans.error.InvalidBeanException;
+import static com.hotels.beans.base.Defaults.defaultValue;
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.beans.constant.ClassType.BUILDER;
+import static com.hotels.beans.constant.ClassType.IMMUTABLE;
+import static com.hotels.beans.constant.ClassType.MIXED;
+import static com.hotels.beans.constant.ClassType.MUTABLE;
+import static com.hotels.beans.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
+import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
+import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_FIELD;
+import static com.hotels.beans.utils.ValidationUtils.notNull;
+import static java.lang.reflect.Modifier.isFinal;
+import static java.lang.reflect.Modifier.isPrivate;
+import static java.lang.reflect.Modifier.isPublic;
+import static java.lang.reflect.Modifier.isStatic;
+import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
+import static java.util.Collections.max;
+import static java.util.Comparator.comparing;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 
 /**
  * Reflection utils for Class objects.
@@ -373,25 +370,19 @@ public final class ClassUtils {
         });
     }
 
-    /**
-     * Check if in nested class of @superclass is present a valid build method
-     * @param superclass
-     * @return true if in the nested class is present a valid build method
-     */
+
     private boolean isValidBuildMethod(final Class superclass) {
         final String build = "build";
         String cacheKey = "build-method-" + superclass.getCanonicalName();
-        Method[] declaredMethods = getDeclaredMethods(getNestedClass(superclass).get(0));
         return ofNullable(cacheManager.getFromCache(cacheKey, Boolean.class)).orElseGet(() -> {
-            Method buildMethod = (stream(declaredMethods)
-                    .filter(method -> method.getName().equals(build))
-                    .filter(method -> method.getReturnType().equals(superclass))
-                    .findFirst())
-                    .orElse(null);
-            cacheManager.cacheObject(cacheKey, buildMethod);
-            boolean res = buildMethod != null ? true : false;
-            return res;
-        });
+                    List<Class> nestedClasses = getNestedClass(superclass);
+                    boolean res =
+                            !nestedClasses.isEmpty()
+                                    && stream(getDeclaredMethods(nestedClasses.get(0)))
+                                    .anyMatch(method -> method.getName().equals(build) && method.getReturnType().equals(superclass));
+                    cacheManager.cacheObject(cacheKey, res);
+                    return res;
+                });
     }
 
     /**
