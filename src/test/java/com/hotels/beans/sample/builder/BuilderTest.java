@@ -30,12 +30,12 @@ public class BuilderTest {
     @Test
     public void checkDeclaredClassInManualBuilder(){
         // WHEN
-        Class<?>[] declaredClasses = ToFoo.class.getDeclaredClasses();
+        Class<?>[] declaredClasses = BuilderToFoo.class.getDeclaredClasses();
         // TODO check for null value...
         Class clazz  = declaredClasses[0];
 
         // THEN
-        assertSame(clazz,ToFoo.Builder.class);
+        assertSame(clazz, BuilderToFoo.Builder.class);
     }
 
 
