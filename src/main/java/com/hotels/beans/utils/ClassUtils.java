@@ -123,8 +123,8 @@ public final class ClassUtils {
     public boolean isPrimitiveTypeArray(final Object object) {
         final String cacheKey = "isPrimitiveTypeArray-" + object.getClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final Boolean res = object instanceof int[] || object instanceof char[] || object instanceof short[]
-                    || object instanceof long[] || object instanceof byte[] || object instanceof float[] || object instanceof double[];
+            final Boolean res = object instanceof int[] || object instanceof byte[] || object instanceof char[]
+                    || object instanceof short[] || object instanceof long[] || object instanceof float[] || object instanceof double[];
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
