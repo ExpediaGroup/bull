@@ -65,28 +65,6 @@ public class CacheManagerTest {
     }
 
     /**
-     * Tests that the method {@code getFromCache} throw exception when the cache key.
-     */
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testGetFromCacheThrowsExceptionWhenTheCacheKeyIsNull() {
-        // GIVEN
-
-        // WHEN
-        underTest.getFromCache(null, CACHED_OBJECT_CLASS);
-    }
-
-    /**
-     * Tests that the method {@code getFromCache} throw exception when the cached value class is null.
-     */
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testGetFromCacheThrowsExceptionWhenTheCachedValueClassIsNull() {
-        // GIVEN
-
-        // WHEN
-        underTest.getFromCache(CACHE_KEY, null);
-    }
-
-    /**
      * Tests that the method {@code removeFromCache} really removes the object from the cache.
      */
     @Test
