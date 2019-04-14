@@ -93,7 +93,6 @@ public final class ClassUtils {
      * @return true if is primitive or special type, false otherwise
      */
     public boolean isPrimitiveOrSpecialType(final Class<?> clazz) {
-        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "isPrimitiveOrSpecial-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final Boolean res = isPrimitiveType(clazz) || isSpecialType(clazz);
@@ -108,10 +107,9 @@ public final class ClassUtils {
      * @return true if is special type, false otherwise
      */
     public boolean isPrimitiveType(final Class<?> clazz) {
-        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "isPrimitive-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final Boolean res = clazz.isPrimitive() || clazz.equals(String.class) || Number.class.isAssignableFrom(clazz) || clazz.equals(Byte.class) || clazz.isEnum();
+            final Boolean res = clazz.equals(String.class) || clazz.isPrimitive() || clazz.isEnum() || Number.class.isAssignableFrom(clazz);
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
@@ -123,7 +121,6 @@ public final class ClassUtils {
      * @return true if is primitive type array, false otherwise
      */
     public boolean isPrimitiveTypeArray(final Object object) {
-        notNull(object, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "isPrimitiveTypeArray-" + object.getClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final Boolean res = object instanceof int[] || object instanceof char[] || object instanceof short[]
@@ -140,7 +137,7 @@ public final class ClassUtils {
      * @return true if is special type, false otherwise
      */
     public boolean isSpecialType(final Class<?> clazz) {
-        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+//        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "isSpecial-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || Temporal.class.isAssignableFrom(clazz)
