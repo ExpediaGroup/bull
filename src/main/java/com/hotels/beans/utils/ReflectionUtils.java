@@ -26,7 +26,6 @@ import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.MethodPrefix.GET;
 import static com.hotels.beans.constant.MethodPrefix.IS;
 import static com.hotels.beans.constant.MethodPrefix.SET;
-import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -87,8 +86,6 @@ public final class ReflectionUtils {
      * @return the method result
      */
     private Object invokeMethod(final Method method, final Object target, final Object... args) {
-        notNull(method, "method cannot be null!");
-        notNull(target, "target cannot be null!");
         try {
             return method.invoke(target, args);
         } catch (MissingFieldException | MissingMethodException e) {
@@ -403,8 +400,6 @@ public final class ReflectionUtils {
      * @return the generic type class
      */
     public MapType getMapGenericType(final Type fieldType, final String declaringClass, final String fieldName) {
-        notNull(fieldType, "fieldType cannot be null!");
-        notNull(fieldName, "fieldName cannot be null!");
         final Class<?> fieldClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);
         if (isNull(fieldClass) || !Map.class.isAssignableFrom(fieldClass)) {
             throw new IllegalArgumentException(

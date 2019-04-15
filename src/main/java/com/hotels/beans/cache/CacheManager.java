@@ -72,8 +72,6 @@ public final class CacheManager {
      * @return the cached object or {@code Optional.empty()} if not existing.
      */
     public <T> Optional<T> getFromCache(final String cacheKey, final Class<? extends T> objectClass) {
-//        notNull(cacheKey, "cacheKey cannot be null!");
-//        notNull(objectClass, "objectClass cannot be null!");
         return ofNullable(cacheMap.get(cacheKey)).map(objectClass::cast);
     }
 
