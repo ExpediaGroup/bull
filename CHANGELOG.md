@@ -2,9 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.2.7] TBD
-#### Fixed
-* Fixed issue when returning null in a field tranformer
+### [1.2.7] 2019.04.18
+#### Changed
+* Improved optional usage.
+* Fixed bug that was preventing the transformer function to return a null value (see: [Issue 52](https://github.com/HotelsDotCom/bull/issues/52)).  
 
 ### [1.2.6] 2019.04.06
 #### Added
@@ -43,6 +44,11 @@ All notable changes to this project will be documented in this file.
 - Updated `jdk` version to 11 (was 1.8).
 - Updated Travis configuration in order to work with java 11
 - Modified Travis configuration in order to automatically create the GitHub site as soon as a tag is created
+
+### [1.1.13] 2019.04.18
+#### Changed
+* Improved optional usage.
+* Fixed bug that was preventing the transformer function to return a null value (see: [Issue 52](https://github.com/HotelsDotCom/bull/issues/52)).  
 
 ### [1.1.12] 2019.04.06
 #### Added

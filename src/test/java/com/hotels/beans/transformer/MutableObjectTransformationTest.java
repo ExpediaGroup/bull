@@ -27,6 +27,7 @@ import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.error.InvalidBeanException;
@@ -36,6 +37,7 @@ import com.hotels.beans.sample.FromFooSimpleNoGetters;
 import com.hotels.beans.sample.mutable.MutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooInvalid;
 import com.hotels.beans.sample.mutable.MutableToFooNotExistingFields;
+import com.hotels.beans.sample.mutable.MutableToFooSimple;
 import com.hotels.beans.sample.mutable.MutableToFooSimpleNoSetters;
 import com.hotels.beans.sample.mutable.MutableToFooSubClass;
 
@@ -95,6 +97,25 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
+    }
+
+    /**
+     * Test that no exception is thrown if the destination object don't met the constraints and the validation is disabled.
+     */
+    @Test
+    public void testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled() {
+        //GIVEN
+        MutableToFooSubClass mutableToFoo = new MutableToFooSubClass();
+        fromFooSubClass.setId(null);
+        underTest.setValidationDisabled(true);
+
+        //WHEN
+        underTest.transform(fromFooSubClass, mutableToFoo);
+
+        //THEN
+        assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
+        fromFooSubClass.setId(ID);
+        underTest.setValidationDisabled(false);
     }
 
     /**
@@ -169,6 +190,41 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(mutableObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
+    }
+
+    /**
+     * Test transformation field with field transformer.
+     * @param testCaseDescription the test case description
+     * @param fieldToTransform the name of the field on which apply the transformation
+     * @param transformationResult the value to return after the transformation
+     */
+    @Test(dataProvider = "dataTransformationTesting")
+    public void testTransformationWithFieldTransformationWorksProperly(final String testCaseDescription, final String fieldToTransform, final Object transformationResult) {
+        //GIVEN
+        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID);
+        FieldTransformer<Object, Object> fieldTransformer = new FieldTransformer<>(fieldToTransform, val -> transformationResult);
+
+        //WHEN
+        underTest.withFieldTransformer(fieldTransformer);
+        MutableToFooSimple actual = underTest.transform(fromFooSimple, MutableToFooSimple.class);
+
+        //THEN
+        assertThat(actual, hasProperty(fieldToTransform, equalTo(transformationResult)));
+        underTest.removeFieldTransformer(fieldToTransform);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the transformation with field transformer.
+     * @return parameters to be used for testing the transformation with field transformer.
+     */
+    @DataProvider
+    private Object[][] dataTransformationTesting() {
+        return new Object[][] {
+                {"Test that the field transformation returns the expected values.",
+                        NAME_FIELD_NAME, NAME.toLowerCase()},
+                {"Test that the field transformation returns the expected values even if null.",
+                        NAME_FIELD_NAME, null}
+        };
     }
 
     /**

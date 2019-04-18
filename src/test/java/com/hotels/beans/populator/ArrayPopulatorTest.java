@@ -27,7 +27,7 @@ import java.util.stream.IntStream;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -59,10 +59,9 @@ public class ArrayPopulatorTest {
     /**
      * Initializes mock.
      */
-    @BeforeMethod
-    public void beforeMethod() {
+    @BeforeClass
+    public void beforeClass() {
         initMocks(this);
-        MIXED_TO_FOO_STATIC_FIELDS_OBJECTS.setNormalField(VAL_1);
     }
 
     /**
@@ -113,6 +112,7 @@ public class ArrayPopulatorTest {
      * @return an array containing an instance of {@link MixedToFooStaticField}.
      */
     private static MixedToFooStaticField[] createMixedToFooArray() {
+        MIXED_TO_FOO_STATIC_FIELDS_OBJECTS.setNormalField(VAL_1);
         return new MixedToFooStaticField[] {MIXED_TO_FOO_STATIC_FIELDS_OBJECTS};
     }
 }
