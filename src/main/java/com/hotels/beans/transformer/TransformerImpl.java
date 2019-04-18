@@ -39,6 +39,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.constant.ClassType;
@@ -377,9 +378,8 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private Object getTransformedField(final Field field, final String breadcrumb, final Object fieldValue) {
         String fieldName = settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;
-        return ofNullable(settings.getFieldsTransformers().get(fieldName))
-                .map(fieldTransformer -> fieldTransformer.apply(fieldValue))
-                .orElse(fieldValue);
+        Function<Object, Object> transformerFunction = settings.getFieldsTransformers().get(fieldName);
+        return nonNull(transformerFunction) ? transformerFunction.apply(fieldValue) : fieldValue;
     }
 
     /**
