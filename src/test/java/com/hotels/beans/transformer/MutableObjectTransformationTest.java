@@ -210,13 +210,14 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(actual, hasProperty(fieldToTransform, equalTo(transformationResult)));
+        underTest.removeFieldTransformer(fieldToTransform);
     }
 
     /**
      * Creates the parameters to be used for testing the transformation with field transformer.
      * @return parameters to be used for testing the transformation with field transformer.
      */
-    @DataProvider(parallel = true)
+    @DataProvider
     private Object[][] dataTransformationTesting() {
         return new Object[][] {
                 {"Test that the field transformation returns the expected values.",
