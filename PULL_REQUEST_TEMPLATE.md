@@ -22,3 +22,4 @@ Please describe the tests that you ran to verify your changes. Please also note 
 - [ ] My changes generate no new warnings
 - [ ] Any dependent changes have been merged and published in downstream modules
 - [ ] My changes have no bad impacts on performances
+- [ ] Any implemented change has been added in the [CHANGELOG.md](./CHANGELOG.md) file 
