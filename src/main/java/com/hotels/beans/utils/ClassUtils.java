@@ -32,6 +32,7 @@ import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 
+import static com.hotels.beans.utils.ValidationUtils.notNull;
 import static com.hotels.beans.base.Defaults.defaultValue;
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.ClassType.IMMUTABLE;
@@ -108,7 +109,7 @@ public final class ClassUtils {
     public boolean isPrimitiveType(final Class<?> clazz) {
         final String cacheKey = "isPrimitive-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final Boolean res = clazz.equals(String.class) || clazz.isPrimitive() || clazz.isEnum() || Number.class.isAssignableFrom(clazz);
+            final Boolean res = clazz.isPrimitive() || clazz.equals(String.class) || clazz.isEnum() || Number.class.isAssignableFrom(clazz);
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
@@ -120,10 +121,10 @@ public final class ClassUtils {
      * @return true if is primitive type array, false otherwise
      */
     public boolean isPrimitiveTypeArray(final Object object) {
-        final String cacheKey = "isPrimitiveTypeArray-" + object.getClass().getName();
+        final String cacheKey = "isPrimitiveTypeArray-" + object.getClass().getCanonicalName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final Boolean res = object instanceof int[] || object instanceof byte[] || object instanceof char[]
-                    || object instanceof short[] || object instanceof long[] || object instanceof float[] || object instanceof double[];
+            final Boolean res = object instanceof int[] || object instanceof char[] || object instanceof short[]
+                    || object instanceof long[] || object instanceof byte[] || object instanceof float[] || object instanceof double[];
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
@@ -224,6 +225,7 @@ public final class ClassUtils {
      */
     @SuppressWarnings("unchecked")
     public List<Field> getPrivateFinalFields(final Class<?> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "PrivateFinalFields-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -> {
             final List<Field> res = new ArrayList<>();
@@ -246,6 +248,7 @@ public final class ClassUtils {
      * @return the total matching item.
      */
     public int getTotalFields(final Class<?> clazz, final Predicate<? super Field> predicate) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "TotalFields-" + clazz.getName() + '-' + predicate;
         return cacheManager.getFromCache(cacheKey, Integer.class).orElseGet(() -> {
             List<Field> declaredFields = getDeclaredFields(clazz, true);
@@ -274,6 +277,7 @@ public final class ClassUtils {
      */
     @SuppressWarnings("unchecked")
     public List<Field> getPrivateFields(final Class<?> clazz, final boolean skipFinal) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "PrivateFields-" + clazz.getName() + "-skipFinal-" + skipFinal;
         return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -> {
             final List<Field> res = new ArrayList<>();
@@ -368,6 +372,7 @@ public final class ClassUtils {
      * @return the all args constructor
      */
     public <K> Constructor getAllArgsConstructor(final Class<K> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "AllArgsConstructor-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
             Constructor constructor = getAllArgsConstructor(clazz.getDeclaredConstructors());
@@ -437,6 +442,7 @@ public final class ClassUtils {
      * @return true if has at least one setter method, false otherwise
      */
     public boolean hasSetterMethods(final Class<?> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "HasSetterMethods-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class)
                 .orElseGet(() -> {
@@ -452,6 +458,7 @@ public final class ClassUtils {
      * @return the class declared methods.
      */
     private Method[] getDeclaredMethods(final Class<?> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "DeclaredMethods-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Method[].class)
                 .orElseGet(() -> {
@@ -467,6 +474,7 @@ public final class ClassUtils {
      * @return true if it has private final field, false otherwise.
      */
     public boolean hasFinalFields(final Class<?> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         return hasFieldsMatchingCondition(clazz, IS_FINAL_AND_NOT_STATIC_FIELD, "HasFinalNotStaticFields-");
     }
 
@@ -476,6 +484,7 @@ public final class ClassUtils {
      * @return true if it has private final field, false otherwise.
      */
     private boolean hasNotFinalFields(final Class<?> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         return hasFieldsMatchingCondition(clazz, IS_NOT_FINAL_AND_NOT_STATIC_FIELD, "HasNotFinalNotStaticFields-");
     }
 
@@ -579,6 +588,7 @@ public final class ClassUtils {
      */
     @SuppressWarnings("unchecked")
     public List<Method> getSetterMethods(final Class<?> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "SetterMethods-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -> {
             final List<Method> setterMethods = new LinkedList<>();
