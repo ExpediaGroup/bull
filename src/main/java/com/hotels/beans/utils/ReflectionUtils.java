@@ -16,13 +16,18 @@
 
 package com.hotels.beans.utils;
 
-import com.hotels.beans.cache.CacheManager;
-import com.hotels.beans.error.MissingFieldException;
-import com.hotels.beans.error.MissingMethodException;
-import com.hotels.beans.model.EmptyValue;
-import com.hotels.beans.model.ItemType;
-import com.hotels.beans.model.MapElemType;
-import com.hotels.beans.model.MapType;
+import static java.lang.reflect.Modifier.isPublic;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
+
+import static org.apache.commons.lang3.StringUtils.capitalize;
+
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.beans.constant.MethodPrefix.GET;
+import static com.hotels.beans.constant.MethodPrefix.IS;
+import static com.hotels.beans.constant.MethodPrefix.SET;
+import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -36,16 +41,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
-import static com.hotels.beans.constant.MethodPrefix.GET;
-import static com.hotels.beans.constant.MethodPrefix.IS;
-import static com.hotels.beans.constant.MethodPrefix.SET;
-import static com.hotels.beans.utils.ValidationUtils.notNull;
-import static java.lang.reflect.Modifier.isPublic;
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-import static java.util.Optional.ofNullable;
-import static org.apache.commons.lang3.StringUtils.capitalize;
+import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.error.MissingFieldException;
+import com.hotels.beans.error.MissingMethodException;
+import com.hotels.beans.model.EmptyValue;
+import com.hotels.beans.model.ItemType;
+import com.hotels.beans.model.MapElemType;
+import com.hotels.beans.model.MapType;
 
 /**
  * Reflection class utils.
@@ -72,7 +74,7 @@ public final class ReflectionUtils {
     private final CacheManager cacheManager;
 
     /**
-     * Name of method inside the Builder Class
+     * Name of method inside the Builder Class.
      */
     private final String nameOfBuilderMethod = "build";
 
@@ -197,8 +199,12 @@ public final class ReflectionUtils {
         });
     }
 
-
-    public Method getBuildMethod(Class<?> builderClass) {
+    /**
+     *  Get build method inside the class.
+     * @param builderClass Class  whit a build method (see Builder Pattern)
+     * @return Build method if present
+     */
+    public Method getBuildMethod(final Class<?> builderClass) {
         final String cacheKey = "BuildMethod-" + builderClass.getCanonicalName();
         return ofNullable(cacheManager.getFromCache(cacheKey, Method.class)).orElseGet(() -> {
             try {
@@ -206,7 +212,7 @@ public final class ReflectionUtils {
                 cacheManager.cacheObject(cacheKey, method);
                 return method;
             } catch (NoSuchMethodException e) {
-                throw new MissingMethodException(String.format("Error while getting method $1 in class $2 " , nameOfBuilderMethod, builderClass.getName()) + e.getMessage());
+                throw new MissingMethodException(String.format("Error while getting method $1 in class $2 ", nameOfBuilderMethod, builderClass.getName()) + e.getMessage());
             }
         });
     }

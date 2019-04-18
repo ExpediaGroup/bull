@@ -33,7 +33,7 @@ public enum ClassType {
      */
     MIXED,
     /**
-     * The class could be instantiated with a Builder
+     * The class could be instantiated with a Builder.
      */
     BUILDER;
 

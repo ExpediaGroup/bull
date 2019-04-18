@@ -16,15 +16,18 @@
 
 package com.hotels.beans.transformer;
 
-import com.hotels.beans.sample.builder.BuilderToFoo;
-import com.hotels.beans.sample.builder.LombokBuilderToFoo;
+import static org.mockito.MockitoAnnotations.initMocks;
+import static org.junit.Assert.assertThat;
+
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.sample.builder.BuilderToFoo;
+import com.hotels.beans.sample.builder.LombokBuilderToFoo;
+
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
-import static org.junit.Assert.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+
 
 /**
  * Unit test for all {@link Transformer} functions related to Object based on Builder Pattern.
