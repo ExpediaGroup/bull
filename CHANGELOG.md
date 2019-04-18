@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.2.7] TBD
+#### Fixed
+* Fixed issue when returning null in a field tranformer
+
 ### [1.2.6] 2019.04.06
 #### Added
 * Implemented possibility to use static transformation with a given transformer (see: [Issue 44](https://github.com/HotelsDotCom/bull/issues/44)).
