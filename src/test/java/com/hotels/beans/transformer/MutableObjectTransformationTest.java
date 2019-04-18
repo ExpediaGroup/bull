@@ -98,6 +98,25 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     }
 
     /**
+     * Test that no exception is thrown if the destination object don't met the constraints and the validation is disabled.
+     */
+    @Test
+    public void testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled() {
+        //GIVEN
+        MutableToFooSubClass mutableToFoo = new MutableToFooSubClass();
+        fromFooSubClass.setId(null);
+        underTest.setValidationDisabled(true);
+
+        //WHEN
+        underTest.transform(fromFooSubClass, mutableToFoo);
+
+        //THEN
+        assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
+        fromFooSubClass.setId(ID);
+        underTest.setValidationDisabled(false);
+    }
+
+    /**
      * Test that a given field transformer function is applied only to a specific field even if there are other ones with same name.
      */
     @Test

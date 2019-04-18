@@ -39,6 +39,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.constant.ClassType;
@@ -350,19 +351,16 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <T> Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final Field field, final boolean isFieldTransformerDefined) {
         Object fieldValue = null;
-        if (classUtils.isPrimitiveType(sourceObj.getClass())) {
-            fieldValue = sourceObj;
-        } else {
-            try {
-                fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());
-            } catch (MissingFieldException e) {
-                if (!isFieldTransformerDefined && !settings.isSetDefaultValue()) {
-                    throw e;
-                }
-            } catch (Exception e) {
-                if (!isFieldTransformerDefined) {
-                    throw e;
-                }
+        try {
+//            fieldValue = classUtils.isPrimitiveType(sourceObj.getClass()) ? sourceObj : reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());
+            fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());
+        } catch (MissingFieldException e) {
+            if (!isFieldTransformerDefined && !settings.isSetDefaultValue()) {
+                throw e;
+            }
+        } catch (Exception e) {
+            if (!isFieldTransformerDefined) {
+                throw e;
             }
         }
         return fieldValue;
@@ -377,9 +375,8 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private Object getTransformedField(final Field field, final String breadcrumb, final Object fieldValue) {
         String fieldName = settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;
-        return ofNullable(settings.getFieldsTransformers().get(fieldName))
-                .map(fieldTransformer -> fieldTransformer.apply(fieldValue))
-                .orElse(fieldValue);
+        Function<Object, Object> transformerFunction = settings.getFieldsTransformers().get(fieldName);
+        return nonNull(transformerFunction) ? transformerFunction.apply(fieldValue) : fieldValue;
     }
 
     /**
