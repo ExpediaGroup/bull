@@ -13,25 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Immutable Bean package.
+ */
 
 package com.hotels.beans.sample.builder;
-
-import java.math.BigInteger;
-import java.util.List;
-
-import com.hotels.beans.sample.FromSubFoo;
-
-import lombok.Builder;
-
-/**
- * Sample class with Lombok Builder
- */
-@Builder
-public class LombokBuilderToFoo {
-    private final String name;
-    private BigInteger id;
-    private final List<FromSubFoo> nestedObjectList;
-    private final List<String> list;
-    private final FromSubFoo nestedObject;
-
-}

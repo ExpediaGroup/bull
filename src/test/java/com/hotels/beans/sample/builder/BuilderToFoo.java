@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hotels.beans.sample.builder;
 
-import com.hotels.beans.sample.mutable.MutableToSubFoo;
-import lombok.Getter;
-import lombok.Setter;
+package com.hotels.beans.sample.builder;
 
 import java.math.BigInteger;
 import java.util.List;
+
+import com.hotels.beans.sample.mutable.MutableToSubFoo;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -31,29 +33,23 @@ public class BuilderToFoo {
     private List<MutableToSubFoo> nestedObjectList;
     private MutableToSubFoo nestedObject;
 
+    /**
+     * Sample Class instantiable with builder.
+     */
+    static class Builder {
 
+        private String name;
+        private BigInteger id;
+        private List<String> list;
+        private List<MutableToSubFoo> nestedObjectList;
+        private MutableToSubFoo nestedObject;
 
-    private BuilderToFoo() {}
-
-    // getters
-
-      static class Builder {
-
-        public Builder(){};
-
-         private String name;
-         private BigInteger id;
-         private List<String> list;
-         private List<MutableToSubFoo> nestedObjectList;
-         private MutableToSubFoo nestedObject;
-
-
-        public Builder withName(String name) {
+        public Builder withName(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder withId(BigInteger id) {
+        public Builder withId(final BigInteger id) {
             this.id = id;
             return this;
         }

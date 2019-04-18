@@ -16,9 +16,31 @@
 
 package com.hotels.beans.utils;
 
-import com.hotels.beans.cache.CacheManager;
-import com.hotels.beans.constant.ClassType;
-import com.hotels.beans.error.InvalidBeanException;
+import static java.lang.reflect.Modifier.isFinal;
+import static java.lang.reflect.Modifier.isPrivate;
+import static java.lang.reflect.Modifier.isPublic;
+import static java.lang.reflect.Modifier.isStatic;
+import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
+import static java.util.Collections.max;
+import static java.util.Comparator.comparing;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.toList;
+
+import static org.apache.commons.lang3.ArrayUtils.isEmpty;
+
+import static com.hotels.beans.utils.ValidationUtils.notNull;
+import static com.hotels.beans.base.Defaults.defaultValue;
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.beans.constant.ClassType.IMMUTABLE;
+import static com.hotels.beans.constant.ClassType.MIXED;
+import static com.hotels.beans.constant.ClassType.MUTABLE;
+import static com.hotels.beans.constant.ClassType.BUILDER;
+import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_FIELD;
+import static com.hotels.beans.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
+import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -35,29 +57,9 @@ import java.util.Locale;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import static com.hotels.beans.base.Defaults.defaultValue;
-import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
-import static com.hotels.beans.constant.ClassType.BUILDER;
-import static com.hotels.beans.constant.ClassType.IMMUTABLE;
-import static com.hotels.beans.constant.ClassType.MIXED;
-import static com.hotels.beans.constant.ClassType.MUTABLE;
-import static com.hotels.beans.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
-import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
-import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_FIELD;
-import static com.hotels.beans.utils.ValidationUtils.notNull;
-import static java.lang.reflect.Modifier.isFinal;
-import static java.lang.reflect.Modifier.isPrivate;
-import static java.lang.reflect.Modifier.isPublic;
-import static java.lang.reflect.Modifier.isStatic;
-import static java.util.Arrays.asList;
-import static java.util.Arrays.stream;
-import static java.util.Collections.max;
-import static java.util.Comparator.comparing;
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-import static java.util.Optional.ofNullable;
-import static java.util.stream.Collectors.toList;
-import static org.apache.commons.lang3.ArrayUtils.isEmpty;
+import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.constant.ClassType;
+import com.hotels.beans.error.InvalidBeanException;
 
 /**
  * Reflection utils for Class objects.
@@ -370,7 +372,11 @@ public final class ClassUtils {
         });
     }
 
-
+    /**
+     * Check if nested class containt a valid build method.
+     * @param superclass class to be instantiated with the build pattern
+     * @return true if we find in nested class a valid build method
+     */
     private boolean isValidBuildMethod(final Class superclass) {
         final String build = "build";
         String cacheKey = "build-method-" + superclass.getCanonicalName();
@@ -386,11 +392,11 @@ public final class ClassUtils {
     }
 
     /**
-     * Get Nested Class defined inside the clazz parameter
-     * @param clazz
+     * Get Nested Class defined inside the clazz parameter.
+     * @param clazz Class where we search for a nested class
      * @return Nested class if present or an empty List
      */
-    public List<Class> getNestedClass(Class<?> clazz) {
+    public List<Class> getNestedClass(final Class<?> clazz) {
         notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         String cacheKey = "nested-classes-" + clazz.getCanonicalName();
         return ofNullable(cacheManager.getFromCache(cacheKey, List.class)).orElseGet(() -> {

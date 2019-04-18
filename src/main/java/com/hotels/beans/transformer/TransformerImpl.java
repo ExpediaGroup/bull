@@ -16,10 +16,12 @@
 
 package com.hotels.beans.transformer;
 
-import com.hotels.beans.annotation.ConstructorArg;
-import com.hotels.beans.constant.ClassType;
-import com.hotels.beans.error.InvalidBeanException;
-import com.hotels.beans.error.MissingFieldException;
+import static java.util.Arrays.stream;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.IntStream.range;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -28,6 +30,13 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Optional;
+
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
+import com.hotels.beans.annotation.ConstructorArg;
+import com.hotels.beans.constant.ClassType;
+import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.beans.error.MissingFieldException;
 
 import static com.hotels.beans.base.Defaults.defaultValue;
 import static com.hotels.beans.constant.ClassType.BUILDER;
@@ -38,13 +47,6 @@ import static com.hotels.beans.constant.Punctuation.DOT;
 import static com.hotels.beans.constant.Punctuation.LPAREN;
 import static com.hotels.beans.constant.Punctuation.RPAREN;
 import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
-import static java.util.Arrays.stream;
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-import static java.util.Optional.ofNullable;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.IntStream.range;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
@@ -68,8 +70,8 @@ public class TransformerImpl extends AbstractTransformer {
             } catch (Exception e) {
                 throw new InvalidBeanException(e.getMessage(), e);
             }
-        } else if (classType.is(BUILDER)){
-            Object builder = null;
+        } else if (classType.is(BUILDER)) {
+            Object builder;
             Class<?> builderClass = targetClass.getDeclaredClasses()[0];
             Constructor<?> declaredConstructor = builderClass.getDeclaredConstructors()[0];
             declaredConstructor.setAccessible(true);
@@ -78,15 +80,17 @@ public class TransformerImpl extends AbstractTransformer {
             } catch (InstantiationException e) {
                 throw new InvalidBeanException("Cannot instantiate class: " + builderClass.getName(), e);
             } catch (IllegalAccessException e) {
-                throw new InvalidBeanException("Illegal access exception to default constructor defined for class: " + builderClass.getName(), e);
+                throw new InvalidBeanException("Illegal access exception to default constructor defined for class: "
+                        + builderClass.getName(), e);
             } catch (InvocationTargetException e) {
-                throw new InvalidBeanException(String.format("Error while invoking default constructor defined for class: $1. Are you sure that only default constructor is defined in the builder ?" , builderClass.getName()), e);
+                throw new InvalidBeanException(String.format("Error while invoking default constructor defined for "
+                + " class: $1. Are you sure that only default constructor is defined in the builder ?", builderClass.getName()), e);
             }
             injectAllFields(sourceObj, builder, breadcrumb);
             Method method;
             method = reflectionUtils.getBuildMethod(builderClass);
             method.setAccessible(true);
-            k = (K)reflectionUtils.invokeMethod(method, builder);
+            k = (K) reflectionUtils.invokeMethod(method, builder);
         } else {
             k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass), breadcrumb);
             if (classType.is(MIXED)) {
