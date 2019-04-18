@@ -59,7 +59,7 @@ public class CacheManagerTest {
         Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        assertFalse(actual.isEmpty());
+        assertTrue(actual.isPresent());
         assertEquals(CACHED_OBJECT_CLASS, actual.get().getClass());
         assertSame(CACHED_VALUE, actual.get());
     }
@@ -77,6 +77,6 @@ public class CacheManagerTest {
         Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        assertTrue(actual.isEmpty());
+        assertFalse(actual.isPresent());
     }
 }
