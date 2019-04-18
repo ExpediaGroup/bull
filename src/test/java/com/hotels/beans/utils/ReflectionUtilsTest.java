@@ -36,15 +36,14 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigInteger;
-import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
 
 import com.hotels.beans.error.MissingMethodException;
 import com.hotels.beans.error.MissingFieldException;
@@ -73,8 +72,8 @@ public class ReflectionUtilsTest {
     /**
      * Initializes mock.
      */
-    @BeforeMethod
-    public void beforeMethod() {
+    @BeforeClass
+    public void beforeClass() {
         initMocks(this);
     }
 
@@ -159,17 +158,6 @@ public class ReflectionUtilsTest {
 
         // WHEN
         underTest.handleReflectionException(exception);
-    }
-
-    /**
-     * Tests that the method {@code getMapGenericType} throws Exception when the given type is not a map.
-     */
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testGetMapGenericTypeThrowsIllegalArgumentExceptionWhenTheGivenTypeIsNotAMap() {
-        // GIVEN
-
-        // WHEN
-        underTest.getMapGenericType(List.class, null, LIST_FIELD_NAME);
     }
 
     /**
