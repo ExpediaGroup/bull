@@ -19,12 +19,11 @@ package com.hotels.beans.cache;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
-import static com.hotels.beans.utils.ValidationUtils.notNull;
-
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import java.util.Map;
+import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,12 +31,12 @@ import lombok.Getter;
 /**
  * Cache Utils class.
  */
-<span class="fc" id="L35">@AllArgsConstructor(access = PROTECTED)</span>
+<span class="fc" id="L34">@AllArgsConstructor(access = PROTECTED)</span>
 public final class CacheManager {
     /**
      * Cache store.
      */
-<span class="nc" id="L40">    @Getter(PRIVATE)</span>
+<span class="nc" id="L39">    @Getter(PRIVATE)</span>
     private final Map&lt;String, Object&gt; cacheMap;
 
     /**
@@ -47,8 +46,8 @@ public final class CacheManager {
      * @param &lt;T&gt; the class object type.
      */
     public &lt;T&gt; void cacheObject(final String cacheKey, final T object) {
-<span class="fc" id="L50">        cacheObject(cacheKey, object, null);</span>
-<span class="fc" id="L51">    }</span>
+<span class="fc" id="L49">        cacheObject(cacheKey, object, null);</span>
+<span class="fc" id="L50">    }</span>
 
     /**
      * Caches the given object.
@@ -58,24 +57,22 @@ public final class CacheManager {
      * @param &lt;T&gt; the class object type.
      */
     public &lt;T&gt; void cacheObject(final String cacheKey, final T object, final Object defaultValue) {
-<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (nonNull(object)) {</span>
-<span class="fc" id="L62">            cacheMap.put(cacheKey, object);</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        } else if (nonNull(defaultValue)) {</span>
-<span class="fc" id="L64">            cacheMap.put(cacheKey, defaultValue);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (nonNull(object)) {</span>
+<span class="fc" id="L61">            cacheMap.put(cacheKey, object);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        } else if (nonNull(defaultValue)) {</span>
+<span class="fc" id="L63">            cacheMap.put(cacheKey, defaultValue);</span>
         }
-<span class="fc" id="L66">    }</span>
+<span class="fc" id="L65">    }</span>
 
     /**
      * Retrieves an object from cache.
      * @param cacheKey the cache key.
      * @param objectClass the class of the object to return.
      * @param &lt;T&gt; the class object type.
-     * @return the cached object.
+     * @return the cached object or {@code Optional.empty()} if not existing.
      */
-    public &lt;T&gt; T getFromCache(final String cacheKey, final Class&lt;? extends T&gt; objectClass) {
-<span class="fc" id="L76">        notNull(cacheKey, &quot;cacheKey cannot be null!&quot;);</span>
-<span class="fc" id="L77">        notNull(objectClass, &quot;objectClass cannot be null!&quot;);</span>
-<span class="fc" id="L78">        return ofNullable(cacheMap.get(cacheKey)).map(objectClass::cast).orElse(null);</span>
+    public &lt;T&gt; Optional&lt;T&gt; getFromCache(final String cacheKey, final Class&lt;? extends T&gt; objectClass) {
+<span class="fc" id="L75">        return ofNullable(cacheMap.get(cacheKey)).map(objectClass::cast);</span>
     }
 
     /**
@@ -83,7 +80,7 @@ public final class CacheManager {
      * @param cacheKey the cache key.
      */
     public void removeFromCache(final String cacheKey) {
-<span class="fc" id="L86">        ofNullable(cacheKey).ifPresent(cacheMap::remove);</span>
-<span class="fc" id="L87">    }</span>
+<span class="fc" id="L83">        ofNullable(cacheKey).ifPresent(cacheMap::remove);</span>
+<span class="fc" id="L84">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

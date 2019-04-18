@@ -183,9 +183,9 @@
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>     <strong class="jxr_keyword">private</strong> Object[][] dataCompositeFieldNameTesting() {
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[][] {
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>                 {<span class="jxr_string">"Test that, in case a destination object field is contained into a nested object of the source field, defining a composite FieldMapping"</span>
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>                         + <span class="jxr_string">"the field is correctly valorized."</span>, fromFoo, fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObject().getPhoneNumbers()},
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>                         + <span class="jxr_string">"the field is correctly set."</span>, fromFoo, fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObject().getPhoneNumbers()},
 <a class="jxr_linenumber" name="L179" href="#L179">179</a>                 {<span class="jxr_string">"Test that, in case a destination object field is contained into a nested object of the source field, defining a composite {@link FieldMapping}"</span>
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>                         + <span class="jxr_string">" the field is correctly  valorized even if some of them are null."</span>, fromFooWithNullProperties, fromFooWithNullProperties.getName(),
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>                         + <span class="jxr_string">" the field is correctly set even if some of them are null."</span>, fromFooWithNullProperties, fromFooWithNullProperties.getName(),
 <a class="jxr_linenumber" name="L181" href="#L181">181</a>                         fromFooWithNullProperties.getId(), <strong class="jxr_keyword">null</strong>}
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>         };
 <a class="jxr_linenumber" name="L183" href="#L183">183</a>     }
@@ -433,9 +433,9 @@
 <a class="jxr_linenumber" name="L425" href="#L425">425</a>                 <span class="jxr_string">"Constructor invoked with arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String). "</span>
 <a class="jxr_linenumber" name="L426" href="#L426">426</a>                         + <span class="jxr_string">"Double check that each %s's field have the same type and name than the source object: %s otherwise specify a transformer configuration. "</span>
 <a class="jxr_linenumber" name="L427" href="#L427">427</a>                         + <span class="jxr_string">"Error message: argument type mismatch"</span>;
-<a class="jxr_linenumber" name="L428" href="#L428">428</a>         String targetClassName = targetClass.getCanonicalName();
+<a class="jxr_linenumber" name="L428" href="#L428">428</a>         String targetClassName = targetClass.getName();
 <a class="jxr_linenumber" name="L429" href="#L429">429</a>         String expectedExceptionMessage =
-<a class="jxr_linenumber" name="L430" href="#L430">430</a>                 format(expectedExceptionMessageFormat, targetClassName, targetClassName, targetClass.getSimpleName(), fromFooSimple.getClass().getCanonicalName());
+<a class="jxr_linenumber" name="L430" href="#L430">430</a>                 format(expectedExceptionMessageFormat, targetClassName, targetClassName, targetClass.getSimpleName(), fromFooSimple.getClass().getName());
 <a class="jxr_linenumber" name="L431" href="#L431">431</a> 
 <a class="jxr_linenumber" name="L432" href="#L432">432</a>         <em class="jxr_comment">//WHEN</em>
 <a class="jxr_linenumber" name="L433" href="#L433">433</a>         Exception raisedException = <strong class="jxr_keyword">null</strong>;

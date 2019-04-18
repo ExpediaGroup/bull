@@ -17,7 +17,6 @@
 package com.hotels.beans.utils;
 
 import static java.util.Objects.isNull;
-import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 
 import static javax.validation.Validation.buildDefaultValidatorFactory;
@@ -48,9 +47,9 @@ public class ValidationUtils {
     /**
      * Default constructor.
      */
-<span class="fc" id="L51">    public ValidationUtils() {</span>
-<span class="fc" id="L52">        this.cacheManager = getCacheManager(&quot;validationUtils&quot;);</span>
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L50">    public ValidationUtils() {</span>
+<span class="fc" id="L51">        this.cacheManager = getCacheManager(&quot;validationUtils&quot;);</span>
+<span class="fc" id="L52">    }</span>
 
     /**
      * Validate that the specified argument is not {@code null};
@@ -60,10 +59,10 @@ public class ValidationUtils {
      * @throws IllegalArgumentException if the object is {@code null}
      */
     public static &lt;T&gt; void notNull(final T object) {
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (isNull(object)) {</span>
-<span class="fc" id="L64">            throw new IllegalArgumentException();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (isNull(object)) {</span>
+<span class="fc" id="L63">            throw new IllegalArgumentException();</span>
         }
-<span class="fc" id="L66">    }</span>
+<span class="fc" id="L65">    }</span>
 
     /**
      * Validate that the specified argument is not {@code null};
@@ -74,10 +73,10 @@ public class ValidationUtils {
      * @throws IllegalArgumentException if the object is {@code null}
      */
     public static &lt;T&gt; void notNull(final T object, final String message) {
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (isNull(object)) {</span>
-<span class="fc" id="L78">            throw new IllegalArgumentException(message);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (isNull(object)) {</span>
+<span class="fc" id="L77">            throw new IllegalArgumentException(message);</span>
         }
-<span class="fc" id="L80">    }</span>
+<span class="fc" id="L79">    }</span>
 
     /**
      * Checks if an object is valid.
@@ -86,30 +85,30 @@ public class ValidationUtils {
      * @throws InvalidBeanException {@link InvalidBeanException} if the validation fails
      */
     public final &lt;K&gt; void validate(final K k) {
-<span class="fc" id="L89">        final Set&lt;ConstraintViolation&lt;Object&gt;&gt; constraintViolations = getValidator().validate(k);</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (!constraintViolations.isEmpty()) {</span>
-<span class="fc" id="L91">            final String errors = constraintViolations.stream()</span>
-<span class="fc" id="L92">                    .map(cv -&gt; cv.getRootBeanClass().getCanonicalName()</span>
-<span class="fc" id="L93">                            + DOT.getSymbol()</span>
-<span class="fc" id="L94">                            + cv.getPropertyPath()</span>
+<span class="fc" id="L88">        final Set&lt;ConstraintViolation&lt;Object&gt;&gt; constraintViolations = getValidator().validate(k);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (!constraintViolations.isEmpty()) {</span>
+<span class="fc" id="L90">            final String errors = constraintViolations.stream()</span>
+<span class="fc" id="L91">                    .map(cv -&gt; cv.getRootBeanClass().getName()</span>
+<span class="fc" id="L92">                            + DOT.getSymbol()</span>
+<span class="fc" id="L93">                            + cv.getPropertyPath()</span>
                             + SPACE
-<span class="fc" id="L96">                            + cv.getMessage())</span>
-<span class="fc" id="L97">                    .collect(joining(SEMICOLON.getSymbol()));</span>
-<span class="fc" id="L98">            throw new InvalidBeanException(errors);</span>
+<span class="fc" id="L95">                            + cv.getMessage())</span>
+<span class="fc" id="L96">                    .collect(joining(SEMICOLON.getSymbol()));</span>
+<span class="fc" id="L97">            throw new InvalidBeanException(errors);</span>
         }
-<span class="fc" id="L100">    }</span>
+<span class="fc" id="L99">    }</span>
 
     /**
      * Creates the validator.
      * @return a {@link Validator} instance.
      */
     private Validator getValidator() {
-<span class="fc" id="L107">        String cacheKey = &quot;BeanValidator&quot;;</span>
-<span class="fc" id="L108">        return ofNullable(cacheManager.getFromCache(cacheKey, Validator.class))</span>
-<span class="fc" id="L109">                .orElseGet(() -&gt; {</span>
-<span class="fc" id="L110">                    Validator validator = buildDefaultValidatorFactory().getValidator();</span>
-<span class="fc" id="L111">                    cacheManager.cacheObject(cacheKey, validator);</span>
-<span class="fc" id="L112">                    return validator;</span>
+<span class="fc" id="L106">        String cacheKey = &quot;BeanValidator&quot;;</span>
+<span class="fc" id="L107">        return cacheManager.getFromCache(cacheKey, Validator.class)</span>
+<span class="fc" id="L108">                .orElseGet(() -&gt; {</span>
+<span class="fc" id="L109">                    Validator validator = buildDefaultValidatorFactory().getValidator();</span>
+<span class="fc" id="L110">                    cacheManager.cacheObject(cacheKey, validator);</span>
+<span class="fc" id="L111">                    return validator;</span>
                 });
     }
 }

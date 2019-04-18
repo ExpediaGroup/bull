@@ -18,8 +18,6 @@ package com.hotels.beans.base;
 
 import static java.lang.Boolean.FALSE;
 
-import static com.hotels.beans.utils.ValidationUtils.notNull;
-
 import static com.hotels.beans.utils.ClassUtils.isBoolean;
 import static com.hotels.beans.utils.ClassUtils.isByte;
 import static com.hotels.beans.utils.ClassUtils.isChar;
@@ -44,22 +42,21 @@ public final class Defaults {
      * @return the default value of a primitive type.
      */
     public static Object defaultValue(final Class&lt;?&gt; type) {
-<span class="fc" id="L47">        notNull(type, &quot;type cannot be null!&quot;);</span>
-<span class="fc" id="L48">        Object res = null;</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (isBoolean(type)) {</span>
-<span class="fc" id="L50">            res = FALSE;</span>
-<span class="fc bfc" id="L51" title="All 2 branches covered.">        } else if (isChar(type)) {</span>
-<span class="fc" id="L52">            res = '\u0000';</span>
-<span class="fc bfc" id="L53" title="All 6 branches covered.">        } else if (isByte(type) || isInt(type) || isShort(type)) {</span>
-<span class="fc" id="L54">            res = 0;</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">        } else if (isLong(type)) {</span>
-<span class="fc" id="L56">            res = 0L;</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">        } else if (isFloat(type)) {</span>
-<span class="fc" id="L58">            res = 0.0F;</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">        } else if (isDouble(type)) {</span>
-<span class="fc" id="L60">            res = 0.0D;</span>
+<span class="fc" id="L45">        Object res = null;</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (isBoolean(type)) {</span>
+<span class="fc" id="L47">            res = FALSE;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        } else if (isChar(type)) {</span>
+<span class="fc" id="L49">            res = '\u0000';</span>
+<span class="fc bfc" id="L50" title="All 6 branches covered.">        } else if (isByte(type) || isInt(type) || isShort(type)) {</span>
+<span class="fc" id="L51">            res = 0;</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        } else if (isLong(type)) {</span>
+<span class="fc" id="L53">            res = 0L;</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        } else if (isFloat(type)) {</span>
+<span class="fc" id="L55">            res = 0.0F;</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        } else if (isDouble(type)) {</span>
+<span class="fc" id="L57">            res = 0.0D;</span>
         }
-<span class="fc" id="L62">        return res;</span>
+<span class="fc" id="L59">        return res;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
