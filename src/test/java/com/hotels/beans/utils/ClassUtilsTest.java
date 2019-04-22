@@ -37,7 +37,7 @@ import java.util.function.Predicate;
 import javax.validation.constraints.NotNull;
 
 import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -94,8 +94,8 @@ public class ClassUtilsTest {
     /**
      * Initializes mock.
      */
-    @BeforeMethod
-    public void beforeMethod() {
+    @BeforeClass
+    public void beforeClass() {
         initMocks(this);
     }
 
@@ -568,15 +568,14 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getClassType}.
-     * @return parameters to be used for testing the the method {@code getClassType}.     FromFooWithBuilder
+     * @return parameters to be used for testing the the method {@code getClassType}.
      */
     @DataProvider
     private Object[][] dataGetClassTypeTesting() {
         return new Object[][] {
                 {"Tests that the method returns immutable if the given class is immutable", ImmutableToFoo.class, ClassType.IMMUTABLE},
                 {"Tests that the method returns mutable if the given class is mutable", MutableToFoo.class, ClassType.MUTABLE},
-                {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED},
-                {"Test that the method returns builder if the given class is a Builder", FromFooWithBuilder.class, ClassType.BUILDER }
+                {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED}
         };
     }
 
