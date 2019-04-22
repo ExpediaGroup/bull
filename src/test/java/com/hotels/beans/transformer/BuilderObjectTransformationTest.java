@@ -74,7 +74,7 @@ public class BuilderObjectTransformationTest extends AbstractTransformerTest {
     }
 
 //    @Test
-//    public void testManualBuilderWithTwoContructor() {
+//    public void testManualBuilderWithTwoConstructor() {
 //        //GIVEN
 //
 //        //WHEN
