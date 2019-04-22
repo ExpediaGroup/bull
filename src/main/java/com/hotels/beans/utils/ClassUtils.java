@@ -30,6 +30,7 @@ import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
 import static org.apache.commons.lang3.ArrayUtils.isEmpty;
+import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 
 import static com.hotels.beans.utils.ValidationUtils.notNull;
 import static com.hotels.beans.base.Defaults.defaultValue;
@@ -359,7 +360,7 @@ public final class ClassUtils {
     public <K> boolean usesBuilderPattern(final Constructor constructor, final Class<K> targetClass) {
         final String cacheKey = "UsesBuilderPattern-" + constructor.getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final boolean res = !isPublic(constructor.getModifiers()) && !getNestedClass(targetClass).isEmpty()
+            final boolean res = !isPublic(constructor.getModifiers()) && isNotEmpty(getDeclaredClasses(targetClass))
                     && isValidBuildMethod(targetClass);
             cacheManager.cacheObject(cacheKey, res);
             return res;
@@ -375,7 +376,7 @@ public final class ClassUtils {
         final String build = "build";
         String cacheKey = "build-method-" + superclass.getCanonicalName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-                    List<Class> nestedClasses = getNestedClass(superclass);
+                    List<Class> nestedClasses = asList(getDeclaredClasses(superclass));
                     boolean res =
                             !nestedClasses.isEmpty()
                                     && stream(getDeclaredMethods(nestedClasses.get(0)))
@@ -386,15 +387,15 @@ public final class ClassUtils {
     }
 
     /**
-     * Get Nested Class defined inside the clazz parameter.
-     * @param clazz Class where we search for a nested class
-     * @return Nested class if present or an empty List
+     * Retrieves all classes defined into the given one.
+     * @param clazz class where we search for a nested class
+     * @return  all classes defined into the given one
      */
-    public List<Class> getNestedClass(final Class<?> clazz) {
+    public Class[] getDeclaredClasses(final Class<?> clazz) {
         notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         String cacheKey = "nested-classes-" + clazz.getCanonicalName();
-        return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -> {
-            List<Class<?>> declaredClasses = asList(clazz.getDeclaredClasses());
+        return cacheManager.getFromCache(cacheKey, Class[].class).orElseGet(() -> {
+            Class[] declaredClasses = clazz.getDeclaredClasses();
             cacheManager.cacheObject(cacheKey, declaredClasses);
             return declaredClasses;
         });
