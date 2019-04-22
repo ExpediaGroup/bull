@@ -18,8 +18,6 @@ package com.hotels.beans.base;
 
 import static java.lang.Boolean.FALSE;
 
-import static com.hotels.beans.utils.ValidationUtils.notNull;
-
 import static com.hotels.beans.utils.ClassUtils.isBoolean;
 import static com.hotels.beans.utils.ClassUtils.isByte;
 import static com.hotels.beans.utils.ClassUtils.isChar;
@@ -44,7 +42,6 @@ public final class Defaults {
      * @return the default value of a primitive type.
      */
     public static Object defaultValue(final Class<?> type) {
-        notNull(type, "type cannot be null!");
         Object res = null;
         if (isBoolean(type)) {
             res = FALSE;

@@ -62,14 +62,6 @@ public class DefaultsTest {
     }
 
     /**
-     * Tests that the method: {@code defaultValue} throws exception when type is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void testDefaultValueThrowsExceptionWhenTypeIsNull() {
-        underTest.defaultValue(null);
-    }
-
-    /**
      * Tests that the method: {@code defaultValue} returns the expected result for the given type.
      */
     @Test
