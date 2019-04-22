@@ -23,9 +23,10 @@ import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-//import com.hotels.beans.sample.builder.BuilderToFooWithTwoConstructor;
+import com.hotels.beans.sample.builder.BuilderToFooWithTwoConstructor;
 import com.hotels.beans.sample.builder.BuilderToFoo;
 import com.hotels.beans.sample.builder.LombokBuilderToFoo;
 
@@ -49,38 +50,32 @@ public class BuilderObjectTransformationTest extends AbstractTransformerTest {
     }
 
     /**
-     * Test mutable beans are correctly copied.
+     * Test mutable beans are correctly copied through builder.
+     * @param testDescription the test case description
+     * @param sourceObject the object to transform
+     * @param targetObjectClass the target object class
      */
-    @Test
-    public void testBuilderWithLombok() {
+    @Test(dataProvider = "transformationThroughBuilderTesting")
+    public void testTransformationThroughBuilder(final String testDescription, final Object sourceObject, final Class<?> targetObjectClass) {
         //GIVEN
 
         //WHEN
-        LombokBuilderToFoo actual = underTest.transform(fromFoo, LombokBuilderToFoo.class);
+        Object actual = underTest.transform(sourceObject, targetObjectClass);
 
         //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
+        assertThat(actual, sameBeanAs(sourceObject));
     }
 
-    @Test
-    public void testManualBuilder() {
-        //GIVEN
-
-        //WHEN
-        BuilderToFoo actual = underTest.transform(fromFoo, BuilderToFoo.class);
-
-        //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
+    /**
+     * Creates the parameters to be used for testing the bean transformation through builder.
+     * @return parameters to be used for testing the bean transformation through builder.
+     */
+    @DataProvider
+    private Object[][] transformationThroughBuilderTesting() {
+        return new Object[][] {
+                {"Test beans are correctly copied if annotated with {@link lombok.Builder} annotation", fromFoo, LombokBuilderToFoo.class},
+                {"Test beans are correctly copied if contains a custom Builder", fromFoo, BuilderToFoo.class},
+                {"Test beans are correctly copied if contains a custom Builder with two constructors", fromFoo, BuilderToFooWithTwoConstructor.class}
+        };
     }
-
-//    @Test
-//    public void testManualBuilderWithTwoConstructor() {
-//        //GIVEN
-//
-//        //WHEN
-//        BuilderToFooWithTwoConstructor actual = underTest.transform(fromFoo, BuilderToFooWithTwoConstructor.class);
-//
-//        //THEN
-//        assertThat(actual, sameBeanAs(fromFoo));
-//    }
 }
