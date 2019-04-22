@@ -368,7 +368,7 @@ public final class ClassUtils {
     }
 
     /**
-     * Check if nested class containt a valid build method.
+     * Check if nested class contains a valid build method.
      * @param superclass class to be instantiated with the build pattern
      * @return true if we find in nested class a valid build method
      */
@@ -389,7 +389,7 @@ public final class ClassUtils {
     /**
      * Retrieves all classes defined into the given one.
      * @param clazz class where we search for a nested class
-     * @return  all classes defined into the given one
+     * @return all classes defined into the given one
      */
     public Class[] getDeclaredClasses(final Class<?> clazz) {
         notNull(clazz, CLAZZ_CANNOT_BE_NULL);

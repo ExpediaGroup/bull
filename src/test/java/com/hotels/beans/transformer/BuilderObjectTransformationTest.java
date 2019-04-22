@@ -19,14 +19,15 @@ package com.hotels.beans.transformer;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.junit.Assert.assertThat;
 
+import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
+
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+//import com.hotels.beans.sample.builder.BuilderToFooWithTwoConstructor;
 import com.hotels.beans.sample.builder.BuilderToFoo;
 import com.hotels.beans.sample.builder.LombokBuilderToFoo;
-
-import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 
 /**
@@ -72,4 +73,14 @@ public class BuilderObjectTransformationTest extends AbstractTransformerTest {
         assertThat(actual, sameBeanAs(fromFoo));
     }
 
+//    @Test
+//    public void testManualBuilderWithTwoContructor() {
+//        //GIVEN
+//
+//        //WHEN
+//        BuilderToFooWithTwoConstructor actual = underTest.transform(fromFoo, BuilderToFooWithTwoConstructor.class);
+//
+//        //THEN
+//        assertThat(actual, sameBeanAs(fromFoo));
+//    }
 }

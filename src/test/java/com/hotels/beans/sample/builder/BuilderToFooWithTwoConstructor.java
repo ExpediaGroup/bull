@@ -21,19 +21,22 @@ import java.util.List;
 
 import com.hotels.beans.sample.mutable.MutableToSubFoo;
 
-import lombok.Setter;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-public final class BuilderToFoo {
+public final class BuilderToFooWithTwoConstructor {
     private String name;
     private BigInteger id;
     private List<String> list;
     private List<MutableToSubFoo> nestedObjectList;
     private MutableToSubFoo nestedObject;
 
-    private BuilderToFoo() {
+    /**
+     * Private constructor.
+     */
+    private BuilderToFooWithTwoConstructor() {
     }
 
     static class Builder {
@@ -42,6 +45,13 @@ public final class BuilderToFoo {
         private List<String> list;
         private List<MutableToSubFoo> nestedObjectList;
         private MutableToSubFoo nestedObject;
+
+        Builder(final String name) {
+            this.name = name;
+        }
+
+        Builder() {
+        }
 
         public Builder withName(final String name) {
             this.name = name;
@@ -53,8 +63,8 @@ public final class BuilderToFoo {
             return this;
         }
 
-        public BuilderToFoo build() {
-            BuilderToFoo builderToFoo = new BuilderToFoo();
+        public BuilderToFooWithTwoConstructor build() {
+            BuilderToFooWithTwoConstructor builderToFoo = new BuilderToFooWithTwoConstructor();
             builderToFoo.id = this.id;
             builderToFoo.name = this.name;
             builderToFoo.list = this.list;

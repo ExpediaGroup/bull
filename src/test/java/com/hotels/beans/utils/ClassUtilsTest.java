@@ -575,7 +575,8 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns immutable if the given class is immutable", ImmutableToFoo.class, ClassType.IMMUTABLE},
                 {"Tests that the method returns mutable if the given class is mutable", MutableToFoo.class, ClassType.MUTABLE},
-                {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED}
+                {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED},
+                {"Test that the method returns builder if the given class is a Builder", FromFooWithBuilder.class, ClassType.BUILDER}
         };
     }
 
