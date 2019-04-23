@@ -16,6 +16,7 @@
 
 package com.hotels.beans.utils;
 
+import static java.lang.String.format;
 import static java.lang.reflect.Modifier.isPublic;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -92,13 +93,19 @@ public final class ReflectionUtils {
      * @return the method result
      */
     public Object invokeMethod(final Method method, final Object target, final Object... args) {
+        boolean isAccessible = method.isAccessible();
         try {
+            if (!isAccessible) {
+                method.setAccessible(true);
+            }
             return method.invoke(target, args);
         } catch (MissingFieldException | MissingMethodException e) {
             throw e;
         } catch (final Exception e) {
             handleReflectionException(e);
             throw new IllegalStateException(e);
+        } finally {
+            method.setAccessible(isAccessible);
         }
     }
 
@@ -201,14 +208,14 @@ public final class ReflectionUtils {
      * @return Build method if present
      */
     public Method getBuildMethod(final Class<?> builderClass) {
-        final String cacheKey = "BuildMethod-" + builderClass.getCanonicalName();
+        final String cacheKey = "BuildMethod-" + builderClass.getName();
         return cacheManager.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
-                Method method = builderClass.getMethod(nameOfBuilderMethod, null);
+                Method method = builderClass.getMethod(nameOfBuilderMethod);
                 cacheManager.cacheObject(cacheKey, method);
                 return method;
             } catch (NoSuchMethodException e) {
-                throw new MissingMethodException(String.format("Error while getting method $1 in class $2 ", nameOfBuilderMethod, builderClass.getName()) + e.getMessage());
+                throw new MissingMethodException(format("Error while getting method %s in class %s.", nameOfBuilderMethod, builderClass.getName()) + e.getMessage());
             }
         });
     }

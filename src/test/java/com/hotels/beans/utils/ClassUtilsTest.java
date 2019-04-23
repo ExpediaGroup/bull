@@ -71,7 +71,6 @@ public class ClassUtilsTest {
     private static final Class<MixedToFooMissingConstructor> CLASS_WITHOUT_CONSTRUCTOR = MixedToFooMissingConstructor.class;
     private static final int EXPECTED_NOT_STATIC_FIELDS = 1;
     private static final String NAME = "name";
-    private static final String NORMAL_FIELD = "normalField";
     private static final int EXPECTED_CLASS_PARAMETERS = 5;
     private static final String NOT_EXISTING_FIELD_NAME = "notExistingFieldName";
     private static final Class<ImmutableToFooSubClass> CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS = ImmutableToFooSubClass.class;
@@ -609,8 +608,7 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns immutable if the given class is immutable", ImmutableToFoo.class, ClassType.IMMUTABLE},
                 {"Tests that the method returns mutable if the given class is mutable", MutableToFoo.class, ClassType.MUTABLE},
-                {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED},
-                {"Test that the method returns builder if the given class is a Builder", MutableToFooWithBuilder.class, ClassType.BUILDER}
+                {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED}
         };
     }
 

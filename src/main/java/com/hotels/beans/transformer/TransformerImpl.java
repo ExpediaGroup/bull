@@ -31,13 +31,11 @@ import static com.hotels.beans.constant.Punctuation.LPAREN;
 import static com.hotels.beans.constant.Punctuation.RPAREN;
 import static com.hotels.beans.constant.ClassType.MIXED;
 import static com.hotels.beans.constant.ClassType.MUTABLE;
-import static com.hotels.beans.constant.ClassType.BUILDER;
 import static com.hotels.beans.base.Defaults.defaultValue;
 import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.List;
@@ -60,42 +58,28 @@ public class TransformerImpl extends AbstractTransformer {
     @Override
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
-        final ClassType classType = classUtils.getClassType(targetClass);
+        final Object transformedClass;
+        Optional<Class<?>> builderClass = classUtils.getBuilderClass(targetClass);
+        final Class<?> classToTransform = builderClass.isPresent() ? builderClass.get() : targetClass;
+        final ClassType classType = classUtils.getClassType(classToTransform);
         if (classType.is(MUTABLE)) {
             try {
-                k = targetClass.getDeclaredConstructor().newInstance();
-                injectAllFields(sourceObj, k, breadcrumb);
-            } catch (NoSuchMethodException e) {
-                throw new InvalidBeanException("No default constructor defined for class: " + targetClass.getName(), e);
+                transformedClass = classUtils.getInstance(classToTransform);
+                injectAllFields(sourceObj, transformedClass, breadcrumb);
             } catch (Exception e) {
                 throw new InvalidBeanException(e.getMessage(), e);
             }
-        } else if (classType.is(BUILDER)) {
-            Object builder;
-            Class<?> builderClass = targetClass.getDeclaredClasses()[0];
-            Constructor<?> declaredConstructor = builderClass.getDeclaredConstructors()[0];
-            declaredConstructor.setAccessible(true);
-            try {
-                builder = declaredConstructor.newInstance();
-            } catch (InstantiationException e) {
-                throw new InvalidBeanException("Cannot instantiate class: " + builderClass.getName(), e);
-            } catch (IllegalAccessException e) {
-                throw new InvalidBeanException("Illegal access exception to default constructor defined for class: "
-                        + builderClass.getName(), e);
-            } catch (InvocationTargetException e) {
-                throw new InvalidBeanException(String.format("Error while invoking default constructor defined for "
-                + " class: $1. Are you sure that only default constructor is defined in the builder ?", builderClass.getName()), e);
-            }
-            injectAllFields(sourceObj, builder, breadcrumb);
-            Method method;
-            method = reflectionUtils.getBuildMethod(builderClass);
-            method.setAccessible(true);
-            k = (K) reflectionUtils.invokeMethod(method, builder);
         } else {
-            k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass), breadcrumb);
+            transformedClass = injectValues(sourceObj, classToTransform, classUtils.getAllArgsConstructor(classToTransform), breadcrumb);
             if (classType.is(MIXED)) {
-                injectNotFinalFields(sourceObj, k, breadcrumb);
+                injectNotFinalFields(sourceObj, transformedClass, breadcrumb);
             }
+        }
+        if (builderClass.isPresent()) {
+            Method method = reflectionUtils.getBuildMethod(classToTransform);
+            k = (K) reflectionUtils.invokeMethod(method, transformedClass);
+        } else {
+            k = (K) transformedClass;
         }
         if (!settings.isValidationDisabled()) {
             validationUtils.validate(k);
