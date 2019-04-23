@@ -14,44 +14,35 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.sample.builder;
+package com.hotels.beans.sample.mutable;
 
 import java.math.BigInteger;
 import java.util.List;
 
-import com.hotels.beans.sample.mutable.MutableToSubFoo;
-
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Mutable object instantiable only through a Builder.
+ */
 @Getter
 @Setter
-public final class BuilderToFooWithTwoConstructor {
+public final class MutableToFooWithBuilder {
     private String name;
     private BigInteger id;
     private List<String> list;
     private List<MutableToSubFoo> nestedObjectList;
     private MutableToSubFoo nestedObject;
 
-    /**
-     * Private constructor.
-     */
-    private BuilderToFooWithTwoConstructor() {
+    private MutableToFooWithBuilder() {
     }
 
-    static class Builder {
+    public static class Builder {
         private String name;
         private BigInteger id;
         private List<String> list;
         private List<MutableToSubFoo> nestedObjectList;
         private MutableToSubFoo nestedObject;
-
-        Builder(final String name) {
-            this.name = name;
-        }
-
-        Builder() {
-        }
 
         public Builder withName(final String name) {
             this.name = name;
@@ -63,14 +54,14 @@ public final class BuilderToFooWithTwoConstructor {
             return this;
         }
 
-        public BuilderToFooWithTwoConstructor build() {
-            BuilderToFooWithTwoConstructor builderToFoo = new BuilderToFooWithTwoConstructor();
-            builderToFoo.id = this.id;
-            builderToFoo.name = this.name;
-            builderToFoo.list = this.list;
-            builderToFoo.nestedObjectList = this.nestedObjectList;
-            builderToFoo.nestedObject = this.nestedObject;
-            return builderToFoo;
+        public MutableToFooWithBuilder build() {
+            MutableToFooWithBuilder mutableToFooWithBuilder = new MutableToFooWithBuilder();
+            mutableToFooWithBuilder.id = this.id;
+            mutableToFooWithBuilder.name = this.name;
+            mutableToFooWithBuilder.list = this.list;
+            mutableToFooWithBuilder.nestedObjectList = this.nestedObjectList;
+            mutableToFooWithBuilder.nestedObject = this.nestedObject;
+            return mutableToFooWithBuilder;
         }
     }
 }
