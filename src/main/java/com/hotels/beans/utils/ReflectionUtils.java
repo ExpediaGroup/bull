@@ -63,6 +63,11 @@ public final class ReflectionUtils {
     private static final String SETTER_METHOD_NAME_REGEX = "^set[A-Z].*";
 
     /**
+     * Name of method inside the Builder Class.
+     */
+    private static final String BUILD_METHOD_NAME = "build";
+
+    /**
      * Regex for identify dots into a string.
      */
     private static final String DOT_SPLIT_REGEX = "\\.";
@@ -71,12 +76,6 @@ public final class ReflectionUtils {
      * CacheManager instance {@link CacheManager}.
      */
     private final CacheManager cacheManager;
-
-    /**
-     * Name of method inside the Builder Class.
-     */
-    private final String nameOfBuilderMethod = "build";
-
 
     /**
      * Default constructor.
@@ -211,11 +210,11 @@ public final class ReflectionUtils {
         final String cacheKey = "BuildMethod-" + builderClass.getName();
         return cacheManager.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
-                Method method = builderClass.getMethod(nameOfBuilderMethod);
+                Method method = builderClass.getMethod(BUILD_METHOD_NAME);
                 cacheManager.cacheObject(cacheKey, method);
                 return method;
             } catch (NoSuchMethodException e) {
-                throw new MissingMethodException(format("Error while getting method %s in class %s.", nameOfBuilderMethod, builderClass.getName()) + e.getMessage());
+                throw new MissingMethodException(format("Error while getting method %s in class %s.", BUILD_METHOD_NAME, builderClass.getName()) + e.getMessage());
             }
         });
     }
