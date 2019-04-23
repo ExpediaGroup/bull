@@ -14,47 +14,57 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.sample.builder;
+package com.hotels.beans.sample.mutable;
 
 import java.math.BigInteger;
 import java.util.List;
 
-import com.hotels.beans.sample.mutable.MutableToSubFoo;
-
-import lombok.Setter;
 import lombok.Getter;
 
+/**
+ * Mutable object instantiable only through a Builder.
+ * The Builder class contains multiple constructors.
+ */
 @Getter
-@Setter
-public final class BuilderToFoo {
+public final class MutableToFooWithBuilderMultipleConstructor {
     private String name;
     private BigInteger id;
     private List<String> list;
     private List<MutableToSubFoo> nestedObjectList;
     private MutableToSubFoo nestedObject;
 
-    private BuilderToFoo() {
+    /**
+     * Private constructor.
+     */
+    private MutableToFooWithBuilderMultipleConstructor() {
     }
 
-    static class Builder {
+    static class Pippo {
         private String name;
         private BigInteger id;
         private List<String> list;
         private List<MutableToSubFoo> nestedObjectList;
         private MutableToSubFoo nestedObject;
 
-        public Builder withName(final String name) {
+        Pippo(final String name) {
+            this.name = name;
+        }
+
+        Pippo() {
+        }
+
+        public Pippo withName(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder withId(final BigInteger id) {
+        public Pippo withId(final BigInteger id) {
             this.id = id;
             return this;
         }
 
-        public BuilderToFoo build() {
-            BuilderToFoo builderToFoo = new BuilderToFoo();
+        public MutableToFooWithBuilderMultipleConstructor build() {
+            MutableToFooWithBuilderMultipleConstructor builderToFoo = new MutableToFooWithBuilderMultipleConstructor();
             builderToFoo.id = this.id;
             builderToFoo.name = this.name;
             builderToFoo.list = this.list;

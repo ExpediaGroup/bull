@@ -19,8 +19,10 @@ package com.hotels.beans.utils;
 import static java.lang.reflect.Modifier.isFinal;
 import static java.util.Objects.nonNull;
 
+import static org.apache.commons.lang3.ArrayUtils.contains;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.lang.annotation.Annotation;
@@ -45,14 +47,15 @@ import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.constant.ClassType;
 import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.sample.FromFoo;
-import com.hotels.beans.sample.FromFooWithBuilder;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
 import com.hotels.beans.sample.mixed.MixedToFoo;
 import com.hotels.beans.sample.mixed.MixedToFooMissingConstructor;
+import com.hotels.beans.sample.mixed.MixedToFooWithBuilder;
 import com.hotels.beans.sample.mixed.MixedToFooStaticField;
 import com.hotels.beans.sample.mutable.MutableToFoo;
+import com.hotels.beans.sample.mutable.MutableToFooWithBuilder;
 
 /**
  * Unit test for {@link ClassUtils}.
@@ -358,6 +361,37 @@ public class ClassUtilsTest {
     }
 
     /**
+     * Test that the a manual declared Builder is returned by method: {@code getDeclaredClasses}.
+     * @param testCaseDescription the test case description
+     * @param testClass the class from which extract the nested classes
+     * @param expectedClass the class expected as nested
+     */
+    @Test(dataProvider = "dataGetDeclaredClassesTesting")
+    public void testGetDeclaredClassesWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final Class<?> expectedClass) {
+        // GIVEN
+
+        // WHEN
+        Class[] actual = underTest.getDeclaredClasses(testClass);
+
+        // THEN
+        assertTrue(contains(actual, expectedClass));
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getDeclaredClasses}.
+     * @return parameters to be used for testing the the method {@code getDeclaredClasses}.
+     */
+    @DataProvider
+    private Object[][] dataGetDeclaredClassesTesting() {
+        return new Object[][] {
+                {"Test that the a manual declared Builder is returned by method: {@code getDeclaredClasses}", MutableToFooWithBuilder.class,
+                        MutableToFooWithBuilder.Builder.class},
+                {"Test that the a Builder created by lombok is returned by method: {@code getDeclaredClasses}", MixedToFooWithBuilder.class,
+                        MixedToFooWithBuilder.builder().getClass()}
+        };
+    }
+
+    /**
      * Tests that the method {@code getAllArgsConstructor} returns the class constructor.
      */
     @Test
@@ -576,7 +610,7 @@ public class ClassUtilsTest {
                 {"Tests that the method returns immutable if the given class is immutable", ImmutableToFoo.class, ClassType.IMMUTABLE},
                 {"Tests that the method returns mutable if the given class is mutable", MutableToFoo.class, ClassType.MUTABLE},
                 {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED},
-                {"Test that the method returns builder if the given class is a Builder", FromFooWithBuilder.class, ClassType.BUILDER}
+                {"Test that the method returns builder if the given class is a Builder", MutableToFooWithBuilder.class, ClassType.BUILDER}
         };
     }
 
@@ -648,7 +682,7 @@ public class ClassUtilsTest {
     @DataProvider
     private Object[][] dataUsesBuilderPatternTesting() {
         return new Object[][] {
-                {"Tests that the method returns true if the class has a builder", FromFooWithBuilder.class, true},
+                {"Tests that the method returns true if the class has a builder", MutableToFooWithBuilder.class, true},
                 {"Tests that the method returns false if the class hasn't a builder", FromFoo.class, false}
         };
     }
@@ -677,8 +711,8 @@ public class ClassUtilsTest {
     @DataProvider
     private Object[][] dataHasAccessibleConstructorsTesting() {
         return new Object[][] {
-                {"Tests that the method returns false if the constructor is private", FromFooWithBuilder.class, false},
-                {"Tests that the method returns false if the constructor is public", FromFoo.class, true}
+                {"Tests that the method returns false if the constructor is public", FromFoo.class, true},
+                {"Tests that the method returns false if the constructor is private", MutableToFooWithBuilder.class, false}
         };
     }
 }

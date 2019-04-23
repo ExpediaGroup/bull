@@ -14,19 +14,29 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.sample;
+package com.hotels.beans.sample.mixed;
 
 import java.math.BigInteger;
+import java.util.List;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import com.hotels.beans.sample.FromSubFoo;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 /**
- * Sample object using Builder pattern.
+ * Mixed bean instantiable only through a Builder.
  */
-@Builder
 @Getter
-public class FromFooWithBuilder {
+@Builder
+@AllArgsConstructor(access = PRIVATE)
+public class MixedToFooWithBuilder {
     private final String name;
-    private final BigInteger id;
+    private BigInteger id;
+    private final List<FromSubFoo> nestedObjectList;
+    private final List<String> list;
+    private final FromSubFoo nestedObject;
 }

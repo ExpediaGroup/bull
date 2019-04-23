@@ -14,24 +14,39 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.sample.builder;
+package com.hotels.beans.sample.immutable;
+
+import static lombok.AccessLevel.PRIVATE;
 
 import java.math.BigInteger;
 import java.util.List;
 
 import com.hotels.beans.sample.FromSubFoo;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
 /**
- * Sample class with Lombok Builder
+ * Immutable bean instantiable only through a Builder.
  */
-@Builder
-public class LombokBuilderToFoo {
+@Getter
+@Builder(builderMethodName = "hiddenBuilder")
+@AllArgsConstructor(access = PRIVATE)
+public class ImmutableToFooWithBuilder {
     private final String name;
-    private BigInteger id;
+    private final BigInteger id;
     private final List<FromSubFoo> nestedObjectList;
     private final List<String> list;
     private final FromSubFoo nestedObject;
 
+    public static ImmutableToFooWithBuilderBuilder builder(final String name, final BigInteger id,
+        final List<FromSubFoo> nestedObjectList, final List<String> list, final FromSubFoo nestedObject) {
+        return hiddenBuilder()
+                .name(name)
+                .id(id)
+                .nestedObjectList(nestedObjectList)
+                .list(list)
+                .nestedObject(nestedObject);
+    }
 }
