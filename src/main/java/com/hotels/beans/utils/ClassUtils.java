@@ -23,6 +23,7 @@ import static java.lang.reflect.Modifier.isStatic;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.Collections.max;
+import static java.util.Collections.min;
 import static java.util.Comparator.comparing;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -30,7 +31,6 @@ import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
 import static org.apache.commons.lang3.ArrayUtils.isEmpty;
-import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 
 import static com.hotels.beans.utils.ValidationUtils.notNull;
 import static com.hotels.beans.base.Defaults.defaultValue;
@@ -38,7 +38,6 @@ import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.ClassType.IMMUTABLE;
 import static com.hotels.beans.constant.ClassType.MIXED;
 import static com.hotels.beans.constant.ClassType.MUTABLE;
-import static com.hotels.beans.constant.ClassType.BUILDER;
 import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_FIELD;
 import static com.hotels.beans.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
 import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
@@ -54,6 +53,7 @@ import java.util.Currency;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -69,6 +69,11 @@ public final class ClassUtils {
      * Class nullability error message constant.
      */
     private static final String CLAZZ_CANNOT_BE_NULL = "clazz cannot be null!";
+
+    /**
+     * Default method name used by a Builder for creating an object.
+     */
+    private static final String BUILD_METHOD_NAME = "build";
 
     /**
      * Reflection utils instance {@link ReflectionUtils}.
@@ -122,7 +127,7 @@ public final class ClassUtils {
      * @return true if is primitive type array, false otherwise
      */
     public boolean isPrimitiveTypeArray(final Object object) {
-        final String cacheKey = "isPrimitiveTypeArray-" + object.getClass().getCanonicalName();
+        final String cacheKey = "isPrimitiveTypeArray-" + object.getClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final Boolean res = object instanceof int[] || object instanceof char[] || object instanceof short[]
                     || object instanceof long[] || object instanceof byte[] || object instanceof float[] || object instanceof double[];
@@ -360,30 +365,48 @@ public final class ClassUtils {
     public <K> boolean usesBuilderPattern(final Constructor constructor, final Class<K> targetClass) {
         final String cacheKey = "UsesBuilderPattern-" + constructor.getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final boolean res = !isPublic(constructor.getModifiers()) && isNotEmpty(getDeclaredClasses(targetClass))
-                    && isValidBuildMethod(targetClass);
+            final boolean res = !isPublic(constructor.getModifiers()) && getBuilderClass(targetClass).isPresent();
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
     }
 
+//    /**
+//     * Check if nested class contains a valid build method.
+//     * @param superclass class to be instantiated with the build pattern
+//     * @return true if we find in nested class a valid build method
+//     */
+//    private boolean isValidBuildMethod(final Class superclass) {
+//        final String build = "build";
+//        String cacheKey = "build-method-" + superclass.getCanonicalName();
+//        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
+//                    List<Class> nestedClasses = asList(getDeclaredClasses(superclass));
+//                    boolean res =
+//                            !nestedClasses.isEmpty()
+//                                    && stream(getDeclaredMethods(nestedClasses.get(0)))
+//                                    .anyMatch(method -> method.getName().equals(build) && method.getReturnType().equals(superclass));
+//                    cacheManager.cacheObject(cacheKey, res);
+//                    return res;
+//                });
+//    }
+
     /**
-     * Check if nested class contains a valid build method.
-     * @param superclass class to be instantiated with the build pattern
-     * @return true if we find in nested class a valid build method
+     * Returns the builder class.
+     * @param targetClass the class where the builder should be searched
+     * @return the Builder class if available.
      */
-    private boolean isValidBuildMethod(final Class superclass) {
-        final String build = "build";
-        String cacheKey = "build-method-" + superclass.getCanonicalName();
-        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-                    List<Class> nestedClasses = asList(getDeclaredClasses(superclass));
-                    boolean res =
-                            !nestedClasses.isEmpty()
-                                    && stream(getDeclaredMethods(nestedClasses.get(0)))
-                                    .anyMatch(method -> method.getName().equals(build) && method.getReturnType().equals(superclass));
-                    cacheManager.cacheObject(cacheKey, res);
-                    return res;
-                });
+    @SuppressWarnings("unchecked")
+    public Optional<Class<?>> getBuilderClass(final Class targetClass) {
+        String cacheKey = "BuilderClass-" + targetClass.getName();
+        return cacheManager.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
+            Optional<Class> res = stream(getDeclaredClasses(targetClass))
+                    .filter(nestedClass ->
+                            stream(getDeclaredMethods(nestedClass))
+                                    .anyMatch(method -> method.getName().equals(BUILD_METHOD_NAME) && method.getReturnType().equals(targetClass)))
+                    .findAny();
+            cacheManager.cacheObject(cacheKey, res);
+            return res;
+        });
     }
 
     /**
@@ -393,7 +416,7 @@ public final class ClassUtils {
      */
     public Class[] getDeclaredClasses(final Class<?> clazz) {
         notNull(clazz, CLAZZ_CANNOT_BE_NULL);
-        String cacheKey = "nested-classes-" + clazz.getCanonicalName();
+        String cacheKey = "nested-classes-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Class[].class).orElseGet(() -> {
             Class[] declaredClasses = clazz.getDeclaredClasses();
             cacheManager.cacheObject(cacheKey, declaredClasses);
@@ -402,7 +425,48 @@ public final class ClassUtils {
     }
 
     /**
-     * Retrieves the all args constructor.
+     * Retrieves an object from cache.
+     * @param objectClass the class of the object to return.
+     * @param <T> the class object type.
+     * @return the object instance.
+     * @throws Exception in case the object creation fails.
+     */
+    public <T> T getInstance(final Class<? extends T> objectClass) throws Exception {
+        Constructor constructor = getNoArgsConstructor(objectClass);
+        boolean isAccessible = constructor.isAccessible();
+        try {
+            if (!isAccessible) {
+                constructor.setAccessible(true);
+            }
+            return (T) constructor.newInstance();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            constructor.setAccessible(isAccessible);
+        }
+    }
+
+    /**
+     * Retrieves the no args constructor.
+     * @param clazz the class from which gets the constructor.
+     * @param <K> the object type
+     * @return the all args constructor
+     */
+    public <K> Constructor getNoArgsConstructor(final Class<K> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        final String cacheKey = "NoArgsConstructor-" + clazz.getName();
+        return cacheManager.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
+            final Constructor constructor = min(asList(clazz.getDeclaredConstructors()), comparing(Constructor::getParameterCount));
+            if (constructor.getParameterCount() != 0) {
+                throw new InvalidBeanException("No default constructor defined for class: " + clazz.getName());
+            }
+            cacheManager.cacheObject(cacheKey, constructor);
+            return constructor;
+        });
+    }
+
+    /**
+     * Retrieves the constructor with more parameters.
      * @param clazz the class from which gets the all arg constructor.
      * @param <K> the object type
      * @return the all args constructor
@@ -426,7 +490,7 @@ public final class ClassUtils {
         if (isEmpty(constructors)) {
             throw new InvalidBeanException("No constructors available");
         }
-        final String cacheKey = "AllArgsConstructor-" + constructors[0].getDeclaringClass().getName();
+        final String cacheKey = "AllArgsConstructorFromConstructor-" + constructors[0].getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
             final Constructor constructor = max(asList(constructors), comparing(Constructor::getParameterCount));
             cacheManager.cacheObject(cacheKey, constructor);
@@ -602,9 +666,7 @@ public final class ClassUtils {
         return cacheManager.getFromCache(cacheKey, ClassType.class).orElseGet(() -> {
             final ClassType classType;
             boolean hasFinalFields = hasFinalFields(clazz);
-            if (usesBuilderPattern(getAllArgsConstructor(clazz), clazz)) {
-                classType = BUILDER;
-            } else if (!hasFinalFields) {
+            if (!hasFinalFields) {
                 classType = MUTABLE;
             } else {
                 boolean hasNotFinalFields = hasNotFinalFields(clazz);

@@ -39,26 +39,26 @@ public final class MutableToFooWithBuilderMultipleConstructor {
     private MutableToFooWithBuilderMultipleConstructor() {
     }
 
-    static class Pippo {
+    static class Builder {
         private String name;
         private BigInteger id;
         private List<String> list;
         private List<MutableToSubFoo> nestedObjectList;
         private MutableToSubFoo nestedObject;
 
-        Pippo(final String name) {
+        Builder(final String name) {
             this.name = name;
         }
 
-        Pippo() {
+        Builder() {
         }
 
-        public Pippo withName(final String name) {
+        public Builder withName(final String name) {
             this.name = name;
             return this;
         }
 
-        public Pippo withId(final BigInteger id) {
+        public Builder withId(final BigInteger id) {
             this.id = id;
             return this;
         }
