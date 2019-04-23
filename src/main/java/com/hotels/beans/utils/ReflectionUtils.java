@@ -29,10 +29,6 @@ import static com.hotels.beans.constant.MethodPrefix.IS;
 import static com.hotels.beans.constant.MethodPrefix.SET;
 
 import java.lang.annotation.Annotation;
-import java.lang.invoke.CallSite;
-import java.lang.invoke.LambdaMetafactory;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -43,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Function;
 
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.error.MissingFieldException;
@@ -110,38 +105,6 @@ public final class ReflectionUtils {
             throw new IllegalStateException(e);
         } finally {
             method.setAccessible(isAccessible);
-        }
-    }
-
-    public Object invokeMethod(final String methodName, final Object target) {
-        try {
-            Function methodFunction = getMethodFunction(methodName, target.getClass());
-            return methodFunction.apply(target);
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Retrieves the method function.
-     * @param methodName the method name.
-     * @param targetClass the class on which invoke the method
-     * @return the function method
-     *
-     * https://www.optaplanner.org/blog/2018/01/09/JavaReflectionButMuchFaster.html
-     */
-    private Function getMethodFunction(final String methodName, final Class<?> targetClass) throws Throwable {
-        try {
-            MethodHandles.Lookup lookup = MethodHandles.lookup();
-            CallSite site = LambdaMetafactory.metafactory(lookup,
-                    "apply",
-                    MethodType.methodType(Function.class),
-                    MethodType.methodType(Object.class, Object.class),
-                    lookup.findVirtual(targetClass, methodName, MethodType.methodType(Object.class)),
-                    MethodType.methodType(Object.class, targetClass));
-            return (Function) site.getTarget().invokeExact();
-        } catch (Throwable e) {
-            throw e;
         }
     }
 
