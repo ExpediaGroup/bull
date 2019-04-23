@@ -371,25 +371,6 @@ public final class ClassUtils {
         });
     }
 
-//    /**
-//     * Check if nested class contains a valid build method.
-//     * @param superclass class to be instantiated with the build pattern
-//     * @return true if we find in nested class a valid build method
-//     */
-//    private boolean isValidBuildMethod(final Class superclass) {
-//        final String build = "build";
-//        String cacheKey = "build-method-" + superclass.getCanonicalName();
-//        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-//                    List<Class> nestedClasses = asList(getDeclaredClasses(superclass));
-//                    boolean res =
-//                            !nestedClasses.isEmpty()
-//                                    && stream(getDeclaredMethods(nestedClasses.get(0)))
-//                                    .anyMatch(method -> method.getName().equals(build) && method.getReturnType().equals(superclass));
-//                    cacheManager.cacheObject(cacheKey, res);
-//                    return res;
-//                });
-//    }
-
     /**
      * Returns the builder class.
      * @param targetClass the class where the builder should be searched
