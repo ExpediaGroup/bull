@@ -369,10 +369,16 @@ public final class ClassUtils {
      * @param objectClass the class of the object to return.
      * @param <T> the class object type.
      * @return the object instance.
-     * @throws Exception in case the object creation fails.
+     * @throws InvalidBeanException in case the object creation fails.
      */
-    public <T> T getInstance(final Class<? extends T> objectClass) throws Exception {
-        return getInstance(getNoArgsConstructor(objectClass), null);
+    public <T> T getInstance(final Class<? extends T> objectClass) {
+        try {
+            return getInstance(getNoArgsConstructor(objectClass), null);
+        } catch (final NoSuchMethodException e) {
+            throw new InvalidBeanException("No default constructor defined for class: " + objectClass.getName(), e);
+        } catch (final Exception e) {
+            throw new InvalidBeanException(e.getMessage(), e);
+        }
     }
 
     /**
