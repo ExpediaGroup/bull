@@ -373,7 +373,7 @@ public final class ClassUtils {
      */
     public <T> T getInstance(final Class<? extends T> objectClass) {
         try {
-            return getInstance(getNoArgsConstructor(objectClass), null);
+            return getInstance(getNoArgsConstructor(objectClass));
         } catch (final NoSuchMethodException e) {
             throw new InvalidBeanException("No default constructor defined for class: " + objectClass.getName(), e);
         } catch (final Exception e) {
@@ -389,8 +389,9 @@ public final class ClassUtils {
      * @return the object instance.
      * @throws Exception in case the object creation fails.
      */
+    @SuppressWarnings("unchecked")
     public <T> T getInstance(final Constructor constructor, final Object... constructorArgs) throws Exception {
-        boolean isAccessible = constructor.isAccessible();
+        boolean isAccessible = reflectionUtils.isAccessible(constructor, null, "IsAccessible-" + constructor.getName() + constructor.getParameterCount());
         try {
             if (!isAccessible) {
                 constructor.setAccessible(true);
