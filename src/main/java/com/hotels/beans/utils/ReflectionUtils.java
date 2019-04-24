@@ -87,8 +87,7 @@ public final class ReflectionUtils {
      * @return the method result
      */
     public Object invokeMethod(final Method method, final Object target, final Object... args) {
-        boolean isAccessible = isAccessible(method, target, "IsAccessible-" + method.getName()
-                + method.getParameterCount() + "-" + target.getClass().getName());
+        boolean isAccessible = isAccessible(method, target);
         try {
             if (!isAccessible) {
                 method.setAccessible(true);
@@ -230,7 +229,7 @@ public final class ReflectionUtils {
         Field field = null;
         try {
             field = getDeclaredField(fieldName, target.getClass());
-            isAccessible = isAccessible(field, target, "IsAccessible-" + fieldName + "-" + target.getClass().getName());
+            isAccessible = isAccessible(field, target);
             if (!isAccessible) {
                 field.setAccessible(true);
             }
@@ -298,7 +297,7 @@ public final class ReflectionUtils {
      * @param fieldValue the value to set
      */
     private void setFieldValueWithoutSetterMethod(final Object target, final Field field, final Object fieldValue) {
-        final boolean isAccessible = isAccessible(field, target, "IsAccessible-" + field.getName() + "-" + target.getClass().getName());
+        final boolean isAccessible = isAccessible(field, target);
         try {
             if (!isAccessible) {
                 field.setAccessible(true);
@@ -319,15 +318,10 @@ public final class ReflectionUtils {
      * To make the project compiling with Java version greater than 8, replace the following line with: {@code accessibleObject.canAccess(target);}
      * @param accessibleObject the object to check
      * @param target the field's class
-     * @param cacheKey the cache key
      * @return true id is accessible, false otherwise
      */
-    protected boolean isAccessible(final AccessibleObject accessibleObject, final Object target, final String cacheKey) {
-        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            Boolean res = accessibleObject.isAccessible();
-            cacheManager.cacheObject(cacheKey, res);
-            return res;
-        });
+    protected boolean isAccessible(final AccessibleObject accessibleObject, final Object target) {
+        return accessibleObject.isAccessible();
     }
 
     /**

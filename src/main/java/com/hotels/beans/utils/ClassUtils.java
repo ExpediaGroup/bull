@@ -391,7 +391,7 @@ public final class ClassUtils {
      */
     @SuppressWarnings("unchecked")
     public <T> T getInstance(final Constructor constructor, final Object... constructorArgs) throws Exception {
-        boolean isAccessible = reflectionUtils.isAccessible(constructor, null, "IsAccessible-" + constructor.getName() + constructor.getParameterCount());
+        boolean isAccessible = reflectionUtils.isAccessible(constructor, null);
         try {
             if (!isAccessible) {
                 constructor.setAccessible(true);
