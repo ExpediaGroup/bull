@@ -53,7 +53,6 @@ import java.util.Currency;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -69,11 +68,6 @@ public final class ClassUtils {
      * Class nullability error message constant.
      */
     private static final String CLAZZ_CANNOT_BE_NULL = "clazz cannot be null!";
-
-    /**
-     * Default method name used by a Builder for creating an object.
-     */
-    private static final String BUILD_METHOD_NAME = "build";
 
     /**
      * Reflection utils instance {@link ReflectionUtils}.
@@ -356,48 +350,13 @@ public final class ClassUtils {
     }
 
     /**
-     * Checks if the destination class uses the Builder pattern.
-     * @param constructor the all args constructor
-     * @param targetClass the destination object class
-     * @param <K> the target object type
-     * @return true if the target class uses the builder pattern
-     */
-    public <K> boolean usesBuilderPattern(final Constructor constructor, final Class<K> targetClass) {
-        final String cacheKey = "UsesBuilderPattern-" + constructor.getDeclaringClass().getName();
-        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final boolean res = !isPublic(constructor.getModifiers()) && getBuilderClass(targetClass).isPresent();
-            cacheManager.cacheObject(cacheKey, res);
-            return res;
-        });
-    }
-
-    /**
-     * Returns the builder class.
-     * @param targetClass the class where the builder should be searched
-     * @return the Builder class if available.
-     */
-    @SuppressWarnings("unchecked")
-    public Optional<Class<?>> getBuilderClass(final Class targetClass) {
-        String cacheKey = "BuilderClass-" + targetClass.getName();
-        return cacheManager.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
-            Optional<Class> res = stream(getDeclaredClasses(targetClass))
-                    .filter(nestedClass ->
-                            stream(getDeclaredMethods(nestedClass))
-                                    .anyMatch(method -> method.getName().equals(BUILD_METHOD_NAME) && method.getReturnType().equals(targetClass)))
-                    .findAny();
-            cacheManager.cacheObject(cacheKey, res);
-            return res;
-        });
-    }
-
-    /**
      * Retrieves all classes defined into the given one.
      * @param clazz class where we search for a nested class
      * @return all classes defined into the given one
      */
     public Class[] getDeclaredClasses(final Class<?> clazz) {
         notNull(clazz, CLAZZ_CANNOT_BE_NULL);
-        String cacheKey = "nested-classes-" + clazz.getName();
+        String cacheKey = "DeclaredClasses-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Class[].class).orElseGet(() -> {
             Class[] declaredClasses = clazz.getDeclaredClasses();
             cacheManager.cacheObject(cacheKey, declaredClasses);
@@ -406,22 +365,31 @@ public final class ClassUtils {
     }
 
     /**
-     * Retrieves an object from cache.
+     * Creates an instance of the given class invoking the no args constructor.
      * @param objectClass the class of the object to return.
      * @param <T> the class object type.
      * @return the object instance.
      * @throws Exception in case the object creation fails.
      */
     public <T> T getInstance(final Class<? extends T> objectClass) throws Exception {
-        Constructor constructor = getNoArgsConstructor(objectClass);
+        return getInstance(getNoArgsConstructor(objectClass), null);
+    }
+
+    /**
+     * Creates an instance of the given class invoking the given constructor.
+     * @param constructor the constructor to invoke.
+     * @param constructorArgs the constructor args.
+     * @param <T> the class object type.
+     * @return the object instance.
+     * @throws Exception in case the object creation fails.
+     */
+    public <T> T getInstance(final Constructor constructor, final Object... constructorArgs) throws Exception {
         boolean isAccessible = constructor.isAccessible();
         try {
             if (!isAccessible) {
                 constructor.setAccessible(true);
             }
-            return (T) constructor.newInstance();
-        } catch (Exception e) {
-            throw e;
+            return (T) constructor.newInstance(constructorArgs);
         } finally {
             constructor.setAccessible(isAccessible);
         }

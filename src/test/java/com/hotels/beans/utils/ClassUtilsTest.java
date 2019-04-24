@@ -656,24 +656,6 @@ public class ClassUtilsTest {
     }
 
     /**
-     * Tests that the method {@code usesBuilderPattern} works as expected.
-     * @param testCaseDescription the test case description
-     * @param testClass the class to test
-     * @param expectedResult the expected result
-     */
-    @Test(dataProvider = "dataUsesBuilderPatternTesting")
-    public void testUsesBuilderPatternWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
-        // GIVEN
-        final Constructor constructor = underTest.getAllArgsConstructor(testClass);
-
-        // WHEN
-        final boolean usesBuilderPattern = underTest.usesBuilderPattern(constructor, testClass);
-
-        // THEN
-        assertEquals(expectedResult, usesBuilderPattern);
-    }
-
-    /**
      * Creates the parameters to be used for testing the method {@code usesBuilderPattern}.
      * @return parameters to be used for testing the the method {@code usesBuilderPattern}.
      */
