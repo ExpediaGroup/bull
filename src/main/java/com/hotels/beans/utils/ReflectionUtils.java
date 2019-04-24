@@ -28,6 +28,7 @@ import static com.hotels.beans.constant.MethodPrefix.IS;
 import static com.hotels.beans.constant.MethodPrefix.SET;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -86,21 +87,23 @@ public final class ReflectionUtils {
      * @return the method result
      */
     public Object invokeMethod(final Method method, final Object target, final Object... args) {
-//        boolean isAccessible = method.isAccessible();
+        boolean isAccessible = isAccessible(method, target, "IsAccessible-" + method.getName()
+                + method.getParameterCount() + "-" + target.getClass().getName());
         try {
-//            if (!isAccessible) {
-//                method.setAccessible(true);
-//            }
+            if (!isAccessible) {
+                method.setAccessible(true);
+            }
             return method.invoke(target, args);
         } catch (MissingFieldException | MissingMethodException e) {
             throw e;
         } catch (final Exception e) {
             handleReflectionException(e);
             throw new IllegalStateException(e);
+        } finally {
+            if (!isAccessible) {
+                method.setAccessible(false);
+            }
         }
-//        finally {
-//            method.setAccessible(isAccessible);
-//        }
     }
 
     /**
@@ -227,7 +230,7 @@ public final class ReflectionUtils {
         Field field = null;
         try {
             field = getDeclaredField(fieldName, target.getClass());
-            isAccessible = isFieldAccessible(field, target);
+            isAccessible = isAccessible(field, target, "IsAccessible-" + fieldName + "-" + target.getClass().getName());
             if (!isAccessible) {
                 field.setAccessible(true);
             }
@@ -273,7 +276,7 @@ public final class ReflectionUtils {
     }
 
     /**
-     * Sets the value of a field through setter method.
+     * Set the value of a field.
      * @param target the field's class
      * @param field the field to set
      * @param fieldValue the value to set
@@ -289,13 +292,13 @@ public final class ReflectionUtils {
     }
 
     /**
-     * Sets the value of a field through {@link Field#set} method.
+     * Set the value of a field through {@link Field#set} method.
      * @param target the field's class
      * @param field the field to set
      * @param fieldValue the value to set
      */
     private void setFieldValueWithoutSetterMethod(final Object target, final Field field, final Object fieldValue) {
-        final boolean isAccessible = isFieldAccessible(field, target);
+        final boolean isAccessible = isAccessible(field, target, "IsAccessible-" + field.getName() + "-" + target.getClass().getName());
         try {
             if (!isAccessible) {
                 field.setAccessible(true);
@@ -312,14 +315,19 @@ public final class ReflectionUtils {
     }
 
     /**
-     * Check if a field is accessible or not.
-     * To make the project compiling with Java version > 8, replace the following line with: {@code field.canAccess(target);}
-     * @param field the field to check
+     * Check if the given object is accessible or not.
+     * To make the project compiling with Java version greater than 8, replace the following line with: {@code accessibleObject.canAccess(target);}
+     * @param accessibleObject the object to check
      * @param target the field's class
+     * @param cacheKey the cache key
      * @return true id is accessible, false otherwise
      */
-    private boolean isFieldAccessible(final Field field, final Object target) {
-        return field.isAccessible();
+    protected boolean isAccessible(final AccessibleObject accessibleObject, final Object target, final String cacheKey) {
+        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
+            Boolean res = accessibleObject.isAccessible();
+            cacheManager.cacheObject(cacheKey, res);
+            return res;
+        });
     }
 
     /**
