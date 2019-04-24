@@ -36,7 +36,6 @@ import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Optional;
@@ -58,28 +57,19 @@ public class TransformerImpl extends AbstractTransformer {
     @Override
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
-        final Object transformedClass;
-        Optional<Class<?>> builderClass = classUtils.getBuilderClass(targetClass);
-        final Class<?> classToTransform = builderClass.isPresent() ? builderClass.get() : targetClass;
-        final ClassType classType = classUtils.getClassType(classToTransform);
+        final ClassType classType = classUtils.getClassType(targetClass);
         if (classType.is(MUTABLE)) {
             try {
-                transformedClass = classUtils.getInstance(classToTransform);
-                injectAllFields(sourceObj, transformedClass, breadcrumb);
+                k = classUtils.getInstance(targetClass);
+                injectAllFields(sourceObj, k, breadcrumb);
             } catch (Exception e) {
                 throw new InvalidBeanException(e.getMessage(), e);
             }
         } else {
-            transformedClass = injectValues(sourceObj, classToTransform, classUtils.getAllArgsConstructor(classToTransform), breadcrumb);
+            k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass), breadcrumb);
             if (classType.is(MIXED)) {
-                injectNotFinalFields(sourceObj, transformedClass, breadcrumb);
+                injectNotFinalFields(sourceObj, k, breadcrumb);
             }
-        }
-        if (builderClass.isPresent()) {
-            Method method = reflectionUtils.getBuildMethod(classToTransform);
-            k = (K) reflectionUtils.invokeMethod(method, transformedClass);
-        } else {
-            k = (K) transformedClass;
         }
         if (!settings.isValidationDisabled()) {
             validationUtils.validate(k);
@@ -118,7 +108,7 @@ public class TransformerImpl extends AbstractTransformer {
             constructorArgs = getConstructorValuesFromFields(sourceObj, targetClass, breadcrumb);
         }
         try {
-            return (K) constructor.newInstance(constructorArgs);
+            return (K) classUtils.getInstance(constructor, constructorArgs);
         } catch (final Exception e) {
             throw new InvalidBeanException("Constructor invoked with arguments. Expected: " + constructor + "; Found: "
                     + getFormattedConstructorArgs(targetClass, constructorArgs)
