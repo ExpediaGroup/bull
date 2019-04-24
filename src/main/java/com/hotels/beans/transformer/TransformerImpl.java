@@ -59,12 +59,8 @@ public class TransformerImpl extends AbstractTransformer {
         final K k;
         final ClassType classType = classUtils.getClassType(targetClass);
         if (classType.is(MUTABLE)) {
-            try {
-                k = classUtils.getInstance(targetClass);
-                injectAllFields(sourceObj, k, breadcrumb);
-            } catch (Exception e) {
-                throw new InvalidBeanException(e.getMessage(), e);
-            }
+            k = classUtils.getInstance(targetClass);
+            injectAllFields(sourceObj, k, breadcrumb);
         } else {
             k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass), breadcrumb);
             if (classType.is(MIXED)) {
