@@ -86,22 +86,14 @@ public final class ReflectionUtils {
      * @param args the method parameters
      * @return the method result
      */
-    public Object invokeMethod(final Method method, final Object target, final Object... args) {
-        boolean isAccessible = isAccessible(method, target);
+    private Object invokeMethod(final Method method, final Object target, final Object... args) {
         try {
-            if (!isAccessible) {
-                method.setAccessible(true);
-            }
             return method.invoke(target, args);
         } catch (MissingFieldException | MissingMethodException e) {
             throw e;
         } catch (final Exception e) {
             handleReflectionException(e);
             throw new IllegalStateException(e);
-        } finally {
-            if (!isAccessible) {
-                method.setAccessible(false);
-            }
         }
     }
 

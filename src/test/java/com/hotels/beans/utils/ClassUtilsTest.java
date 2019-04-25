@@ -398,21 +398,21 @@ public class ClassUtilsTest {
         // GIVEN
 
         // WHEN
-        Constructor actual = underTest.getAllArgsConstructor(CLASS_WITH_PRIVATE_FINAL_FIELDS.getConstructors());
+        Constructor actual = underTest.getAllArgsConstructor(CLASS_WITH_PRIVATE_FINAL_FIELDS);
 
         // THEN
         assertNotNull(actual);
     }
 
     /**
-     * Tests that the method {@code getAllArgsConstructor} throws exception if the class has no all args constructor.
+     * Tests that the method {@code getNoArgsConstructor} throws exception if the class has no all args constructor.
      */
     @Test(expectedExceptions = InvalidBeanException.class)
-    public void testGetAllArgsConstructorThrowsExceptionIfTheConstructorIsMissing() {
+    public void testGetNoArgsConstructorThrowsExceptionIfTheConstructorIsMissing() {
         // GIVEN
 
         // WHEN
-        underTest.getAllArgsConstructor(CLASS_WITHOUT_CONSTRUCTOR.getConstructors());
+        underTest.getNoArgsConstructor(CLASS_WITHOUT_CONSTRUCTOR);
     }
 
     /**
@@ -421,7 +421,7 @@ public class ClassUtilsTest {
     @Test
     public void testGetConstructorParameters() {
         // GIVEN
-        Constructor classConstructor = underTest.getAllArgsConstructor(CLASS_WITH_PRIVATE_FINAL_FIELDS.getConstructors());
+        Constructor classConstructor = underTest.getAllArgsConstructor(CLASS_WITH_PRIVATE_FINAL_FIELDS);
 
         // WHEN
         Parameter[] constructorParameters = underTest.getConstructorParameters(classConstructor);
