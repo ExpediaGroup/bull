@@ -107,7 +107,7 @@ public final class ClassUtils {
     public boolean isPrimitiveType(final Class<?> clazz) {
         final String cacheKey = "isPrimitive-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final Boolean res = clazz.isPrimitive() || clazz.equals(String.class) || clazz.isEnum() || Number.class.isAssignableFrom(clazz);
+            final Boolean res = clazz.isPrimitive() || clazz.equals(String.class) || clazz.equals(Boolean.class) || clazz.isEnum() || Number.class.isAssignableFrom(clazz);
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });

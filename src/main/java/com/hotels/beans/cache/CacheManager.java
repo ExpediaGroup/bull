@@ -19,14 +19,12 @@ package com.hotels.beans.cache;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
-import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import java.util.Map;
 import java.util.Optional;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * Cache Utils class.
@@ -36,7 +34,6 @@ public final class CacheManager {
     /**
      * Cache store.
      */
-    @Getter(PRIVATE)
     private final Map<String, Object> cacheMap;
 
     /**
