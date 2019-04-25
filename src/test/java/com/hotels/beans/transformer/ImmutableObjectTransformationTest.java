@@ -204,8 +204,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     private Object[][] dataConstructorErrorTesting() {
         FromFoo actual = new FromFoo(NAME, ID, null, null, null);
         return new Object[][] {
-                {"Test that an exception is thrown if the constructor invocation throws exception", actual, ImmutableToFooCustomAnnotation.class},
-//                {"Test that an exception is thrown if no constructors are defined", actual, ImmutableToFooNoConstructors.class},
+                {"Test that an exception is thrown if the constructor invocation throws exception", actual, ImmutableToFooCustomAnnotation.class}
         };
     }
 
