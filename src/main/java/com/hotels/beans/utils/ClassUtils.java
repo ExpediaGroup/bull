@@ -43,6 +43,7 @@ import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIEL
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.time.temporal.Temporal;
@@ -56,6 +57,7 @@ import java.util.stream.Stream;
 
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.constant.ClassType;
+import com.hotels.beans.error.InstanceCreationException;
 import com.hotels.beans.error.InvalidBeanException;
 
 /**
@@ -368,16 +370,18 @@ public final class ClassUtils {
      * @param constructorArgs the constructor args.
      * @param <T> the class object type.
      * @return the object instance.
-     * @throws Exception in case the object creation fails.
+     * @throws InstanceCreationException in case the object creation fails.
      */
     @SuppressWarnings("unchecked")
-    public <T> T getInstance(final Constructor constructor, final Object... constructorArgs) throws Exception {
+    public <T> T getInstance(final Constructor constructor, final Object... constructorArgs) {
         boolean isAccessible = reflectionUtils.isAccessible(constructor, null);
         try {
             if (!isAccessible) {
                 constructor.setAccessible(true);
             }
             return (T) constructor.newInstance(constructorArgs);
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+           throw new InstanceCreationException(e.getMessage(), e);
         } finally {
             if (!isAccessible) {
                 constructor.setAccessible(false);
