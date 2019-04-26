@@ -211,6 +211,7 @@ public class ReflectionUtilsTest {
      * @param testCaseDescription the test case description
      * @param annotationToGet the annotation to retrieve
      * @param expectNull true if it's expected to find it null, false otherwise
+     * @throws NoSuchFieldException if the field does not exists.
      */
     @Test(dataProvider = "dataGetFieldAnnotationTesting")
     public void testGetFieldAnnotationWorksProperly(final String testCaseDescription, final Class<? extends Annotation> annotationToGet,
