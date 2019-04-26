@@ -6,7 +6,7 @@ BULL - Bean Utils Light Library,com.hotels.beans.constant,MethodPrefix,0,38,0,0,
 BULL - Bean Utils Light Library,com.hotels.beans.constant,Punctuation,0,70,0,0,0,7,0,3,0,3
 BULL - Bean Utils Light Library,com.hotels.beans.constant,Filters,0,40,1,7,0,8,1,7,0,4
 BULL - Bean Utils Light Library,com.hotels.beans.constant,ClassType,0,51,0,2,0,6,0,3,0,2
-BULL - Bean Utils Light Library,com.hotels.beans.utils,ReflectionUtils,150,782,10,56,29,152,10,62,0,39
+BULL - Bean Utils Light Library,com.hotels.beans.utils,ReflectionUtils,150,782,12,54,29,152,12,60,0,39
 BULL - Bean Utils Light Library,com.hotels.beans.utils,ClassUtils,1,1352,13,117,0,219,13,125,0,73
 BULL - Bean Utils Light Library,com.hotels.beans.utils,ValidationUtils,0,84,0,6,0,25,0,10,0,7
 BULL - Bean Utils Light Library,com.hotels.beans.error,MissingMethodException,0,4,0,0,0,2,0,1,0,1
