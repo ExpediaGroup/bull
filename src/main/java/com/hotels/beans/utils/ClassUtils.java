@@ -396,7 +396,6 @@ public final class ClassUtils {
      * @return the no args constructor
      */
     public <K> Constructor getNoArgsConstructor(final Class<K> clazz) {
-        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "NoArgsConstructor-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
             Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
@@ -416,7 +415,6 @@ public final class ClassUtils {
      * @return the all args constructor
      */
     public <K> Constructor getAllArgsConstructor(final Class<K> clazz) {
-        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "AllArgsConstructor-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
             Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
