@@ -16,24 +16,24 @@
 
 package com.hotels.beans.sample.mixed;
 
-import static lombok.AccessLevel.PRIVATE;
-
 import java.math.BigInteger;
 
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
  * Sample mixed object.
  */
-@NoArgsConstructor(access = PRIVATE)
 @Getter
 @ToString
 public class MixedToFooMissingConstructor {
     @NotNull
     public BigInteger id;
-    private final String name = null;
+    private final String name;
+
+    public MixedToFooMissingConstructor(final String name) {
+        this.name = name;
+    }
 }

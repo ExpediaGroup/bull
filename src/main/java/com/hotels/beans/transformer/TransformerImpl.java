@@ -59,8 +59,12 @@ public class TransformerImpl extends AbstractTransformer {
         final K k;
         final ClassType classType = classUtils.getClassType(targetClass);
         if (classType.is(MUTABLE)) {
-            k = classUtils.getInstance(targetClass);
-            injectAllFields(sourceObj, k, breadcrumb);
+            try {
+                k = classUtils.getInstance(classUtils.getNoArgsConstructor(targetClass));
+                injectAllFields(sourceObj, k, breadcrumb);
+            } catch (Exception e) {
+                throw new InvalidBeanException(e.getMessage(), e);
+            }
         } else {
             k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass), breadcrumb);
             if (classType.is(MIXED)) {
@@ -95,7 +99,6 @@ public class TransformerImpl extends AbstractTransformer {
      * @return a copy of the source object into the destination object
      * @throws InvalidBeanException {@link InvalidBeanException} if the target object is not compliant with the requirements
      */
-    @SuppressWarnings("unchecked")
     private <T, K> K injectValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
         final Object[] constructorArgs;
         if (canBeInjectedByConstructorParams(constructor, targetClass)) {
@@ -104,7 +107,7 @@ public class TransformerImpl extends AbstractTransformer {
             constructorArgs = getConstructorValuesFromFields(sourceObj, targetClass, breadcrumb);
         }
         try {
-            return (K) classUtils.getInstance(constructor, constructorArgs);
+            return classUtils.getInstance(constructor, constructorArgs);
         } catch (final Exception e) {
             throw new InvalidBeanException("Constructor invoked with arguments. Expected: " + constructor + "; Found: "
                     + getFormattedConstructorArgs(targetClass, constructorArgs)
