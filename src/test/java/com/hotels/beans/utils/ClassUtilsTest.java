@@ -126,7 +126,8 @@ public class ClassUtilsTest {
     private Object[][] dataIsPrimitiveTypeObjectTesting() {
         return new Object[][] {
                 {"Tests that the method returns true if the class is a primitive type object", BigDecimal.class, true},
-                {"Tests that the method returns false if the class is not a primitive type object", FromFoo.class, false}
+                {"Tests that the method returns false if the class is not a primitive type object", FromFoo.class, false},
+                {"Tests that the method returns true if the class is not a Boolean", Boolean.class, true}
         };
     }
 
