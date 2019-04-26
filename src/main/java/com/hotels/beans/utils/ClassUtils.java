@@ -363,23 +363,6 @@ public final class ClassUtils {
     }
 
     /**
-     * Creates an instance of the given class invoking the no args constructor.
-     * @param objectClass the class of the object to return.
-     * @param <T> the class object type.
-     * @return the object instance.
-     * @throws InvalidBeanException in case the object creation fails.
-     */
-    public <T> T getInstance(final Class<? extends T> objectClass) {
-        try {
-            return getInstance(getNoArgsConstructor(objectClass));
-        } catch (final NoSuchMethodException e) {
-            throw new InvalidBeanException("No default constructor defined for class: " + objectClass.getName(), e);
-        } catch (final Exception e) {
-            throw new InvalidBeanException(e.getMessage(), e);
-        }
-    }
-
-    /**
      * Creates an instance of the given class invoking the given constructor.
      * @param constructor the constructor to invoke.
      * @param constructorArgs the constructor args.
