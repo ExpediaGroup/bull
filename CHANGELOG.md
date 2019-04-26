@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-### [TO BE DEFINED] 2019.04.26
+### [1.2.8] TBD
 #### Added
-* Added support for copying Bean into Object populated  with  Builder Pattern
+* Added support for the transformation of Java Beans built through Builder
 
 ### [1.2.7] 2019.04.18
 #### Changed
