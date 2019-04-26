@@ -51,7 +51,7 @@ public class BuilderObjectTransformationTest extends AbstractTransformerTest {
     }
 
     /**
-     * Test mutable beans are correctly copied through builder.
+     * Test mutable / immutable / mixed beans are correctly copied through builder.
      * @param testDescription the test case description
      * @param sourceObject the object to transform
      * @param targetObjectClass the target object class
