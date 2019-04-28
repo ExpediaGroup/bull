@@ -19,11 +19,8 @@ package com.hotels.beans.sample.mixed;
 import java.math.BigInteger;
 import java.util.List;
 
-import static lombok.AccessLevel.PRIVATE;
+import com.hotels.beans.sample.immutable.ImmutableToSubFoo;
 
-import com.hotels.beans.sample.FromSubFoo;
-
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -32,11 +29,19 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-@AllArgsConstructor(access = PRIVATE)
 public class MixedToFooWithBuilder {
     private final String name;
     private BigInteger id;
-    private final List<FromSubFoo> nestedObjectList;
+    private final List<ImmutableToSubFoo> nestedObjectList;
     private final List<String> list;
-    private final FromSubFoo nestedObject;
+    private final ImmutableToSubFoo nestedObject;
+
+    public MixedToFooWithBuilder(final String name, final BigInteger id, final List<ImmutableToSubFoo> nestedObjectList,
+        final List<String> list, final ImmutableToSubFoo nestedObject) {
+        this.name = name;
+        this.id = id;
+        this.nestedObjectList = nestedObjectList;
+        this.list = list;
+        this.nestedObject = nestedObject;
+    }
 }
