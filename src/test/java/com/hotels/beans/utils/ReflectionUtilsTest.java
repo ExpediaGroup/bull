@@ -36,6 +36,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -161,6 +162,17 @@ public class ReflectionUtilsTest {
     }
 
     /**
+     * Tests that the method {@code getMapGenericType} throws Exception when the given type is not a map.
+     */
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testGetMapGenericTypeThrowsIllegalArgumentExceptionWhenTheGivenTypeIsNotAMap() {
+        // GIVEN
+
+        // WHEN
+        underTest.getMapGenericType(List.class, null, LIST_FIELD_NAME);
+    }
+
+    /**
      * Tests that the method {@code getGetterMethodPrefix} returns the expected value.
      * @param testCaseDescription the test case description
      * @param testClass the class to test
@@ -199,6 +211,7 @@ public class ReflectionUtilsTest {
      * @param testCaseDescription the test case description
      * @param annotationToGet the annotation to retrieve
      * @param expectNull true if it's expected to find it null, false otherwise
+     * @throws NoSuchFieldException if the field does not exists.
      */
     @Test(dataProvider = "dataGetFieldAnnotationTesting")
     public void testGetFieldAnnotationWorksProperly(final String testCaseDescription, final Class<? extends Annotation> annotationToGet,

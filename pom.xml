@@ -40,12 +40,12 @@
 		<glassfish.javax.el.version>2.2.6</glassfish.javax.el.version>
 		<!-- JaCoCo properties -->
 		<jacoco.version>0.8.2</jacoco.version>
-		<jacoco.classRatio>0.80</jacoco.classRatio>
-		<jacoco.instructionRatio>0.80</jacoco.instructionRatio>
-		<jacoco.methodRatio>0.80</jacoco.methodRatio>
-		<jacoco.branchRatio>0.75</jacoco.branchRatio>
-		<jacoco.complexityRatio>0.80</jacoco.complexityRatio>
-		<jacoco.lineRatio>0.80</jacoco.lineRatio>
+		<jacoco.classRatio>0.85</jacoco.classRatio>
+		<jacoco.instructionRatio>0.85</jacoco.instructionRatio>
+		<jacoco.methodRatio>0.85</jacoco.methodRatio>
+		<jacoco.branchRatio>0.85</jacoco.branchRatio>
+		<jacoco.complexityRatio>0.85</jacoco.complexityRatio>
+		<jacoco.lineRatio>0.85</jacoco.lineRatio>
 		<!-- site properties -->
 		<wagon-ssh.version>3.2.0</wagon-ssh.version>
 		<github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>

@@ -56,6 +56,7 @@ mvn clean install -P relaxed
 * support validation through annotations.
 * support copy of beans with different field's name.
 * support lambda function field transformation.
+* support copy of java bean built through Builder.
 * easy usage, declarative way to define the property mapping (in case of different names) or simply adding the lombok annotations.
 * allows to set the default value for all objects not existing in the source object.
 * allows to skip transformation for a given set of fields.
