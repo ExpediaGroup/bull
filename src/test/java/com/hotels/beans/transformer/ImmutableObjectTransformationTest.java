@@ -60,7 +60,6 @@ import com.hotels.beans.sample.immutable.ImmutableToFooDiffFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooInvalid;
 import com.hotels.beans.sample.immutable.ImmutableToFooMap;
 import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
-import com.hotels.beans.sample.immutable.ImmutableToFooNoConstructors;
 import com.hotels.beans.sample.immutable.ImmutableToFooNotExistingFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
@@ -205,8 +204,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     private Object[][] dataConstructorErrorTesting() {
         FromFoo actual = new FromFoo(NAME, ID, null, null, null);
         return new Object[][] {
-                {"Test that an exception is thrown if the constructor invocation throws exception", actual, ImmutableToFooCustomAnnotation.class},
-                {"Test that an exception is thrown if no constructors are defined", actual, ImmutableToFooNoConstructors.class},
+                {"Test that an exception is thrown if the constructor invocation throws exception", actual, ImmutableToFooCustomAnnotation.class}
         };
     }
 

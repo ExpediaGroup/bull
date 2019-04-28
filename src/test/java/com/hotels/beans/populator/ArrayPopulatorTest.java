@@ -16,6 +16,9 @@
 
 package com.hotels.beans.populator;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -83,6 +86,8 @@ public class ArrayPopulatorTest {
             assertArrayEquals((char[]) array, (char[]) actual);
         } else if (genericFieldType == Integer.class) {
             assertArrayEquals((int[]) array, (int[]) actual);
+        } else if (genericFieldType == Object.class) {
+            assertArrayEquals((Object[]) array, (Object[]) actual);
         } else if (genericFieldType == MixedToFooStaticField.class) {
             final MixedToFooStaticField[] expectedArray = (MixedToFooStaticField[]) array;
             final Object[] actualArray = (Object[]) actual;
@@ -103,7 +108,8 @@ public class ArrayPopulatorTest {
                 {String.class, STRING_ARRAY, null},
                 {Character.class, CHAR_ARRAY, null},
                 {Integer.class, INT_ARRAY, null},
-                {MixedToFooStaticField.class, createMixedToFooArray(), null}
+                {MixedToFooStaticField.class, createMixedToFooArray(), null},
+                {Object.class, createBooleanArray(), null}
         };
     }
 
@@ -114,5 +120,13 @@ public class ArrayPopulatorTest {
     private static MixedToFooStaticField[] createMixedToFooArray() {
         MIXED_TO_FOO_STATIC_FIELDS_OBJECTS.setNormalField(VAL_1);
         return new MixedToFooStaticField[] {MIXED_TO_FOO_STATIC_FIELDS_OBJECTS};
+    }
+
+    /**
+     * Creates an array containing an instance of {@link Boolean}.
+     * @return an array containing an instance of {@link Boolean}.
+     */
+    private static Object[] createBooleanArray() {
+        return new Object[] {TRUE, FALSE};
     }
 }

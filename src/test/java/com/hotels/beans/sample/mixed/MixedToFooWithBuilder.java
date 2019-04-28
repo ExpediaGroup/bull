@@ -17,23 +17,31 @@
 package com.hotels.beans.sample.mixed;
 
 import java.math.BigInteger;
+import java.util.List;
 
-import javax.validation.constraints.NotNull;
+import com.hotels.beans.sample.immutable.ImmutableToSubFoo;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 /**
- * Sample mixed object.
+ * Mixed bean instantiable only through a Builder.
  */
 @Getter
-@ToString
-public class MixedToFooMissingConstructor {
-    @NotNull
-    public BigInteger id;
+@Builder
+public class MixedToFooWithBuilder {
     private final String name;
+    private BigInteger id;
+    private final List<ImmutableToSubFoo> nestedObjectList;
+    private final List<String> list;
+    private final ImmutableToSubFoo nestedObject;
 
-    public MixedToFooMissingConstructor(final String name) {
+    public MixedToFooWithBuilder(final String name, final BigInteger id, final List<ImmutableToSubFoo> nestedObjectList,
+        final List<String> list, final ImmutableToSubFoo nestedObject) {
         this.name = name;
+        this.id = id;
+        this.nestedObjectList = nestedObjectList;
+        this.list = list;
+        this.nestedObject = nestedObject;
     }
 }
