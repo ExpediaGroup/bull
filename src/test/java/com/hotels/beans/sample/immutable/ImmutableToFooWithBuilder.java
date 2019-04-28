@@ -16,14 +16,11 @@
 
 package com.hotels.beans.sample.immutable;
 
-import static lombok.AccessLevel.PRIVATE;
-
 import java.math.BigInteger;
 import java.util.List;
 
 import com.hotels.beans.sample.FromSubFoo;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -32,13 +29,21 @@ import lombok.Getter;
  */
 @Getter
 @Builder(builderMethodName = "hiddenBuilder")
-@AllArgsConstructor(access = PRIVATE)
 public class ImmutableToFooWithBuilder {
     private final String name;
     private final BigInteger id;
     private final List<FromSubFoo> nestedObjectList;
     private final List<String> list;
     private final FromSubFoo nestedObject;
+
+    public ImmutableToFooWithBuilder(final String name, final BigInteger id, final List<FromSubFoo> nestedObjectList,
+        final List<String> list, final FromSubFoo nestedObject) {
+        this.name = name;
+        this.id = id;
+        this.nestedObjectList = nestedObjectList;
+        this.list = list;
+        this.nestedObject = nestedObject;
+    }
 
     public static ImmutableToFooWithBuilderBuilder builder(final String name, final BigInteger id,
         final List<FromSubFoo> nestedObjectList, final List<String> list, final FromSubFoo nestedObject) {

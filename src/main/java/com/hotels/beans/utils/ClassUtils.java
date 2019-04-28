@@ -28,6 +28,7 @@ import static java.util.Comparator.comparing;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
+import static java.util.Set.of;
 import static java.util.stream.Collectors.toList;
 
 import static com.hotels.beans.utils.ValidationUtils.notNull;
@@ -46,12 +47,15 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -68,6 +72,12 @@ public final class ClassUtils {
      * Class nullability error message constant.
      */
     private static final String CLAZZ_CANNOT_BE_NULL = "clazz cannot be null!";
+
+    /**
+     * Primitive types list.
+     */
+    private static final Set<Class<?>> PRIMITIVE_TYPES = of(String.class, Boolean.class, Integer.class, Long.class,
+           Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class);
 
     /**
      * Reflection utils instance {@link ReflectionUtils}.
@@ -109,7 +119,7 @@ public final class ClassUtils {
     public boolean isPrimitiveType(final Class<?> clazz) {
         final String cacheKey = "isPrimitive-" + clazz.getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final Boolean res = clazz.isPrimitive() || clazz.equals(String.class) || clazz.equals(Boolean.class) || clazz.isEnum() || Number.class.isAssignableFrom(clazz);
+            final Boolean res = clazz.isPrimitive() || PRIMITIVE_TYPES.contains(clazz) || clazz.isEnum();
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
@@ -123,8 +133,7 @@ public final class ClassUtils {
     public boolean isPrimitiveTypeArray(final Object object) {
         final String cacheKey = "isPrimitiveTypeArray-" + object.getClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final Boolean res = object instanceof int[] || object instanceof char[] || object instanceof short[]
-                    || object instanceof long[] || object instanceof byte[] || object instanceof float[] || object instanceof double[];
+            final Boolean res = isPrimitiveType(object.getClass().getComponentType());
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
@@ -394,6 +403,7 @@ public final class ClassUtils {
      * @param clazz the class from which gets the all arg constructor.
      * @param <K> the object type
      * @return the no args constructor
+     * @throws InvalidBeanException if no default constructor is available
      */
     public <K> Constructor getNoArgsConstructor(final Class<K> clazz) {
         final String cacheKey = "NoArgsConstructor-" + clazz.getName();
