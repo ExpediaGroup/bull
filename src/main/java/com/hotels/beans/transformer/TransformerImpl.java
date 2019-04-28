@@ -60,10 +60,8 @@ public class TransformerImpl extends AbstractTransformer {
         final ClassType classType = classUtils.getClassType(targetClass);
         if (classType.is(MUTABLE)) {
             try {
-                k = targetClass.getDeclaredConstructor().newInstance();
+                k = classUtils.getInstance(classUtils.getNoArgsConstructor(targetClass));
                 injectAllFields(sourceObj, k, breadcrumb);
-            } catch (NoSuchMethodException e) {
-                throw new InvalidBeanException("No default constructor defined for class: " + targetClass.getName(), e);
             } catch (Exception e) {
                 throw new InvalidBeanException(e.getMessage(), e);
             }
@@ -101,7 +99,6 @@ public class TransformerImpl extends AbstractTransformer {
      * @return a copy of the source object into the destination object
      * @throws InvalidBeanException {@link InvalidBeanException} if the target object is not compliant with the requirements
      */
-    @SuppressWarnings("unchecked")
     private <T, K> K injectValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
         final Object[] constructorArgs;
         if (canBeInjectedByConstructorParams(constructor, targetClass)) {
@@ -110,7 +107,7 @@ public class TransformerImpl extends AbstractTransformer {
             constructorArgs = getConstructorValuesFromFields(sourceObj, targetClass, breadcrumb);
         }
         try {
-            return (K) constructor.newInstance(constructorArgs);
+            return classUtils.getInstance(constructor, constructorArgs);
         } catch (final Exception e) {
             throw new InvalidBeanException("Constructor invoked with arguments. Expected: " + constructor + "; Found: "
                     + getFormattedConstructorArgs(targetClass, constructorArgs)
