@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.2.8] TBD
+### [1.3.0] 2019.04.28
 #### Added
 * Added support for the transformation of Java Beans built through Builder
 
@@ -49,7 +49,7 @@ All notable changes to this project will be documented in this file.
 - Updated Travis configuration in order to work with java 11
 - Modified Travis configuration in order to automatically create the GitHub site as soon as a tag is created
 
-### [1.1.14] TBD
+### [1.1.14] 2019.04.28
 #### Added
 * Added support for the transformation of Java Beans built through Builder
 

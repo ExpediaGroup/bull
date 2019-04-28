@@ -33,18 +33,10 @@ public final class MutableToFooWithBuilderMultipleConstructor {
     private List<MutableToSubFoo> nestedObjectList;
     private MutableToSubFoo nestedObject;
 
-    private MutableToFooWithBuilderMultipleConstructor() {
-    }
-
     /**
      * Private constructor.
      */
-    private MutableToFooWithBuilderMultipleConstructor(final Builder builder) {
-        this.id = builder.id;
-        this.name = builder.name;
-        this.list = builder.list;
-        this.nestedObjectList = builder.nestedObjectList;
-        this.nestedObject = builder.nestedObject;
+    private MutableToFooWithBuilderMultipleConstructor() {
     }
 
     static class Builder {
@@ -71,23 +63,14 @@ public final class MutableToFooWithBuilderMultipleConstructor {
             return this;
         }
 
-        public Builder withList(final List<String> list) {
-            this.list = list;
-            return this;
-        }
-
-        public Builder withNestedObjectList(final List<MutableToSubFoo> nestedObjectList) {
-            this.nestedObjectList = nestedObjectList;
-            return this;
-        }
-
-        public Builder withNestedObject(final MutableToSubFoo nestedObject) {
-            this.nestedObject = nestedObject;
-            return this;
-        }
-
         public MutableToFooWithBuilderMultipleConstructor build() {
-            return new MutableToFooWithBuilderMultipleConstructor(this);
+            MutableToFooWithBuilderMultipleConstructor builderToFoo = new MutableToFooWithBuilderMultipleConstructor();
+            builderToFoo.id = this.id;
+            builderToFoo.name = this.name;
+            builderToFoo.list = this.list;
+            builderToFoo.nestedObjectList = this.nestedObjectList;
+            builderToFoo.nestedObject = this.nestedObject;
+            return builderToFoo;
         }
     }
 }
