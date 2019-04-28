@@ -85,6 +85,7 @@ public class ClassUtilsTest {
     private static final double[] PRIMITIVE_DOUBLE_ARRAY = {};
     private static final float[] PRIMITIVE_FLOAT_ARRAY = {};
     private static final long[] PRIMITIVE_LONG_ARRAY = {};
+    private static final Integer[] PRIMITIVE_INTEGER_ARRAY = {};
     private static final FromFoo[] NOT_PRIMITIVE_ARRAY = {};
 
     /**
@@ -127,7 +128,9 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns true if the class is a primitive type object", BigDecimal.class, true},
                 {"Tests that the method returns false if the class is not a primitive type object", FromFoo.class, false},
-                {"Tests that the method returns true if the class is not a Boolean", Boolean.class, true}
+                {"Tests that the method returns true if the class is not a Boolean", Boolean.class, true},
+                {"Tests that the method returns true if the class is not a Character", Character.class, true},
+                {"Tests that the method returns true if the class is not a Byte", Byte.class, true}
         };
     }
 
@@ -222,6 +225,7 @@ public class ClassUtilsTest {
                 {"Tests that the method returns true if the array is of type double[]", PRIMITIVE_DOUBLE_ARRAY, true},
                 {"Tests that the method returns true if the array is of type float[]", PRIMITIVE_FLOAT_ARRAY, true},
                 {"Tests that the method returns true if the array is of type long[]", PRIMITIVE_LONG_ARRAY, true},
+                {"Tests that the method returns true if the array is of type Integer[]", PRIMITIVE_INTEGER_ARRAY, true},
                 {"Tests that the method returns false if the array is of type FromFoo[]", NOT_PRIMITIVE_ARRAY, false}
         };
     }
