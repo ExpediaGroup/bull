@@ -49,12 +49,12 @@ class ArrayPopulator extends Populator&lt;Object&gt; implements ICollectionPopul
     @Override
     public Object getPopulatedObject(final Class&lt;?&gt; fieldType, final Class&lt;?&gt; genericFieldType, final Object fieldValue, final Class&lt;?&gt; nestedGenericClass) {
         final Object res;
-<span class="fc bfc" id="L52" title="All 4 branches covered.">        if (classUtils.isPrimitiveTypeArray(fieldValue) || classUtils.isPrimitiveOrSpecialType(genericFieldType)) {</span>
+<span class="pc bpc" id="L52" title="1 of 4 branches missed.">        if (classUtils.isPrimitiveTypeArray(fieldValue) || classUtils.isPrimitiveOrSpecialType(genericFieldType)) {</span>
 <span class="fc" id="L53">            res = fieldValue;</span>
         } else {
 <span class="fc" id="L55">            res = stream((Object[]) fieldValue)</span>
                     //.parallel()
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">                    .map(o -&gt; classUtils.isPrimitiveOrSpecialType(genericFieldType) ? o : transform(o, genericFieldType)).toArray();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">                    .map(o -&gt; classUtils.isPrimitiveOrSpecialType(o.getClass()) ? o : transform(o, genericFieldType)).toArray();</span>
         }
 <span class="fc" id="L59">        return res;</span>
     }

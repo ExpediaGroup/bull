@@ -23,14 +23,13 @@ import static java.lang.reflect.Modifier.isStatic;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.Collections.max;
+import static java.util.Collections.min;
 import static java.util.Comparator.comparing;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
+import static java.util.Set.of;
 import static java.util.stream.Collectors.toList;
-
-import static org.apache.commons.lang3.ArrayUtils.isEmpty;
-import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 
 import static com.hotels.beans.utils.ValidationUtils.notNull;
 import static com.hotels.beans.base.Defaults.defaultValue;
@@ -38,7 +37,6 @@ import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.ClassType.IMMUTABLE;
 import static com.hotels.beans.constant.ClassType.MIXED;
 import static com.hotels.beans.constant.ClassType.MUTABLE;
-import static com.hotels.beans.constant.ClassType.BUILDER;
 import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_FIELD;
 import static com.hotels.beans.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
 import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
@@ -46,19 +44,24 @@ import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIEL
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.constant.ClassType;
+import com.hotels.beans.error.InstanceCreationException;
 import com.hotels.beans.error.InvalidBeanException;
 
 /**
@@ -69,6 +72,12 @@ public final class ClassUtils {
      * Class nullability error message constant.
      */
     private static final String CLAZZ_CANNOT_BE_NULL = &quot;clazz cannot be null!&quot;;
+
+    /**
+     * Primitive types list.
+     */
+<span class="fc" id="L79">    private static final Set&lt;Class&lt;?&gt;&gt; PRIMITIVE_TYPES = of(String.class, Boolean.class, Integer.class, Long.class,</span>
+           Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class);
 
     /**
      * Reflection utils instance {@link ReflectionUtils}.
@@ -83,10 +92,10 @@ public final class ClassUtils {
     /**
      * Default constructor.
      */
-<span class="fc" id="L86">    public ClassUtils() {</span>
-<span class="fc" id="L87">        this.reflectionUtils = new ReflectionUtils();</span>
-<span class="fc" id="L88">        this.cacheManager = getCacheManager(&quot;classUtils&quot;);</span>
-<span class="fc" id="L89">    }</span>
+<span class="fc" id="L95">    public ClassUtils() {</span>
+<span class="fc" id="L96">        this.reflectionUtils = new ReflectionUtils();</span>
+<span class="fc" id="L97">        this.cacheManager = getCacheManager(&quot;classUtils&quot;);</span>
+<span class="fc" id="L98">    }</span>
 
     /**
      * Checks if an object is a primitive or special type.
@@ -94,11 +103,11 @@ public final class ClassUtils {
      * @return true if is primitive or special type, false otherwise
      */
     public boolean isPrimitiveOrSpecialType(final Class&lt;?&gt; clazz) {
-<span class="fc" id="L97">        final String cacheKey = &quot;isPrimitiveOrSpecial-&quot; + clazz.getName();</span>
-<span class="fc" id="L98">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
-<span class="fc bfc" id="L99" title="All 4 branches covered.">            final Boolean res = isPrimitiveType(clazz) || isSpecialType(clazz);</span>
-<span class="fc" id="L100">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L101">            return res;</span>
+<span class="fc" id="L106">        final String cacheKey = &quot;isPrimitiveOrSpecial-&quot; + clazz.getName();</span>
+<span class="fc" id="L107">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
+<span class="fc bfc" id="L108" title="All 4 branches covered.">            final Boolean res = isPrimitiveType(clazz) || isSpecialType(clazz);</span>
+<span class="fc" id="L109">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L110">            return res;</span>
         });
     }
 
@@ -108,11 +117,11 @@ public final class ClassUtils {
      * @return true if is special type, false otherwise
      */
     public boolean isPrimitiveType(final Class&lt;?&gt; clazz) {
-<span class="fc" id="L111">        final String cacheKey = &quot;isPrimitive-&quot; + clazz.getName();</span>
-<span class="fc" id="L112">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
-<span class="fc bfc" id="L113" title="All 8 branches covered.">            final Boolean res = clazz.isPrimitive() || clazz.equals(String.class) || clazz.isEnum() || Number.class.isAssignableFrom(clazz);</span>
-<span class="fc" id="L114">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L115">            return res;</span>
+<span class="fc" id="L120">        final String cacheKey = &quot;isPrimitive-&quot; + clazz.getName();</span>
+<span class="fc" id="L121">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
+<span class="fc bfc" id="L122" title="All 6 branches covered.">            final Boolean res = clazz.isPrimitive() || PRIMITIVE_TYPES.contains(clazz) || clazz.isEnum();</span>
+<span class="fc" id="L123">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L124">            return res;</span>
         });
     }
 
@@ -122,12 +131,11 @@ public final class ClassUtils {
      * @return true if is primitive type array, false otherwise
      */
     public boolean isPrimitiveTypeArray(final Object object) {
-<span class="fc" id="L125">        final String cacheKey = &quot;isPrimitiveTypeArray-&quot; + object.getClass().getCanonicalName();</span>
-<span class="fc" id="L126">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
-<span class="fc bfc" id="L127" title="All 14 branches covered.">            final Boolean res = object instanceof int[] || object instanceof char[] || object instanceof short[]</span>
-                    || object instanceof long[] || object instanceof byte[] || object instanceof float[] || object instanceof double[];
-<span class="fc" id="L129">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L130">            return res;</span>
+<span class="fc" id="L134">        final String cacheKey = &quot;isPrimitiveTypeArray-&quot; + object.getClass().getName();</span>
+<span class="fc" id="L135">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L136">            final Boolean res = isPrimitiveType(object.getClass().getComponentType());</span>
+<span class="fc" id="L137">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L138">            return res;</span>
         });
     }
 
@@ -138,12 +146,12 @@ public final class ClassUtils {
      * @return true if is special type, false otherwise
      */
     public boolean isSpecialType(final Class&lt;?&gt; clazz) {
-<span class="fc" id="L141">        final String cacheKey = &quot;isSpecial-&quot; + clazz.getName();</span>
-<span class="fc" id="L142">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
-<span class="pc bpc" id="L143" title="1 of 6 branches missed.">            final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || Temporal.class.isAssignableFrom(clazz)</span>
-<span class="pc bpc" id="L144" title="2 of 4 branches missed.">                    || clazz.isSynthetic() || clazz.isAnonymousClass();</span>
-<span class="fc" id="L145">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L146">            return res;</span>
+<span class="fc" id="L149">        final String cacheKey = &quot;isSpecial-&quot; + clazz.getName();</span>
+<span class="fc" id="L150">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
+<span class="pc bpc" id="L151" title="1 of 6 branches missed.">            final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || Temporal.class.isAssignableFrom(clazz)</span>
+<span class="pc bpc" id="L152" title="2 of 4 branches missed.">                    || clazz.isSynthetic() || clazz.isAnonymousClass();</span>
+<span class="fc" id="L153">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L154">            return res;</span>
         });
     }
 
@@ -153,7 +161,7 @@ public final class ClassUtils {
      * @return true if is Double
      */
     public static boolean isDouble(final Class&lt;?&gt; type) {
-<span class="fc bfc" id="L156" title="All 4 branches covered.">        return Double.class.isAssignableFrom(type) || type == double.class;</span>
+<span class="fc bfc" id="L164" title="All 4 branches covered.">        return Double.class.isAssignableFrom(type) || type == double.class;</span>
     }
 
     /**
@@ -162,7 +170,7 @@ public final class ClassUtils {
      * @return true if is Float
      */
     public static boolean isFloat(final Class&lt;?&gt; type) {
-<span class="fc bfc" id="L165" title="All 4 branches covered.">        return Float.class.isAssignableFrom(type) || type == float.class;</span>
+<span class="fc bfc" id="L173" title="All 4 branches covered.">        return Float.class.isAssignableFrom(type) || type == float.class;</span>
     }
 
     /**
@@ -171,7 +179,7 @@ public final class ClassUtils {
      * @return true if is Long
      */
     public static boolean isLong(final Class&lt;?&gt; type) {
-<span class="fc bfc" id="L174" title="All 4 branches covered.">        return Long.class.isAssignableFrom(type) || type == long.class;</span>
+<span class="fc bfc" id="L182" title="All 4 branches covered.">        return Long.class.isAssignableFrom(type) || type == long.class;</span>
     }
 
     /**
@@ -180,7 +188,7 @@ public final class ClassUtils {
      * @return true if is Short
      */
     public static boolean isShort(final Class&lt;?&gt; type) {
-<span class="fc bfc" id="L183" title="All 4 branches covered.">        return Short.class.isAssignableFrom(type) || type == short.class;</span>
+<span class="fc bfc" id="L191" title="All 4 branches covered.">        return Short.class.isAssignableFrom(type) || type == short.class;</span>
     }
 
     /**
@@ -189,7 +197,7 @@ public final class ClassUtils {
      * @return true if is Integer
      */
     public static boolean isInt(final Class&lt;?&gt; type) {
-<span class="fc bfc" id="L192" title="All 4 branches covered.">        return Integer.class.isAssignableFrom(type) || type == int.class;</span>
+<span class="fc bfc" id="L200" title="All 4 branches covered.">        return Integer.class.isAssignableFrom(type) || type == int.class;</span>
     }
 
     /**
@@ -198,7 +206,7 @@ public final class ClassUtils {
      * @return true if is Byte
      */
     public static boolean isByte(final Class&lt;?&gt; type) {
-<span class="fc bfc" id="L201" title="All 4 branches covered.">        return Byte.class.isAssignableFrom(type) || type == byte.class;</span>
+<span class="fc bfc" id="L209" title="All 4 branches covered.">        return Byte.class.isAssignableFrom(type) || type == byte.class;</span>
     }
 
     /**
@@ -207,7 +215,7 @@ public final class ClassUtils {
      * @return true if is Character
      */
     public static boolean isChar(final Class&lt;?&gt; type) {
-<span class="fc bfc" id="L210" title="All 4 branches covered.">        return Character.class.isAssignableFrom(type) || type == char.class;</span>
+<span class="fc bfc" id="L218" title="All 4 branches covered.">        return Character.class.isAssignableFrom(type) || type == char.class;</span>
     }
 
     /**
@@ -216,7 +224,7 @@ public final class ClassUtils {
      * @return true if is Boolean
      */
     public static boolean isBoolean(final Class&lt;?&gt; type) {
-<span class="fc bfc" id="L219" title="All 4 branches covered.">        return Boolean.class.isAssignableFrom(type) || type == boolean.class;</span>
+<span class="fc bfc" id="L227" title="All 4 branches covered.">        return Boolean.class.isAssignableFrom(type) || type == boolean.class;</span>
     }
 
     /**
@@ -226,19 +234,19 @@ public final class ClassUtils {
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     public List&lt;Field&gt; getPrivateFinalFields(final Class&lt;?&gt; clazz) {
-<span class="fc" id="L229">        notNull(clazz, CLAZZ_CANNOT_BE_NULL);</span>
-<span class="fc" id="L230">        final String cacheKey = &quot;PrivateFinalFields-&quot; + clazz.getName();</span>
-<span class="fc" id="L231">        return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L232">            final List&lt;Field&gt; res = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L233" title="1 of 4 branches missed.">            if (nonNull(clazz.getSuperclass()) &amp;&amp; !clazz.getSuperclass().equals(Object.class)) {</span>
-<span class="fc" id="L234">                res.addAll(getPrivateFinalFields(clazz.getSuperclass()));</span>
+<span class="fc" id="L237">        notNull(clazz, CLAZZ_CANNOT_BE_NULL);</span>
+<span class="fc" id="L238">        final String cacheKey = &quot;PrivateFinalFields-&quot; + clazz.getName();</span>
+<span class="fc" id="L239">        return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L240">            final List&lt;Field&gt; res = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L241" title="1 of 4 branches missed.">            if (nonNull(clazz.getSuperclass()) &amp;&amp; !clazz.getSuperclass().equals(Object.class)) {</span>
+<span class="fc" id="L242">                res.addAll(getPrivateFinalFields(clazz.getSuperclass()));</span>
             }
-<span class="fc" id="L236">            res.addAll(stream(getDeclaredFields(clazz))</span>
+<span class="fc" id="L244">            res.addAll(stream(getDeclaredFields(clazz))</span>
                     //.parallel()
-<span class="fc" id="L238">                    .filter(IS_FINAL_AND_NOT_STATIC_FIELD)</span>
-<span class="fc" id="L239">                    .collect(toList()));</span>
-<span class="fc" id="L240">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L241">            return res;</span>
+<span class="fc" id="L246">                    .filter(IS_FINAL_AND_NOT_STATIC_FIELD)</span>
+<span class="fc" id="L247">                    .collect(toList()));</span>
+<span class="fc" id="L248">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L249">            return res;</span>
         });
     }
 
@@ -249,15 +257,15 @@ public final class ClassUtils {
      * @return the total matching item.
      */
     public int getTotalFields(final Class&lt;?&gt; clazz, final Predicate&lt;? super Field&gt; predicate) {
-<span class="fc" id="L252">        notNull(clazz, CLAZZ_CANNOT_BE_NULL);</span>
-<span class="fc" id="L253">        final String cacheKey = &quot;TotalFields-&quot; + clazz.getName() + '-' + predicate;</span>
-<span class="fc" id="L254">        return cacheManager.getFromCache(cacheKey, Integer.class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L255">            List&lt;Field&gt; declaredFields = getDeclaredFields(clazz, true);</span>
-<span class="fc" id="L256">            int res = ofNullable(predicate)</span>
-<span class="fc" id="L257">                    .map(filter -&gt; (int) declaredFields.stream().filter(filter).count())</span>
-<span class="fc" id="L258">                    .orElseGet(declaredFields::size);</span>
-<span class="fc" id="L259">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L260">            return res;</span>
+<span class="fc" id="L260">        notNull(clazz, CLAZZ_CANNOT_BE_NULL);</span>
+<span class="fc" id="L261">        final String cacheKey = &quot;TotalFields-&quot; + clazz.getName() + '-' + predicate;</span>
+<span class="fc" id="L262">        return cacheManager.getFromCache(cacheKey, Integer.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L263">            List&lt;Field&gt; declaredFields = getDeclaredFields(clazz, true);</span>
+<span class="fc" id="L264">            int res = ofNullable(predicate)</span>
+<span class="fc" id="L265">                    .map(filter -&gt; (int) declaredFields.stream().filter(filter).count())</span>
+<span class="fc" id="L266">                    .orElseGet(declaredFields::size);</span>
+<span class="fc" id="L267">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L268">            return res;</span>
         });
     }
 
@@ -267,7 +275,7 @@ public final class ClassUtils {
      * @return a list of private final fields.
      */
     public List&lt;Field&gt; getPrivateFields(final Class&lt;?&gt; clazz) {
-<span class="fc" id="L270">        return getPrivateFields(clazz, false);</span>
+<span class="fc" id="L278">        return getPrivateFields(clazz, false);</span>
     }
 
     /**
@@ -278,21 +286,21 @@ public final class ClassUtils {
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     public List&lt;Field&gt; getPrivateFields(final Class&lt;?&gt; clazz, final boolean skipFinal) {
-<span class="fc" id="L281">        notNull(clazz, CLAZZ_CANNOT_BE_NULL);</span>
-<span class="fc" id="L282">        final String cacheKey = &quot;PrivateFields-&quot; + clazz.getName() + &quot;-skipFinal-&quot; + skipFinal;</span>
-<span class="fc" id="L283">        return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L284">            final List&lt;Field&gt; res = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L285" title="1 of 4 branches missed.">            if (nonNull(clazz.getSuperclass()) &amp;&amp; !clazz.getSuperclass().equals(Object.class)) {</span>
-<span class="fc" id="L286">                res.addAll(getPrivateFields(clazz.getSuperclass(), skipFinal));</span>
+<span class="fc" id="L289">        notNull(clazz, CLAZZ_CANNOT_BE_NULL);</span>
+<span class="fc" id="L290">        final String cacheKey = &quot;PrivateFields-&quot; + clazz.getName() + &quot;-skipFinal-&quot; + skipFinal;</span>
+<span class="fc" id="L291">        return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L292">            final List&lt;Field&gt; res = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L293" title="1 of 4 branches missed.">            if (nonNull(clazz.getSuperclass()) &amp;&amp; !clazz.getSuperclass().equals(Object.class)) {</span>
+<span class="fc" id="L294">                res.addAll(getPrivateFields(clazz.getSuperclass(), skipFinal));</span>
             }
-<span class="fc" id="L288">            res.addAll(stream(getDeclaredFields(clazz))</span>
+<span class="fc" id="L296">            res.addAll(stream(getDeclaredFields(clazz))</span>
                     //.parallel()
-<span class="fc bfc" id="L290" title="All 4 branches covered.">                    .filter(field -&gt; isPrivate(field.getModifiers())</span>
-<span class="fc bfc" id="L291" title="All 2 branches covered.">                            &amp;&amp; (!skipFinal || !isFinal(field.getModifiers()))</span>
-<span class="fc bfc" id="L292" title="All 2 branches covered.">                            &amp;&amp; !isStatic(field.getModifiers()))</span>
-<span class="fc" id="L293">                    .collect(toList()));</span>
-<span class="fc" id="L294">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L295">            return res;</span>
+<span class="fc bfc" id="L298" title="All 4 branches covered.">                    .filter(field -&gt; isPrivate(field.getModifiers())</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">                            &amp;&amp; (!skipFinal || !isFinal(field.getModifiers()))</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">                            &amp;&amp; !isStatic(field.getModifiers()))</span>
+<span class="fc" id="L301">                    .collect(toList()));</span>
+<span class="fc" id="L302">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L303">            return res;</span>
         });
     }
 
@@ -304,20 +312,20 @@ public final class ClassUtils {
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     public List&lt;Field&gt; getDeclaredFields(final Class&lt;?&gt; clazz, final boolean skipStatic) {
-<span class="fc" id="L307">        final String cacheKey = &quot;DeclaredFields-&quot; + clazz.getName() + &quot;-skipStatic-&quot; + skipStatic;</span>
-<span class="fc" id="L308">        return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L309">            final List&lt;Field&gt; res = new LinkedList&lt;&gt;();</span>
-<span class="pc bpc" id="L310" title="1 of 4 branches missed.">            if (nonNull(clazz.getSuperclass()) &amp;&amp; !clazz.getSuperclass().equals(Object.class)) {</span>
-<span class="fc" id="L311">                res.addAll(getDeclaredFields(clazz.getSuperclass(), skipStatic));</span>
+<span class="fc" id="L315">        final String cacheKey = &quot;DeclaredFields-&quot; + clazz.getName() + &quot;-skipStatic-&quot; + skipStatic;</span>
+<span class="fc" id="L316">        return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L317">            final List&lt;Field&gt; res = new LinkedList&lt;&gt;();</span>
+<span class="pc bpc" id="L318" title="1 of 4 branches missed.">            if (nonNull(clazz.getSuperclass()) &amp;&amp; !clazz.getSuperclass().equals(Object.class)) {</span>
+<span class="fc" id="L319">                res.addAll(getDeclaredFields(clazz.getSuperclass(), skipStatic));</span>
             }
-<span class="fc" id="L313">            Stream&lt;Field&gt; fieldStream = stream(getDeclaredFields(clazz));</span>
-<span class="fc bfc" id="L314" title="All 2 branches covered.">            if (skipStatic) {</span>
+<span class="fc" id="L321">            Stream&lt;Field&gt; fieldStream = stream(getDeclaredFields(clazz));</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">            if (skipStatic) {</span>
 //                fieldStream = fieldStream.parallel().filter(field -&gt; !isStatic(field.getModifiers()));
-<span class="fc bfc" id="L316" title="All 2 branches covered.">                fieldStream = fieldStream.filter(field -&gt; !isStatic(field.getModifiers()));</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">                fieldStream = fieldStream.filter(field -&gt; !isStatic(field.getModifiers()));</span>
             }
-<span class="fc" id="L318">            res.addAll(fieldStream.collect(toList()));</span>
-<span class="fc" id="L319">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L320">            return res;</span>
+<span class="fc" id="L326">            res.addAll(fieldStream.collect(toList()));</span>
+<span class="fc" id="L327">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L328">            return res;</span>
         });
     }
 
@@ -327,11 +335,11 @@ public final class ClassUtils {
      * @return a list of class fields
      */
     private Field[] getDeclaredFields(final Class&lt;?&gt; clazz) {
-<span class="fc" id="L330">        final String cacheKey = &quot;ClassDeclaredFields-&quot; + clazz.getName();</span>
-<span class="fc" id="L331">        return cacheManager.getFromCache(cacheKey, Field[].class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L332">            Field[] res = clazz.getDeclaredFields();</span>
-<span class="fc" id="L333">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L334">            return res;</span>
+<span class="fc" id="L338">        final String cacheKey = &quot;ClassDeclaredFields-&quot; + clazz.getName();</span>
+<span class="fc" id="L339">        return cacheManager.getFromCache(cacheKey, Field[].class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L340">            Field[] res = clazz.getDeclaredFields();</span>
+<span class="fc" id="L341">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L342">            return res;</span>
         });
     }
 
@@ -342,62 +350,71 @@ public final class ClassUtils {
      * @return true if the target class uses the builder pattern
      */
     public &lt;K&gt; boolean hasAccessibleConstructors(final Class&lt;K&gt; targetClass) {
-<span class="fc" id="L345">        final String cacheKey = &quot;HasAccessibleConstructors-&quot; + targetClass.getName();</span>
-<span class="fc" id="L346">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L347">            final boolean res = stream(targetClass.getDeclaredConstructors()).anyMatch(constructor -&gt; isPublic(constructor.getModifiers()));</span>
-<span class="fc" id="L348">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L349">            return res;</span>
+<span class="fc" id="L353">        final String cacheKey = &quot;HasAccessibleConstructors-&quot; + targetClass.getName();</span>
+<span class="fc" id="L354">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L355">            final boolean res = stream(targetClass.getDeclaredConstructors()).anyMatch(constructor -&gt; isPublic(constructor.getModifiers()));</span>
+<span class="fc" id="L356">            cacheManager.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L357">            return res;</span>
         });
-    }
-
-    /**
-     * Checks if the destination class uses the Builder pattern.
-     * @param constructor the all args constructor
-     * @param targetClass the destination object class
-     * @param &lt;K&gt; the target object type
-     * @return true if the target class uses the builder pattern
-     */
-    public &lt;K&gt; boolean usesBuilderPattern(final Constructor constructor, final Class&lt;K&gt; targetClass) {
-<span class="fc" id="L361">        final String cacheKey = &quot;UsesBuilderPattern-&quot; + constructor.getDeclaringClass().getName();</span>
-<span class="fc" id="L362">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
-<span class="fc bfc" id="L363" title="All 4 branches covered.">            final boolean res = !isPublic(constructor.getModifiers()) &amp;&amp; isNotEmpty(getDeclaredClasses(targetClass))</span>
-<span class="pc bpc" id="L364" title="1 of 2 branches missed.">                    &amp;&amp; isValidBuildMethod(targetClass);</span>
-<span class="fc" id="L365">            cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L366">            return res;</span>
-        });
-    }
-
-    /**
-     * Check if nested class containt a valid build method.
-     * @param superclass class to be instantiated with the build pattern
-     * @return true if we find in nested class a valid build method
-     */
-    private boolean isValidBuildMethod(final Class superclass) {
-<span class="fc" id="L376">        final String build = &quot;build&quot;;</span>
-<span class="fc" id="L377">        String cacheKey = &quot;build-method-&quot; + superclass.getCanonicalName();</span>
-<span class="fc" id="L378">        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L379">                    List&lt;Class&gt; nestedClasses = asList(getDeclaredClasses(superclass));</span>
-<span class="fc" id="L380">                    boolean res =</span>
-<span class="pc bpc" id="L381" title="1 of 2 branches missed.">                            !nestedClasses.isEmpty()</span>
-<span class="fc" id="L382">                                    &amp;&amp; stream(getDeclaredMethods(nestedClasses.get(0)))</span>
-<span class="pc bpc" id="L383" title="2 of 6 branches missed.">                                    .anyMatch(method -&gt; method.getName().equals(build) &amp;&amp; method.getReturnType().equals(superclass));</span>
-<span class="fc" id="L384">                    cacheManager.cacheObject(cacheKey, res);</span>
-<span class="fc" id="L385">                    return res;</span>
-                });
     }
 
     /**
      * Retrieves all classes defined into the given one.
      * @param clazz class where we search for a nested class
-     * @return  all classes defined into the given one
+     * @return all classes defined into the given one
      */
     public Class[] getDeclaredClasses(final Class&lt;?&gt; clazz) {
-<span class="fc" id="L395">        notNull(clazz, CLAZZ_CANNOT_BE_NULL);</span>
-<span class="fc" id="L396">        String cacheKey = &quot;nested-classes-&quot; + clazz.getCanonicalName();</span>
-<span class="fc" id="L397">        return cacheManager.getFromCache(cacheKey, Class[].class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L398">            Class[] declaredClasses = clazz.getDeclaredClasses();</span>
-<span class="fc" id="L399">            cacheManager.cacheObject(cacheKey, declaredClasses);</span>
-<span class="fc" id="L400">            return declaredClasses;</span>
+<span class="fc" id="L367">        notNull(clazz, CLAZZ_CANNOT_BE_NULL);</span>
+<span class="fc" id="L368">        String cacheKey = &quot;DeclaredClasses-&quot; + clazz.getName();</span>
+<span class="fc" id="L369">        return cacheManager.getFromCache(cacheKey, Class[].class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L370">            Class[] declaredClasses = clazz.getDeclaredClasses();</span>
+<span class="fc" id="L371">            cacheManager.cacheObject(cacheKey, declaredClasses);</span>
+<span class="fc" id="L372">            return declaredClasses;</span>
+        });
+    }
+
+    /**
+     * Creates an instance of the given class invoking the given constructor.
+     * @param constructor the constructor to invoke.
+     * @param constructorArgs the constructor args.
+     * @param &lt;T&gt; the class object type.
+     * @return the object instance.
+     * @throws InstanceCreationException in case the object creation fails.
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public &lt;T&gt; T getInstance(final Constructor constructor, final Object... constructorArgs) {
+<span class="fc" id="L386">        boolean isAccessible = reflectionUtils.isAccessible(constructor, null);</span>
+        try {
+<span class="fc bfc" id="L388" title="All 2 branches covered.">            if (!isAccessible) {</span>
+<span class="fc" id="L389">                constructor.setAccessible(true);</span>
+            }
+<span class="fc" id="L391">            return (T) constructor.newInstance(constructorArgs);</span>
+<span class="nc" id="L392">        } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {</span>
+<span class="nc" id="L393">           throw new InstanceCreationException(e.getMessage(), e);</span>
+        } finally {
+<span class="fc bfc" id="L395" title="All 2 branches covered.">            if (!isAccessible) {</span>
+<span class="fc" id="L396">                constructor.setAccessible(false);</span>
+            }
+        }
+    }
+
+    /**
+     * Retrieves the no args constructor.
+     * @param clazz the class from which gets the all arg constructor.
+     * @param &lt;K&gt; the object type
+     * @return the no args constructor
+     * @throws InvalidBeanException if no default constructor is available
+     */
+    public &lt;K&gt; Constructor getNoArgsConstructor(final Class&lt;K&gt; clazz) {
+<span class="fc" id="L409">        final String cacheKey = &quot;NoArgsConstructor-&quot; + clazz.getName();</span>
+<span class="fc" id="L410">        return cacheManager.getFromCache(cacheKey, Constructor.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L411">            Constructor&lt;?&gt;[] declaredConstructors = clazz.getDeclaredConstructors();</span>
+<span class="fc" id="L412">            final Constructor constructor = min(asList(declaredConstructors), comparing(Constructor::getParameterCount));</span>
+<span class="fc bfc" id="L413" title="All 2 branches covered.">            if (constructor.getParameterCount() != 0) {</span>
+<span class="fc" id="L414">                throw new InvalidBeanException(&quot;No default constructors available&quot;);</span>
+            }
+<span class="fc" id="L416">            cacheManager.cacheObject(cacheKey, constructor);</span>
+<span class="fc" id="L417">            return constructor;</span>
         });
     }
 
@@ -408,27 +425,10 @@ public final class ClassUtils {
      * @return the all args constructor
      */
     public &lt;K&gt; Constructor getAllArgsConstructor(final Class&lt;K&gt; clazz) {
-<span class="fc" id="L411">        notNull(clazz, CLAZZ_CANNOT_BE_NULL);</span>
-<span class="fc" id="L412">        final String cacheKey = &quot;AllArgsConstructor-&quot; + clazz.getName();</span>
-<span class="fc" id="L413">        return cacheManager.getFromCache(cacheKey, Constructor.class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L414">            Constructor constructor = getAllArgsConstructor(clazz.getDeclaredConstructors());</span>
-<span class="fc" id="L415">            cacheManager.cacheObject(cacheKey, constructor);</span>
-<span class="fc" id="L416">            return constructor;</span>
-        });
-    }
-
-    /**
-     * Retrieves the all args constructor.
-     * @param constructors class constructors
-     * @return the all args constructor
-     */
-    public Constructor getAllArgsConstructor(final Constructor[] constructors) {
-<span class="fc bfc" id="L426" title="All 2 branches covered.">        if (isEmpty(constructors)) {</span>
-<span class="fc" id="L427">            throw new InvalidBeanException(&quot;No constructors available&quot;);</span>
-        }
-<span class="fc" id="L429">        final String cacheKey = &quot;AllArgsConstructor-&quot; + constructors[0].getDeclaringClass().getName();</span>
-<span class="fc" id="L430">        return cacheManager.getFromCache(cacheKey, Constructor.class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L431">            final Constructor constructor = max(asList(constructors), comparing(Constructor::getParameterCount));</span>
+<span class="fc" id="L428">        final String cacheKey = &quot;AllArgsConstructor-&quot; + clazz.getName();</span>
+<span class="fc" id="L429">        return cacheManager.getFromCache(cacheKey, Constructor.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L430">            Constructor&lt;?&gt;[] declaredConstructors = clazz.getDeclaredConstructors();</span>
+<span class="fc" id="L431">            final Constructor constructor = max(asList(declaredConstructors), comparing(Constructor::getParameterCount));</span>
 <span class="fc" id="L432">            cacheManager.cacheObject(cacheKey, constructor);</span>
 <span class="fc" id="L433">            return constructor;</span>
         });
@@ -602,20 +602,18 @@ public final class ClassUtils {
 <span class="fc" id="L602">        return cacheManager.getFromCache(cacheKey, ClassType.class).orElseGet(() -&gt; {</span>
             final ClassType classType;
 <span class="fc" id="L604">            boolean hasFinalFields = hasFinalFields(clazz);</span>
-<span class="fc bfc" id="L605" title="All 2 branches covered.">            if (usesBuilderPattern(getAllArgsConstructor(clazz), clazz)) {</span>
-<span class="fc" id="L606">                classType = BUILDER;</span>
-<span class="fc bfc" id="L607" title="All 2 branches covered.">            } else if (!hasFinalFields) {</span>
-<span class="fc" id="L608">                classType = MUTABLE;</span>
+<span class="fc bfc" id="L605" title="All 2 branches covered.">            if (!hasFinalFields) {</span>
+<span class="fc" id="L606">                classType = MUTABLE;</span>
             } else {
-<span class="fc" id="L610">                boolean hasNotFinalFields = hasNotFinalFields(clazz);</span>
-<span class="fc bfc" id="L611" title="All 2 branches covered.">                if (hasNotFinalFields) {</span>
-<span class="fc" id="L612">                    classType = MIXED;</span>
+<span class="fc" id="L608">                boolean hasNotFinalFields = hasNotFinalFields(clazz);</span>
+<span class="fc bfc" id="L609" title="All 2 branches covered.">                if (hasNotFinalFields) {</span>
+<span class="fc" id="L610">                    classType = MIXED;</span>
                 } else {
-<span class="fc" id="L614">                    classType = IMMUTABLE;</span>
+<span class="fc" id="L612">                    classType = IMMUTABLE;</span>
                 }
             }
-<span class="fc" id="L617">            cacheManager.cacheObject(cacheKey, classType);</span>
-<span class="fc" id="L618">            return classType;</span>
+<span class="fc" id="L615">            cacheManager.cacheObject(cacheKey, classType);</span>
+<span class="fc" id="L616">            return classType;</span>
         });
     }
 
@@ -626,18 +624,18 @@ public final class ClassUtils {
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     public List&lt;Method&gt; getSetterMethods(final Class&lt;?&gt; clazz) {
-<span class="fc" id="L629">        notNull(clazz, CLAZZ_CANNOT_BE_NULL);</span>
-<span class="fc" id="L630">        final String cacheKey = &quot;SetterMethods-&quot; + clazz.getName();</span>
-<span class="fc" id="L631">        return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L632">            final List&lt;Method&gt; setterMethods = new LinkedList&lt;&gt;();</span>
-<span class="pc bpc" id="L633" title="1 of 4 branches missed.">            if (nonNull(clazz.getSuperclass()) &amp;&amp; !clazz.getSuperclass().equals(Object.class)) {</span>
-<span class="fc" id="L634">                setterMethods.addAll(getSetterMethods(clazz.getSuperclass()));</span>
+<span class="fc" id="L627">        notNull(clazz, CLAZZ_CANNOT_BE_NULL);</span>
+<span class="fc" id="L628">        final String cacheKey = &quot;SetterMethods-&quot; + clazz.getName();</span>
+<span class="fc" id="L629">        return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L630">            final List&lt;Method&gt; setterMethods = new LinkedList&lt;&gt;();</span>
+<span class="pc bpc" id="L631" title="1 of 4 branches missed.">            if (nonNull(clazz.getSuperclass()) &amp;&amp; !clazz.getSuperclass().equals(Object.class)) {</span>
+<span class="fc" id="L632">                setterMethods.addAll(getSetterMethods(clazz.getSuperclass()));</span>
             }
-<span class="fc" id="L636">            setterMethods.addAll(stream(getDeclaredMethods(clazz))</span>
-<span class="fc" id="L637">                    .filter(reflectionUtils::isSetter)</span>
-<span class="fc" id="L638">                    .collect(toList()));</span>
-<span class="fc" id="L639">            cacheManager.cacheObject(cacheKey, setterMethods);</span>
-<span class="fc" id="L640">            return setterMethods;</span>
+<span class="fc" id="L634">            setterMethods.addAll(stream(getDeclaredMethods(clazz))</span>
+<span class="fc" id="L635">                    .filter(reflectionUtils::isSetter)</span>
+<span class="fc" id="L636">                    .collect(toList()));</span>
+<span class="fc" id="L637">            cacheManager.cacheObject(cacheKey, setterMethods);</span>
+<span class="fc" id="L638">            return setterMethods;</span>
         });
     }
 
@@ -647,11 +645,11 @@ public final class ClassUtils {
      * @return the default value of a primitive type
      */
     public Object getDefaultTypeValue(final Class&lt;?&gt; objectType) {
-<span class="fc" id="L650">        final String cacheKey = &quot;DefaultTypeValue-&quot; + objectType.getName();</span>
-<span class="fc" id="L651">        return cacheManager.getFromCache(cacheKey, Object.class).orElseGet(() -&gt; {</span>
-<span class="fc bfc" id="L652" title="All 2 branches covered.">            final Object defaultValue = isPrimitiveType(objectType) ? defaultValue(objectType) : null;</span>
-<span class="fc" id="L653">            cacheManager.cacheObject(cacheKey, defaultValue);</span>
-<span class="fc" id="L654">            return defaultValue;</span>
+<span class="fc" id="L648">        final String cacheKey = &quot;DefaultTypeValue-&quot; + objectType.getName();</span>
+<span class="fc" id="L649">        return cacheManager.getFromCache(cacheKey, Object.class).orElseGet(() -&gt; {</span>
+<span class="fc bfc" id="L650" title="All 2 branches covered.">            final Object defaultValue = isPrimitiveType(objectType) ? defaultValue(objectType) : null;</span>
+<span class="fc" id="L651">            cacheManager.cacheObject(cacheKey, defaultValue);</span>
+<span class="fc" id="L652">            return defaultValue;</span>
         });
     }
 
@@ -663,13 +661,13 @@ public final class ClassUtils {
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     public List&lt;Field&gt; getNotFinalFields(final Class&lt;?&gt; clazz, final Boolean skipStatic) {
-<span class="fc" id="L666">        final String cacheKey = &quot;NotFinalFields-&quot; + clazz.getName() + &quot;-&quot; + skipStatic;</span>
-<span class="fc" id="L667">        return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -&gt; {</span>
-<span class="fc" id="L668">            List&lt;Field&gt; notFinalFields = getDeclaredFields(clazz, skipStatic)</span>
-<span class="fc" id="L669">                    .stream()</span>
-<span class="fc" id="L670">                    .filter(IS_NOT_FINAL_FIELD).collect(toList());</span>
-<span class="fc" id="L671">            cacheManager.cacheObject(cacheKey, notFinalFields);</span>
-<span class="fc" id="L672">            return notFinalFields;</span>
+<span class="fc" id="L664">        final String cacheKey = &quot;NotFinalFields-&quot; + clazz.getName() + &quot;-&quot; + skipStatic;</span>
+<span class="fc" id="L665">        return cacheManager.getFromCache(cacheKey, List.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L666">            List&lt;Field&gt; notFinalFields = getDeclaredFields(clazz, skipStatic)</span>
+<span class="fc" id="L667">                    .stream()</span>
+<span class="fc" id="L668">                    .filter(IS_NOT_FINAL_FIELD).collect(toList());</span>
+<span class="fc" id="L669">            cacheManager.cacheObject(cacheKey, notFinalFields);</span>
+<span class="fc" id="L670">            return notFinalFields;</span>
         });
     }
 }

@@ -4,7 +4,6 @@ com.hotels.beans.cache
 com.hotels.beans.performance
 com.hotels.beans.populator
 com.hotels.beans.sample
-com.hotels.beans.sample.builder
 com.hotels.beans.sample.immutable
 com.hotels.beans.sample.mixed
 com.hotels.beans.sample.mutable
