@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia Inc.
+ * Copyright (C) 2019 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -313,20 +313,20 @@ public class TransformerImpl extends AbstractTransformer {
         }
         boolean primitiveType = classUtils.isPrimitiveType(fieldType);
         Function<Object, Object> transformerFunction = getTransformerFunction(field, fieldBreadcrumb);
-        boolean isFieldTransformerDefined = nonNull(transformerFunction);
-        Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);
+        boolean isTransformerFunctionDefined = nonNull(transformerFunction);
+        Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isTransformerFunctionDefined);
         if (nonNull(fieldValue)) {
             // is not a primitive type or an optional && there are no transformer function
             // defined it recursively evaluate the value
             boolean notPrimitiveAndNotSpecialType = !primitiveType && !classUtils.isSpecialType(fieldType);
-            if (!isFieldTransformerDefined
+            if (!isTransformerFunctionDefined
                     && (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))) {
                 fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
             }
         } else if (primitiveType) {
             fieldValue = defaultValue(fieldType); // assign the default value
         }
-        if (isFieldTransformerDefined) {
+        if (isTransformerFunctionDefined) {
             fieldValue = transformerFunction.apply(fieldValue);
         }
         return fieldValue;
