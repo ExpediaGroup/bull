@@ -307,24 +307,29 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
         String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
+        Class<?> fieldType = field.getType();
         if (doSkipTransformation(fieldBreadcrumb)) {
-            return defaultValue(field.getType());
+            return defaultValue(fieldType);
         }
-        boolean primitiveType = classUtils.isPrimitiveType(field.getType());
-        boolean isFieldTransformerDefined = settings.getFieldsTransformers().containsKey(field.getName());
+        boolean primitiveType = classUtils.isPrimitiveType(fieldType);
+        Function<Object, Object> transformerFunction = getTransformerFunction(field, fieldBreadcrumb);
+        boolean isFieldTransformerDefined = nonNull(transformerFunction);
         Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);
         if (nonNull(fieldValue)) {
             // is not a primitive type or an optional && there are no transformer function
             // defined it recursively evaluate the value
-            boolean notPrimitiveAndNotSpecialType = !primitiveType && !classUtils.isSpecialType(field.getType());
-            if ((notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))
-                    && !isFieldTransformerDefined) {
+            boolean notPrimitiveAndNotSpecialType = !primitiveType && !classUtils.isSpecialType(fieldType);
+            if (!isFieldTransformerDefined
+                    && (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))) {
                 fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
             }
         } else if (primitiveType) {
-            fieldValue = defaultValue(field.getType()); // assign the default value
+            fieldValue = defaultValue(fieldType); // assign the default value
         }
-        return getTransformedField(field, fieldBreadcrumb, fieldValue);
+        if (isFieldTransformerDefined) {
+            fieldValue = transformerFunction.apply(fieldValue);
+        }
+        return fieldValue;
     }
 
     /**
@@ -364,16 +369,13 @@ public class TransformerImpl extends AbstractTransformer {
     }
 
     /**
-     * It executes the lambda function defined to the field.
+     * Retrieves the transformer function.
      * @param field The field on which the transformation should be applied.
      * @param breadcrumb The full field path on which the transformation should be applied.
-     * @param fieldValue The field value.
-     * @return the transformed field.
+     * @return the transformer function.
      */
-    private Object getTransformedField(final Field field, final String breadcrumb, final Object fieldValue) {
-        String fieldName = settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;
-        Function<Object, Object> transformerFunction = settings.getFieldsTransformers().get(fieldName);
-        return nonNull(transformerFunction) ? transformerFunction.apply(fieldValue) : fieldValue;
+    private Function<Object, Object> getTransformerFunction(final Field field, final String breadcrumb) {
+        return settings.getFieldsTransformers().get(settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb);
     }
 
     /**
