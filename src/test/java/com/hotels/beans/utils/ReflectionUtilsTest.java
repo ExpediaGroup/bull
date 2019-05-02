@@ -246,7 +246,7 @@ public class ReflectionUtilsTest {
         // GIVEN
 
         // WHEN
-        final Method actual = underTest.getSetterMethodForField(MutableToFoo.class, ID_FIELD_NAME, BigInteger.class);
+        final Method actual = underTest.getSetterMethodForFieldOldApproach(MutableToFoo.class, ID_FIELD_NAME, BigInteger.class);
 
         // THEN
         assertNotNull(actual);
@@ -261,7 +261,7 @@ public class ReflectionUtilsTest {
         // GIVEN
 
         // WHEN
-        underTest.getSetterMethodForField(MutableToFoo.class, NOT_EXISTING_FIELD_NAME, BigInteger.class);
+        underTest.getSetterMethodForFieldOldApproach(MutableToFoo.class, NOT_EXISTING_FIELD_NAME, BigInteger.class);
     }
 
     /**
