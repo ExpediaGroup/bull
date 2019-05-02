@@ -28,6 +28,8 @@ import static com.hotels.beans.constant.MethodPrefix.IS;
 import static com.hotels.beans.constant.MethodPrefix.SET;
 
 import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -66,6 +68,11 @@ public final class ReflectionUtils {
      * Regex for identify dots into a string.
      */
     private static final String DOT_SPLIT_REGEX = "\\.";
+
+    /**
+     * Method Handles lookup
+     */
+    private static final MethodHandles.Lookup METHOD_HANDLES_LOOKUP = MethodHandles.lookup();
 
     /**
      * CacheManager instance {@link CacheManager}.
@@ -115,7 +122,7 @@ public final class ReflectionUtils {
     }
 
     /**
-     * Gets the value of a field.
+     * Gets the value of a field.G
      * @param target the field's class
      * @param field the field {@link Field}
      * @return the field value
@@ -138,9 +145,9 @@ public final class ReflectionUtils {
                 break;
             }
             try {
+                fieldValue = getGetterMethod(fieldValue.getClass(), currFieldName, fieldType).invoke(target);
+            } catch (final Throwable e) {
                 fieldValue = getFieldValue(fieldValue, currFieldName);
-            } catch (final Exception e) {
-                fieldValue = invokeMethod(getGetterMethod(fieldValue.getClass(), currFieldName, fieldType), fieldValue);
             }
         }
         return fieldValue;
@@ -153,8 +160,8 @@ public final class ReflectionUtils {
      * @param fieldType the field type
      * @return the getter method
      */
-    private Method getGetterMethod(final Class<?> fieldClass, final String fieldName, final Class<?> fieldType) {
-        final String cacheKey = "GetterMethod-" + fieldClass.getName() + '-' + fieldName;
+    private Method getGetterMethodOldApproach(final Class<?> fieldClass, final String fieldName, final Class<?> fieldType) {
+        final String cacheKey = "GetterMethodOldApproach-" + fieldClass.getName() + '-' + fieldName;
         return cacheManager.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
                 Method method = fieldClass.getMethod(getGetterMethodPrefix(fieldType) + capitalize(fieldName));
@@ -168,6 +175,35 @@ public final class ReflectionUtils {
                     throw new MissingFieldException(fieldClass.getName() + " hasn't a field called: " + fieldName + ".");
                 }
             }
+        });
+    }
+
+    /**
+     * Returns the getter method for the given field.
+     * @param fieldClass the field's class
+     * @param fieldName the field name
+     * @param fieldType the field type
+     * @return the getter method
+     */
+    private MethodHandle getGetterMethod(final Class<?> fieldClass, final String fieldName, final Class<?> fieldType) {
+        final String cacheKey = "GetterMethod-" + fieldClass.getName() + '-' + fieldName;
+        return cacheManager.getFromCache(cacheKey, MethodHandle.class).orElseGet(() -> {
+            MethodHandle method;
+            try {
+                MethodHandles.Lookup privateLookupIn = MethodHandles.privateLookupIn(fieldClass, METHOD_HANDLES_LOOKUP);
+                method = privateLookupIn.findGetter(fieldClass, fieldName, fieldType);
+            } catch (NoSuchFieldException e) {
+                Field declaredField = getDeclaredField(fieldName, fieldClass);
+                if (declaredField != null) {
+                    method = getGetterMethod(fieldClass, fieldName, declaredField.getType());
+                } else {
+                    throw new MissingFieldException(fieldClass.getName() + " hasn't a field called: " + fieldName + ".");
+                }
+            } catch (Exception e) {
+                throw new MissingMethodException(fieldClass.getName() + " does not allow to get value for field: " + fieldName + ". Is a getter method defined?");
+            }
+            cacheManager.cacheObject(cacheKey, method);
+            return method;
         });
     }
 
@@ -274,11 +310,10 @@ public final class ReflectionUtils {
      */
     public void setFieldValue(final Object target, final Field field, final Object fieldValue) {
         try {
+            MethodHandle setterMethodForField = getSetterMethodForField(target.getClass(), field.getName(), field.getType());
+            setterMethodForField.invoke(target, fieldValue);
+        } catch (final Throwable e) {
             setFieldValueWithoutSetterMethod(target, field, fieldValue);
-        } catch (final IllegalArgumentException e) {
-            throw e;
-        } catch (final Exception e) {
-            invokeMethod(getSetterMethodForField(target.getClass(), field.getName(), field.getType()), target, fieldValue);
         }
     }
 
@@ -360,14 +395,38 @@ public final class ReflectionUtils {
      * @return the setter method
      * @throws MissingMethodException if the method does not exists
      */
-    public Method getSetterMethodForField(final Class<?> fieldClass, final String fieldName, final Class<?> fieldType) {
-        final String cacheKey = "SetterMethod-" + fieldClass.getName() + '-' + fieldName;
+    public Method getSetterMethodForFieldOldApproach(final Class<?> fieldClass, final String fieldName, final Class<?> fieldType) {
+        final String cacheKey = "SetterMethodOldApproach-" + fieldClass.getName() + '-' + fieldName;
         return cacheManager.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
                 Method method = fieldClass.getMethod(SET.getPrefix() + capitalize(fieldName), fieldType);
                 cacheManager.cacheObject(cacheKey, method);
                 return method;
             } catch (NoSuchMethodException e) {
+                throw new MissingMethodException(e.getMessage());
+            }
+        });
+    }
+
+    /**
+     * Gets the setter method for a specific field.
+     * @param fieldClass class containing the field
+     * @param fieldName the name of the field to be retrieved
+     * @param fieldType the field class
+     * @return the setter method
+     * @throws MissingMethodException if the method does not exists
+     */
+    public MethodHandle getSetterMethodForField(final Class<?> fieldClass, final String fieldName, final Class<?> fieldType) {
+        final String cacheKey = "SetterMethod-" + fieldClass.getName() + '-' + fieldName;
+        return cacheManager.getFromCache(cacheKey, MethodHandle.class).orElseGet(() -> {
+            try {
+                MethodHandles.Lookup privateLookupIn = MethodHandles.privateLookupIn(fieldClass, METHOD_HANDLES_LOOKUP);
+                MethodHandle method = privateLookupIn.findSetter(fieldClass, fieldName, fieldType);
+                cacheManager.cacheObject(cacheKey, method);
+                return method;
+            } catch (NoSuchFieldException e) {
+                throw new MissingFieldException(fieldClass.getName() + " hasn't a field called: " + fieldName + ".");
+            } catch (Exception e) {
                 throw new MissingMethodException(e.getMessage());
             }
         });
