@@ -79,26 +79,23 @@ public class ReflectionUtilsTest {
     }
 
     /**
-     * Tests that the method {@code getFieldValue} returns the expected value.
-     *
-     * @throws NoSuchFieldException if the field does not exists.
+     * Tests that the method {@code getFieldValueDirectAccess} returns the expected value.
      */
     @Test
-    public void testGetFieldValueWorksAsExpected() throws NoSuchFieldException {
+    public void testGetFieldValueWorksAsExpected() {
         // GIVEN
         MutableToFoo mutableToFoo = new MutableToFoo();
         mutableToFoo.setId(ZERO);
-        Field idField = mutableToFoo.getClass().getDeclaredField(ID_FIELD_NAME);
 
         // WHEN
-        Object actual = underTest.getFieldValue(mutableToFoo, idField);
+        Object actual = underTest.getFieldValue(mutableToFoo, ID_FIELD_NAME);
 
         // THEN
         assertEquals(ZERO, actual);
     }
 
     /**
-     * Tests that the method {@code getFieldValue} throws Exception if the field does not exists.
+     * Tests that the method {@code getFieldValueDirectAccess} throws Exception if the field does not exists.
      */
     @Test(expectedExceptions = MissingFieldException.class)
     public void testGetFieldValueThrowsExceptionIfTheFieldDoesNotExists() {
@@ -107,7 +104,7 @@ public class ReflectionUtilsTest {
         mutableToFoo.setId(ZERO);
 
         // WHEN
-        Object actual = underTest.getFieldValue(mutableToFoo, NOT_EXISTING_FIELD_NAME, Integer.class);
+        Object actual = underTest.getFieldValue(mutableToFoo, NOT_EXISTING_FIELD_NAME);
 
         // THEN
         assertEquals(ZERO, actual);
