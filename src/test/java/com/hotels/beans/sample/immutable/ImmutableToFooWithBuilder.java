@@ -28,7 +28,7 @@ import lombok.Getter;
  * Immutable bean instantiable only through a Builder.
  */
 @Getter
-@Builder(builderMethodName = "hiddenBuilder")
+@Builder
 public class ImmutableToFooWithBuilder {
     private final String name;
     private final BigInteger id;
@@ -43,15 +43,5 @@ public class ImmutableToFooWithBuilder {
         this.nestedObjectList = nestedObjectList;
         this.list = list;
         this.nestedObject = nestedObject;
-    }
-
-    public static ImmutableToFooWithBuilderBuilder builder(final String name, final BigInteger id,
-        final List<FromSubFoo> nestedObjectList, final List<String> list, final FromSubFoo nestedObject) {
-        return hiddenBuilder()
-                .name(name)
-                .id(id)
-                .nestedObjectList(nestedObjectList)
-                .list(list)
-                .nestedObject(nestedObject);
     }
 }
