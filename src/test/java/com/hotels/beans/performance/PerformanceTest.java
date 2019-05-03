@@ -39,6 +39,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.BeanUtils;
+import com.hotels.beans.transformer.Transformer;
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSubClass;
@@ -114,11 +115,12 @@ public class PerformanceTest {
         //WHEN
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
+        Transformer transformer = underTest.getTransformer();
         for (int i = 0; i <= totalTransformation; i++) {
             stopWatch.suspend();
             sleep(waitInterval);
             stopWatch.resume();
-            underTest.getTransformer().transform(sourceObject, destObjectClass);
+            transformer.transform(sourceObject, destObjectClass);
         }
         stopWatch.stop();
         double avgTransformationTime = stopWatch.getTime(MILLISECONDS) / totalTransformation;
