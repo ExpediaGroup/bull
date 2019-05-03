@@ -21,7 +21,16 @@ package com.hotels.beans.error;
  */
 public class MissingMethodException extends RuntimeException {
     /**
-     * Constructs a new invalid bean exception with the specified detail message.
+     * Constructs a new missing method exception with {@code null} as its
+     * detail message.  The cause is not initialized, and may subsequently be
+     * initialized by a call to {@link #initCause}.
+     */
+    public MissingMethodException() {
+        super();
+    }
+
+    /**
+     * Constructs a new method method exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
      * @param message the detail message. The detail message is saved for later
