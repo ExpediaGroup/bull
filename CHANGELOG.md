@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.3.2] TBD
+### Added
+* Modified project structure in order to offer Java Bean validation feature against the defined constraints as public feature (see: [Issue 57](https://github.com/HotelsDotCom/bull/issues/57)).
+
 ### [1.3.1] 2019.05.08
 #### Changes
 * In order to improve the library performances the following changes have been applied:
