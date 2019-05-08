@@ -12,7 +12,7 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bean-utils-library/badge.svg?subject=maven-central)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bean-utils-library)
 [![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bean-utils-library.svg)](http://www.javadoc.io/doc/com.hotels.beans/bean-utils-library)
 [![Build Status](https://travis-ci.org/HotelsDotCom/bull.svg?branch=master)](https://travis-ci.org/HotelsDotCom/bull)
-[![Join the chat at https://gitter.im/bean-utils-light-library/community](https://badges.gitter.im/bean-utils-light-library/community.svg)](https://gitter.im/bean-utils-light-library/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://bull-crew.slack.com](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://bull-crew.slack.com/messages/CJ0NTGF2N/details)
 
 [![GitHub site](https://img.shields.io/badge/GitHub-site-blue.svg)](https://hotelsdotcom.github.io/bull/)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=coverage)](https://sonarcloud.io/dashboard?id=BULL)
@@ -28,6 +28,10 @@ You can obtain BULL from Maven Central:
     <version>x.y.z</version>
 </dependency>
 ~~~
+
+**The project provides two different builds**, one compatible with `jdk 8` (or above) and one with `jdk 11` or above.
+
+In case you need to integrate it in a `jdk 8` (or above project) please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md) file or to [CHANGELOG](CHANGELOG.md) otherwise .
 
 ## Maven build
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia Inc.
+ * Copyright (C) 2019 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -204,7 +204,7 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
         MixedToFoo mixedToFoo = new MixedToFoo(null, null, null, null, null);
 
         //WHEN
-        underTest.transform(fromFoo, mixedToFoo);
+        underTest.skipTransformationForField().transform(fromFoo, mixedToFoo);
 
         //THEN
         assertThat(mixedToFoo, sameBeanAs(fromFoo));

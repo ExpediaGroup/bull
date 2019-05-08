@@ -1,61 +1,48 @@
-# BULL Change Log (`jdk 11` or above)
+# BULL Change Log (`jdk 8` or above)
 
 All notable changes to this project will be documented in this file.
 
-### [1.3.1] 2019.05.08
-#### Changes
-* In order to improve the library performances the following changes have been applied:
-    * Modified no args constructor invocation in order to use `LambdaMetafactory`
-    * Modified field value retrieval in order to use `LambdaMetafactory`
-    * Modified value retrieval/set from/to source/destination object in order to minimise the executed actions
-* Updated `hotels-oss-parent` version to `4.0.1` (was `4.0.0`).
-
-### [1.3.0] 2019.04.28
+### [1.1.14] 2019.04.28
 #### Added
 * Added support for the transformation of Java Beans built through Builder
 
-### [1.2.7] 2019.04.18
+### [1.1.13] 2019.04.18
 #### Changed
 * Improved optional usage.
 * Fixed bug that was preventing the transformer function to return a null value (see: [Issue 52](https://github.com/HotelsDotCom/bull/issues/52)).  
 
-### [1.2.6] 2019.04.06
+### [1.1.12] 2019.04.06
 #### Added
 * Implemented possibility to use static transformation with a given transformer (see: [Issue 44](https://github.com/HotelsDotCom/bull/issues/44)).
 
-### [1.2.5] 2019.03.31
+### [1.1.10] 2019.03.31
 #### Added
 * Improved field value retrieval function.
 * Added ling to Gitter channel for BULL.
 * Integrated Gitter notification in order to keep up to date BULL community
 
-### [1.2.4] 2019.03.23
+### [1.1.9] 2019.03.23
 #### Changed
 * Updated `spring-boot-starter-test` version to `2.1.3.RELEASE` (was `2.1.2.RELEASE`).
 * Added caching for method: `getDeclaredField`
 
-### [1.2.3] 2019.03.22
+### [1.1.8] 2019.03.22
 #### Added
 * Implemented a new feature that allows to skip the transformation for a given set of fields (see: [Issue 38](https://github.com/HotelsDotCom/bull/issues/38))
 * Performance improvement
 
-### [1.2.2] 2019.03.20
+### [1.1.7] 2019.03.20
 #### Changed
 * Replaced `junit` test with `testng`
 
-### [1.2.1] 2019.03.05
+### [1.1.6] 2019.03.05
 #### Added
-* Implemented a new feature that allows the copy on an existing object instance (see: [Issue 24](https://github.com/HotelsDotCom/bull/issues/24))
+* Implemented a new feature that allows the copy on an existing object instance (see: [Issue 24](https://github.com/HotelsDotCom/bull/issues/24)) for project compiled with `jdk` 8.
 * Added profile: `fast` that skips the following plugin execution: `javadoc`, `checkstyle`, `pmd` and `jacoco`
 
-### [1.2.0] 2019.02.25
+### [1.1.5] 2019.03.03
 #### Added
-* Added possibility to skip the object validation (see: [Issue 31](https://github.com/HotelsDotCom/bull/issues/31))
-* Added documentation and samples for the above functionality
-### Changed
-- Updated `jdk` version to `11` (was `1.8`).
-- Updated Travis configuration in order to work with java 11
-- Modified Travis configuration in order to automatically create the GitHub site as soon as a tag is created
+* Added all new features into the java 8 project version.
 
 ### [1.1.4] 2019.02.20
 #### Added

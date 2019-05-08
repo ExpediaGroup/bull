@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia Inc.
+ * Copyright (C) 2019 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ public class TransformerTest extends AbstractTransformerTest {
 
         //WHEN
         beanTransformer.removeFieldMapping(DEST_FIELD_NAME);
-        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
+        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME);
 
         //THEN
         assertFalse(transformerSettings.getFieldsNameMapping().containsKey(DEST_FIELD_NAME));
@@ -94,7 +94,7 @@ public class TransformerTest extends AbstractTransformerTest {
 
         //WHEN
         beanTransformer.resetFieldsMapping();
-        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
+        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME);
 
         //THEN
         assertTrue(transformerSettings.getFieldsNameMapping().isEmpty());
@@ -111,7 +111,7 @@ public class TransformerTest extends AbstractTransformerTest {
 
         //WHEN
         beanTransformer.resetFieldsTransformer();
-        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
+        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME);
 
         //THEN
         assertTrue(transformerSettings.getFieldsTransformers().isEmpty());
@@ -127,7 +127,7 @@ public class TransformerTest extends AbstractTransformerTest {
 
         //WHEN
         beanTransformer.removeFieldTransformer(DEST_FIELD_NAME);
-        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
+        TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME);
 
         //THEN
         assertFalse(transformerSettings.getFieldsTransformers().containsKey(DEST_FIELD_NAME));

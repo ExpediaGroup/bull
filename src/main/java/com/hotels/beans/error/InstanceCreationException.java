@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia Inc.
+ * Copyright (C) 2019 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,16 +20,6 @@ package com.hotels.beans.error;
  * Instance creation exception class.
  */
 public class InstanceCreationException extends RuntimeException {
-    /**
-     * Constructs a new instance creation exception with the specified detail message.
-     * The cause is the call of newInstance method throws an Exception.
-     * @param message the detail message. The detail message is saved for later
-     *                retrieval by the {@link #getMessage()} method.
-     */
-    public InstanceCreationException(final String message) {
-        super(message);
-    }
-
     /**
      * Constructs a new instance creation exception with the specified detail message.
      * The cause is the call of newInstance method throws an Exception.

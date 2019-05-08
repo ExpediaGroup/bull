@@ -14,31 +14,19 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.constant;
+package com.hotels.beans.sample;
+
+import java.math.BigInteger;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
- * Class type definition.
+ * Abstract class for testing purpose.
  */
-public enum ClassType {
-    /**
-     * The class is mutable.
-     */
-    MUTABLE,
-    /**
-     * The class is immutable.
-     */
-    IMMUTABLE,
-    /**
-     * The class contains both final and not final fields.
-     */
-    MIXED;
-
-    /**
-     * Checks if a the class type  instance is equal to the given one.
-     * @param classType the {@link ClassType} to which compare
-     * @return true if this is equals to the given class type
-     */
-    public boolean is(final ClassType classType) {
-        return this == classType;
-    }
+@AllArgsConstructor
+@Getter
+public abstract class AbstractClass {
+    private final String name;
+    private final BigInteger id;
 }

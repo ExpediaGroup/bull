@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia Inc.
+ * Copyright (C) 2019 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,12 @@
 
 package com.hotels.beans.utils;
 
+import static java.lang.invoke.LambdaMetafactory.metafactory;
+import static java.lang.invoke.MethodHandles.lookup;
+import static java.lang.invoke.MethodHandles.privateLookupIn;
+import static java.lang.invoke.MethodType.methodType;
 import static java.lang.reflect.Modifier.isPublic;
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 
 import static org.apache.commons.lang3.StringUtils.capitalize;
 
@@ -28,7 +31,8 @@ import static com.hotels.beans.constant.MethodPrefix.IS;
 import static com.hotels.beans.constant.MethodPrefix.SET;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.AccessibleObject;
+import java.lang.invoke.CallSite;
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -39,8 +43,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
 
 import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.error.MissingMethodException;
 import com.hotels.beans.model.EmptyValue;
@@ -68,16 +74,14 @@ public final class ReflectionUtils {
     private static final String DOT_SPLIT_REGEX = "\\.";
 
     /**
-     * CacheManager instance {@link CacheManager}.
+     * Method Handles lookup.
      */
-    private final CacheManager cacheManager;
+    private static final MethodHandles.Lookup METHOD_HANDLES_LOOKUP = lookup();
 
     /**
-     * Default constructor.
+     * CacheManager instance {@link CacheManager}.
      */
-    public ReflectionUtils() {
-        this.cacheManager = getCacheManager("reflectionUtils");
-    }
+    private static final CacheManager CACHE_MANAGER = getCacheManager("reflectionUtils");
 
     /**
      * Invokes the method.
@@ -89,8 +93,6 @@ public final class ReflectionUtils {
     private Object invokeMethod(final Method method, final Object target, final Object... args) {
         try {
             return method.invoke(target, args);
-        } catch (MissingFieldException | MissingMethodException e) {
-            throw e;
         } catch (final Exception e) {
             handleReflectionException(e);
             throw new IllegalStateException(e);
@@ -104,43 +106,33 @@ public final class ReflectionUtils {
      */
     public boolean isSetter(final Method method) {
         final String cacheKey = "IsSetter-" + method.getDeclaringClass().getName() + '-' + method.getName();
-        return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
+        return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             boolean res = isPublic(method.getModifiers())
                     && method.getName().matches(SETTER_METHOD_NAME_REGEX)
                     && method.getParameterTypes().length == 1
                     && method.getReturnType().equals(void.class);
-            cacheManager.cacheObject(cacheKey, res);
+            CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
-    }
-
-    /**
-     * Gets the value of a field.
-     * @param target the field's class
-     * @param field the field {@link Field}
-     * @return the field value
-     */
-    public Object getFieldValue(final Object target, final Field field) {
-        return getFieldValue(target, field.getName(), field.getType());
     }
 
     /**
      * Gets the value of a field through getter method.
      * @param target the field's class
      * @param fieldName the field name
-     * @param fieldType the field type
      * @return the field value
      */
-    public Object getFieldValue(final Object target, final String fieldName, final Class<?> fieldType) {
+    @SuppressWarnings("unchecked")
+    public Object getFieldValue(final Object target, final String fieldName) {
         Object fieldValue = getRealTarget(target);
         for (String currFieldName : fieldName.split(DOT_SPLIT_REGEX)) {
             if (fieldValue == null) {
                 break;
             }
             try {
-                fieldValue = getFieldValue(fieldValue, currFieldName);
-            } catch (final Exception e) {
-                fieldValue = invokeMethod(getGetterMethod(fieldValue.getClass(), currFieldName, fieldType), fieldValue);
+                fieldValue = getGetterMethod(fieldValue.getClass(), currFieldName).apply(fieldValue);
+            } catch (final ClassCastException | MissingMethodException | InvalidBeanException e) {
+                fieldValue = getFieldValueDirectAccess(fieldValue, currFieldName);
             }
         }
         return fieldValue;
@@ -150,24 +142,31 @@ public final class ReflectionUtils {
      * Returns the getter method for the given field.
      * @param fieldClass the field's class
      * @param fieldName the field name
-     * @param fieldType the field type
      * @return the getter method
      */
-    private Method getGetterMethod(final Class<?> fieldClass, final String fieldName, final Class<?> fieldType) {
+    private Function getGetterMethod(final Class<?> fieldClass, final String fieldName) {
         final String cacheKey = "GetterMethod-" + fieldClass.getName() + '-' + fieldName;
-        return cacheManager.getFromCache(cacheKey, Method.class).orElseGet(() -> {
+        return CACHE_MANAGER.getFromCache(cacheKey, Function.class).orElseGet(() -> {
+            Function function;
             try {
-                Method method = fieldClass.getMethod(getGetterMethodPrefix(fieldType) + capitalize(fieldName));
-                cacheManager.cacheObject(cacheKey, method);
-                return method;
+                Class<?> fieldType = getDeclaredFieldType(fieldName, fieldClass);
+                MethodHandles.Lookup privateLookupIn = privateLookupIn(fieldClass, METHOD_HANDLES_LOOKUP);
+                CallSite site = metafactory(privateLookupIn,
+                        "apply",
+                        methodType(Function.class),
+                        methodType(Object.class, Object.class),
+                        privateLookupIn.findVirtual(fieldClass, getGetterMethodPrefix(fieldType) + capitalize(fieldName), methodType(fieldType)),
+                        methodType(fieldType, fieldClass));
+                function = (Function) site.getTarget().invokeExact();
+            } catch (NoSuchFieldException | MissingFieldException e) {
+                throw new MissingFieldException(e.getMessage());
             } catch (NoSuchMethodException e) {
-                if (new ClassUtils().hasField(fieldClass, fieldName)) {
-                    throw new MissingMethodException(fieldClass.getName() + " does not allow to get value for field: " + fieldName
-                            + ". Is a getter method defined?");
-                } else {
-                    throw new MissingFieldException(fieldClass.getName() + " hasn't a field called: " + fieldName + ".");
-                }
+                throw new MissingMethodException();
+            } catch (Throwable e) {
+                throw new InvalidBeanException(e);
             }
+            CACHE_MANAGER.cacheObject(cacheKey, function);
+            return function;
         });
     }
 
@@ -180,12 +179,12 @@ public final class ReflectionUtils {
      */
     public <A extends Annotation> A getFieldAnnotation(final Field field, final Class<A> annotationClazz) {
         final String cacheKey = "FieldAnnotation-" + field.getDeclaringClass().getName() + "-" + field.getName() + "-" + annotationClazz.getName();
-        return cacheManager.getFromCache(cacheKey, annotationClazz).orElseGet(() -> {
+        return CACHE_MANAGER.getFromCache(cacheKey, annotationClazz).orElseGet(() -> {
             A annotation = null;
             if (field.isAnnotationPresent(annotationClazz)) {
                 annotation = field.getAnnotation(annotationClazz);
             }
-            cacheManager.cacheObject(cacheKey, annotation);
+            CACHE_MANAGER.cacheObject(cacheKey, annotation);
             return annotation;
         });
     }
@@ -200,12 +199,12 @@ public final class ReflectionUtils {
      */
     public <A extends Annotation> A getParameterAnnotation(final Parameter parameter, final Class<A> annotationClazz, final String declaringClassName) {
         final String cacheKey = "ParameterAnnotation-" + declaringClassName + "-" + parameter.getName() + "-" + annotationClazz.getName();
-        return cacheManager.getFromCache(cacheKey, annotationClazz).orElseGet(() -> {
+        return CACHE_MANAGER.getFromCache(cacheKey, annotationClazz).orElseGet(() -> {
             A annotation = null;
             if (parameter.isAnnotationPresent(annotationClazz)) {
                 annotation = parameter.getAnnotation(annotationClazz);
             }
-            cacheManager.cacheObject(cacheKey, annotation);
+            CACHE_MANAGER.cacheObject(cacheKey, annotation);
             return annotation;
         });
     }
@@ -216,40 +215,31 @@ public final class ReflectionUtils {
      * @param fieldName the field name
      * @return the field value
      */
-    private Object getFieldValue(final Object target, final String fieldName) {
-        boolean isAccessible = true;
-        Field field = null;
+    private Object getFieldValueDirectAccess(final Object target, final String fieldName) {
         try {
-            field = getDeclaredField(fieldName, target.getClass());
-            isAccessible = isAccessible(field, target);
-            if (!isAccessible) {
-                field.setAccessible(true);
-            }
+            Field field = getDeclaredField(fieldName, target.getClass());
             return field.get(target);
         } catch (MissingFieldException e) {
             throw e;
         } catch (final Exception e) {
             handleReflectionException(e);
             throw new IllegalStateException(e);
-        } finally {
-            if (nonNull(field) && !isAccessible) {
-                field.setAccessible(false);
-            }
         }
     }
 
     /**
      * Return the field of the given class.
-     * @param fieldName the name of the filed to retrieve.
+     * @param fieldName the name of the field to retrieve.
      * @param targetClass the field's class
      * @return the field corresponding to the given name.
      */
     public Field getDeclaredField(final String fieldName, final Class<?> targetClass) {
         final String cacheKey = "ClassDeclaredField-" + targetClass.getName() + "-" + fieldName;
-        return cacheManager.getFromCache(cacheKey, Field.class).orElseGet(() -> {
+        return CACHE_MANAGER.getFromCache(cacheKey, Field.class).orElseGet(() -> {
             Field field;
             try {
                 field = targetClass.getDeclaredField(fieldName);
+                field.setAccessible(true);
             } catch (NoSuchFieldException e) {
                 Class<?> superclass = targetClass.getSuperclass();
                 if (!superclass.equals(Object.class)) {
@@ -261,8 +251,38 @@ public final class ReflectionUtils {
                 handleReflectionException(e);
                 throw new IllegalStateException(e);
             }
-            cacheManager.cacheObject(cacheKey, field);
+            CACHE_MANAGER.cacheObject(cacheKey, field);
             return field;
+        });
+    }
+
+    /**
+     * Return the class of the given field.
+     * @param fieldName the name of the filed to retrieve.
+     * @param clazz the field's class
+     * @return the class field of the given field.
+     */
+    public Class<?> getDeclaredFieldType(final String fieldName, final Class<?> clazz) {
+        final String cacheKey = "FieldType-" + clazz.getName() + "-" + fieldName;
+        return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
+            Class<?> fieldType;
+            Field field;
+            try {
+                field = clazz.getDeclaredField(fieldName);
+            } catch (NoSuchFieldException e) {
+                Class<?> superclass = clazz.getSuperclass();
+                if (!superclass.equals(Object.class)) {
+                    field = getDeclaredField(fieldName, superclass);
+                } else {
+                    throw new MissingFieldException(clazz.getName() + " does not contain field: " + fieldName);
+                }
+            } catch (final Exception e) {
+                handleReflectionException(e);
+                throw new IllegalStateException(e);
+            }
+            fieldType = field.getType();
+            CACHE_MANAGER.cacheObject(cacheKey, fieldType);
+            return fieldType;
         });
     }
 
@@ -289,31 +309,12 @@ public final class ReflectionUtils {
      * @param fieldValue the value to set
      */
     private void setFieldValueWithoutSetterMethod(final Object target, final Field field, final Object fieldValue) {
-        final boolean isAccessible = isAccessible(field, target);
         try {
-            if (!isAccessible) {
-                field.setAccessible(true);
-            }
             field.set(target, fieldValue);
         } catch (final Exception e) {
             handleReflectionException(e);
             throw new IllegalStateException(e);
-        } finally {
-            if (!isAccessible) {
-                field.setAccessible(false);
-            }
         }
-    }
-
-    /**
-     * Check if the given object is accessible or not.
-     * To make the project compiling with Java version greater than 8, replace the following line with: {@code accessibleObject.canAccess(target);}
-     * @param accessibleObject the object to check
-     * @param target the field's class
-     * @return true id is accessible, false otherwise
-     */
-    protected boolean isAccessible(final AccessibleObject accessibleObject, final Object target) {
-        return accessibleObject.isAccessible();
     }
 
     /**
@@ -345,9 +346,9 @@ public final class ReflectionUtils {
      */
     private String getGetterMethodPrefix(final Class<?> fieldType) {
         final String cacheKey = "GetterMethodPrefix-" + fieldType.getName();
-        return cacheManager.getFromCache(cacheKey, String.class).orElseGet(() -> {
+        return CACHE_MANAGER.getFromCache(cacheKey, String.class).orElseGet(() -> {
             String res = Boolean.class.equals(fieldType) || fieldType.getName().equals(BOOLEAN) ? IS.getPrefix() : GET.getPrefix();
-            cacheManager.cacheObject(cacheKey, res);
+            CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
     }
@@ -362,10 +363,11 @@ public final class ReflectionUtils {
      */
     public Method getSetterMethodForField(final Class<?> fieldClass, final String fieldName, final Class<?> fieldType) {
         final String cacheKey = "SetterMethod-" + fieldClass.getName() + '-' + fieldName;
-        return cacheManager.getFromCache(cacheKey, Method.class).orElseGet(() -> {
+        return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
                 Method method = fieldClass.getMethod(SET.getPrefix() + capitalize(fieldName), fieldType);
-                cacheManager.cacheObject(cacheKey, method);
+                method.setAccessible(true);
+                CACHE_MANAGER.cacheObject(cacheKey, method);
                 return method;
             } catch (NoSuchMethodException e) {
                 throw new MissingMethodException(e.getMessage());
@@ -380,7 +382,7 @@ public final class ReflectionUtils {
      */
     public Class<?> getGenericFieldType(final Field field) {
         final String cacheKey = "GenericFieldType-" + field.getDeclaringClass().getName() + '-' + field.getName();
-        return cacheManager.getFromCache(cacheKey, Class.class).orElseGet(() -> {
+        return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
             Class<?> res = null;
             if (ParameterizedType.class.isAssignableFrom(field.getGenericType().getClass())) {
                 final Type[] fieldArgTypes = ((ParameterizedType) field.getGenericType()).getActualTypeArguments();
@@ -388,7 +390,7 @@ public final class ReflectionUtils {
                     res = (Class<?>) fieldArgTypes[0];
                 }
             }
-            cacheManager.cacheObject(cacheKey, res);
+            CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
     }
@@ -408,12 +410,12 @@ public final class ReflectionUtils {
                             + "It cannot be assigned from: " + Map.class.getName() + ".");
         }
         final String cacheKey = "MapGenericFieldType-" + fieldClass.getName() + '-' + fieldName;
-        return cacheManager.getFromCache(cacheKey, MapType.class).orElseGet(() -> {
+        return CACHE_MANAGER.getFromCache(cacheKey, MapType.class).orElseGet(() -> {
             final ParameterizedType genericType = (ParameterizedType) fieldType;
             final MapElemType keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);
             final MapElemType elemType = getMapElemType(genericType.getActualTypeArguments()[1], declaringClass, fieldName);
             final MapType mapType = new MapType(keyType, elemType);
-            cacheManager.cacheObject(cacheKey, mapType);
+            CACHE_MANAGER.cacheObject(cacheKey, mapType);
             return mapType;
         });
     }
@@ -429,7 +431,7 @@ public final class ReflectionUtils {
      */
     private MapElemType getMapElemType(final Type fieldType, final String declaringClass, final String fieldName) {
         final String cacheKey = "MapElemType-" + declaringClass + "-" + fieldType.getTypeName() + '-' + fieldName;
-        return cacheManager.getFromCache(cacheKey, MapElemType.class).orElseGet(() -> {
+        return CACHE_MANAGER.getFromCache(cacheKey, MapElemType.class).orElseGet(() -> {
             final Class<?> argumentTypeClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);
             final MapElemType res;
             if (Map.class.isAssignableFrom(argumentTypeClass)) {
@@ -437,7 +439,7 @@ public final class ReflectionUtils {
             } else {
                 res = buildItemType(fieldType, declaringClass, fieldName);
             }
-            cacheManager.cacheObject(cacheKey, res);
+            CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
     }
@@ -469,7 +471,7 @@ public final class ReflectionUtils {
         final boolean argumentIsTypeClass = argument instanceof Class;
         final String cacheKey = "ArgumentTypeClass-" + declaringClass + "-" + fieldName + "-" + getNestedGenericClass + "-"
                 + "-" + (argumentIsTypeClass || !List.class.isAssignableFrom(argument.getClass()) ? argument : argument.getClass());
-        return cacheManager.getFromCache(cacheKey, Class.class)
+        return CACHE_MANAGER.getFromCache(cacheKey, Class.class)
                 .map(atc -> atc == EmptyValue.class ? null : atc)
                 .orElseGet(() -> {
                     Class<?> res = null;
@@ -480,7 +482,7 @@ public final class ReflectionUtils {
                                 ? getArgumentTypeClass(((ParameterizedType) argument).getActualTypeArguments()[0], declaringClass, fieldName, false)
                                 : (Class<?>) ((ParameterizedType) argument).getRawType();
                     }
-                    cacheManager.cacheObject(cacheKey, res, EmptyValue.class);
+                    CACHE_MANAGER.cacheObject(cacheKey, res, EmptyValue.class);
                     return res;
                 });
     }
@@ -492,9 +494,9 @@ public final class ReflectionUtils {
      */
     public Class<?> getArrayType(final Field arrayField) {
         final String cacheKey = "ArrayType-" + arrayField.getDeclaringClass().getName();
-        return cacheManager.getFromCache(cacheKey, Class.class).orElseGet(() -> {
+        return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
             final Class<?> arrayType = arrayField.getType().getComponentType();
-            cacheManager.cacheObject(cacheKey, arrayType);
+            CACHE_MANAGER.cacheObject(cacheKey, arrayType);
             return arrayType;
         });
     }
