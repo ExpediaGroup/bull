@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.15] 2019.05.08
+#### Changes
+* Modified value retrieval/set from/to source/destination object in order to minimise the executed actions
+* Updated `hotels-oss-parent` version to `4.0.1` (was `4.0.0`).
+
 ### [1.1.14] 2019.04.28
 #### Added
 * Added support for the transformation of Java Beans built through Builder
