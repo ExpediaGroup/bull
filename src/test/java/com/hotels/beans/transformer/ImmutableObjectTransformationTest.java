@@ -60,7 +60,6 @@ import com.hotels.beans.sample.immutable.ImmutableToFooDiffFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooInvalid;
 import com.hotels.beans.sample.immutable.ImmutableToFooMap;
 import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
-import com.hotels.beans.sample.immutable.ImmutableToFooNoConstructors;
 import com.hotels.beans.sample.immutable.ImmutableToFooNotExistingFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
@@ -175,9 +174,9 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     private Object[][] dataCompositeFieldNameTesting() {
         return new Object[][] {
                 {"Test that, in case a destination object field is contained into a nested object of the source field, defining a composite FieldMapping"
-                        + "the field is correctly valorized.", fromFoo, fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObject().getPhoneNumbers()},
+                        + "the field is correctly set.", fromFoo, fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObject().getPhoneNumbers()},
                 {"Test that, in case a destination object field is contained into a nested object of the source field, defining a composite {@link FieldMapping}"
-                        + " the field is correctly  valorized even if some of them are null.", fromFooWithNullProperties, fromFooWithNullProperties.getName(),
+                        + " the field is correctly set even if some of them are null.", fromFooWithNullProperties, fromFooWithNullProperties.getName(),
                         fromFooWithNullProperties.getId(), null}
         };
     }
@@ -205,8 +204,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     private Object[][] dataConstructorErrorTesting() {
         FromFoo actual = new FromFoo(NAME, ID, null, null, null);
         return new Object[][] {
-                {"Test that an exception is thrown if the constructor invocation throws exception", actual, ImmutableToFooCustomAnnotation.class},
-                {"Test that an exception is thrown if no constructors are defined", actual, ImmutableToFooNoConstructors.class},
+                {"Test that an exception is thrown if the constructor invocation throws exception", actual, ImmutableToFooCustomAnnotation.class}
         };
     }
 
@@ -425,9 +423,9 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
                 "Constructor invoked with arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String). "
                         + "Double check that each %s's field have the same type and name than the source object: %s otherwise specify a transformer configuration. "
                         + "Error message: argument type mismatch";
-        String targetClassName = targetClass.getCanonicalName();
+        String targetClassName = targetClass.getName();
         String expectedExceptionMessage =
-                format(expectedExceptionMessageFormat, targetClassName, targetClassName, targetClass.getSimpleName(), fromFooSimple.getClass().getCanonicalName());
+                format(expectedExceptionMessageFormat, targetClassName, targetClassName, targetClass.getSimpleName(), fromFooSimple.getClass().getName());
 
         //WHEN
         Exception raisedException = null;

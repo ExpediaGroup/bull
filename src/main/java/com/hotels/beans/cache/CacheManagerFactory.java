@@ -16,8 +16,6 @@
 
 package com.hotels.beans.cache;
 
-import static java.util.Objects.isNull;
-
 import static com.hotels.beans.utils.ValidationUtils.notNull;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -44,11 +42,6 @@ public final class CacheManagerFactory {
      */
     public static CacheManager getCacheManager(final String cacheName) {
         notNull(cacheName, "cacheName cannot be null!");
-        Map<String, Object> cacheMap = CACHE_MAP.get(cacheName);
-        if (isNull(cacheMap)) {
-            cacheMap = new ConcurrentHashMap<>();
-            CACHE_MAP.put(cacheName, cacheMap);
-        }
-        return new CacheManager(cacheMap);
+        return new CacheManager(CACHE_MAP.computeIfAbsent(cacheName, k -> new ConcurrentHashMap<>()));
     }
 }

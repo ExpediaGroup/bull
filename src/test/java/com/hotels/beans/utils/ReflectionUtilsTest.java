@@ -41,10 +41,10 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
 
 import com.hotels.beans.error.MissingMethodException;
 import com.hotels.beans.error.MissingFieldException;
@@ -73,8 +73,8 @@ public class ReflectionUtilsTest {
     /**
      * Initializes mock.
      */
-    @BeforeMethod
-    public void beforeMethod() {
+    @BeforeClass
+    public void beforeClass() {
         initMocks(this);
     }
 
@@ -211,6 +211,7 @@ public class ReflectionUtilsTest {
      * @param testCaseDescription the test case description
      * @param annotationToGet the annotation to retrieve
      * @param expectNull true if it's expected to find it null, false otherwise
+     * @throws NoSuchFieldException if the field does not exists.
      */
     @Test(dataProvider = "dataGetFieldAnnotationTesting")
     public void testGetFieldAnnotationWorksProperly(final String testCaseDescription, final Class<? extends Annotation> annotationToGet,
