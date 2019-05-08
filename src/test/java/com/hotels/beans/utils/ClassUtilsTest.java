@@ -45,7 +45,9 @@ import org.testng.annotations.Test;
 
 import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.constant.ClassType;
+import com.hotels.beans.error.InstanceCreationException;
 import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.beans.sample.AbstractClass;
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
@@ -434,6 +436,18 @@ public class ClassUtilsTest {
         // THEN
         assertNotNull(constructorParameters);
         assertEquals(EXPECTED_CLASS_PARAMETERS, constructorParameters.length);
+    }
+
+    /**
+     * Tests that the method {@code getInstance} raises an {@link InstanceCreationException} if an error occurs.
+     */
+    @Test(expectedExceptions = InstanceCreationException.class)
+    public void testGetInstanceRaisesAnInstanceCreationExceptionIfAnErrorOccurs() {
+        // GIVEN
+        Constructor classConstructor = underTest.getAllArgsConstructor(AbstractClass.class);
+
+        // WHEN
+        underTest.getInstance(classConstructor, NAME, ZERO);
     }
 
     /**

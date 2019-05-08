@@ -193,6 +193,18 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     }
 
     /**
+     * Test that an {@link InvalidBeanException} is thrown if the source object does not contains one of the destination fields.
+     */
+    @Test(expectedExceptions = InvalidBeanException.class)
+    public void testThatAnExceptionIsThrownIfTheSourceObjectDoesNotContainsOneOfTheDestinationFields() {
+        //GIVEN
+        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID);
+
+        //WHEN
+        underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
+    }
+
+    /**
      * Test transformation field with field transformer.
      * @param testCaseDescription the test case description
      * @param fieldToTransform the name of the field on which apply the transformation

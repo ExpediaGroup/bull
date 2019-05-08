@@ -204,7 +204,7 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
         MixedToFoo mixedToFoo = new MixedToFoo(null, null, null, null, null);
 
         //WHEN
-        underTest.transform(fromFoo, mixedToFoo);
+        underTest.skipTransformationForField().transform(fromFoo, mixedToFoo);
 
         //THEN
         assertThat(mixedToFoo, sameBeanAs(fromFoo));
