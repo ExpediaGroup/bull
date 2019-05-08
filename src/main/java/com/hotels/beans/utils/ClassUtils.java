@@ -31,7 +31,6 @@ import static java.util.Comparator.comparing;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
-import static java.util.Set.of;
 import static java.util.stream.Collectors.toList;
 
 import static com.hotels.beans.utils.ValidationUtils.notNull;
@@ -57,6 +56,7 @@ import java.math.BigInteger;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -86,8 +86,8 @@ public final class ClassUtils {
     /**
      * Primitive types list.
      */
-    private static final Set<Class<?>> PRIMITIVE_TYPES = of(String.class, Boolean.class, Integer.class, Long.class,
-           Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class);
+    private static final Set<Class<?>> PRIMITIVE_TYPES = new HashSet<>(asList(String.class, Boolean.class, Integer.class, Long.class,
+           Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class));
 
     /**
      * Method Handles lookup.
