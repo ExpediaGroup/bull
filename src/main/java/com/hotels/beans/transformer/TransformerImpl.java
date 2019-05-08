@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia Inc.
+ * Copyright (C) 2019 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ public class TransformerImpl extends AbstractTransformer {
         final ClassType classType = classUtils.getClassType(targetClass);
         if (classType.is(MUTABLE)) {
             try {
-                k = classUtils.getInstance(classUtils.getNoArgsConstructor(targetClass));
+                k = classUtils.getNoArgsConstructor(targetClass).get();
                 injectAllFields(sourceObj, k, breadcrumb);
             } catch (Exception e) {
                 throw new InvalidBeanException(e.getMessage(), e);
@@ -307,24 +307,29 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
         String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
+        Class<?> fieldType = field.getType();
         if (doSkipTransformation(fieldBreadcrumb)) {
-            return defaultValue(field.getType());
+            return defaultValue(fieldType);
         }
-        boolean primitiveType = classUtils.isPrimitiveType(field.getType());
-        boolean isFieldTransformerDefined = settings.getFieldsTransformers().containsKey(field.getName());
-        Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);
+        boolean primitiveType = classUtils.isPrimitiveType(fieldType);
+        Function<Object, Object> transformerFunction = getTransformerFunction(field, fieldBreadcrumb);
+        boolean isTransformerFunctionDefined = nonNull(transformerFunction);
+        Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, isTransformerFunctionDefined);
         if (nonNull(fieldValue)) {
             // is not a primitive type or an optional && there are no transformer function
             // defined it recursively evaluate the value
-            boolean notPrimitiveAndNotSpecialType = !primitiveType && !classUtils.isSpecialType(field.getType());
-            if ((notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))
-                    && !isFieldTransformerDefined) {
+            boolean notPrimitiveAndNotSpecialType = !primitiveType && !classUtils.isSpecialType(fieldType);
+            if (!isTransformerFunctionDefined
+                    && (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))) {
                 fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
             }
         } else if (primitiveType) {
-            fieldValue = defaultValue(field.getType()); // assign the default value
+            fieldValue = defaultValue(fieldType); // assign the default value
         }
-        return getTransformedField(field, fieldBreadcrumb, fieldValue);
+        if (isTransformerFunctionDefined) {
+            fieldValue = transformerFunction.apply(fieldValue);
+        }
+        return fieldValue;
     }
 
     /**
@@ -341,16 +346,15 @@ public class TransformerImpl extends AbstractTransformer {
      * Gets the source field value. If a field transformer function is defined and the field does not exists in the source object it raises an exception.
      * @param sourceObj sourceObj the source object
      * @param sourceFieldName sourceFieldName the field name in the source object (if different from the target one)
-     * @param field The field for which the value has to be retrieved
      * @param isFieldTransformerDefined indicates if a transformer function is implemented for this field
      * @param <T> the sourceObj object type
      * @return the source field value
      */
-    private <T> Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final Field field, final boolean isFieldTransformerDefined) {
+    private <T> Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final boolean isFieldTransformerDefined) {
         Object fieldValue = null;
         try {
-//            fieldValue = classUtils.isPrimitiveType(sourceObj.getClass()) ? sourceObj : reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());
-            fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());
+//            fieldValue = classUtils.isPrimitiveType(sourceObj.getClass()) ? sourceObj : reflectionUtils.getFieldValueDirectAccess(sourceObj, sourceFieldName, field.getType());
+            fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName);
         } catch (MissingFieldException e) {
             if (!isFieldTransformerDefined && !settings.isSetDefaultValue()) {
                 throw e;
@@ -364,16 +368,13 @@ public class TransformerImpl extends AbstractTransformer {
     }
 
     /**
-     * It executes the lambda function defined to the field.
+     * Retrieves the transformer function.
      * @param field The field on which the transformation should be applied.
      * @param breadcrumb The full field path on which the transformation should be applied.
-     * @param fieldValue The field value.
-     * @return the transformed field.
+     * @return the transformer function.
      */
-    private Object getTransformedField(final Field field, final String breadcrumb, final Object fieldValue) {
-        String fieldName = settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;
-        Function<Object, Object> transformerFunction = settings.getFieldsTransformers().get(fieldName);
-        return nonNull(transformerFunction) ? transformerFunction.apply(fieldValue) : fieldValue;
+    private Function<Object, Object> getTransformerFunction(final Field field, final String breadcrumb) {
+        return settings.getFieldsTransformers().get(settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb);
     }
 
     /**
