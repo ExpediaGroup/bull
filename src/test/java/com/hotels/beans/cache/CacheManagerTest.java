@@ -17,13 +17,14 @@
 package com.hotels.beans.cache;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
@@ -41,8 +42,8 @@ public class CacheManagerTest {
     /**
      * Initializes mock.
      */
-    @BeforeMethod
-    public void before() {
+    @BeforeClass
+    public void beforeClass() {
         underTest = new CacheManager(new ConcurrentHashMap<>());
     }
 
@@ -55,34 +56,12 @@ public class CacheManagerTest {
         underTest.cacheObject(CACHE_KEY, CACHED_VALUE);
 
         // WHEN
-        Object actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
+        Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        assertNotNull(actual);
-        assertEquals(CACHED_OBJECT_CLASS, actual.getClass());
-        assertSame(CACHED_VALUE, actual);
-    }
-
-    /**
-     * Tests that the method {@code getFromCache} throw exception when the cache key.
-     */
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testGetFromCacheThrowsExceptionWhenTheCacheKeyIsNull() {
-        // GIVEN
-
-        // WHEN
-        underTest.getFromCache(null, CACHED_OBJECT_CLASS);
-    }
-
-    /**
-     * Tests that the method {@code getFromCache} throw exception when the cached value class is null.
-     */
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testGetFromCacheThrowsExceptionWhenTheCachedValueClassIsNull() {
-        // GIVEN
-
-        // WHEN
-        underTest.getFromCache(CACHE_KEY, null);
+        assertTrue(actual.isPresent());
+        assertEquals(CACHED_OBJECT_CLASS, actual.get().getClass());
+        assertSame(CACHED_VALUE, actual.get());
     }
 
     /**
@@ -95,9 +74,9 @@ public class CacheManagerTest {
 
         // WHEN
         underTest.removeFromCache(CACHE_KEY);
-        Object actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
+        Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        assertNull(actual);
+        assertFalse(actual.isPresent());
     }
 }

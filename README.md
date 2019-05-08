@@ -11,9 +11,10 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bean-utils-library/badge.svg?subject=maven-central)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bean-utils-library)
 [![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bean-utils-library.svg)](http://www.javadoc.io/doc/com.hotels.beans/bean-utils-library)
-[![GitHub site](https://img.shields.io/badge/GitHub-site-blue.svg)](https://hotelsdotcom.github.io/bull/)
 [![Build Status](https://travis-ci.org/HotelsDotCom/bull.svg?branch=master)](https://travis-ci.org/HotelsDotCom/bull)
+[![Join the chat at https://gitter.im/bean-utils-light-library/community](https://badges.gitter.im/bean-utils-light-library/community.svg)](https://gitter.im/bean-utils-light-library/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![GitHub site](https://img.shields.io/badge/GitHub-site-blue.svg)](https://hotelsdotcom.github.io/bull/)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=coverage)](https://sonarcloud.io/dashboard?id=BULL)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=security_rating)](https://sonarcloud.io/dashboard?id=BULL)
 ![GitHub license](https://img.shields.io/github/license/HotelsDotCom/bull.svg)
@@ -55,6 +56,7 @@ mvn clean install -P relaxed
 * support validation through annotations.
 * support copy of beans with different field's name.
 * support lambda function field transformation.
+* support copy of java bean built through Builder.
 * easy usage, declarative way to define the property mapping (in case of different names) or simply adding the lombok annotations.
 * allows to set the default value for all objects not existing in the source object.
 * allows to skip transformation for a given set of fields.
@@ -333,7 +335,14 @@ List<FromFooSimple> fromFooSimpleList = Arrays.asList(fromFooSimple, fromFooSimp
 can be transformed as follow:
 ~~~Java
 Function<FromFooSimple, ImmutableToFooSimple> transformerFunction = BeanUtils.getTransformer(ImmutableToFooSimple.class);
-        List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
+List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
+                .map(transformerFunction)
+                .collect(Collectors.toList());
+~~~
+or if you have a pre-configured transformer:
+~~~Java
+Function<FromFooSimple, ImmutableToFooSimple> transformerFunction = BeanUtils.getTransformer(<yourPreconfiguredTransformer>, ImmutableToFooSimple.class);
+List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
                 .map(transformerFunction)
                 .collect(Collectors.toList());
 ~~~

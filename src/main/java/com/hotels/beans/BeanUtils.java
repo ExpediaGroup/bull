@@ -16,6 +16,8 @@
 
 package com.hotels.beans;
 
+import static com.hotels.beans.utils.ValidationUtils.notNull;
+
 import java.util.function.Function;
 
 import com.hotels.beans.transformer.TransformerImpl;
@@ -36,6 +38,20 @@ public class BeanUtils {
      */
     public static <T, K> Function<T, K> getTransformer(final Class<K> targetClass) {
         return fromBean -> new TransformerImpl().transform(fromBean, targetClass);
+    }
+
+    /**
+     * Returns a function that transforms an object T in an object K.
+     * @param beanTransformer the transformer to be used.
+     * @param targetClass the destination object class
+     * @param <T> the Source object type
+     * @param <K> the target object type
+     * @return a function that copies of the source object into the destination object
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    public static <T, K> Function<T, K> getTransformer(final Transformer beanTransformer, final Class<K> targetClass) {
+        notNull(beanTransformer, "beanTransformer cannot be null!");
+        return fromBean -> beanTransformer.transform(fromBean, targetClass);
     }
 
     /**
