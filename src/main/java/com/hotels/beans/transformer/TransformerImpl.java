@@ -71,7 +71,7 @@ public class TransformerImpl extends AbstractTransformer {
                 injectNotFinalFields(sourceObj, k, breadcrumb);
             }
         }
-        if (!settings.isValidationDisabled()) {
+        if (settings.isValidationEnabled()) {
             validationUtils.validate(k);
         }
         return k;
@@ -83,7 +83,7 @@ public class TransformerImpl extends AbstractTransformer {
     @Override
     protected final <T, K> void transform(final T sourceObj, final K targetObject, final String breadcrumb) {
         injectAllFields(sourceObj, targetObject, breadcrumb);
-        if (!settings.isValidationDisabled()) {
+        if (settings.isValidationEnabled()) {
             validationUtils.validate(targetObject);
         }
     }
