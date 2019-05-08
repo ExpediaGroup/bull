@@ -33,6 +33,7 @@ import static com.hotels.beans.constant.MethodPrefix.IS;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.UndeclaredThrowableException;
@@ -316,10 +317,10 @@ public class ReflectionUtilsTest {
     }
 
     /**
-     * Tests that the method {@code invokeMethod} raises an {@link IllegalArgumentException} if the argument is wrong.
+     * Tests that the method {@code invokeMethod} raises an {@link InvocationTargetException} if the argument is wrong.
      * @throws Exception if something goes wrong.
      */
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvocationTargetException.class)
     public void testInvokeMethodRaisesAnIllegalArgumentExceptionIfTheArgumentIsWrong() throws Exception {
         // GIVEN
         MutableToFoo mutableToFoo = new MutableToFoo();
