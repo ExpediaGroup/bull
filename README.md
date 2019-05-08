@@ -29,6 +29,10 @@ You can obtain BULL from Maven Central:
 </dependency>
 ~~~
 
+**The project provides two different builds**, one compatible with `jdk 8` (or above) and one with `jdk 11` or above.
+
+In case you need to integrate it in a `jdk 8` (or above project) please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md) file or to [CHANGELOG](CHANGELOG.md) otherwise .
+
 ## Maven build
 
 Full build
