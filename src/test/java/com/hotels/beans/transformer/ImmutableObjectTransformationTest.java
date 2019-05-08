@@ -39,6 +39,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.mockito.InjectMocks;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -86,6 +87,11 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
+    }
+
+    @AfterMethod
+    public void afterMethod() {
+        underTest.setValidationEnabled(false);
     }
 
     /**
@@ -193,7 +199,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         //GIVEN
 
         //WHEN
-        underTest.transform(sourceObject, targetObjectClass);
+        underTest.setValidationEnabled(true).transform(sourceObject, targetObjectClass);
     }
 
     /**
@@ -220,7 +226,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         //GIVEN
 
         //WHEN
-        underTest.transform(sourceObject, targetObjectClass);
+        underTest.setValidationEnabled(true).transform(sourceObject, targetObjectClass);
     }
 
     /**
@@ -246,7 +252,6 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     public void testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled() {
         //GIVEN
         fromFoo.setId(null);
-        underTest.setValidationDisabled(true);
 
         //WHEN
         ImmutableToFoo actual = underTest.transform(fromFoo, ImmutableToFoo.class);
@@ -254,7 +259,6 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         // THEN
         assertThat(actual, sameBeanAs(fromFoo));
         fromFoo.setId(ID);
-        underTest.setValidationDisabled(false);
     }
 
     /**
