@@ -30,7 +30,7 @@ import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
-import static com.hotels.beans.utils.ValidationUtils.notNull;
+import static com.hotels.beans.validator.Validator.notNull;
 import static com.hotels.beans.base.Defaults.defaultValue;
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.ClassType.IMMUTABLE;
@@ -243,7 +243,6 @@ public final class ClassUtils {
             res.addAll(stream(getDeclaredFields(clazz))
                     //.parallel()
                     .filter(IS_FINAL_AND_NOT_STATIC_FIELD)
-                    .peek(field -> field.setAccessible(true))
                     .collect(toList()));
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;

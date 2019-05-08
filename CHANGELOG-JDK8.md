@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.16] TBD
+### Added
+* Modified project structure in order to offer Java Bean validation feature against the defined constraints as public feature (see: [Issue 57](https://github.com/HotelsDotCom/bull/issues/57)).
+
 ### [1.1.15] 2019.05.08
 #### Changes
 * Modified value retrieval/set from/to source/destination object in order to minimise the executed actions
