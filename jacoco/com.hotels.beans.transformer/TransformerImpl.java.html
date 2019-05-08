@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransformerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Bean Utils Light Library</a> &gt; <a href="index.source.html" class="el_package">com.hotels.beans.transformer</a> &gt; <span class="el_source">TransformerImpl.java</span></div><h1>TransformerImpl.java</h1><pre class="source lang-java linenums">/**
- * Copyright (C) 2019 Expedia Inc.
+ * Copyright (C) 2019 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ import com.hotels.beans.error.MissingFieldException;
 <span class="fc" id="L60">        final ClassType classType = classUtils.getClassType(targetClass);</span>
 <span class="fc bfc" id="L61" title="All 2 branches covered.">        if (classType.is(MUTABLE)) {</span>
             try {
-<span class="fc" id="L63">                k = classUtils.getInstance(classUtils.getNoArgsConstructor(targetClass));</span>
+<span class="fc" id="L63">                k = classUtils.getNoArgsConstructor(targetClass).get();</span>
 <span class="fc" id="L64">                injectAllFields(sourceObj, k, breadcrumb);</span>
 <span class="fc" id="L65">            } catch (Exception e) {</span>
 <span class="fc" id="L66">                throw new InvalidBeanException(e.getMessage(), e);</span>
@@ -307,24 +307,29 @@ import com.hotels.beans.error.MissingFieldException;
      */
     private &lt;T, K&gt; Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class&lt;K&gt; targetClass, final Field field, final String breadcrumb) {
 <span class="fc" id="L309">        String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);</span>
-<span class="fc bfc" id="L310" title="All 2 branches covered.">        if (doSkipTransformation(fieldBreadcrumb)) {</span>
-<span class="fc" id="L311">            return defaultValue(field.getType());</span>
+<span class="fc" id="L310">        Class&lt;?&gt; fieldType = field.getType();</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">        if (doSkipTransformation(fieldBreadcrumb)) {</span>
+<span class="fc" id="L312">            return defaultValue(fieldType);</span>
         }
-<span class="fc" id="L313">        boolean primitiveType = classUtils.isPrimitiveType(field.getType());</span>
-<span class="fc" id="L314">        boolean isFieldTransformerDefined = settings.getFieldsTransformers().containsKey(field.getName());</span>
-<span class="fc" id="L315">        Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isFieldTransformerDefined);</span>
-<span class="fc bfc" id="L316" title="All 2 branches covered.">        if (nonNull(fieldValue)) {</span>
+<span class="fc" id="L314">        boolean primitiveType = classUtils.isPrimitiveType(fieldType);</span>
+<span class="fc" id="L315">        Function&lt;Object, Object&gt; transformerFunction = getTransformerFunction(field, fieldBreadcrumb);</span>
+<span class="fc" id="L316">        boolean isTransformerFunctionDefined = nonNull(transformerFunction);</span>
+<span class="fc" id="L317">        Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, isTransformerFunctionDefined);</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">        if (nonNull(fieldValue)) {</span>
             // is not a primitive type or an optional &amp;&amp; there are no transformer function
             // defined it recursively evaluate the value
-<span class="fc bfc" id="L319" title="All 4 branches covered.">            boolean notPrimitiveAndNotSpecialType = !primitiveType &amp;&amp; !classUtils.isSpecialType(field.getType());</span>
-<span class="pc bpc" id="L320" title="1 of 6 branches missed.">            if ((notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))</span>
-                    &amp;&amp; !isFieldTransformerDefined) {
-<span class="fc" id="L322">                fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);</span>
+<span class="fc bfc" id="L321" title="All 4 branches covered.">            boolean notPrimitiveAndNotSpecialType = !primitiveType &amp;&amp; !classUtils.isSpecialType(fieldType);</span>
+<span class="fc bfc" id="L322" title="All 4 branches covered.">            if (!isTransformerFunctionDefined</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">                    &amp;&amp; (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))) {</span>
+<span class="fc" id="L324">                fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);</span>
             }
-<span class="fc bfc" id="L324" title="All 2 branches covered.">        } else if (primitiveType) {</span>
-<span class="fc" id="L325">            fieldValue = defaultValue(field.getType()); // assign the default value</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">        } else if (primitiveType) {</span>
+<span class="fc" id="L327">            fieldValue = defaultValue(fieldType); // assign the default value</span>
         }
-<span class="fc" id="L327">        return getTransformedField(field, fieldBreadcrumb, fieldValue);</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">        if (isTransformerFunctionDefined) {</span>
+<span class="fc" id="L330">            fieldValue = transformerFunction.apply(fieldValue);</span>
+        }
+<span class="fc" id="L332">        return fieldValue;</span>
     }
 
     /**
@@ -334,46 +339,42 @@ import com.hotels.beans.error.MissingFieldException;
      * @return the updated breadcrumb
      */
     private String evalBreadcrumb(final String fieldName, final String breadcrumb) {
-<span class="fc bfc" id="L337" title="All 2 branches covered.">        return (nonNull(breadcrumb) ? breadcrumb + DOT.getSymbol() : EMPTY) + fieldName;</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">        return (nonNull(breadcrumb) ? breadcrumb + DOT.getSymbol() : EMPTY) + fieldName;</span>
     }
 
     /**
      * Gets the source field value. If a field transformer function is defined and the field does not exists in the source object it raises an exception.
      * @param sourceObj sourceObj the source object
      * @param sourceFieldName sourceFieldName the field name in the source object (if different from the target one)
-     * @param field The field for which the value has to be retrieved
      * @param isFieldTransformerDefined indicates if a transformer function is implemented for this field
      * @param &lt;T&gt; the sourceObj object type
      * @return the source field value
      */
-    private &lt;T&gt; Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final Field field, final boolean isFieldTransformerDefined) {
-<span class="fc" id="L350">        Object fieldValue = null;</span>
+    private &lt;T&gt; Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final boolean isFieldTransformerDefined) {
+<span class="fc" id="L354">        Object fieldValue = null;</span>
         try {
-//            fieldValue = classUtils.isPrimitiveType(sourceObj.getClass()) ? sourceObj : reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());
-<span class="fc" id="L353">            fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());</span>
-<span class="fc" id="L354">        } catch (MissingFieldException e) {</span>
-<span class="fc bfc" id="L355" title="All 4 branches covered.">            if (!isFieldTransformerDefined &amp;&amp; !settings.isSetDefaultValue()) {</span>
-<span class="fc" id="L356">                throw e;</span>
-            }
-<span class="fc" id="L358">        } catch (Exception e) {</span>
-<span class="pc bpc" id="L359" title="1 of 2 branches missed.">            if (!isFieldTransformerDefined) {</span>
+//            fieldValue = classUtils.isPrimitiveType(sourceObj.getClass()) ? sourceObj : reflectionUtils.getFieldValueDirectAccess(sourceObj, sourceFieldName, field.getType());
+<span class="fc" id="L357">            fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName);</span>
+<span class="fc" id="L358">        } catch (MissingFieldException e) {</span>
+<span class="fc bfc" id="L359" title="All 4 branches covered.">            if (!isFieldTransformerDefined &amp;&amp; !settings.isSetDefaultValue()) {</span>
 <span class="fc" id="L360">                throw e;</span>
             }
-<span class="fc" id="L362">        }</span>
-<span class="fc" id="L363">        return fieldValue;</span>
+<span class="nc" id="L362">        } catch (Exception e) {</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">            if (!isFieldTransformerDefined) {</span>
+<span class="nc" id="L364">                throw e;</span>
+            }
+<span class="fc" id="L366">        }</span>
+<span class="fc" id="L367">        return fieldValue;</span>
     }
 
     /**
-     * It executes the lambda function defined to the field.
+     * Retrieves the transformer function.
      * @param field The field on which the transformation should be applied.
      * @param breadcrumb The full field path on which the transformation should be applied.
-     * @param fieldValue The field value.
-     * @return the transformed field.
+     * @return the transformer function.
      */
-    private Object getTransformedField(final Field field, final String breadcrumb, final Object fieldValue) {
-<span class="fc bfc" id="L374" title="All 2 branches covered.">        String fieldName = settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;</span>
-<span class="fc" id="L375">        Function&lt;Object, Object&gt; transformerFunction = settings.getFieldsTransformers().get(fieldName);</span>
-<span class="fc bfc" id="L376" title="All 2 branches covered.">        return nonNull(transformerFunction) ? transformerFunction.apply(fieldValue) : fieldValue;</span>
+    private Function&lt;Object, Object&gt; getTransformerFunction(final Field field, final String breadcrumb) {
+<span class="fc bfc" id="L377" title="All 2 branches covered.">        return settings.getFieldsTransformers().get(settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb);</span>
     }
 
     /**
@@ -388,11 +389,11 @@ import com.hotels.beans.error.MissingFieldException;
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     private &lt;K&gt; Object getFieldValue(final Class&lt;K&gt; targetClass, final Field field, final Object fieldValue, final String breadcrumb) {
-<span class="fc" id="L391">        return getPopulator(field.getType(), fieldValue.getClass(), this)</span>
-<span class="fc" id="L392">                .map(populator -&gt; populator.getPopulatedObject(targetClass, field.getName(), fieldValue))</span>
-<span class="fc" id="L393">                .orElseGet(() -&gt;</span>
+<span class="fc" id="L392">        return getPopulator(field.getType(), fieldValue.getClass(), this)</span>
+<span class="fc" id="L393">                .map(populator -&gt; populator.getPopulatedObject(targetClass, field.getName(), fieldValue))</span>
+<span class="fc" id="L394">                .orElseGet(() -&gt;</span>
                         // recursively inject object
-<span class="fc" id="L395">                        transform(fieldValue, field.getType(), breadcrumb)</span>
+<span class="fc" id="L396">                        transform(fieldValue, field.getType(), breadcrumb)</span>
                 );
     }
 }
