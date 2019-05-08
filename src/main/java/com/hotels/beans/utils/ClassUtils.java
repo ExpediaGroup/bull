@@ -16,6 +16,10 @@
 
 package com.hotels.beans.utils;
 
+import static java.lang.invoke.LambdaMetafactory.metafactory;
+import static java.lang.invoke.MethodHandles.lookup;
+import static java.lang.invoke.MethodHandles.privateLookupIn;
+import static java.lang.invoke.MethodType.methodType;
 import static java.lang.reflect.Modifier.isFinal;
 import static java.lang.reflect.Modifier.isPrivate;
 import static java.lang.reflect.Modifier.isPublic;
@@ -23,7 +27,6 @@ import static java.lang.reflect.Modifier.isStatic;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.Collections.max;
-import static java.util.Collections.min;
 import static java.util.Comparator.comparing;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -42,6 +45,8 @@ import static com.hotels.beans.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
 import static com.hotels.beans.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
 
 import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -57,7 +62,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
+import java.util.function.Supplier;
 
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.constant.ClassType;
@@ -83,6 +88,11 @@ public final class ClassUtils {
      */
     private static final Set<Class<?>> PRIMITIVE_TYPES = of(String.class, Boolean.class, Integer.class, Long.class,
            Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class);
+
+    /**
+     * Method Handles lookup.
+     */
+    private static final MethodHandles.Lookup METHOD_HANDLES_LOOKUP = lookup();
 
     /**
      * Reflection utils instance {@link ReflectionUtils}.
@@ -314,16 +324,16 @@ public final class ClassUtils {
     public List<Field> getDeclaredFields(final Class<?> clazz, final boolean skipStatic) {
         final String cacheKey = "DeclaredFields-" + clazz.getName() + "-skipStatic-" + skipStatic;
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
-            final List<Field> res = new LinkedList<>();
+            final List<Field> res = new ArrayList<>();
             if (nonNull(clazz.getSuperclass()) && !clazz.getSuperclass().equals(Object.class)) {
                 res.addAll(getDeclaredFields(clazz.getSuperclass(), skipStatic));
             }
-            Stream<Field> fieldStream = stream(getDeclaredFields(clazz));
-            if (skipStatic) {
-//                fieldStream = fieldStream.parallel().filter(field -> !isStatic(field.getModifiers()));
-                fieldStream = fieldStream.filter(field -> !isStatic(field.getModifiers()));
-            }
-            res.addAll(fieldStream.collect(toList()));
+            stream(getDeclaredFields(clazz))
+                    .filter(field -> !skipStatic || !isStatic(field.getModifiers()))
+                    .forEach(field -> {
+                field.setAccessible(true);
+                res.add(field);
+            });
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -383,18 +393,10 @@ public final class ClassUtils {
      */
     @SuppressWarnings("unchecked")
     public <T> T getInstance(final Constructor constructor, final Object... constructorArgs) {
-        boolean isAccessible = reflectionUtils.isAccessible(constructor, null);
         try {
-            if (!isAccessible) {
-                constructor.setAccessible(true);
-            }
             return (T) constructor.newInstance(constructorArgs);
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
            throw new InstanceCreationException(e.getMessage(), e);
-        } finally {
-            if (!isAccessible) {
-                constructor.setAccessible(false);
-            }
         }
     }
 
@@ -405,16 +407,21 @@ public final class ClassUtils {
      * @return the no args constructor
      * @throws InvalidBeanException if no default constructor is available
      */
-    public <K> Constructor getNoArgsConstructor(final Class<K> clazz) {
+    @SuppressWarnings("unchecked")
+    public <K> Supplier<K> getNoArgsConstructor(final Class<K> clazz) {
         final String cacheKey = "NoArgsConstructor-" + clazz.getName();
-        return CACHE_MANAGER.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
-            Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
-            final Constructor constructor = min(asList(declaredConstructors), comparing(Constructor::getParameterCount));
-            if (constructor.getParameterCount() != 0) {
+        return CACHE_MANAGER.getFromCache(cacheKey, Supplier.class).orElseGet(() -> {
+            try {
+                MethodHandles.Lookup privateLookupIn = privateLookupIn(clazz, METHOD_HANDLES_LOOKUP);
+                MethodHandle mh = privateLookupIn.findConstructor(clazz, methodType(void.class));
+                Supplier<K> constructor = (Supplier<K>) metafactory(
+                        privateLookupIn, "get", methodType(Supplier.class), mh.type().generic(), mh, mh.type()
+                ).getTarget().invokeExact();
+                CACHE_MANAGER.cacheObject(cacheKey, constructor);
+                return constructor;
+            } catch (Throwable e) {
                 throw new InvalidBeanException("No default constructors available");
             }
-            CACHE_MANAGER.cacheObject(cacheKey, constructor);
-            return constructor;
         });
     }
 
@@ -429,6 +436,7 @@ public final class ClassUtils {
         return CACHE_MANAGER.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
             Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
             final Constructor constructor = max(asList(declaredConstructors), comparing(Constructor::getParameterCount));
+            constructor.setAccessible(true);
             CACHE_MANAGER.cacheObject(cacheKey, constructor);
             return constructor;
         });

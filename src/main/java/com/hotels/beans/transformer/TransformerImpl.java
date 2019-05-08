@@ -60,7 +60,7 @@ public class TransformerImpl extends AbstractTransformer {
         final ClassType classType = classUtils.getClassType(targetClass);
         if (classType.is(MUTABLE)) {
             try {
-                k = classUtils.getInstance(classUtils.getNoArgsConstructor(targetClass));
+                k = classUtils.getNoArgsConstructor(targetClass).get();
                 injectAllFields(sourceObj, k, breadcrumb);
             } catch (Exception e) {
                 throw new InvalidBeanException(e.getMessage(), e);
