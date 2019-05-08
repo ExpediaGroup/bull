@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.utils;
+package com.hotels.beans.validator;
 
 import static java.util.Objects.nonNull;
 
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
- * Unit test for {@link ValidationUtils}.
+ * Unit test for {@link Validator}.
  */
-public class ValidationUtilsTest {
+public class ValidatorTest {
     /**
      * Exception message.
      */
@@ -38,12 +37,6 @@ public class ValidationUtilsTest {
      * A sample value.
      */
     private static final String VALUE = "val";
-
-    /**
-     * The class to be tested.
-     */
-    @InjectMocks
-    private static ValidationUtils underTest;
 
     /**
      * Initialized mocks.
@@ -65,9 +58,9 @@ public class ValidationUtilsTest {
 
         //WHEN
         if (nonNull(exceptionMessage)) {
-            underTest.notNull(elemToCheck, exceptionMessage);
+            Validator.notNull(elemToCheck, exceptionMessage);
         } else {
-            underTest.notNull(elemToCheck);
+            Validator.notNull(elemToCheck);
         }
     }
 
@@ -96,9 +89,9 @@ public class ValidationUtilsTest {
 
         //WHEN
         if (nonNull(exceptionMessage)) {
-            underTest.notNull(elemToCheck, exceptionMessage);
+            Validator.notNull(elemToCheck, exceptionMessage);
         } else {
-            underTest.notNull(elemToCheck);
+            Validator.notNull(elemToCheck);
         }
     }
 
