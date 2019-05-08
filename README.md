@@ -65,7 +65,12 @@ mvn clean install -P relaxed
 * allows to set the default value for all objects not existing in the source object.
 * allows to skip transformation for a given set of fields.
 
-# Transformation samples
+# Feature samples
+
+* [Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
+* [Validation](https://github.com/HotelsDotCom/bull#validation-samples)
+
+## Transformation samples
 
 ### Simple case:
 
@@ -510,7 +515,7 @@ Following the obtained results:
 | JVM stats screenshot | [screenshot](docs/site/resources/images/stats/performance/realTestCase/classicTransformer/jvmStats.jpg) | [screenshot](docs/site/resources/images/stats/performance/realTestCase/beanUtilsLib/jvmStats.jpg) |
 | Dashboard screenshot | [screenshot](docs/site/resources/images/stats/performance/realTestCase/classicTransformer/dashboard.jpg) | [screenshot](docs/site/resources/images/stats/performance/realTestCase/beanUtilsLib/dashboard.jpg) |
 
-# Validation samples
+## Validation samples
 
 Validate a java bean has never been so simple. Given the following bean:
 
