@@ -19,7 +19,7 @@ jobs:
     - stage: "Build"
       name: "Build and Test"
       if: NOT branch = master
-      install: travis_retry mvn clean install -Dmaven.javadoc.skip=true -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} -Dsonar.branch.name=${TRAVIS_BRANCH} -Dsonar.branch.target=master
+      install: travis_retry mvn clean install -Dmaven.javadoc.skip=true -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} -Dsonar.branch.name=${TRAVIS_BRANCH} -Dsonar.branch.target=origin/master
     # If the branch is master it sends the quality report to SonarCloud
     - stage: "Build and Quality Check"
       name: "Building, testing and performing quality check"

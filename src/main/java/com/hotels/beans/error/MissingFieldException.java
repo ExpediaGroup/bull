@@ -21,15 +21,6 @@ package com.hotels.beans.error;
  */
 public class MissingFieldException extends RuntimeException {
     /**
-     * Constructs a new missing field exception with {@code null} as its
-     * detail message.  The cause is not initialized, and may subsequently be
-     * initialized by a call to {@link #initCause}.
-     */
-    public MissingFieldException() {
-        super();
-    }
-
-    /**
      * Constructs a new missing field exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.

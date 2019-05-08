@@ -25,16 +25,6 @@ public class InstanceCreationException extends RuntimeException {
      * The cause is the call of newInstance method throws an Exception.
      * @param message the detail message. The detail message is saved for later
      *                retrieval by the {@link #getMessage()} method.
-     */
-    public InstanceCreationException(final String message) {
-        super(message);
-    }
-
-    /**
-     * Constructs a new instance creation exception with the specified detail message.
-     * The cause is the call of newInstance method throws an Exception.
-     * @param message the detail message. The detail message is saved for later
-     *                retrieval by the {@link #getMessage()} method.
      * @param cause the given bean is not valid and caused an exception while copying the properties.
      */
     public InstanceCreationException(final String message, final Throwable cause) {
