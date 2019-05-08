@@ -34,6 +34,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
+import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
 import com.hotels.beans.transformer.Transformer;
@@ -119,6 +122,32 @@ public class BeanUtilsTest {
                 {"Test that the transformer function returned is able to transform the given object with the given transformer.",
                         beanUtils.getTransformer(beanUtils.getTransformer(), ImmutableToFooSimple.class)}
         };
+    }
+
+    /**
+     * Test that no exceptions are thrown when the bean is valid.
+     */
+    @Test
+    public void testValidateWorksProperly() {
+        //GIVEN
+        ImmutableToFooMissingCustomAnnotation validBean =
+                new ImmutableToFooMissingCustomAnnotation(NAME, ID.intValue());
+
+        //WHEN
+        underTest.getValidator().validate(validBean);
+    }
+
+    /**
+     * Test that an exception is returned if the given bean is not valid.
+     */
+    @Test(expectedExceptions = InvalidBeanException.class)
+    public void testValidateThrowsExceptionIfTheGivenBeanIsInvalid() {
+        //GIVEN
+        ImmutableToFoo immutableToFoo =
+                new ImmutableToFoo(null, null, null, null, null);
+
+        //WHEN
+        underTest.getValidator().validate(immutableToFoo);
     }
 
     /**

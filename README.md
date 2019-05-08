@@ -506,10 +506,38 @@ Following the obtained results:
 | JVM stats screenshot | [screenshot](docs/site/resources/images/stats/performance/realTestCase/classicTransformer/jvmStats.jpg) | [screenshot](docs/site/resources/images/stats/performance/realTestCase/beanUtilsLib/jvmStats.jpg) |
 | Dashboard screenshot | [screenshot](docs/site/resources/images/stats/performance/realTestCase/classicTransformer/dashboard.jpg) | [screenshot](docs/site/resources/images/stats/performance/realTestCase/beanUtilsLib/dashboard.jpg) |
 
+# Validation samples
+
+Validate a java bean has never been so simple. Given the following bean:
+
+~~~Java
+public class SampleBean {                           
+   @NotNull                   
+   private BigInteger id;                      
+   private String name;                 
+   
+   // constructor
+   // getters and setters... 
+}                                                               
+~~~
+
+an instance of the above object:
+
+~~~Java
+SampleBean sampleBean = new SampleBean();
+~~~
+
+And one line code as:
+
+~~~Java
+beanUtils.getValidator().validate(sampleBean);
+~~~
+
+this will throw an `InvalidBeanException` as the `id` field is null.
+
 ## Constraints:
 
 * the class's fields that have to be copied must not be static
-* the class must not contain builders
 
 ## Documentation
 

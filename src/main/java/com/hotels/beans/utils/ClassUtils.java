@@ -31,7 +31,7 @@ import static java.util.Optional.ofNullable;
 import static java.util.Set.of;
 import static java.util.stream.Collectors.toList;
 
-import static com.hotels.beans.utils.ValidationUtils.notNull;
+import static com.hotels.beans.validator.Validator.notNull;
 import static com.hotels.beans.base.Defaults.defaultValue;
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.ClassType.IMMUTABLE;

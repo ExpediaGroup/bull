@@ -72,7 +72,7 @@ public class TransformerImpl extends AbstractTransformer {
             }
         }
         if (!settings.isValidationDisabled()) {
-            validationUtils.validate(k);
+            validator.validate(k);
         }
         return k;
     }
@@ -84,7 +84,7 @@ public class TransformerImpl extends AbstractTransformer {
     protected final <T, K> void transform(final T sourceObj, final K targetObject, final String breadcrumb) {
         injectAllFields(sourceObj, targetObject, breadcrumb);
         if (!settings.isValidationDisabled()) {
-            validationUtils.validate(targetObject);
+            validator.validate(targetObject);
         }
     }
 
