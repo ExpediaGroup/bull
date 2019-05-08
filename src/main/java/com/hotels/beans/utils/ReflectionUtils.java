@@ -93,8 +93,6 @@ public final class ReflectionUtils {
     private Object invokeMethod(final Method method, final Object target, final Object... args) {
         try {
             return method.invoke(target, args);
-        } catch (MissingFieldException | MissingMethodException e) {
-            throw e;
         } catch (final Exception e) {
             handleReflectionException(e);
             throw new IllegalStateException(e);
