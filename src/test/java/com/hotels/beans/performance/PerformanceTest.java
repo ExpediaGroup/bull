@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia Inc.
+ * Copyright (C) 2019 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.BeanUtils;
+import com.hotels.beans.transformer.Transformer;
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSubClass;
@@ -114,11 +115,12 @@ public class PerformanceTest {
         //WHEN
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
+        Transformer transformer = underTest.getTransformer();
         for (int i = 0; i <= totalTransformation; i++) {
             stopWatch.suspend();
             sleep(waitInterval);
             stopWatch.resume();
-            underTest.getTransformer().transform(sourceObject, destObjectClass);
+            transformer.transform(sourceObject, destObjectClass);
         }
         stopWatch.stop();
         double avgTransformationTime = stopWatch.getTime(MILLISECONDS) / totalTransformation;
