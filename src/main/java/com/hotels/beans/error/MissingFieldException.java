@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia Inc.
+ * Copyright (C) 2019 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ package com.hotels.beans.error;
  */
 public class MissingFieldException extends RuntimeException {
     /**
-     * Constructs a new invalid bean exception with the specified detail message.
+     * Constructs a new missing field exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
      * @param message the detail message. The detail message is saved for later

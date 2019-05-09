@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.3.1] 2019.05.08
+#### Changes
+* In order to improve the library performances the following changes have been applied:
+    * Modified no args constructor invocation in order to use `LambdaMetafactory`
+    * Modified field value retrieval in order to use `LambdaMetafactory`
+    * Modified value retrieval/set from/to source/destination object in order to minimise the executed actions
+* Updated `hotels-oss-parent` version to `4.0.1` (was `4.0.0`).
+
 ### [1.3.0] 2019.04.28
 #### Added
 * Added support for the transformation of Java Beans built through Builder
