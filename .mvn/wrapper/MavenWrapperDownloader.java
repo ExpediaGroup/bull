@@ -78,6 +78,13 @@ public final class MavenWrapperDownloader {
         }
     }
 
+    /**
+     * Loads a given property file.
+     * @param propertiesFileName property file name
+     * @param baseDirectory the directory containing the property file
+     * @return an instance of {@link Properties}
+     * @throws Exception if the parsing fails
+     */
     private static Properties parsePropertiesFile(final String propertiesFileName, final File baseDirectory) throws Exception {
         File mavenWrapperPropertyFile = new File(baseDirectory, propertiesFileName);
         if (!mavenWrapperPropertyFile.exists()) {
@@ -92,6 +99,14 @@ public final class MavenWrapperDownloader {
         }
     }
 
+    /**
+     * Downloads a file from a given url.
+     * @param username the environment variable name containing the username required for the authentication
+     * @param password the environment variable name containing the password required for the authentication
+     * @param urlString the url from which the file has to be downloaded
+     * @param destination where the file has to be copied
+     * @throws Exception in case the download fails
+     */
     private static void downloadFileFromURL(final String username, final String password, final String urlString, final File destination) throws Exception {
         if (getenv(username) != null && getenv(password) != null) {
             Authenticator.setDefault(new Authenticator() {
