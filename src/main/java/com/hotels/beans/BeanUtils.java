@@ -16,12 +16,14 @@
 
 package com.hotels.beans;
 
-import static com.hotels.beans.utils.ValidationUtils.notNull;
+import static com.hotels.beans.validator.Validator.notNull;
 
 import java.util.function.Function;
 
 import com.hotels.beans.transformer.TransformerImpl;
 import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.validator.Validator;
+import com.hotels.beans.validator.ValidatorImpl;
 
 /**
  * Set of Bean utilities.
@@ -60,6 +62,14 @@ public class BeanUtils {
      */
     public final Transformer getTransformer() {
         return new TransformerImpl();
+    }
+
+    /**
+     * Returns a Bean Validator.
+     * @return a Bean Validator instance.
+     */
+    public final Validator getValidator() {
+        return new ValidatorImpl();
     }
 
 }

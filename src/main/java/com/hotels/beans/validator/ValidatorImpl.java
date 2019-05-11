@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.utils;
+package com.hotels.beans.validator;
 
-import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.joining;
 
 import static javax.validation.Validation.buildDefaultValidatorFactory;
@@ -30,15 +29,15 @@ import static com.hotels.beans.constant.Punctuation.SEMICOLON;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
 
-import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.beans.cache.CacheManager;
 
 /**
- * Validation utils for Class objects.
+ * Java Bean validation class.
+ * It offers the possibility to validate a given Java Bean against a set of defined constraints.
  */
-public class ValidationUtils {
+public class ValidatorImpl implements Validator {
     /**
      * CacheManager class {@link CacheManager}.
      */
@@ -47,43 +46,14 @@ public class ValidationUtils {
     /**
      * Default constructor.
      */
-    public ValidationUtils() {
-        this.cacheManager = getCacheManager("validationUtils");
+    public ValidatorImpl() {
+        this.cacheManager = getCacheManager("validatorImpl");
     }
 
     /**
-     * Validate that the specified argument is not {@code null};
-     * otherwise throws an {@link IllegalArgumentException} with the specified message.
-     * @param object  the object to check
-     * @param <T> the object type
-     * @throws IllegalArgumentException if the object is {@code null}
+     * {@inheritDoc}
      */
-    public static <T> void notNull(final T object) {
-        if (isNull(object)) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    /**
-     * Validate that the specified argument is not {@code null};
-     * otherwise throws an {@link IllegalArgumentException} with the specified message.
-     * @param object  the object to check
-     * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
-     * @param <T> the object type
-     * @throws IllegalArgumentException if the object is {@code null}
-     */
-    public static <T> void notNull(final T object, final String message) {
-        if (isNull(object)) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    /**
-     * Checks if an object is valid.
-     * @param k the object to check
-     * @param <K> the object class
-     * @throws InvalidBeanException {@link InvalidBeanException} if the validation fails
-     */
+    @Override
     public final <K> void validate(final K k) {
         final Set<ConstraintViolation<Object>> constraintViolations = getValidator().validate(k);
         if (!constraintViolations.isEmpty()) {
@@ -100,13 +70,13 @@ public class ValidationUtils {
 
     /**
      * Creates the validator.
-     * @return a {@link Validator} instance.
+     * @return a {@link javax.validation.Validator} instance.
      */
-    private Validator getValidator() {
+    private javax.validation.Validator getValidator() {
         String cacheKey = "BeanValidator";
-        return cacheManager.getFromCache(cacheKey, Validator.class)
+        return cacheManager.getFromCache(cacheKey, javax.validation.Validator.class)
                 .orElseGet(() -> {
-                    Validator validator = buildDefaultValidatorFactory().getValidator();
+                    javax.validation.Validator validator = buildDefaultValidatorFactory().getValidator();
                     cacheManager.cacheObject(cacheKey, validator);
                     return validator;
                 });

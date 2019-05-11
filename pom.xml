@@ -61,7 +61,7 @@
   	</scm>
 	<distributionManagement>
 		<snapshotRepository>
-			<id>onatype-nexus-snapshot</id>
+			<id>sonatype-nexus-snapshot</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 		<repository>
