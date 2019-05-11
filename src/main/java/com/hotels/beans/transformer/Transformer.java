@@ -100,10 +100,19 @@ public interface Transformer {
     Transformer setFlatFieldNameTransformation(boolean useFlatTransformation);
 
     /**
+     * It allows to enable the object validation.
+     * @param validationEnabled if true the validation is performed.
+     * @return the {@link Transformer} instance
+     */
+    Transformer setValidationEnabled(boolean validationEnabled);
+
+    /**
      * It allows to disable the object validation.
      * @param validationDisabled if true the validation is skipped.
      * @return the {@link Transformer} instance
+     * @deprecated the bean validation is disabled by default since version: 1.4.0. To enable it use {@code setValidationEnabled}
      */
+    @Deprecated(since = "1.3.3")
     Transformer setValidationDisabled(boolean validationDisabled);
 
     /**

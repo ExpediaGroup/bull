@@ -154,8 +154,17 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
+    public Transformer setValidationEnabled(final boolean validationEnabled) {
+        settings.setValidationEnabled(validationEnabled);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Transformer setValidationDisabled(final boolean validationDisabled) {
-        settings.setValidationDisabled(validationDisabled);
+        settings.setValidationEnabled(!validationDisabled);
         return this;
     }
 

@@ -158,4 +158,18 @@ public class TransformerTest extends AbstractTransformerTest {
         getSourceFieldValueMethod.invoke(underTest, null, null, null, false);
     }
 
+    /**
+     * Test that the method: {@code setValidationDisabled} works properly.
+     */
+    @Test
+    public void testSetValidationDisabledWorksProperly() {
+        //GIVEN
+
+        //WHEN
+        underTest.setValidationDisabled(false);
+
+        //THEN
+        assertTrue(underTest.settings.isValidationEnabled());
+        underTest.setValidationDisabled(true);
+    }
 }
