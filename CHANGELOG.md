@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.4.0] TBD
+#### Changes
+* **Modified project behaviour**, since this version the **"Bean Validation" is disabled by default**, to enable it, the following instruction needs to be executed: `transformer.setValidationEnabled(true);`
+
 ### [1.3.2] 2019.05.11
 ### Added
 * Modified project structure in order to offer Java Bean validation feature against the defined constraints as public feature (see: [Issue 57](https://github.com/HotelsDotCom/bull/issues/57)).
