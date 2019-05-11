@@ -16,7 +16,7 @@
 
 package com.hotels.beans.cache;
 
-import static com.hotels.beans.utils.ValidationUtils.notNull;
+import static com.hotels.beans.validator.Validator.notNull;
 
 import static lombok.AccessLevel.PRIVATE;
 

@@ -37,12 +37,20 @@ In case you need to integrate it in a `jdk 8` (or above project) please refer to
 
 Full build
 ~~~
-mvn clean install
+./mvnw clean install
+~~~
+or on Windows
+~~~
+mvnw.cmd clean install
 ~~~
 
 Skip test coverage and checkstyle check
 ~~~
-mvn clean install -P relaxed
+./mvnw clean install -P relaxed
+~~~
+or on Windows
+~~~
+mvnw.cmd clean install -P relaxed
 ~~~
 
 ## Features:
@@ -65,7 +73,12 @@ mvn clean install -P relaxed
 * allows to set the default value for all objects not existing in the source object.
 * allows to skip transformation for a given set of fields.
 
-# Transformation samples
+# Feature samples
+
+* [Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
+* [Validation](https://github.com/HotelsDotCom/bull#validation-samples)
+
+## Transformation samples
 
 ### Simple case:
 
@@ -510,10 +523,38 @@ Following the obtained results:
 | JVM stats screenshot | [screenshot](docs/site/resources/images/stats/performance/realTestCase/classicTransformer/jvmStats.jpg) | [screenshot](docs/site/resources/images/stats/performance/realTestCase/beanUtilsLib/jvmStats.jpg) |
 | Dashboard screenshot | [screenshot](docs/site/resources/images/stats/performance/realTestCase/classicTransformer/dashboard.jpg) | [screenshot](docs/site/resources/images/stats/performance/realTestCase/beanUtilsLib/dashboard.jpg) |
 
+## Validation samples
+
+Validate a java bean has never been so simple. Given the following bean:
+
+~~~Java
+public class SampleBean {                           
+   @NotNull                   
+   private BigInteger id;                      
+   private String name;                 
+   
+   // constructor
+   // getters and setters... 
+}                                                               
+~~~
+
+an instance of the above object:
+
+~~~Java
+SampleBean sampleBean = new SampleBean();
+~~~
+
+And one line code as:
+
+~~~Java
+beanUtils.getValidator().validate(sampleBean);
+~~~
+
+this will throw an `InvalidBeanException` as the `id` field is null.
+
 ## Constraints:
 
 * the class's fields that have to be copied must not be static
-* the class must not contain builders
 
 ## Documentation
 

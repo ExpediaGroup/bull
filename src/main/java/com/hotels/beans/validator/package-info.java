@@ -13,27 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.hotels.beans.sample.mixed;
-
-import java.math.BigInteger;
-
-import javax.validation.constraints.NotNull;
-
-import lombok.Getter;
-import lombok.ToString;
-
 /**
- * Sample mixed object with missing default constructor.
+ * validator package.
  */
-@Getter
-@ToString
-public class MixedToFooMissingConstructor {
-    @NotNull
-    public BigInteger id;
-    private final String name;
 
-    public MixedToFooMissingConstructor(final String name) {
-        this.name = name;
-    }
-}
+package com.hotels.beans.validator;
