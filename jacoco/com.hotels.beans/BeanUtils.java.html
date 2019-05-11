@@ -16,17 +16,19 @@
 
 package com.hotels.beans;
 
-import static com.hotels.beans.utils.ValidationUtils.notNull;
+import static com.hotels.beans.validator.Validator.notNull;
 
 import java.util.function.Function;
 
 import com.hotels.beans.transformer.TransformerImpl;
 import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.validator.Validator;
+import com.hotels.beans.validator.ValidatorImpl;
 
 /**
  * Set of Bean utilities.
  */
-<span class="fc" id="L29">public class BeanUtils {</span>
+<span class="fc" id="L31">public class BeanUtils {</span>
 
     /**
      * Returns a function that transforms an object T in an object K.
@@ -37,7 +39,7 @@ import com.hotels.beans.transformer.Transformer;
      * @throws IllegalArgumentException if any parameter is invalid
      */
     public static &lt;T, K&gt; Function&lt;T, K&gt; getTransformer(final Class&lt;K&gt; targetClass) {
-<span class="fc" id="L40">        return fromBean -&gt; new TransformerImpl().transform(fromBean, targetClass);</span>
+<span class="fc" id="L42">        return fromBean -&gt; new TransformerImpl().transform(fromBean, targetClass);</span>
     }
 
     /**
@@ -50,8 +52,8 @@ import com.hotels.beans.transformer.Transformer;
      * @throws IllegalArgumentException if any parameter is invalid
      */
     public static &lt;T, K&gt; Function&lt;T, K&gt; getTransformer(final Transformer beanTransformer, final Class&lt;K&gt; targetClass) {
-<span class="fc" id="L53">        notNull(beanTransformer, &quot;beanTransformer cannot be null!&quot;);</span>
-<span class="fc" id="L54">        return fromBean -&gt; beanTransformer.transform(fromBean, targetClass);</span>
+<span class="fc" id="L55">        notNull(beanTransformer, &quot;beanTransformer cannot be null!&quot;);</span>
+<span class="fc" id="L56">        return fromBean -&gt; beanTransformer.transform(fromBean, targetClass);</span>
     }
 
     /**
@@ -59,7 +61,15 @@ import com.hotels.beans.transformer.Transformer;
      * @return a Bean Transformer instance.
      */
     public final Transformer getTransformer() {
-<span class="fc" id="L62">        return new TransformerImpl();</span>
+<span class="fc" id="L64">        return new TransformerImpl();</span>
+    }
+
+    /**
+     * Returns a Bean Validator.
+     * @return a Bean Validator instance.
+     */
+    public final Validator getValidator() {
+<span class="fc" id="L72">        return new ValidatorImpl();</span>
     }
 
 }

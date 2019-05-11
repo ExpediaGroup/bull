@@ -80,7 +80,7 @@
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>              }
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          }
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>          <strong class="jxr_keyword">if</strong> (!settings.isValidationDisabled()) {
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>              validationUtils.validate(k);
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>              validator.validate(k);
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          }
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">return</strong> k;
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>      }
@@ -92,7 +92,7 @@
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> &lt;T, K&gt; <strong class="jxr_keyword">void</strong> transform(<strong class="jxr_keyword">final</strong> T sourceObj, <strong class="jxr_keyword">final</strong> K targetObject, <strong class="jxr_keyword">final</strong> String breadcrumb) {
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>          injectAllFields(sourceObj, targetObject, breadcrumb);
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">if</strong> (!settings.isValidationDisabled()) {
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>              validationUtils.validate(targetObject);
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>              validator.validate(targetObject);
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          }
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>      }
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  

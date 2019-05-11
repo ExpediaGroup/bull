@@ -9,3 +9,4 @@ com.hotels.beans.sample.mixed
 com.hotels.beans.sample.mutable
 com.hotels.beans.transformer
 com.hotels.beans.utils
+com.hotels.beans.validator

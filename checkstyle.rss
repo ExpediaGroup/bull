@@ -25,9 +25,9 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2019 Hotels.com (Data Platform Team)</copyright>
     <item>
-      <title>File: 43,
+      <title>File: 45,
              Errors: 0,
-             Warnings: 1080,
+             Warnings: 1085,
              Infos: 0
       </title>
             <link>https://github.com/HotelsDotCom/bull/checkstyle.html</link>
@@ -410,6 +410,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.validator.ValidatorImpl.java">com/hotels/beans/validator/ValidatorImpl.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  18
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.transformer.package-info.java">com/hotels/beans/transformer/package-info.java</a>
                 </td>
                 <td>
@@ -472,7 +486,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  10
+                  13
                 </td>
                 <td>
                   0
@@ -536,13 +550,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.utils.ValidationUtils.java">com/hotels/beans/utils/ValidationUtils.java</a>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.validator.Validator.java">com/hotels/beans/validator/Validator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  28
+                  12
                 </td>
                 <td>
                   0
@@ -635,6 +649,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.annotation.package-info.java">com/hotels/beans/annotation/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.validator.package-info.java">com/hotels/beans/validator/package-info.java</a>
                 </td>
                 <td>
                   0
