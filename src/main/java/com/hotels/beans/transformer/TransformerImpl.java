@@ -353,10 +353,12 @@ public class TransformerImpl extends AbstractTransformer {
     private <T> Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final boolean isFieldTransformerDefined) {
         Object fieldValue = null;
         try {
-//            fieldValue = classUtils.isPrimitiveType(sourceObj.getClass()) ? sourceObj : reflectionUtils.getFieldValueDirectAccess(sourceObj, sourceFieldName, field.getType());
             fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName);
         } catch (MissingFieldException e) {
-            if (!isFieldTransformerDefined && !settings.isSetDefaultValue()) {
+            // in case the source field is a primitive type and the destination one is composite, the source field value is returned without going in deep
+            if (classUtils.isPrimitiveType(sourceObj.getClass())) {
+                fieldValue = sourceObj;
+            } else if (!isFieldTransformerDefined && !settings.isSetDefaultValue()) {
                 throw e;
             }
         } catch (Exception e) {

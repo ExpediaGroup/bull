@@ -71,9 +71,12 @@ import com.hotels.beans.utils.ReflectionUtils;
  * Unit test for all {@link Transformer} functions related to Immutable Java Beans.
  */
 public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
-    private static final int TOTAL_ADV_CLASS_FIELDS = 5;
+    private static final int TOTAL_ADV_CLASS_FIELDS = 6;
     private static final String GET_DEST_FIELD_NAME_METHOD_NAME = "getDestFieldName";
     private static final String GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME = "getConstructorValuesFromFields";
+    private static final String PRICE_FIELD_NAME = "price";
+    private static final String NET_PRICE_FIELD_NAME = "price.netPrice";
+    private static final String GROSS_PRICE_FIELD_NAME = "price.grossPrice";
 
     /**
      * The class to be tested.
@@ -296,6 +299,8 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         //WHEN
         final Transformer beanTransformer = underTest
                 .withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
+                .withFieldMapping(new FieldMapping(PRICE_FIELD_NAME, NET_PRICE_FIELD_NAME))
+                .withFieldMapping(new FieldMapping(PRICE_FIELD_NAME, GROSS_PRICE_FIELD_NAME))
                 .withFieldTransformer(new FieldTransformer<>(LOCALE_FIELD_NAME, Locale::forLanguageTag));
         ImmutableToFooAdvFields actual = (ImmutableToFooAdvFields) beanTransformer.transform(sourceObject, targetObjectClass);
 

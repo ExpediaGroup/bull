@@ -37,4 +37,12 @@ public class ImmutableToFooAdvFields {
     private final String indexNumber;
     private final ClassType classType;
     private final Locale locale;
+    private final Price price;
+}
+
+@AllArgsConstructor
+@Getter
+class Price {
+    private final float netPrice;
+    private final float grossPrice;
 }

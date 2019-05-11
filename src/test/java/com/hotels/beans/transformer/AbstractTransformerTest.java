@@ -73,6 +73,7 @@ public abstract class AbstractTransformerTest {
     private static final BigDecimal AMOUNT = new BigDecimal(10);
     private static final String SUB_FOO_NAME = "Smith";
     private static final int[] SUB_FOO_PHONE_NUMBERS = {12345, 6892, 10873};
+    private static final float PRICE = 10.0f;
     private static final Map<String, String> SAMPLE_MAP = new HashMap<>();
     private static final Map<String, List<String>> COMPLEX_MAP = new HashMap<>();
     private static final Map<String, Map<String, String>> VERY_COMPLEX_MAP = new HashMap<>();
@@ -148,6 +149,6 @@ public abstract class AbstractTransformerTest {
      * @return the {@link FromFooAdvFields} instance.
      */
     private FromFooAdvFields createFromFooAdvFields() {
-        return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage());
+        return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage(), PRICE);
     }
 }
