@@ -38,6 +38,7 @@ public class FromFooAdvFields implements Cloneable {
     private final String indexNumber;
     private final ClassType classType;
     private final String locale;
+    private final float price;
 
     public FromFooAdvFields clone() throws CloneNotSupportedException {
         return (FromFooAdvFields) super.clone();
