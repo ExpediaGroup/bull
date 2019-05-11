@@ -18,7 +18,7 @@ package com.hotels.beans.transformer;
 
 import static java.util.Arrays.asList;
 
-import static com.hotels.beans.utils.ValidationUtils.notNull;
+import static com.hotels.beans.validator.Validator.notNull;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -29,7 +29,8 @@ import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
-import com.hotels.beans.utils.ValidationUtils;
+import com.hotels.beans.validator.Validator;
+import com.hotels.beans.validator.ValidatorImpl;
 
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
@@ -47,11 +48,6 @@ abstract class AbstractTransformer implements Transformer {
     final ClassUtils classUtils;
 
     /**
-     * Validation utils instance {@link ValidationUtils}.
-     */
-    final ValidationUtils validationUtils;
-
-    /**
      * CacheManager instance {@link CacheManager}.
      */
     final CacheManager cacheManager;
@@ -62,12 +58,17 @@ abstract class AbstractTransformer implements Transformer {
     final TransformerSettings settings;
 
     /**
+     * Bean Validator. It offers the possibility to validate a given Java Bean against a set of defined constraints.
+     */
+    final Validator validator;
+
+    /**
      * Default constructor.
      */
     AbstractTransformer() {
         this.reflectionUtils = new ReflectionUtils();
         this.classUtils = new ClassUtils();
-        this.validationUtils = new ValidationUtils();
+        this.validator = new ValidatorImpl();
         this.settings = new TransformerSettings();
         this.cacheManager = CacheManagerFactory.getCacheManager("transformer");
     }
