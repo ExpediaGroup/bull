@@ -37,12 +37,20 @@ In case you need to integrate it in a `jdk 8` (or above project) please refer to
 
 Full build
 ~~~
-mvn clean install
+./mvnw clean install
+~~~
+or on Windows
+~~~
+mvnw.cmd clean install
 ~~~
 
 Skip test coverage and checkstyle check
 ~~~
-mvn clean install -P relaxed
+./mvnw clean install -P relaxed
+~~~
+or on Windows
+~~~
+mvnw.cmd clean install -P relaxed
 ~~~
 
 ## Features:
