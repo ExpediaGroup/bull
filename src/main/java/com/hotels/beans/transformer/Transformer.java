@@ -110,9 +110,9 @@ public interface Transformer {
      * It allows to disable the object validation.
      * @param validationDisabled if true the validation is skipped.
      * @return the {@link Transformer} instance
-     * @deprecated the bean validation is disabled by default since version: 1.4.0. To enable it use {@code setValidationEnabled}
+     * @deprecated the bean validation is disabled by default since version: 1.1.17. To enable it use {@code setValidationEnabled}. This method will be removed in version 1.1.18
      */
-    @Deprecated(since = "1.3.3")
+    @Deprecated
     Transformer setValidationDisabled(boolean validationDisabled);
 
     /**
