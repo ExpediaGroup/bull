@@ -2,7 +2,7 @@
     <title>Samples</title>
 </head>
 
-# Transformation samples
+## Transformation samples
 
 ### Simple case:
 
@@ -219,10 +219,10 @@ public class FromBean {                                     public class ToBean 
 ~~~
 and
 ~~~Java
-public class FromSubBean {                                  public class ToSubBean {                           
-   private final String name;                                  private final String name;                   
-   private final long index;                                   private final long index;                    
-}                                                           }
+public class ToSubBean {                           
+   private final String name;                   
+   private final long index;                    
+}
 ~~~
 Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as 
 follow:
@@ -231,6 +231,36 @@ FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("neste
 ToBean toBean = beanUtils.getTransformer()
                     .withFieldTransformer(nameTransformer)
                     .transform(fromBean, ToBean.class);
+~~~
+
+### Map a primitive type field in the source object into a nested object:
+
+This example shows of to map a primitive field into a nested object into the destination one.
+
+Given:
+
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  private final String name;                   
+   private final FromSubBean nestedObject;                     private final ToSubBean nestedObject;                    
+   private final int x;
+   // all args constructor                                     // all args constructor
+   // getters...                                               // getters...
+}                                                           }
+~~~
+and
+~~~Java
+public class ToSubBean {                           
+   private final int x;
+   
+   // all args constructor
+}  // getters...          
+~~~
+Assuming that the value `x` should be mapped into field: `x` contained into the `ToSubBean` object, the field mapping has to be defined as 
+follow:
+~~~Java
+ToBean toBean = beanUtils.getTransformer()
+                    .withFieldMapping(new FieldMapping("x", "nestedObject.x"));
 ~~~
 
 ### Apply a transformation function on all fields matching with the given one:
