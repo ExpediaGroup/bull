@@ -107,7 +107,6 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
         //GIVEN
         MutableToFooSubClass mutableToFoo = new MutableToFooSubClass();
         fromFooSubClass.setId(null);
-        underTest.setValidationDisabled(true);
 
         //WHEN
         underTest.transform(fromFooSubClass, mutableToFoo);
@@ -115,7 +114,6 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
         //THEN
         assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
         fromFooSubClass.setId(ID);
-        underTest.setValidationDisabled(false);
     }
 
     /**
