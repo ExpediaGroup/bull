@@ -71,7 +71,7 @@ public class TransformerImpl extends AbstractTransformer {
                 injectNotFinalFields(sourceObj, k, breadcrumb);
             }
         }
-        if (!settings.isValidationDisabled()) {
+        if (settings.isValidationEnabled()) {
             validator.validate(k);
         }
         return k;
@@ -83,7 +83,7 @@ public class TransformerImpl extends AbstractTransformer {
     @Override
     protected final <T, K> void transform(final T sourceObj, final K targetObject, final String breadcrumb) {
         injectAllFields(sourceObj, targetObject, breadcrumb);
-        if (!settings.isValidationDisabled()) {
+        if (settings.isValidationEnabled()) {
             validator.validate(targetObject);
         }
     }
@@ -353,10 +353,12 @@ public class TransformerImpl extends AbstractTransformer {
     private <T> Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final boolean isFieldTransformerDefined) {
         Object fieldValue = null;
         try {
-//            fieldValue = classUtils.isPrimitiveType(sourceObj.getClass()) ? sourceObj : reflectionUtils.getFieldValueDirectAccess(sourceObj, sourceFieldName, field.getType());
             fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName);
         } catch (MissingFieldException e) {
-            if (!isFieldTransformerDefined && !settings.isSetDefaultValue()) {
+            // in case the source field is a primitive type and the destination one is composite, the source field value is returned without going in deep
+            if (classUtils.isPrimitiveType(sourceObj.getClass())) {
+                fieldValue = sourceObj;
+            } else if (!isFieldTransformerDefined && !settings.isSetDefaultValue()) {
                 throw e;
             }
         } catch (Exception e) {

@@ -10,7 +10,7 @@ technologies and and their ecosystems and how to make constructive, helpful bug 
 - Add the original repository as a remote called `upstream`.
 - If you created your fork a while ago be sure to pull upstream changes into your local repository.
 - Create a new branch to work on! Branch from `develop` if it exists, else from `master`.
-- The branch name should follow the best practices naming convention:
+- **The branch name should follow the best practices naming convention:**
     1. Use grouping tokens (words) at the beginning of your branch names.
         * `feature`: Feature I'm adding or expanding
         * `bug`: Bug fix or experiment
