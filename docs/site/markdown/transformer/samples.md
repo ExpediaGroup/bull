@@ -2,7 +2,7 @@
     <title>Samples</title>
 </head>
 
-## Transformation samples
+# Transformation samples
 
 ### Simple case:
 
