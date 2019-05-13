@@ -242,10 +242,10 @@ import com.hotels.beans.model.MapType;
 <span class="fc" id="L242">                field.setAccessible(true);</span>
 <span class="fc" id="L243">            } catch (NoSuchFieldException e) {</span>
 <span class="fc" id="L244">                Class&lt;?&gt; superclass = targetClass.getSuperclass();</span>
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">                if (!superclass.equals(Object.class)) {</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">                if (!superclass.equals(Object.class)) {</span>
 <span class="fc" id="L246">                    field = getDeclaredField(fieldName, superclass);</span>
                 } else {
-<span class="nc" id="L248">                    throw new MissingFieldException(targetClass.getName() + &quot; does not contain field: &quot; + fieldName);</span>
+<span class="fc" id="L248">                    throw new MissingFieldException(targetClass.getName() + &quot; does not contain field: &quot; + fieldName);</span>
                 }
 <span class="nc" id="L250">            } catch (final Exception e) {</span>
 <span class="nc" id="L251">                handleReflectionException(e);</span>

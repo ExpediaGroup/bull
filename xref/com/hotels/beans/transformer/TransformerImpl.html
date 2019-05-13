@@ -79,7 +79,7 @@
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>                  injectNotFinalFields(sourceObj, k, breadcrumb);
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>              }
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          }
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          <strong class="jxr_keyword">if</strong> (!settings.isValidationDisabled()) {
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          <strong class="jxr_keyword">if</strong> (settings.isValidationEnabled()) {
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>              validator.validate(k);
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          }
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">return</strong> k;
@@ -91,7 +91,7 @@
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>      @Override
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> &lt;T, K&gt; <strong class="jxr_keyword">void</strong> transform(<strong class="jxr_keyword">final</strong> T sourceObj, <strong class="jxr_keyword">final</strong> K targetObject, <strong class="jxr_keyword">final</strong> String breadcrumb) {
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>          injectAllFields(sourceObj, targetObject, breadcrumb);
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">if</strong> (!settings.isValidationDisabled()) {
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">if</strong> (settings.isValidationEnabled()) {
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>              validator.validate(targetObject);
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          }
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>      }
@@ -361,50 +361,52 @@
 <a class="jxr_linenumber" name="L353" href="#L353">353</a>     <strong class="jxr_keyword">private</strong> &lt;T&gt; Object getSourceFieldValue(<strong class="jxr_keyword">final</strong> T sourceObj, <strong class="jxr_keyword">final</strong> String sourceFieldName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> isFieldTransformerDefined) {
 <a class="jxr_linenumber" name="L354" href="#L354">354</a>         Object fieldValue = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L355" href="#L355">355</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L356" href="#L356">356</a> <em class="jxr_comment">//            fieldValue = classUtils.isPrimitiveType(sourceObj.getClass()) ? sourceObj : reflectionUtils.getFieldValueDirectAccess(sourceObj, sourceFieldName, field.getType());</em>
-<a class="jxr_linenumber" name="L357" href="#L357">357</a>             fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName);
-<a class="jxr_linenumber" name="L358" href="#L358">358</a>         } <strong class="jxr_keyword">catch</strong> (MissingFieldException e) {
-<a class="jxr_linenumber" name="L359" href="#L359">359</a>             <strong class="jxr_keyword">if</strong> (!isFieldTransformerDefined &amp;&amp; !settings.isSetDefaultValue()) {
-<a class="jxr_linenumber" name="L360" href="#L360">360</a>                 <strong class="jxr_keyword">throw</strong> e;
-<a class="jxr_linenumber" name="L361" href="#L361">361</a>             }
-<a class="jxr_linenumber" name="L362" href="#L362">362</a>         } <strong class="jxr_keyword">catch</strong> (Exception e) {
-<a class="jxr_linenumber" name="L363" href="#L363">363</a>             <strong class="jxr_keyword">if</strong> (!isFieldTransformerDefined) {
-<a class="jxr_linenumber" name="L364" href="#L364">364</a>                 <strong class="jxr_keyword">throw</strong> e;
-<a class="jxr_linenumber" name="L365" href="#L365">365</a>             }
-<a class="jxr_linenumber" name="L366" href="#L366">366</a>         }
-<a class="jxr_linenumber" name="L367" href="#L367">367</a>         <strong class="jxr_keyword">return</strong> fieldValue;
-<a class="jxr_linenumber" name="L368" href="#L368">368</a>     }
-<a class="jxr_linenumber" name="L369" href="#L369">369</a> 
-<a class="jxr_linenumber" name="L370" href="#L370">370</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L371" href="#L371">371</a> <em class="jxr_javadoccomment">     * Retrieves the transformer function.</em>
-<a class="jxr_linenumber" name="L372" href="#L372">372</a> <em class="jxr_javadoccomment">     * @param field The field on which the transformation should be applied.</em>
-<a class="jxr_linenumber" name="L373" href="#L373">373</a> <em class="jxr_javadoccomment">     * @param breadcrumb The full field path on which the transformation should be applied.</em>
-<a class="jxr_linenumber" name="L374" href="#L374">374</a> <em class="jxr_javadoccomment">     * @return the transformer function.</em>
-<a class="jxr_linenumber" name="L375" href="#L375">375</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L376" href="#L376">376</a>     <strong class="jxr_keyword">private</strong> Function&lt;Object, Object&gt; getTransformerFunction(<strong class="jxr_keyword">final</strong> Field field, <strong class="jxr_keyword">final</strong> String breadcrumb) {
-<a class="jxr_linenumber" name="L377" href="#L377">377</a>         <strong class="jxr_keyword">return</strong> settings.getFieldsTransformers().get(settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb);
-<a class="jxr_linenumber" name="L378" href="#L378">378</a>     }
-<a class="jxr_linenumber" name="L379" href="#L379">379</a> 
-<a class="jxr_linenumber" name="L380" href="#L380">380</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L381" href="#L381">381</a> <em class="jxr_javadoccomment">     * Retrieves the value of a field.</em>
-<a class="jxr_linenumber" name="L382" href="#L382">382</a> <em class="jxr_javadoccomment">     * @param targetClass the destination object class</em>
-<a class="jxr_linenumber" name="L383" href="#L383">383</a> <em class="jxr_javadoccomment">     * @param field The field for which the value has to be retrieved</em>
-<a class="jxr_linenumber" name="L384" href="#L384">384</a> <em class="jxr_javadoccomment">     * @param fieldValue The current object value.</em>
-<a class="jxr_linenumber" name="L385" href="#L385">385</a> <em class="jxr_javadoccomment">     * @param breadcrumb The full field path on which the transformation should be applied</em>
-<a class="jxr_linenumber" name="L386" href="#L386">386</a> <em class="jxr_javadoccomment">     * @param &lt;K&gt; the target object type</em>
-<a class="jxr_linenumber" name="L387" href="#L387">387</a> <em class="jxr_javadoccomment">     * @return the field value</em>
-<a class="jxr_linenumber" name="L388" href="#L388">388</a> <em class="jxr_javadoccomment">     * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value</em>
-<a class="jxr_linenumber" name="L389" href="#L389">389</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L390" href="#L390">390</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
-<a class="jxr_linenumber" name="L391" href="#L391">391</a>     <strong class="jxr_keyword">private</strong> &lt;K&gt; Object getFieldValue(<strong class="jxr_keyword">final</strong> Class&lt;K&gt; targetClass, <strong class="jxr_keyword">final</strong> Field field, <strong class="jxr_keyword">final</strong> Object fieldValue, <strong class="jxr_keyword">final</strong> String breadcrumb) {
-<a class="jxr_linenumber" name="L392" href="#L392">392</a>         <strong class="jxr_keyword">return</strong> getPopulator(field.getType(), fieldValue.getClass(), <strong class="jxr_keyword">this</strong>)
-<a class="jxr_linenumber" name="L393" href="#L393">393</a>                 .map(populator -&gt; populator.getPopulatedObject(targetClass, field.getName(), fieldValue))
-<a class="jxr_linenumber" name="L394" href="#L394">394</a>                 .orElseGet(() -&gt;
-<a class="jxr_linenumber" name="L395" href="#L395">395</a>                         <em class="jxr_comment">// recursively inject object</em>
-<a class="jxr_linenumber" name="L396" href="#L396">396</a>                         transform(fieldValue, field.getType(), breadcrumb)
-<a class="jxr_linenumber" name="L397" href="#L397">397</a>                 );
-<a class="jxr_linenumber" name="L398" href="#L398">398</a>     }
-<a class="jxr_linenumber" name="L399" href="#L399">399</a> }
+<a class="jxr_linenumber" name="L356" href="#L356">356</a>             fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName);
+<a class="jxr_linenumber" name="L357" href="#L357">357</a>         } <strong class="jxr_keyword">catch</strong> (MissingFieldException e) {
+<a class="jxr_linenumber" name="L358" href="#L358">358</a>             <em class="jxr_comment">// in case the source field is a primitive type and the destination one is composite, the source field value is returned without going in deep</em>
+<a class="jxr_linenumber" name="L359" href="#L359">359</a>             <strong class="jxr_keyword">if</strong> (classUtils.isPrimitiveType(sourceObj.getClass())) {
+<a class="jxr_linenumber" name="L360" href="#L360">360</a>                 fieldValue = sourceObj;
+<a class="jxr_linenumber" name="L361" href="#L361">361</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (!isFieldTransformerDefined &amp;&amp; !settings.isSetDefaultValue()) {
+<a class="jxr_linenumber" name="L362" href="#L362">362</a>                 <strong class="jxr_keyword">throw</strong> e;
+<a class="jxr_linenumber" name="L363" href="#L363">363</a>             }
+<a class="jxr_linenumber" name="L364" href="#L364">364</a>         } <strong class="jxr_keyword">catch</strong> (Exception e) {
+<a class="jxr_linenumber" name="L365" href="#L365">365</a>             <strong class="jxr_keyword">if</strong> (!isFieldTransformerDefined) {
+<a class="jxr_linenumber" name="L366" href="#L366">366</a>                 <strong class="jxr_keyword">throw</strong> e;
+<a class="jxr_linenumber" name="L367" href="#L367">367</a>             }
+<a class="jxr_linenumber" name="L368" href="#L368">368</a>         }
+<a class="jxr_linenumber" name="L369" href="#L369">369</a>         <strong class="jxr_keyword">return</strong> fieldValue;
+<a class="jxr_linenumber" name="L370" href="#L370">370</a>     }
+<a class="jxr_linenumber" name="L371" href="#L371">371</a> 
+<a class="jxr_linenumber" name="L372" href="#L372">372</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L373" href="#L373">373</a> <em class="jxr_javadoccomment">     * Retrieves the transformer function.</em>
+<a class="jxr_linenumber" name="L374" href="#L374">374</a> <em class="jxr_javadoccomment">     * @param field The field on which the transformation should be applied.</em>
+<a class="jxr_linenumber" name="L375" href="#L375">375</a> <em class="jxr_javadoccomment">     * @param breadcrumb The full field path on which the transformation should be applied.</em>
+<a class="jxr_linenumber" name="L376" href="#L376">376</a> <em class="jxr_javadoccomment">     * @return the transformer function.</em>
+<a class="jxr_linenumber" name="L377" href="#L377">377</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L378" href="#L378">378</a>     <strong class="jxr_keyword">private</strong> Function&lt;Object, Object&gt; getTransformerFunction(<strong class="jxr_keyword">final</strong> Field field, <strong class="jxr_keyword">final</strong> String breadcrumb) {
+<a class="jxr_linenumber" name="L379" href="#L379">379</a>         <strong class="jxr_keyword">return</strong> settings.getFieldsTransformers().get(settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb);
+<a class="jxr_linenumber" name="L380" href="#L380">380</a>     }
+<a class="jxr_linenumber" name="L381" href="#L381">381</a> 
+<a class="jxr_linenumber" name="L382" href="#L382">382</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L383" href="#L383">383</a> <em class="jxr_javadoccomment">     * Retrieves the value of a field.</em>
+<a class="jxr_linenumber" name="L384" href="#L384">384</a> <em class="jxr_javadoccomment">     * @param targetClass the destination object class</em>
+<a class="jxr_linenumber" name="L385" href="#L385">385</a> <em class="jxr_javadoccomment">     * @param field The field for which the value has to be retrieved</em>
+<a class="jxr_linenumber" name="L386" href="#L386">386</a> <em class="jxr_javadoccomment">     * @param fieldValue The current object value.</em>
+<a class="jxr_linenumber" name="L387" href="#L387">387</a> <em class="jxr_javadoccomment">     * @param breadcrumb The full field path on which the transformation should be applied</em>
+<a class="jxr_linenumber" name="L388" href="#L388">388</a> <em class="jxr_javadoccomment">     * @param &lt;K&gt; the target object type</em>
+<a class="jxr_linenumber" name="L389" href="#L389">389</a> <em class="jxr_javadoccomment">     * @return the field value</em>
+<a class="jxr_linenumber" name="L390" href="#L390">390</a> <em class="jxr_javadoccomment">     * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value</em>
+<a class="jxr_linenumber" name="L391" href="#L391">391</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L392" href="#L392">392</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a class="jxr_linenumber" name="L393" href="#L393">393</a>     <strong class="jxr_keyword">private</strong> &lt;K&gt; Object getFieldValue(<strong class="jxr_keyword">final</strong> Class&lt;K&gt; targetClass, <strong class="jxr_keyword">final</strong> Field field, <strong class="jxr_keyword">final</strong> Object fieldValue, <strong class="jxr_keyword">final</strong> String breadcrumb) {
+<a class="jxr_linenumber" name="L394" href="#L394">394</a>         <strong class="jxr_keyword">return</strong> getPopulator(field.getType(), fieldValue.getClass(), <strong class="jxr_keyword">this</strong>)
+<a class="jxr_linenumber" name="L395" href="#L395">395</a>                 .map(populator -&gt; populator.getPopulatedObject(targetClass, field.getName(), fieldValue))
+<a class="jxr_linenumber" name="L396" href="#L396">396</a>                 .orElseGet(() -&gt;
+<a class="jxr_linenumber" name="L397" href="#L397">397</a>                         <em class="jxr_comment">// recursively inject object</em>
+<a class="jxr_linenumber" name="L398" href="#L398">398</a>                         transform(fieldValue, field.getType(), breadcrumb)
+<a class="jxr_linenumber" name="L399" href="#L399">399</a>                 );
+<a class="jxr_linenumber" name="L400" href="#L400">400</a>     }
+<a class="jxr_linenumber" name="L401" href="#L401">401</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2019 <a href="http://hotels.com">Hotels.com (Data Platform Team)</a>. All rights reserved.</div>
