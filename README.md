@@ -394,7 +394,7 @@ List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
                 .collect(Collectors.toList());
 ~~~
 
-### Disable Java Beans validation:
+### Enable Java Beans validation:
 
 Assuming that the field: `id` in the fromBean instance is null.
 ~~~Java
@@ -407,10 +407,10 @@ public class FromBean {                                     public class ToBean 
    // getters...                                               // getters and setters...
 }                                                            }
 ~~~
-adding the following configuration no exception will be thrown:
+adding the following configuration an exception will be thrown:
 ~~~Java
 ToBean toBean = beanUtils.getTransformer()
-                     .setValidationDisabled(true)
+                     .setValidationEnabled(true)
                      .transform(fromBean, ToBean.class);
 ~~~
 
