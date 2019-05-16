@@ -1,0 +1,85 @@
+Sonar build:
+mvn clean install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=borriello-fabio-bitbucket -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=a7172540aa78055143a6fdfc793d6eaf1091be7b -Dsonar.branch.name=feature/performance-tuning
+* GitHub site build
+mvn site
+
+** Gitter webhook
+https://webhooks.gitter.im/e/0984df55c367fefe8e2c
+
+bamboo build bkp:
+clean deploy -DforceTags -DpushImageTag -DdeployAtEnd -Pbuild-all,docker -Dshortname=${bamboo.inject.shortname} -DreleaseVersion=${bamboo.inject.releaseVersion} -Dbuildnumber=${bamboo.buildNumber}  -Dbranch=${bamboo.repository.branch.name} -Dbuild.number=${bamboo.buildNumber} -Dtimestamp=${bamboo.buildTimeStamp} -Drelease.date=${bamboo.buildTimeStamp} -Dbuildlabel=${bamboo.inject.shortname}.${bamboo.inject.releaseVersion}.${bamboo.buildNumber}
+new build:
+clean deploy sonar:sonar -Dsonar.projectKey=${bamboo.shortname} -Dsonar.organization=${bamboo.sonar.organization} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${bamboo.sonarcloud.token.password} -DforceTags -DpushImageTag -DdeployAtEnd -Pbuild-all,docker -Dshortname=${bamboo.inject.shortname} -DreleaseVersion=${bamboo.inject.releaseVersion} -Dbuildnumber=${bamboo.buildNumber}  -Dbranch=${bamboo.repository.branch.name} -Dbuild.number=${bamboo.buildNumber} -Dtimestamp=${bamboo.buildTimeStamp} -Drelease.date=${bamboo.buildTimeStamp} -Dbuildlabel=${bamboo.inject.shortname}.${bamboo.inject.releaseVersion}.${bamboo.buildNumber}
+clean deploy sonar:sonar -Dsonar.projectKey=${sonar.projectKey} -Dsonar.organization=${sonar.organization} -Dsonar.host.url=${sonar.host.url} -Dsonar.login=${sonar.token}
+-DforceTags -DpushImageTag -DdeployAtEnd -Pbuild-all,docker -Dshortname=${bamboo.inject.shortname} -DreleaseVersion=${bamboo.inject.releaseVersion} -Dbuildnumber=${bamboo.buildNumber}  -Dbranch=${bamboo.repository.branch.name} -Dbuild.number=${bamboo.buildNumber} -Dtimestamp=${bamboo.buildTimeStamp} -Drelease.date=${bamboo.buildTimeStamp} -Dbuildlabel=${bamboo.inject.shortname}.${bamboo.inject.releaseVersion}.${bamboo.buildNumber}
+
+bamboo site build bkp:
+clean install site:site site:deploy -U -DskipTests=true -DskipDocker=true -Pdocs
+bamboo site build new:
+clean install site --settings config/bamboo/mvn-settings.xml -U -DskipTests=true -DskipDocker=true
+
+mvn clean deploy --settings config/travis/mvn-settings.xml -DforceTags -DpushImageTag -DdeployAtEnd -Dshortname=BULL -DreleaseVersion=1.0.4 -Dbuildnumber=1.0.4 -Dbuild.number=1.0.4 -Dbuildlabel=bean-utils.library.1.0.4
+
+clean deploy --settings config/bamboo/mvn-settings.xml -DforceTags -DpushImageTag -DdeployAtEnd -Pdocker -Dshortname=${bamboo.inject.shortname} -DreleaseVersion=${bamboo.inject.releaseVersion} -Dbuildnumber=${bamboo.buildNumber}  -Dbranch=${bamboo.repository.branch.name} -Dbuild.number=${bamboo.buildNumber} -Dtimestamp=${bamboo.buildTimeStamp} -Drelease.date=${bamboo.buildTimeStamp} -Dbuildlabel=${bamboo.inject.shortname}.${bamboo.inject.releaseVersion}.${bamboo.buildNumber}
+
+
+Travis release:
+    - stage: "Release"
+      name: "Releasing artifacts on Maven central"
+      #      if: branch = master
+      jdk: oraclejdk8
+      script: mvn versions:set -DnewVersion=${TRAVIS_TAG} && mvn clean deploy -DforceTags -DpushImageTag -B -U -P -DskipTests=true release --settings config/travis/mvn-settings.xml
+      on:
+        tags: true
+#    - stage: "Release"
+#      name: "Releasing artifacts on Maven central"
+#      "https://blog.travis-ci.com/2017-03-30-deploy-maven-travis-ci-packagecloud/"
+#deploy:
+#  provider: script
+#    script: "mvn versions:set -DnewVersion=${TRAVIS_TAG} && mvn clean deploy -B -U -P release --settings travis/settings.xml"
+#    on:
+#      tags: true
+
+maven release samples:
+
+Hi guys, did, anyone of you, configured the artifact release on sonatype through travis? if yes, do you have any guide i can follow?
+6 replies
+
+Nikos Katirtzis   [3 hours ago]
+@v-fborriello Had the same question for our Pitchfork project: https://github.com/HotelsDotCom/pitchfork/issues/27
+
+I believe something like https://jakob.soy/blog/2016/maven-central-and-travis/ or https://notbarjo.blogspot.com/2014/09/travis-ci-maven-deploy.html would work but haven’t tried yet.
+notbarjo.blogspot.com
+Travis Ci & Maven deploy
+A blog about programming, system and so on.
+nikos912000
+#27 [Feature Request] Configure Travis CI to deploy maven artifact
+In addition to building/pushing the Docker image to DockerHub it'd be good to automate deploys of Maven artifacts. There are many examples on how to do this (e.g. here).
+
+We can use Jobs and Stages or Matrixes where we first build while Docker/Maven deploys take place on tag push.
+Also check here.
+HotelsDotCom/pitchforkJan 27thAdded by GitHub
+
+Fabio Borriello   [3 hours ago]
+thank you so much
+
+Nikos Katirtzis   [3 hours ago]
+No probs. Let me know if it works :slightly_smiling_face:
+
+Adrian Woodhead   [3 hours ago]
+we tried to set this all up for one of ourprojects from Travis a while back, here are our notes: https://confluence.expedia.biz/display/HOS/Travis-CI+and+Coveralls+for+Open+Source+projects
+
+Adrian Woodhead   [3 hours ago]
+I may have shared this before but here is another open source project that we're involvedin that does it from Trvis: https://github.com/klarna/HiveRunner/blob/master/RELEASING.md
+RELEASING.md
+```# Releasing HiveRunner to Maven Central
+
+## Deployment to Sonatype OSSRH using Maven and Travis CI
+
+HiveRunner has been setup to build continuously on a travis-ci.org build server as well as prepared to be manually released from a travis-ci.org buildserver to Maven central.```
+ Show more
+klarna/HiveRunnerAdded by GitHub
+
+
+Nikos Katirtzis   [1 hour ago]
+Thanks Adrian, helps a lot
