@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.1.17] TBD
+### [1.1.17] 2019.05.13
 #### Changes
-* **Modified project behaviour**, since this version the **"Bean Validation" is disabled by default**, to enable it, the following instruction needs to be executed: `transformer.setValidationEnabled(true);`
+* **Modified project behaviour:** since this version the **"Bean Validation" is disabled by default**, to enable it, the following instruction needs to be executed: `transformer.setValidationEnabled(true);`
 
 ### [1.1.16] 2019.05.11
 ### Added

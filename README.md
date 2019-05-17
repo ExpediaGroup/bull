@@ -12,7 +12,7 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bean-utils-library/badge.svg?subject=maven-central)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bean-utils-library)
 [![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bean-utils-library.svg)](http://www.javadoc.io/doc/com.hotels.beans/bean-utils-library)
 [![Build Status](https://travis-ci.org/HotelsDotCom/bull.svg?branch=master)](https://travis-ci.org/HotelsDotCom/bull)
-[![Join the chat at https://bull-crew.slack.com](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://bull-crew.slack.com/messages/CJ0NTGF2N/details)
+[![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWQxOWZiYjAwOThlY2FmNjYxZDY1ZDNlZTdlNTZlY2Y2YmE0MjcxMzNjZjNjOTY3OWJkNzdmM2ViNmQ2NjUyNDE](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWQxOWZiYjAwOThlY2FmNjYxZDY1ZDNlZTdlNTZlY2Y2YmE0MjcxMzNjZjNjOTY3OWJkNzdmM2ViNmQ2NjUyNDE)
 
 [![GitHub site](https://img.shields.io/badge/GitHub-site-blue.svg)](https://hotelsdotcom.github.io/bull/)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=coverage)](https://sonarcloud.io/dashboard?id=BULL)
@@ -295,10 +295,10 @@ public class FromBean {                                     public class ToBean 
 ~~~
 and
 ~~~Java
-public class FromSubBean {                                  public class ToSubBean {                           
-   private final String name;                                  private final String name;                   
-   private final long index;                                   private final long index;                    
-}                                                           }
+public class ToSubBean {                           
+   private final String name;                   
+   private final long index;                    
+}
 ~~~
 Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as 
 follow:
@@ -307,6 +307,36 @@ FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("neste
 ToBean toBean = beanUtils.getTransformer()
                     .withFieldTransformer(nameTransformer)
                     .transform(fromBean, ToBean.class);
+~~~
+
+### Map a primitive type field in the source object into a nested object:
+
+This example shows of to map a primitive field into a nested object into the destination one.
+
+Given:
+
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  private final String name;                   
+   private final FromSubBean nestedObject;                     private final ToSubBean nestedObject;                    
+   private final int x;
+   // all args constructor                                     // all args constructor
+   // getters...                                               // getters...
+}                                                           }
+~~~
+and
+~~~Java
+public class ToSubBean {                           
+   private final int x;
+   
+   // all args constructor
+}  // getters...          
+~~~
+Assuming that the value `x` should be mapped into field: `x` contained into the `ToSubBean` object, the field mapping has to be defined as 
+follow:
+~~~Java
+ToBean toBean = beanUtils.getTransformer()
+                    .withFieldMapping(new FieldMapping("x", "nestedObject.x"));
 ~~~
 
 ### Apply a transformation function on all fields matching with the given one:
@@ -364,7 +394,7 @@ List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
                 .collect(Collectors.toList());
 ~~~
 
-### Disable Java Beans validation:
+### Enable Java Beans validation:
 
 Assuming that the field: `id` in the fromBean instance is null.
 ~~~Java
@@ -377,10 +407,10 @@ public class FromBean {                                     public class ToBean 
    // getters...                                               // getters and setters...
 }                                                            }
 ~~~
-adding the following configuration no exception will be thrown:
+adding the following configuration an exception will be thrown:
 ~~~Java
 ToBean toBean = beanUtils.getTransformer()
-                     .setValidationDisabled(true)
+                     .setValidationEnabled(true)
                      .transform(fromBean, ToBean.class);
 ~~~
 
@@ -501,11 +531,11 @@ Let's have a look to the performance library performance. The test has been exec
 
 | | **Mutable**      | **Immutable** | **Mixed**       |
 | :----------- | :-----------: | :-----------: | :-----------: |
-| Simple objects (without nested objects) | ~0.05ms | ~0.034ms | NA |
-| Complex objects (containing several nested object and several items in Map and Array objects) | ~0.38ms | ~0.21ms | ~0.22ms | 
+| Simple objects (without nested objects) | ~0.011ms | ~0.018ms | NA |
+| Complex objects (containing several nested object and several items in Map and Array objects) | ~0.37ms | ~0.21ms | ~0.22ms | 
 | CPU/Heap usage | [~0.2%/35 MB](docs/site/resources/images/stats/performance/mutableObject/jvmStats.jpg) | [~0.2%/30 MB](docs/site/resources/images/stats/performance/immutableObject/jvmStats.jpg) | [~0.2%/25 MB](docs/site/resources/images/stats/performance/mixedObject/jvmStats.jpg) |
 
-Transformation time [screenshot](docs/site/resources/images/stats/performance/transformationTime.jpg)
+Transformation time [screenshot](docs/site/resources/images/stats/performance/transformationTime.png)
 
 #### Real case testing
 
