@@ -291,7 +291,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * @param targetObjectClass the target object class
      * @param isNameFieldEmpty true if the name field should contain a value, false otherwise
      */
-    @Test(dataProvider = "dataCAdvancedFieldsCopyTesting")
+    @Test(dataProvider = "dataAdvancedFieldsCopyTesting")
     public void testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied(final String testCaseDescription, final FromFooAdvFields sourceObject,
         final Class<?> targetObjectClass, final boolean isNameFieldEmpty) {
         //GIVEN
