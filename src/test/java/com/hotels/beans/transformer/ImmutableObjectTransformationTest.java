@@ -319,7 +319,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * @throws CloneNotSupportedException if the clone fails
      */
     @DataProvider(parallel = true)
-    private Object[][] dataCAdvancedFieldsCopyTesting() throws CloneNotSupportedException {
+    private Object[][] dataAdvancedFieldsCopyTesting() throws CloneNotSupportedException {
         FromFooAdvFields emptyOptionalSourceObject = fromFooAdvFields.clone();
         emptyOptionalSourceObject.setName(Optional.empty());
         return new Object[][] {
