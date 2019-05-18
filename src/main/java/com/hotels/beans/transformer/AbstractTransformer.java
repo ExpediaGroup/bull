@@ -16,6 +16,7 @@
 
 package com.hotels.beans.transformer;
 
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static java.util.Arrays.asList;
 
 import static com.hotels.beans.validator.Validator.notNull;
@@ -24,7 +25,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 import com.hotels.beans.cache.CacheManager;
-import com.hotels.beans.cache.CacheManagerFactory;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.utils.ClassUtils;
@@ -70,7 +70,7 @@ abstract class AbstractTransformer implements Transformer {
         this.classUtils = new ClassUtils();
         this.validator = new ValidatorImpl();
         this.settings = new TransformerSettings();
-        this.cacheManager = CacheManagerFactory.getCacheManager("transformer");
+        this.cacheManager = getCacheManager("transformer");
     }
 
     /**
