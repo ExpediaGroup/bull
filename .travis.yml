@@ -18,20 +18,13 @@ jobs:
     # If the branch is not master it just builds the application
     - stage: "Build"
       name: "Build and Test"
-      if: tag IS blank
       install: travis_retry mvn clean install
-    - stage: "Build, Test and Quality Check"
-      name: "Building, testing and performing quality check"
-      if: branch = master AND type NOT IN (pull_request) AND tag IS present
-      before_install:
-        - mvn versions:set -D newVersion=${TRAVIS_TAG}
-      install: travis_retry mvn clean install -B sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token}
-    - stage: "Site Build and Publish"
-      name: "Building site and publishing on GitHub pages"
+    - stage: "Site Build and Quality check"
+      name: "Publishing site and performing a code quality check"
       if: type NOT IN (pull_request) AND tag IS present
       before_deploy:
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
-        - travis_retry mvn install site:site -Dmaven.test.skip=true -B
+        - travis_retry mvn install sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} site:site -Dmaven.test.skip=true -B
       deploy:
         provider: pages
         local-dir: target/site
