@@ -21,7 +21,6 @@ import static java.lang.invoke.MethodHandles.lookup;
 import static java.lang.invoke.MethodHandles.privateLookupIn;
 import static java.lang.invoke.MethodType.methodType;
 import static java.lang.reflect.Modifier.isPublic;
-import static java.util.Objects.isNull;
 
 import static org.apache.commons.lang3.StringUtils.capitalize;
 
@@ -404,13 +403,12 @@ public final class ReflectionUtils {
      */
     public MapType getMapGenericType(final Type fieldType, final String declaringClass, final String fieldName) {
         final Class<?> fieldClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);
-        if (isNull(fieldClass) || !Map.class.isAssignableFrom(fieldClass)) {
-            throw new IllegalArgumentException(
-                    "Type for object: " + fieldName + " is invalid. "
-                            + "It cannot be assigned from: " + Map.class.getName() + ".");
-        }
         final String cacheKey = "MapGenericFieldType-" + fieldClass.getName() + '-' + fieldName;
         return CACHE_MANAGER.getFromCache(cacheKey, MapType.class).orElseGet(() -> {
+            if (!Map.class.isAssignableFrom(fieldClass)) {
+                throw new IllegalArgumentException("Type for object: " + fieldName + " is invalid. "
+                                + "It cannot be assigned from: " + Map.class.getName() + ".");
+            }
             final ParameterizedType genericType = (ParameterizedType) fieldType;
             final MapElemType keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);
             final MapElemType elemType = getMapElemType(genericType.getActualTypeArguments()[1], declaringClass, fieldName);
