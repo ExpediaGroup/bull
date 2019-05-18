@@ -16,10 +16,10 @@
 
 package com.hotels.beans.transformer;
 
-import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static java.util.Arrays.asList;
 
 import static com.hotels.beans.validator.Validator.notNull;
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 
 import java.util.Map;
 import java.util.function.Function;
