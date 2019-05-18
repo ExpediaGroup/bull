@@ -27,7 +27,7 @@ ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
 
 ### Different field names copy:
 
-From class and To class with custom annotation usage and different field names:
+From class and To class with different field names:
 ~~~Java
 public class FromBean {                                     public class ToBean {                           
                                                                                        
@@ -235,7 +235,7 @@ ToBean toBean = beanUtils.getTransformer()
 
 ### Map a primitive type field in the source object into a nested object:
 
-This example shows of to map a primitive field into a nested object into the destination one.
+This example shows how to map a primitive field into a nested object into the destination one.
 
 Given:
 
@@ -265,7 +265,7 @@ ToBean toBean = beanUtils.getTransformer()
 
 ### Apply a transformation function on all fields matching with the given one:
 
-This example shows of a lambda transformation function can be applied on all fields matching with the given one independently from their position.
+This example shows how a lambda transformation function can be applied on all fields matching with the given one independently from their position.
 
 Given:
 

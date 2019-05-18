@@ -31,7 +31,7 @@ You can obtain BULL from Maven Central:
 
 **The project provides two different builds**, one compatible with `jdk 8` (or above) and one with `jdk 11` or above.
 
-In case you need to integrate it in a `jdk 8` (or above project) please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md) file or to [CHANGELOG](CHANGELOG.md) otherwise .
+In case you need to integrate it in a `jdk 8` (or above project) please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md) file or to [CHANGELOG](CHANGELOG.md) otherwise.
 
 ## Maven build
 
@@ -103,7 +103,7 @@ ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
 
 ### Different field names copy:
 
-From class and To class with custom annotation usage and different field names:
+From class and To class with different field names:
 ~~~Java
 public class FromBean {                                     public class ToBean {                           
                                                                                        
@@ -311,7 +311,7 @@ ToBean toBean = beanUtils.getTransformer()
 
 ### Map a primitive type field in the source object into a nested object:
 
-This example shows of to map a primitive field into a nested object into the destination one.
+This example shows how to map a primitive field into a nested object into the destination one.
 
 Given:
 
@@ -341,7 +341,7 @@ ToBean toBean = beanUtils.getTransformer()
 
 ### Apply a transformation function on all fields matching with the given one:
 
-This example shows of a lambda transformation function can be applied on all fields matching with the given one independently from their position.
+This example shows how a lambda transformation function can be applied on all fields matching with the given one independently from their position.
 
 Given:
 
@@ -364,7 +364,8 @@ public class FromSubBean {                                  public class ToSubBe
    // getters...                                               // getters...
 }                                                           }
 ~~~
-Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as 
+Assuming that the lambda transformation function should be applied only to the field: `name` contained in the `ToSubBean` object, the transformation function has to be defined
+ as 
 follow:
 ~~~Java
 FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("name", StringUtils::capitalize);
@@ -467,8 +468,8 @@ where `nestedObject` is the name of the field in the destination object.
 This feature allows to **transform an object keeping the data from different sources**.
 
 To better explain this function let's assume that the `ToBean` (defined above) should be transformed as follow:
-- `name` field value has be taken from the `FromBean` object
-- `nestedObject` field value has be taken from the `FromBean2` object
+- `name` field value has been taken from the `FromBean` object
+- `nestedObject` field value has been taken from the `FromBean2` object
 
 the objective can be reached by doing:
 ~~~Java
