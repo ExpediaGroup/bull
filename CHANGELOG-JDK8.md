@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.18] 2019.05.18
+#### Changes
+* Removed deprecated method: `setValidationDisabled`
+* Updated dependencies
+
 ### [1.1.17] 2019.05.13
 #### Changes
 * **Modified project behaviour:** since this version the **"Bean Validation" is disabled by default**, to enable it, the following instruction needs to be executed: `transformer.setValidationEnabled(true);`
