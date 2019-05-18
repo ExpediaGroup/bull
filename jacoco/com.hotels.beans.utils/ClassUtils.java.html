@@ -159,7 +159,7 @@ public final class ClassUtils {
 <span class="fc" id="L159">        final String cacheKey = &quot;isSpecial-&quot; + clazz.getName();</span>
 <span class="fc" id="L160">        return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
 <span class="pc bpc" id="L161" title="1 of 6 branches missed.">            final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || Temporal.class.isAssignableFrom(clazz)</span>
-<span class="pc bpc" id="L162" title="2 of 4 branches missed.">                    || clazz.isSynthetic() || clazz.isAnonymousClass();</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">                    || clazz.isSynthetic();</span>
 <span class="fc" id="L163">            CACHE_MANAGER.cacheObject(cacheKey, res);</span>
 <span class="fc" id="L164">            return res;</span>
         });

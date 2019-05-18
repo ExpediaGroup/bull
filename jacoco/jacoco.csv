@@ -1,13 +1,13 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-BULL - Bean Utils Light Library,com.hotels.beans.transformer,AbstractTransformer,0,184,0,8,0,45,0,19,0,15
+BULL - Bean Utils Light Library,com.hotels.beans.transformer,AbstractTransformer,0,174,0,6,0,43,0,17,0,14
 BULL - Bean Utils Light Library,com.hotels.beans.transformer,TransformerSettings,0,48,0,0,0,10,0,10,0,10
 BULL - Bean Utils Light Library,com.hotels.beans.transformer,TransformerImpl,28,577,8,44,5,107,6,50,0,30
 BULL - Bean Utils Light Library,com.hotels.beans.constant,MethodPrefix,0,38,0,0,0,5,0,2,0,2
 BULL - Bean Utils Light Library,com.hotels.beans.constant,Punctuation,0,70,0,0,0,7,0,3,0,3
 BULL - Bean Utils Light Library,com.hotels.beans.constant,Filters,0,40,1,7,0,8,1,7,0,4
 BULL - Bean Utils Light Library,com.hotels.beans.constant,ClassType,0,41,0,2,0,5,0,3,0,2
-BULL - Bean Utils Light Library,com.hotels.beans.utils,ReflectionUtils,83,800,6,50,23,162,6,60,0,38
-BULL - Bean Utils Light Library,com.hotels.beans.utils,ClassUtils,0,1234,9,87,0,213,9,110,0,71
+BULL - Bean Utils Light Library,com.hotels.beans.utils,ReflectionUtils,83,798,5,49,23,162,5,60,0,38
+BULL - Bean Utils Light Library,com.hotels.beans.utils,ClassUtils,0,1231,8,86,0,213,8,110,0,71
 BULL - Bean Utils Light Library,com.hotels.beans.validator,ValidatorImpl,0,67,0,2,0,19,0,6,0,5
 BULL - Bean Utils Light Library,com.hotels.beans.validator,Validator,0,17,0,4,0,6,0,4,0,2
 BULL - Bean Utils Light Library,com.hotels.beans.error,MissingMethodException,0,7,0,0,0,4,0,2,0,2

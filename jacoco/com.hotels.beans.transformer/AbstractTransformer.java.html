@@ -19,12 +19,12 @@ package com.hotels.beans.transformer;
 import static java.util.Arrays.asList;
 
 import static com.hotels.beans.validator.Validator.notNull;
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 
 import java.util.Map;
 import java.util.function.Function;
 
 import com.hotels.beans.cache.CacheManager;
-import com.hotels.beans.cache.CacheManagerFactory;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.utils.ClassUtils;
@@ -70,7 +70,7 @@ abstract class AbstractTransformer implements Transformer {
 <span class="fc" id="L70">        this.classUtils = new ClassUtils();</span>
 <span class="fc" id="L71">        this.validator = new ValidatorImpl();</span>
 <span class="fc" id="L72">        this.settings = new TransformerSettings();</span>
-<span class="fc" id="L73">        this.cacheManager = CacheManagerFactory.getCacheManager(&quot;transformer&quot;);</span>
+<span class="fc" id="L73">        this.cacheManager = getCacheManager(&quot;transformer&quot;);</span>
 <span class="fc" id="L74">    }</span>
 
     /**
@@ -163,19 +163,10 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
-    public Transformer setValidationDisabled(final boolean validationDisabled) {
-<span class="fc bfc" id="L167" title="All 2 branches covered.">        settings.setValidationEnabled(!validationDisabled);</span>
-<span class="fc" id="L168">        return this;</span>
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public final &lt;T, K&gt; K transform(final T sourceObj, final Class&lt;? extends K&gt; targetClass) {
-<span class="fc" id="L176">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
-<span class="fc" id="L177">        notNull(targetClass, &quot;The destination class cannot be null!&quot;);</span>
-<span class="fc" id="L178">        return transform(sourceObj, targetClass, null);</span>
+<span class="fc" id="L167">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
+<span class="fc" id="L168">        notNull(targetClass, &quot;The destination class cannot be null!&quot;);</span>
+<span class="fc" id="L169">        return transform(sourceObj, targetClass, null);</span>
     }
 
     /**
@@ -194,26 +185,26 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final &lt;T, K&gt; void transform(final T sourceObj, final K targetObject) {
-<span class="fc" id="L197">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
-<span class="fc" id="L198">        notNull(targetObject, &quot;The destination object cannot be null!&quot;);</span>
-<span class="fc" id="L199">        transform(sourceObj, targetObject, null);</span>
-<span class="fc" id="L200">    }</span>
+<span class="fc" id="L188">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
+<span class="fc" id="L189">        notNull(targetObject, &quot;The destination object cannot be null!&quot;);</span>
+<span class="fc" id="L190">        transform(sourceObj, targetObject, null);</span>
+<span class="fc" id="L191">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Transformer skipTransformationForField(final String... fieldName) {
-<span class="fc bfc" id="L207" title="All 2 branches covered.">        if (fieldName.length != 0) {</span>
-<span class="fc" id="L208">            settings.getFieldsToSkip().addAll(asList(fieldName));</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">        if (fieldName.length != 0) {</span>
+<span class="fc" id="L199">            settings.getFieldsToSkip().addAll(asList(fieldName));</span>
         }
-<span class="fc" id="L210">        return this;</span>
+<span class="fc" id="L201">        return this;</span>
     }
 
     @Override
     public void resetFieldsTransformationSkip() {
-<span class="fc" id="L215">        settings.getFieldsToSkip().clear();</span>
-<span class="fc" id="L216">    }</span>
+<span class="fc" id="L206">        settings.getFieldsToSkip().clear();</span>
+<span class="fc" id="L207">    }</span>
 
     /**
      * Copies all properties from an object to a new one.

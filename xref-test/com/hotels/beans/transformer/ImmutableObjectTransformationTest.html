@@ -299,7 +299,7 @@
 <a class="jxr_linenumber" name="L291" href="#L291">291</a> <em class="jxr_javadoccomment">     * @param targetObjectClass the target object class</em>
 <a class="jxr_linenumber" name="L292" href="#L292">292</a> <em class="jxr_javadoccomment">     * @param isNameFieldEmpty true if the name field should contain a value, false otherwise</em>
 <a class="jxr_linenumber" name="L293" href="#L293">293</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L294" href="#L294">294</a>     @Test(dataProvider = <span class="jxr_string">"dataCAdvancedFieldsCopyTesting"</span>)
+<a class="jxr_linenumber" name="L294" href="#L294">294</a>     @Test(dataProvider = <span class="jxr_string">"dataAdvancedFieldsCopyTesting"</span>)
 <a class="jxr_linenumber" name="L295" href="#L295">295</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied(<strong class="jxr_keyword">final</strong> String testCaseDescription, <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/sample/FromFooAdvFields.html">FromFooAdvFields</a> sourceObject,
 <a class="jxr_linenumber" name="L296" href="#L296">296</a>         <strong class="jxr_keyword">final</strong> Class&lt;?&gt; targetObjectClass, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> isNameFieldEmpty) {
 <a class="jxr_linenumber" name="L297" href="#L297">297</a>         <em class="jxr_comment">//GIVEN</em>
@@ -327,7 +327,7 @@
 <a class="jxr_linenumber" name="L319" href="#L319">319</a> <em class="jxr_javadoccomment">     * @throws CloneNotSupportedException if the clone fails</em>
 <a class="jxr_linenumber" name="L320" href="#L320">320</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L321" href="#L321">321</a>     @DataProvider(parallel = <strong class="jxr_keyword">true</strong>)
-<a class="jxr_linenumber" name="L322" href="#L322">322</a>     <strong class="jxr_keyword">private</strong> Object[][] dataCAdvancedFieldsCopyTesting() <strong class="jxr_keyword">throws</strong> CloneNotSupportedException {
+<a class="jxr_linenumber" name="L322" href="#L322">322</a>     <strong class="jxr_keyword">private</strong> Object[][] dataAdvancedFieldsCopyTesting() <strong class="jxr_keyword">throws</strong> CloneNotSupportedException {
 <a class="jxr_linenumber" name="L323" href="#L323">323</a>         <a href="../../../../com/hotels/beans/sample/FromFooAdvFields.html">FromFooAdvFields</a> emptyOptionalSourceObject = fromFooAdvFields.clone();
 <a class="jxr_linenumber" name="L324" href="#L324">324</a>         emptyOptionalSourceObject.setName(Optional.empty());
 <a class="jxr_linenumber" name="L325" href="#L325">325</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[][] {
