@@ -148,7 +148,7 @@ public final class ClassUtils {
         final String cacheKey = "isSpecial-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || Temporal.class.isAssignableFrom(clazz)
-                    || clazz.isSynthetic() || clazz.isAnonymousClass();
+                    || clazz.isSynthetic();
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });

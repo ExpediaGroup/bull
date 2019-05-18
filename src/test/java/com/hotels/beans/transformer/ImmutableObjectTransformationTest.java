@@ -291,7 +291,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * @param targetObjectClass the target object class
      * @param isNameFieldEmpty true if the name field should contain a value, false otherwise
      */
-    @Test(dataProvider = "dataCAdvancedFieldsCopyTesting")
+    @Test(dataProvider = "dataAdvancedFieldsCopyTesting")
     public void testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied(final String testCaseDescription, final FromFooAdvFields sourceObject,
         final Class<?> targetObjectClass, final boolean isNameFieldEmpty) {
         //GIVEN
@@ -319,7 +319,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * @throws CloneNotSupportedException if the clone fails
      */
     @DataProvider(parallel = true)
-    private Object[][] dataCAdvancedFieldsCopyTesting() throws CloneNotSupportedException {
+    private Object[][] dataAdvancedFieldsCopyTesting() throws CloneNotSupportedException {
         FromFooAdvFields emptyOptionalSourceObject = fromFooAdvFields.clone();
         emptyOptionalSourceObject.setName(Optional.empty());
         return new Object[][] {

@@ -394,7 +394,7 @@ List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
                 .collect(Collectors.toList());
 ~~~
 
-### Disable Java Beans validation:
+### Enable Java Beans validation:
 
 Assuming that the field: `id` in the fromBean instance is null.
 ~~~Java
@@ -407,10 +407,10 @@ public class FromBean {                                     public class ToBean 
    // getters...                                               // getters and setters...
 }                                                            }
 ~~~
-adding the following configuration no exception will be thrown:
+adding the following configuration an exception will be thrown:
 ~~~Java
 ToBean toBean = beanUtils.getTransformer()
-                     .setValidationDisabled(true)
+                     .setValidationEnabled(true)
                      .transform(fromBean, ToBean.class);
 ~~~
 
@@ -531,11 +531,11 @@ Let's have a look to the performance library performance. The test has been exec
 
 | | **Mutable**      | **Immutable** | **Mixed**       |
 | :----------- | :-----------: | :-----------: | :-----------: |
-| Simple objects (without nested objects) | ~0.05ms | ~0.034ms | NA |
-| Complex objects (containing several nested object and several items in Map and Array objects) | ~0.38ms | ~0.21ms | ~0.22ms | 
+| Simple objects (without nested objects) | ~0.011ms | ~0.018ms | NA |
+| Complex objects (containing several nested object and several items in Map and Array objects) | ~0.37ms | ~0.21ms | ~0.22ms | 
 | CPU/Heap usage | [~0.2%/35 MB](docs/site/resources/images/stats/performance/mutableObject/jvmStats.jpg) | [~0.2%/30 MB](docs/site/resources/images/stats/performance/immutableObject/jvmStats.jpg) | [~0.2%/25 MB](docs/site/resources/images/stats/performance/mixedObject/jvmStats.jpg) |
 
-Transformation time [screenshot](docs/site/resources/images/stats/performance/transformationTime.jpg)
+Transformation time [screenshot](docs/site/resources/images/stats/performance/transformationTime.png)
 
 #### Real case testing
 
