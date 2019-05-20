@@ -24,7 +24,7 @@ jobs:
       if: type NOT IN (pull_request) AND tag IS present
       before_deploy:
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
-        - travis_retry mvn install sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} site:site -Dmaven.test.skip=true -B
+        - travis_retry mvn install sonar:sonar -Dmaven.javadoc.skip=true -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} site:site -Dmaven.test.skip=true javadoc:aggregate -B
       deploy:
         provider: pages
         local-dir: target/site
