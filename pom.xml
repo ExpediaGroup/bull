@@ -6,7 +6,7 @@
     <artifactId>bean-utils-library</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
     <version>1.4.2-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
         This BeanUtils library is a Java Bean to Java Bean transformer that recursively copies data from one object to
@@ -14,12 +14,17 @@
         incredibly fast. It's the only library able to transform Mutable, Immutable and Mixed bean without any custom
         configuration.
     </description>
-
     <parent>
         <groupId>com.hotels</groupId>
         <artifactId>hotels-oss-parent</artifactId>
         <version>4.0.1</version>
     </parent>
+
+    <modules>
+        <module>bull-common</module>
+        <module>bull-converter</module>
+        <module>bull-core</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -148,7 +153,7 @@
             <properties>
                 <checkstyle.check.skip>false</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
-                <jacoco.check.skip>false</jacoco.check.skip>
+                <jacoco.check.skip>true</jacoco.check.skip>
                 <pmd.check.skip>true</pmd.check.skip>
                 <javadoc.skip>false</javadoc.skip>
             </properties>
@@ -212,7 +217,8 @@
 
     <!-- build configuration -->
     <build>
-        <plugins>
+        <pluginManagement>
+            <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -446,6 +452,21 @@
                 </executions>
             </plugin>
         </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-javadoc</id>
+                        <goals>
+                            <goal>aggregate-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
     <reporting>
         <plugins>
@@ -455,6 +476,14 @@
                 <configuration>
                     <show>public</show>
                 </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>aggregate</id>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>
