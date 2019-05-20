@@ -3,12 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>bull-core</artifactId>
+    <artifactId>bean-utils-library</artifactId>
     <packaging>jar</packaging>
 
     <parent>
         <groupId>com.hotels.beans</groupId>
-        <artifactId>bean-utils-library</artifactId>
+        <artifactId>bean-utils-library-parent</artifactId>
         <version>1.4.2-SNAPSHOT</version>
     </parent>
 
@@ -23,10 +23,11 @@
             <artifactId>bull-converter</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- test dependencies -->
+        <dependency>
+            <groupId>com.shazam</groupId>
+            <artifactId>shazamcrest</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-
-    <!-- build configuration -->
-    <build>
-        <finalName>${parent.artifactId}-${project.version}</finalName>
-    </build>
 </project>

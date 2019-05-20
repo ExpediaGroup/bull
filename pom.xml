@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <name>BULL - Bean Utils Light Library</name>
     <groupId>com.hotels.beans</groupId>
-    <artifactId>bean-utils-library</artifactId>
+    <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
     <version>1.4.2-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -23,7 +23,7 @@
     <modules>
         <module>bull-common</module>
         <module>bull-converter</module>
-        <module>bull-core</module>
+        <module>bean-utils-library</module>
     </modules>
 
     <properties>
@@ -33,6 +33,7 @@
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
         <maven.pmd.plugin.version>3.12.0</maven.pmd.plugin.version>
+        <maven.javadoc.plugin.version>3.1.0</maven.javadoc.plugin.version>
         <spring-boot.version>2.1.5.RELEASE</spring-boot.version>
         <lombok.version>1.18.8</lombok.version>
         <apache.commons-lang3.version>3.9</apache.commons-lang3.version>
@@ -77,68 +78,95 @@
         </repository>
     </distributionManagement>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.hotels.beans</groupId>
+                <artifactId>bull-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.commons-lang3.version}</version>
+            </dependency>
+            <!-- validation dependencies -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validation-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>javax.el-api</artifactId>
+                <version>${javax.el-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.web</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>${glassfish.javax.el.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            <!-- test dependencies -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.shazam</groupId>
+                <artifactId>shazamcrest</artifactId>
+                <version>${shazamcrest.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Common dependencies, inherited by all child modules -->
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${apache.commons-lang3.version}</version>
-        </dependency>
-        <!-- validation dependencies -->
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>${validation-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-            <version>${javax.el-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>javax.el</artifactId>
-            <version>${glassfish.javax.el.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate-validator.version}</version>
         </dependency>
         <!-- test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring-boot.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j-api.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.shazam</groupId>
-            <artifactId>shazamcrest</artifactId>
-            <version>${shazamcrest.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${gson.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -153,7 +181,7 @@
             <properties>
                 <checkstyle.check.skip>false</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
-                <jacoco.check.skip>true</jacoco.check.skip>
+                <jacoco.check.skip>false</jacoco.check.skip>
                 <pmd.check.skip>true</pmd.check.skip>
                 <javadoc.skip>false</javadoc.skip>
             </properties>
@@ -217,6 +245,7 @@
 
     <!-- build configuration -->
     <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <pluginManagement>
             <plugins>
             <plugin>
