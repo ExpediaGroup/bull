@@ -55,12 +55,17 @@ public final class ConversionAnalyzer {
      * @param destinationFieldType the destination field class
      * @return an {@link Optional} containing the conversion function (if exists)
      */
+    @SuppressWarnings("unchecked")
     public Optional<Function<?, ?>> getConversionFunction(final Class<?> sourceFieldType, final Class<?> destinationFieldType) {
-        Optional<Function<?, ?>> conversionFunction = empty();
-        if (destinationFieldType != sourceFieldType && classUtils.isPrimitiveType(sourceFieldType) && classUtils.isPrimitiveType(destinationFieldType)) {
-            conversionFunction = getConversionFunction(getConversionProcessor(destinationFieldType), sourceFieldType);
-        }
-        return conversionFunction;
+        final String cacheKey = "ConversionFunction-" + sourceFieldType.getName() + "-" + destinationFieldType.getName();
+        return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
+            Optional<Function<?, ?>> conversionFunction = empty();
+            if (destinationFieldType != sourceFieldType && classUtils.isPrimitiveType(sourceFieldType) && classUtils.isPrimitiveType(destinationFieldType)) {
+                conversionFunction = getConversionFunction(getConversionProcessor(destinationFieldType), sourceFieldType);
+            }
+            CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);
+            return conversionFunction;
+        });
     }
 
     /**
