@@ -21,9 +21,9 @@
     </parent>
 
     <modules>
+        <module>bean-utils-library</module>
         <module>bull-common</module>
         <module>bull-converter</module>
-        <module>bean-utils-library</module>
     </modules>
 
     <properties>
@@ -80,11 +80,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.hotels.beans</groupId>
-                <artifactId>bull-common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
