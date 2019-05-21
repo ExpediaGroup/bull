@@ -17,34 +17,19 @@
 package com.hotels.beans.base;
 
 import static java.lang.Boolean.FALSE;
-import static java.util.Arrays.asList;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Collection;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.mockito.InjectMocks;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import com.hotels.beans.sample.FromFoo;
 
 /**
  * Unit test for {@link Defaults}.
  */
-@RunWith(value = Parameterized.class)
 public class DefaultsTest {
-    /**
-     * The class type.
-     */
-    private final Class<?> type;
-
-    /**
-     * The expected result.
-     */
-    private final Object expectedResult;
-
     /**
      * The class to be tested.
      */
@@ -52,20 +37,12 @@ public class DefaultsTest {
     private Defaults underTest;
 
     /**
-     * All args constructor.
+     * Tests that the method: {@code defaultValue} returns the expected result for the given type.
      * @param type the class type.
      * @param expectedResult the expected result.
      */
-    public DefaultsTest(final Class<?> type, final Object expectedResult) {
-        this.type = type;
-        this.expectedResult = expectedResult;
-    }
-
-    /**
-     * Tests that the method: {@code defaultValue} returns the expected result for the given type.
-     */
-    @Test
-    public void testDefaultValueShouldReturnTheExpectedResult() {
+    @Test(dataProvider = "dataProvider")
+    public void testDefaultValueShouldReturnTheExpectedResult(final Class<?> type, final Object expectedResult) {
         // GIVEN
 
         // WHEN
@@ -79,9 +56,9 @@ public class DefaultsTest {
      * Data provider for the required test cases.
      * @return the test cases.
      */
-    @Parameterized.Parameters(name = "{index}. Type: {0}.")
-    public static Collection<Object[]> dataProvider() {
-      return asList(new Object[][]{
+    @DataProvider
+    private Object[][] dataProvider() {
+      return new Object[][] {
                 {boolean.class, FALSE},
                 {Boolean.class, FALSE},
                 {Character.class, '\u0000'},
@@ -99,6 +76,6 @@ public class DefaultsTest {
                 {Double.class, 0.0D},
                 {double.class, 0.0D},
                 {FromFoo.class, null}
-        });
+      };
     }
 }
