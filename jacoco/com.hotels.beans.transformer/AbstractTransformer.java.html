@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractTransformer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Bean Utils Light Library</a> &gt; <a href="index.source.html" class="el_package">com.hotels.beans.transformer</a> &gt; <span class="el_source">AbstractTransformer.java</span></div><h1>AbstractTransformer.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.beans.transformer;
+
+import static java.util.Arrays.asList;
+
+import static com.hotels.beans.validator.Validator.notNull;
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
+
+import java.util.Map;
+import java.util.function.Function;
+
+import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.model.FieldMapping;
+import com.hotels.beans.model.FieldTransformer;
+import com.hotels.beans.utils.ClassUtils;
+import com.hotels.beans.utils.ReflectionUtils;
+import com.hotels.beans.validator.Validator;
+import com.hotels.beans.validator.ValidatorImpl;
+
+/**
+ * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
+ * Contains all method implementation that will be common to any {@link Transformer} implementation.
+ */
+abstract class AbstractTransformer implements Transformer {
+    /**
+     * Reflection utils instance {@link ReflectionUtils}.
+     */
+    final ReflectionUtils reflectionUtils;
+
+    /**
+     * Class utils instance {@link ClassUtils}.
+     */
+    final ClassUtils classUtils;
+
+    /**
+     * CacheManager instance {@link CacheManager}.
+     */
+    final CacheManager cacheManager;
+
+    /**
+     * Contains both the field name mapping and the lambda function to be applied on fields.
+     */
+    final TransformerSettings settings;
+
+    /**
+     * Bean Validator. It offers the possibility to validate a given Java Bean against a set of defined constraints.
+     */
+    final Validator validator;
+
+    /**
+     * Default constructor.
+     */
+<span class="fc" id="L68">    AbstractTransformer() {</span>
+<span class="fc" id="L69">        this.reflectionUtils = new ReflectionUtils();</span>
+<span class="fc" id="L70">        this.classUtils = new ClassUtils();</span>
+<span class="fc" id="L71">        this.validator = new ValidatorImpl();</span>
+<span class="fc" id="L72">        this.settings = new TransformerSettings();</span>
+<span class="fc" id="L73">        this.cacheManager = getCacheManager(&quot;transformer&quot;);</span>
+<span class="fc" id="L74">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Transformer withFieldMapping(final FieldMapping... fieldMapping) {
+<span class="fc" id="L81">        final Map&lt;String, String&gt; fieldsNameMapping = settings.getFieldsNameMapping();</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (FieldMapping mapping : fieldMapping) {</span>
+<span class="fc" id="L83">            fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());</span>
+        }
+<span class="fc" id="L85">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void removeFieldMapping(final String destFieldName) {
+<span class="fc" id="L93">        notNull(destFieldName, &quot;The field name for which the mapping has to be removed cannot be null!&quot;);</span>
+<span class="fc" id="L94">        settings.getFieldsNameMapping().remove(destFieldName);</span>
+<span class="fc" id="L95">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void resetFieldsMapping() {
+<span class="fc" id="L102">        settings.getFieldsNameMapping().clear();</span>
+<span class="fc" id="L103">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public final Transformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
+<span class="fc" id="L111">        Map&lt;String, Function&lt;Object, Object&gt;&gt; fieldsTransformers = settings.getFieldsTransformers();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        for (FieldTransformer transformer : fieldTransformer) {</span>
+<span class="fc" id="L113">            fieldsTransformers.put(transformer.getDestFieldName(), transformer.getTransformerFunction());</span>
+        }
+<span class="fc" id="L115">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void removeFieldTransformer(final String destFieldName) {
+<span class="fc" id="L123">        notNull(destFieldName, &quot;The field name for which the transformer function has to be removed cannot be null!&quot;);</span>
+<span class="fc" id="L124">        settings.getFieldsTransformers().remove(destFieldName);</span>
+<span class="fc" id="L125">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void resetFieldsTransformer() {
+<span class="fc" id="L132">        settings.getFieldsTransformers().clear();</span>
+<span class="fc" id="L133">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Transformer setDefaultValueForMissingField(final boolean useDefaultValue) {
+<span class="fc" id="L140">        settings.setSetDefaultValue(useDefaultValue);</span>
+<span class="fc" id="L141">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Transformer setFlatFieldNameTransformation(final boolean useFlatTransformation) {
+<span class="fc" id="L149">        settings.setFlatFieldNameTransformation(useFlatTransformation);</span>
+<span class="fc" id="L150">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Transformer setValidationEnabled(final boolean validationEnabled) {
+<span class="fc" id="L158">        settings.setValidationEnabled(validationEnabled);</span>
+<span class="fc" id="L159">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final &lt;T, K&gt; K transform(final T sourceObj, final Class&lt;? extends K&gt; targetClass) {
+<span class="fc" id="L167">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
+<span class="fc" id="L168">        notNull(targetClass, &quot;The destination class cannot be null!&quot;);</span>
+<span class="fc" id="L169">        return transform(sourceObj, targetClass, null);</span>
+    }
+
+    /**
+     * Copies all properties from an object to a new one.
+     * @param sourceObj the source object
+     * @param targetClass the destination object class
+     * @param breadcrumb the full path of the current field starting from his ancestor
+     * @param &lt;T&gt; the Source object type
+     * @param &lt;K&gt; the target object type
+     * @return a copy of the source object into the destination object
+     */
+    protected abstract &lt;T, K&gt; K transform(T sourceObj, Class&lt;? extends K&gt; targetClass, String breadcrumb);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final &lt;T, K&gt; void transform(final T sourceObj, final K targetObject) {
+<span class="fc" id="L188">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
+<span class="fc" id="L189">        notNull(targetObject, &quot;The destination object cannot be null!&quot;);</span>
+<span class="fc" id="L190">        transform(sourceObj, targetObject, null);</span>
+<span class="fc" id="L191">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Transformer skipTransformationForField(final String... fieldName) {
+<span class="fc bfc" id="L198" title="All 2 branches covered.">        if (fieldName.length != 0) {</span>
+<span class="fc" id="L199">            settings.getFieldsToSkip().addAll(asList(fieldName));</span>
+        }
+<span class="fc" id="L201">        return this;</span>
+    }
+
+    @Override
+    public void resetFieldsTransformationSkip() {
+<span class="fc" id="L206">        settings.getFieldsToSkip().clear();</span>
+<span class="fc" id="L207">    }</span>
+
+    /**
+     * Copies all properties from an object to a new one.
+     * @param sourceObj the source object
+     * @param targetObject the destination object
+     * @param breadcrumb the full path of the current field starting from his ancestor
+     * @param &lt;T&gt; the Source object type
+     * @param &lt;K&gt; the target object type
+     */
+    protected abstract &lt;T, K&gt; void transform(T sourceObj, K targetObject, String breadcrumb);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
