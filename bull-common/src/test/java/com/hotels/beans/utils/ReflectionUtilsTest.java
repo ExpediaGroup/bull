@@ -49,8 +49,12 @@ import org.testng.annotations.Test;
 
 import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.error.MissingMethodException;
+import com.hotels.beans.model.ItemType;
+import com.hotels.beans.model.MapElemType;
+import com.hotels.beans.model.MapType;
 import com.hotels.beans.sample.FromFooSubClass;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
+import com.hotels.beans.sample.immutable.ImmutableToSubFoo;
 import com.hotels.beans.sample.mutable.MutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooSimple;
 
@@ -66,6 +70,7 @@ public class ReflectionUtilsTest {
     private static final String EXPECTED_SETTER_METHOD_NAME = "setId";
     private static final String DECLARING_CLASS_NAME = "declaringClassName";
     private static final String INVOKE_METHOD_NAME = "invokeMethod";
+    private static final String VERY_COMPLEX_MAP_FIELD_NAME = "veryComplexMap";
 
     /**
      * The class to be tested.
@@ -300,7 +305,7 @@ public class ReflectionUtilsTest {
     }
 
     /**
-     * Tests that the method {@code invokeMethod} works properly.
+     * Tests that the method {@code getSetterMethodForField} works properly.
      * @throws Exception if something goes wrong.
      */
     @Test
@@ -317,7 +322,7 @@ public class ReflectionUtilsTest {
     }
 
     /**
-     * Tests that the method {@code invokeMethod} raises an {@link InvocationTargetException} if the argument is wrong.
+     * Tests that the method {@code getSetterMethodForField} raises an {@link InvocationTargetException} if the argument is wrong.
      * @throws Exception if something goes wrong.
      */
     @Test(expectedExceptions = InvocationTargetException.class)
@@ -331,7 +336,7 @@ public class ReflectionUtilsTest {
     }
 
     /**
-     * Tests that the method {@code invokeMethod} works properly.
+     * Tests that the method {@code getDeclaredField} works properly.
      */
     @Test
     public void testGetDeclaredFieldWorksProperly() {
@@ -345,7 +350,7 @@ public class ReflectionUtilsTest {
     }
 
     /**
-     * Tests that the method {@code invokeMethod} throws a {@link MissingFieldException} if the field does not exists.
+     * Tests that the method {@code getDeclaredField} throws a {@link MissingFieldException} if the field does not exists.
      */
     @Test(expectedExceptions = MissingFieldException.class)
     public void testGetDeclaredFieldRaisesAnExceptionIfTheFieldDoesNotExists() {
@@ -356,6 +361,66 @@ public class ReflectionUtilsTest {
 
         // THEN
         assertNotNull(actual);
+    }
+
+    /**
+     * Tests that the method {@code getDeclaredFieldType} works properly.
+     */
+    @Test
+    public void testGetDeclaredFieldTypeWorksProperly() {
+        // GIVEN
+
+        // WHEN
+        Class<?> actual = underTest.getDeclaredFieldType(ID_FIELD_NAME, FromFooSubClass.class);
+
+        // THEN
+        assertNotNull(actual);
+    }
+
+    /**
+     * Tests that the method {@code getGenericFieldType} works properly.
+     */
+    @Test
+    public void testGetGenericFieldTypeWorksProperly() {
+        // GIVEN
+        Field field = underTest.getDeclaredField(LIST_FIELD_NAME, ImmutableToFoo.class);
+
+        // WHEN
+        Class<?> actual = underTest.getGenericFieldType(field);
+
+        // THEN
+        assertEquals(String.class, actual);
+    }
+
+    /**
+     * Tests that the method {@code getGenericFieldType} works properly.
+     */
+    @Test
+    public void testMapGenericFieldTypeWorksProperly() {
+        // GIVEN
+        MapElemType keyType = ItemType.builder()
+                .objectClass(String.class)
+                .build();
+        final MapType expectedElemType = new MapType(keyType, keyType);
+        final MapType expectedMapType = new MapType(keyType, expectedElemType);
+        Field field = underTest.getDeclaredField(VERY_COMPLEX_MAP_FIELD_NAME, ImmutableToSubFoo.class);
+
+        // WHEN
+        MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
+        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
+        ItemType actualMapKeyType = (ItemType) actual.getKeyType();
+        ItemType expectedNestedMapKeyType = (ItemType) ((MapType) expectedMapType.getElemType()).getKeyType();
+        ItemType actualNestedMapKeyType = (ItemType) ((MapType) actual.getElemType()).getKeyType();
+        ItemType expectedNestedMapElemType = (ItemType) ((MapType) expectedMapType.getElemType()).getElemType();
+        ItemType actualNestedMapElemType = (ItemType) ((MapType) actual.getElemType()).getElemType();
+
+        // THEN
+        assertEquals(expectedMapKeyType.getObjectClass(), actualMapKeyType.getObjectClass());
+        assertEquals(expectedMapKeyType.getGenericClass(), actualMapKeyType.getGenericClass());
+        assertEquals(expectedNestedMapKeyType.getObjectClass(), actualNestedMapKeyType.getObjectClass());
+        assertEquals(expectedNestedMapKeyType.getGenericClass(), actualNestedMapKeyType.getGenericClass());
+        assertEquals(expectedNestedMapElemType.getObjectClass(), actualNestedMapElemType.getObjectClass());
+        assertEquals(expectedNestedMapElemType.getGenericClass(), actualNestedMapElemType.getGenericClass());
     }
 
     /**
