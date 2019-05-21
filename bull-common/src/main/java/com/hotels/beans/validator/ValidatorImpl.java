@@ -17,6 +17,7 @@
 package com.hotels.beans.validator;
 
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 import static javax.validation.Validation.buildDefaultValidatorFactory;
 
@@ -26,6 +27,7 @@ import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.constant.Punctuation.DOT;
 import static com.hotels.beans.constant.Punctuation.SEMICOLON;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -54,8 +56,30 @@ public class ValidatorImpl implements Validator {
      * {@inheritDoc}
      */
     @Override
+    public final <K> Set<ConstraintViolation<Object>> getConstraintViolations(final K k) {
+        return getValidator().validate(k);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final <K> List<String> getConstraintViolationsMessages(final K k) {
+        return getConstraintViolations(k).stream()
+                .map(cv -> cv.getRootBeanClass().getName()
+                        + DOT.getSymbol()
+                        + cv.getPropertyPath()
+                        + SPACE
+                        + cv.getMessage())
+                .collect(toList());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final <K> void validate(final K k) {
-        final Set<ConstraintViolation<Object>> constraintViolations = getValidator().validate(k);
+        final Set<ConstraintViolation<Object>> constraintViolations = getConstraintViolations(k);
         if (!constraintViolations.isEmpty()) {
             final String errors = constraintViolations.stream()
                     .map(cv -> cv.getRootBeanClass().getName()

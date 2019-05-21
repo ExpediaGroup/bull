@@ -16,12 +16,16 @@
 
 package com.hotels.beans.validator;
 
+import static java.math.BigInteger.ONE;
+import static java.math.BigInteger.ZERO;
 import static java.util.Objects.nonNull;
 
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.testng.Assert.assertEquals;
 
 import java.math.BigInteger;
 import java.util.Collections;
+import java.util.List;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
@@ -88,8 +92,8 @@ public class ValidatorTest {
     }
 
     /**
-     * Creates the parameters to be used for testing tat the method {@code notNull} raises an {@link IllegalArgumentException}.
-     * @return parameters to be used for testing tat the method {@code notNull} raises an {@link IllegalArgumentException}.
+     * Creates the parameters to be used for testing that the method {@code notNull} raises an {@link IllegalArgumentException}.
+     * @return parameters to be used for testing that the method {@code notNull} raises an {@link IllegalArgumentException}.
      */
     @DataProvider
     private Object[][] dataIllegalArgumentExceptionTesting() {
@@ -119,8 +123,8 @@ public class ValidatorTest {
     }
 
     /**
-     * Creates the parameters to be used for testing tat the method {@code notNull} raises an {@link IllegalArgumentException}.
-     * @return parameters to be used for testing tat the method {@code notNull} raises an {@link IllegalArgumentException}.
+     * Creates the parameters to be used for testing that the method {@code notNull} raises an {@link IllegalArgumentException}.
+     * @return parameters to be used for testing that the method {@code notNull} raises an {@link IllegalArgumentException}.
      */
     @DataProvider
     private Object[][] dataNoExceptionAreRaisedTesting() {
@@ -152,6 +156,35 @@ public class ValidatorTest {
 
         //WHEN
         underTest.validate(validBean);
+    }
+
+    /**
+     * Test that the method {@code getConstraintViolationsAsString} returns the exact number of violations.
+     * @param testCaseDescription the test case description
+     * @param elemToCheck the class to validate
+     * @param totalExpectedViolation the exception message
+     */
+    @Test(dataProvider = "dataValidationConstraintsList")
+    public void testGetConstraintViolationsWorksAsExpected(final String testCaseDescription, final Object elemToCheck, final int totalExpectedViolation) {
+        //GIVEN
+
+        //WHEN
+        List<String> actual = underTest.getConstraintViolationsMessages(elemToCheck);
+
+        // THEN
+        assertEquals(totalExpectedViolation, actual.size());
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code getConstraintViolationsAsString} returns the exact number of violations.
+     * @return parameters to be used for testing that the method {@code getConstraintViolationsAsString} returns the exact number of violations.
+     */
+    @DataProvider
+    private Object[][] dataValidationConstraintsList() {
+        return new Object[][] {
+                {"Tests that no constraints violation are returned if the object is valid.", createTestBean(ID), ZERO.intValue()},
+                {"Tests that one constraints violation is returned if the object id is null.", createTestBean(null), ONE.intValue()}
+        };
     }
 
     /**
