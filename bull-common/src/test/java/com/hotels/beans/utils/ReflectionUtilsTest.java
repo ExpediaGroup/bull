@@ -53,6 +53,7 @@ import com.hotels.beans.model.ItemType;
 import com.hotels.beans.model.MapElemType;
 import com.hotels.beans.model.MapType;
 import com.hotels.beans.sample.FromFooSubClass;
+import com.hotels.beans.sample.FromSubFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToSubFoo;
 import com.hotels.beans.sample.mutable.MutableToFoo;
@@ -65,9 +66,11 @@ public class ReflectionUtilsTest {
     private static final String ID_FIELD_NAME = "id";
     private static final String NOT_EXISTING_FIELD_NAME = "notExistingField";
     private static final String LIST_FIELD_NAME = "list";
+    private static final String PHONE_NUMBERS_FIELD_NAME = "phoneNumbers";
     private static final String GETTER_METHOD_PREFIX_METHOD_NAME = "getGetterMethodPrefix";
-    private static final String CHECK_FIELD_NAME = "check";
     private static final String EXPECTED_SETTER_METHOD_NAME = "setId";
+    private static final String GET_FIELD_VALUE_DIRECT_ACCESS_METHOD_NAME = "getFieldValueDirectAccess";
+    private static final String CHECK_FIELD_NAME = "check";
     private static final String DECLARING_CLASS_NAME = "declaringClassName";
     private static final String INVOKE_METHOD_NAME = "invokeMethod";
     private static final String VERY_COMPLEX_MAP_FIELD_NAME = "veryComplexMap";
@@ -87,7 +90,7 @@ public class ReflectionUtilsTest {
     }
 
     /**
-     * Tests that the method {@code getFieldValueDirectAccess} returns the expected value.
+     * Tests that the method {@code getFieldValue} returns the expected value.
      */
     @Test
     public void testGetFieldValueWorksAsExpected() {
@@ -103,19 +106,49 @@ public class ReflectionUtilsTest {
     }
 
     /**
-     * Tests that the method {@code getFieldValueDirectAccess} throws Exception if the field does not exists.
+     * Tests that the method {@code getFieldValue} throws Exception if the field does not exists.
      */
     @Test(expectedExceptions = MissingFieldException.class)
     public void testGetFieldValueThrowsExceptionIfTheFieldDoesNotExists() {
         // GIVEN
         MutableToFoo mutableToFoo = new MutableToFoo();
-        mutableToFoo.setId(ZERO);
 
         // WHEN
-        Object actual = underTest.getFieldValue(mutableToFoo, NOT_EXISTING_FIELD_NAME);
+        underTest.getFieldValue(mutableToFoo, NOT_EXISTING_FIELD_NAME);
+    }
+
+    /**
+     * Tests that the method {@code getFieldValueDirectAccess} returns the expected value.
+     * @throws Exception if an error occurs
+     */
+    @Test
+    public void testGetFieldValueDirectAccessWorksAsExpected() throws Exception {
+        // GIVEN
+        MutableToFoo mutableToFoo = new MutableToFoo();
+        mutableToFoo.setId(ZERO);
+        Method getFieldValueDirectAccessMethod = ReflectionUtils.class.getDeclaredMethod(GET_FIELD_VALUE_DIRECT_ACCESS_METHOD_NAME, Object.class, String.class);
+        getFieldValueDirectAccessMethod.setAccessible(true);
+
+        // WHEN
+        Object actual = getFieldValueDirectAccessMethod.invoke(underTest, mutableToFoo, ID_FIELD_NAME);
 
         // THEN
         assertEquals(ZERO, actual);
+    }
+
+    /**
+     * Tests that the method {@code getFieldValueDirectAccess} throws Exception if the field does not exists.
+     * @throws Exception if an error occurs
+     */
+    @Test(expectedExceptions = java.lang.reflect.InvocationTargetException.class)
+    public void testGetFieldValueDirectAccessThrowsExceptionIfTheFieldDoesNotExists() throws Exception {
+        // GIVEN
+        MutableToFoo mutableToFoo = new MutableToFoo();
+        Method getFieldValueDirectAccessMethod = ReflectionUtils.class.getDeclaredMethod(GET_FIELD_VALUE_DIRECT_ACCESS_METHOD_NAME, Object.class, String.class);
+        getFieldValueDirectAccessMethod.setAccessible(true);
+
+        // WHEN
+       getFieldValueDirectAccessMethod.invoke(underTest, mutableToFoo, NOT_EXISTING_FIELD_NAME);
     }
 
     /**
@@ -390,6 +423,21 @@ public class ReflectionUtilsTest {
 
         // THEN
         assertEquals(String.class, actual);
+    }
+
+    /**
+     * Tests that the method {@code getArrayType} works properly.
+     */
+    @Test
+    public void testGetArrayTypeWorksProperly() {
+        // GIVEN
+        Field phoneNumbersField = underTest.getDeclaredField(PHONE_NUMBERS_FIELD_NAME, FromSubFoo.class);
+
+        // WHEN
+        Class<?> actual = underTest.getArrayType(phoneNumbersField);
+
+        // THEN
+        assertEquals(int.class, actual);
     }
 
     /**
