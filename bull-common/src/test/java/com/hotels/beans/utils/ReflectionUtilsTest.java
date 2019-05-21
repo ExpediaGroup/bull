@@ -52,6 +52,7 @@ import com.hotels.beans.error.MissingMethodException;
 import com.hotels.beans.sample.FromFooSubClass;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFoo;
+import com.hotels.beans.sample.mutable.MutableToFooSimple;
 
 /**
  * Unit tests fro class: {@link ReflectionUtils}.
@@ -216,7 +217,7 @@ public class ReflectionUtilsTest {
     public void testGetFieldAnnotationWorksProperly(final String testCaseDescription, final Class<? extends Annotation> annotationToGet,
         final boolean expectNull) throws NoSuchFieldException {
         // GIVEN
-        Field nameField = ImmutableToFoo.class.getDeclaredField(ID_FIELD_NAME);
+        Field nameField = underTest.getDeclaredField(ID_FIELD_NAME, ImmutableToFoo.class);
 
         // WHEN
         final Annotation actual = underTest.getFieldAnnotation(nameField, annotationToGet);
@@ -327,6 +328,63 @@ public class ReflectionUtilsTest {
 
         // WHEN
         getMethod(INVOKE_METHOD_NAME).invoke(underTest, idSetterMethod, mutableToFoo, new Object[] {ONE});
+    }
+
+    /**
+     * Tests that the method {@code invokeMethod} works properly.
+     */
+    @Test
+    public void testGetDeclaredFieldWorksProperly() {
+        // GIVEN
+
+        // WHEN
+        Field actual = underTest.getDeclaredField(ID_FIELD_NAME, FromFooSubClass.class);
+
+        // THEN
+        assertNotNull(actual);
+    }
+
+    /**
+     * Tests that the method {@code invokeMethod} throws a {@link MissingFieldException} if the field does not exists.
+     */
+    @Test(expectedExceptions = MissingFieldException.class)
+    public void testGetDeclaredFieldRaisesAnExceptionIfTheFieldDoesNotExists() {
+        // GIVEN
+
+        // WHEN
+        Field actual = underTest.getDeclaredField(NOT_EXISTING_FIELD_NAME, FromFooSubClass.class);
+
+        // THEN
+        assertNotNull(actual);
+    }
+
+    /**
+     * Tests that the method {@code setFieldValue} works properly.
+     */
+    @Test
+    public void testSetFieldValueWorksProperly() {
+        // GIVEN
+        MutableToFooSimple mutableToFoo = new MutableToFooSimple();
+        Field idField = underTest.getDeclaredField(ID_FIELD_NAME, mutableToFoo.getClass());
+
+        // WHEN
+        underTest.setFieldValue(mutableToFoo, idField, ONE);
+
+        // THEN
+        assertEquals(ONE, mutableToFoo.getId());
+    }
+
+    /**
+     * Tests that the method {@code setFieldValue} throws an {@link IllegalArgumentException} if the field value is not valid.
+     */
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testSetFieldValueRaiseAnExceptionIfTheValueToSetIsNotValid() {
+        // GIVEN
+        MutableToFooSimple mutableToFoo = new MutableToFooSimple();
+        Field idField = underTest.getDeclaredField(ID_FIELD_NAME, mutableToFoo.getClass());
+
+        // WHEN
+        underTest.setFieldValue(mutableToFoo, idField, Boolean.TRUE);
     }
 
     /**

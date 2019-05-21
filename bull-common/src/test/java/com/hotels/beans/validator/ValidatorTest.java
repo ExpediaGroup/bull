@@ -20,9 +20,16 @@ import static java.util.Objects.nonNull;
 
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.math.BigInteger;
+import java.util.Collections;
+
+import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.beans.sample.mixed.MixedToFoo;
 
 /**
  * Unit test for {@link Validator}.
@@ -34,9 +41,25 @@ public class ValidatorTest {
     private static final String EXCEPTION_MESSAGE = "exception message";
 
     /**
+     * A sample ID.
+     */
+    private static final BigInteger ID = new BigInteger("1234");
+
+    /**
+     * A sample name.
+     */
+    private static final String NAME = "Goofy";
+
+    /**
      * A sample value.
      */
     private static final String VALUE = "val";
+
+    /**
+     * The class to be tested.
+     */
+    @InjectMocks
+    private ValidatorImpl underTest;
 
     /**
      * Initialized mocks.
@@ -105,5 +128,38 @@ public class ValidatorTest {
                 {"Tests that the method does not raise an exception if the given parameter is not null and a description message is defined", VALUE, EXCEPTION_MESSAGE},
                 {"Tests that the method does not raise an exception if the given parameter is not null and a description message is not defined", VALUE, null}
         };
+    }
+
+    /**
+     * Test that an {@link InvalidBeanException} is thrown if the bean is not valid.
+     */
+    @Test(expectedExceptions = InvalidBeanException.class)
+    public void testValidateThrowsExceptionWhenTheBeanIsInvalid() {
+        //GIVEN
+        MixedToFoo validBean = createTestBean(null);
+
+        //WHEN
+        underTest.validate(validBean);
+    }
+
+    /**
+     * Test that no exceptions are thrown if the bean is valid.
+     */
+    @Test
+    public void testValidateDoesNotThrowsExceptionWhenTheBeanIsValid() {
+        //GIVEN
+        MixedToFoo validBean = createTestBean(ID);
+
+        //WHEN
+        underTest.validate(validBean);
+    }
+
+    /**
+     * Creates a test bean.
+     * @param id the id to use
+     * @return a populated {@link MixedToFoo}
+     */
+    private MixedToFoo createTestBean(final BigInteger id) {
+        return new MixedToFoo(id, NAME, Collections.emptyList(), null, null);
     }
 }

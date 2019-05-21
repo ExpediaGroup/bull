@@ -31,7 +31,8 @@ import org.testng.annotations.Test;
  * Unit test for {@link CacheManager}.
  */
 public class CacheManagerTest {
-    private static final String CACHED_VALUE = "cachedValue";
+    private static final String VALUE = "value";
+    private static final String DEFAULT_VALUE = "defaultValue";
     private static final String CACHE_KEY = "cacheKey";
     private static final Class<String> CACHED_OBJECT_CLASS = String.class;
     /**
@@ -53,7 +54,7 @@ public class CacheManagerTest {
     @Test
     public void testCacheObjectStoresTheGivenObjectWithTheGivenKey() {
         // GIVEN
-        underTest.cacheObject(CACHE_KEY, CACHED_VALUE);
+        underTest.cacheObject(CACHE_KEY, VALUE);
 
         // WHEN
         Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
@@ -61,7 +62,24 @@ public class CacheManagerTest {
         // THEN
         assertTrue(actual.isPresent());
         assertEquals(CACHED_OBJECT_CLASS, actual.get().getClass());
-        assertSame(CACHED_VALUE, actual.get());
+        assertSame(VALUE, actual.get());
+    }
+
+    /**
+     * Tests that the method {@code cacheObject} caches the default value if the object is null.
+     */
+    @Test
+    public void testCacheObjectStoresTheDefaultValueIfTheGivenObjectIsNull() {
+        // GIVEN
+        underTest.cacheObject(CACHE_KEY, null, DEFAULT_VALUE);
+
+        // WHEN
+        Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
+
+        // THEN
+        assertTrue(actual.isPresent());
+        assertEquals(CACHED_OBJECT_CLASS, actual.get().getClass());
+        assertSame(DEFAULT_VALUE, actual.get());
     }
 
     /**
@@ -70,7 +88,7 @@ public class CacheManagerTest {
     @Test
     public void testRemoveFromCacheRemovesTheObject() {
         // GIVEN
-        underTest.cacheObject(CACHE_KEY, CACHED_VALUE);
+        underTest.cacheObject(CACHE_KEY, VALUE);
 
         // WHEN
         underTest.removeFromCache(CACHE_KEY);
