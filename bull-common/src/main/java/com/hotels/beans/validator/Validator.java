@@ -18,18 +18,40 @@ package com.hotels.beans.validator;
 
 import static java.util.Objects.isNull;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+
 /**
  * Java Bean validation class.
  * It offers the possibility to validate a given Java Bean against a set of defined constraints.
  */
 public interface Validator {
     /**
-     * Checks if an object is valid.
-     * @param k the object to check
+     * Checks if an object is valid and returns the list of the constraints not met.
      * @param <K> the object class
-     * @throws com.hotels.beans.error.InvalidBeanException {@link com.hotels.beans.error.InvalidBeanException} if the validation fails
+     * @param k the object to check
+     * @return the list of violated constraints.
      */
-    <K> void validate(final K k);
+    <K> Set<ConstraintViolation<Object>> getConstraintViolations(K k);
+
+    /**
+     * Checks if an object is valid and returns the list of the constraints messages not met.
+     * @param <K> the object class
+     * @param k the object to check
+     * @return the list of violated constraints messages.
+     */
+    <K> List<String> getConstraintViolationsMessages(K k);
+
+    /**
+     * Checks if an object is valid.
+     * @param <K> the object class
+     * @param k the object to check
+     * @throws com.hotels.beans.error.InvalidBeanException {@link com.hotels.beans.error.InvalidBeanException} if the validation fails
+     * @return
+     */
+    <K> void validate(K k);
 
     /**
      * Validate that the specified argument is not {@code null};

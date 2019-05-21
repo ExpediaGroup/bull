@@ -23,6 +23,8 @@ import static org.apache.commons.lang3.ArrayUtils.contains;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.lang.annotation.Annotation;
@@ -35,10 +37,12 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import javax.validation.constraints.NotNull;
 
 import org.mockito.InjectMocks;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -57,17 +61,19 @@ import com.hotels.beans.sample.mixed.MixedToFooMissingConstructor;
 import com.hotels.beans.sample.mixed.MixedToFooStaticField;
 import com.hotels.beans.sample.mixed.MixedToFooWithBuilder;
 import com.hotels.beans.sample.mutable.MutableToFoo;
+import com.hotels.beans.sample.mutable.MutableToFooSubClass;
 import com.hotels.beans.sample.mutable.MutableToFooWithBuilder;
 
 /**
  * Unit test for {@link ClassUtils}.
  */
 public class ClassUtilsTest {
-    private static final Class<MutableToFoo> CLASS_WITHOUT_PRIVATE_FINAL_FIELDS = MutableToFoo.class;
+    private static final Class<MutableToFooSubClass> CLASS_WITHOUT_PRIVATE_FINAL_FIELDS = MutableToFooSubClass.class;
     private static final Class<ImmutableToFoo> CLASS_WITH_PRIVATE_FINAL_FIELDS = ImmutableToFoo.class;
     private static final int EXPECTED_PRIVATE_FINAL_FIELDS = 5;
     private static final int EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS = 4;
     private static final Class<MixedToFoo> CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS = MixedToFoo.class;
+    private static final int EXPECTED_MIXED_CLASS_TOTAL_NOT_FINAL_FIELDS = 2;
     private static final int EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_NOT_FINAL_FIELDS = 1;
     private static final Class<MixedToFooStaticField> CLASS_WITH_STATIC_FIELDS = MixedToFooStaticField.class;
     private static final Class<MixedToFooMissingConstructor> CLASS_WITHOUT_CONSTRUCTOR = MixedToFooMissingConstructor.class;
@@ -259,7 +265,39 @@ public class ClassUtilsTest {
     private Object[][] dataGetPrivateFinalFieldsTesting() {
         return new Object[][] {
                 {"Tests that the method returns 0 if the given class has no private final fields", CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, ZERO},
-                {"Tests that the method returns the expected value if the class has private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, EXPECTED_PRIVATE_FINAL_FIELDS}
+                {"Tests that the method returns the expected value if the class has private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, EXPECTED_PRIVATE_FINAL_FIELDS},
+                {"Tests that the method returns the expected value if the class has private final fields and extends another class",
+                        CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, EXPECTED_SUB_CLASS_PRIVATE_FIELDS}
+        };
+    }
+
+    /**
+     * Tests that the method {@code getNotFinalFields} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataGetNotFinalFieldsTesting")
+    public void testGetNotFinalFieldsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final int expectedResult) {
+        // GIVEN
+
+        // WHEN
+        List<Field> actual = underTest.getNotFinalFields(testClass, true);
+
+        // THEN
+        assertEquals(expectedResult, actual.size());
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getNotFinalFields}.
+     * @return parameters to be used for testing the the method {@code getNotFinalFields}.
+     */
+    @DataProvider
+    private Object[][] dataGetNotFinalFieldsTesting() {
+        return new Object[][] {
+                {"Tests that the method returns 0 if the given class has only private fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, ZERO},
+                {"Tests that the method returns the expected value if the class has private final fields",
+                        CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, EXPECTED_MIXED_CLASS_TOTAL_NOT_FINAL_FIELDS}
         };
     }
 
@@ -364,7 +402,9 @@ public class ClassUtilsTest {
                 {"Tests that the method returns the expected total number of fields when the skipStatic param is true", CLASS_WITH_STATIC_FIELDS, true,
                         EXPECTED_NOT_STATIC_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields only", CLASS_WITH_STATIC_FIELDS, false,
-                        CLASS_WITH_STATIC_FIELDS.getDeclaredFields().length}
+                        CLASS_WITH_STATIC_FIELDS.getDeclaredFields().length},
+                {"Tests that the method returns the expected total number of fields when the skipStatic param is true and the class extends another class",
+                        CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, true, EXPECTED_SUB_CLASS_PRIVATE_FIELDS}
         };
     }
 
@@ -411,6 +451,65 @@ public class ClassUtilsTest {
 
         // THEN
         assertNotNull(actual);
+    }
+
+    /**
+     * Tests that the method {@code getNoArgsConstructor} works as expected.
+     */
+    @Test
+    public void testGetNoArgsConstructorWorksAsExpected() {
+        // GIVEN
+
+        // WHEN
+        Supplier<MutableToFooSubClass> actual = underTest.getNoArgsConstructor(CLASS_WITHOUT_PRIVATE_FINAL_FIELDS);
+
+        // THEN
+        assertNotNull(actual);
+    }
+
+    /**
+     * Tests that the method {@code areParameterNamesAvailable} works as expected.
+     * @param testCaseDescription the test case description
+     * @param constructor the test constructor to check
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataAreParameterNamesAvailableTesting")
+    public void testAreParameterNamesAvailableWorksAsExpected(final String testCaseDescription, final Constructor constructor, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.areParameterNamesAvailable(constructor);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code areParameterNamesAvailable}.
+     * @return parameters to be used for testing the the method {@code areParameterNamesAvailable}.
+     */
+    @DataProvider
+    private Object[][] dataAreParameterNamesAvailableTesting() {
+        return new Object[][] {
+                {"Tests that the method returns false if the constructor parameter names are not available", createMockedConstructor(false), false},
+                {"Tests that the method returns false if the constructor parameter names are available", underTest.getAllArgsConstructor(MixedToFoo.class), true}
+        };
+    }
+
+    /**
+     * Creates a mocked constructor for testing method {@code areParameterNamesAvailable}.
+     * @param isNamePresent the value it should return when invoking the {@code isNamePresent} method
+     * @return a mocked {@link Constructor} instance
+     */
+    private Constructor createMockedConstructor(final boolean isNamePresent) {
+        Parameter parameter = mock(Parameter.class);
+        ReflectionTestUtils.setField(parameter, "name", "paramName");
+        when(parameter.isNamePresent()).thenReturn(isNamePresent);
+        Constructor constructor = mock(Constructor.class);
+        when(constructor.getDeclaringClass()).thenReturn(ImmutableToFoo.class);
+        when(constructor.getParameters()).thenReturn(new Parameter[] {parameter});
+        return constructor;
     }
 
     /**
