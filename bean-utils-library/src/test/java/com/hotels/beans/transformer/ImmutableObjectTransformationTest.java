@@ -237,7 +237,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * @return parameters to be used for testing the exception raised in case of error during the constructor invocation.
      * @throws CloneNotSupportedException if the clone fails
      */
-    @DataProvider(parallel = true)
+    @DataProvider
     private Object[][] dataInvalidBeanExceptionTesting() throws CloneNotSupportedException {
         FromFoo fromFooNullId = AbstractTransformerTest.fromFoo.clone();
         fromFooNullId.setId(null);

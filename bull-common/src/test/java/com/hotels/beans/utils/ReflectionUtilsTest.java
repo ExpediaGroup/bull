@@ -97,13 +97,16 @@ public class ReflectionUtilsTest {
      * @param beanObject the java bean from which the value has to be retrieved
      * @param fieldName the name of the field to retrieve
      * @param expectedResult the expected result
+     * @throws NoSuchFieldException if the field does not exists.
      */
     @Test(dataProvider = "dataGetFieldValueTesting")
-    public void testGetFieldValueWorksAsExpected(final String testCaseDescription, final Object beanObject, final String fieldName, final Object expectedResult) {
+    public void testGetFieldValueWorksAsExpected(final String testCaseDescription, final Object beanObject,
+        final String fieldName, final Object expectedResult) throws NoSuchFieldException {
         // GIVEN
+        Field field = beanObject.getClass().getDeclaredField(fieldName);
 
         // WHEN
-        Object actual = underTest.getFieldValue(beanObject, fieldName);
+        Object actual = underTest.getFieldValue(beanObject, field);
 
         // THEN
         assertEquals(expectedResult, actual);
@@ -118,21 +121,8 @@ public class ReflectionUtilsTest {
         MutableToFoo mutableToFoo = createMutableToFoo(ZERO);
         return new Object[][] {
                 {"Tests that the method returns the field value", mutableToFoo, ID_FIELD_NAME, ZERO},
-                {"Tests that the method returns null if the required field is inside a null object", mutableToFoo, NESTED_OBJECT_FIELD_NAME, null},
                 {"Tests that the method returns the field value even if there is no getter method defined", createFromFooSimpleNoGetters(), ID_FIELD_NAME, ZERO}
         };
-    }
-
-    /**
-     * Tests that the method {@code getFieldValue} throws Exception if the field does not exists.
-     */
-    @Test(expectedExceptions = MissingFieldException.class)
-    public void testGetFieldValueThrowsExceptionIfTheFieldDoesNotExists() {
-        // GIVEN
-        MutableToFoo mutableToFoo = createMutableToFoo(null);
-
-        // WHEN
-        underTest.getFieldValue(mutableToFoo, NOT_EXISTING_FIELD_NAME);
     }
 
     /**

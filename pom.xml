@@ -6,7 +6,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>1.1.19-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -24,13 +24,12 @@
     <modules>
         <module>bean-utils-library</module>
         <module>bull-common</module>
-        <!--        <module>bull-converter</module>-->
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jdk.version>11</jdk.version>
+        <jdk.version>1.8</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
         <maven.pmd.plugin.version>3.12.0</maven.pmd.plugin.version>
@@ -52,7 +51,7 @@
         <jacoco.classRatio>0.85</jacoco.classRatio>
         <jacoco.instructionRatio>0.85</jacoco.instructionRatio>
         <jacoco.methodRatio>0.85</jacoco.methodRatio>
-        <jacoco.branchRatio>0.85</jacoco.branchRatio>
+        <jacoco.branchRatio>0.84</jacoco.branchRatio>
         <jacoco.complexityRatio>0.85</jacoco.complexityRatio>
         <jacoco.lineRatio>0.85</jacoco.lineRatio>
         <!-- site properties -->

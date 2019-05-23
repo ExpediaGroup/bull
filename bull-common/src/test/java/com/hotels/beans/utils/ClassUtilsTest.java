@@ -37,7 +37,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import javax.validation.constraints.NotNull;
 
@@ -58,8 +57,8 @@ import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
 import com.hotels.beans.sample.mixed.MixedToFoo;
 import com.hotels.beans.sample.mixed.MixedToFooMissingConstructor;
-import com.hotels.beans.sample.mixed.MixedToFooStaticField;
 import com.hotels.beans.sample.mixed.MixedToFooWithBuilder;
+import com.hotels.beans.sample.mixed.MixedToFooStaticField;
 import com.hotels.beans.sample.mutable.MutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooSubClass;
 import com.hotels.beans.sample.mutable.MutableToFooWithBuilder;
@@ -461,7 +460,7 @@ public class ClassUtilsTest {
         // GIVEN
 
         // WHEN
-        Supplier<MutableToFooSubClass> actual = underTest.getNoArgsConstructor(CLASS_WITHOUT_PRIVATE_FINAL_FIELDS);
+        Constructor actual = underTest.getNoArgsConstructor(CLASS_WITHOUT_PRIVATE_FINAL_FIELDS);
 
         // THEN
         assertNotNull(actual);
