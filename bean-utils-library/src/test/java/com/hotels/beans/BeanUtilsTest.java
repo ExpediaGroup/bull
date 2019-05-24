@@ -157,4 +157,5 @@ public class BeanUtilsTest {
     private FromFooSimple createFromFooSimple() {
         return new FromFooSimple(NAME, ID);
     }
+
 }

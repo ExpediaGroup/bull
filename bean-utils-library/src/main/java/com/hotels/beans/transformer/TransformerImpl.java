@@ -320,10 +320,10 @@ public class TransformerImpl extends AbstractTransformer {
             // defined it recursively evaluate the value
             boolean notPrimitiveAndNotSpecialType = !primitiveType && !classUtils.isSpecialType(fieldType);
             if (!isTransformerFunctionDefined
-                    && (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))) {
+                && (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))) {
                 fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
             }
-        } else if (primitiveType) {
+        } else if (!isTransformerFunctionDefined && primitiveType) {
             fieldValue = defaultValue(fieldType); // assign the default value
         }
         if (isTransformerFunctionDefined) {
