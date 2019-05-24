@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.20] TBD
+#### Added
+* Added possibility to define transformer function without arguments if not needed (see: [Issue X](https://github.com/HotelsDotCom/bull/issues/X)).
+
 ### [1.1.19] 2019.05.23
 #### Changes
 * Made the project multi module

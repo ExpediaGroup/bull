@@ -44,7 +44,7 @@ public class FieldTransformer<T, K> {
     private Function<T, K> transformerFunction;
 
     /**
-     * The field transformer supplier
+     * The field transformer supplier.
      */
     private Supplier<K> transformerSupplier;
 
@@ -73,7 +73,7 @@ public class FieldTransformer<T, K> {
      * @param objectToTransform the object to transform
      * @return the transformed object
      */
-    public K getTransformedObject(final T objectToTransform) {
+    public final K getTransformedObject(final T objectToTransform) {
         return nonNull(transformerFunction) ? transformerFunction.apply(objectToTransform) : transformerSupplier.get();
     }
 }
