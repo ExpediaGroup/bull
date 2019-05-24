@@ -16,11 +16,11 @@
 
 package com.hotels.beans;
 
+import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
-
-import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -35,10 +35,13 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFooSimple;
+import com.hotels.beans.sample.FromFooSimpleBooleanField;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
+import com.hotels.beans.sample.immutable.ImmutableToFooSimpleBoolean;
 import com.hotels.beans.transformer.Transformer;
 
 /**
@@ -110,6 +113,26 @@ public class BeanUtilsTest {
     }
 
     /**
+     * Test that the transformer function is applied earlier than the default value
+     */
+    @Test
+    public void testTransformerFunctionHasHigherPriorityThanDefaultValue() {
+        //GIVEN
+        BeanUtils beanUtils = new BeanUtils();
+        FromFooSimpleBooleanField fromFooSimpleNullFields = createFromFooSimpleNullFields();
+        FieldTransformer<Boolean, Boolean> nullToTrue =
+                new FieldTransformer<>("work", aBoolean -> aBoolean == null || aBoolean);
+
+        //WHEN
+        ImmutableToFooSimpleBoolean transformed = beanUtils.getTransformer()
+                .withFieldTransformer(nullToTrue)
+                .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
+
+        //THEN
+        assertTrue(transformed.getWork());
+    }
+
+    /**
      * Creates the parameters to be used for testing the default transformation operations.
      * @return parameters to be used for testing the default transformation operations.
      */
@@ -156,5 +179,13 @@ public class BeanUtilsTest {
      */
     private FromFooSimple createFromFooSimple() {
         return new FromFooSimple(NAME, ID);
+    }
+
+    /**
+     * Creates a {@link FromFooSimpleBooleanField} instance with null field.
+     * @return the {@link FromFooSimpleBooleanField} instance.
+     */
+    private FromFooSimpleBooleanField createFromFooSimpleNullFields() {
+        return new FromFooSimpleBooleanField();
     }
 }

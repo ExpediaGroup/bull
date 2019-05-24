@@ -315,21 +315,22 @@ public class TransformerImpl extends AbstractTransformer {
         Function<Object, Object> transformerFunction = getTransformerFunction(field, fieldBreadcrumb);
         boolean isTransformerFunctionDefined = nonNull(transformerFunction);
         Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, isTransformerFunctionDefined);
+        Object outputValue = fieldValue;
         if (nonNull(fieldValue)) {
             // is not a primitive type or an optional && there are no transformer function
             // defined it recursively evaluate the value
             boolean notPrimitiveAndNotSpecialType = !primitiveType && !classUtils.isSpecialType(fieldType);
             if (!isTransformerFunctionDefined
                     && (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))) {
-                fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
+                outputValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
             }
         } else if (primitiveType) {
-            fieldValue = defaultValue(fieldType); // assign the default value
+            outputValue = defaultValue(fieldType); // assign the default value
         }
         if (isTransformerFunctionDefined) {
-            fieldValue = transformerFunction.apply(fieldValue);
+            outputValue = transformerFunction.apply(fieldValue);
         }
-        return fieldValue;
+        return outputValue;
     }
 
     /**
