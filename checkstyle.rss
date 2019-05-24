@@ -19,15 +19,15 @@ under the License.
 -->
 <rss version="0.91">
   <channel>
-    <title>BULL - Bean Utils Light Library - Checkstyle report</title>
+    <title>BULL - Bean Utils Light Library Parent - Checkstyle report</title>
     <link>https://github.com/HotelsDotCom/bull</link>
-    <description>BULL - Bean Utils Light Library - Checkstyle report</description>
+    <description>BULL - Bean Utils Light Library Parent - Checkstyle report</description>
     <language>en-us</language>
     <copyright>&#169;2019 Hotels.com (Data Platform Team)</copyright>
     <item>
       <title>File: 45,
              Errors: 0,
-             Warnings: 1096,
+             Warnings: 1104,
              Infos: 0
       </title>
             <link>https://github.com/HotelsDotCom/bull/checkstyle.html</link>
@@ -234,7 +234,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  10
                 </td>
                 <td>
                   0
