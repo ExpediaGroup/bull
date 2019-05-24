@@ -16,11 +16,12 @@
 
 package com.hotels.beans;
 
-import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import java.math.BigInteger;
 import java.util.Arrays;
