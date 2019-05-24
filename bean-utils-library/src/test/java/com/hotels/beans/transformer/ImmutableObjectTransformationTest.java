@@ -489,7 +489,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     }
 
     /**
-     * Test that the transformer function is applied earlier than the default value
+     * Test that the transformer function is applied earlier than the default value.
      */
     @Test
     public void testTransformerFunctionHasHigherPriorityThanDefaultValue() {
