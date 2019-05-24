@@ -20,10 +20,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import com.hotels.beans.model.FieldTransformer;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,16 +49,6 @@ final class TransformerSettings {
      * }
      */
     private final Map<String, FieldTransformer> fieldsTransformers = new ConcurrentHashMap<>();
-
-//    /**
-//     * Contains the supplier functions to be applied on a given fields.
-//     * This features allows to apply transformation on the destination object value.
-//     * e.g. The following instructions allows to negate the destination value of the identifier field.
-//     * {@code
-//     *      FieldTransformer<BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::ZERO);
-//     * }
-//     */
-//    private final Map<String, Supplier<Object>> fieldsSuppliers = new ConcurrentHashMap<>();
 
     /**
      * Contains the list of fields that don't need to be transformed.
