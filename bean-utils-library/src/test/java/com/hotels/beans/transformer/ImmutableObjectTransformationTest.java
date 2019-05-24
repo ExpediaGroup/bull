@@ -494,18 +494,18 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     @Test
     public void testTransformerFunctionHasHigherPriorityThanDefaultValue() {
         //GIVEN
-        BeanUtils beanUtils = new BeanUtils();
         FromFooSimpleBooleanField fromFooSimpleNullFields = new FromFooSimpleBooleanField();
         FieldTransformer<Boolean, Boolean> nullToTrue =
             new FieldTransformer<>("work", aBoolean -> aBoolean == null || aBoolean);
 
         //WHEN
-        ImmutableToFooSimpleBoolean actual = beanUtils.getTransformer()
+        ImmutableToFooSimpleBoolean actual = underTest
             .withFieldTransformer(nullToTrue)
             .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
 
         //THEN
         assertTrue(actual.getWork());
+        underTest.resetFieldsTransformer();
     }
 
     /**
