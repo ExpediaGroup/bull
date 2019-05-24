@@ -20,7 +20,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
+
+import com.hotels.beans.model.FieldTransformer;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -47,7 +48,7 @@ final class TransformerSettings {
      *      FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::negate);
      * }
      */
-    private final Map<String, Function<Object, Object>> fieldsTransformers = new ConcurrentHashMap<>();
+    private final Map<String, FieldTransformer> fieldsTransformers = new ConcurrentHashMap<>();
 
     /**
      * Contains the list of fields that don't need to be transformed.
