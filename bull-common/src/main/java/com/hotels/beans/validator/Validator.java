@@ -49,7 +49,6 @@ public interface Validator {
      * @param <K> the object class
      * @param k the object to check
      * @throws com.hotels.beans.error.InvalidBeanException {@link com.hotels.beans.error.InvalidBeanException} if the validation fails
-     * @return
      */
     <K> void validate(K k);
 
