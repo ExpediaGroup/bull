@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.19] 2019.05.23
+#### Changes
+* Made the project multi module
+
 ### [1.1.18] 2019.05.18
 #### Changes
 * Removed deprecated method: `setValidationDisabled`
