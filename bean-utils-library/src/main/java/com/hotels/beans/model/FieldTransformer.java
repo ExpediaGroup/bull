@@ -18,9 +18,12 @@ package com.hotels.beans.model;
 
 import static java.util.Objects.nonNull;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -30,6 +33,7 @@ import lombok.ToString;
  * @param <T> input field type.
  * @param <K> field value on with apply the function.
  */
+@AllArgsConstructor(access = PRIVATE)
 @Getter
 @ToString
 public class FieldTransformer<T, K> {
@@ -41,31 +45,29 @@ public class FieldTransformer<T, K> {
     /**
      * The field transformer function.
      */
-    private Function<T, K> transformerFunction;
+    private final Function<T, K> transformerFunction;
 
     /**
      * The field transformer supplier.
      */
-    private Supplier<K> transformerSupplier;
+    private final Supplier<K> transformerSupplier;
 
     /**
      * Creates a field transformer with a lambda function to be applied on the field.
-     * @param destFieldName the field name in the destination object.
-     * @param transformerFunction the transformer function to apply on field
+     * @param destinationFieldName the field name in the destination object.
+     * @param fieldTransformerFunction the transformer function to apply on field
      */
-    public FieldTransformer(final String destFieldName, final Function<T, K> transformerFunction) {
-        this.destFieldName = destFieldName;
-        this.transformerFunction = transformerFunction;
+    public FieldTransformer(final String destinationFieldName, final Function<T, K> fieldTransformerFunction) {
+        this(destinationFieldName, fieldTransformerFunction, null);
     }
 
     /**
      * Creates a field transformer with a field supplier function to be applied on the field.
-     * @param destFieldName the field name in the destination object.
-     * @param transformerSupplier the transformer supplier to apply on field
+     * @param destinationFieldName the field name in the destination object.
+     * @param fieldTransformerSupplier the transformer supplier to apply on field
      */
-    public FieldTransformer(final String destFieldName, final Supplier<K> transformerSupplier) {
-        this.destFieldName = destFieldName;
-        this.transformerSupplier = transformerSupplier;
+    public FieldTransformer(final String destinationFieldName, final Supplier<K> fieldTransformerSupplier) {
+        this(destinationFieldName, null, fieldTransformerSupplier);
     }
 
     /**
