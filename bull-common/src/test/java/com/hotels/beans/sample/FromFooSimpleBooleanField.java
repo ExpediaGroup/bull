@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Sample immutable object with a {@link Boolean} field.
@@ -28,11 +29,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class FromFooSimpleBooleanField {
     public Boolean work;
-
-    @Override
-    public String toString() {
-        return "FromFooSimpleBooleanField";
-    }
 }
