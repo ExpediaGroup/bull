@@ -16,9 +16,11 @@
 
 package com.hotels.beans.model;
 
-import java.util.function.Function;
+import static java.util.Objects.nonNull;
 
-import lombok.AllArgsConstructor;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import lombok.Getter;
 import lombok.ToString;
 
@@ -28,7 +30,6 @@ import lombok.ToString;
  * @param <T> input field type.
  * @param <K> field value on with apply the function.
  */
-@AllArgsConstructor
 @Getter
 @ToString
 public class FieldTransformer<T, K> {
@@ -40,5 +41,39 @@ public class FieldTransformer<T, K> {
     /**
      * The field transformer function.
      */
-    private final Function<T, K> transformerFunction;
+    private Function<T, K> transformerFunction;
+
+    /**
+     * The field transformer supplier
+     */
+    private Supplier<K> transformerSupplier;
+
+    /**
+     * Creates a field transformer with a lambda function to be applied on the field.
+     * @param destFieldName the field name in the destination object.
+     * @param transformerFunction the transformer function to apply on field
+     */
+    public FieldTransformer(final String destFieldName, final Function<T, K> transformerFunction) {
+        this.destFieldName = destFieldName;
+        this.transformerFunction = transformerFunction;
+    }
+
+    /**
+     * Creates a field transformer with a field supplier function to be applied on the field.
+     * @param destFieldName the field name in the destination object.
+     * @param transformerSupplier the transformer supplier to apply on field
+     */
+    public FieldTransformer(final String destFieldName, final Supplier<K> transformerSupplier) {
+        this.destFieldName = destFieldName;
+        this.transformerSupplier = transformerSupplier;
+    }
+
+    /**
+     * Returns a transformed object by applying the defined transformed function or the supplier.
+     * @param objectToTransform the object to transform
+     * @return the transformed object
+     */
+    public K getTransformedObject(final T objectToTransform) {
+        return nonNull(transformerFunction) ? transformerFunction.apply(objectToTransform) : transformerSupplier.get();
+    }
 }

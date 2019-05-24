@@ -22,7 +22,6 @@ import static com.hotels.beans.validator.Validator.notNull;
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 
 import java.util.Map;
-import java.util.function.Function;
 
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.model.FieldMapping;
@@ -106,11 +105,10 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("unchecked")
     public final Transformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
-        Map<String, Function<Object, Object>> fieldsTransformers = settings.getFieldsTransformers();
+        Map<String, FieldTransformer> fieldsTransformers = settings.getFieldsTransformers();
         for (FieldTransformer transformer : fieldTransformer) {
-            fieldsTransformers.put(transformer.getDestFieldName(), transformer.getTransformerFunction());
+            fieldsTransformers.put(transformer.getDestFieldName(), transformer);
         }
         return this;
     }
