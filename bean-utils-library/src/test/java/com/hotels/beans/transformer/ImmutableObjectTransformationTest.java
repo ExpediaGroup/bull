@@ -500,12 +500,12 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
             new FieldTransformer<>("work", aBoolean -> aBoolean == null || aBoolean);
 
         //WHEN
-        ImmutableToFooSimpleBoolean transformed = beanUtils.getTransformer()
+        ImmutableToFooSimpleBoolean actual = beanUtils.getTransformer()
             .withFieldTransformer(nullToTrue)
             .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
 
         //THEN
-        assertTrue(transformed.getWork());
+        assertTrue(actual.getWork());
     }
 
     /**
