@@ -180,7 +180,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     public void testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions() {
         //GIVEN
         FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID);
-        FieldTransformer<Object, Integer> ageFieldTransformer = new FieldTransformer<>(AGE_FIELD_NAME, val -> AGE);
+        FieldTransformer<Object, Integer> ageFieldTransformer = new FieldTransformer<>(AGE_FIELD_NAME, () -> AGE);
 
         //WHEN
         underTest.withFieldTransformer(ageFieldTransformer);
