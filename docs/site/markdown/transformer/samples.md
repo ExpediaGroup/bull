@@ -196,7 +196,7 @@ public class FromBean {                                     public class ToBean 
 ~~~
 And one line code as:
 ~~~Java
-FieldTransformer<String, String> notExistingFieldTransformer = new FieldTransformer<>("notExistingField", val -> "sampleVal");
+FieldTransformer<String, String> notExistingFieldTransformer = new FieldTransformer<>("notExistingField", () -> "sampleVal");
 ToBean toBean = beanUtils.getTransformer()
                     .withFieldTransformer(notExistingFieldTransformer)
                     .transform(fromBean, ToBean.class);

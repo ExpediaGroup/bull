@@ -39,12 +39,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.constant.ClassType;
 import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.error.MissingFieldException;
+import com.hotels.beans.model.FieldTransformer;
 
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
@@ -305,6 +305,7 @@ public class TransformerImpl extends AbstractTransformer {
      * @return the field value
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
+    @SuppressWarnings("unchecked")
     private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
         String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
         Class<?> fieldType = field.getType();
@@ -312,7 +313,7 @@ public class TransformerImpl extends AbstractTransformer {
             return defaultValue(fieldType);
         }
         boolean primitiveType = classUtils.isPrimitiveType(fieldType);
-        Function<Object, Object> transformerFunction = getTransformerFunction(field, fieldBreadcrumb);
+        FieldTransformer transformerFunction = getTransformerFunction(field, fieldBreadcrumb);
         boolean isTransformerFunctionDefined = nonNull(transformerFunction);
         Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, isTransformerFunctionDefined);
         if (nonNull(fieldValue)) {
@@ -323,11 +324,11 @@ public class TransformerImpl extends AbstractTransformer {
                     && (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))) {
                 fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
             }
-        } else if (primitiveType) {
+        } else if (primitiveType && !isTransformerFunctionDefined) {
             fieldValue = defaultValue(fieldType); // assign the default value
         }
         if (isTransformerFunctionDefined) {
-            fieldValue = transformerFunction.apply(fieldValue);
+            fieldValue = transformerFunction.getTransformedObject(fieldValue);
         }
         return fieldValue;
     }
@@ -375,7 +376,7 @@ public class TransformerImpl extends AbstractTransformer {
      * @param breadcrumb The full field path on which the transformation should be applied.
      * @return the transformer function.
      */
-    private Function<Object, Object> getTransformerFunction(final Field field, final String breadcrumb) {
+    private FieldTransformer getTransformerFunction(final Field field, final String breadcrumb) {
         return settings.getFieldsTransformers().get(settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb);
     }
 
