@@ -18,17 +18,14 @@ package com.hotels.beans.sample.immutable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Sample immutable object.
  */
 @AllArgsConstructor
 @Getter
+@ToString
 public class ImmutableToFooSimpleBoolean {
     private final Boolean work;
-
-    @Override
-    public String toString() {
-        return "ImmutableToFooSimpleBoolean";
-    }
 }
