@@ -324,7 +324,7 @@ public class TransformerImpl extends AbstractTransformer {
                     && (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))) {
                 fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
             }
-        } else if (primitiveType) {
+        } else if (primitiveType && !isTransformerFunctionDefined) {
             fieldValue = defaultValue(fieldType); // assign the default value
         }
         if (isTransformerFunctionDefined) {

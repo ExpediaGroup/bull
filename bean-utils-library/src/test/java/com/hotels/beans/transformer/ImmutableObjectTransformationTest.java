@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -53,6 +54,7 @@ import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooAdvFields;
 import com.hotels.beans.sample.FromFooSimple;
+import com.hotels.beans.sample.FromFooSimpleBooleanField;
 import com.hotels.beans.sample.immutable.ImmutableFlatToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooAdvFields;
@@ -63,6 +65,7 @@ import com.hotels.beans.sample.immutable.ImmutableToFooMap;
 import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooNotExistingFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
+import com.hotels.beans.sample.immutable.ImmutableToFooSimpleBoolean;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
 import com.hotels.beans.utils.ReflectionUtils;
@@ -483,6 +486,26 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         assertNull(actual.getName());
         assertNull(actual.getNestedObject().getPhoneNumbers());
         underTest.resetFieldsTransformationSkip();
+    }
+
+    /**
+     * Test that the transformer function is applied earlier than the default value.
+     */
+    @Test
+    public void testTransformerFunctionHasHigherPriorityThanDefaultValue() {
+        //GIVEN
+        FromFooSimpleBooleanField fromFooSimpleNullFields = new FromFooSimpleBooleanField();
+        FieldTransformer<Boolean, Boolean> nullToTrue =
+            new FieldTransformer<>("work", aBoolean -> aBoolean == null || aBoolean);
+
+        //WHEN
+        ImmutableToFooSimpleBoolean actual = underTest
+            .withFieldTransformer(nullToTrue)
+            .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
+
+        //THEN
+        assertTrue(actual.getWork());
+        underTest.resetFieldsTransformer();
     }
 
     /**
