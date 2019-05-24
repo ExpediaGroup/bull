@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.4.1.2] 2019.05.24
+### [1.4.2] 2019.05.24
 #### Changes
 * Fixed a bug: FieldTransformer was receiving a default value instead of the source bean one (see: [Issue 64](https://github.com/HotelsDotCom/bull/issues/64)).
 
