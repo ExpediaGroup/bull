@@ -5,7 +5,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>1.4.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -33,7 +33,6 @@
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
         <maven.pmd.plugin.version>3.12.0</maven.pmd.plugin.version>
         <maven.javadoc.plugin.version>3.1.0</maven.javadoc.plugin.version>
-        <maven-deploy.plugin.version>2.8.2</maven-deploy.plugin.version>
         <spring-boot.version>2.1.5.RELEASE</spring-boot.version>
         <lombok.version>1.18.8</lombok.version>
         <apache.commons-lang3.version>3.9</apache.commons-lang3.version>
@@ -236,6 +235,38 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>prepare-doc</id>
+            <properties>
+                <checkstyle.check.skip>true</checkstyle.check.skip>
+                <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
+                <jacoco.check.skip>true</jacoco.check.skip>
+                <pmd.check.skip>true</pmd.check.skip>
+                <javadoc.skip>true</javadoc.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                    <classifier>javadoc</classifier>
+                                    <classesDirectory>${project.parent.basedir}/target/site/apidocs</classesDirectory>
+                                    <includes>**/*</includes>
+                                    <finalName>${build.finalName}</finalName>
+                                </configuration>
+                                <id>pack-javadoc</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <!-- build configuration -->
@@ -282,22 +313,6 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven.javadoc.plugin.version}</version>
-                    <configuration>
-                        <skip>${javadoc.skip}</skip>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>${maven.checkstyle.plugin.version}</version>
                     <executions>
@@ -327,11 +342,6 @@
                     <configuration>
                         <parallelMavenExecution>false</parallelMavenExecution>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>${maven-deploy.plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
@@ -513,10 +523,20 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.plugin.version}</version>
                 <configuration>
-                    <skip>true</skip>
+                    <skip>${javadoc.skip}</skip>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
