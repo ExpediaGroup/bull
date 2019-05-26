@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.18">
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/main/java/com/hotels/beans/transformer/TransformerImpl.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/main/java/com/hotels/beans/transformer/AbstractTransformer.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/main/java/com/hotels/beans/model/FieldTransformer.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/main/java/com/hotels/beans/populator/ArrayPopulator.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/main/java/com/hotels/beans/populator/Populator.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/main/java/com/hotels/beans/populator/CollectionPopulator.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/main/java/com/hotels/beans/populator/PopulatorFactory.java">
+<error line="35" column="1" severity="warning" message="Utility classes should not have a public or default constructor." source="com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck"/>
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/test/java/com/hotels/beans/BeanUtilsTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/test/java/com/hotels/beans/transformer/TransformerTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/test/java/com/hotels/beans/transformer/BuilderObjectTransformationTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/test/java/com/hotels/beans/transformer/ImmutableObjectTransformationTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/test/java/com/hotels/beans/transformer/MutableObjectTransformationTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/test/java/com/hotels/beans/transformer/AbstractTransformerTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/test/java/com/hotels/beans/transformer/MixedObjectTransformationTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/test/java/com/hotels/beans/populator/PopulatorFactoryTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/test/java/com/hotels/beans/populator/ArrayPopulatorTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bean-utils-library/src/test/java/com/hotels/beans/performance/PerformanceTest.java">
+</file>
+</checkstyle>

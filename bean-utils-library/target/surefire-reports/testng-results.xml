@@ -1,0 +1,1723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="75" passed="75" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2019-05-26T20:28:34Z" name="Surefire suite" finished-at="2019-05-26T20:28:41Z" duration-ms="7098">
+    <groups>
+    </groups>
+    <test started-at="2019-05-26T20:28:34Z" name="Surefire test" finished-at="2019-05-26T20:28:41Z" duration-ms="7098">
+      <class name="com.hotels.beans.transformer.MixedObjectTransformationTest">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="beforeClass" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testFieldTransformationSkipWorksProperly()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="testFieldTransformationSkipWorksProperly" finished-at="2019-05-26T20:28:39Z" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFieldTransformationSkipWorksProperly -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testMixedBeanIsCorrectlyCopied()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="testMixedBeanIsCorrectlyCopied" finished-at="2019-05-26T20:28:39Z" duration-ms="11" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMixedBeanIsCorrectlyCopied -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testMixedBeanWithDifferentFieldNamesIsCorrectlyCopied()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="testMixedBeanWithDifferentFieldNamesIsCorrectlyCopied" finished-at="2019-05-26T20:28:39Z" duration-ms="14" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMixedBeanWithDifferentFieldNamesIsCorrectlyCopied -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testMixedBeanWithDifferentFieldNamesIsCorrectlyCopiedThroughFieldTransformer()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="testMixedBeanWithDifferentFieldNamesIsCorrectlyCopiedThroughFieldTransformer" finished-at="2019-05-26T20:28:39Z" duration-ms="12" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMixedBeanWithDifferentFieldNamesIsCorrectlyCopiedThroughFieldTransformer -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="3" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testMixedBeanWithMissingFieldsReturnsTheDefaultValueWhenTheSourceObjectDoesNotContainARequiredField()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="testMixedBeanWithMissingFieldsReturnsTheDefaultValueWhenTheSourceObjectDoesNotContainARequiredField" finished-at="2019-05-26T20:28:39Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMixedBeanWithMissingFieldsReturnsTheDefaultValueWhenTheSourceObjectDoesNotContainARequiredField -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testMixedBeanWithMissingFieldsThrowsMissingFieldExceptionWhenTheSourceObjectDoesNotContainARequiredField()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="testMixedBeanWithMissingFieldsThrowsMissingFieldExceptionWhenTheSourceObjectDoesNotContainARequiredField" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <exception class="com.hotels.beans.error.MissingFieldException">
+            <message>
+              <![CDATA[com.hotels.beans.sample.FromFoo does not contain field: fooField]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.hotels.beans.error.MissingFieldException: com.hotels.beans.sample.FromFoo does not contain field: fooField
+at com.hotels.beans.utils.ReflectionUtils.lambda$getGetterMethod$1(ReflectionUtils.java:161)
+at java.base/java.util.Optional.orElseGet(Optional.java:369)
+at com.hotels.beans.utils.ReflectionUtils.getGetterMethod(ReflectionUtils.java:148)
+at com.hotels.beans.utils.ReflectionUtils.getFieldValue(ReflectionUtils.java:132)
+at com.hotels.beans.transformer.TransformerImpl.getSourceFieldValue(TransformerImpl.java:357)
+at com.hotels.beans.transformer.TransformerImpl.getFieldValue(TransformerImpl.java:318)
+at com.hotels.beans.transformer.TransformerImpl.lambda$getConstructorArgsValues$2(TransformerImpl.java:173)
+at java.base/java.util.stream.Streams$RangeIntSpliterator.forEachRemaining(Streams.java:104)
+at java.base/java.util.stream.IntPipeline$Head.forEach(IntPipeline.java:593)
+at com.hotels.beans.transformer.TransformerImpl.getConstructorArgsValues(TransformerImpl.java:166)
+at com.hotels.beans.transformer.TransformerImpl.injectValues(TransformerImpl.java:105)
+at com.hotels.beans.transformer.TransformerImpl.transform(TransformerImpl.java:69)
+at com.hotels.beans.transformer.AbstractTransformer.transform(AbstractTransformer.java:167)
+at com.hotels.beans.transformer.MixedObjectTransformationTest.testMixedBeanWithMissingFieldsThrowsMissingFieldExceptionWhenTheSourceObjectDoesNotContainARequiredField(MixedObjectTransformationTest.java:160)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+at org.testng.TestNG.runSuites(TestNG.java:1049)
+at org.testng.TestNG.run(TestNG.java:1017)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:135)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeMulti(TestNGDirectoryTestSuite.java:193)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:94)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:146)
+at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:383)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:344)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:125)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:417)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.hotels.beans.error.MissingFieldException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMixedBeanWithMissingFieldsThrowsMissingFieldExceptionWhenTheSourceObjectDoesNotContainARequiredField -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testMixedBeanWithoutAllArgsConstructorIsCorrectlyCopied()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="testMixedBeanWithoutAllArgsConstructorIsCorrectlyCopied" finished-at="2019-05-26T20:28:39Z" duration-ms="11" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMixedBeanWithoutAllArgsConstructorIsCorrectlyCopied -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions" finished-at="2019-05-26T20:28:39Z" duration-ms="5" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformationOnAnExistingDestinationWorksProperly()[pri:0, instance:com.hotels.beans.transformer.MixedObjectTransformationTest@7c0df4ab]" started-at="2019-05-26T20:28:39Z" name="testTransformationOnAnExistingDestinationWorksProperly" finished-at="2019-05-26T20:28:39Z" duration-ms="13" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationOnAnExistingDestinationWorksProperly -->
+      </class> <!-- com.hotels.beans.transformer.MixedObjectTransformationTest -->
+      <class name="com.hotels.beans.transformer.TransformerTest">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="beforeClass" finished-at="2019-05-26T20:28:36Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull" finished-at="2019-05-26T20:28:36Z" duration-ms="2" status="PASS">
+          <exception class="java.lang.NoSuchMethodException">
+            <message>
+              <![CDATA[com.hotels.beans.transformer.TransformerImpl.getSourceFieldValue(java.lang.Object, java.lang.String, java.lang.reflect.Field, boolean)]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.NoSuchMethodException: com.hotels.beans.transformer.TransformerImpl.getSourceFieldValue(java.lang.Object, java.lang.String, java.lang.reflect.Field, boolean)
+at java.base/java.lang.Class.getDeclaredMethod(Class.java:2476)
+at com.hotels.beans.transformer.TransformerTest.testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull(TransformerTest.java:154)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+at org.testng.TestNG.runSuites(TestNG.java:1049)
+at org.testng.TestNG.run(TestNG.java:1017)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:135)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeMulti(TestNGDirectoryTestSuite.java:193)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:94)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:146)
+at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:383)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:344)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:125)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:417)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.NoSuchMethodException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testRemoveFieldMappingRaisesExceptionIfItsCalledWithNullParam()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="testRemoveFieldMappingRaisesExceptionIfItsCalledWithNullParam" finished-at="2019-05-26T20:28:36Z" duration-ms="2" status="PASS">
+          <exception class="java.lang.IllegalArgumentException">
+            <message>
+              <![CDATA[The field name for which the mapping has to be removed cannot be null!]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.IllegalArgumentException: The field name for which the mapping has to be removed cannot be null!
+at com.hotels.beans.validator.Validator.notNull(Validator.java:78)
+at com.hotels.beans.transformer.AbstractTransformer.removeFieldMapping(AbstractTransformer.java:92)
+at com.hotels.beans.transformer.TransformerTest.testRemoveFieldMappingRaisesExceptionIfItsCalledWithNullParam(TransformerTest.java:83)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+at org.testng.TestNG.runSuites(TestNG.java:1049)
+at org.testng.TestNG.run(TestNG.java:1017)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:135)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeMulti(TestNGDirectoryTestSuite.java:193)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:94)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:146)
+at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:383)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:344)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:125)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:417)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.IllegalArgumentException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testRemoveFieldMappingRaisesExceptionIfItsCalledWithNullParam -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testRemoveFieldMappingWorksProperly()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="testRemoveFieldMappingWorksProperly" finished-at="2019-05-26T20:28:36Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testRemoveFieldMappingWorksProperly -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testRemoveFieldTransformerRaisesExceptionIfItsCalledWithNullParam()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="testRemoveFieldTransformerRaisesExceptionIfItsCalledWithNullParam" finished-at="2019-05-26T20:28:36Z" duration-ms="1" status="PASS">
+          <exception class="java.lang.IllegalArgumentException">
+            <message>
+              <![CDATA[The field name for which the transformer function has to be removed cannot be null!]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.IllegalArgumentException: The field name for which the transformer function has to be removed cannot be null!
+at com.hotels.beans.validator.Validator.notNull(Validator.java:78)
+at com.hotels.beans.transformer.AbstractTransformer.removeFieldTransformer(AbstractTransformer.java:121)
+at com.hotels.beans.transformer.TransformerTest.testRemoveFieldTransformerRaisesExceptionIfItsCalledWithNullParam(TransformerTest.java:145)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+at org.testng.TestNG.runSuites(TestNG.java:1049)
+at org.testng.TestNG.run(TestNG.java:1017)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:135)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeMulti(TestNGDirectoryTestSuite.java:193)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:94)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:146)
+at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:383)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:344)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:125)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:417)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.IllegalArgumentException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testRemoveFieldTransformerRaisesExceptionIfItsCalledWithNullParam -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testRemoveFieldTransformerWorksProperly()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="testRemoveFieldTransformerWorksProperly" finished-at="2019-05-26T20:28:36Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testRemoveFieldTransformerWorksProperly -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testResetFieldsMappingWorksProperly()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="testResetFieldsMappingWorksProperly" finished-at="2019-05-26T20:28:36Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testResetFieldsMappingWorksProperly -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testResetFieldsTransformerWorksProperly()[pri:0, instance:com.hotels.beans.transformer.TransformerTest@2e362407]" started-at="2019-05-26T20:28:36Z" name="testResetFieldsTransformerWorksProperly" finished-at="2019-05-26T20:28:36Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testResetFieldsTransformerWorksProperly -->
+      </class> <!-- com.hotels.beans.transformer.TransformerTest -->
+      <class name="com.hotels.beans.transformer.ImmutableObjectTransformationTest">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:36Z" name="beforeClass" finished-at="2019-05-26T20:28:36Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testFieldTransformationSkipWorksProperly()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:36Z" name="testFieldTransformationSkipWorksProperly" finished-at="2019-05-26T20:28:36Z" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFieldTransformationSkipWorksProperly -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:36Z" name="afterMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testGetConstructorValuesFromFieldsWorksProperly()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:36Z" name="testGetConstructorValuesFromFieldsWorksProperly" finished-at="2019-05-26T20:28:36Z" duration-ms="78" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetConstructorValuesFromFieldsWorksProperly -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:36Z" name="afterMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method signature="testGetDestFieldNameIsRetrievedFromConstructorArgIfTheParamNameIsNotProvidedFromJVM()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:36Z" name="testGetDestFieldNameIsRetrievedFromConstructorArgIfTheParamNameIsNotProvidedFromJVM" finished-at="2019-05-26T20:28:37Z" duration-ms="1182" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetDestFieldNameIsRetrievedFromConstructorArgIfTheParamNameIsNotProvidedFromJVM -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="afterMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="beforeMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="5" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testGetDestFieldNameReturnsNullIfConstructorParamHasNoNameProvidedFromJVMAndNoConstructorArgIsDefined()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="testGetDestFieldNameReturnsNullIfConstructorParamHasNoNameProvidedFromJVMAndNoConstructorArgIsDefined" finished-at="2019-05-26T20:28:37Z" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetDestFieldNameReturnsNullIfConstructorParamHasNoNameProvidedFromJVMAndNoConstructorArgIsDefined -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="afterMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="beforeMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="3" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="beforeMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="3" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="beforeMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="3" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testImmutableBeanIsCorrectlyCopied(java.lang.String, com.hotels.beans.transformer.Transformer, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="testImmutableBeanIsCorrectlyCopied" data-provider="dataDefaultTransformationTesting" finished-at="2019-05-26T20:28:37Z" duration-ms="58" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that immutable beans without constructor arguments parameter annotated with: @ConstructorArg are correctly copied.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[com.hotels.beans.transformer.TransformerImpl@62bb8771]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFoo]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testImmutableBeanIsCorrectlyCopied -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="beforeMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testImmutableBeanIsCorrectlyCopied(java.lang.String, com.hotels.beans.transformer.Transformer, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="testImmutableBeanIsCorrectlyCopied" data-provider="dataDefaultTransformationTesting" finished-at="2019-05-26T20:28:37Z" duration-ms="51" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that immutable beans with constructor arguments parameter annotated with: @ConstructorArg are correctly copied.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[com.hotels.beans.transformer.TransformerImpl@508177b1]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testImmutableBeanIsCorrectlyCopied -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="beforeMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testImmutableBeanIsCorrectlyCopied(java.lang.String, com.hotels.beans.transformer.Transformer, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="testImmutableBeanIsCorrectlyCopied" data-provider="dataDefaultTransformationTesting" finished-at="2019-05-26T20:28:37Z" duration-ms="53" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that immutable beans without custom field mapping are correctly transformed.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[com.hotels.beans.transformer.TransformerImpl@74240c9a]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFoo]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testImmutableBeanIsCorrectlyCopied -->
+        <test-method signature="testImmutableBeanIsCorrectlyCopied(java.lang.String, com.hotels.beans.transformer.Transformer, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="testImmutableBeanIsCorrectlyCopied" data-provider="dataDefaultTransformationTesting" finished-at="2019-05-26T20:28:37Z" duration-ms="66" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that immutable beans with extremely complex map are correctly transformed.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[com.hotels.beans.transformer.TransformerImpl@6ef3d8f]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[FromFooMap(sampleMap={donald=duck}, complexMap={donald=[duck]}, veryComplexMap={donald={donald=duck}}, extremeComplexMap={FromFooSimple={donald=duck}, FromFooSimple={donald=duck}, FromFooSimple={donald=duck}, FromFooSimple={donald=duck}, FromFooSimple={donald=duck}})]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFooMap]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testImmutableBeanIsCorrectlyCopied -->
+        <test-method signature="testImmutableBeanIsCorrectlyCopied(java.lang.String, com.hotels.beans.transformer.Transformer, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="testImmutableBeanIsCorrectlyCopied" data-provider="dataDefaultTransformationTesting" finished-at="2019-05-26T20:28:37Z" duration-ms="54" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that bean that extends another class are correctly copied]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[com.hotels.beans.transformer.TransformerImpl@5d08e560]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[FromFooSubClass(surname=surname, phone=123, check=true, amount=10)]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFooSubClass]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testImmutableBeanIsCorrectlyCopied -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="afterMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="afterMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="afterMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="afterMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="afterMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="beforeMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="3" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="beforeMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="3" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied(java.lang.String, com.hotels.beans.sample.FromFooAdvFields, java.lang.Class, boolean)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied" data-provider="dataAdvancedFieldsCopyTesting" finished-at="2019-05-26T20:28:37Z" duration-ms="5" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that bean containing advanced final fields (with empty optional) are correctly copied]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[FromFooAdvFields(name=Optional.empty, age=Optional[34], indexNumber=null, classType=IMMUTABLE, locale=en, price=10.0)]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFooAdvFields]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[false]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied -->
+        <test-method signature="testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied(java.lang.String, com.hotels.beans.sample.FromFooAdvFields, java.lang.Class, boolean)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied" data-provider="dataAdvancedFieldsCopyTesting" finished-at="2019-05-26T20:28:37Z" duration-ms="5" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that bean containing advanced final fields are correctly copied]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[FromFooAdvFields(name=Optional[Goofy], age=Optional[34], indexNumber=null, classType=IMMUTABLE, locale=en, price=10.0)]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFooAdvFields]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[true]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="afterMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="afterMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="beforeMethod" finished-at="2019-05-26T20:28:37Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testImmutableBeanWithDifferentFieldNamesIsCorrectlyCopied()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:37Z" name="testImmutableBeanWithDifferentFieldNamesIsCorrectlyCopied" finished-at="2019-05-26T20:28:38Z" duration-ms="66" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testImmutableBeanWithDifferentFieldNamesIsCorrectlyCopied -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:38Z" name="afterMethod" finished-at="2019-05-26T20:28:38Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:38Z" name="beforeMethod" finished-at="2019-05-26T20:28:38Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testImmutableBeanWithMissingConstructorArgIsCorrectlyCopied()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:38Z" name="testImmutableBeanWithMissingConstructorArgIsCorrectlyCopied" finished-at="2019-05-26T20:28:38Z" duration-ms="3" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testImmutableBeanWithMissingConstructorArgIsCorrectlyCopied -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:38Z" name="afterMethod" finished-at="2019-05-26T20:28:38Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:38Z" name="beforeMethod" finished-at="2019-05-26T20:28:38Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:38Z" name="testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions" finished-at="2019-05-26T20:28:38Z" duration-ms="6" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:38Z" name="afterMethod" finished-at="2019-05-26T20:28:38Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:38Z" name="beforeMethod" finished-at="2019-05-26T20:28:38Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformThrowsExceptionIfTheConstructorInvocationThrowsException(java.lang.String, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:38Z" name="testTransformThrowsExceptionIfTheConstructorInvocationThrowsException" data-provider="dataConstructorErrorTesting" finished-at="2019-05-26T20:28:39Z" duration-ms="930" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that an exception is thrown if the constructor invocation throws exception]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation]]>
+              </value>
+            </param>
+          </params>
+          <exception class="com.hotels.beans.error.InvalidBeanException">
+            <message>
+              <![CDATA[com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation.list must not be null;com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation.nestedObject must not be null;com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation.nestedObjectList must not be null]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.hotels.beans.error.InvalidBeanException: com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation.list must not be null;com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation.nestedObject must not be null;com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation.nestedObjectList must not be null
+at com.hotels.beans.validator.ValidatorImpl.validate(ValidatorImpl.java:91)
+at com.hotels.beans.transformer.TransformerImpl.transform(TransformerImpl.java:75)
+at com.hotels.beans.transformer.AbstractTransformer.transform(AbstractTransformer.java:167)
+at com.hotels.beans.transformer.ImmutableObjectTransformationTest.testTransformThrowsExceptionIfTheConstructorInvocationThrowsException(ImmutableObjectTransformationTest.java:208)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.TestMethodWithDataProviderMethodWorker.call(TestMethodWithDataProviderMethodWorker.java:71)
+at org.testng.internal.TestMethodWithDataProviderMethodWorker.call(TestMethodWithDataProviderMethodWorker.java:14)
+at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+at java.base/java.lang.Thread.run(Thread.java:834)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.hotels.beans.error.InvalidBeanException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformThrowsExceptionIfTheConstructorInvocationThrowsException -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="afterMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformThrowsExceptionWhenImmutableIsInvalid(java.lang.String, com.hotels.beans.sample.FromFoo, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="testTransformThrowsExceptionWhenImmutableIsInvalid" data-provider="dataInvalidBeanExceptionTesting" finished-at="2019-05-26T20:28:39Z" duration-ms="33" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that an exception is thrown if there the constructor args parameters have a different order for the mutable bean object.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFooInvalid]]>
+              </value>
+            </param>
+          </params>
+          <exception class="com.hotels.beans.error.InvalidBeanException">
+            <message>
+              <![CDATA[Constructor invoked with arguments. Expected: public com.hotels.beans.sample.immutable.ImmutableToFooInvalid(java.lang.String,java.math.BigInteger,java.util.List,com.hotels.beans.sample.immutable.ImmutableToSubFoo); Found: com.hotels.beans.sample.immutable.ImmutableToFooInvalid(java.lang.String,java.math.BigInteger,java.util.Arrays$ArrayList,java.util.ArrayList,com.hotels.beans.sample.immutable.ImmutableToSubFoo). Double check that each ImmutableToFooInvalid's field have the same type and name than the source object: com.hotels.beans.sample.FromFoo otherwise specify a transformer configuration. Error message: wrong number of arguments]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.hotels.beans.error.InvalidBeanException: Constructor invoked with arguments. Expected: public com.hotels.beans.sample.immutable.ImmutableToFooInvalid(java.lang.String,java.math.BigInteger,java.util.List,com.hotels.beans.sample.immutable.ImmutableToSubFoo); Found: com.hotels.beans.sample.immutable.ImmutableToFooInvalid(java.lang.String,java.math.BigInteger,java.util.Arrays$ArrayList,java.util.ArrayList,com.hotels.beans.sample.immutable.ImmutableToSubFoo). Double check that each ImmutableToFooInvalid's field have the same type and name than the source object: com.hotels.beans.sample.FromFoo otherwise specify a transformer configuration. Error message: wrong number of arguments
+at com.hotels.beans.transformer.TransformerImpl.injectValues(TransformerImpl.java:115)
+at com.hotels.beans.transformer.TransformerImpl.transform(TransformerImpl.java:69)
+at com.hotels.beans.transformer.AbstractTransformer.transform(AbstractTransformer.java:167)
+at com.hotels.beans.transformer.ImmutableObjectTransformationTest.testTransformThrowsExceptionWhenImmutableIsInvalid(ImmutableObjectTransformationTest.java:235)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.TestMethodWithDataProviderMethodWorker.call(TestMethodWithDataProviderMethodWorker.java:71)
+at org.testng.internal.TestMethodWithDataProviderMethodWorker.call(TestMethodWithDataProviderMethodWorker.java:14)
+at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.lang.IllegalArgumentException: wrong number of arguments
+at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+at com.hotels.beans.utils.ClassUtils.getInstance(ClassUtils.java:397)
+at com.hotels.beans.transformer.TransformerImpl.injectValues(TransformerImpl.java:110)
+... 18 more
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.hotels.beans.error.InvalidBeanException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformThrowsExceptionWhenImmutableIsInvalid -->
+        <test-method signature="testTransformThrowsExceptionWhenImmutableIsInvalid(java.lang.String, com.hotels.beans.sample.FromFoo, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="testTransformThrowsExceptionWhenImmutableIsInvalid" data-provider="dataInvalidBeanExceptionTesting" finished-at="2019-05-26T20:28:39Z" duration-ms="26" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that an exception is thrown if the destination object don't met the constraints.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFoo]]>
+              </value>
+            </param>
+          </params>
+          <exception class="com.hotels.beans.error.InvalidBeanException">
+            <message>
+              <![CDATA[com.hotels.beans.sample.immutable.ImmutableToFoo.id must not be null]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.hotels.beans.error.InvalidBeanException: com.hotels.beans.sample.immutable.ImmutableToFoo.id must not be null
+at com.hotels.beans.validator.ValidatorImpl.validate(ValidatorImpl.java:91)
+at com.hotels.beans.transformer.TransformerImpl.transform(TransformerImpl.java:75)
+at com.hotels.beans.transformer.AbstractTransformer.transform(AbstractTransformer.java:167)
+at com.hotels.beans.transformer.ImmutableObjectTransformationTest.testTransformThrowsExceptionWhenImmutableIsInvalid(ImmutableObjectTransformationTest.java:235)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.TestMethodWithDataProviderMethodWorker.call(TestMethodWithDataProviderMethodWorker.java:71)
+at org.testng.internal.TestMethodWithDataProviderMethodWorker.call(TestMethodWithDataProviderMethodWorker.java:14)
+at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+at java.base/java.lang.Thread.run(Thread.java:834)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.hotels.beans.error.InvalidBeanException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformThrowsExceptionWhenImmutableIsInvalid -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="afterMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="afterMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled" finished-at="2019-05-26T20:28:39Z" duration-ms="17" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="afterMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformationOnAnExistingDestinationWorksProperly()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="testTransformationOnAnExistingDestinationWorksProperly" finished-at="2019-05-26T20:28:39Z" duration-ms="3" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationOnAnExistingDestinationWorksProperly -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="afterMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformationReturnsAMeaningfulException()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="testTransformationReturnsAMeaningfulException" finished-at="2019-05-26T20:28:39Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationReturnsAMeaningfulException -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="afterMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected(java.lang.String, java.lang.Object, java.lang.String, java.math.BigInteger, [I)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected" data-provider="dataCompositeFieldNameTesting" finished-at="2019-05-26T20:28:39Z" duration-ms="2" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that, in case a destination object field is contained into a nested object of the source field, defining a composite FieldMappingthe field is correctly set.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Goofy]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[1234]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[[I@26c1f3eb]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="afterMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="afterMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method signature="testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected(java.lang.String, java.lang.Object, java.lang.String, java.math.BigInteger, [I)[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected" data-provider="dataCompositeFieldNameTesting" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that, in case a destination object field is contained into a nested object of the source field, defining a composite {@link FieldMapping} the field is correctly set even if some of them are null.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Goofy]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[1234]]>
+              </value>
+            </param>
+            <param index="4">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformerFunctionHasHigherPriorityThanDefaultValue()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="testTransformerFunctionHasHigherPriorityThanDefaultValue" finished-at="2019-05-26T20:28:39Z" duration-ms="3" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformerFunctionHasHigherPriorityThanDefaultValue -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.beans.transformer.ImmutableObjectTransformationTest@167a21b]" started-at="2019-05-26T20:28:39Z" name="afterMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+      </class> <!-- com.hotels.beans.transformer.ImmutableObjectTransformationTest -->
+      <class name="com.hotels.beans.populator.ArrayPopulatorTest">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.hotels.beans.populator.ArrayPopulatorTest@8f2e3e6]" started-at="2019-05-26T20:28:39Z" name="beforeClass" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method signature="testGetPopulatedObjectWorksProperly(java.lang.Class, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.populator.ArrayPopulatorTest@8f2e3e6]" started-at="2019-05-26T20:28:39Z" name="testGetPopulatedObjectWorksProperly" data-provider="dataProvider" finished-at="2019-05-26T20:28:39Z" duration-ms="10" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[class java.lang.String]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Ljava.lang.String;@46a94faf]]>
+              </value>
+            </param>
+            <param index="2">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPopulatedObjectWorksProperly -->
+        <test-method signature="testGetPopulatedObjectWorksProperly(java.lang.Class, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.populator.ArrayPopulatorTest@8f2e3e6]" started-at="2019-05-26T20:28:39Z" name="testGetPopulatedObjectWorksProperly" data-provider="dataProvider" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[class java.lang.Character]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[C@3c833d43]]>
+              </value>
+            </param>
+            <param index="2">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPopulatedObjectWorksProperly -->
+        <test-method signature="testGetPopulatedObjectWorksProperly(java.lang.Class, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.populator.ArrayPopulatorTest@8f2e3e6]" started-at="2019-05-26T20:28:39Z" name="testGetPopulatedObjectWorksProperly" data-provider="dataProvider" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[class java.lang.Integer]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[I@17b3feb7]]>
+              </value>
+            </param>
+            <param index="2">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPopulatedObjectWorksProperly -->
+        <test-method signature="testGetPopulatedObjectWorksProperly(java.lang.Class, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.populator.ArrayPopulatorTest@8f2e3e6]" started-at="2019-05-26T20:28:39Z" name="testGetPopulatedObjectWorksProperly" data-provider="dataProvider" finished-at="2019-05-26T20:28:39Z" duration-ms="5" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.mixed.MixedToFooStaticField]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Lcom.hotels.beans.sample.mixed.MixedToFooStaticField;@7a1cd6a2]]>
+              </value>
+            </param>
+            <param index="2">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPopulatedObjectWorksProperly -->
+        <test-method signature="testGetPopulatedObjectWorksProperly(java.lang.Class, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.populator.ArrayPopulatorTest@8f2e3e6]" started-at="2019-05-26T20:28:39Z" name="testGetPopulatedObjectWorksProperly" data-provider="dataProvider" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[class java.lang.Object]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Ljava.lang.Object;@9605ae7]]>
+              </value>
+            </param>
+            <param index="2">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPopulatedObjectWorksProperly -->
+      </class> <!-- com.hotels.beans.populator.ArrayPopulatorTest -->
+      <class name="com.hotels.beans.transformer.MutableObjectTransformationTest">
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeClass" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method signature="testFieldTransformationIsAppliedOnlyToASpecificField()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="testFieldTransformationIsAppliedOnlyToASpecificField" finished-at="2019-05-26T20:28:39Z" duration-ms="9" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFieldTransformationIsAppliedOnlyToASpecificField -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testFieldTransformationIsAppliedToAllMatchingFields()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="testFieldTransformationIsAppliedToAllMatchingFields" finished-at="2019-05-26T20:28:39Z" duration-ms="3" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFieldTransformationIsAppliedToAllMatchingFields -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testFieldTransformationSkipWorksProperly()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="testFieldTransformationSkipWorksProperly" finished-at="2019-05-26T20:28:39Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFieldTransformationSkipWorksProperly -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testMutableBeanIsCorrectlyCopied()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="testMutableBeanIsCorrectlyCopied" finished-at="2019-05-26T20:28:39Z" duration-ms="15" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMutableBeanIsCorrectlyCopied -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions" finished-at="2019-05-26T20:28:39Z" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformThrowsExceptionWhenMutableBeanHasNoDefaultConstructor()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="testTransformThrowsExceptionWhenMutableBeanHasNoDefaultConstructor" finished-at="2019-05-26T20:28:39Z" duration-ms="2" status="PASS">
+          <exception class="com.hotels.beans.error.InvalidBeanException">
+            <message>
+              <![CDATA[No default constructors available]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.hotels.beans.error.InvalidBeanException: No default constructors available
+at com.hotels.beans.transformer.TransformerImpl.transform(TransformerImpl.java:66)
+at com.hotels.beans.transformer.AbstractTransformer.transform(AbstractTransformer.java:167)
+at com.hotels.beans.transformer.MutableObjectTransformationTest.testTransformThrowsExceptionWhenMutableBeanHasNoDefaultConstructor(MutableObjectTransformationTest.java:70)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+at org.testng.TestNG.runSuites(TestNG.java:1049)
+at org.testng.TestNG.run(TestNG.java:1017)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:135)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeMulti(TestNGDirectoryTestSuite.java:193)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:94)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:146)
+at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:383)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:344)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:125)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:417)
+Caused by: com.hotels.beans.error.InvalidBeanException: No default constructors available
+at com.hotels.beans.utils.ClassUtils.lambda$getNoArgsConstructor$16(ClassUtils.java:423)
+at java.base/java.util.Optional.orElseGet(Optional.java:369)
+at com.hotels.beans.utils.ClassUtils.getNoArgsConstructor(ClassUtils.java:413)
+at com.hotels.beans.transformer.TransformerImpl.transform(TransformerImpl.java:63)
+... 32 more
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.hotels.beans.error.InvalidBeanException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformThrowsExceptionWhenMutableBeanHasNoDefaultConstructor -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled" finished-at="2019-05-26T20:28:39Z" duration-ms="16" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformationOnAnExistingDestinationWorksProperly()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="testTransformationOnAnExistingDestinationWorksProperly" finished-at="2019-05-26T20:28:39Z" duration-ms="16" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationOnAnExistingDestinationWorksProperly -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformationWithFieldTransformationWorksProperly(java.lang.String, java.lang.String, java.lang.Object)[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="testTransformationWithFieldTransformationWorksProperly" data-provider="dataTransformationTesting" finished-at="2019-05-26T20:28:39Z" duration-ms="6" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that the field transformation returns the expected values.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[name]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[goofy]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationWithFieldTransformationWorksProperly -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformationWithFieldTransformationWorksProperly(java.lang.String, java.lang.String, java.lang.Object)[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="testTransformationWithFieldTransformationWorksProperly" data-provider="dataTransformationTesting" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that the field transformation returns the expected values even if null.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[name]]>
+              </value>
+            </param>
+            <param index="2">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationWithFieldTransformationWorksProperly -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="beforeMethod" finished-at="2019-05-26T20:28:39Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformerIsAbleToCopyObjectsWithoutRequiredMethods()[pri:0, instance:com.hotels.beans.transformer.MutableObjectTransformationTest@388be5fd]" started-at="2019-05-26T20:28:39Z" name="testTransformerIsAbleToCopyObjectsWithoutRequiredMethods" finished-at="2019-05-26T20:28:39Z" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformerIsAbleToCopyObjectsWithoutRequiredMethods -->
+      </class> <!-- com.hotels.beans.transformer.MutableObjectTransformationTest -->
+      <class name="com.hotels.beans.transformer.BuilderObjectTransformationTest">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.hotels.beans.transformer.BuilderObjectTransformationTest@3915e7c3]" started-at="2019-05-26T20:28:34Z" name="beforeClass" finished-at="2019-05-26T20:28:34Z" duration-ms="34" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.BuilderObjectTransformationTest@3915e7c3]" started-at="2019-05-26T20:28:34Z" name="beforeMethod" finished-at="2019-05-26T20:28:35Z" duration-ms="1537" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformationThroughBuilder(java.lang.String, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.BuilderObjectTransformationTest@3915e7c3]" started-at="2019-05-26T20:28:35Z" name="testTransformationThroughBuilder" data-provider="transformationThroughBuilderTesting" finished-at="2019-05-26T20:28:36Z" duration-ms="501" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that a Mutable bean, containing a custom Builder is correctly transformed]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.mutable.MutableToFooWithBuilder]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationThroughBuilder -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.BuilderObjectTransformationTest@3915e7c3]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformationThroughBuilder(java.lang.String, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.BuilderObjectTransformationTest@3915e7c3]" started-at="2019-05-26T20:28:36Z" name="testTransformationThroughBuilder" data-provider="transformationThroughBuilderTesting" finished-at="2019-05-26T20:28:36Z" duration-ms="19" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that a Mutable bean, containing a custom Builder with multiple constructors, is correctly transformed]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.mutable.MutableToFooWithBuilderMultipleConstructor]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationThroughBuilder -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.BuilderObjectTransformationTest@3915e7c3]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformationThroughBuilder(java.lang.String, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.BuilderObjectTransformationTest@3915e7c3]" started-at="2019-05-26T20:28:36Z" name="testTransformationThroughBuilder" data-provider="transformationThroughBuilderTesting" finished-at="2019-05-26T20:28:36Z" duration-ms="43" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that a Mixed bean, containing a Builder generated by lombok, is correctly transformed]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.mixed.MixedToFooWithBuilder]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationThroughBuilder -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:com.hotels.beans.transformer.BuilderObjectTransformationTest@3915e7c3]" started-at="2019-05-26T20:28:36Z" name="beforeMethod" finished-at="2019-05-26T20:28:36Z" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testTransformationThroughBuilder(java.lang.String, java.lang.Object, java.lang.Class)[pri:0, instance:com.hotels.beans.transformer.BuilderObjectTransformationTest@3915e7c3]" started-at="2019-05-26T20:28:36Z" name="testTransformationThroughBuilder" data-provider="transformationThroughBuilderTesting" finished-at="2019-05-26T20:28:36Z" duration-ms="15" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that an Immutable bean, containing a Builder generated by lombok with all mandatory fields, is correctly transformed]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFooWithBuilder]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformationThroughBuilder -->
+      </class> <!-- com.hotels.beans.transformer.BuilderObjectTransformationTest -->
+      <class name="com.hotels.beans.populator.PopulatorFactoryTest">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.hotels.beans.populator.PopulatorFactoryTest@17fbfb02]" started-at="2019-05-26T20:28:39Z" name="beforeClass" finished-at="2019-05-26T20:28:39Z" duration-ms="136" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method signature="testGetPopulatorReturnsTheExpectedResult(java.lang.Class, java.lang.Class)[pri:0, instance:com.hotels.beans.populator.PopulatorFactoryTest@17fbfb02]" started-at="2019-05-26T20:28:39Z" name="testGetPopulatorReturnsTheExpectedResult" data-provider="dataProvider" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[class [Ljava.lang.String;]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[class com.hotels.beans.populator.ArrayPopulator]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPopulatorReturnsTheExpectedResult -->
+        <test-method signature="testGetPopulatorReturnsTheExpectedResult(java.lang.Class, java.lang.Class)[pri:0, instance:com.hotels.beans.populator.PopulatorFactoryTest@17fbfb02]" started-at="2019-05-26T20:28:39Z" name="testGetPopulatorReturnsTheExpectedResult" data-provider="dataProvider" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[interface java.util.Map]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[class com.hotels.beans.populator.MapPopulator]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPopulatorReturnsTheExpectedResult -->
+        <test-method signature="testGetPopulatorReturnsTheExpectedResult(java.lang.Class, java.lang.Class)[pri:0, instance:com.hotels.beans.populator.PopulatorFactoryTest@17fbfb02]" started-at="2019-05-26T20:28:39Z" name="testGetPopulatorReturnsTheExpectedResult" data-provider="dataProvider" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[interface java.util.List]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[class com.hotels.beans.populator.CollectionPopulator]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPopulatorReturnsTheExpectedResult -->
+        <test-method signature="testGetPopulatorReturnsTheExpectedResult(java.lang.Class, java.lang.Class)[pri:0, instance:com.hotels.beans.populator.PopulatorFactoryTest@17fbfb02]" started-at="2019-05-26T20:28:39Z" name="testGetPopulatorReturnsTheExpectedResult" data-provider="dataProvider" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.FromFoo]]>
+              </value>
+            </param>
+            <param index="1">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPopulatorReturnsTheExpectedResult -->
+        <test-method signature="testGetPopulatorReturnsTheExpectedResult(java.lang.Class, java.lang.Class)[pri:0, instance:com.hotels.beans.populator.PopulatorFactoryTest@17fbfb02]" started-at="2019-05-26T20:28:39Z" name="testGetPopulatorReturnsTheExpectedResult" data-provider="dataProvider" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[class java.util.Optional]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[class com.hotels.beans.populator.OptionalPopulator]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPopulatorReturnsTheExpectedResult -->
+      </class> <!-- com.hotels.beans.populator.PopulatorFactoryTest -->
+      <class name="com.hotels.beans.BeanUtilsTest">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.hotels.beans.BeanUtilsTest@440ef8d]" started-at="2019-05-26T20:28:39Z" name="beforeClass" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method signature="testGetTransformerFunctionWorksProperly(java.lang.String, java.util.function.Function)[pri:0, instance:com.hotels.beans.BeanUtilsTest@440ef8d]" started-at="2019-05-26T20:28:39Z" name="testGetTransformerFunctionWorksProperly" data-provider="dataStaticTransformationTesting" finished-at="2019-05-26T20:28:39Z" duration-ms="5" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that the transformer function returned is able to transform the given object.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[com.hotels.beans.BeanUtils$$Lambda$266/0x000000080043e040@662e04f3]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetTransformerFunctionWorksProperly -->
+        <test-method signature="testGetTransformerFunctionWorksProperly(java.lang.String, java.util.function.Function)[pri:0, instance:com.hotels.beans.BeanUtilsTest@440ef8d]" started-at="2019-05-26T20:28:39Z" name="testGetTransformerFunctionWorksProperly" data-provider="dataStaticTransformationTesting" finished-at="2019-05-26T20:28:39Z" duration-ms="5" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that the transformer function returned is able to transform the given object with the given transformer.]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[com.hotels.beans.BeanUtils$$Lambda$267/0x000000080043e440@1d4738db]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetTransformerFunctionWorksProperly -->
+        <test-method signature="testGetTransformerWorksProperly()[pri:0, instance:com.hotels.beans.BeanUtilsTest@440ef8d]" started-at="2019-05-26T20:28:39Z" name="testGetTransformerWorksProperly" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetTransformerWorksProperly -->
+        <test-method signature="testGetTransformerThrowsExceptionIfTheBeanTransformerIsNull()[pri:0, instance:com.hotels.beans.BeanUtilsTest@440ef8d]" started-at="2019-05-26T20:28:39Z" name="testGetTransformerThrowsExceptionIfTheBeanTransformerIsNull" finished-at="2019-05-26T20:28:39Z" duration-ms="0" status="PASS">
+          <exception class="java.lang.IllegalArgumentException">
+            <message>
+              <![CDATA[beanTransformer cannot be null!]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.IllegalArgumentException: beanTransformer cannot be null!
+at com.hotels.beans.validator.Validator.notNull(Validator.java:78)
+at com.hotels.beans.BeanUtils.getTransformer(BeanUtils.java:55)
+at com.hotels.beans.BeanUtilsTest.testGetTransformerThrowsExceptionIfTheBeanTransformerIsNull(BeanUtilsTest.java:87)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+at org.testng.TestNG.runSuites(TestNG.java:1049)
+at org.testng.TestNG.run(TestNG.java:1017)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:135)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeMulti(TestNGDirectoryTestSuite.java:193)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:94)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:146)
+at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:383)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:344)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:125)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:417)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.IllegalArgumentException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetTransformerThrowsExceptionIfTheBeanTransformerIsNull -->
+        <test-method signature="testValidateThrowsExceptionIfTheGivenBeanIsInvalid()[pri:0, instance:com.hotels.beans.BeanUtilsTest@440ef8d]" started-at="2019-05-26T20:28:39Z" name="testValidateThrowsExceptionIfTheGivenBeanIsInvalid" finished-at="2019-05-26T20:28:39Z" duration-ms="1" status="PASS">
+          <exception class="com.hotels.beans.error.InvalidBeanException">
+            <message>
+              <![CDATA[com.hotels.beans.sample.immutable.ImmutableToFoo.list must not be null;com.hotels.beans.sample.immutable.ImmutableToFoo.nestedObjectList must not be null;com.hotels.beans.sample.immutable.ImmutableToFoo.nestedObject must not be null;com.hotels.beans.sample.immutable.ImmutableToFoo.id must not be null]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.hotels.beans.error.InvalidBeanException: com.hotels.beans.sample.immutable.ImmutableToFoo.list must not be null;com.hotels.beans.sample.immutable.ImmutableToFoo.nestedObjectList must not be null;com.hotels.beans.sample.immutable.ImmutableToFoo.nestedObject must not be null;com.hotels.beans.sample.immutable.ImmutableToFoo.id must not be null
+at com.hotels.beans.validator.ValidatorImpl.validate(ValidatorImpl.java:91)
+at com.hotels.beans.BeanUtilsTest.testValidateThrowsExceptionIfTheGivenBeanIsInvalid(BeanUtilsTest.java:150)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+at org.testng.TestNG.runSuites(TestNG.java:1049)
+at org.testng.TestNG.run(TestNG.java:1017)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:135)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeMulti(TestNGDirectoryTestSuite.java:193)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:94)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:146)
+at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:383)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:344)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:125)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:417)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.hotels.beans.error.InvalidBeanException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testValidateThrowsExceptionIfTheGivenBeanIsInvalid -->
+        <test-method signature="testValidateWorksProperly()[pri:0, instance:com.hotels.beans.BeanUtilsTest@440ef8d]" started-at="2019-05-26T20:28:39Z" name="testValidateWorksProperly" finished-at="2019-05-26T20:28:39Z" duration-ms="7" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testValidateWorksProperly -->
+      </class> <!-- com.hotels.beans.BeanUtilsTest -->
+      <class name="com.hotels.beans.performance.PerformanceTest">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.hotels.beans.performance.PerformanceTest@6f315b08]" started-at="2019-05-26T20:28:39Z" name="beforeClass" finished-at="2019-05-26T20:28:39Z" duration-ms="20" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method signature="testCopyPropertiesGetsCompletedInTheExpectedTime(double, int, java.lang.Object, java.lang.Class, double)[pri:0, instance:com.hotels.beans.performance.PerformanceTest@6f315b08]" started-at="2019-05-26T20:28:39Z" name="testCopyPropertiesGetsCompletedInTheExpectedTime" data-provider="dataPerformanceTest" finished-at="2019-05-26T20:28:39Z" duration-ms="66" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1000.0]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[0]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[FromFooSimple]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.mutable.MutableToFooSimple]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[0.2]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testCopyPropertiesGetsCompletedInTheExpectedTime -->
+        <test-method signature="testCopyPropertiesGetsCompletedInTheExpectedTime(double, int, java.lang.Object, java.lang.Class, double)[pri:0, instance:com.hotels.beans.performance.PerformanceTest@6f315b08]" started-at="2019-05-26T20:28:39Z" name="testCopyPropertiesGetsCompletedInTheExpectedTime" data-provider="dataPerformanceTest" finished-at="2019-05-26T20:28:40Z" duration-ms="655" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1000.0]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[0]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[FromFooSubClass(surname=surname, phone=123456, check=true, amount=10)]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.mutable.MutableToFooSubClass]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[1.0]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testCopyPropertiesGetsCompletedInTheExpectedTime -->
+        <test-method signature="testCopyPropertiesGetsCompletedInTheExpectedTime(double, int, java.lang.Object, java.lang.Class, double)[pri:0, instance:com.hotels.beans.performance.PerformanceTest@6f315b08]" started-at="2019-05-26T20:28:40Z" name="testCopyPropertiesGetsCompletedInTheExpectedTime" data-provider="dataPerformanceTest" finished-at="2019-05-26T20:28:40Z" duration-ms="83" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1000.0]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[0]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[FromFooSimple]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFooSimple]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[0.2]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testCopyPropertiesGetsCompletedInTheExpectedTime -->
+        <test-method signature="testCopyPropertiesGetsCompletedInTheExpectedTime(double, int, java.lang.Object, java.lang.Class, double)[pri:0, instance:com.hotels.beans.performance.PerformanceTest@6f315b08]" started-at="2019-05-26T20:28:40Z" name="testCopyPropertiesGetsCompletedInTheExpectedTime" data-provider="dataPerformanceTest" finished-at="2019-05-26T20:28:40Z" duration-ms="525" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1000.0]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[0]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[FromFooSubClass(surname=surname, phone=123456, check=true, amount=10)]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.immutable.ImmutableToFooSubClass]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[1.0]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testCopyPropertiesGetsCompletedInTheExpectedTime -->
+        <test-method signature="testCopyPropertiesGetsCompletedInTheExpectedTime(double, int, java.lang.Object, java.lang.Class, double)[pri:0, instance:com.hotels.beans.performance.PerformanceTest@6f315b08]" started-at="2019-05-26T20:28:40Z" name="testCopyPropertiesGetsCompletedInTheExpectedTime" data-provider="dataPerformanceTest" finished-at="2019-05-26T20:28:41Z" duration-ms="633" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1000.0]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[0]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[FromFoo]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[class com.hotels.beans.sample.mixed.MixedToFoo]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[1.0]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testCopyPropertiesGetsCompletedInTheExpectedTime -->
+      </class> <!-- com.hotels.beans.performance.PerformanceTest -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>

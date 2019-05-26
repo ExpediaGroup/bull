@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrayPopulator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Bean Utils Light Library</a> &gt; <a href="index.source.html" class="el_package">com.hotels.beans.populator</a> &gt; <span class="el_source">ArrayPopulator.java</span></div><h1>ArrayPopulator.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.beans.populator;
+
+import static java.util.Arrays.stream;
+
+import java.lang.reflect.Field;
+
+import com.hotels.beans.transformer.Transformer;
+
+/**
+ * Populator for primitive types array.
+ */
+class ArrayPopulator extends Populator&lt;Object&gt; implements ICollectionPopulator&lt;Object&gt; {
+
+    /**
+     * Default constructor.
+     * @param beanTransformer the bean transformer containing the field name mapping and transformation functions
+     */
+    ArrayPopulator(final Transformer beanTransformer) {
+<span class="fc" id="L35">        super(beanTransformer);</span>
+<span class="fc" id="L36">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getPopulatedObject(final Field field, final Object fieldValue) {
+<span class="fc" id="L43">        return getPopulatedObject(field.getType(), reflectionUtils.getArrayType(field), fieldValue, null);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getPopulatedObject(final Class&lt;?&gt; fieldType, final Class&lt;?&gt; genericFieldType, final Object fieldValue, final Class&lt;?&gt; nestedGenericClass) {
+        final Object res;
+<span class="pc bpc" id="L52" title="1 of 4 branches missed.">        if (classUtils.isPrimitiveTypeArray(fieldValue) || classUtils.isPrimitiveOrSpecialType(genericFieldType)) {</span>
+<span class="fc" id="L53">            res = fieldValue;</span>
+        } else {
+<span class="fc" id="L55">            res = stream((Object[]) fieldValue)</span>
+                    //.parallel()
+<span class="fc bfc" id="L57" title="All 2 branches covered.">                    .map(o -&gt; classUtils.isPrimitiveOrSpecialType(o.getClass()) ? o : transform(o, genericFieldType)).toArray();</span>
+        }
+<span class="fc" id="L59">        return res;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

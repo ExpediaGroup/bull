@@ -1,0 +1,9 @@
+
+${AnsiStyle.BOLD}${Ansi.RED} ,/         \,
+${AnsiStyle.BOLD}${Ansi.RED}((__,-"""-,__))${Ansi.BRIGHT_BLACK}  _____________  _____________
+${AnsiStyle.BOLD}${Ansi.RED} `--)~   ~(--` ${Ansi.BRIGHT_BLACK}  ___  __ )_  / / /__  /___  /
+${AnsiStyle.BOLD}${Ansi.RED}.-'(       )`-,${Ansi.BRIGHT_BLACK}  __  __  |  / / /__  / __  /
+${AnsiStyle.BOLD}${Ansi.RED}`~~`d\   /b`~~`${Ansi.BRIGHT_BLACK}  _  /_/ // /_/ / _  /___  /___
+${AnsiStyle.BOLD}${Ansi.RED}    |     |    ${Ansi.BRIGHT_BLACK}  /_____/ \____/  /_____/_____/
+${AnsiStyle.BOLD}${Ansi.RED}    (O___O)  ${AnsiStyle.NORMAL}${Ansi.DEFAULT}:: ${Ansi.BRIGHT_BLACK}©${Ansi.CYAN}Powered by ${AnsiStyle.BOLD}Checkout Team Rome${AnsiStyle.NORMAL}${Ansi.DEFAULT} ::
+${AnsiStyle.BOLD}${Ansi.RED}     `---` ${AnsiStyle.NORMAL}${Ansi.GREEN}:: Running Spring Boot${spring-boot.formatted-version} ::  ${Ansi.DEFAULT}

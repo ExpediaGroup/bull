@@ -1,0 +1,19 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+BULL - Common,com.hotels.beans.constant,MethodPrefix,0,38,0,0,0,5,0,2,0,2
+BULL - Common,com.hotels.beans.constant,Punctuation,0,70,0,0,0,7,0,3,0,3
+BULL - Common,com.hotels.beans.constant,ClassType,7,34,2,0,1,4,2,1,1,1
+BULL - Common,com.hotels.beans.constant,Filters,0,40,1,7,0,8,1,7,0,4
+BULL - Common,com.hotels.beans.utils,ClassUtils,5,1226,10,84,1,212,10,108,0,71
+BULL - Common,com.hotels.beans.utils,ReflectionUtils,89,792,9,45,17,168,9,56,0,38
+BULL - Common,com.hotels.beans.validator,ValidatorImpl,0,92,0,2,0,26,0,9,0,8
+BULL - Common,com.hotels.beans.validator,Validator,0,17,0,4,0,6,0,4,0,2
+BULL - Common,com.hotels.beans.model,ItemType.ItemTypeBuilder,6,21,0,0,0,1,1,4,1,4
+BULL - Common,com.hotels.beans.model,MapType,0,15,0,0,0,3,0,3,0,3
+BULL - Common,com.hotels.beans.model,ItemType,0,19,0,0,0,3,0,4,0,4
+BULL - Common,com.hotels.beans.error,MissingMethodException,0,7,0,0,0,4,0,2,0,2
+BULL - Common,com.hotels.beans.error,InvalidBeanException,9,4,0,0,4,2,2,1,2,1
+BULL - Common,com.hotels.beans.error,MissingFieldException,0,4,0,0,0,2,0,1,0,1
+BULL - Common,com.hotels.beans.error,InstanceCreationException,0,5,0,0,0,2,0,1,0,1
+BULL - Common,com.hotels.beans.base,Defaults,0,50,0,16,0,14,0,9,0,1
+BULL - Common,com.hotels.beans.cache,CacheManagerFactory,0,21,0,0,0,3,0,3,0,3
+BULL - Common,com.hotels.beans.cache,CacheManager,0,54,0,4,0,11,0,7,0,5

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.18">
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/main/java/com/hotels/beans/cache/CacheManagerFactory.java">
+<error line="31" column="1" severity="warning" message="Utility classes should not have a public or default constructor." source="com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck"/>
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/main/java/com/hotels/beans/utils/ClassUtils.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/main/java/com/hotels/beans/utils/ReflectionUtils.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/main/java/com/hotels/beans/constant/Filters.java">
+<error line="32" column="1" severity="warning" message="Utility classes should not have a public or default constructor." source="com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck"/>
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/main/java/com/hotels/beans/base/Defaults.java">
+<error line="37" column="1" severity="warning" message="Utility classes should not have a public or default constructor." source="com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck"/>
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/validator/ValidatorTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/cache/CacheManagerTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/cache/CacheManagerFactoryTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/utils/ClassUtilsTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/utils/ReflectionUtilsTest.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/FromFooSimpleNoGetters.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mutable/MutableToFoo.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mutable/MutableToFooSimpleNoSetters.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mutable/MutableToFooAdvFields.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mutable/MutableToFooWithBuilderMultipleConstructor.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mutable/MutableToFooNotExistingFields.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mutable/MutableToSubFoo.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mutable/MutableToFooInvalid.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mutable/MutableToFooSubClass.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mutable/MutableToFooSimple.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mutable/MutableToFooWithBuilder.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/FromFooSubClass.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooSimple.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooInvalid.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooSubClass.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooMissingCustomAnnotation.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooNotExistingFields.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooMap.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooDiffFields.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToSubFooCustomAnnotation.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFoo.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToSubFoo.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooSimpleBoolean.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooAdvFields.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooWithBuilder.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooCustomAnnotation.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableToFooSimpleWrongTypes.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/immutable/ImmutableFlatToFoo.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/FromFooMap.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/FromFooWithPrimitiveFields.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mixed/MixedToFooWithBuilder.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mixed/MixedToFooNotExistingFields.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mixed/MixedToFooStaticField.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mixed/MixedToFooMissingConstructor.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mixed/MixedToFooDiffFields.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mixed/MixedToFooMissingField.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mixed/MixedToFooMissingAllArgsConstructor.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/mixed/MixedToFoo.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/FromSubFoo.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/FromFooSimpleBooleanField.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/AbstractClass.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/FromFooAdvFields.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/FromFooSimple.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/sample/FromFoo.java">
+</file>
+<file name="/Users/borriello.fabio/Documents/Development/hotelsDotCom/bull/bull-common/src/test/java/com/hotels/beans/base/DefaultsTest.java">
+</file>
+</checkstyle>

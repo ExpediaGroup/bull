@@ -1,0 +1,15 @@
+# Created at 2019-05-26T22:28:36.187
+WARNING: An illegal reflective access operation has occurred
+
+# Created at 2019-05-26T22:28:36.187
+WARNING: Illegal reflective access by com.shazam.shazamcrest.CyclicReferenceDetector (file:/Users/borriello.fabio/.m2/repository/com/shazam/shazamcrest/0.11/shazamcrest-0.11.jar) to field java.math.BigInteger.signum
+
+# Created at 2019-05-26T22:28:36.188
+WARNING: Please consider reporting this to the maintainers of com.shazam.shazamcrest.CyclicReferenceDetector
+
+# Created at 2019-05-26T22:28:36.188
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created at 2019-05-26T22:28:36.188
+WARNING: All illegal access operations will be denied in a future release
+
