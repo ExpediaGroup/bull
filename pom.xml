@@ -248,7 +248,7 @@
                                     <classifier>javadoc</classifier>
                                     <classesDirectory>${project.parent.basedir}/target/site/apidocs</classesDirectory>
                                     <includes>**/*</includes>
-                                    <finalName>${build.finalName}</finalName>
+                                    <finalName>${project.build.finalName}</finalName>
                                 </configuration>
                                 <id>pack-javadoc</id>
                                 <phase>package</phase>
