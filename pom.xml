@@ -235,6 +235,38 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>prepare-doc</id>
+            <properties>
+                <checkstyle.check.skip>true</checkstyle.check.skip>
+                <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
+                <jacoco.check.skip>true</jacoco.check.skip>
+                <pmd.check.skip>true</pmd.check.skip>
+                <javadoc.skip>true</javadoc.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                    <classifier>javadoc</classifier>
+                                    <classesDirectory>${project.parent.basedir}/target/site/apidocs</classesDirectory>
+                                    <includes>**/*</includes>
+                                    <finalName>${build.finalName}</finalName>
+                                </configuration>
+                                <id>pack-javadoc</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <!-- build configuration -->
@@ -273,22 +305,6 @@
                     <executions>
                         <execution>
                             <id>attach-sources</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven.javadoc.plugin.version}</version>
-                    <configuration>
-                        <skip>${javadoc.skip}</skip>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
                             <goals>
                                 <goal>jar</goal>
                             </goals>
@@ -502,6 +518,23 @@
                             <goal>site</goal>
                         </goals>
                         <phase>site</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.plugin.version}</version>
+                <configuration>
+                    <skip>${javadoc.skip}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
