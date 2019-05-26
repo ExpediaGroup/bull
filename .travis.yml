@@ -18,7 +18,7 @@ jobs:
     # If the branch is not master it just builds the application
     - stage: "Build"
       name: "Build and Test"
-      install: travis_retry mvn clean install -DskipTests -Dmaven.test.skip=true
+      install: travis_retry mvn clean install
     - stage: "Site Build and Quality check"
       name: "Publishing site and performing a code quality check"
       if: type NOT IN (pull_request) AND tag IS present
