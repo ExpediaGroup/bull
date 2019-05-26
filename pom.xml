@@ -217,6 +217,13 @@
         <!-- release profile -->
         <profile>
             <id>release</id>
+            <properties>
+                <checkstyle.check.skip>true</checkstyle.check.skip>
+                <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
+                <jacoco.check.skip>true</jacoco.check.skip>
+                <pmd.check.skip>true</pmd.check.skip>
+                <javadoc.skip>true</javadoc.skip>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -233,20 +240,6 @@
                             </execution>
                         </executions>
                     </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>prepare-doc</id>
-            <properties>
-                <checkstyle.check.skip>true</checkstyle.check.skip>
-                <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
-                <jacoco.check.skip>true</jacoco.check.skip>
-                <pmd.check.skip>true</pmd.check.skip>
-                <javadoc.skip>true</javadoc.skip>
-            </properties>
-            <build>
-                <plugins>
                     <plugin>
                         <artifactId>maven-jar-plugin</artifactId>
                         <executions>
