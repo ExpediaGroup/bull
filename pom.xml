@@ -23,7 +23,6 @@
     <modules>
         <module>bean-utils-library</module>
         <module>bull-common</module>
-        <module>bull-converter</module>
     </modules>
 
     <properties>
