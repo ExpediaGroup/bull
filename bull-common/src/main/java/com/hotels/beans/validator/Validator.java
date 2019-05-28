@@ -54,7 +54,7 @@ public interface Validator {
 
     /**
      * Validate that the specified argument is not {@code null};
-     * otherwise throws an {@link IllegalArgumentException} with the specified message.
+     * otherwise throws an {@link IllegalArgumentException}.
      * @param object  the object to check
      * @param <T> the object type
      * @throws IllegalArgumentException if the object is {@code null}
