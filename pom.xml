@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <name>BULL - Bean Utils Light Library Parent</name>
+    <name>BULL - Bean Utils Light Library</name>
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
@@ -213,9 +213,9 @@
                 </plugins>
             </build>
         </profile>
-        <!-- pack all modules javadoc into a single jar -->
+        <!-- release profile -->
         <profile>
-            <id>prepare-doc</id>
+            <id>release</id>
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
@@ -223,32 +223,6 @@
                 <pmd.check.skip>true</pmd.check.skip>
                 <javadoc.skip>true</javadoc.skip>
             </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-jar-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <configuration>
-                                    <classifier>javadoc</classifier>
-                                    <classesDirectory>${project.parent.basedir}/target/site/apidocs</classesDirectory>
-                                    <includes>**/*</includes>
-                                    <finalName>${build.finalName}</finalName>
-                                </configuration>
-                                <id>pack-javadoc</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <!-- release profile -->
-        <profile>
-            <id>release</id>
             <build>
                 <plugins>
                     <plugin>
@@ -261,6 +235,25 @@
                                 <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- replace the bean-utils-library javadoc jar file with the one containing all modules -->
+                    <plugin>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                    <classifier>javadoc</classifier>
+                                    <classesDirectory>${project.parent.basedir}/target/site/apidocs</classesDirectory>
+                                    <includes>**/*</includes>
+                                    <finalName>${project.build.finalName}</finalName>
+                                </configuration>
+                                <id>pack-javadoc</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
                                 </goals>
                             </execution>
                         </executions>
