@@ -19,6 +19,7 @@ package com.hotels.beans.transformer;
 import static java.util.Arrays.stream;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.range;
@@ -37,8 +38,10 @@ import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.constant.ClassType;
@@ -305,7 +308,6 @@ public class TransformerImpl extends AbstractTransformer {
      * @return the field value
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
-    @SuppressWarnings("unchecked")
     private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
         String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
         Class<?> fieldType = field.getType();
@@ -313,8 +315,8 @@ public class TransformerImpl extends AbstractTransformer {
             return defaultValue(fieldType);
         }
         boolean primitiveType = classUtils.isPrimitiveType(fieldType);
-        FieldTransformer transformerFunction = getTransformerFunction(field, fieldBreadcrumb);
-        boolean isTransformerFunctionDefined = nonNull(transformerFunction);
+        List<FieldTransformer> transformerFunction = getTransformerFunction(sourceObj.getClass(), field, primitiveType, fieldBreadcrumb);
+        boolean isTransformerFunctionDefined = !transformerFunction.isEmpty();
         Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, isTransformerFunctionDefined);
         if (nonNull(fieldValue)) {
             // is not a primitive type or an optional && there are no transformer function
@@ -327,10 +329,19 @@ public class TransformerImpl extends AbstractTransformer {
         } else if (primitiveType && !isTransformerFunctionDefined) {
             fieldValue = defaultValue(fieldType); // assign the default value
         }
-        if (isTransformerFunctionDefined) {
-            fieldValue = transformerFunction.getTransformedObject(fieldValue);
-        }
+        fieldValue = getTransformedValue(transformerFunction, isTransformerFunctionDefined, fieldValue);
         return fieldValue;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Object getTransformedValue(final List<FieldTransformer> transformerFunctions, final boolean isTransformerFunctionDefined, final Object fieldValue) {
+        Object transformedValue = fieldValue;
+        if (isTransformerFunctionDefined) {
+            for (FieldTransformer transformerFunction : transformerFunctions) {
+                transformedValue = transformerFunction.getTransformedObject(transformedValue);
+            }
+        }
+        return transformedValue;
     }
 
     /**
@@ -371,13 +382,24 @@ public class TransformerImpl extends AbstractTransformer {
     }
 
     /**
-     * Retrieves the transformer function.
+     * Retrieves the transformer function. If the field type is different and they are primitive
+     * a conversion function is automatically added.
+     * @param sourceObjectClass the source object class
      * @param field The field on which the transformation should be applied.
+     * @param isDestinationFieldPrimitiveType indicates if the destination field type is primitive or not
      * @param breadcrumb The full field path on which the transformation should be applied.
      * @return the transformer function.
      */
-    private FieldTransformer getTransformerFunction(final Field field, final String breadcrumb) {
-        return settings.getFieldsTransformers().get(settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb);
+    private List<FieldTransformer> getTransformerFunction(final Class<?> sourceObjectClass, final Field field,
+        final boolean isDestinationFieldPrimitiveType, final String breadcrumb) {
+        List<FieldTransformer> fieldTransformers = new ArrayList<>();
+        if (isDestinationFieldPrimitiveType) {
+            conversionAnalyzer.getConversionFunction(sourceObjectClass, field.getType(), isDestinationFieldPrimitiveType)
+                    .ifPresent(conversionFunction -> fieldTransformers.add(new FieldTransformer<>(field.getName(), conversionFunction)));
+        }
+        ofNullable(settings.getFieldsTransformers().get(settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb))
+                .ifPresent(fieldTransformers::add);
+        return fieldTransformers;
     }
 
     /**
