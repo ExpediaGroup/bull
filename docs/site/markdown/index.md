@@ -33,3 +33,17 @@ This BeanUtils library is a utility library for managing Bean objects. The libra
     * allows to set the default value for all objects not existing in the source object.
     * allows to skip transformation for a given set of fields.
 
+- #### Bean Validation: 
+
+    Validates a Java Bean against a set of rules can be precious, especially when we need to be sure that the object data is compliant with our expectations.
+    The validation works with both the default `javax.constraints` provided by Java and the custom one
+
+    ##### Features:
+    * Java Bean validation
+    * retrieve the violated constraints
+    
+# Related articles
+
+ - DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)
+ - InfoQ: [How Expedia Is Getting Rid of Java Bean Transformers](https://www.infoq.com/articles/expedia-rid-of-bean-transformers/)
+
