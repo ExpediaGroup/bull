@@ -629,12 +629,19 @@ Set<ConstraintViolation<Object>> violatedConstraints = beanUtils.getValidator().
 
 A detailed project documentation is available [here](https://hotelsdotcom.github.io/bull), including some samples for [testing the library](https://hotelsdotcom.github.io/bull/transformer/testing.html) inside your project.
 
+An article that explains how it works, with suggestion and examples is available on DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li) 
+
 ## Credits
 
 Created by: [Fabio Borriello](https://github.com/fborriello) with the contribution of: [Patrizio Munzi](https://github.com/patriziomunzi), 
 [Andrea Marsiglia](https://github.com/AndreaMars94), [Giorgio Delle Grottaglie](https://github.com/geordie--) & the Hotels.com's Checkout team in Rome.
 
 The application's logo has been designed by: Rob Light.
+
+## Related articles
+
+ - DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)
+ - InfoQ: [How Expedia Is Getting Rid of Java Bean Transformers](https://www.infoq.com/articles/expedia-rid-of-bean-transformers/)
 
 ## Legal
 
