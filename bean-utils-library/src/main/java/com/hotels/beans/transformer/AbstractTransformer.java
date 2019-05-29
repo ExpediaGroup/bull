@@ -24,6 +24,7 @@ import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import java.util.Map;
 
 import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.conversion.ConversionAnalyzer;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.utils.ClassUtils;
@@ -62,6 +63,11 @@ abstract class AbstractTransformer implements Transformer {
     final Validator validator;
 
     /**
+     * Conversion analyzer. It allows to automatically convert common field types.
+     */
+    final ConversionAnalyzer conversionAnalyzer;
+
+    /**
      * Default constructor.
      */
     AbstractTransformer() {
@@ -69,6 +75,7 @@ abstract class AbstractTransformer implements Transformer {
         this.classUtils = new ClassUtils();
         this.validator = new ValidatorImpl();
         this.settings = new TransformerSettings();
+        this.conversionAnalyzer = new ConversionAnalyzer();
         this.cacheManager = getCacheManager("transformer");
     }
 
