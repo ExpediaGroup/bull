@@ -5,7 +5,5 @@ com.hotels.beans.cache
 com.hotels.beans.constant
 com.hotels.beans.error
 com.hotels.beans.model
-com.hotels.beans.populator
-com.hotels.beans.transformer
 com.hotels.beans.utils
 com.hotels.beans.validator
