@@ -36,7 +36,6 @@
             <item name="Samples" href="/validator/samples.html" />
         </menu>
         <menu name="Quality check">
-            <item name="Test coverage" href="jacoco/index.html" />
             <item name="SonarCloud" href="https://sonarcloud.io/dashboard?id=BULL" />
         </menu>
         <menu name="Related Articles">
