@@ -19,9 +19,9 @@ under the License.
 -->
 <rss version="0.91">
   <channel>
-    <title>BULL - Bean Utils Light Library Parent - Checkstyle report</title>
+    <title>BULL - Bean Utils Light Library - Checkstyle report</title>
     <link>https://github.com/HotelsDotCom/bull</link>
-    <description>BULL - Bean Utils Light Library Parent - Checkstyle report</description>
+    <description>BULL - Bean Utils Light Library - Checkstyle report</description>
     <language>en-us</language>
     <copyright>&#169;2019 Hotels.com (Data Platform Team)</copyright>
     <item>

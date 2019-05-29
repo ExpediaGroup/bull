@@ -1,5 +1,0 @@
-2019-05-26 22:28:39 [main] [INFO] c.h.b.performance.PerformanceTest - Object: class com.hotels.beans.sample.mutable.MutableToFooSimple, Average transformation time: 0.035 ms
-2019-05-26 22:28:40 [main] [INFO] c.h.b.performance.PerformanceTest - Object: class com.hotels.beans.sample.mutable.MutableToFooSubClass, Average transformation time: 0.597 ms
-2019-05-26 22:28:40 [main] [INFO] c.h.b.performance.PerformanceTest - Object: class com.hotels.beans.sample.immutable.ImmutableToFooSimple, Average transformation time: 0.067 ms
-2019-05-26 22:28:40 [main] [INFO] c.h.b.performance.PerformanceTest - Object: class com.hotels.beans.sample.immutable.ImmutableToFooSubClass, Average transformation time: 0.516 ms
-2019-05-26 22:28:41 [main] [INFO] c.h.b.performance.PerformanceTest - Object: class com.hotels.beans.sample.mixed.MixedToFoo, Average transformation time: 0.622 ms
