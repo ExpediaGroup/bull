@@ -41,7 +41,7 @@
         </menu>
         <menu name="Related Articles">
             <item name="DZone" href="https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li" />
-            <item name="InfoQ" href="jacoco/index.html" />
+            <item name="InfoQ" href="https://www.infoq.com/articles/expedia-rid-of-bean-transformers/" />
         </menu>
         <menu ref="reports" />
     </body>

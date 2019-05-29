@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.4.3] 2019.05.29
+#### Changed
+* Improved Javadoc
+* Added reference to the articles published on **DZone** and **InfoQ**
+
 ### [1.4.2] 2019.05.24
 #### Added
 * Added possibility to define transformer function without arguments if not needed (see: [Issue 62](https://github.com/HotelsDotCom/bull/issues/62)).
