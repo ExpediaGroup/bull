@@ -65,13 +65,13 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>      @Override
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> &lt;T, K&gt; K transform(<strong class="jxr_keyword">final</strong> T sourceObj, <strong class="jxr_keyword">final</strong> Class&lt;? <strong class="jxr_keyword">extends</strong> K&gt; targetClass, <strong class="jxr_keyword">final</strong> String breadcrumb) {
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">final</strong> K k;
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          <strong class="jxr_keyword">final</strong> ClassType classType = classUtils.getClassType(targetClass);
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/constant/ClassType.html">ClassType</a> classType = classUtils.getClassType(targetClass);
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          <strong class="jxr_keyword">if</strong> (classType.is(MUTABLE)) {
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>              <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>                  k = classUtils.getNoArgsConstructor(targetClass).get();
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>                  injectAllFields(sourceObj, k, breadcrumb);
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>              } <strong class="jxr_keyword">catch</strong> (Exception e) {
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>                  <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> InvalidBeanException(e.getMessage(), e);
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>                  <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/error/InvalidBeanException.html">InvalidBeanException</a>(e.getMessage(), e);
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>              }
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>          } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>              k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass), breadcrumb);
@@ -117,7 +117,7 @@
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>         <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>             <strong class="jxr_keyword">return</strong> classUtils.getInstance(constructor, constructorArgs);
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> Exception e) {
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> InvalidBeanException(<span class="jxr_string">"Constructor invoked with arguments. Expected: "</span> + constructor + <span class="jxr_string">"; Found: "</span>
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/error/InvalidBeanException.html">InvalidBeanException</a>(<span class="jxr_string">"Constructor invoked with arguments. Expected: "</span> + constructor + <span class="jxr_string">"; Found: "</span>
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>                     + getFormattedConstructorArgs(targetClass, constructorArgs)
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>                     + <span class="jxr_string">". Double check that each "</span> + targetClass.getSimpleName() + <span class="jxr_string">"'s field have the same type and name than the source object: "</span>
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>                     + sourceObj.getClass().getName() + <span class="jxr_string">" otherwise specify a transformer configuration. Error message: "</span> + e.getMessage(), e);

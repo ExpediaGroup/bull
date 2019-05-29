@@ -47,17 +47,17 @@
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">     * Reflection utils instance {@link ReflectionUtils}.</em>
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">final</strong> ReflectionUtils reflectionUtils;
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/utils/ReflectionUtils.html">ReflectionUtils</a> reflectionUtils;
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment">     * Class utils instance {@link ClassUtils}.</em>
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">final</strong> ClassUtils classUtils;
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/utils/ClassUtils.html">ClassUtils</a> classUtils;
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment">     * CacheManager instance {@link CacheManager}.</em>
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">final</strong> CacheManager cacheManager;
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/cache/CacheManager.html">CacheManager</a> cacheManager;
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment">     * Contains both the field name mapping and the lambda function to be applied on fields.</em>
@@ -67,15 +67,15 @@
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment">     * Bean Validator. It offers the possibility to validate a given Java Bean against a set of defined constraints.</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>      <strong class="jxr_keyword">final</strong> Validator validator;
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>      <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/validator/Validator.html">Validator</a> validator;
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     * Default constructor.</em>
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      <a href="../../../../com/hotels/beans/transformer/AbstractTransformer.html">AbstractTransformer</a>() {
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">this</strong>.reflectionUtils = <strong class="jxr_keyword">new</strong> ReflectionUtils();
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          <strong class="jxr_keyword">this</strong>.classUtils = <strong class="jxr_keyword">new</strong> ClassUtils();
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          <strong class="jxr_keyword">this</strong>.validator = <strong class="jxr_keyword">new</strong> ValidatorImpl();
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">this</strong>.reflectionUtils = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/utils/ReflectionUtils.html">ReflectionUtils</a>();
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          <strong class="jxr_keyword">this</strong>.classUtils = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/utils/ClassUtils.html">ClassUtils</a>();
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>          <strong class="jxr_keyword">this</strong>.validator = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/validator/ValidatorImpl.html">ValidatorImpl</a>();
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>          <strong class="jxr_keyword">this</strong>.settings = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/transformer/TransformerSettings.html">TransformerSettings</a>();
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">this</strong>.cacheManager = getCacheManager(<span class="jxr_string">"transformer"</span>);
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      }

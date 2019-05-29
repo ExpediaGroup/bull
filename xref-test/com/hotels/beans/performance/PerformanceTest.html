@@ -83,12 +83,12 @@
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> WAIT_INTERVAL = 1000;
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> NO_WAIT_INTERVAL = 0;
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>  
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> FromFoo fromFoo;
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> FromFooSimple fromFooSimple;
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../com/hotels/beans/sample/FromFoo.html">FromFoo</a> fromFoo;
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../com/hotels/beans/sample/FromFooSimple.html">FromFooSimple</a> fromFooSimple;
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> List&lt;FromSubFoo&gt; fromSubFooList;
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> List&lt;String&gt; sourceFooSimpleList;
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> FromSubFoo fromSubFoo;
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> FromFooSubClass fromFooSubClass;
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../com/hotels/beans/sample/FromSubFoo.html">FromSubFoo</a> fromSubFoo;
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../com/hotels/beans/sample/FromFooSubClass.html">FromFooSubClass</a> fromFooSubClass;
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">     * The class to be tested.</em>
@@ -158,7 +158,7 @@
 <a class="jxr_linenumber" name="L150" href="#L150">150</a>         subFooSampleMap.put(ITEM_1, ITEM_2);
 <a class="jxr_linenumber" name="L151" href="#L151">151</a>         subFooComplexMap.put(ITEM_1, singletonList(ITEM_2));
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>         subFooVeryComplexMap.put(ITEM_1, subFooSampleMap);
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>         fromSubFoo = <strong class="jxr_keyword">new</strong> FromSubFoo(SUB_FOO_NAME, SUB_FOO_PHONE_NUMBERS, subFooSampleMap, subFooComplexMap, subFooVeryComplexMap);
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>         fromSubFoo = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/FromSubFoo.html">FromSubFoo</a>(SUB_FOO_NAME, SUB_FOO_PHONE_NUMBERS, subFooSampleMap, subFooComplexMap, subFooVeryComplexMap);
 <a class="jxr_linenumber" name="L154" href="#L154">154</a>         sourceFooSimpleList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L155" href="#L155">155</a>         IntStream.range(0, TOTAL_SIMPLE_OBJECTS).parallel().forEach(i -&gt; sourceFooSimpleList.add(valueOf(i)));
 <a class="jxr_linenumber" name="L156" href="#L156">156</a>         fromSubFooList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
@@ -172,24 +172,24 @@
 <a class="jxr_linenumber" name="L164" href="#L164">164</a> <em class="jxr_javadoccomment">     * Creates a {@link FromFoo} instance.</em>
 <a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     * @return the {@link FromFoo} instance.</em>
 <a class="jxr_linenumber" name="L166" href="#L166">166</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>     <strong class="jxr_keyword">private</strong> FromFoo createFromFoo() {
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> FromFoo(NAME, ID, fromSubFooList, sourceFooSimpleList, fromSubFoo);
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../com/hotels/beans/sample/FromFoo.html">FromFoo</a> createFromFoo() {
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/FromFoo.html">FromFoo</a>(NAME, ID, fromSubFooList, sourceFooSimpleList, fromSubFoo);
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>     }
 <a class="jxr_linenumber" name="L170" href="#L170">170</a> 
 <a class="jxr_linenumber" name="L171" href="#L171">171</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L172" href="#L172">172</a> <em class="jxr_javadoccomment">     * Creates a {@link FromFooSimple} instance.</em>
 <a class="jxr_linenumber" name="L173" href="#L173">173</a> <em class="jxr_javadoccomment">     * @return the {@link FromFooSimple} instance.</em>
 <a class="jxr_linenumber" name="L174" href="#L174">174</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>     <strong class="jxr_keyword">private</strong> FromFooSimple createFromFooSimple() {
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> FromFooSimple(NAME, ID);
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../com/hotels/beans/sample/FromFooSimple.html">FromFooSimple</a> createFromFooSimple() {
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/FromFooSimple.html">FromFooSimple</a>(NAME, ID);
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>     }
 <a class="jxr_linenumber" name="L178" href="#L178">178</a> 
 <a class="jxr_linenumber" name="L179" href="#L179">179</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L180" href="#L180">180</a> <em class="jxr_javadoccomment">     * Creates a {@link FromFooSubClass} instance.</em>
 <a class="jxr_linenumber" name="L181" href="#L181">181</a> <em class="jxr_javadoccomment">     * @return the {@link FromFooSubClass} instance.</em>
 <a class="jxr_linenumber" name="L182" href="#L182">182</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>     <strong class="jxr_keyword">private</strong> FromFooSubClass createFromFooSubClass() {
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> FromFooSubClass(fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObjectList(), fromFoo.getList(), fromFoo.getNestedObject(), SURNAME, PHONE, CHECK, AMOUNT);
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../com/hotels/beans/sample/FromFooSubClass.html">FromFooSubClass</a> createFromFooSubClass() {
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/FromFooSubClass.html">FromFooSubClass</a>(fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObjectList(), fromFoo.getList(), fromFoo.getNestedObject(), SURNAME, PHONE, CHECK, AMOUNT);
 <a class="jxr_linenumber" name="L185" href="#L185">185</a>     }
 <a class="jxr_linenumber" name="L186" href="#L186">186</a> 
 <a class="jxr_linenumber" name="L187" href="#L187">187</a>     <em class="jxr_javadoccomment">/**</em>

@@ -76,7 +76,7 @@
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>          <em class="jxr_comment">//GIVEN</em>
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          MixedToFooMissingAllArgsConstructor actual = underTest.transform(fromFoo, MixedToFooMissingAllArgsConstructor.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          <a href="../../../../com/hotels/beans/sample/mixed/MixedToFooMissingAllArgsConstructor.html">MixedToFooMissingAllArgsConstructor</a> actual = underTest.transform(fromFoo, MixedToFooMissingAllArgsConstructor.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>          assertThat(actual, sameBeanAs(fromFoo));
@@ -90,7 +90,7 @@
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>          <em class="jxr_comment">//GIVEN</em>
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>  
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>          <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>          MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a> actual = underTest.transform(fromFoo, MixedToFoo.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>  
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>          <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          assertThat(actual, sameBeanAs(fromFoo));
@@ -105,7 +105,7 @@
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>  
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>          <em class="jxr_comment">//WHEN</em>
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>          <strong class="jxr_keyword">final</strong> Transformer beanTransformer = underTest.withFieldMapping(<strong class="jxr_keyword">new</strong> FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>         MixedToFooDiffFields actual = beanTransformer.transform(fromFoo, MixedToFooDiffFields.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         <a href="../../../../com/hotels/beans/sample/mixed/MixedToFooDiffFields.html">MixedToFooDiffFields</a> actual = beanTransformer.transform(fromFoo, MixedToFooDiffFields.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L101" href="#L101">101</a> 
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>         <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>         assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
@@ -130,7 +130,7 @@
 <a class="jxr_linenumber" name="L122" href="#L122">122</a> 
 <a class="jxr_linenumber" name="L123" href="#L123">123</a>         <em class="jxr_comment">//WHEN</em>
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>         underTest.withFieldMapping(<strong class="jxr_keyword">new</strong> FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME)).withFieldTransformer(fieldTransformer);
-<a class="jxr_linenumber" name="L125" href="#L125">125</a>         MixedToFooDiffFields actual = underTest.transform(fromFoo, MixedToFooDiffFields.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>         <a href="../../../../com/hotels/beans/sample/mixed/MixedToFooDiffFields.html">MixedToFooDiffFields</a> actual = underTest.transform(fromFoo, MixedToFooDiffFields.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L126" href="#L126">126</a> 
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>         <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>         assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
@@ -150,7 +150,7 @@
 <a class="jxr_linenumber" name="L142" href="#L142">142</a>         underTest.setDefaultValueForMissingField(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L143" href="#L143">143</a> 
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>         <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>         MixedToFooMissingField actual = underTest.transform(fromFoo, MixedToFooMissingField.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>         <a href="../../../../com/hotels/beans/sample/mixed/MixedToFooMissingField.html">MixedToFooMissingField</a> actual = underTest.transform(fromFoo, MixedToFooMissingField.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L146" href="#L146">146</a> 
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>         assertNull(actual.getFooField());
 <a class="jxr_linenumber" name="L148" href="#L148">148</a>         underTest.setDefaultValueForMissingField(false);
@@ -174,12 +174,12 @@
 <a class="jxr_linenumber" name="L166" href="#L166">166</a>     @Test
 <a class="jxr_linenumber" name="L167" href="#L167">167</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions() {
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>         <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L169" href="#L169">169</a>         FromFooSimple fromFooSimple = <strong class="jxr_keyword">new</strong> FromFooSimple(NAME, ID);
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>         <a href="../../../../com/hotels/beans/sample/FromFooSimple.html">FromFooSimple</a> fromFooSimple = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/FromFooSimple.html">FromFooSimple</a>(NAME, ID);
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>         FieldTransformer&lt;Object, Integer&gt; ageFieldTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(AGE_FIELD_NAME, val -&gt; AGE);
 <a class="jxr_linenumber" name="L171" href="#L171">171</a> 
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>         <em class="jxr_comment">//WHEN</em>
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>         underTest.withFieldTransformer(ageFieldTransformer);
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>         MixedToFooNotExistingFields mixedObjectBean = underTest.transform(fromFooSimple, MixedToFooNotExistingFields.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>         <a href="../../../../com/hotels/beans/sample/mixed/MixedToFooNotExistingFields.html">MixedToFooNotExistingFields</a> mixedObjectBean = underTest.transform(fromFooSimple, MixedToFooNotExistingFields.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L175" href="#L175">175</a> 
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>         <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>         assertThat(mixedObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
@@ -194,7 +194,7 @@
 <a class="jxr_linenumber" name="L186" href="#L186">186</a>         underTest.skipTransformationForField(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
 <a class="jxr_linenumber" name="L187" href="#L187">187</a> 
 <a class="jxr_linenumber" name="L188" href="#L188">188</a>         <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>         MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>         <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a> actual = underTest.transform(fromFoo, MixedToFoo.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L190" href="#L190">190</a> 
 <a class="jxr_linenumber" name="L191" href="#L191">191</a>         <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L192" href="#L192">192</a>         assertEquals(fromFoo.getId(), actual.getId());
@@ -209,7 +209,7 @@
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>     @Test
 <a class="jxr_linenumber" name="L202" href="#L202">202</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformationOnAnExistingDestinationWorksProperly() {
 <a class="jxr_linenumber" name="L203" href="#L203">203</a>         <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L204" href="#L204">204</a>         MixedToFoo mixedToFoo = <strong class="jxr_keyword">new</strong> MixedToFoo(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>         <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a> mixedToFoo = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a>(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L205" href="#L205">205</a> 
 <a class="jxr_linenumber" name="L206" href="#L206">206</a>         <em class="jxr_comment">//WHEN</em>
 <a class="jxr_linenumber" name="L207" href="#L207">207</a>         underTest.skipTransformationForField().transform(fromFoo, mixedToFoo);
