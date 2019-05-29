@@ -5,7 +5,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>1.4.3-SNAPSHOT</version>
+    <version>1.4.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
