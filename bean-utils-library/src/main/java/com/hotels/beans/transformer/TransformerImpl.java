@@ -19,7 +19,6 @@ package com.hotels.beans.transformer;
 import static java.util.Arrays.stream;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.range;
@@ -41,7 +40,6 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.constant.ClassType;
