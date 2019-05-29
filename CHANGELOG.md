@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.4.3] 2019.05.29
+### [1.4.4.1] 2019.05.29
 #### Changed
 * Improved Javadoc
 * Added reference to the articles published on **DZone** and **InfoQ**
