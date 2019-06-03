@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.conversion;
+package com.hotels.beans.conversion.processor;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -34,12 +34,12 @@ public final class ConversionProcessorFactory {
         ConversionProcessor conversionProcessor = null;
         if (clazz == String.class) {
             conversionProcessor = new StringConversionProcessor();
+        } else if (clazz == Byte.class) {
+            conversionProcessor = new ByteConversionProcessor();
+        } else if (clazz == byte.class) {
+            conversionProcessor = new PrimitiveByteConversionProcessor();
         }
-//        else if (clazz == Byte.class) {
-//            conversionProcessor = new ByteConversionProcessor();
-//        } else if (clazz == byte.class) {
-//            conversionProcessor = new PrimitiveByteConversionProcessor();
-//        } else if (clazz == Short.class) {
+//        else if (clazz == Short.class) {
 //            conversionProcessor = new ShortConversionProcessor();
 //        } else if (clazz == short.class) {
 //            conversionProcessor = new PrimitiveShortConversionProcessor();

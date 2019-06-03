@@ -24,7 +24,7 @@ import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import java.util.Map;
 
 import com.hotels.beans.cache.CacheManager;
-import com.hotels.beans.conversion.ConversionAnalyzer;
+import com.hotels.beans.conversion.analyzer.ConversionAnalyzer;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.utils.ClassUtils;

@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Type conversion processor package.
+ */
 
 /**
- * Conversion package.
+ * Analyzer package.
  */
-package com.hotels.beans.conversion;
+package com.hotels.beans.conversion.analyzer;
