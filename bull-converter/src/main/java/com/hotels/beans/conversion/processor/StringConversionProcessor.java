@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.conversion;
+package com.hotels.beans.conversion.processor;
 
 import java.util.function.Function;
 
 /**
- * Provides all method for converting any primitive type to a String.
+ * Provides all method for converting any primitive type to a {@link String}.
  */
 public class StringConversionProcessor implements ConversionProcessor {
 

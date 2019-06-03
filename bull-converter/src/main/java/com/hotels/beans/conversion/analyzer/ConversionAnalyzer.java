@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.conversion;
+package com.hotels.beans.conversion.analyzer;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
-import static com.hotels.beans.conversion.ConversionProcessorFactory.getConversionProcessor;
+import static com.hotels.beans.conversion.processor.ConversionProcessorFactory.getConversionProcessor;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.conversion.processor.ConversionProcessor;
 import com.hotels.beans.utils.ClassUtils;
 
 /**

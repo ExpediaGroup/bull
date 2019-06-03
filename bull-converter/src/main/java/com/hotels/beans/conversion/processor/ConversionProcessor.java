@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.conversion;
+package com.hotels.beans.conversion.processor;
 
 import java.util.function.Function;
 
