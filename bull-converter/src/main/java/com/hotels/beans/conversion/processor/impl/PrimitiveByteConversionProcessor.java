@@ -1,24 +1,24 @@
-package com.hotels.beans.conversion.processor;
-
-import static java.lang.Byte.valueOf;
+package com.hotels.beans.conversion.processor.impl;
 
 import java.util.function.Function;
 
+import com.hotels.beans.conversion.processor.ConversionProcessor;
+
 /**
- * Provides all method for converting any primitive type to a {@link Byte}.
+ * Provides all method for converting any primitive type to a primitive byte.
  */
-public class ByteConversionProcessor implements ConversionProcessor {
+public class PrimitiveByteConversionProcessor implements ConversionProcessor {
     /**
      * {@inheritDoc}
      */
     @Override
     public Function<Byte, Byte> convertPrimitiveByte() {
-        return Byte::valueOf;
+        return val -> val;
     }
 
     @Override
     public Function<Byte, Byte> convertByte() {
-        return val -> val;
+        return Byte::byteValue;
     }
 
     /**
@@ -26,7 +26,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Short, Byte> convertPrimitiveShort() {
-        return val -> valueOf((byte) ((short) val));
+        return val -> (byte) ((short) val);
     }
 
     /**
@@ -34,7 +34,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Short, Byte> convertShort() {
-        return val -> valueOf(val.byteValue());
+        return Short::byteValue;
     }
 
     /**
@@ -42,7 +42,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Integer, Byte> convertInt() {
-        return val -> valueOf((byte) ((int) val));
+        return val -> (byte) ((int) val);
     }
 
     /**
@@ -50,7 +50,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Integer, Byte> convertInteger() {
-        return val -> valueOf(val.byteValue());
+        return Integer::byteValue;
     }
 
     /**
@@ -58,7 +58,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Long, Byte> convertPrimitiveLong() {
-        return val -> valueOf((byte) ((long) val));
+        return val -> (byte) ((long) val);
     }
 
     /**
@@ -66,7 +66,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Long, Byte> convertLong() {
-        return val -> valueOf(val.byteValue());
+        return Long::byteValue;
     }
 
     /**
@@ -74,7 +74,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Float, Byte> convertPrimitiveFloat() {
-        return val -> valueOf((byte) ((float) val));
+        return val -> (byte) ((float) val);
     }
 
     /**
@@ -82,7 +82,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Float, Byte> convertFloat() {
-        return val -> valueOf(val.byteValue());
+        return Float::byteValue;
     }
 
     /**
@@ -90,7 +90,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Double, Byte> convertPrimitiveDouble() {
-        return val -> valueOf((byte) ((double) val));
+        return val -> (byte) ((double) val);
     }
 
     /**
@@ -98,7 +98,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Double, Byte> convertDouble() {
-        return val -> valueOf(val.byteValue());
+        return Double::byteValue;
     }
 
     /**
@@ -106,7 +106,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Character, Byte> convertChar() {
-        return val -> valueOf((byte) ((char) val));
+        return val -> (byte) ((char) val);
     }
 
     /**
@@ -114,7 +114,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Character, Byte> convertCharacter() {
-        return val -> valueOf((byte) val.charValue());
+        return val -> (byte) val.charValue();
     }
 
     /**
@@ -122,7 +122,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Boolean, Byte> convertPrimitiveBoolean() {
-        return val -> valueOf(val ? (byte) 1 : (byte) 0);
+        return val -> val ? (byte) 1 : (byte) 0;
     }
 
     /**
@@ -130,7 +130,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Boolean, Byte> convertBoolean() {
-        return val -> valueOf(val ? (byte) 1 : (byte) 0);
+        return val -> val ? (byte) 1 : (byte) 0;
     }
 
     /**
@@ -138,6 +138,6 @@ public class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<String, Byte> convertString() {
-        return Byte::valueOf;
+        return Byte::parseByte;
     }
 }
