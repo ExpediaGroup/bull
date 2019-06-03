@@ -18,6 +18,10 @@ package com.hotels.beans.conversion.processor;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.PrimitiveByteConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.StringConversionProcessor;
+
 import lombok.NoArgsConstructor;
 
 /**
