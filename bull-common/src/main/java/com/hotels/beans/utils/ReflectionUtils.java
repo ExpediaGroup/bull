@@ -89,7 +89,7 @@ public final class ReflectionUtils {
      * @param args the method parameters
      * @return the method result
      */
-    private Object invokeMethod(final Method method, final Object target, final Object... args) {
+    protected Object invokeMethod(final Method method, final Object target, final Object... args) {
         try {
             return method.invoke(target, args);
         } catch (final Exception e) {
@@ -166,12 +166,7 @@ public final class ReflectionUtils {
                 CACHE_MANAGER.cacheObject(cacheKey, method);
                 return method;
             } catch (NoSuchMethodException e) {
-                if (new ClassUtils().hasField(fieldClass, fieldName)) {
-                    throw new MissingMethodException(fieldClass.getName() + " does not allow to get value for field: " + fieldName
-                            + ". Is a getter method defined?");
-                } else {
-                    throw new MissingFieldException(fieldClass.getName() + " hasn't a field called: " + fieldName + ".");
-                }
+                throw new MissingFieldException(fieldClass.getName() + " hasn't a field called: " + fieldName + ".");
             }
         });
     }
@@ -183,7 +178,7 @@ public final class ReflectionUtils {
      * @return the getter method
      */
     private Function getGetterMethodFunction(final Class<?> fieldClass, final String fieldName) {
-        final String cacheKey = "GetterMethod-" + fieldClass.getName() + '-' + fieldName;
+        final String cacheKey = "getGetterMethodFunction-" + fieldClass.getName() + '-' + fieldName;
         return CACHE_MANAGER.getFromCache(cacheKey, Function.class).orElseGet(() -> {
             Function function;
             try {
@@ -544,9 +539,9 @@ public final class ReflectionUtils {
      */
     void handleReflectionException(final Exception ex) {
         if (ex instanceof NoSuchMethodException) {
-            throw new IllegalStateException("Method not found: " + ex.getMessage());
+            throw new MissingMethodException("Method not found: " + ex.getMessage());
         } else if (ex instanceof IllegalAccessException) {
-            throw new IllegalStateException("Could not access method: " + ex.getMessage());
+            throw new IllegalStateException("Could not access method: " + ex.getMessage(), ex);
         } else {
             if (ex instanceof RuntimeException) {
                 throw (RuntimeException) ex;

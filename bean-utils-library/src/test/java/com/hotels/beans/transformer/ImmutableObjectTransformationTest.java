@@ -149,10 +149,11 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         ImmutableToFooSimple immutableToFoo = new ImmutableToFooSimple(null, null, false);
 
         //WHEN
-        underTest.transform(fromFooSimple, immutableToFoo);
+        underTest.setValidationEnabled(true).transform(fromFooSimple, immutableToFoo);
 
         //THEN
         assertThat(immutableToFoo, sameBeanAs(fromFooSimple));
+        underTest.setValidationEnabled(false);
     }
 
     /**
