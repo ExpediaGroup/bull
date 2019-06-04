@@ -27,4 +27,5 @@ import lombok.Getter;
 public class MutableToFooSimpleNoSetters {
     private String name;
     private BigInteger id;
+    private boolean active;
 }
