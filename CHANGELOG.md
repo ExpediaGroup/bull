@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.4.5] 2019.06.05
 #### Added
-* Modified library in order to let it able to retrieve values from getters if a field does not exists (see: [Issue 66](https://github.com/HotelsDotCom/bull/issues/66)).
+* Modified library in order to let it able to retrieve values from getters if a field does not exist (see: [Issue 66](https://github.com/HotelsDotCom/bull/issues/66)).
 
 ### [1.4.4.1] 2019.05.29
 #### Changed
