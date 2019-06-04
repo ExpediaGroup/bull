@@ -213,6 +213,30 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>site-release</id>
+            <properties>
+                <checkstyle.check.skip>false</checkstyle.check.skip>
+                <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
+                <jacoco.check.skip>false</jacoco.check.skip>
+                <pmd.check.skip>true</pmd.check.skip>
+                <javadoc.skip>false</javadoc.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <!-- skip some test cases during the release -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/PerformanceTest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <!-- release profile -->
         <profile>
             <id>release</id>
@@ -238,6 +262,16 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <!-- skip some test cases during the release -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/PerformanceTest.java</exclude>
+                            </excludes>
+                        </configuration>
                     </plugin>
                     <!-- replace the bean-utils-library javadoc jar file with the one containing all modules -->
                     <plugin>
