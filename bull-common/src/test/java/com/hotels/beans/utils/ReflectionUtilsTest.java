@@ -99,11 +99,12 @@ public class ReflectionUtilsTest {
      * @param expectedResult the expected result
      */
     @Test(dataProvider = "dataGetFieldValueTesting")
-    public void testGetFieldValueWorksAsExpected(final String testCaseDescription, final Object beanObject, final String fieldName, final Object expectedResult) {
+    public void testGetFieldValueWorksAsExpected(final String testCaseDescription, final Object beanObject,
+        final String fieldName, final Class<?> fieldType, final Object expectedResult) {
         // GIVEN
 
         // WHEN
-        Object actual = underTest.getFieldValue(beanObject, fieldName);
+        Object actual = underTest.getFieldValue(beanObject, fieldName, fieldType);
 
         // THEN
         assertEquals(expectedResult, actual);
@@ -117,9 +118,11 @@ public class ReflectionUtilsTest {
     private Object[][] dataGetFieldValueTesting() {
         MutableToFoo mutableToFoo = createMutableToFoo(ZERO);
         return new Object[][] {
-                {"Tests that the method returns the field value", mutableToFoo, ID_FIELD_NAME, ZERO},
-                {"Tests that the method returns null if the required field is inside a null object", mutableToFoo, NESTED_OBJECT_FIELD_NAME, null},
-                {"Tests that the method returns the field value even if there is no getter method defined", createFromFooSimpleNoGetters(), ID_FIELD_NAME, ZERO}
+                {"Tests that the method returns the field value", mutableToFoo, ID_FIELD_NAME, BigInteger.class, ZERO},
+                {"Tests that the method returns null if the required field is inside a null object", mutableToFoo, NESTED_OBJECT_FIELD_NAME,
+                    String.class, null},
+                {"Tests that the method returns the field value even if there is no getter method defined", createFromFooSimpleNoGetters(),
+                    ID_FIELD_NAME, BigInteger.class, ZERO}
         };
     }
 
@@ -132,7 +135,7 @@ public class ReflectionUtilsTest {
         MutableToFoo mutableToFoo = createMutableToFoo(null);
 
         // WHEN
-        underTest.getFieldValue(mutableToFoo, NOT_EXISTING_FIELD_NAME);
+        underTest.getFieldValue(mutableToFoo, NOT_EXISTING_FIELD_NAME, Object.class);
     }
 
     /**

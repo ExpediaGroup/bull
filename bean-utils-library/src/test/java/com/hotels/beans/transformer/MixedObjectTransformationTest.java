@@ -46,6 +46,7 @@ import com.hotels.beans.sample.mixed.MixedToFooNotExistingFields;
  * Unit test for all {@link Transformer} functions related to Mixed type Java Beans.
  */
 public class MixedObjectTransformationTest extends AbstractTransformerTest {
+    private static final boolean ACTIVE = true;
     /**
      * The class to be tested.
      */
@@ -166,7 +167,7 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
     @Test
     public void testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions() {
         //GIVEN
-        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID);
+        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
         FieldTransformer<Object, Integer> ageFieldTransformer = new FieldTransformer<>(AGE_FIELD_NAME, val -> AGE);
 
         //WHEN

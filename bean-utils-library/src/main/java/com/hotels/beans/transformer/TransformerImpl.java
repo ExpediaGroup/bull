@@ -315,7 +315,7 @@ public class TransformerImpl extends AbstractTransformer {
         boolean primitiveType = classUtils.isPrimitiveType(fieldType);
         FieldTransformer transformerFunction = getTransformerFunction(field, fieldBreadcrumb);
         boolean isTransformerFunctionDefined = nonNull(transformerFunction);
-        Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, isTransformerFunctionDefined);
+        Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isTransformerFunctionDefined);
         if (nonNull(fieldValue)) {
             // is not a primitive type or an optional && there are no transformer function
             // defined it recursively evaluate the value
@@ -347,14 +347,15 @@ public class TransformerImpl extends AbstractTransformer {
      * Gets the source field value. If a field transformer function is defined and the field does not exists in the source object it raises an exception.
      * @param sourceObj sourceObj the source object
      * @param sourceFieldName sourceFieldName the field name in the source object (if different from the target one)
+     * @param field The field for which the value has to be retrieved
      * @param isFieldTransformerDefined indicates if a transformer function is implemented for this field
      * @param <T> the sourceObj object type
      * @return the source field value
      */
-    private <T> Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final boolean isFieldTransformerDefined) {
+    private <T> Object getSourceFieldValue(final T sourceObj, final String sourceFieldName, final Field field, final boolean isFieldTransformerDefined) {
         Object fieldValue = null;
         try {
-            fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName);
+            fieldValue = reflectionUtils.getFieldValue(sourceObj, sourceFieldName, field.getType());
         } catch (MissingFieldException e) {
             // in case the source field is a primitive type and the destination one is composite, the source field value is returned without going in deep
             if (classUtils.isPrimitiveType(sourceObj.getClass())) {

@@ -116,22 +116,35 @@ public final class ReflectionUtils {
     }
 
     /**
+     * Gets the value of a field.
+     * @param target the field's class
+     * @param field the field {@link Field}
+     * @return the field value
+     */
+    public Object getFieldValue(final Object target, final Field field) {
+        return getFieldValue(target, field.getName(), field.getType());
+    }
+
+    /**
      * Gets the value of a field through getter method.
      * @param target the field's class
      * @param fieldName the field name
+     * @param fieldType the field type
      * @return the field value
      */
     @SuppressWarnings("unchecked")
-    public Object getFieldValue(final Object target, final String fieldName) {
+    public Object getFieldValue(final Object target, final String fieldName, final Class<?> fieldType) {
         Object fieldValue = getRealTarget(target);
         for (String currFieldName : fieldName.split(DOT_SPLIT_REGEX)) {
             if (fieldValue == null) {
                 break;
             }
             try {
-                fieldValue = getGetterMethod(fieldValue.getClass(), currFieldName).apply(fieldValue);
+                fieldValue = getGetterMethodFunction(fieldValue.getClass(), currFieldName).apply(fieldValue);
             } catch (final ClassCastException | MissingMethodException | InvalidBeanException e) {
                 fieldValue = getFieldValueDirectAccess(fieldValue, currFieldName);
+            } catch (final MissingFieldException e) {
+                fieldValue = invokeMethod(getGetterMethod(fieldValue.getClass(), currFieldName, fieldType), fieldValue);
             }
         }
         return fieldValue;
@@ -141,9 +154,35 @@ public final class ReflectionUtils {
      * Returns the getter method for the given field.
      * @param fieldClass the field's class
      * @param fieldName the field name
+     * @param fieldType the field type
      * @return the getter method
      */
-    private Function getGetterMethod(final Class<?> fieldClass, final String fieldName) {
+    private Method getGetterMethod(final Class<?> fieldClass, final String fieldName, final Class<?> fieldType) {
+        final String cacheKey = "GetterMethod-" + fieldClass.getName() + '-' + fieldName;
+        return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -> {
+            try {
+                Method method = fieldClass.getMethod(getGetterMethodPrefix(fieldType) + capitalize(fieldName));
+                method.setAccessible(true);
+                CACHE_MANAGER.cacheObject(cacheKey, method);
+                return method;
+            } catch (NoSuchMethodException e) {
+                if (new ClassUtils().hasField(fieldClass, fieldName)) {
+                    throw new MissingMethodException(fieldClass.getName() + " does not allow to get value for field: " + fieldName
+                            + ". Is a getter method defined?");
+                } else {
+                    throw new MissingFieldException(fieldClass.getName() + " hasn't a field called: " + fieldName + ".");
+                }
+            }
+        });
+    }
+
+    /**
+     * Returns the getter method for the given field.
+     * @param fieldClass the field's class
+     * @param fieldName the field name
+     * @return the getter method
+     */
+    private Function getGetterMethodFunction(final Class<?> fieldClass, final String fieldName) {
         final String cacheKey = "GetterMethod-" + fieldClass.getName() + '-' + fieldName;
         return CACHE_MANAGER.getFromCache(cacheKey, Function.class).orElseGet(() -> {
             Function function;
