@@ -118,6 +118,22 @@ public class ReflectionUtilsTest {
     }
 
     /**
+     * Tests that the method {@code getFieldValue} with a a given field returns the expected value.
+     */
+    @Test
+    public void testGetFieldValueWithAGivenFieldWorksAsExpected() throws Exception {
+        // GIVEN
+        FromFooSimpleNoGetters fromFooSimpleNoGetters = createFromFooSimpleNoGetters();
+        Field field = FromFooSimpleNoGetters.class.getDeclaredField(ID_FIELD_NAME);
+
+        // WHEN
+        Object actual = underTest.getFieldValue(fromFooSimpleNoGetters, field);
+
+        // THEN
+        assertEquals(ZERO, actual);
+    }
+
+    /**
      * Creates the parameters to be used for testing the method {@code getFieldValue}.
      * @return parameters to be used for testing the the method {@code getFieldValue}.
      */
