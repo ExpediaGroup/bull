@@ -29,9 +29,5 @@ import lombok.Setter;
 public class MutableToFooSimple {
     private String name;
     private BigInteger id;
-
-    @Override
-    public String toString() {
-        return "MutableToFooSimple";
-    }
+    private boolean active;
 }

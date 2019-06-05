@@ -14,20 +14,30 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.sample.immutable;
+package com.hotels.beans.sample;
+
+import static java.lang.Boolean.TRUE;
+import static java.math.BigInteger.ONE;
 
 import java.math.BigInteger;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.ToString;
 
 /**
- * Sample immutable object.
+ * Sample object without any field but with getter methods.
  */
-@AllArgsConstructor
-@Getter
-public class ImmutableToFooSimple {
-    private final String name;
-    private final BigInteger id;
-    private boolean active;
+@ToString
+public class FromFooNoField {
+
+    public String getName() {
+        return "FromFooNoField";
+    }
+
+    public BigInteger getId() {
+        return ONE;
+    }
+
+    public boolean isActive() {
+        return TRUE;
+    }
 }
