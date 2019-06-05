@@ -74,6 +74,7 @@ public class PerformanceTest {
     private static final double COMPLEX_OBJECTS_MAX_TRANSFORMATION_TIME = 1;
     private static final int WAIT_INTERVAL = 1000;
     private static final int NO_WAIT_INTERVAL = 0;
+    private static final boolean ACTIVE = true;
 
     private static FromFoo fromFoo;
     private static FromFooSimple fromFooSimple;
@@ -173,7 +174,7 @@ public class PerformanceTest {
      * @return the {@link FromFooSimple} instance.
      */
     private FromFooSimple createFromFooSimple() {
-        return new FromFooSimple(NAME, ID);
+        return new FromFooSimple(NAME, ID, ACTIVE);
     }
 
     /**

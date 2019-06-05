@@ -1,3 +1,19 @@
+/**
+ * Copyright (C) 2019 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.hotels.beans.conversion.processor.impl;
 
 import java.util.function.Function;
@@ -12,12 +28,12 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Byte, Byte> convertPrimitiveByte() {
+    public final Function<Byte, Byte> convertPrimitiveByte() {
         return val -> val;
     }
 
     @Override
-    public Function<Byte, Byte> convertByte() {
+    public final Function<Byte, Byte> convertByte() {
         return Byte::byteValue;
     }
 
@@ -25,7 +41,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Short, Byte> convertPrimitiveShort() {
+    public final Function<Short, Byte> convertPrimitiveShort() {
         return val -> (byte) ((short) val);
     }
 
@@ -33,7 +49,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Short, Byte> convertShort() {
+    public final Function<Short, Byte> convertShort() {
         return Short::byteValue;
     }
 
@@ -41,7 +57,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Integer, Byte> convertInt() {
+    public final Function<Integer, Byte> convertInt() {
         return val -> (byte) ((int) val);
     }
 
@@ -49,7 +65,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Integer, Byte> convertInteger() {
+    public final Function<Integer, Byte> convertInteger() {
         return Integer::byteValue;
     }
 
@@ -57,7 +73,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Long, Byte> convertPrimitiveLong() {
+    public final Function<Long, Byte> convertPrimitiveLong() {
         return val -> (byte) ((long) val);
     }
 
@@ -65,7 +81,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Long, Byte> convertLong() {
+    public final Function<Long, Byte> convertLong() {
         return Long::byteValue;
     }
 
@@ -73,7 +89,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Float, Byte> convertPrimitiveFloat() {
+    public final Function<Float, Byte> convertPrimitiveFloat() {
         return val -> (byte) ((float) val);
     }
 
@@ -81,7 +97,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Float, Byte> convertFloat() {
+    public final Function<Float, Byte> convertFloat() {
         return Float::byteValue;
     }
 
@@ -89,7 +105,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Double, Byte> convertPrimitiveDouble() {
+    public final Function<Double, Byte> convertPrimitiveDouble() {
         return val -> (byte) ((double) val);
     }
 
@@ -97,7 +113,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Double, Byte> convertDouble() {
+    public final Function<Double, Byte> convertDouble() {
         return Double::byteValue;
     }
 
@@ -105,7 +121,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Character, Byte> convertChar() {
+    public final Function<Character, Byte> convertChar() {
         return val -> (byte) ((char) val);
     }
 
@@ -113,7 +129,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Character, Byte> convertCharacter() {
+    public final Function<Character, Byte> convertCharacter() {
         return val -> (byte) val.charValue();
     }
 
@@ -121,7 +137,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Boolean, Byte> convertPrimitiveBoolean() {
+    public final Function<Boolean, Byte> convertPrimitiveBoolean() {
         return val -> val ? (byte) 1 : (byte) 0;
     }
 
@@ -129,7 +145,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Boolean, Byte> convertBoolean() {
+    public final Function<Boolean, Byte> convertBoolean() {
         return val -> val ? (byte) 1 : (byte) 0;
     }
 
@@ -137,7 +153,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<String, Byte> convertString() {
+    public final Function<String, Byte> convertString() {
         return Byte::parseByte;
     }
 }
