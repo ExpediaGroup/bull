@@ -411,7 +411,7 @@ beanUtils.getTransformer()
 ~~~
 
 ### Not existing field in the source object:
-In case the destination class has a field that does not exist in the source object, but it contains a getter method returning the value, the library should get the field value from that method.
+In case the destination class has a field that does not exist in the source object, but it contains a getter method returning the value, the library gets the field value from that method.
 ~~~Java
 public class FromBean {                                     public class ToBean {                           
                                                                private final BigInteger id;
