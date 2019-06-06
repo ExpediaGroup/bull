@@ -72,6 +72,7 @@ mvnw.cmd clean install -P relaxed
 * easy usage, declarative way to define the property mapping (in case of different names) or simply adding the lombok annotations.
 * allows to set the default value for all objects not existing in the source object.
 * allows to skip transformation for a given set of fields.
+* supports the values retrieval from getters if a field does not exists in the source object
 
 # Feature samples
 
@@ -485,6 +486,22 @@ beanUtils.getTransformer()
 beanUtils.getTransformer()
     .skipTransformationForField("name")
     .transform(fromBean2, toBean);
+~~~
+
+### Not existing field in the source object:
+In case the destination class has a field that does not exist in the source object, but it contains a getter method returning the value, the library should get the field value from that method.
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+                                                               private final BigInteger id;
+    public BigInteger getId() {                                   
+        return BigInteger.TEN;                                 // all args constructor
+   }                                                           // getters...
+}                                                               
+                                                            }
+~~~
+And one line code as:
+~~~Java
+ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
 ~~~
 
 More sample beans can be found in the test package: `com.hotels.beans.sample`
