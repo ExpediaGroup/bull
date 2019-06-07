@@ -43,7 +43,7 @@ public class ByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Integer, Byte> convertInt() {
+    public Function<Integer, Byte> convertPrimitiveInt() {
         return val -> valueOf((byte) ((int) val));
     }
 

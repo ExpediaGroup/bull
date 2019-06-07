@@ -13,7 +13,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Byte, Byte> convertPrimitiveByte() {
-        return val -> val;
+        return val -> (byte) val;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class PrimitiveByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Integer, Byte> convertInt() {
+    public Function<Integer, Byte> convertPrimitiveInt() {
         return val -> (byte) ((int) val);
     }
 
