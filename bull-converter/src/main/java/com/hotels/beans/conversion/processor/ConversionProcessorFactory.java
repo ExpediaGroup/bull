@@ -19,7 +19,12 @@ package com.hotels.beans.conversion.processor;
 import static lombok.AccessLevel.PRIVATE;
 
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.IntegerConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.LongConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.PrimitiveByteConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.PrimitiveIntConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.PrimitiveShortConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.ShortConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.StringConversionProcessor;
 
 import lombok.NoArgsConstructor;
@@ -42,18 +47,17 @@ public final class ConversionProcessorFactory {
             conversionProcessor = new ByteConversionProcessor();
         } else if (clazz == byte.class) {
             conversionProcessor = new PrimitiveByteConversionProcessor();
-        }
-//        else if (clazz == Short.class) {
-//            conversionProcessor = new ShortConversionProcessor();
-//        } else if (clazz == short.class) {
-//            conversionProcessor = new PrimitiveShortConversionProcessor();
-//        } else if (clazz == Integer.class) {
-//            conversionProcessor = new IntegerConversionProcessor();
-//        } else if (clazz == int.class) {
-//            conversionProcessor = new IntConversionProcessor();
-//        } else if (clazz == Long.class) {
-//            conversionProcessor = new LongConversionProcessor();
-//        } else if (clazz == long.class) {
+        } else if (clazz == Short.class) {
+            conversionProcessor = new ShortConversionProcessor();
+        } else if (clazz == short.class) {
+            conversionProcessor = new PrimitiveShortConversionProcessor();
+        } else if (clazz == Integer.class) {
+            conversionProcessor = new IntegerConversionProcessor();
+        } else if (clazz == int.class) {
+            conversionProcessor = new PrimitiveIntConversionProcessor();
+        } else if (clazz == Long.class) {
+            conversionProcessor = new LongConversionProcessor();
+        } //else if (clazz == long.class) {
 //            conversionProcessor = new PrimitiveLongConversionProcessor();
 //        } else if (clazz == Float.class) {
 //            conversionProcessor = new FloatConversionProcessor();

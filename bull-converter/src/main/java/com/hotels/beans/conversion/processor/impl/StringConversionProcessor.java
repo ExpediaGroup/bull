@@ -56,7 +56,7 @@ public class StringConversionProcessor implements ConversionProcessor {
     /**
      * {@inheritDoc}
      */
-    public final Function<Integer, String> convertInt() {
+    public final Function<Integer, String> convertPrimitiveInt() {
         return val -> Integer.toString(val);
     }
 

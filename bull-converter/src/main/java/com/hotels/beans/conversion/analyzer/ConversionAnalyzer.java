@@ -111,7 +111,7 @@ public final class ConversionAnalyzer {
         } else if (sourceFieldType == short.class) {
             conversionFunction = of(conversionProcessor.convertPrimitiveShort());
         } else if (sourceFieldType == int.class) {
-            conversionFunction = of(conversionProcessor.convertInt());
+            conversionFunction = of(conversionProcessor.convertPrimitiveInt());
         } else if (sourceFieldType == long.class) {
             conversionFunction = of(conversionProcessor.convertPrimitiveLong());
         } else if (sourceFieldType == float.class) {

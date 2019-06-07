@@ -50,7 +50,7 @@ public interface ConversionProcessor {
      * Converts an int type.
      * @return the converted value
      */
-    Function<Integer, ?> convertInt();
+    Function<Integer, ?> convertPrimitiveInt();
 
     /**
      * Converts an {@link Integer} type.
