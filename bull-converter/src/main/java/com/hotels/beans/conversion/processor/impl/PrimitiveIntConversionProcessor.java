@@ -22,7 +22,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a primitive int.
  */
-public class PrimitiveIntConversionProcessor implements ConversionProcessor {
+public final class PrimitiveIntConversionProcessor implements ConversionProcessor {
     /**
      * {@inheritDoc}
      */

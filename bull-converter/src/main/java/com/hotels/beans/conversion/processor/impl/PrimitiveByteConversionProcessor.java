@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.hotels.beans.conversion.processor.impl;
 
 import java.util.function.Function;
@@ -22,7 +23,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a primitive byte.
  */
-public class PrimitiveByteConversionProcessor implements ConversionProcessor {
+public final class PrimitiveByteConversionProcessor implements ConversionProcessor {
     /**
      * {@inheritDoc}
      */

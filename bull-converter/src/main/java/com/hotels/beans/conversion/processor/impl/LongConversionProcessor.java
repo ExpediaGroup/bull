@@ -24,7 +24,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Long}.
  */
-public class LongConversionProcessor implements ConversionProcessor {
+public final class LongConversionProcessor implements ConversionProcessor {
     /**
      * {@inheritDoc}
      */
@@ -33,6 +33,9 @@ public class LongConversionProcessor implements ConversionProcessor {
         return val -> valueOf((long) ((byte) val));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Function<Byte, Long> convertByte() {
         return Long::valueOf;
