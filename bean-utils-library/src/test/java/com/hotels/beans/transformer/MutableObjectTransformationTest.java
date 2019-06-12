@@ -32,6 +32,7 @@ import org.testng.annotations.Test;
 
 import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.model.FieldTransformer;
+import com.hotels.beans.sample.FromFooNoField;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
 import com.hotels.beans.sample.mutable.MutableToFoo;
@@ -45,6 +46,7 @@ import com.hotels.beans.sample.mutable.MutableToFooSubClass;
  * Unit test for all {@link Transformer} functions related to Mutable type Java Beans.
  */
 public class MutableObjectTransformationTest extends AbstractTransformerTest {
+    private static final boolean ACTIVE = true;
     /**
      * The class to be tested.
      */
@@ -164,7 +166,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     @Test
     public void testTransformerIsAbleToCopyObjectsWithoutRequiredMethods() {
         //GIVEN
-        FromFooSimpleNoGetters fromFooSimpleNoGetters = new FromFooSimpleNoGetters(NAME, ID);
+        FromFooSimpleNoGetters fromFooSimpleNoGetters = new FromFooSimpleNoGetters(NAME, ID, ACTIVE);
 
         //WHEN
         MutableToFooSimpleNoSetters actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.class);
@@ -174,12 +176,29 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     }
 
     /**
+     * Test that the transformer is able to copy object even if the source object has no fields but has getter methods.
+     */
+    @Test
+    public void testTransformerIsAbleToCopyObjectsWithoutFieldButWithGetterMethods() {
+        //GIVEN
+        FromFooNoField fromFooNoField = new FromFooNoField();
+
+        //WHEN
+        MutableToFooSimpleNoSetters actual = underTest.transform(fromFooNoField, MutableToFooSimpleNoSetters.class);
+
+        //THEN
+        assertEquals(actual.getId(), fromFooNoField.getId());
+        assertEquals(actual.getName(), fromFooNoField.getName());
+        assertEquals(actual.isActive(), fromFooNoField.isActive());
+    }
+
+    /**
      * Test that a bean containing a field not existing in the source object, but with a transformer function defined for such object is correctly copied.
      */
     @Test
     public void testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions() {
         //GIVEN
-        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID);
+        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
         FieldTransformer<Object, Integer> ageFieldTransformer = new FieldTransformer<>(AGE_FIELD_NAME, () -> AGE);
 
         //WHEN
@@ -199,7 +218,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     @Test(dataProvider = "dataTransformationTesting")
     public void testTransformationWithFieldTransformationWorksProperly(final String testCaseDescription, final String fieldToTransform, final Object transformationResult) {
         //GIVEN
-        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID);
+        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
         FieldTransformer<Object, Object> fieldTransformer = new FieldTransformer<>(fieldToTransform, val -> transformationResult);
 
         //WHEN

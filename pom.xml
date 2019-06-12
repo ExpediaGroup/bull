@@ -5,7 +5,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>1.4.5-SNAPSHOT</version>
+    <version>1.4.6-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -58,6 +58,12 @@
         <wagon-ssh.version>3.3.2</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
         <github.global.server>github</github.global.server>
+        <!-- build settings -->
+        <checkstyle.check.skip>false</checkstyle.check.skip>
+        <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
+        <jacoco.check.skip>false</jacoco.check.skip>
+        <pmd.check.skip>true</pmd.check.skip>
+        <javadoc.skip>false</javadoc.skip>
     </properties>
 
     <!-- distribution configuration -->
@@ -169,26 +175,11 @@
     <!-- profile configuration -->
     <profiles>
         <profile>
-            <id>full</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <checkstyle.check.skip>false</checkstyle.check.skip>
-                <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
-                <jacoco.check.skip>false</jacoco.check.skip>
-                <pmd.check.skip>true</pmd.check.skip>
-                <javadoc.skip>false</javadoc.skip>
-            </properties>
-        </profile>
-        <profile>
             <id>relaxed</id>
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
                 <jacoco.check.skip>true</jacoco.check.skip>
-                <pmd.check.skip>true</pmd.check.skip>
-                <javadoc.skip>false</javadoc.skip>
             </properties>
         </profile>
         <profile>
@@ -197,7 +188,6 @@
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
                 <jacoco.check.skip>true</jacoco.check.skip>
-                <pmd.check.skip>true</pmd.check.skip>
                 <javadoc.skip>true</javadoc.skip>
             </properties>
             <build>
@@ -214,6 +204,27 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>site-release</id>
+            <properties>
+                <checkstyle.check.skip>true</checkstyle.check.skip>
+                <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
+            </properties>
+            <build>
+                <plugins>
+                    <!-- skip some test cases during the release -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/PerformanceTest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <!-- release profile -->
         <profile>
             <id>release</id>
@@ -221,7 +232,6 @@
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
                 <jacoco.check.skip>true</jacoco.check.skip>
-                <pmd.check.skip>true</pmd.check.skip>
                 <javadoc.skip>true</javadoc.skip>
             </properties>
             <build>
@@ -239,6 +249,16 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <!-- skip some test cases during the release -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/PerformanceTest.java</exclude>
+                            </excludes>
+                        </configuration>
                     </plugin>
                     <!-- replace the bean-utils-library javadoc jar file with the one containing all modules -->
                     <plugin>
@@ -321,8 +341,7 @@
                                 <consoleOutput>true</consoleOutput>
                                 <failsOnError>true</failsOnError>
                                 <skip>${checkstyle.check.skip}</skip>
-                                <includeTestSourceDirectory>${checkstyle.includeTestSourceDirectory}
-                                </includeTestSourceDirectory>
+                                <includeTestSourceDirectory>${checkstyle.includeTestSourceDirectory}</includeTestSourceDirectory>
                             </configuration>
                             <goals>
                                 <goal>check</goal>

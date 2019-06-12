@@ -420,7 +420,7 @@ public final class ClassUtils {
                 CACHE_MANAGER.cacheObject(cacheKey, constructor);
                 return constructor;
             } catch (Throwable e) {
-                throw new InvalidBeanException("No default constructors available");
+                throw new InvalidBeanException("No default constructors available for class: " + clazz.getName());
             }
         });
     }
