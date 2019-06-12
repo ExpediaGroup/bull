@@ -37,4 +37,8 @@ public class MutableToFooAdvFields {
     private String indexNumber;
     private ClassType classType;
     private Locale locale;
+
+    private void setIndex(final String indexNumber) {
+        this.indexNumber = indexNumber;
+    }
 }

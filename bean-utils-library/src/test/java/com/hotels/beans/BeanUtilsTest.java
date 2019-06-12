@@ -47,6 +47,7 @@ import com.hotels.beans.transformer.Transformer;
 public class BeanUtilsTest {
     private static final BigInteger ID = new BigInteger("1234");
     private static final String NAME = "Goofy";
+    private static final boolean ACTIVE = true;
 
     /**
      * The class to be tested.
@@ -155,6 +156,6 @@ public class BeanUtilsTest {
      * @return the {@link FromFooSimple} instance.
      */
     private FromFooSimple createFromFooSimple() {
-        return new FromFooSimple(NAME, ID);
+        return new FromFooSimple(NAME, ID, ACTIVE);
     }
 }
