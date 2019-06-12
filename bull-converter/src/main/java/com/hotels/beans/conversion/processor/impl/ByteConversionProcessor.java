@@ -24,7 +24,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Byte}.
  */
-public class ByteConversionProcessor implements ConversionProcessor {
+public final class ByteConversionProcessor implements ConversionProcessor {
     /**
      * {@inheritDoc}
      */

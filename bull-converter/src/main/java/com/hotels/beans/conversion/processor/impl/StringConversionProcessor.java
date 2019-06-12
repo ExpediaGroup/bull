@@ -23,124 +23,141 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link String}.
  */
-public class StringConversionProcessor implements ConversionProcessor {
+public final class StringConversionProcessor implements ConversionProcessor {
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Byte, String> convertPrimitiveByte() {
+    @Override
+    public Function<Byte, String> convertPrimitiveByte() {
         return val -> Byte.toString(val);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Byte, Object> convertByte() {
+    @Override
+    public Function<Byte, Object> convertByte() {
         return Object::toString;
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Short, String> convertPrimitiveShort() {
+    @Override
+    public Function<Short, String> convertPrimitiveShort() {
         return val -> Short.toString(val);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Short, String> convertShort() {
+    @Override
+    public Function<Short, String> convertShort() {
         return Object::toString;
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Integer, String> convertPrimitiveInt() {
+    @Override
+    public Function<Integer, String> convertPrimitiveInt() {
         return val -> Integer.toString(val);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Integer, String> convertInteger() {
+    @Override
+    public Function<Integer, String> convertInteger() {
         return Object::toString;
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Long, String> convertPrimitiveLong() {
+    @Override
+    public Function<Long, String> convertPrimitiveLong() {
         return val -> Long.toString(val);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Long, String> convertLong() {
+    @Override
+    public Function<Long, String> convertLong() {
         return Object::toString;
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Float, String> convertPrimitiveFloat() {
+    @Override
+    public Function<Float, String> convertPrimitiveFloat() {
         return val -> Float.toString(val);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Float, String> convertFloat() {
+    @Override
+    public Function<Float, String> convertFloat() {
         return Object::toString;
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Double, String> convertPrimitiveDouble() {
+    @Override
+    public Function<Double, String> convertPrimitiveDouble() {
         return val -> Double.toString(val);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Double, String> convertDouble() {
+    @Override
+    public Function<Double, String> convertDouble() {
         return Object::toString;
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Character, String> convertChar() {
+    @Override
+    public Function<Character, String> convertChar() {
         return val -> Character.toString(val);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Character, String> convertCharacter() {
+    @Override
+    public Function<Character, String> convertCharacter() {
         return Object::toString;
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Boolean, String> convertPrimitiveBoolean() {
+    @Override
+    public Function<Boolean, String> convertPrimitiveBoolean() {
         return val -> Boolean.toString(val);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<Boolean, String> convertBoolean() {
+    @Override
+    public Function<Boolean, String> convertBoolean() {
         return Object::toString;
     }
 
     /**
      * {@inheritDoc}
      */
-    public final Function<String, String> convertString() {
+    @Override
+    public Function<String, String> convertString() {
         return val -> val;
     }
 }

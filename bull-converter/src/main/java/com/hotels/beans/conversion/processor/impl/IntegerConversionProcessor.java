@@ -24,13 +24,13 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Integer}.
  */
-public class IntegerConversionProcessor implements ConversionProcessor {
+public final class IntegerConversionProcessor implements ConversionProcessor {
     /**
      * {@inheritDoc}
      */
     @Override
     public Function<Byte, Integer> convertPrimitiveByte() {
-        return val -> valueOf((int) ((byte)val));
+        return val -> valueOf((int) ((byte) val));
     }
 
     @Override
@@ -139,7 +139,7 @@ public class IntegerConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Boolean, Integer> convertPrimitiveBoolean() {
-        return val -> valueOf(val ? (int) 1 : (int) 0);
+        return val -> valueOf(val ? 1 : 0);
     }
 
     /**
@@ -147,7 +147,7 @@ public class IntegerConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Boolean, Integer> convertBoolean() {
-        return val -> valueOf(val ? (int) 1 : (int) 0);
+        return val -> valueOf(val ? 1 : 0);
     }
 
     /**
