@@ -23,15 +23,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link String}.
  */
-public final class StringConversionProcessor implements ConversionProcessor {
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Byte, String> convertPrimitiveByte() {
-        return val -> Byte.toString(val);
-    }
+public final class StringConversionProcessor extends ConversionProcessor {
 
     /**
      * {@inheritDoc}
@@ -39,14 +31,6 @@ public final class StringConversionProcessor implements ConversionProcessor {
     @Override
     public Function<Byte, Object> convertByte() {
         return Object::toString;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Short, String> convertPrimitiveShort() {
-        return val -> Short.toString(val);
     }
 
     /**
@@ -61,24 +45,8 @@ public final class StringConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Integer, String> convertPrimitiveInt() {
-        return val -> Integer.toString(val);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Integer, String> convertInteger() {
         return Object::toString;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Long, String> convertPrimitiveLong() {
-        return val -> Long.toString(val);
     }
 
     /**
@@ -93,24 +61,8 @@ public final class StringConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Float, String> convertPrimitiveFloat() {
-        return val -> Float.toString(val);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Float, String> convertFloat() {
         return Object::toString;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Double, String> convertPrimitiveDouble() {
-        return val -> Double.toString(val);
     }
 
     /**
@@ -125,24 +77,8 @@ public final class StringConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Character, String> convertChar() {
-        return val -> Character.toString(val);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Character, String> convertCharacter() {
         return Object::toString;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Boolean, String> convertPrimitiveBoolean() {
-        return val -> Boolean.toString(val);
     }
 
     /**
