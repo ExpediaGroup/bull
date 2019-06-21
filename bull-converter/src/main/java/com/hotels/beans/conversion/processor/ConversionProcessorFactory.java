@@ -21,9 +21,7 @@ import static lombok.AccessLevel.PRIVATE;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.IntegerConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.LongConversionProcessor;
-import com.hotels.beans.conversion.processor.impl.PrimitiveByteConversionProcessor;
-import com.hotels.beans.conversion.processor.impl.PrimitiveIntConversionProcessor;
-import com.hotels.beans.conversion.processor.impl.PrimitiveShortConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.PrimitiveConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.ShortConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.StringConversionProcessor;
 
@@ -41,41 +39,41 @@ public final class ConversionProcessorFactory {
      */
     public static ConversionProcessor getConversionProcessor(final Class<?> clazz) {
         ConversionProcessor conversionProcessor = null;
-        if (clazz == String.class) {
-            conversionProcessor = new StringConversionProcessor();
-        } else if (clazz == Byte.class) {
+        if (clazz == Byte.class) {
             conversionProcessor = new ByteConversionProcessor();
         } else if (clazz == byte.class) {
-            conversionProcessor = new PrimitiveByteConversionProcessor();
-        } else if (clazz == Short.class) {
-            conversionProcessor = new ShortConversionProcessor();
-        } else if (clazz == short.class) {
-            conversionProcessor = new PrimitiveShortConversionProcessor();
-        } else if (clazz == Integer.class) {
-            conversionProcessor = new IntegerConversionProcessor();
-        } else if (clazz == int.class) {
-            conversionProcessor = new PrimitiveIntConversionProcessor();
-        } else if (clazz == Long.class) {
-            conversionProcessor = new LongConversionProcessor();
-        } //else if (clazz == long.class) {
-//            conversionProcessor = new PrimitiveLongConversionProcessor();
+            conversionProcessor = new PrimitiveConversionProcessor<Byte>();
+//        } else if (clazz == Short.class) {
+//            conversionProcessor = new ShortConversionProcessor();
+//        } else if (clazz == short.class) {
+//            conversionProcessor = new PrimitiveShortConversionProcessor();
+//        } else if (clazz == Integer.class) {
+//            conversionProcessor = new IntegerConversionProcessor();
+//        } else if (clazz == int.class) {
+//            conversionProcessor = new PrimitiveConversionProcessor<Integer>();
+//        } else if (clazz == Long.class) {
+//            conversionProcessor = new LongConversionProcessor();
+//        } else if (clazz == long.class) {
+//            conversionProcessor = new PrimitiveConversionProcessor<Long>();
 //        } else if (clazz == Float.class) {
 //            conversionProcessor = new FloatConversionProcessor();
 //        } else if (clazz == float.class) {
-//            conversionProcessor = new PrimitiveFloatConversionProcessor();
+//            conversionProcessor = new PrimitiveConversionProcessor<Long>();
 //        } else if (clazz == Double.class) {
 //            conversionProcessor = new DoubleConversionProcessor();
 //        } else if (clazz == double.class) {
-//            conversionProcessor = new PrimitiveDoubleConversionProcessor();
+//            conversionProcessor = new PrimitiveConversionProcessor<Double>();
 //        } else if (clazz == Character.class) {
 //            conversionProcessor = new CharacterConversionProcessor();
 //        } else if (clazz == char.class) {
-//            conversionProcessor = new CharConversionProcessor();
+//            conversionProcessor = new PrimitiveConversionProcessor<Character>();
 //        } else if (clazz == Boolean.class) {
 //            conversionProcessor = new BooleanConversionProcessor();
 //        } else if (clazz == boolean.class) {
-//            conversionProcessor = new PrimitiveBooleanConversionProcessor();
-//        }
+//            conversionProcessor = new PrimitiveConversionProcessor<Boolean>();
+//        } else if (clazz == String.class) {
+//            conversionProcessor = new StringConversionProcessor();
+        }
         return conversionProcessor;
     }
 }

@@ -24,14 +24,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Long}.
  */
-public final class LongConversionProcessor implements ConversionProcessor {
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Byte, Long> convertPrimitiveByte() {
-        return val -> valueOf((long) ((byte) val));
-    }
+public final class LongConversionProcessor extends ConversionProcessor {
 
     /**
      * {@inheritDoc}
@@ -39,14 +32,6 @@ public final class LongConversionProcessor implements ConversionProcessor {
     @Override
     public Function<Byte, Long> convertByte() {
         return Long::valueOf;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Short, Long> convertPrimitiveShort() {
-        return val -> valueOf((short) ((long) val));
     }
 
     /**
@@ -61,24 +46,8 @@ public final class LongConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Integer, Long> convertPrimitiveInt() {
-        return val -> valueOf((long) ((int) val));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Integer, Long> convertInteger() {
         return val -> valueOf(val.longValue());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Long, Long> convertPrimitiveLong() {
-        return Long::valueOf;
     }
 
     /**
@@ -93,24 +62,8 @@ public final class LongConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Float, Long> convertPrimitiveFloat() {
-        return val -> valueOf((long) ((float) val));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Float, Long> convertFloat() {
         return Float::longValue;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Double, Long> convertPrimitiveDouble() {
-        return val -> valueOf((long) ((double) val));
     }
 
     /**
@@ -125,24 +78,8 @@ public final class LongConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Character, Long> convertChar() {
-        return val -> valueOf((long) ((char) val));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Character, Long> convertCharacter() {
         return val -> valueOf((long) val);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Boolean, Long> convertPrimitiveBoolean() {
-        return val -> valueOf(val ? (long) 1 : (long) 0);
     }
 
     /**

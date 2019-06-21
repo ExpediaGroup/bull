@@ -24,26 +24,11 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Integer}.
  */
-public final class IntegerConversionProcessor implements ConversionProcessor {
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Byte, Integer> convertPrimitiveByte() {
-        return val -> valueOf((int) ((byte) val));
-    }
+public final class IntegerConversionProcessor extends ConversionProcessor {
 
     @Override
     public Function<Byte, Integer> convertByte() {
         return Integer::valueOf;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Short, Integer> convertPrimitiveShort() {
-        return val -> valueOf((int) ((short)val));
     }
 
     /**
@@ -58,24 +43,8 @@ public final class IntegerConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Integer, Integer> convertPrimitiveInt() {
-        return val -> (int) val;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Integer, Integer> convertInteger() {
         return val -> val;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Long, Integer> convertPrimitiveLong() {
-        return val -> valueOf((int) ((long) val));
     }
 
     /**
@@ -90,24 +59,8 @@ public final class IntegerConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Float, Integer> convertPrimitiveFloat() {
-        return val -> valueOf((int) ((float) val));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Float, Integer> convertFloat() {
         return val -> valueOf(val.intValue());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Double, Integer> convertPrimitiveDouble() {
-        return val -> valueOf((int) ((double) val));
     }
 
     /**
@@ -122,24 +75,8 @@ public final class IntegerConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Character, Integer> convertChar() {
-        return val -> valueOf((int) ((char) val));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Character, Integer> convertCharacter() {
         return Integer::valueOf;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Boolean, Integer> convertPrimitiveBoolean() {
-        return val -> valueOf(val ? 1 : 0);
     }
 
     /**

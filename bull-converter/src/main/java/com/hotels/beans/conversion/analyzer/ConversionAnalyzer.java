@@ -23,7 +23,6 @@ import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.conversion.processor.ConversionProcessorFactory.getConversionProcessor;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.conversion.processor.ConversionProcessor;
@@ -56,7 +55,7 @@ public final class ConversionAnalyzer {
      * @param destinationFieldType the destination field class
      * @return an {@link Optional} containing the conversion function (if exists)
      */
-    public Optional<Function<Object, Object>> getConversionFunction(final Class<?> sourceFieldType, final Class<?> destinationFieldType) {
+    public Optional getConversionFunction(final Class<?> sourceFieldType, final Class<?> destinationFieldType) {
         return getConversionFunction(sourceFieldType, destinationFieldType, classUtils.isPrimitiveType(destinationFieldType));
     }
 
@@ -68,11 +67,11 @@ public final class ConversionAnalyzer {
      * @return an {@link Optional} containing the conversion function (if exists)
      */
     @SuppressWarnings("unchecked")
-    public Optional<Function<Object, Object>> getConversionFunction(final Class<?> sourceFieldType, final Class<?> destinationFieldType,
+    public <T> Optional<T> getConversionFunction(final Class<?> sourceFieldType, final Class<?> destinationFieldType,
         final boolean isDestinationFieldPrimitiveType) {
         final String cacheKey = "ConversionFunction-" + sourceFieldType.getName() + "-" + destinationFieldType.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
-            Optional<Function<?, ?>> conversionFunction = empty();
+            Optional<T> conversionFunction = empty();
             if (destinationFieldType != sourceFieldType && isDestinationFieldPrimitiveType && classUtils.isPrimitiveType(sourceFieldType)) {
                 conversionFunction = getConversionFunction(getConversionProcessor(destinationFieldType), sourceFieldType);
             }
@@ -88,10 +87,10 @@ public final class ConversionAnalyzer {
      * @return the conversion function
      */
     @SuppressWarnings("unchecked")
-    private Optional<Function<?, ?>> getConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
+    private Optional getConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
         final String cacheKey = "ConversionFunction-" + sourceFieldType.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
-            Optional<Function<?, ?>> conversionFunction = getNativeTypeConversionFunction(conversionProcessor, sourceFieldType)
+            Optional conversionFunction = getNativeTypeConversionFunction(conversionProcessor, sourceFieldType)
                     .or(() -> getPrimitiveTypeConversionFunction(conversionProcessor, sourceFieldType));
             CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);
             return conversionFunction;
@@ -104,8 +103,8 @@ public final class ConversionAnalyzer {
      * @param sourceFieldType he source field class
      * @return the conversion function
      */
-    private Optional<Function<?, ?>> getNativeTypeConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
-        final Optional<Function<?, ?>> conversionFunction;
+    private Optional getNativeTypeConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
+        final Optional conversionFunction;
         if (sourceFieldType == byte.class) {
             conversionFunction = of(conversionProcessor.convertPrimitiveByte());
         } else if (sourceFieldType == short.class) {
@@ -119,7 +118,7 @@ public final class ConversionAnalyzer {
         } else if (sourceFieldType == double.class) {
             conversionFunction = of(conversionProcessor.convertPrimitiveDouble());
         } else if (sourceFieldType == char.class) {
-            conversionFunction = of(conversionProcessor.convertChar());
+            conversionFunction = of(conversionProcessor.convertPrimitiveChar());
         } else if (sourceFieldType == boolean.class) {
             conversionFunction = of(conversionProcessor.convertPrimitiveBoolean());
         } else {
@@ -135,8 +134,8 @@ public final class ConversionAnalyzer {
      * @param sourceFieldType he source field class
      * @return the conversion function
      */
-    private Optional<Function<?, ?>> getPrimitiveTypeConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
-        final Optional<Function<?, ?>> conversionFunction;
+    private Optional getPrimitiveTypeConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
+        final Optional conversionFunction;
         if (sourceFieldType == String.class) {
             conversionFunction = of(conversionProcessor.convertString());
         } else if (sourceFieldType == Byte.class) {

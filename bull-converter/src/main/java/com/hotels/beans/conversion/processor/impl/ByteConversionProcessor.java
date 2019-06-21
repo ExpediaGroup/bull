@@ -24,26 +24,11 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Byte}.
  */
-public final class ByteConversionProcessor implements ConversionProcessor {
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Byte, Byte> convertPrimitiveByte() {
-        return Byte::valueOf;
-    }
+public final class ByteConversionProcessor extends ConversionProcessor {
 
     @Override
     public Function<Byte, Byte> convertByte() {
         return val -> val;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Short, Byte> convertPrimitiveShort() {
-        return val -> valueOf((byte) ((short) val));
     }
 
     /**
@@ -58,24 +43,8 @@ public final class ByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Integer, Byte> convertPrimitiveInt() {
-        return val -> valueOf((byte) ((int) val));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Integer, Byte> convertInteger() {
         return val -> valueOf(val.byteValue());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Long, Byte> convertPrimitiveLong() {
-        return val -> valueOf((byte) ((long) val));
     }
 
     /**
@@ -90,24 +59,8 @@ public final class ByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Float, Byte> convertPrimitiveFloat() {
-        return val -> valueOf((byte) ((float) val));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Float, Byte> convertFloat() {
         return val -> valueOf(val.byteValue());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Double, Byte> convertPrimitiveDouble() {
-        return val -> valueOf((byte) ((double) val));
     }
 
     /**
@@ -122,24 +75,8 @@ public final class ByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Character, Byte> convertChar() {
-        return val -> valueOf((byte) ((char) val));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Function<Character, Byte> convertCharacter() {
         return val -> valueOf((byte) val.charValue());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Boolean, Byte> convertPrimitiveBoolean() {
-        return val -> valueOf(val ? (byte) 1 : (byte) 0);
     }
 
     /**
