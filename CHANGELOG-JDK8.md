@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 ### [1.1.20] 2019.05.24
 #### Added
 * Added possibility to define transformer function without arguments if not needed (see: [Issue 62](https://github.com/HotelsDotCom/bull/issues/62)).
+* Added new maven profile: `check-for-updates` for checking if any dependency can be updated (see: [Issue 68](https://github.com/HotelsDotCom/bull/issues/68)).
+* Added check during project build in order to prevent the add different versions of the same dependency.
 #### Fixed
 * Fixed a bug: FieldTransformer was receiving a default value instead of the source bean one (see: [Issue 64](https://github.com/HotelsDotCom/bull/issues/64)).
 
