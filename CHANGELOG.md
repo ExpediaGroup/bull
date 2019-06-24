@@ -3,7 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ### [1.4.5] 2019.06.05
-#### Added
+* Added new maven profile: `check-for-updates` for checking if any dependency can be updated (see: [Issue 68](https://github.com/HotelsDotCom/bull/issues/68)).
+* Added check during project build in order to prevent the add different versions of the same dependency.
+#### Changes
 * Modified library in order to let it able to retrieve values from getters if a field does not exist (see: [Issue 66](https://github.com/HotelsDotCom/bull/issues/66)).
 
 ### [1.4.4.1] 2019.05.29
