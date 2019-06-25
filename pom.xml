@@ -17,7 +17,7 @@
     <parent>
         <groupId>com.hotels</groupId>
         <artifactId>hotels-oss-parent</artifactId>
-        <version>4.0.1</version>
+        <version>4.1.0</version>
     </parent>
 
     <modules>
@@ -31,11 +31,6 @@
         <jdk.version>11</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
-        <maven.pmd.plugin.version>3.12.0</maven.pmd.plugin.version>
-        <maven.javadoc.plugin.version>3.1.0</maven.javadoc.plugin.version>
-        <maven.update.checker.version>2.7</maven.update.checker.version>
-        <required.maven.version>3.3.9</required.maven.version>
-        <maven.enforcer.plugin.version>3.0.0-M2</maven.enforcer.plugin.version>
         <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
         <lombok.version>1.18.8</lombok.version>
         <apache.commons-lang3.version>3.9</apache.commons-lang3.version>
@@ -207,6 +202,7 @@
                     <plugin>
                         <groupId>com.mycila</groupId>
                         <artifactId>license-maven-plugin</artifactId>
+                        <version>${license.maven.plugin.version}</version>
                         <executions>
                             <execution>
                                 <phase>none</phase>
@@ -533,7 +529,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>${maven.enforcer.plugin.version}</version>
                     <executions>
                         <execution>
                             <id>enforce-maven</id>
@@ -543,7 +538,7 @@
                             <configuration>
                                 <rules>
                                     <requireMavenVersion>
-                                        <version>${required.maven.version}</version>
+                                        <version>${maven.required.version}</version>
                                     </requireMavenVersion>
                                     <DependencyConvergence />
                                 </rules>
@@ -555,9 +550,8 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
-                    <version>${maven.update.checker.version}</version>
                     <configuration>
-                        <rulesUri>file:///${project.basedir}/config/maven/updateRules.xml</rulesUri>
+                        <rulesUri>file:///${project.basedir}/config/maven/versions-plugin-rules.xml</rulesUri>
                     </configuration>
                     <executions>
                         <execution>
@@ -603,7 +597,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven.javadoc.plugin.version}</version>
                 <configuration>
                     <skip>${javadoc.skip}</skip>
                 </configuration>
