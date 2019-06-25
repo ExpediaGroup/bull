@@ -20,8 +20,8 @@ import static com.hotels.beans.validator.Validator.notNull;
 
 import java.util.function.Function;
 
-import com.hotels.beans.transformer.TransformerImpl;
 import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.transformer.TransformerImpl;
 import com.hotels.beans.validator.Validator;
 import com.hotels.beans.validator.ValidatorImpl;
 
