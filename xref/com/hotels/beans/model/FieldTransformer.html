@@ -13,7 +13,7 @@
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> * you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> * You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -65,7 +65,7 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment">     * @param destinationFieldName the field name in the destination object.</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment">     * @param fieldTransformerFunction the transformer function to apply on field</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/hotels/beans/model/FieldTransformer.html">FieldTransformer</a>(<strong class="jxr_keyword">final</strong> String destinationFieldName, <strong class="jxr_keyword">final</strong> Function&lt;T, K&gt; fieldTransformerFunction) {
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">public</strong> <a name="FieldTransformer" href="../../../../com/hotels/beans/model/FieldTransformer.html#FieldTransformer">FieldTransformer</a>(<strong class="jxr_keyword">final</strong> String destinationFieldName, <strong class="jxr_keyword">final</strong> Function&lt;T, K&gt; fieldTransformerFunction) {
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          <strong class="jxr_keyword">this</strong>(destinationFieldName, fieldTransformerFunction, <strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>      }
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  
@@ -74,7 +74,7 @@
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * @param destinationFieldName the field name in the destination object.</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     * @param fieldTransformerSupplier the transformer supplier to apply on field</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/hotels/beans/model/FieldTransformer.html">FieldTransformer</a>(<strong class="jxr_keyword">final</strong> String destinationFieldName, <strong class="jxr_keyword">final</strong> Supplier&lt;K&gt; fieldTransformerSupplier) {
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <a name="FieldTransformer" href="../../../../com/hotels/beans/model/FieldTransformer.html#FieldTransformer">FieldTransformer</a>(<strong class="jxr_keyword">final</strong> String destinationFieldName, <strong class="jxr_keyword">final</strong> Supplier&lt;K&gt; fieldTransformerSupplier) {
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          <strong class="jxr_keyword">this</strong>(destinationFieldName, <strong class="jxr_keyword">null</strong>, fieldTransformerSupplier);
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      }
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  

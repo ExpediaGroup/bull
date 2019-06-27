@@ -13,7 +13,7 @@
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> * you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> * You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -81,7 +81,7 @@
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment"> * Unit test for all {@link Transformer} functions related to Immutable Java Beans.</em>
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../com/hotels/beans/transformer/ImmutableObjectTransformationTest.html">ImmutableObjectTransformationTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../com/hotels/beans/transformer/AbstractTransformerTest.html">AbstractTransformerTest</a> {
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ImmutableObjectTransformationTest" href="../../../../com/hotels/beans/transformer/ImmutableObjectTransformationTest.html#ImmutableObjectTransformationTest">ImmutableObjectTransformationTest</a> <strong class="jxr_keyword">extends</strong> <a name="AbstractTransformerTest" href="../../../../com/hotels/beans/transformer/AbstractTransformerTest.html#AbstractTransformerTest">AbstractTransformerTest</a> {
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> TOTAL_ADV_CLASS_FIELDS = 6;
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String GET_DEST_FIELD_NAME_METHOD_NAME = <span class="jxr_string">"getDestFieldName"</span>;
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME = <span class="jxr_string">"getConstructorValuesFromFields"</span>;
@@ -154,7 +154,7 @@
 <a class="jxr_linenumber" name="L146" href="#L146">146</a>     @Test
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformationOnAnExistingDestinationWorksProperly() {
 <a class="jxr_linenumber" name="L148" href="#L148">148</a>         <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L149" href="#L149">149</a>         <a href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooSimple.html">ImmutableToFooSimple</a> immutableToFoo = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooSimple.html">ImmutableToFooSimple</a>(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, false);
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>         <a name="ImmutableToFooSimple" href="../../../../com/hotels/beans/sample/immuta<a name="ImmutableToFooSimple" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooSimple.html#ImmutableToFooSimple">ImmutableToFooSimple</a>mple.html#ImmutableToFooSimple">ImmutableToFooSimple</a> immutableToFoo = <strong class="jxr_keyword">new</strong> <a name="ImmutableToFooSimple" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooSimple.html#ImmutableToFooSimple">ImmutableToFooSimple</a>(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, false);
 <a class="jxr_linenumber" name="L150" href="#L150">150</a> 
 <a class="jxr_linenumber" name="L151" href="#L151">151</a>         <em class="jxr_comment">//WHEN</em>
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>         underTest.setValidationEnabled(<strong class="jxr_keyword">true</strong>).transform(fromFooSimple, immutableToFoo);
@@ -179,7 +179,7 @@
 <a class="jxr_linenumber" name="L171" href="#L171">171</a>         FieldMapping phoneNumbersMapping = <strong class="jxr_keyword">new</strong> FieldMapping(PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME, PHONE_NUMBER_DEST_FIELD_NAME);
 <a class="jxr_linenumber" name="L172" href="#L172">172</a> 
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>         <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>         <a href="../../../../com/hotels/beans/sample/immutable/ImmutableFlatToFoo.html">ImmutableFlatToFoo</a> actual = underTest.withFieldMapping(phoneNumbersMapping).transform(sourceObject, ImmutableFlatToFoo.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>         <a name="ImmutableFlatToFoo" href="../../../../com/hotels/beans/sample/immutable/ImmutableFlatToFoo.html#ImmutableFlatToFoo">ImmutableFlatToFoo</a> actual = underTest.withFieldMapping(phoneNumbersMapping).transform(sourceObject, ImmutableFlatToFoo.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L175" href="#L175">175</a> 
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>         <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>         assertEquals(expectedName, actual.getName());
@@ -224,7 +224,7 @@
 <a class="jxr_linenumber" name="L216" href="#L216">216</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L217" href="#L217">217</a>     @DataProvider(parallel = <strong class="jxr_keyword">true</strong>)
 <a class="jxr_linenumber" name="L218" href="#L218">218</a>     <strong class="jxr_keyword">private</strong> Object[][] dataConstructorErrorTesting() {
-<a class="jxr_linenumber" name="L219" href="#L219">219</a>         <a href="../../../../com/hotels/beans/sample/FromFoo.html">FromFoo</a> actual = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/FromFoo.html">FromFoo</a>(NAME, ID, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>         <a name="FromFoo" href="../../../../com/hotels/beans/sampl<a name="FromFoo" href="../../../../com/hotels/beans/sample/FromFoo.html#FromFoo">FromFoo</a>oo.html#FromFoo">FromFoo</a> actual = <strong class="jxr_keyword">new</strong> <a name="FromFoo" href="../../../../com/hotels/beans/sample/FromFoo.html#FromFoo">FromFoo</a>(NAME, ID, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L220" href="#L220">220</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[][] {
 <a class="jxr_linenumber" name="L221" href="#L221">221</a>                 {<span class="jxr_string">"Test that an exception is thrown if the constructor invocation throws exception"</span>, actual, ImmutableToFooCustomAnnotation.<strong class="jxr_keyword">class</strong>}
 <a class="jxr_linenumber" name="L222" href="#L222">222</a>         };
@@ -237,7 +237,7 @@
 <a class="jxr_linenumber" name="L229" href="#L229">229</a> <em class="jxr_javadoccomment">     * @param targetObjectClass the target object class</em>
 <a class="jxr_linenumber" name="L230" href="#L230">230</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L231" href="#L231">231</a>     @Test(dataProvider = <span class="jxr_string">"dataInvalidBeanExceptionTesting"</span>, expectedExceptions = InvalidBeanException.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="L232" href="#L232">232</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformThrowsExceptionWhenImmutableIsInvalid(<strong class="jxr_keyword">final</strong> String testCaseDescription, <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/sample/FromFoo.html">FromFoo</a> sourceObject,
+<a class="jxr_linenumber" name="L232" href="#L232">232</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformThrowsExceptionWhenImmutableIsInvalid(<strong class="jxr_keyword">final</strong> String testCaseDescription, <strong class="jxr_keyword">final</strong> <a name="FromFoo" href="../../../../com/hotels/beans/sample/FromFoo.html#FromFoo">FromFoo</a> sourceObject,
 <a class="jxr_linenumber" name="L233" href="#L233">233</a>         <strong class="jxr_keyword">final</strong> Class&lt;?&gt; targetObjectClass) {
 <a class="jxr_linenumber" name="L234" href="#L234">234</a>         <em class="jxr_comment">//GIVEN</em>
 <a class="jxr_linenumber" name="L235" href="#L235">235</a> 
@@ -252,7 +252,7 @@
 <a class="jxr_linenumber" name="L244" href="#L244">244</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L245" href="#L245">245</a>     @DataProvider(parallel = <strong class="jxr_keyword">true</strong>)
 <a class="jxr_linenumber" name="L246" href="#L246">246</a>     <strong class="jxr_keyword">private</strong> Object[][] dataInvalidBeanExceptionTesting() <strong class="jxr_keyword">throws</strong> CloneNotSupportedException {
-<a class="jxr_linenumber" name="L247" href="#L247">247</a>         <a href="../../../../com/hotels/beans/sample/FromFoo.html">FromFoo</a> fromFooNullId = AbstractTransformerTest.fromFoo.clone();
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>         <a name="FromFoo" href="../../../../com/hotels/beans/sample/FromFoo.html#FromFoo">FromFoo</a> fromFooNullId = AbstractTransformerTest.fromFoo.clone();
 <a class="jxr_linenumber" name="L248" href="#L248">248</a>         fromFooNullId.setId(<strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L249" href="#L249">249</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[][] {
 <a class="jxr_linenumber" name="L250" href="#L250">250</a>                 {<span class="jxr_string">"Test that an exception is thrown if there the constructor args parameters have a different order for the mutable bean object."</span>,
@@ -270,7 +270,7 @@
 <a class="jxr_linenumber" name="L262" href="#L262">262</a>         fromFoo.setId(<strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L263" href="#L263">263</a> 
 <a class="jxr_linenumber" name="L264" href="#L264">264</a>         <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L265" href="#L265">265</a>         <a href="../../../../com/hotels/beans/sample/immutable/ImmutableToFoo.html">ImmutableToFoo</a> actual = underTest.transform(fromFoo, ImmutableToFoo.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>         <a name="ImmutableToFoo" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFoo.html#ImmutableToFoo">ImmutableToFoo</a> actual = underTest.transform(fromFoo, ImmutableToFoo.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L266" href="#L266">266</a> 
 <a class="jxr_linenumber" name="L267" href="#L267">267</a>         <em class="jxr_comment">// THEN</em>
 <a class="jxr_linenumber" name="L268" href="#L268">268</a>         assertThat(actual, sameBeanAs(fromFoo));
@@ -286,7 +286,7 @@
 <a class="jxr_linenumber" name="L278" href="#L278">278</a> 
 <a class="jxr_linenumber" name="L279" href="#L279">279</a>         <em class="jxr_comment">//WHEN</em>
 <a class="jxr_linenumber" name="L280" href="#L280">280</a>         <strong class="jxr_keyword">final</strong> Transformer beanTransformer = underTest.withFieldMapping(<strong class="jxr_keyword">new</strong> FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
-<a class="jxr_linenumber" name="L281" href="#L281">281</a>         <a href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooDiffFields.html">ImmutableToFooDiffFields</a> actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L281" href="#L281">281</a>         <a name="ImmutableToFooDiffFields" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooDiffFields.html#ImmutableToFooDiffFields">ImmutableToFooDiffFields</a> actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L282" href="#L282">282</a> 
 <a class="jxr_linenumber" name="L283" href="#L283">283</a>         <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L284" href="#L284">284</a>         assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
@@ -305,7 +305,7 @@
 <a class="jxr_linenumber" name="L297" href="#L297">297</a> <em class="jxr_javadoccomment">     * @param isNameFieldEmpty true if the name field should contain a value, false otherwise</em>
 <a class="jxr_linenumber" name="L298" href="#L298">298</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L299" href="#L299">299</a>     @Test(dataProvider = <span class="jxr_string">"dataAdvancedFieldsCopyTesting"</span>)
-<a class="jxr_linenumber" name="L300" href="#L300">300</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied(<strong class="jxr_keyword">final</strong> String testCaseDescription, <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/sample/FromFooAdvFields.html">FromFooAdvFields</a> sourceObject,
+<a class="jxr_linenumber" name="L300" href="#L300">300</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied(<strong class="jxr_keyword">final</strong> String testCaseDescription, <strong class="jxr_keyword">final</strong> <a name="FromFooAdvFields" href="../../../../com/hotels/beans/sample/FromFooAdvFields.html#FromFooAdvFields">FromFooAdvFields</a> sourceObject,
 <a class="jxr_linenumber" name="L301" href="#L301">301</a>         <strong class="jxr_keyword">final</strong> Class&lt;?&gt; targetObjectClass, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> isNameFieldEmpty) {
 <a class="jxr_linenumber" name="L302" href="#L302">302</a>         <em class="jxr_comment">//GIVEN</em>
 <a class="jxr_linenumber" name="L303" href="#L303">303</a> 
@@ -315,7 +315,7 @@
 <a class="jxr_linenumber" name="L307" href="#L307">307</a>                 .withFieldMapping(<strong class="jxr_keyword">new</strong> FieldMapping(PRICE_FIELD_NAME, NET_PRICE_FIELD_NAME))
 <a class="jxr_linenumber" name="L308" href="#L308">308</a>                 .withFieldMapping(<strong class="jxr_keyword">new</strong> FieldMapping(PRICE_FIELD_NAME, GROSS_PRICE_FIELD_NAME))
 <a class="jxr_linenumber" name="L309" href="#L309">309</a>                 .withFieldTransformer(<strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(LOCALE_FIELD_NAME, Locale::forLanguageTag));
-<a class="jxr_linenumber" name="L310" href="#L310">310</a>         <a href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooAdvFields.html">ImmutableToFooAdvFields</a> actual = (ImmutableToFooAdvFields) beanTransformer.transform(sourceObject, targetObjectClass);
+<a class="jxr_linenumber" name="L310" href="#L310">310</a>         <a name="ImmutableToFooAdvFields" <a name="ImmutableToFooAdvFields" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooAdvFields.html#ImmutableToFooAdvFields">ImmutableToFooAdvFields</a>otels/beans/sample/immutable/ImmutableToFooAdvFields.html#ImmutableToFooAdvFields">ImmutableToFooAdvFields</a> actual = (<a name="ImmutableToFooAdvFields" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooAdvFields.html#ImmutableToFooAdvFields">ImmutableToFooAdvFields</a>) beanTransformer.transform(sourceObject, targetObjectClass);
 <a class="jxr_linenumber" name="L311" href="#L311">311</a> 
 <a class="jxr_linenumber" name="L312" href="#L312">312</a>         <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L313" href="#L313">313</a>         assertNotNull(actual.getName());
@@ -333,7 +333,7 @@
 <a class="jxr_linenumber" name="L325" href="#L325">325</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L326" href="#L326">326</a>     @DataProvider(parallel = <strong class="jxr_keyword">true</strong>)
 <a class="jxr_linenumber" name="L327" href="#L327">327</a>     <strong class="jxr_keyword">private</strong> Object[][] dataAdvancedFieldsCopyTesting() <strong class="jxr_keyword">throws</strong> CloneNotSupportedException {
-<a class="jxr_linenumber" name="L328" href="#L328">328</a>         <a href="../../../../com/hotels/beans/sample/FromFooAdvFields.html">FromFooAdvFields</a> emptyOptionalSourceObject = fromFooAdvFields.clone();
+<a class="jxr_linenumber" name="L328" href="#L328">328</a>         <a name="FromFooAdvFields" href="../../../../com/hotels/beans/sample/FromFooAdvFields.html#FromFooAdvFields">FromFooAdvFields</a> emptyOptionalSourceObject = fromFooAdvFields.clone();
 <a class="jxr_linenumber" name="L329" href="#L329">329</a>         emptyOptionalSourceObject.setName(Optional.empty());
 <a class="jxr_linenumber" name="L330" href="#L330">330</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[][] {
 <a class="jxr_linenumber" name="L331" href="#L331">331</a>                 {<span class="jxr_string">"Test that bean containing advanced final fields are correctly copied"</span>, fromFooAdvFields, ImmutableToFooAdvFields.<strong class="jxr_keyword">class</strong>, <strong class="jxr_keyword">true</strong>},
@@ -350,7 +350,7 @@
 <a class="jxr_linenumber" name="L342" href="#L342">342</a>         <em class="jxr_comment">//GIVEN</em>
 <a class="jxr_linenumber" name="L343" href="#L343">343</a> 
 <a class="jxr_linenumber" name="L344" href="#L344">344</a>         <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L345" href="#L345">345</a>         <a href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooMissingCustomAnnotation.html">ImmutableToFooMissingCustomAnnotation</a> actual = underTest.withFieldTransformer().transform(fromFooWithPrimitiveFields, ImmutableToFooMissingCustomAnnotation.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L345" href="#L345">345</a>         <a name="ImmutableToFooMissingCustomAnnotation" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooMissingCustomAnnotation.html#ImmutableToFooMissingCustomAnnotation">ImmutableToFooMissingCustomAnnotation</a> actual = underTest.withFieldTransformer().transform(fromFooWithPrimitiveFields, ImmutableToFooMissingCustomAnnotation.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L346" href="#L346">346</a> 
 <a class="jxr_linenumber" name="L347" href="#L347">347</a>         <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L348" href="#L348">348</a>         assertNotNull(actual);
@@ -469,12 +469,12 @@
 <a class="jxr_linenumber" name="L461" href="#L461">461</a>     @Test
 <a class="jxr_linenumber" name="L462" href="#L462">462</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions() {
 <a class="jxr_linenumber" name="L463" href="#L463">463</a>         <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>         <a href="../../../../com/hotels/beans/sample/FromFooSimple.html">FromFooSimple</a> fromFooSimple = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/FromFooSimple.html">FromFooSimple</a>(NAME, ID, ACTIVE);
+<a class="jxr_linenumber" name="L464" href="#L464">464</a>         <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromF<a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>#FromFooSimple">FromFooSimple</a> fromFooSimple = <strong class="jxr_keyword">new</strong> <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>(NAME, ID, ACTIVE);
 <a class="jxr_linenumber" name="L465" href="#L465">465</a>         FieldTransformer&lt;Object, Integer&gt; ageFieldTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(AGE_FIELD_NAME, () -&gt; AGE);
 <a class="jxr_linenumber" name="L466" href="#L466">466</a> 
 <a class="jxr_linenumber" name="L467" href="#L467">467</a>         <em class="jxr_comment">//WHEN</em>
 <a class="jxr_linenumber" name="L468" href="#L468">468</a>         underTest.withFieldTransformer(ageFieldTransformer);
-<a class="jxr_linenumber" name="L469" href="#L469">469</a>         <a href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooNotExistingFields.html">ImmutableToFooNotExistingFields</a> immutableObjectBean = underTest.transform(fromFooSimple, ImmutableToFooNotExistingFields.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L469" href="#L469">469</a>         <a name="ImmutableToFooNotExistingFields" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooNotExistingFields.html#ImmutableToFooNotExistingFields">ImmutableToFooNotExistingFields</a> immutableObjectBean = underTest.transform(fromFooSimple, ImmutableToFooNotExistingFields.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L470" href="#L470">470</a> 
 <a class="jxr_linenumber" name="L471" href="#L471">471</a>         <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L472" href="#L472">472</a>         assertThat(immutableObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
@@ -489,7 +489,7 @@
 <a class="jxr_linenumber" name="L481" href="#L481">481</a>         underTest.skipTransformationForField(<span class="jxr_string">"name"</span>, <span class="jxr_string">"nestedObject.phoneNumbers"</span>);
 <a class="jxr_linenumber" name="L482" href="#L482">482</a> 
 <a class="jxr_linenumber" name="L483" href="#L483">483</a>         <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L484" href="#L484">484</a>         <a href="../../../../com/hotels/beans/sample/immutable/ImmutableToFoo.html">ImmutableToFoo</a> actual = underTest.transform(fromFoo, ImmutableToFoo.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>         <a name="ImmutableToFoo" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFoo.html#ImmutableToFoo">ImmutableToFoo</a> actual = underTest.transform(fromFoo, ImmutableToFoo.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L485" href="#L485">485</a> 
 <a class="jxr_linenumber" name="L486" href="#L486">486</a>         <em class="jxr_comment">//THEN</em>
 <a class="jxr_linenumber" name="L487" href="#L487">487</a>         assertEquals(fromFoo.getId(), actual.getId());
@@ -504,12 +504,12 @@
 <a class="jxr_linenumber" name="L496" href="#L496">496</a>     @Test
 <a class="jxr_linenumber" name="L497" href="#L497">497</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformerFunctionHasHigherPriorityThanDefaultValue() {
 <a class="jxr_linenumber" name="L498" href="#L498">498</a>         <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L499" href="#L499">499</a>         <a href="../../../../com/hotels/beans/sample/FromFooSimpleBooleanField.html">FromFooSimpleBooleanField</a> fromFooSimpleNullFields = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/FromFooSimpleBooleanField.html">FromFooSimpleBooleanField</a>();
+<a class="jxr_linenumber" name="L499" href="#L499">499</a>         <a name="FromFooSimpleBooleanField" href="../../../../com/hotels/beans/sample/FromFooSimpleBo<a name="FromFooSimpleBooleanField" href="../../../../com/hotels/beans/sample/FromFooSimpleBooleanField.html#FromFooSimpleBooleanField">FromFooSimpleBooleanField</a>mpleBooleanField">FromFooSimpleBooleanField</a> fromFooSimpleNullFields = <strong class="jxr_keyword">new</strong> <a name="FromFooSimpleBooleanField" href="../../../../com/hotels/beans/sample/FromFooSimpleBooleanField.html#FromFooSimpleBooleanField">FromFooSimpleBooleanField</a>();
 <a class="jxr_linenumber" name="L500" href="#L500">500</a>         FieldTransformer&lt;Boolean, Boolean&gt; nullToTrue =
 <a class="jxr_linenumber" name="L501" href="#L501">501</a>             <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(<span class="jxr_string">"work"</span>, aBoolean -&gt; aBoolean == <strong class="jxr_keyword">null</strong> || aBoolean);
 <a class="jxr_linenumber" name="L502" href="#L502">502</a> 
 <a class="jxr_linenumber" name="L503" href="#L503">503</a>         <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L504" href="#L504">504</a>         <a href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooSimpleBoolean.html">ImmutableToFooSimpleBoolean</a> actual = underTest
+<a class="jxr_linenumber" name="L504" href="#L504">504</a>         <a name="ImmutableToFooSimpleBoolean" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooSimpleBoolean.html#ImmutableToFooSimpleBoolean">ImmutableToFooSimpleBoolean</a> actual = underTest
 <a class="jxr_linenumber" name="L505" href="#L505">505</a>             .withFieldTransformer(nullToTrue)
 <a class="jxr_linenumber" name="L506" href="#L506">506</a>             .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L507" href="#L507">507</a> 

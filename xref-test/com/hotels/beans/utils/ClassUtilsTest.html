@@ -13,7 +13,7 @@
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> * you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> * You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -75,7 +75,7 @@
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment"> * Unit test for {@link ClassUtils}.</em>
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../com/hotels/beans/utils/ClassUtilsTest.html">ClassUtilsTest</a> {
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ClassUtilsTest" href="../../../../com/hotels/beans/utils/ClassUtilsTest.html#ClassUtilsTest">ClassUtilsTest</a> {
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Class&lt;MutableToFooSubClass&gt; CLASS_WITHOUT_PRIVATE_FINAL_FIELDS = MutableToFooSubClass.<strong class="jxr_keyword">class</strong>;
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Class&lt;ImmutableToFoo&gt; CLASS_WITH_PRIVATE_FINAL_FIELDS = ImmutableToFoo.<strong class="jxr_keyword">class</strong>;
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> EXPECTED_PRIVATE_FINAL_FIELDS = 5;
@@ -102,7 +102,7 @@
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">float</strong>[] PRIMITIVE_FLOAT_ARRAY = {};
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong>[] PRIMITIVE_LONG_ARRAY = {};
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Integer[] PRIMITIVE_INTEGER_ARRAY = {};
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/sample/FromFoo.html">FromFoo</a>[] NOT_PRIMITIVE_ARRAY = {};
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a name="FromFoo" href="../../../../com/hotels/beans/sample/FromFoo.html#FromFoo">FromFoo</a>[] NOT_PRIMITIVE_ARRAY = {};
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>  
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L100" href="#L100">100</a> <em class="jxr_javadoccomment">     * The class to be tested.</em>
@@ -568,8 +568,8 @@
 <a class="jxr_linenumber" name="L560" href="#L560">560</a>     @Test(dataProvider = <span class="jxr_string">"dataHasFieldTesting"</span>)
 <a class="jxr_linenumber" name="L561" href="#L561">561</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testHasFieldWorksAsExpected(<strong class="jxr_keyword">final</strong> String testCaseDescription, <strong class="jxr_keyword">final</strong> String fieldName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> expectedResult) {
 <a class="jxr_linenumber" name="L562" href="#L562">562</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L563" href="#L563">563</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooSubClass.html">ImmutableToFooSubClass</a> immutableToFooSubClass =
-<a class="jxr_linenumber" name="L564" href="#L564">564</a>                 <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooSubClass.html">ImmutableToFooSubClass</a>(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, 0, false, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L563" href="#L563">563</a>         <strong class="jxr_keyword">final</strong> <a name="ImmutableToFooSubClass" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooSubClass.html#ImmutableToFooSubClass">ImmutableToFooSubClass</a> immutableToFooSubClass =
+<a class="jxr_linenumber" name="L564" href="#L564">564</a>                 <strong class="jxr_keyword">new</strong> <a name="ImmutableToFooSubClass" href="../../../../com/hotels/beans/sample/immutable/ImmutableToFooSubClass.html#ImmutableToFooSubClass">ImmutableToFooSubClass</a>(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, 0, false, <strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L565" href="#L565">565</a> 
 <a class="jxr_linenumber" name="L566" href="#L566">566</a>         <em class="jxr_comment">// WHEN</em>
 <a class="jxr_linenumber" name="L567" href="#L567">567</a>         <strong class="jxr_keyword">boolean</strong> actual = underTest.hasField(immutableToFooSubClass, fieldName);

@@ -13,7 +13,7 @@
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> * you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> * You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -46,7 +46,7 @@
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment"> * Unit test for {@link Validator}.</em>
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../com/hotels/beans/validator/ValidatorTest.html">ValidatorTest</a> {
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ValidatorTest" href="../../../../com/hotels/beans/validator/ValidatorTest.html#ValidatorTest">ValidatorTest</a> {
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     * Exception message.</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     */</em>
@@ -148,7 +148,7 @@
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>     @Test(expectedExceptions = InvalidBeanException.<strong class="jxr_keyword">class</strong>)
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testValidateThrowsExceptionWhenTheBeanIsInvalid() {
 <a class="jxr_linenumber" name="L142" href="#L142">142</a>         <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>         <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a> validBean = createTestBean(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>         <a name="MixedToFoo" href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html#MixedToFoo">MixedToFoo</a> validBean = createTestBean(<strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L144" href="#L144">144</a> 
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>         <em class="jxr_comment">//WHEN</em>
 <a class="jxr_linenumber" name="L146" href="#L146">146</a>         underTest.validate(validBean);
@@ -160,7 +160,7 @@
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>     @Test
 <a class="jxr_linenumber" name="L153" href="#L153">153</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testValidateDoesNotThrowsExceptionWhenTheBeanIsValid() {
 <a class="jxr_linenumber" name="L154" href="#L154">154</a>         <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>         <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a> validBean = createTestBean(ID);
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>         <a name="MixedToFoo" href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html#MixedToFoo">MixedToFoo</a> validBean = createTestBean(ID);
 <a class="jxr_linenumber" name="L156" href="#L156">156</a> 
 <a class="jxr_linenumber" name="L157" href="#L157">157</a>         <em class="jxr_comment">//WHEN</em>
 <a class="jxr_linenumber" name="L158" href="#L158">158</a>         underTest.validate(validBean);
@@ -200,8 +200,8 @@
 <a class="jxr_linenumber" name="L192" href="#L192">192</a> <em class="jxr_javadoccomment">     * @param id the id to use</em>
 <a class="jxr_linenumber" name="L193" href="#L193">193</a> <em class="jxr_javadoccomment">     * @return a populated {@link MixedToFoo}</em>
 <a class="jxr_linenumber" name="L194" href="#L194">194</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L195" href="#L195">195</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a> createTestBean(<strong class="jxr_keyword">final</strong> BigInteger id) {
-<a class="jxr_linenumber" name="L196" href="#L196">196</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html">MixedToFoo</a>(id, NAME, Collections.emptyList(), <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>     <strong class="jxr_keyword">private</strong> <a name="MixedToFoo" href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html#MixedToFoo">MixedToFoo</a> createTestBean(<strong class="jxr_keyword">final</strong> BigInteger id) {
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="MixedToFoo" href="../../../../com/hotels/beans/sample/mixed/MixedToFoo.html#MixedToFoo">MixedToFoo</a>(id, NAME, Collections.emptyList(), <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L197" href="#L197">197</a>     }
 <a class="jxr_linenumber" name="L198" href="#L198">198</a> }
 </pre>

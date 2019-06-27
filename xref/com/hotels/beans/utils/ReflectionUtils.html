@@ -13,7 +13,7 @@
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> * you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> * You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -64,7 +64,7 @@
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment"> * Reflection class utils.</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../com/hotels/beans/utils/ReflectionUtils.html">ReflectionUtils</a> {
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="ReflectionUtils" href="../../../../com/hotels/beans/utils/ReflectionUtils.html#ReflectionUtils">ReflectionUtils</a> {
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">     * boolean type name.</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     */</em>
@@ -88,7 +88,7 @@
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment">     * CacheManager instance {@link CacheManager}.</em>
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/cache/CacheManager.html">CacheManager</a> CACHE_MANAGER = getCacheManager(<span class="jxr_string">"reflectionUtils"</span>);
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a name="CacheManager" href="../../../../com/hotels/beans/cache/CacheManager.html#CacheManager">CacheManager</a> CACHE_MANAGER = getCacheManager(<span class="jxr_string">"reflectionUtils"</span>);
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">     * Invokes the method.</em>
@@ -149,9 +149,9 @@
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>             }
 <a class="jxr_linenumber" name="L142" href="#L142">142</a>             <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>                 fieldValue = getGetterMethodFunction(fieldValue.getClass(), currFieldName).apply(fieldValue);
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> ClassCastException | MissingMethodException | InvalidBeanException e) {
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> ClassCastException | <a name="MissingMethodException" href="../../../../com/hotels/beans/error/MissingMethodException.html#MissingMethodException">MissingMethodException</a> | <a name="InvalidBeanException" href="../../../../com/hotels/beans/error/InvalidBeanException.html#InvalidBeanException">InvalidBeanException</a> e) {
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>                 fieldValue = getFieldValueDirectAccess(fieldValue, currFieldName);
-<a class="jxr_linenumber" name="L146" href="#L146">146</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> MissingFieldException e) {
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> <a name="MissingFieldException" href="../../../../com/hotels/beans/error/MissingFieldException.html#MissingFieldException">MissingFieldException</a> e) {
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>                 fieldValue = invokeMethod(getGetterMethod(fieldValue.getClass(), currFieldName, fieldType), fieldValue);
 <a class="jxr_linenumber" name="L148" href="#L148">148</a>             }
 <a class="jxr_linenumber" name="L149" href="#L149">149</a>         }
@@ -174,7 +174,7 @@
 <a class="jxr_linenumber" name="L166" href="#L166">166</a>                 CACHE_MANAGER.cacheObject(cacheKey, method);
 <a class="jxr_linenumber" name="L167" href="#L167">167</a>                 <strong class="jxr_keyword">return</strong> method;
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>             } <strong class="jxr_keyword">catch</strong> (NoSuchMethodException e) {
-<a class="jxr_linenumber" name="L169" href="#L169">169</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/error/MissingFieldException.html">MissingFieldException</a>(fieldClass.getName() + <span class="jxr_string">" hasn't a field called: "</span> + fieldName + <span class="jxr_string">"."</span>);
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="MissingFieldException" href="../../../../com/hotels/beans/error/MissingFieldException.html#MissingFieldException">MissingFieldException</a>(fieldClass.getName() + <span class="jxr_string">" hasn't a field called: "</span> + fieldName + <span class="jxr_string">"."</span>);
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>             }
 <a class="jxr_linenumber" name="L171" href="#L171">171</a>         });
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>     }
@@ -199,12 +199,12 @@
 <a class="jxr_linenumber" name="L191" href="#L191">191</a>                         privateLookupIn.findVirtual(fieldClass, getGetterMethodPrefix(fieldType) + capitalize(fieldName), methodType(fieldType)),
 <a class="jxr_linenumber" name="L192" href="#L192">192</a>                         methodType(fieldType, fieldClass));
 <a class="jxr_linenumber" name="L193" href="#L193">193</a>                 function = (Function) site.getTarget().invokeExact();
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>             } <strong class="jxr_keyword">catch</strong> (NoSuchFieldException | MissingFieldException e) {
-<a class="jxr_linenumber" name="L195" href="#L195">195</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/error/MissingFieldException.html">MissingFieldException</a>(e.getMessage());
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>             } <strong class="jxr_keyword">catch</strong> (NoSuchFieldException | <a name="MissingFieldException" href="../../../../com/hotels/beans/error/MissingFieldException.html#MissingFieldException">MissingFieldException</a> e) {
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="MissingFieldException" href="../../../../com/hotels/beans/error/MissingFieldException.html#MissingFieldException">MissingFieldException</a>(e.getMessage());
 <a class="jxr_linenumber" name="L196" href="#L196">196</a>             } <strong class="jxr_keyword">catch</strong> (NoSuchMethodException e) {
-<a class="jxr_linenumber" name="L197" href="#L197">197</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/error/MissingMethodException.html">MissingMethodException</a>();
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="MissingMethodException" href="../../../../com/hotels/beans/error/MissingMethodException.html#MissingMethodException">MissingMethodException</a>();
 <a class="jxr_linenumber" name="L198" href="#L198">198</a>             } <strong class="jxr_keyword">catch</strong> (Throwable e) {
-<a class="jxr_linenumber" name="L199" href="#L199">199</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/error/InvalidBeanException.html">InvalidBeanException</a>(e);
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="InvalidBeanException" href="../../../../com/hotels/beans/error/InvalidBeanException.html#InvalidBeanException">InvalidBeanException</a>(e);
 <a class="jxr_linenumber" name="L200" href="#L200">200</a>             }
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>             CACHE_MANAGER.cacheObject(cacheKey, function);
 <a class="jxr_linenumber" name="L202" href="#L202">202</a>             <strong class="jxr_keyword">return</strong> function;
@@ -260,7 +260,7 @@
 <a class="jxr_linenumber" name="L252" href="#L252">252</a>         <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L253" href="#L253">253</a>             Field field = getDeclaredField(fieldName, target.getClass());
 <a class="jxr_linenumber" name="L254" href="#L254">254</a>             <strong class="jxr_keyword">return</strong> field.get(target);
-<a class="jxr_linenumber" name="L255" href="#L255">255</a>         } <strong class="jxr_keyword">catch</strong> (MissingFieldException e) {
+<a class="jxr_linenumber" name="L255" href="#L255">255</a>         } <strong class="jxr_keyword">catch</strong> (<a name="MissingFieldException" href="../../../../com/hotels/beans/error/MissingFieldException.html#MissingFieldException">MissingFieldException</a> e) {
 <a class="jxr_linenumber" name="L256" href="#L256">256</a>             <strong class="jxr_keyword">throw</strong> e;
 <a class="jxr_linenumber" name="L257" href="#L257">257</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> Exception e) {
 <a class="jxr_linenumber" name="L258" href="#L258">258</a>             handleReflectionException(e);
@@ -286,7 +286,7 @@
 <a class="jxr_linenumber" name="L278" href="#L278">278</a>                 <strong class="jxr_keyword">if</strong> (!superclass.equals(Object.<strong class="jxr_keyword">class</strong>)) {
 <a class="jxr_linenumber" name="L279" href="#L279">279</a>                     field = getDeclaredField(fieldName, superclass);
 <a class="jxr_linenumber" name="L280" href="#L280">280</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L281" href="#L281">281</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/error/MissingFieldException.html">MissingFieldException</a>(targetClass.getName() + <span class="jxr_string">" does not contain field: "</span> + fieldName);
+<a class="jxr_linenumber" name="L281" href="#L281">281</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="MissingFieldException" href="../../../../com/hotels/beans/error/MissingFieldException.html#MissingFieldException">MissingFieldException</a>(targetClass.getName() + <span class="jxr_string">" does not contain field: "</span> + fieldName);
 <a class="jxr_linenumber" name="L282" href="#L282">282</a>                 }
 <a class="jxr_linenumber" name="L283" href="#L283">283</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> Exception e) {
 <a class="jxr_linenumber" name="L284" href="#L284">284</a>                 handleReflectionException(e);
@@ -315,7 +315,7 @@
 <a class="jxr_linenumber" name="L307" href="#L307">307</a>                 <strong class="jxr_keyword">if</strong> (!superclass.equals(Object.<strong class="jxr_keyword">class</strong>)) {
 <a class="jxr_linenumber" name="L308" href="#L308">308</a>                     field = getDeclaredField(fieldName, superclass);
 <a class="jxr_linenumber" name="L309" href="#L309">309</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L310" href="#L310">310</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/error/MissingFieldException.html">MissingFieldException</a>(clazz.getName() + <span class="jxr_string">" does not contain field: "</span> + fieldName);
+<a class="jxr_linenumber" name="L310" href="#L310">310</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="MissingFieldException" href="../../../../com/hotels/beans/error/MissingFieldException.html#MissingFieldException">MissingFieldException</a>(clazz.getName() + <span class="jxr_string">" does not contain field: "</span> + fieldName);
 <a class="jxr_linenumber" name="L311" href="#L311">311</a>                 }
 <a class="jxr_linenumber" name="L312" href="#L312">312</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> Exception e) {
 <a class="jxr_linenumber" name="L313" href="#L313">313</a>                 handleReflectionException(e);
@@ -411,7 +411,7 @@
 <a class="jxr_linenumber" name="L403" href="#L403">403</a>                 CACHE_MANAGER.cacheObject(cacheKey, method);
 <a class="jxr_linenumber" name="L404" href="#L404">404</a>                 <strong class="jxr_keyword">return</strong> method;
 <a class="jxr_linenumber" name="L405" href="#L405">405</a>             } <strong class="jxr_keyword">catch</strong> (NoSuchMethodException e) {
-<a class="jxr_linenumber" name="L406" href="#L406">406</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/error/MissingMethodException.html">MissingMethodException</a>(e.getMessage());
+<a class="jxr_linenumber" name="L406" href="#L406">406</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="MissingMethodException" href="../../../../com/hotels/beans/error/MissingMethodException.html#MissingMethodException">MissingMethodException</a>(e.getMessage());
 <a class="jxr_linenumber" name="L407" href="#L407">407</a>             }
 <a class="jxr_linenumber" name="L408" href="#L408">408</a>         });
 <a class="jxr_linenumber" name="L409" href="#L409">409</a>     }
@@ -443,7 +443,7 @@
 <a class="jxr_linenumber" name="L435" href="#L435">435</a> <em class="jxr_javadoccomment">     * @param fieldName the field name</em>
 <a class="jxr_linenumber" name="L436" href="#L436">436</a> <em class="jxr_javadoccomment">     * @return the generic type class</em>
 <a class="jxr_linenumber" name="L437" href="#L437">437</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L438" href="#L438">438</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../com/hotels/beans/model/MapType.html">MapType</a> getMapGenericType(<strong class="jxr_keyword">final</strong> Type fieldType, <strong class="jxr_keyword">final</strong> String declaringClass, <strong class="jxr_keyword">final</strong> String fieldName) {
+<a class="jxr_linenumber" name="L438" href="#L438">438</a>     <strong class="jxr_keyword">public</strong> <a name="MapType" href="../../../../com/hotels/beans/model/MapType.html#MapType">MapType</a> getMapGenericType(<strong class="jxr_keyword">final</strong> Type fieldType, <strong class="jxr_keyword">final</strong> String declaringClass, <strong class="jxr_keyword">final</strong> String fieldName) {
 <a class="jxr_linenumber" name="L439" href="#L439">439</a>         <strong class="jxr_keyword">final</strong> Class&lt;?&gt; fieldClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);
 <a class="jxr_linenumber" name="L440" href="#L440">440</a>         <strong class="jxr_keyword">final</strong> String cacheKey = <span class="jxr_string">"MapGenericFieldType-"</span> + fieldClass.getName() + '-' + fieldName;
 <a class="jxr_linenumber" name="L441" href="#L441">441</a>         <strong class="jxr_keyword">return</strong> CACHE_MANAGER.getFromCache(cacheKey, MapType.<strong class="jxr_keyword">class</strong>).orElseGet(() -&gt; {
@@ -452,9 +452,9 @@
 <a class="jxr_linenumber" name="L444" href="#L444">444</a>                                 + <span class="jxr_string">"It cannot be assigned from: "</span> + Map.<strong class="jxr_keyword">class</strong>.getName() + <span class="jxr_string">"."</span>);
 <a class="jxr_linenumber" name="L445" href="#L445">445</a>             }
 <a class="jxr_linenumber" name="L446" href="#L446">446</a>             <strong class="jxr_keyword">final</strong> ParameterizedType genericType = (ParameterizedType) fieldType;
-<a class="jxr_linenumber" name="L447" href="#L447">447</a>             <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/model/MapElemType.html">MapElemType</a> keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);
-<a class="jxr_linenumber" name="L448" href="#L448">448</a>             <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/model/MapElemType.html">MapElemType</a> elemType = getMapElemType(genericType.getActualTypeArguments()[1], declaringClass, fieldName);
-<a class="jxr_linenumber" name="L449" href="#L449">449</a>             <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/model/MapType.html">MapType</a> mapType = <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/model/MapType.html">MapType</a>(keyType, elemType);
+<a class="jxr_linenumber" name="L447" href="#L447">447</a>             <strong class="jxr_keyword">final</strong> <a name="MapElemType" href="../../../../com/hotels/beans/model/MapElemType.html#MapElemType">MapElemType</a> keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);
+<a class="jxr_linenumber" name="L448" href="#L448">448</a>             <strong class="jxr_keyword">final</strong> <a name="MapElemType" href="../../../../com/hotels/beans/model/MapElemType.html#MapElemType">MapElemType</a> elemType = getMapElemType(genericType.getActualTypeArguments()[1], declaringClass, fieldName);
+<a class="jxr_linenumber" name="L449" href="#L449">449</a>             <strong class="jxr_keyword">final</strong> <a name="MapType" href="../../../../com/hotels/beans/model/<a name="MapType" href="../../../../com/hotels/beans/model/MapType.html#MapType">MapType</a>.html#MapType">MapType</a> mapType = <strong class="jxr_keyword">new</strong> <a name="MapType" href="../../../../com/hotels/beans/model/MapType.html#MapType">MapType</a>(keyType, elemType);
 <a class="jxr_linenumber" name="L450" href="#L450">450</a>             CACHE_MANAGER.cacheObject(cacheKey, mapType);
 <a class="jxr_linenumber" name="L451" href="#L451">451</a>             <strong class="jxr_keyword">return</strong> mapType;
 <a class="jxr_linenumber" name="L452" href="#L452">452</a>         });
@@ -469,11 +469,11 @@
 <a class="jxr_linenumber" name="L461" href="#L461">461</a> <em class="jxr_javadoccomment">     * @param fieldName the field name</em>
 <a class="jxr_linenumber" name="L462" href="#L462">462</a> <em class="jxr_javadoccomment">     * @return the generic class of the objects contained in the map.</em>
 <a class="jxr_linenumber" name="L463" href="#L463">463</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../com/hotels/beans/model/MapElemType.html">MapElemType</a> getMapElemType(<strong class="jxr_keyword">final</strong> Type fieldType, <strong class="jxr_keyword">final</strong> String declaringClass, <strong class="jxr_keyword">final</strong> String fieldName) {
+<a class="jxr_linenumber" name="L464" href="#L464">464</a>     <strong class="jxr_keyword">private</strong> <a name="MapElemType" href="../../../../com/hotels/beans/model/MapElemType.html#MapElemType">MapElemType</a> getMapElemType(<strong class="jxr_keyword">final</strong> Type fieldType, <strong class="jxr_keyword">final</strong> String declaringClass, <strong class="jxr_keyword">final</strong> String fieldName) {
 <a class="jxr_linenumber" name="L465" href="#L465">465</a>         <strong class="jxr_keyword">final</strong> String cacheKey = <span class="jxr_string">"MapElemType-"</span> + declaringClass + <span class="jxr_string">"-"</span> + fieldType.getTypeName() + '-' + fieldName;
 <a class="jxr_linenumber" name="L466" href="#L466">466</a>         <strong class="jxr_keyword">return</strong> CACHE_MANAGER.getFromCache(cacheKey, MapElemType.<strong class="jxr_keyword">class</strong>).orElseGet(() -&gt; {
 <a class="jxr_linenumber" name="L467" href="#L467">467</a>             <strong class="jxr_keyword">final</strong> Class&lt;?&gt; argumentTypeClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);
-<a class="jxr_linenumber" name="L468" href="#L468">468</a>             <strong class="jxr_keyword">final</strong> <a href="../../../../com/hotels/beans/model/MapElemType.html">MapElemType</a> res;
+<a class="jxr_linenumber" name="L468" href="#L468">468</a>             <strong class="jxr_keyword">final</strong> <a name="MapElemType" href="../../../../com/hotels/beans/model/MapElemType.html#MapElemType">MapElemType</a> res;
 <a class="jxr_linenumber" name="L469" href="#L469">469</a>             <strong class="jxr_keyword">if</strong> (Map.<strong class="jxr_keyword">class</strong>.isAssignableFrom(argumentTypeClass)) {
 <a class="jxr_linenumber" name="L470" href="#L470">470</a>                 res = getMapGenericType(fieldType, declaringClass, fieldName);
 <a class="jxr_linenumber" name="L471" href="#L471">471</a>             } <strong class="jxr_keyword">else</strong> {
@@ -491,7 +491,7 @@
 <a class="jxr_linenumber" name="L483" href="#L483">483</a> <em class="jxr_javadoccomment">     * @param fieldName the field name of which the argument belongs to</em>
 <a class="jxr_linenumber" name="L484" href="#L484">484</a> <em class="jxr_javadoccomment">     * @return the {@link ItemType} object</em>
 <a class="jxr_linenumber" name="L485" href="#L485">485</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L486" href="#L486">486</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../com/hotels/beans/model/ItemType.html">ItemType</a> buildItemType(<strong class="jxr_keyword">final</strong> Object argument, <strong class="jxr_keyword">final</strong> String declaringClass, <strong class="jxr_keyword">final</strong> String fieldName) {
+<a class="jxr_linenumber" name="L486" href="#L486">486</a>     <strong class="jxr_keyword">private</strong> <a name="ItemType" href="../../../../com/hotels/beans/model/ItemType.html#ItemType">ItemType</a> buildItemType(<strong class="jxr_keyword">final</strong> Object argument, <strong class="jxr_keyword">final</strong> String declaringClass, <strong class="jxr_keyword">final</strong> String fieldName) {
 <a class="jxr_linenumber" name="L487" href="#L487">487</a>         <strong class="jxr_keyword">return</strong> ItemType.builder()
 <a class="jxr_linenumber" name="L488" href="#L488">488</a>                 .objectClass(getArgumentTypeClass(argument, declaringClass, fieldName, false))
 <a class="jxr_linenumber" name="L489" href="#L489">489</a>                 .genericClass(getArgumentTypeClass(argument, declaringClass, fieldName, <strong class="jxr_keyword">true</strong>))
@@ -547,7 +547,7 @@
 <a class="jxr_linenumber" name="L539" href="#L539">539</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L540" href="#L540">540</a>     <strong class="jxr_keyword">void</strong> handleReflectionException(<strong class="jxr_keyword">final</strong> Exception ex) {
 <a class="jxr_linenumber" name="L541" href="#L541">541</a>         <strong class="jxr_keyword">if</strong> (ex instanceof NoSuchMethodException) {
-<a class="jxr_linenumber" name="L542" href="#L542">542</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/hotels/beans/error/MissingMethodException.html">MissingMethodException</a>(<span class="jxr_string">"Method not found: "</span> + ex.getMessage());
+<a class="jxr_linenumber" name="L542" href="#L542">542</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="MissingMethodException" href="../../../../com/hotels/beans/error/MissingMethodException.html#MissingMethodException">MissingMethodException</a>(<span class="jxr_string">"Method not found: "</span> + ex.getMessage());
 <a class="jxr_linenumber" name="L543" href="#L543">543</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (ex instanceof IllegalAccessException) {
 <a class="jxr_linenumber" name="L544" href="#L544">544</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Could not access method: "</span> + ex.getMessage(), ex);
 <a class="jxr_linenumber" name="L545" href="#L545">545</a>         } <strong class="jxr_keyword">else</strong> {
