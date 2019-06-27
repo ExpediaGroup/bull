@@ -103,6 +103,7 @@ public class ReflectionUtilsTest {
      * @param testCaseDescription the test case description
      * @param beanObject the java bean from which the value has to be retrieved
      * @param fieldName the name of the field to retrieve
+     * @param fieldType the type of the field to retrieve
      * @param expectedResult the expected result
      */
     @Test(dataProvider = "dataGetFieldValueTesting")
@@ -119,6 +120,7 @@ public class ReflectionUtilsTest {
 
     /**
      * Tests that the method {@code getFieldValue} with a a given field returns the expected value.
+     * @throws Exception in case of issues
      */
     @Test
     public void testGetFieldValueWithAGivenFieldWorksAsExpected() throws Exception {
