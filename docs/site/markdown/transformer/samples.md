@@ -410,4 +410,20 @@ beanUtils.getTransformer()
     .transform(fromBean2, toBean);
 ~~~
 
-More sample beans can be found in the test package: `com.hotels.beans.sample`
+### Not existing field in the source object:
+In case the destination class has a field that does not exist in the source object, but it contains a getter method returning the value, the library gets the field value from that method.
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+                                                               private final BigInteger id;
+    public BigInteger getId() {                                   
+        return BigInteger.TEN;                                 // all args constructor
+   }                                                           // getters...
+}                                                               
+                                                            }
+~~~
+And one line code as:
+~~~Java
+ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
+~~~
+
+More sample beans can be found in the test package: `com.hotels.beans.sample` or on DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)

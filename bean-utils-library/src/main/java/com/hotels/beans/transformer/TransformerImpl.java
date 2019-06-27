@@ -347,7 +347,7 @@ public class TransformerImpl extends AbstractTransformer {
      * Gets the source field value. If a field transformer function is defined and the field does not exists in the source object it raises an exception.
      * @param sourceObj sourceObj the source object
      * @param sourceFieldName sourceFieldName the field name in the source object (if different from the target one)
-     * @param field The field for which the value has to be retrieved
+     * @param field the field for which the value has to be retrieved
      * @param isFieldTransformerDefined indicates if a transformer function is implemented for this field
      * @param <T> the sourceObj object type
      * @return the source field value

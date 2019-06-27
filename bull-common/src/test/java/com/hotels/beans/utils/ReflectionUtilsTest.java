@@ -52,12 +52,14 @@ import com.hotels.beans.error.MissingMethodException;
 import com.hotels.beans.model.ItemType;
 import com.hotels.beans.model.MapElemType;
 import com.hotels.beans.model.MapType;
+import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
 import com.hotels.beans.sample.FromFooSubClass;
 import com.hotels.beans.sample.FromSubFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToSubFoo;
 import com.hotels.beans.sample.mutable.MutableToFoo;
+import com.hotels.beans.sample.mutable.MutableToFooAdvFields;
 import com.hotels.beans.sample.mutable.MutableToFooSimple;
 
 /**
@@ -76,6 +78,11 @@ public class ReflectionUtilsTest {
     private static final String DECLARING_CLASS_NAME = "declaringClassName";
     private static final String INVOKE_METHOD_NAME = "invokeMethod";
     private static final String VERY_COMPLEX_MAP_FIELD_NAME = "veryComplexMap";
+    private static final String GET_GETTER_METHOD_NAME = "getGetterMethod";
+    private static final String NAME = "Donald Duck";
+    private static final String SET_NAME_METHOD_NAME = "setName";
+    private static final String SET_INDEX_METHOD_NAME = "setIndex";
+    private static final String INDEX_NUMBER = "123";
 
     /**
      * The class to be tested.
@@ -96,20 +103,36 @@ public class ReflectionUtilsTest {
      * @param testCaseDescription the test case description
      * @param beanObject the java bean from which the value has to be retrieved
      * @param fieldName the name of the field to retrieve
+     * @param fieldType the type of the field to retrieve
      * @param expectedResult the expected result
-     * @throws NoSuchFieldException if the field does not exists.
      */
     @Test(dataProvider = "dataGetFieldValueTesting")
     public void testGetFieldValueWorksAsExpected(final String testCaseDescription, final Object beanObject,
-        final String fieldName, final Object expectedResult) throws NoSuchFieldException {
+        final String fieldName, final Class<?> fieldType, final Object expectedResult) {
         // GIVEN
-        Field field = beanObject.getClass().getDeclaredField(fieldName);
 
         // WHEN
-        Object actual = underTest.getFieldValue(beanObject, field);
+        Object actual = underTest.getFieldValue(beanObject, fieldName, fieldType);
 
         // THEN
         assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Tests that the method {@code getFieldValue} with a a given field returns the expected value.
+     * @throws Exception in case of issues
+     */
+    @Test
+    public void testGetFieldValueWithAGivenFieldWorksAsExpected() throws Exception {
+        // GIVEN
+        FromFooSimpleNoGetters fromFooSimpleNoGetters = createFromFooSimpleNoGetters();
+        Field field = FromFooSimpleNoGetters.class.getDeclaredField(ID_FIELD_NAME);
+
+        // WHEN
+        Object actual = underTest.getFieldValue(fromFooSimpleNoGetters, field);
+
+        // THEN
+        assertEquals(ZERO, actual);
     }
 
     /**
@@ -120,9 +143,24 @@ public class ReflectionUtilsTest {
     private Object[][] dataGetFieldValueTesting() {
         MutableToFoo mutableToFoo = createMutableToFoo(ZERO);
         return new Object[][] {
-                {"Tests that the method returns the field value", mutableToFoo, ID_FIELD_NAME, ZERO},
-                {"Tests that the method returns the field value even if there is no getter method defined", createFromFooSimpleNoGetters(), ID_FIELD_NAME, ZERO}
+                {"Tests that the method returns the field value", mutableToFoo, ID_FIELD_NAME, BigInteger.class, ZERO},
+                {"Tests that the method returns null if the required field is inside a null object", mutableToFoo, NESTED_OBJECT_FIELD_NAME,
+                    String.class, null},
+                {"Tests that the method returns the field value even if there is no getter method defined", createFromFooSimpleNoGetters(),
+                    ID_FIELD_NAME, BigInteger.class, ZERO}
         };
+    }
+
+    /**
+     * Tests that the method {@code getFieldValue} throws Exception if the field does not exists.
+     */
+    @Test(expectedExceptions = MissingFieldException.class)
+    public void testGetFieldValueThrowsExceptionIfTheFieldDoesNotExists() {
+        // GIVEN
+        MutableToFoo mutableToFoo = createMutableToFoo(null);
+
+        // WHEN
+        underTest.getFieldValue(mutableToFoo, NOT_EXISTING_FIELD_NAME, Object.class);
     }
 
     /**
@@ -177,7 +215,7 @@ public class ReflectionUtilsTest {
     /**
      * Tests that the method {@code handleReflectionException} raises the expected exception.
      */
-    @Test(expectedExceptions = IllegalStateException.class)
+    @Test(expectedExceptions = MissingMethodException.class)
     public void testHandleReflectionExceptionThrowsIllegalStateExceptionWhenGivenExceptionIsNoSuchMethodException() {
         // GIVEN
         NoSuchMethodException noSuchMethodException = new NoSuchMethodException();
@@ -372,7 +410,8 @@ public class ReflectionUtilsTest {
         Method idSetterMethod = underTest.getSetterMethodForField(MutableToFoo.class, ID_FIELD_NAME, BigInteger.class);
 
         // WHEN
-        getMethod(INVOKE_METHOD_NAME).invoke(underTest, idSetterMethod, mutableToFoo, new Object[] {ONE});
+        getMethod(underTest.getClass(), INVOKE_METHOD_NAME, true, Method.class, Object.class, Object[].class)
+                .invoke(underTest, idSetterMethod, mutableToFoo, new Object[] {ONE});
 
         // THEN
         assertEquals(ONE, mutableToFoo.getId());
@@ -382,14 +421,24 @@ public class ReflectionUtilsTest {
      * Tests that the method {@code getSetterMethodForField} raises an {@link InvocationTargetException} if the argument is wrong.
      * @throws Exception if something goes wrong.
      */
-    @Test(expectedExceptions = InvocationTargetException.class)
+    @Test
     public void testInvokeMethodRaisesAnIllegalArgumentExceptionIfTheArgumentIsWrong() throws Exception {
         // GIVEN
         MutableToFoo mutableToFoo = createMutableToFoo(null);
         Method idSetterMethod = underTest.getSetterMethodForField(MutableToFoo.class, LIST_FIELD_NAME, List.class);
 
+
         // WHEN
-        getMethod(INVOKE_METHOD_NAME).invoke(underTest, idSetterMethod, mutableToFoo, new Object[] {ONE});
+        InvocationTargetException actualException = null;
+        try {
+            getMethod(underTest.getClass(), INVOKE_METHOD_NAME, true, Method.class, Object.class, Object[].class)
+                    .invoke(underTest, idSetterMethod, mutableToFoo, new Object[] {ONE});
+        } catch (final InvocationTargetException e) {
+            actualException = e;
+        }
+
+        // THEN
+        assertEquals(IllegalArgumentException.class, actualException.getTargetException().getClass());
     }
 
     /**
@@ -496,19 +545,58 @@ public class ReflectionUtilsTest {
     }
 
     /**
-     * Tests that the method {@code setFieldValue} works properly.
+     * Tests that the method {@code getGetterMethod} works properly.
+     * @throws Exception in case an error occurs
      */
     @Test
-    public void testSetFieldValueWorksProperly() {
+    public void testGetGetterMethodWorksProperly() throws Exception {
         // GIVEN
-        MutableToFooSimple mutableToFoo = new MutableToFooSimple();
-        Field idField = underTest.getDeclaredField(ID_FIELD_NAME, mutableToFoo.getClass());
+        Method methodUnderTest = getMethod(underTest.getClass(), GET_GETTER_METHOD_NAME, true, Class.class, String.class, Class.class);
 
         // WHEN
-        underTest.setFieldValue(mutableToFoo, idField, ONE);
+        Object actual = methodUnderTest.invoke(underTest, FromFooSimple.class, ID_FIELD_NAME, BigInteger.class);
 
         // THEN
-        assertEquals(ONE, mutableToFoo.getId());
+        assertNotNull(actual);
+    }
+
+    /**
+     * Tests that the method returned by {@code getGetterMethod} returns the expected value once invoked.
+     * @throws Exception in case an error occurs
+     */
+    @Test
+    public void testThatTheReturnedMethodFromGetGetterMethodReturnsTheExpectedValue() throws Exception {
+        // GIVEN
+        MutableToFoo mutableToFoo = createMutableToFoo(ONE);
+        Method getGetterMethod = getMethod(underTest.getClass(), GET_GETTER_METHOD_NAME, true, Class.class, String.class, Class.class);
+        Method methodUnderTest = (Method) getGetterMethod.invoke(underTest, MutableToFoo.class, ID_FIELD_NAME, BigInteger.class);
+
+        // WHEN
+        BigInteger actual = (BigInteger) methodUnderTest.invoke(mutableToFoo);
+
+        // THEN
+        assertEquals(ONE, actual);
+    }
+
+    /**
+     * Tests that the method {@code getGetterMethod} raises an exception in case the given class does not have the method.
+     * @throws Exception in case an error occurs
+     */
+    @Test
+    public void testGetGetterMethodThrowsExceptionIfTheMethodDoesNotExists() throws Exception {
+        // GIVEN
+        Method methodUnderTest = getMethod(underTest.getClass(), GET_GETTER_METHOD_NAME, true, Class.class, String.class, Class.class);
+
+        // WHEN
+        InvocationTargetException actualException = null;
+        try {
+            methodUnderTest.invoke(underTest, FromFooSimpleNoGetters.class, ID_FIELD_NAME, BigInteger.class);
+        } catch (final InvocationTargetException e) {
+            actualException = e;
+        }
+
+        // THEN
+        assertEquals(MissingFieldException.class, actualException.getTargetException().getClass());
     }
 
     /**
@@ -537,15 +625,71 @@ public class ReflectionUtilsTest {
         underTest.setFieldValue(mutableToFoo, idField, Boolean.TRUE);
     }
 
+    @Test
+    public void testSetFieldValueWorksProperly() {
+        // GIVEN
+        MutableToFooSimple mutableToFoo = new MutableToFooSimple();
+        Field idField = underTest.getDeclaredField(ID_FIELD_NAME, mutableToFoo.getClass());
+
+        // WHEN
+        underTest.setFieldValue(mutableToFoo, idField, ONE);
+
+        // THEN
+        assertEquals(ONE, mutableToFoo.getId());
+    }
+
+    /**
+     * Tests that the method {@code invokeMethod} manages the exception properly.
+     * @param testCaseDescription the test case description
+     * @param methodArg the argument to pass to the invoke method
+     * @param isAccessible the accessibility that the {@code invokeMethod} must have
+     * @param expectedException the expected exception class
+     */
+    @Test(dataProvider = "dataInvokeMethodTesting")
+    public void testInvokeMethodCorrectlyHandlesExceptions(final String testCaseDescription, final Object targetObject, final String methodNameToInvoke,
+        final Object methodArg, final boolean isAccessible, final Class<?> expectedException) throws Exception {
+        // GIVEN
+        Method setMethodToInvoke = getMethod(targetObject.getClass(), methodNameToInvoke, isAccessible, String.class);
+
+        // WHEN
+        Throwable actualException = null;
+        try {
+            underTest.invokeMethod(setMethodToInvoke, targetObject, methodArg);
+        } catch (final Throwable e) {
+            actualException = e;
+        }
+
+        // THEN
+        assertEquals(expectedException, actualException.getClass());
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code invokeMethod}.
+     * @return parameters to be used for testing the the method {@code invokeMethod}.
+     */
+    @DataProvider
+    private Object[][] dataInvokeMethodTesting() {
+        return new Object[][] {
+                {"Tests that the method raises an IllegalArgumentException in case the given argument is wrong", createMutableToFoo(ONE), SET_NAME_METHOD_NAME, ZERO,
+                    true, IllegalArgumentException.class},
+                {"Tests that the method raises an IllegalAccessException in case the method is not accessible", new MutableToFooAdvFields(), SET_INDEX_METHOD_NAME,
+                    INDEX_NUMBER, false, IllegalStateException.class}
+        };
+    }
+
     /**
      * Retrieves a method.
+     * @param targetClass the class on which look for the method
      * @param methodName the method to retrieve
+     * @param makeAccessible sets the method visibility
+     * @param parameterTypes the parameter types
      * @return the method
      * @throws NoSuchMethodException if the method does not exists
      */
-    private Method getMethod(final String methodName) throws NoSuchMethodException {
-        Method invokeMethod = underTest.getClass().getDeclaredMethod(methodName, Method.class, Object.class, Object[].class);
-        invokeMethod.setAccessible(true);
+    private Method getMethod(final Class<?> targetClass, final String methodName, final boolean makeAccessible, final Class<?>... parameterTypes)
+            throws NoSuchMethodException {
+        Method invokeMethod = targetClass.getDeclaredMethod(methodName, parameterTypes);
+        invokeMethod.setAccessible(makeAccessible);
         return invokeMethod;
     }
 

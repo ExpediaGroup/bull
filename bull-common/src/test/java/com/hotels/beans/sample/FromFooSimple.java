@@ -22,6 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Sample immutable object.
@@ -30,12 +31,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class FromFooSimple {
     public String name;
     public BigInteger id;
-
-    @Override
-    public String toString() {
-        return "FromFooSimple";
-    }
+    public boolean active;
 }

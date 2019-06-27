@@ -32,8 +32,8 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
-import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.error.InvalidBeanException;
 
 /**
  * Java Bean validation class.

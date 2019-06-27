@@ -31,4 +31,5 @@ import lombok.Setter;
 public class FromFooSimpleNoGetters {
     public String name;
     public BigInteger id;
+    public boolean active;
 }

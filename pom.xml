@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <name>BULL - Bean Utils Light Library Parent</name>
+    <name>BULL - Bean Utils Light Library</name>
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>1.1.20</version>
+    <version>1.1.21-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -17,7 +17,7 @@
     <parent>
         <groupId>com.hotels</groupId>
         <artifactId>hotels-oss-parent</artifactId>
-        <version>4.0.1</version>
+        <version>4.1.0</version>
     </parent>
 
     <modules>
@@ -31,10 +31,7 @@
         <jdk.version>1.8</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
-        <maven.pmd.plugin.version>3.12.0</maven.pmd.plugin.version>
-        <maven.javadoc.plugin.version>3.1.0</maven.javadoc.plugin.version>
-        <maven-deploy.plugin.version>2.8.2</maven-deploy.plugin.version>
-        <spring-boot.version>2.1.5.RELEASE</spring-boot.version>
+        <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
         <lombok.version>1.18.8</lombok.version>
         <apache.commons-lang3.version>3.9</apache.commons-lang3.version>
         <shazamcrest.version>0.11</shazamcrest.version>
@@ -42,7 +39,7 @@
         <testng.version>6.14.3</testng.version>
         <!-- validation dependencies -->
         <validation-api.version>2.0.1.Final</validation-api.version>
-        <hibernate-validator.version>6.0.16.Final</hibernate-validator.version>
+        <hibernate-validator.version>6.0.17.Final</hibernate-validator.version>
         <slf4j-api.version>1.7.26</slf4j-api.version>
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <glassfish.javax.el.version>2.2.6</glassfish.javax.el.version>
@@ -51,13 +48,19 @@
         <jacoco.classRatio>0.85</jacoco.classRatio>
         <jacoco.instructionRatio>0.85</jacoco.instructionRatio>
         <jacoco.methodRatio>0.85</jacoco.methodRatio>
-        <jacoco.branchRatio>0.84</jacoco.branchRatio>
+        <jacoco.branchRatio>0.85</jacoco.branchRatio>
         <jacoco.complexityRatio>0.85</jacoco.complexityRatio>
         <jacoco.lineRatio>0.85</jacoco.lineRatio>
         <!-- site properties -->
-        <wagon-ssh.version>3.3.2</wagon-ssh.version>
+        <wagon-ssh.version>3.3.3</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
         <github.global.server>github</github.global.server>
+        <!-- build settings -->
+        <checkstyle.check.skip>false</checkstyle.check.skip>
+        <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
+        <jacoco.check.skip>false</jacoco.check.skip>
+        <pmd.check.skip>true</pmd.check.skip>
+        <javadoc.skip>false</javadoc.skip>
     </properties>
 
     <!-- distribution configuration -->
@@ -65,7 +68,7 @@
         <connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
         <developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
         <url>https://github.com/HotelsDotCom/bull</url>
-        <tag>1.1.20</tag>
+        <tag>HEAD</tag>
     </scm>
     <distributionManagement>
         <snapshotRepository>
@@ -130,6 +133,16 @@
                 <artifactId>shazamcrest</artifactId>
                 <version>${shazamcrest.version}</version>
                 <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.skyscreamer</groupId>
+                        <artifactId>jsonassert</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -169,26 +182,11 @@
     <!-- profile configuration -->
     <profiles>
         <profile>
-            <id>full</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <checkstyle.check.skip>false</checkstyle.check.skip>
-                <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
-                <jacoco.check.skip>false</jacoco.check.skip>
-                <pmd.check.skip>true</pmd.check.skip>
-                <javadoc.skip>false</javadoc.skip>
-            </properties>
-        </profile>
-        <profile>
             <id>relaxed</id>
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
                 <jacoco.check.skip>true</jacoco.check.skip>
-                <pmd.check.skip>true</pmd.check.skip>
-                <javadoc.skip>false</javadoc.skip>
             </properties>
         </profile>
         <profile>
@@ -197,7 +195,6 @@
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
                 <jacoco.check.skip>true</jacoco.check.skip>
-                <pmd.check.skip>true</pmd.check.skip>
                 <javadoc.skip>true</javadoc.skip>
             </properties>
             <build>
@@ -205,6 +202,7 @@
                     <plugin>
                         <groupId>com.mycila</groupId>
                         <artifactId>license-maven-plugin</artifactId>
+                        <version>${license.maven.plugin.version}</version>
                         <executions>
                             <execution>
                                 <phase>none</phase>
@@ -214,9 +212,36 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>site-release</id>
+            <properties>
+                <checkstyle.check.skip>true</checkstyle.check.skip>
+                <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
+            </properties>
+            <build>
+                <plugins>
+                    <!-- skip some test cases during the release -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/PerformanceTest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <!-- release profile -->
         <profile>
             <id>release</id>
+            <properties>
+                <checkstyle.check.skip>true</checkstyle.check.skip>
+                <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
+                <jacoco.check.skip>true</jacoco.check.skip>
+                <javadoc.skip>true</javadoc.skip>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -232,6 +257,48 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <!-- skip some test cases during the release -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/PerformanceTest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                    <!-- replace the bean-utils-library javadoc jar file with the one containing all modules -->
+                    <plugin>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                    <classifier>javadoc</classifier>
+                                    <classesDirectory>${project.parent.basedir}/target/site/apidocs</classesDirectory>
+                                    <includes>**/*</includes>
+                                    <finalName>${project.build.finalName}</finalName>
+                                </configuration>
+                                <id>pack-javadoc</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- updates checker profile -->
+        <profile>
+            <id>check-for-updates</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>versions-maven-plugin</artifactId>
+                        <inherited>false</inherited>
                     </plugin>
                 </plugins>
             </build>
@@ -282,22 +349,6 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven.javadoc.plugin.version}</version>
-                    <configuration>
-                        <skip>${javadoc.skip}</skip>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>${maven.checkstyle.plugin.version}</version>
                     <executions>
@@ -311,8 +362,7 @@
                                 <consoleOutput>true</consoleOutput>
                                 <failsOnError>true</failsOnError>
                                 <skip>${checkstyle.check.skip}</skip>
-                                <includeTestSourceDirectory>${checkstyle.includeTestSourceDirectory}
-                                </includeTestSourceDirectory>
+                                <includeTestSourceDirectory>${checkstyle.includeTestSourceDirectory}</includeTestSourceDirectory>
                             </configuration>
                             <goals>
                                 <goal>check</goal>
@@ -327,11 +377,6 @@
                     <configuration>
                         <parallelMavenExecution>false</parallelMavenExecution>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>${maven-deploy.plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
@@ -480,6 +525,44 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- enforcer rules -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>enforce-maven</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireMavenVersion>
+                                        <version>${maven.required.version}</version>
+                                    </requireMavenVersion>
+                                    <DependencyConvergence />
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- dependencies update checker -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <configuration>
+                        <rulesUri>file:///${project.basedir}/config/maven/versions-plugin-rules.xml</rulesUri>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>display-dependency-updates</goal>
+                                <goal>display-plugin-updates</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -513,10 +596,23 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
+                <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <skip>true</skip>
+                    <skip>${javadoc.skip}</skip>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

@@ -67,6 +67,7 @@ public abstract class AbstractTransformerTest {
     private static final String ITEM_1 = "donald";
     private static final String ITEM_2 = "duck";
     private static final String SURNAME = "surname";
+    private static final boolean ACTIVE = true;
     private static final int PHONE = 123;
     private static final String INDEX_NUMBER = null;
     private static final boolean CHECK = true;
@@ -124,7 +125,7 @@ public abstract class AbstractTransformerTest {
      * @return the {@link FromFooSimple} instance.
      */
     private FromFooSimple createFromFooSimple() {
-        return new FromFooSimple(NAME, ID);
+        return new FromFooSimple(NAME, ID, ACTIVE);
     }
 
 

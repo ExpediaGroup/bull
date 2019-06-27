@@ -80,6 +80,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     private static final String PRICE_FIELD_NAME = "price";
     private static final String NET_PRICE_FIELD_NAME = "price.netPrice";
     private static final String GROSS_PRICE_FIELD_NAME = "price.grossPrice";
+    private static final boolean ACTIVE = true;
 
     /**
      * The class to be tested.
@@ -145,13 +146,14 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     @Test
     public void testTransformationOnAnExistingDestinationWorksProperly() {
         //GIVEN
-        ImmutableToFooSimple immutableToFoo = new ImmutableToFooSimple(null, null);
+        ImmutableToFooSimple immutableToFoo = new ImmutableToFooSimple(null, null, false);
 
         //WHEN
-        underTest.transform(fromFooSimple, immutableToFoo);
+        underTest.setValidationEnabled(true).transform(fromFooSimple, immutableToFoo);
 
         //THEN
         assertThat(immutableToFoo, sameBeanAs(fromFooSimple));
+        underTest.setValidationEnabled(false);
     }
 
     /**
@@ -459,7 +461,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     @Test
     public void testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions() {
         //GIVEN
-        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID);
+        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
         FieldTransformer<Object, Integer> ageFieldTransformer = new FieldTransformer<>(AGE_FIELD_NAME, () -> AGE);
 
         //WHEN
