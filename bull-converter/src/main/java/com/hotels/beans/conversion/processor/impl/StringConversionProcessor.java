@@ -23,13 +23,13 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link String}.
  */
-public final class StringConversionProcessor extends ConversionProcessor {
+public final class StringConversionProcessor implements ConversionProcessor {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<Byte, Object> convertByte() {
+    public Function<Byte, String> convertByte() {
         return Object::toString;
     }
 

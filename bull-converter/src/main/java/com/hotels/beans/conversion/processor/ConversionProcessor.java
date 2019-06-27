@@ -17,153 +17,62 @@
 package com.hotels.beans.conversion.processor;
 
 import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
-
-import com.hotels.beans.conversion.function.ToBooleanFunction;
-import com.hotels.beans.conversion.function.ToByteFunction;
-import com.hotels.beans.conversion.function.ToCharFunction;
-import com.hotels.beans.conversion.function.ToFloatFunction;
-import com.hotels.beans.conversion.function.ToShortFunction;
 
 /**
  * Conversion methods for all primitive types.
  */
-public abstract class ConversionProcessor<T> {
-    /**
-     * Converts a byte type.
-     * @return the converted value
-     */
-    public ToByteFunction<T> convertPrimitiveByte() {
-        return val -> (byte) val;
-    }
-
+public interface ConversionProcessor {
     /**
      * Converts a {@link Byte} type.
      * @return the converted value
      */
-    public Function<Byte, ?> convertByte() {
-        return val -> val;
-    }
-
-    /**
-     * Converts a short type.
-     * @return the converted value
-     */
-    public ToShortFunction<T> convertPrimitiveShort() {
-        return val -> (short) val;
-    }
+    Function<Byte, ?> convertByte();
 
     /**
      * Converts a {@link Short} type.
      * @return the converted value
      */
-    public Function<Short, ?> convertShort() {
-        return val -> val;
-    }
-
-    /**
-     * Converts an int type.
-     * @return the converted value
-     */
-    public ToIntFunction<T> convertPrimitiveInt() {
-        return val -> (int) val;
-    }
+    Function<Short, ?> convertShort();
 
     /**
      * Converts an {@link Integer} type.
      * @return the converted value
      */
-    public Function<Integer, ?> convertInteger() {
-        return val -> val;
-    }
-
-    /**
-     * Converts a long type.
-     * @return the converted value
-     */
-    public ToLongFunction<T> convertPrimitiveLong() {
-        return val -> (long) val;
-    }
+    Function<Integer, ?> convertInteger();
 
     /**
      * Converts a {@link Long} type.
      * @return the converted value
      */
-    public Function<Long, ?> convertLong() {
-        return val -> val;
-    }
-
-    /**
-     * Converts a float type.
-     * @return the converted value
-     */
-    public ToFloatFunction<T> convertPrimitiveFloat() {
-        return val -> (float) val;
-    }
+    Function<Long, ?> convertLong();
 
     /**
      * Converts an {@link Float} type.
      * @return the converted value
      */
-    public Function<Float, ?> convertFloat() {
-        return val -> val;
-    }
-
-    /**
-     * Converts a double type.
-     * @return the converted value
-     */
-    public ToDoubleFunction<T> convertPrimitiveDouble() {
-        return val -> (double) val;
-    }
+    Function<Float, ?> convertFloat();
 
     /**
      * Converts a {@link Double} type.
      * @return the converted value
      */
-    public Function<Double, ?> convertDouble() {
-        return val -> val;
-    }
-
-    /**
-     * Converts a char type.
-     * @return the converted value
-     */
-    public ToCharFunction<T> convertPrimitiveChar() {
-        return val -> (char) val;
-    }
+    Function<Double, ?> convertDouble();
 
     /**
      * Converts a {@link Character} type.
      * @return the converted value
      */
-    public Function<Character, ?> convertCharacter() {
-        return val -> val;
-    }
-
-    /**
-     * Converts a boolean type.
-     * @return the converted value
-     */
-    public ToBooleanFunction<T> convertPrimitiveBoolean() {
-        return val -> (boolean) val;
-    }
+    Function<Character, ?> convertCharacter();
 
     /**
      * Converts a {@link Boolean} type.
      * @return the converted value
      */
-    public Function<Boolean, ?> convertBoolean() {
-        return val -> val;
-    }
+    Function<Boolean, ?> convertBoolean();
 
     /**
      * Converts a {@link String} type.
      * @return the converted value
      */
-    public Function<String, ?> convertString() {
-        return val -> val;
-    }
+    Function<String, ?> convertString();
 }

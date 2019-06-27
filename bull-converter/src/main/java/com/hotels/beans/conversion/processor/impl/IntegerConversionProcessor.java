@@ -24,11 +24,11 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Integer}.
  */
-public final class IntegerConversionProcessor extends ConversionProcessor {
+public final class IntegerConversionProcessor implements ConversionProcessor {
 
     @Override
     public Function<Byte, Integer> convertByte() {
-        return Integer::valueOf;
+        return Byte::intValue;
     }
 
     /**
@@ -36,7 +36,7 @@ public final class IntegerConversionProcessor extends ConversionProcessor {
      */
     @Override
     public Function<Short, Integer> convertShort() {
-        return Integer::valueOf;
+        return Short::intValue;
     }
 
     /**
@@ -52,7 +52,7 @@ public final class IntegerConversionProcessor extends ConversionProcessor {
      */
     @Override
     public Function<Long, Integer> convertLong() {
-        return val -> valueOf(val.intValue());
+        return Long::intValue;
     }
 
     /**
@@ -60,7 +60,7 @@ public final class IntegerConversionProcessor extends ConversionProcessor {
      */
     @Override
     public Function<Float, Integer> convertFloat() {
-        return val -> valueOf(val.intValue());
+        return Float::intValue;
     }
 
     /**
@@ -68,7 +68,7 @@ public final class IntegerConversionProcessor extends ConversionProcessor {
      */
     @Override
     public Function<Double, Integer> convertDouble() {
-        return val -> valueOf(val.intValue());
+        return Double::intValue;
     }
 
     /**
@@ -76,7 +76,7 @@ public final class IntegerConversionProcessor extends ConversionProcessor {
      */
     @Override
     public Function<Character, Integer> convertCharacter() {
-        return Integer::valueOf;
+        return val -> valueOf((int) val);
     }
 
     /**
