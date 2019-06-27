@@ -13,21 +13,71 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Byte.valueOf;
+package com.hotels.beans.conversion.processor.impl;
 
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
 /**
- * Provides all method for converting any primitive type to a {@link Byte}.
+ * Provides all method for converting any primitive type to a {@link Character}.
  */
-public final class ByteConversionProcessor implements ConversionProcessor {
+public final class CharacterConversionProcessor implements ConversionProcessor {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Function<Byte, Byte> convertByte() {
+    public Function<Byte, Character> convertByte() {
+        return val -> val.toString().charAt(0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<Short, Character> convertShort() {
+        return val -> val.toString().charAt(0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<Integer, Character> convertInteger() {
+        return val -> val.toString().charAt(0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<Long, Character> convertLong() {
+        return val -> val.toString().charAt(0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<Float, Character> convertFloat() {
+        return val -> val.toString().charAt(0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<Double, Character> convertDouble() {
+        return val -> val.toString().charAt(0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<Character, Character> convertCharacter() {
         return val -> val;
     }
 
@@ -35,63 +85,15 @@ public final class ByteConversionProcessor implements ConversionProcessor {
      * {@inheritDoc}
      */
     @Override
-    public Function<Short, Byte> convertShort() {
-        return Short::byteValue;
+    public Function<Boolean, Character> convertBoolean() {
+        return val -> val.toString().charAt(0);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<Integer, Byte> convertInteger() {
-        return Integer::byteValue;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Long, Byte> convertLong() {
-        return Long::byteValue;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Float, Byte> convertFloat() {
-        return Float::byteValue;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Double, Byte> convertDouble() {
-        return Double::byteValue;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Character, Byte> convertCharacter() {
-        return val -> valueOf((byte) val.charValue());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Boolean, Byte> convertBoolean() {
-        return val -> valueOf(val ? (byte) 1 : (byte) 0);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<String, Byte> convertString() {
-        return Byte::valueOf;
+    public Function<String, Character> convertString() {
+        return val -> val.charAt(0);
     }
 }

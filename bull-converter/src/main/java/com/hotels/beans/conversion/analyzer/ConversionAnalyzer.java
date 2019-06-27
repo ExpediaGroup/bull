@@ -90,41 +90,10 @@ public final class ConversionAnalyzer {
     private Optional getConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
         final String cacheKey = "ConversionFunction-" + sourceFieldType.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
-            Optional conversionFunction = getNativeTypeConversionFunction(conversionProcessor, sourceFieldType)
-                    .or(() -> getPrimitiveTypeConversionFunction(conversionProcessor, sourceFieldType));
+            Optional conversionFunction = getPrimitiveTypeConversionFunction(conversionProcessor, sourceFieldType);
             CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);
             return conversionFunction;
         });
-    }
-
-    /**
-     * Returns a function that converts to a native type: byte, short, int, long, float, double, char and boolean.
-     * @param conversionProcessor the {@link ConversionProcessor} for the given type
-     * @param sourceFieldType he source field class
-     * @return the conversion function
-     */
-    private Optional getNativeTypeConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
-        final Optional conversionFunction;
-        if (sourceFieldType == byte.class) {
-            conversionFunction = of(conversionProcessor.convertPrimitiveByte());
-        } else if (sourceFieldType == short.class) {
-            conversionFunction = of(conversionProcessor.convertPrimitiveShort());
-        } else if (sourceFieldType == int.class) {
-            conversionFunction = of(conversionProcessor.convertPrimitiveInt());
-        } else if (sourceFieldType == long.class) {
-            conversionFunction = of(conversionProcessor.convertPrimitiveLong());
-        } else if (sourceFieldType == float.class) {
-            conversionFunction = of(conversionProcessor.convertPrimitiveFloat());
-        } else if (sourceFieldType == double.class) {
-            conversionFunction = of(conversionProcessor.convertPrimitiveDouble());
-        } else if (sourceFieldType == char.class) {
-            conversionFunction = of(conversionProcessor.convertPrimitiveChar());
-        } else if (sourceFieldType == boolean.class) {
-            conversionFunction = of(conversionProcessor.convertPrimitiveBoolean());
-        } else {
-            conversionFunction = empty();
-        }
-        return conversionFunction;
     }
 
     /**
@@ -152,9 +121,10 @@ public final class ConversionAnalyzer {
             conversionFunction = of(conversionProcessor.convertDouble());
         } else if (sourceFieldType == Character.class) {
             conversionFunction = of(conversionProcessor.convertCharacter());
-        } else if (sourceFieldType == Boolean.class) {
-            conversionFunction = of(conversionProcessor.convertBoolean());
-        } else {
+        } //else if (sourceFieldType == Boolean.class) {
+//            conversionFunction = of(conversionProcessor.convertBoolean());
+//        }
+        else {
             conversionFunction = empty();
         }
         return conversionFunction;

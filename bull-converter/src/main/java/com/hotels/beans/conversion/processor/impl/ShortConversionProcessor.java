@@ -24,11 +24,11 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Short}.
  */
-public final class ShortConversionProcessor extends ConversionProcessor {
+public final class ShortConversionProcessor implements ConversionProcessor {
 
     @Override
     public Function<Byte, Short> convertByte() {
-        return Short::valueOf;
+        return Byte::shortValue;
     }
 
     /**
@@ -44,7 +44,7 @@ public final class ShortConversionProcessor extends ConversionProcessor {
      */
     @Override
     public Function<Integer, Short> convertInteger() {
-        return val -> valueOf(val.shortValue());
+        return Integer::shortValue;
     }
 
     /**
@@ -52,7 +52,7 @@ public final class ShortConversionProcessor extends ConversionProcessor {
      */
     @Override
     public Function<Long, Short> convertLong() {
-        return val -> valueOf(val.shortValue());
+        return Long::shortValue;
     }
 
     /**
@@ -60,7 +60,7 @@ public final class ShortConversionProcessor extends ConversionProcessor {
      */
     @Override
     public Function<Float, Short> convertFloat() {
-        return val -> valueOf(val.shortValue());
+        return Float::shortValue;
     }
 
     /**
@@ -68,7 +68,7 @@ public final class ShortConversionProcessor extends ConversionProcessor {
      */
     @Override
     public Function<Double, Short> convertDouble() {
-        return val -> valueOf(val.shortValue());
+        return Double::shortValue;
     }
 
     /**

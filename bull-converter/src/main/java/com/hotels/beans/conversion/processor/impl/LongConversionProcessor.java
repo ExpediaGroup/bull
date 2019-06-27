@@ -24,14 +24,14 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Long}.
  */
-public final class LongConversionProcessor extends ConversionProcessor {
+public final class LongConversionProcessor implements ConversionProcessor {
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Function<Byte, Long> convertByte() {
-        return Long::valueOf;
+        return Byte::longValue;
     }
 
     /**
@@ -47,7 +47,7 @@ public final class LongConversionProcessor extends ConversionProcessor {
      */
     @Override
     public Function<Integer, Long> convertInteger() {
-        return val -> valueOf(val.longValue());
+        return Integer::longValue;
     }
 
     /**
