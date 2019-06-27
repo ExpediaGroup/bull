@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.1.21] 2019.06.27
 #### Changed
-* Improved exception messages in order to provide more details.
+* Improved exception messages in order to provide more details (see: [Issue 70](https://github.com/HotelsDotCom/bull/issues/70)).
 
 ### [1.1.20] 2019.05.24
 #### Added

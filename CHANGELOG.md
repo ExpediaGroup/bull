@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.4.6] 2019.06.27
 #### Changed
-* Improved exception messages in order to provide more details.
+* Improved exception messages in order to provide more details (see: [Issue 70](https://github.com/HotelsDotCom/bull/issues/70)).
 
 ### [1.4.5] 2019.06.05
 * Added new maven profile: `check-for-updates` for checking if any dependency can be updated (see: [Issue 68](https://github.com/HotelsDotCom/bull/issues/68)).
