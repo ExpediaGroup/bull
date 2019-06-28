@@ -2,23 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.21] 2019.06.27
+#### Changed
+* Improved exception messages in order to provide more details (see: [Issue 70](https://github.com/HotelsDotCom/bull/issues/70)).
+
 ### [1.1.20] 2019.05.24
 #### Added
 * Added possibility to define transformer function without arguments if not needed (see: [Issue 62](https://github.com/HotelsDotCom/bull/issues/62)).
+* Added new maven profile: `check-for-updates` for checking if any dependency can be updated (see: [Issue 68](https://github.com/HotelsDotCom/bull/issues/68)).
+* Added check during project build in order to prevent the add different versions of the same dependency.
 #### Fixed
 * Fixed a bug: FieldTransformer was receiving a default value instead of the source bean one (see: [Issue 64](https://github.com/HotelsDotCom/bull/issues/64)).
 
 ### [1.1.19] 2019.05.23
-#### Changes
+#### Changed
 * Made the project multi module
 
 ### [1.1.18] 2019.05.18
-#### Changes
+#### Changed
 * Removed deprecated method: `setValidationDisabled`
 * Updated dependencies
 
 ### [1.1.17] 2019.05.13
-#### Changes
+#### Changed
 * **Modified project behaviour:** since this version the **"Bean Validation" is disabled by default**, to enable it, the following instruction needs to be executed: `transformer.setValidationEnabled(true);`
 
 ### [1.1.16] 2019.05.11
@@ -26,7 +32,7 @@ All notable changes to this project will be documented in this file.
 * Modified project structure in order to offer Java Bean validation feature against the defined constraints as public feature (see: [Issue 57](https://github.com/HotelsDotCom/bull/issues/57)).
 
 ### [1.1.15] 2019.05.08
-#### Changes
+#### Changed
 * Modified value retrieval/set from/to source/destination object in order to minimise the executed actions
 * Updated `hotels-oss-parent` version to `4.0.1` (was `4.0.0`).
 
