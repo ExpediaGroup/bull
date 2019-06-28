@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Byte.valueOf;
@@ -26,6 +27,9 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
  */
 public final class ByteConversionProcessor implements ConversionProcessor {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Function<Byte, Byte> convertByte() {
         return val -> val;

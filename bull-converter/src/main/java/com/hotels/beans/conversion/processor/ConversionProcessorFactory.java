@@ -16,6 +16,16 @@
 
 package com.hotels.beans.conversion.processor;
 
+import static com.hotels.beans.utils.ClassUtils.isBoolean;
+import static com.hotels.beans.utils.ClassUtils.isByte;
+import static com.hotels.beans.utils.ClassUtils.isChar;
+import static com.hotels.beans.utils.ClassUtils.isDouble;
+import static com.hotels.beans.utils.ClassUtils.isFloat;
+import static com.hotels.beans.utils.ClassUtils.isInt;
+import static com.hotels.beans.utils.ClassUtils.isLong;
+import static com.hotels.beans.utils.ClassUtils.isShort;
+import static com.hotels.beans.utils.ClassUtils.isString;
+
 import static lombok.AccessLevel.PRIVATE;
 
 import com.hotels.beans.conversion.processor.impl.BooleanConversionProcessor;
@@ -42,23 +52,23 @@ public final class ConversionProcessorFactory {
      */
     public static ConversionProcessor getConversionProcessor(final Class<?> clazz) {
         ConversionProcessor conversionProcessor = null;
-        if (clazz == Byte.class) {
+        if (isByte(clazz)) {
             conversionProcessor = new ByteConversionProcessor();
-        } else if (clazz == Short.class) {
+        } else if (isShort(clazz)) {
             conversionProcessor = new ShortConversionProcessor();
-        } else if (clazz == Integer.class) {
+        } else if (isInt(clazz)) {
             conversionProcessor = new IntegerConversionProcessor();
-        } else if (clazz == Long.class) {
+        } else if (isLong(clazz)) {
             conversionProcessor = new LongConversionProcessor();
-        } else if (clazz == Float.class) {
+        } else if (isFloat(clazz)) {
             conversionProcessor = new FloatConversionProcessor();
-        } else if (clazz == Double.class) {
+        } else if (isDouble(clazz)) {
             conversionProcessor = new DoubleConversionProcessor();
-        } else if (clazz == Character.class) {
+        } else if (isChar(clazz)) {
             conversionProcessor = new CharacterConversionProcessor();
-        } else if (clazz == String.class) {
+        } else if (isString(clazz)) {
             conversionProcessor = new StringConversionProcessor();
-        } else if (clazz == Boolean.class) {
+        } else if (isBoolean(clazz)) {
             conversionProcessor = new BooleanConversionProcessor();
         }
         return conversionProcessor;
