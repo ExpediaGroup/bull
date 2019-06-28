@@ -238,6 +238,15 @@ public final class ClassUtils {
     }
 
     /**
+     * Checks if the given type is a String.
+     * @param type the class to check
+     * @return true if is String
+     */
+    public static boolean isString(final Class<?> type) {
+        return String.class.isAssignableFrom(type);
+    }
+
+    /**
      * Return the private final fields of a class.
      * @param clazz class from which gets the field
      * @return a list of private final fields.
