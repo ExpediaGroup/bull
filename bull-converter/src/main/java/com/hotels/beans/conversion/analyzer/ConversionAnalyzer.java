@@ -65,6 +65,7 @@ public final class ConversionAnalyzer {
      * @param destinationFieldType the destination field class
      * @param isDestinationFieldPrimitiveType indicates if the destination field type is primitive or not
      * @return an {@link Optional} containing the conversion function (if exists)
+     * @param <T> the conversion function type
      */
     @SuppressWarnings("unchecked")
     public <T> Optional<T> getConversionFunction(final Class<?> sourceFieldType, final Class<?> destinationFieldType,

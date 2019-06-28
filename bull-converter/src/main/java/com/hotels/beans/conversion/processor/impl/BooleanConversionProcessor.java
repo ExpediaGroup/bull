@@ -1,7 +1,5 @@
 package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Byte.valueOf;
-
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
@@ -9,7 +7,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Boolean}.
  */
-public class BooleanConversionProcessor implements ConversionProcessor {
+public final class BooleanConversionProcessor implements ConversionProcessor {
     @Override
     public Function<Byte, Boolean> convertByte() {
         return val -> val != 0;
