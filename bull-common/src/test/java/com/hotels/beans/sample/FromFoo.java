@@ -22,13 +22,15 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
- * Sample immutable object.
+ * Sample mixed object.
  */
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class FromFoo implements Cloneable {
     private final String name;
     private BigInteger id;
@@ -38,10 +40,5 @@ public class FromFoo implements Cloneable {
 
     public FromFoo clone() throws CloneNotSupportedException {
         return (FromFoo) super.clone();
-    }
-
-    @Override
-    public String toString() {
-        return "FromFoo";
     }
 }
