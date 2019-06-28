@@ -90,7 +90,7 @@ public final class ConversionAnalyzer {
     private Optional getConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
         final String cacheKey = "ConversionFunction-" + sourceFieldType.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
-            Optional conversionFunction = getPrimitiveTypeConversionFunction(conversionProcessor, sourceFieldType);
+            Optional conversionFunction = getTypeConversionFunction(conversionProcessor, sourceFieldType);
             CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);
             return conversionFunction;
         });
@@ -103,7 +103,7 @@ public final class ConversionAnalyzer {
      * @param sourceFieldType he source field class
      * @return the conversion function
      */
-    private Optional getPrimitiveTypeConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
+    private Optional getTypeConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
         final Optional conversionFunction;
         if (sourceFieldType == String.class) {
             conversionFunction = of(conversionProcessor.convertString());
@@ -121,10 +121,9 @@ public final class ConversionAnalyzer {
             conversionFunction = of(conversionProcessor.convertDouble());
         } else if (sourceFieldType == Character.class) {
             conversionFunction = of(conversionProcessor.convertCharacter());
-        } //else if (sourceFieldType == Boolean.class) {
-//            conversionFunction = of(conversionProcessor.convertBoolean());
-//        }
-        else {
+        } else if (sourceFieldType == Boolean.class) {
+            conversionFunction = of(conversionProcessor.convertBoolean());
+        } else {
             conversionFunction = empty();
         }
         return conversionFunction;

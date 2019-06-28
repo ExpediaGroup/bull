@@ -18,6 +18,7 @@ package com.hotels.beans.conversion.processor;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import com.hotels.beans.conversion.processor.impl.BooleanConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.CharacterConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.DoubleConversionProcessor;
@@ -57,10 +58,9 @@ public final class ConversionProcessorFactory {
             conversionProcessor = new CharacterConversionProcessor();
         } else if (clazz == String.class) {
             conversionProcessor = new StringConversionProcessor();
+        } else if (clazz == Boolean.class) {
+            conversionProcessor = new BooleanConversionProcessor();
         }
-//        } else if (clazz == Boolean.class) {
-//            conversionProcessor = new BooleanConversionProcessor();
-//        }
         return conversionProcessor;
     }
 }
