@@ -65,24 +65,12 @@ public final class ConversionAnalyzer {
      * @param destinationFieldType the destination field class
      * @return an {@link Optional} containing the conversion function (if exists)
      */
-    public Optional<Function<Object, Object>> getConversionFunction(final Class<?> sourceFieldType, final Class<?> destinationFieldType) {
-        return getConversionFunction(sourceFieldType, destinationFieldType, classUtils.isPrimitiveType(destinationFieldType));
-    }
-
-    /**
-     * Analyzes Fields given as input and returns the conversion processor.
-     * @param sourceFieldType source field class
-     * @param destinationFieldType the destination field class
-     * @param isDestinationFieldPrimitiveType indicates if the destination field type is primitive or not
-     * @return an {@link Optional} containing the conversion function (if exists)
-     */
     @SuppressWarnings("unchecked")
-    public Optional<Function<Object, Object>> getConversionFunction(final Class<?> sourceFieldType, final Class<?> destinationFieldType,
-        final boolean isDestinationFieldPrimitiveType) {
+    public Optional<Function<Object, Object>> getConversionFunction(final Class<?> sourceFieldType, final Class<?> destinationFieldType) {
         final String cacheKey = "ConversionFunction-" + sourceFieldType.getName() + "-" + destinationFieldType.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
             Optional<Function<Object, Object>> conversionFunction = empty();
-            if (destinationFieldType != sourceFieldType && isDestinationFieldPrimitiveType && classUtils.isPrimitiveType(sourceFieldType)) {
+            if (destinationFieldType != sourceFieldType && classUtils.isPrimitiveType(sourceFieldType)) {
                 conversionFunction = getConversionFunction(getConversionProcessor(destinationFieldType), sourceFieldType);
             }
             CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);
