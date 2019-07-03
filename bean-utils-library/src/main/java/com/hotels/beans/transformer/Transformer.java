@@ -117,4 +117,11 @@ public interface Transformer {
      * Removes all the configured fields to skip.
      */
     void resetFieldsTransformationSkip();
+
+    /**
+     * It allows to enable/disable the set of the default value for primitive types in case they are null.
+     * @param defaultValueSetEnabled if true the default value for the primitive type is set. By default it's true.
+     * @return the {@link Transformer} instance
+     */
+    Transformer setDefaultValueSetEnabled(boolean defaultValueSetEnabled);
 }

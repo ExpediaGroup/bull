@@ -75,4 +75,11 @@ final class TransformerSettings {
      */
     @Setter
     private boolean validationEnabled;
+
+    /**
+     * It allows to enable/disable the set of the default value for primitive types in case they are null.
+     * If set to true the default value is set.
+     */
+    @Setter
+    private boolean defaultValueSetEnabled = true;
 }
