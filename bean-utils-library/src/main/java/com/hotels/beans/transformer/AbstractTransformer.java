@@ -161,6 +161,15 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
+    public Transformer setDefaultValueSetEnabled(final boolean defaultValueSetEnabled) {
+        settings.setDefaultValueSetEnabled(defaultValueSetEnabled);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass) {
         notNull(sourceObj, "The object to copy cannot be null!");
         notNull(targetClass, "The destination class cannot be null!");

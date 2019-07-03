@@ -2,11 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.4.7] 2019.07.03
+#### Added
+* Implemented possibility to disable the default value set for primitive types in case its value is null (see: [Issue 73](https://github.com/HotelsDotCom/bull/issues/73)).
+
 ### [1.4.6] 2019.06.27
 #### Changed
 * Improved exception messages in order to provide more details (see: [Issue 70](https://github.com/HotelsDotCom/bull/issues/70)).
 
 ### [1.4.5] 2019.06.05
+#### Added
 * Added new maven profile: `check-for-updates` for checking if any dependency can be updated (see: [Issue 68](https://github.com/HotelsDotCom/bull/issues/68)).
 * Added check during project build in order to prevent the add different versions of the same dependency.
 #### Changed
