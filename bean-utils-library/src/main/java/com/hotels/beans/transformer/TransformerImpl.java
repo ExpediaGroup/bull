@@ -313,7 +313,8 @@ public class TransformerImpl extends AbstractTransformer {
             return defaultValue(fieldType);
         }
         boolean primitiveType = classUtils.isPrimitiveType(fieldType);
-        List<FieldTransformer> transformerFunction = getTransformerFunction(sourceObj.getClass(), sourceFieldName, field, primitiveType || classUtils.isPrimitiveTypeArray(fieldType), fieldBreadcrumb);
+//        List<FieldTransformer> transformerFunction = getTransformerFunction(sourceObj.getClass(), sourceFieldName, field, primitiveType || classUtils.isPrimitiveTypeArray(fieldType), fieldBreadcrumb);
+        List<FieldTransformer> transformerFunction = getTransformerFunction(sourceObj.getClass(), sourceFieldName, field, primitiveType, fieldBreadcrumb);
         boolean isTransformerFunctionDefined = !transformerFunction.isEmpty();
         Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isTransformerFunctionDefined);
         if (nonNull(fieldValue)) {
