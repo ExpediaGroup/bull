@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.22] 2019.07.03
+#### Added
+* Implemented possibility to disable the default value set for primitive types in case its value is null (see: [Issue 73](https://github.com/HotelsDotCom/bull/issues/73)).
+
 ### [1.1.21] 2019.06.27
 #### Changed
 * Improved exception messages in order to provide more details (see: [Issue 70](https://github.com/HotelsDotCom/bull/issues/70)).
