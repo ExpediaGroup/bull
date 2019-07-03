@@ -171,7 +171,7 @@ public final class ClassUtils {
      * @return true if is Double
      */
     public static boolean isDouble(final Class<?> type) {
-        return Double.class.isAssignableFrom(type) || type == double.class || type == double[].class;
+        return Double.class.isAssignableFrom(type) || type == double.class;
     }
 
     /**
@@ -180,7 +180,7 @@ public final class ClassUtils {
      * @return true if is Float
      */
     public static boolean isFloat(final Class<?> type) {
-        return Float.class.isAssignableFrom(type) || type == float.class|| type == float[].class;
+        return Float.class.isAssignableFrom(type) || type == float.class;
     }
 
     /**
@@ -189,7 +189,7 @@ public final class ClassUtils {
      * @return true if is Long
      */
     public static boolean isLong(final Class<?> type) {
-        return Long.class.isAssignableFrom(type) || type == long.class || type == long[].class;
+        return Long.class.isAssignableFrom(type) || type == long.class;
     }
 
     /**
@@ -198,7 +198,7 @@ public final class ClassUtils {
      * @return true if is Short
      */
     public static boolean isShort(final Class<?> type) {
-        return Short.class.isAssignableFrom(type) || type == short.class|| type == short[].class;
+        return Short.class.isAssignableFrom(type) || type == short.class;
     }
 
     /**
@@ -207,7 +207,7 @@ public final class ClassUtils {
      * @return true if is Integer
      */
     public static boolean isInt(final Class<?> type) {
-        return Integer.class.isAssignableFrom(type) || type == int.class || type == int[].class;
+        return Integer.class.isAssignableFrom(type) || type == int.class;
     }
 
     /**
@@ -216,7 +216,7 @@ public final class ClassUtils {
      * @return true if is Byte
      */
     public static boolean isByte(final Class<?> type) {
-        return Byte.class.isAssignableFrom(type) || type == byte.class || type == byte[].class;
+        return Byte.class.isAssignableFrom(type) || type == byte.class;
     }
 
     /**
@@ -225,7 +225,7 @@ public final class ClassUtils {
      * @return true if is Character
      */
     public static boolean isChar(final Class<?> type) {
-        return Character.class.isAssignableFrom(type) || type == char.class || type == char[].class;
+        return Character.class.isAssignableFrom(type) || type == char.class;
     }
 
     /**
@@ -234,7 +234,7 @@ public final class ClassUtils {
      * @return true if is Boolean
      */
     public static boolean isBoolean(final Class<?> type) {
-        return Boolean.class.isAssignableFrom(type) || type == boolean.class || type == int[].class;
+        return Boolean.class.isAssignableFrom(type) || type == boolean.class;
     }
 
     /**
