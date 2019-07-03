@@ -170,8 +170,7 @@ public class TransformerImpl extends AbstractTransformer {
                     } else {
                         String sourceFieldName = getSourceFieldName(destFieldName);
                         constructorArgsValues[i] =
-                                ofNullable(getFieldValue(sourceObj, sourceFieldName, targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb))
-                                .orElse(classUtils.getDefaultTypeValue(constructorParameters[i].getType()));
+                                getFieldValue(sourceObj, sourceFieldName, targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb);
                     }
                 });
         return constructorArgsValues;
