@@ -179,6 +179,33 @@ ToBean toBean = beanUtils.getTransformer()
                     .setDefaultValueForMissingField(true).transform(fromBean, ToBean.class);
 ~~~
 
+### Disable the default value set for primitive types in case they are null:
+
+BULL by default sets the default value for all primitive types fields in case their value in the source object.
+Given the following Java Bean:
+
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  @NotNull                   
+   private final BigInteger id;                                public BigInteger id;                      
+                                                               private final String name;                 
+
+   // constructors...                                          // constructors...
+   // getters...                                               // getters and setters...
+
+}                                                           }
+~~~
+
+in case the field `id` in the `FromBean` object is `null`, the value assigned the correspondent field in the `ToBean` object will be `0`.
+To disable this you can simply do: 
+
+~~~Java
+ToBean toBean = beanUtils.getTransformer()
+                    .setDefaultValueSetEnabled(false).transform(fromBean, ToBean.class);
+~~~
+
+in this case the field `id` after the transformation will be `null`
+
 ### Applying a transformation function in case of missing fields in the source object:
 
 Assign a default value in case of missing field in the source object:
