@@ -18,6 +18,7 @@ package com.hotels.beans.conversion.analyzer;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
+import static java.util.Optional.ofNullable;
 
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.conversion.processor.ConversionProcessorFactory.getConversionProcessor;
@@ -69,26 +70,11 @@ public final class ConversionAnalyzer {
     public Optional<Function<Object, Object>> getConversionFunction(final Class<?> sourceFieldType, final Class<?> destinationFieldType) {
         final String cacheKey = "ConversionFunction-" + sourceFieldType.getName() + "-" + destinationFieldType.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
-            Optional<Function<Object, Object>> conversionFunction = empty();
+            Optional conversionFunction = empty();
             if (!destinationFieldType.getSimpleName().equalsIgnoreCase(sourceFieldType.getSimpleName()) && classUtils.isPrimitiveType(sourceFieldType)) {
-                conversionFunction = getConversionFunction(getConversionProcessor(destinationFieldType), sourceFieldType);
+                conversionFunction = ofNullable(getConversionProcessor(destinationFieldType))
+                        .flatMap(cp -> getTypeConversionFunction(cp, sourceFieldType));
             }
-            CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);
-            return conversionFunction;
-        });
-    }
-
-    /**
-     * Returns the type transformer function for the given type.
-     * @param conversionProcessor the {@link ConversionProcessor} for the given type
-     * @param sourceFieldType the source field class
-     * @return the conversion function
-     */
-    @SuppressWarnings("unchecked")
-    private Optional<Function<Object, Object>> getConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
-        final String cacheKey = "ConversionFunction-" + sourceFieldType.getName();
-        return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
-            Optional<Function<?, ?>> conversionFunction = getTypeConversionFunction(conversionProcessor, sourceFieldType);
             CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);
             return conversionFunction;
         });
@@ -102,7 +88,7 @@ public final class ConversionAnalyzer {
      * @return the conversion function
      */
     private Optional<Function<?, ?>> getTypeConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
-        final Optional<Function<?, ?>> conversionFunction;
+        Optional<Function<?, ?>> conversionFunction = null;
         if (isString(sourceFieldType)) {
             conversionFunction = of(conversionProcessor.convertString());
         } else if (isByte(sourceFieldType)) {
@@ -121,8 +107,6 @@ public final class ConversionAnalyzer {
             conversionFunction = of(conversionProcessor.convertCharacter());
         } else if (isBoolean(sourceFieldType)) {
             conversionFunction = of(conversionProcessor.convertBoolean());
-        } else {
-            conversionFunction = empty();
         }
         return conversionFunction;
     }

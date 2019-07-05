@@ -18,6 +18,7 @@ package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
 import static java.lang.Integer.valueOf;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -29,6 +30,16 @@ import org.testng.annotations.Test;
  * Unit test for {@link IntegerConversionProcessor}.
  */
 public class IntegerConversionProcessorTest {
+    private static final Byte BYTE_VALUE = 10;
+    private static final Short SHORT_VALUE = 10;
+    private static final Integer INTEGER_VALUE = 10;
+    private static final Long LONG_VALUE = 10L;
+    private static final Float FLOAT_VALUE = 10f;
+    private static final Double DOUBLE_VALUE = 10.51;
+    private static final char CHAR_VALUE = 'c';
+    private static final Boolean BOOLEAN_VALUE = Boolean.TRUE;
+    private static final String STRING_VALUE = "140";
+
     /**
      * The class to be tested.
      */
@@ -46,109 +57,100 @@ public class IntegerConversionProcessorTest {
     @Test
     public void testConvertByteShouldReturnProperResult() {
         // GIVEN
-        Byte expected = 10;
 
         // WHEN
-        Integer actual = underTest.convertByte().apply(expected);
+        Integer actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals((Integer) expected.intValue(), actual);
+        assertEquals((Integer) BYTE_VALUE.intValue(), actual);
     }
 
     @Test
     public void testConvertShortShouldReturnProperResult() {
         // GIVEN
-        Short expected = 10;
 
         // WHEN
-        Integer actual = underTest.convertShort().apply(expected);
+        Integer actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals((Integer) expected.intValue(), actual);
+        assertEquals((Integer) SHORT_VALUE.intValue(), actual);
     }
 
     @Test
     public void testConvertIntegerShouldReturnProperResult() {
         // GIVEN
-        Integer expected = 10;
 
         // WHEN
-        Integer actual = underTest.convertInteger().apply(expected);
+        Integer actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertEquals(INTEGER_VALUE, actual);
     }
 
     @Test
     public void testConvertLongShouldReturnProperResult() {
         // GIVEN
-        Long expected = 10L;
 
         // WHEN
-        Integer actual = underTest.convertLong().apply(expected);
+        Integer actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals((Integer) expected.intValue(), actual);
+        assertEquals((Integer) LONG_VALUE.intValue(), actual);
     }
 
     @Test
     public void testConvertFloatShouldReturnProperResult() {
         // GIVEN
-        Float expected = 10f;
 
         // WHEN
-        Integer actual = underTest.convertFloat().apply(expected);
+        Integer actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals((Integer) expected.intValue(), actual);
+        assertEquals((Integer) FLOAT_VALUE.intValue(), actual);
     }
 
     @Test
     public void testConvertDoubleShouldReturnProperResult() {
         // GIVEN
-        Double expected = 10.51;
 
         // WHEN
-        Integer actual = underTest.convertDouble().apply(expected);
+        Integer actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals((Integer) expected.intValue(), actual);
+        assertEquals((Integer) DOUBLE_VALUE.intValue(), actual);
     }
 
     @Test
     public void testConvertCharacterShouldReturnProperResult() {
         // GIVEN
-        Character expected = 'c';
 
         // WHEN
-        Integer actual = underTest.convertCharacter().apply(expected);
+        Integer actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals((Integer) getNumericValue(expected), actual);
+        assertEquals((Integer) getNumericValue(CHAR_VALUE), actual);
     }
 
     @Test
     public void testConvertBooleanShouldReturnProperResult() {
         // GIVEN
-        Boolean expected = true;
 
         // WHEN
-        Integer actual = underTest.convertBoolean().apply(expected);
+        Integer actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
 
         // THEN
-        assertEquals(expected, actual.equals(1));
+        assertEquals(BOOLEAN_VALUE, actual.equals(1));
     }
 
     @Test
     public void testConvertStringShouldReturnProperResult() {
         // GIVEN
-        String expected = "140";
 
         // WHEN
-        Integer actual = underTest.convertString().apply(expected);
+        Integer actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(valueOf(expected), actual);
+        assertEquals(valueOf(STRING_VALUE), actual);
     }
 }
 
