@@ -1,7 +1,5 @@
 package com.hotels.beans.conversion.processor;
 
-import static java.util.Optional.empty;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.MockitoAnnotations.initMocks;
