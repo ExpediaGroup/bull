@@ -70,7 +70,7 @@ public final class ConversionAnalyzer {
         final String cacheKey = "ConversionFunction-" + sourceFieldType.getName() + "-" + destinationFieldType.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
             Optional<Function<Object, Object>> conversionFunction = empty();
-            if (destinationFieldType != sourceFieldType && classUtils.isPrimitiveType(sourceFieldType)) {
+            if (!destinationFieldType.getSimpleName().equalsIgnoreCase(sourceFieldType.getSimpleName()) && classUtils.isPrimitiveType(sourceFieldType)) {
                 conversionFunction = getConversionFunction(getConversionProcessor(destinationFieldType), sourceFieldType);
             }
             CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);
