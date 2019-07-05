@@ -21,8 +21,6 @@ import static java.lang.Integer.valueOf;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.function.Function;
-
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -48,79 +46,73 @@ public class IntegerConversionProcessorTest {
     @Test
     public void testConvertByteShouldReturnProperResult() {
         // GIVEN
-        Byte actual = 10;
+        Byte expected = 10;
 
         // WHEN
-        Function<Byte, Integer> function = underTest.convertByte();
+        Integer actual = underTest.convertByte().apply(expected);
 
         // THEN
-        Integer expected = function.apply(actual);
-        assertEquals(expected, (Integer) actual.intValue());
+        assertEquals((Integer) expected.intValue(), actual);
     }
 
     @Test
     public void testConvertShortShouldReturnProperResult() {
         // GIVEN
-        Short actual = 10;
+        Short expected = 10;
 
         // WHEN
-        Function<Short, Integer> function = underTest.convertShort();
+        Integer actual = underTest.convertShort().apply(expected);
 
         // THEN
-        Integer expected = function.apply(actual);
-        assertEquals(expected, (Integer) actual.intValue());
+        assertEquals((Integer) expected.intValue(), actual);
     }
 
     @Test
     public void testConvertIntegerShouldReturnProperResult() {
         // GIVEN
-        Integer actual = 10;
+        Integer expected = 10;
 
         // WHEN
-        Function<Integer, Integer> function = underTest.convertInteger();
+        Integer actual = underTest.convertInteger().apply(expected);
 
         // THEN
-        Integer expected = function.apply(actual);
         assertEquals(expected, actual);
     }
 
     @Test
     public void testConvertLongShouldReturnProperResult() {
         // GIVEN
-        Long actual = 10L;
+        Long expected = 10L;
 
         // WHEN
-        Function<Long, Integer> function = underTest.convertLong();
+        Integer actual = underTest.convertLong().apply(expected);
 
         // THEN
-        Integer expected = function.apply(actual);
-        assertEquals(expected, (Integer) actual.intValue());
+        assertEquals((Integer) expected.intValue(), actual);
     }
 
     @Test
     public void testConvertFloatShouldReturnProperResult() {
         // GIVEN
-        Float actual = 10f;
+        Float expected = 10f;
 
         // WHEN
-        Function<Float, Integer> function = underTest.convertFloat();
+        Integer actual = underTest.convertFloat().apply(expected);
 
         // THEN
-        Integer expected = function.apply(actual);
-        assertEquals(expected, (Integer) actual.intValue());
+        assertEquals((Integer) expected.intValue(), actual);
     }
 
     @Test
     public void testConvertDoubleShouldReturnProperResult() {
         // GIVEN
-        Double actual = 10.51;
+        Double expected = 10.51;
 
         // WHEN
-        Function<Double, Integer> function = underTest.convertDouble();
+        Integer actual = underTest.convertDouble().apply(expected);
 
         // THEN
-        Integer expected = function.apply(actual);
-        assertEquals(expected, (Integer) actual.intValue());
+        assertEquals((Integer) expected.intValue(), actual);
     }
 
     @Test
