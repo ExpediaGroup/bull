@@ -88,7 +88,7 @@ public final class ConversionAnalyzer {
     private Optional<Function<Object, Object>> getConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
         final String cacheKey = "ConversionFunction-" + sourceFieldType.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
-            Optional conversionFunction = getTypeConversionFunction(conversionProcessor, sourceFieldType);
+            Optional<Function<?, ?>> conversionFunction = getTypeConversionFunction(conversionProcessor, sourceFieldType);
             CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);
             return conversionFunction;
         });
