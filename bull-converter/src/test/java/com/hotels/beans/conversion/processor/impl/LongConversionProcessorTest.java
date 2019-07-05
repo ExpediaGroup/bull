@@ -17,7 +17,7 @@
 package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
-import static java.lang.Integer.valueOf;
+import static java.lang.Long.valueOf;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -27,14 +27,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
- * Unit test for {@link IntegerConversionProcessor}.
+ * Unit test for {@link LongConversionProcessor}.
  */
-public class IntegerConversionProcessorTest {
+public class LongConversionProcessorTest {
     /**
      * The class to be tested.
      */
     @InjectMocks
-    private IntegerConversionProcessor underTest;
+    private LongConversionProcessor underTest;
 
     /**
      * Initializes mock.
@@ -50,10 +50,10 @@ public class IntegerConversionProcessorTest {
         Byte expected = 10;
 
         // WHEN
-        Integer actual = underTest.convertByte().apply(expected);
+        Long actual = underTest.convertByte().apply(expected);
 
         // THEN
-        assertEquals((Integer) expected.intValue(), actual);
+        assertEquals((Long) expected.longValue(), actual);
     }
 
     @Test
@@ -62,10 +62,10 @@ public class IntegerConversionProcessorTest {
         Short expected = 10;
 
         // WHEN
-        Integer actual = underTest.convertShort().apply(expected);
+        Long actual = underTest.convertShort().apply(expected);
 
         // THEN
-        assertEquals((Integer) expected.intValue(), actual);
+        assertEquals((Long) expected.longValue(), actual);
     }
 
     @Test
@@ -74,10 +74,10 @@ public class IntegerConversionProcessorTest {
         Integer expected = 10;
 
         // WHEN
-        Integer actual = underTest.convertInteger().apply(expected);
+        Long actual = underTest.convertInteger().apply(expected);
 
         // THEN
-        assertEquals(expected, actual);
+        assertEquals((Long) expected.longValue(), actual);
     }
 
     @Test
@@ -86,10 +86,10 @@ public class IntegerConversionProcessorTest {
         Long expected = 10L;
 
         // WHEN
-        Integer actual = underTest.convertLong().apply(expected);
+        Long actual = underTest.convertLong().apply(expected);
 
         // THEN
-        assertEquals((Integer) expected.intValue(), actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -98,10 +98,10 @@ public class IntegerConversionProcessorTest {
         Float expected = 10f;
 
         // WHEN
-        Integer actual = underTest.convertFloat().apply(expected);
+        Long actual = underTest.convertFloat().apply(expected);
 
         // THEN
-        assertEquals((Integer) expected.intValue(), actual);
+        assertEquals((Long) expected.longValue(), actual);
     }
 
     @Test
@@ -110,22 +110,22 @@ public class IntegerConversionProcessorTest {
         Double expected = 10.51;
 
         // WHEN
-        Integer actual = underTest.convertDouble().apply(expected);
+        Long actual = underTest.convertDouble().apply(expected);
 
         // THEN
-        assertEquals((Integer) expected.intValue(), actual);
+        assertEquals((Long) expected.longValue(), actual);
     }
 
     @Test
     public void testConvertCharacterShouldReturnProperResult() {
         // GIVEN
-        Character expected = 'c';
+        char expected = 'c';
 
         // WHEN
-        Integer actual = underTest.convertCharacter().apply(expected);
+        Long actual = underTest.convertCharacter().apply(expected);
 
         // THEN
-        assertEquals((Integer) getNumericValue(expected), actual);
+        assertEquals(valueOf(getNumericValue(expected)), actual);
     }
 
     @Test
@@ -134,10 +134,10 @@ public class IntegerConversionProcessorTest {
         Boolean expected = true;
 
         // WHEN
-        Integer actual = underTest.convertBoolean().apply(expected);
+        Long actual = underTest.convertBoolean().apply(expected);
 
         // THEN
-        assertEquals(expected, actual.equals(1));
+        assertEquals(expected, actual.equals(1L));
     }
 
     @Test
@@ -146,7 +146,7 @@ public class IntegerConversionProcessorTest {
         String expected = "140";
 
         // WHEN
-        Integer actual = underTest.convertString().apply(expected);
+        Long actual = underTest.convertString().apply(expected);
 
         // THEN
         assertEquals(valueOf(expected), actual);

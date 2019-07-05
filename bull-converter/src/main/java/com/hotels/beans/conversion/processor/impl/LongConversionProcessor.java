@@ -16,6 +16,7 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.lang.Character.getNumericValue;
 import static java.lang.Long.valueOf;
 
 import java.util.function.Function;
@@ -80,7 +81,7 @@ public final class LongConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Character, Long> convertCharacter() {
-        return val -> valueOf((long) val);
+        return val -> valueOf(getNumericValue(val));
     }
 
     /**
