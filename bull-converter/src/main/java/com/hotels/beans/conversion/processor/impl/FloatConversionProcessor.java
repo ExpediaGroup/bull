@@ -16,6 +16,7 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.lang.Character.getNumericValue;
 import static java.lang.Float.valueOf;
 
 import java.util.function.Function;
@@ -79,7 +80,7 @@ public final class FloatConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Character, Float> convertCharacter() {
-        return val -> valueOf((float) val);
+        return val -> valueOf(getNumericValue(val));
     }
 
     /**
