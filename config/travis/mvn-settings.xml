@@ -2,18 +2,18 @@
   <servers>
     <server>
       <id>ossrh</id>
-      <username>${env.OSSRH_USERNAME}</username>
-      <password>${env.OSSRH_PASSWORD}</password>
+      <username>${env.EG_OSSRH_USERNAME}</username>
+      <password>${env.EG_OSSRH_PASSWORD}</password>
     </server>
     <server>
       <id>sonatype-nexus-staging</id>
-      <username>${env.OSSRH_USERNAME}</username>
-      <password>${env.OSSRH_PASSWORD}</password>
+      <username>${env.EG_OSSRH_USERNAME}</username>
+      <password>${env.EG_OSSRH_PASSWORD}</password>
     </server>
     <server>
       <id>sonatype-nexus-snapshots</id>
-      <username>${env.OSSRH_USERNAME}</username>
-      <password>${env.OSSRH_PASSWORD}</password>
+      <username>${env.EG_OSSRH_USERNAME}</username>
+      <password>${env.EG_OSSRH_PASSWORD}</password>
     </server>
     <!-- GitHub config -->
     <server>
