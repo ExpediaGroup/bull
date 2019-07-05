@@ -77,7 +77,7 @@ public final class IntegerConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Character, Integer> convertCharacter() {
-        return val -> valueOf((int) val);
+        return Character::getNumericValue;
     }
 
     /**
