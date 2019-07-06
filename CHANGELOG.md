@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.4.7.1] 2019.07.05
+### [1.4.7.1]git status [1.4.7.2] 2019.07.05
 #### Changed
 * Changed sonatype credential
 
