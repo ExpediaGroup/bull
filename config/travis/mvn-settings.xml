@@ -24,7 +24,10 @@
 
   <profiles>
     <profile>
-      <id>sign</id>
+      <id>release</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <properties>
         <gpg.executable>gpg</gpg.executable>
         <gpg.keyname>${env.GPG_KEYNAME}</gpg.keyname>
