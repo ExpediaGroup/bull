@@ -540,6 +540,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
+                    <version>${maven.versions.plugin.version}</version>
                     <configuration>
                         <rulesUri>file:///${project.basedir}/config/maven/versions-plugin-rules.xml</rulesUri>
                     </configuration>
