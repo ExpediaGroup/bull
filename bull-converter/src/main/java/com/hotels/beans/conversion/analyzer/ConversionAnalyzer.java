@@ -40,7 +40,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 import com.hotels.beans.utils.ClassUtils;
 
 /**
- * This class analyzes the two classes received in input, and returns the conversion processor to be used.
+ * This class provides method for converting a primitive input into another.
  */
 public final class ConversionAnalyzer {
     /**
@@ -62,18 +62,18 @@ public final class ConversionAnalyzer {
 
     /**
      * Analyzes Fields given as input and returns the conversion processor.
-     * @param sourceFieldType source field class
-     * @param destinationFieldType the destination field class
+     * @param sourceClass source field class
+     * @param targetClass the destination field class
      * @return an {@link Optional} containing the conversion function (if exists)
      */
     @SuppressWarnings("unchecked")
-    public Optional<Function<Object, Object>> getConversionFunction(final Class<?> sourceFieldType, final Class<?> destinationFieldType) {
-        final String cacheKey = "ConversionFunction-" + sourceFieldType.getName() + "-" + destinationFieldType.getName();
+    public Optional<Function<Object, Object>> getConversionFunction(final Class<?> sourceClass, final Class<?> targetClass) {
+        final String cacheKey = "ConversionFunction-" + sourceClass.getName() + "-" + targetClass.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
             Optional conversionFunction = empty();
-            if (!destinationFieldType.getSimpleName().equalsIgnoreCase(sourceFieldType.getSimpleName()) && classUtils.isPrimitiveType(sourceFieldType)) {
-                conversionFunction = ofNullable(getConversionProcessor(destinationFieldType))
-                        .flatMap(cp -> getTypeConversionFunction(cp, sourceFieldType));
+            if (!targetClass.getSimpleName().equalsIgnoreCase(sourceClass.getSimpleName()) && classUtils.isPrimitiveType(sourceClass)) {
+                conversionFunction = ofNullable(getConversionProcessor(targetClass))
+                        .flatMap(cp -> getTypeConversionFunction(cp, sourceClass));
             }
             CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);
             return conversionFunction;
