@@ -400,7 +400,7 @@ public class TransformerImpl extends AbstractTransformer {
         final boolean isDestinationFieldPrimitiveType, final String breadcrumb) {
         List<FieldTransformer> fieldTransformers = new ArrayList<>();
         String fieldTransformerKey = settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;
-        if (isDestinationFieldPrimitiveType) {
+        if (settings.isDefaultPrimitiveTypeConversionEnabled() && isDestinationFieldPrimitiveType) {
             conversionAnalyzer.getConversionFunction(sourceObjectClass, field.getType())
                     .ifPresent(conversionFunction -> fieldTransformers.add(new FieldTransformer<>(fieldTransformerKey, conversionFunction)));
         }

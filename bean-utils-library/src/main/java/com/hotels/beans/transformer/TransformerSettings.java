@@ -82,4 +82,11 @@ final class TransformerSettings {
      */
     @Setter
     private boolean defaultValueSetEnabled = true;
+
+    /**
+     * It allows to enable/disable the automatic conversion of primitive types.
+     * If set to true primitive types are transformed automatically.
+     */
+    @Setter
+    private boolean defaultPrimitiveTypeConversionEnabled = true;
 }

@@ -29,17 +29,7 @@ import org.testng.annotations.Test;
 /**
  * Unit test for {@link IntegerConversionProcessor}.
  */
-public class IntegerConversionProcessorTest {
-    private static final Byte BYTE_VALUE = 10;
-    private static final Short SHORT_VALUE = 10;
-    private static final Integer INTEGER_VALUE = 10;
-    private static final Long LONG_VALUE = 10L;
-    private static final Float FLOAT_VALUE = 10f;
-    private static final Double DOUBLE_VALUE = 10.51;
-    private static final char CHAR_VALUE = 'c';
-    private static final Boolean BOOLEAN_VALUE = Boolean.TRUE;
-    private static final String STRING_VALUE = "140";
-
+public class IntegerConversionProcessorTest extends AbstractConversionProcessorTest {
     /**
      * The class to be tested.
      */

@@ -34,6 +34,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.Converter;
 import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
@@ -149,6 +150,20 @@ public class BeanUtilsTest {
 
         //WHEN
         underTest.getValidator().validate(immutableToFoo);
+    }
+
+    /**
+     * Test that a {@link com.hotels.beans.conversion.Converter} is correctly returned.
+     */
+    @Test
+    public void testGetPrimitiveTypeConverterWorksProperly() {
+        //GIVEN
+
+        //WHEN
+        Converter actual = underTest.getPrimitiveTypeConverter();
+
+        //THEN
+        assertNotNull(actual);
     }
 
     /**

@@ -157,4 +157,34 @@ public class TransformerTest extends AbstractTransformerTest {
         //WHEN
         getSourceFieldValueMethod.invoke(underTest, null, null, null, false);
     }
+
+    /**
+     * Test that by default the primitive type conversion is disabled.
+     */
+    @Test
+    public void testThatDefaultPrimitiveTypeConversionIsDisabledByDefault() {
+        //GIVEN
+
+        //WHEN
+        boolean actual = underTest.settings.isDefaultPrimitiveTypeConversionEnabled();
+
+        //THEN
+        assertFalse(actual);
+    }
+
+    /**
+     * Test that the primitive type conversion is correctly enabled.
+     */
+    @Test
+    public void testThatDefaultPrimitiveTypeConversionIsCorrectlyEnabled() {
+        //GIVEN
+        underTest.setDefaultPrimitiveTypeConversionEnabled(true);
+
+        //WHEN
+        boolean actual = underTest.settings.isDefaultPrimitiveTypeConversionEnabled();
+
+        //THEN
+        assertTrue(actual);
+        underTest.setDefaultPrimitiveTypeConversionEnabled(false);
+    }
 }

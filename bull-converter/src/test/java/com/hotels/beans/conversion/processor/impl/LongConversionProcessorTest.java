@@ -29,7 +29,7 @@ import org.testng.annotations.Test;
 /**
  * Unit test for {@link LongConversionProcessor}.
  */
-public class LongConversionProcessorTest {
+public class LongConversionProcessorTest  extends AbstractConversionProcessorTest {
     /**
      * The class to be tested.
      */
@@ -47,109 +47,100 @@ public class LongConversionProcessorTest {
     @Test
     public void testConvertByteShouldReturnProperResult() {
         // GIVEN
-        Byte expected = 10;
 
         // WHEN
-        Long actual = underTest.convertByte().apply(expected);
+        Long actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals((Long) expected.longValue(), actual);
+        assertEquals((Long) BYTE_VALUE.longValue(), actual);
     }
 
     @Test
     public void testConvertShortShouldReturnProperResult() {
         // GIVEN
-        Short expected = 10;
 
         // WHEN
-        Long actual = underTest.convertShort().apply(expected);
+        Long actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals((Long) expected.longValue(), actual);
+        assertEquals((Long) SHORT_VALUE.longValue(), actual);
     }
 
     @Test
     public void testConvertIntegerShouldReturnProperResult() {
         // GIVEN
-        Integer expected = 10;
 
         // WHEN
-        Long actual = underTest.convertInteger().apply(expected);
+        Long actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals((Long) expected.longValue(), actual);
+        assertEquals((Long) INTEGER_VALUE.longValue(), actual);
     }
 
     @Test
     public void testConvertLongShouldReturnProperResult() {
         // GIVEN
-        Long expected = 10L;
 
         // WHEN
-        Long actual = underTest.convertLong().apply(expected);
+        Long actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertEquals(LONG_VALUE, actual);
     }
 
     @Test
     public void testConvertFloatShouldReturnProperResult() {
         // GIVEN
-        Float expected = 10f;
 
         // WHEN
-        Long actual = underTest.convertFloat().apply(expected);
+        Long actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals((Long) expected.longValue(), actual);
+        assertEquals((Long) FLOAT_VALUE.longValue(), actual);
     }
 
     @Test
     public void testConvertDoubleShouldReturnProperResult() {
         // GIVEN
-        Double expected = 10.51;
 
         // WHEN
-        Long actual = underTest.convertDouble().apply(expected);
+        Long actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals((Long) expected.longValue(), actual);
+        assertEquals((Long) DOUBLE_VALUE.longValue(), actual);
     }
 
     @Test
     public void testConvertCharacterShouldReturnProperResult() {
         // GIVEN
-        char expected = 'c';
 
         // WHEN
-        Long actual = underTest.convertCharacter().apply(expected);
+        Long actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals(valueOf(getNumericValue(expected)), actual);
+        assertEquals(valueOf(getNumericValue(CHAR_VALUE)), actual);
     }
 
     @Test
     public void testConvertBooleanShouldReturnProperResult() {
         // GIVEN
-        Boolean expected = true;
 
         // WHEN
-        Long actual = underTest.convertBoolean().apply(expected);
+        Long actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
 
         // THEN
-        assertEquals(expected, actual.equals(1L));
+        assertEquals(BOOLEAN_VALUE, actual.equals(1L));
     }
 
     @Test
     public void testConvertStringShouldReturnProperResult() {
         // GIVEN
-        String expected = "140";
 
         // WHEN
-        Long actual = underTest.convertString().apply(expected);
+        Long actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(valueOf(expected), actual);
+        assertEquals(valueOf(STRING_VALUE), actual);
     }
 }
 
