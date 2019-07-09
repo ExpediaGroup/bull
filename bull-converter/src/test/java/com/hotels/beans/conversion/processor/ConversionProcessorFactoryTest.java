@@ -18,7 +18,10 @@ package com.hotels.beans.conversion.processor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.mockito.InjectMocks;
@@ -62,10 +65,10 @@ public class ConversionProcessorFactoryTest {
         // GIVEN
 
         // WHEN
-        ConversionProcessor actual = underTest.getConversionProcessor(Pair.class);
+        Optional<ConversionProcessor> actual = underTest.getConversionProcessor(Pair.class);
 
         // THEN
-        assertNull(actual);
+        assertTrue(actual.isEmpty());
     }
 
     /**
@@ -80,10 +83,10 @@ public class ConversionProcessorFactoryTest {
         // GIVEN
 
         // WHEN
-        ConversionProcessor actual = underTest.getConversionProcessor(targetClass);
+        Optional<ConversionProcessor> actual = underTest.getConversionProcessor(targetClass);
 
         // THEN
-        assertEquals(expectedResult, actual.getClass());
+        assertEquals(expectedResult, actual.get().getClass());
     }
 
     /**

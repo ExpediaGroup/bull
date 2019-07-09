@@ -442,9 +442,12 @@ public class ReflectionUtilsTest {
 
     /**
      * Tests that the method {@code getDeclaredField} works properly.
+     * @param testCaseDescription the test case description
+     * @param fieldName the field to retrieve
+     * @param targetClass the class where the field has to be searched
      */
     @Test(dataProvider = "dataGetDeclaredFieldTesting")
-    public void testGetDeclaredFieldWorksProperly(final String testDescription, final String fieldName, final Class<?> targetClass) {
+    public void testGetDeclaredFieldWorksProperly(final String testCaseDescription, final String fieldName, final Class<?> targetClass) {
         // GIVEN
 
         // WHEN

@@ -18,6 +18,8 @@ package com.hotels.beans.conversion;
 
 import static java.util.Objects.isNull;
 
+import static com.hotels.beans.validator.Validator.notNull;
+
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -55,12 +57,12 @@ public class ConverterImpl implements Converter {
     @Override
     @SuppressWarnings("unchecked")
     public <T, K> K convertValue(final T valueToConvert, final Class<K> targetClass) {
-        Validator.notNull(targetClass, "The destination field type cannot be null.");
+        notNull(targetClass, "The destination field type cannot be null.");
         if (isNull(valueToConvert)) {
             return null;
         }
         return (K) getConversionFunction(valueToConvert.getClass(), targetClass)
-                .map(processor -> processor.apply(targetClass))
+                .map(processor -> processor.apply(valueToConvert))
                 .orElseThrow(() -> new NoConverterAvailableException("No converter available for type: " + targetClass.getName()));
     }
 }

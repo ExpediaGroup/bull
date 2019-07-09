@@ -16,7 +16,6 @@
 
 package com.hotels.beans.transformer;
 
-import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -27,13 +26,13 @@ import static java.util.stream.IntStream.range;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
-import static com.hotels.beans.base.Defaults.defaultValue;
-import static com.hotels.beans.constant.ClassType.MIXED;
-import static com.hotels.beans.constant.ClassType.MUTABLE;
-import static com.hotels.beans.constant.Punctuation.COMMA;
 import static com.hotels.beans.constant.Punctuation.DOT;
+import static com.hotels.beans.constant.Punctuation.COMMA;
 import static com.hotels.beans.constant.Punctuation.LPAREN;
 import static com.hotels.beans.constant.Punctuation.RPAREN;
+import static com.hotels.beans.constant.ClassType.MIXED;
+import static com.hotels.beans.constant.ClassType.MUTABLE;
+import static com.hotels.beans.base.Defaults.defaultValue;
 import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 
 import java.lang.reflect.Constructor;

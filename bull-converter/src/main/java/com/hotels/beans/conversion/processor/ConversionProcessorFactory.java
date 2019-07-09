@@ -16,6 +16,9 @@
 
 package com.hotels.beans.conversion.processor;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+
 import static com.hotels.beans.utils.ClassUtils.isBoolean;
 import static com.hotels.beans.utils.ClassUtils.isByte;
 import static com.hotels.beans.utils.ClassUtils.isChar;
@@ -27,6 +30,8 @@ import static com.hotels.beans.utils.ClassUtils.isShort;
 import static com.hotels.beans.utils.ClassUtils.isString;
 
 import static lombok.AccessLevel.PRIVATE;
+
+import java.util.Optional;
 
 import com.hotels.beans.conversion.processor.impl.BooleanConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
@@ -48,28 +53,28 @@ public final class ConversionProcessorFactory {
     /**
      * Returns a conversion processor for the given type.
      * @param clazz the class for which the conversion processor has to be retrieved.
-     * @return a conversion processor for the given type
+     * @return a conversion processor for the given type wrapped into {@link Optional}
      */
-    public static ConversionProcessor getConversionProcessor(final Class<?> clazz) {
-        ConversionProcessor conversionProcessor = null;
+    public static Optional<ConversionProcessor> getConversionProcessor(final Class<?> clazz) {
+        Optional<ConversionProcessor> conversionProcessor = empty();
         if (isByte(clazz)) {
-            conversionProcessor = new ByteConversionProcessor();
+            conversionProcessor = of(new ByteConversionProcessor());
         } else if (isShort(clazz)) {
-            conversionProcessor = new ShortConversionProcessor();
+            conversionProcessor = of(new ShortConversionProcessor());
         } else if (isInt(clazz)) {
-            conversionProcessor = new IntegerConversionProcessor();
+            conversionProcessor = of(new IntegerConversionProcessor());
         } else if (isLong(clazz)) {
-            conversionProcessor = new LongConversionProcessor();
+            conversionProcessor = of(new LongConversionProcessor());
         } else if (isFloat(clazz)) {
-            conversionProcessor = new FloatConversionProcessor();
+            conversionProcessor = of(new FloatConversionProcessor());
         } else if (isDouble(clazz)) {
-            conversionProcessor = new DoubleConversionProcessor();
+            conversionProcessor = of(new DoubleConversionProcessor());
         } else if (isChar(clazz)) {
-            conversionProcessor = new CharacterConversionProcessor();
+            conversionProcessor = of(new CharacterConversionProcessor());
         } else if (isString(clazz)) {
-            conversionProcessor = new StringConversionProcessor();
+            conversionProcessor = of(new StringConversionProcessor());
         } else if (isBoolean(clazz)) {
-            conversionProcessor = new BooleanConversionProcessor();
+            conversionProcessor = of(new BooleanConversionProcessor());
         }
         return conversionProcessor;
     }

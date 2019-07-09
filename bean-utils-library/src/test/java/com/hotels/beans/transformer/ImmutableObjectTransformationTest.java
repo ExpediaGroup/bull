@@ -383,7 +383,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     @Test
     public void testGetConstructorValuesFromFieldsWorksProperly() throws Exception {
         //GIVEN
-        underTest.setDefaultPrimitiveTypeConversionEnabled(true).withFieldTransformer(new FieldTransformer<>(LOCALE_FIELD_NAME, Locale::forLanguageTag));
+        underTest.withFieldTransformer(new FieldTransformer<>(LOCALE_FIELD_NAME, Locale::forLanguageTag));
 
         //WHEN
         final Method getConstructorValuesFromFieldsMethod =

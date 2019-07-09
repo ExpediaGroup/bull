@@ -32,7 +32,8 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 * easy usage, declarative way to define the property mapping (in case of different names) or simply adding the lombok annotations.
 * allows to set the default value for all objects not existing in the source object.
 * allows to skip transformation for a given set of fields.
-* supports the values retrieval from getters if a field does not exists in the source object
+* supports the values retrieval from getters if a field does not exists in the source object.
+* supports the automatic conversion of primitive types.
 
 #### Bean Validation: 
 
@@ -41,7 +42,11 @@ The validation works with both the default `javax.constraints` provided by Java 
 
 ##### Features:
 * Java Bean validation
-* retrieve the violated constraints
+* Retrieve the violated constraints
+
+#### Primitive object automatic conversion: 
+
+Transforms any primitive type value into another one.
     
 #### Related articles
 
