@@ -17,6 +17,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.error.NoConverterAvailableException;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.CharacterConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.DoubleConversionProcessor;
@@ -189,5 +190,16 @@ public class ConverterTest {
                 {"Tests that the method returns an int value from a String", ONE_AS_STRING, int.class, Integer.parseInt(ONE_AS_STRING)},
                 {"Tests that the method returns a byte value from a String", ONE_AS_STRING, byte.class, Byte.parseByte(ONE_AS_STRING)}
         };
+    }
+
+    /**
+     * Tests that the method {@code convertValue} raises a {@link NoConverterAvailableException}.
+     */
+    @Test(expectedExceptions = NoConverterAvailableException.class)
+    public void testConvertValueRaisesExpectionInCaseNoConverterIsDefined() {
+        // GIVEN
+
+        // WHEN
+        underTest.convertValue(ONE_AS_STRING, Void.class);
     }
 }
