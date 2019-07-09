@@ -18,7 +18,6 @@ package com.hotels.beans.conversion.analyzer;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
-import static java.util.Optional.ofNullable;
 
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.conversion.processor.ConversionProcessorFactory.getConversionProcessor;
@@ -72,8 +71,7 @@ public final class ConversionAnalyzer {
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
             Optional conversionFunction = empty();
             if (!targetClass.getSimpleName().equalsIgnoreCase(sourceClass.getSimpleName()) && classUtils.isPrimitiveType(sourceClass)) {
-                conversionFunction =
-                        ofNullable(getConversionProcessor(targetClass))
+                conversionFunction = getConversionProcessor(targetClass)
                         .flatMap(cp -> getTypeConversionFunction(cp, sourceClass));
             }
             CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);

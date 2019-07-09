@@ -136,11 +136,11 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns true if the class is a primitive type object", BigDecimal.class, true},
                 {"Tests that the method returns false if the class is not a primitive type object", FromFoo.class, false},
-                {"Tests that the method returns true if the class is not a Boolean", Boolean.class, true},
-                {"Tests that the method returns true if the class is not a Character", Character.class, true},
-                {"Tests that the method returns true if the class is not a Byte", Byte.class, true},
-                {"Tests that the method returns true if the class is not a Void", Void.class, true},
-                {"Tests that the method returns true if the class is not a String", String.class, true},
+                {"Tests that the method returns true if the class is a Boolean", Boolean.class, true},
+                {"Tests that the method returns true if the class is a Character", Character.class, true},
+                {"Tests that the method returns true if the class is a Byte", Byte.class, true},
+                {"Tests that the method returns true if the class is a Void", Void.class, true},
+                {"Tests that the method returns true if the class is a String", String.class, true},
         };
     }
 
