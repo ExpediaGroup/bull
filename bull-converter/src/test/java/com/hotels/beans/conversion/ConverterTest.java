@@ -29,8 +29,8 @@ import com.hotels.beans.conversion.processor.impl.StringConversionProcessor;
  */
 public class ConverterTest {
     private static final String ONE_AS_STRING = "1";
-    private static final int ONE_AS_INT = 1;
-    private static final byte ONE_AS_BYTE = 1;
+    private static final char CHAR_VALUE = 'x';
+    private static final byte TRUE_AS_BYTE = 1;
     /**
      * The class to be tested.
      */
@@ -70,8 +70,6 @@ public class ConverterTest {
     @DataProvider
     private Object[][] dataGetConversionFunctionEmptyCaseTesting() {
         return new Object[][]{
-                {"Tests that the method returns an empty optional in case the source field type is equal to the destination field type",
-                        int.class, int.class},
                 {"Tests that the method returns an empty optional in case the source field type is not equal to the source field type but it's not primitive",
                         Pair.class, int.class},
                 {"Tests that the method returns an empty optional in case the source field type is not equal to the source field type and the destination type is void",
@@ -166,7 +164,28 @@ public class ConverterTest {
     private Object[][] dataConvertValueTesting() {
         return new Object[][]{
                 {"Tests that the method returns a null value in case the value to convert is null", null, BigInteger.class, null},
-                {"Tests that the method returns a boolean value from a byte", ONE_AS_BYTE, boolean.class, Boolean.TRUE},
+                // boolean conversion test cases
+                {"Tests that the method returns a boolean value from a byte", Byte.MIN_VALUE, boolean.class, Boolean.TRUE},
+                {"Tests that the method returns a boolean value from a short", Short.MIN_VALUE, boolean.class, Boolean.TRUE},
+                {"Tests that the method returns a boolean value from an Integer", Integer.MIN_VALUE, boolean.class, Boolean.TRUE},
+                {"Tests that the method returns a boolean value from a Long", Long.MIN_VALUE, boolean.class, Boolean.TRUE},
+                {"Tests that the method returns a boolean value from a Float", Float.MIN_VALUE, boolean.class, Boolean.TRUE},
+                {"Tests that the method returns a boolean value from a Double", Double.MIN_VALUE, boolean.class, Boolean.TRUE},
+                {"Tests that the method returns a boolean value from a char", CHAR_VALUE, boolean.class, Boolean.TRUE},
+                {"Tests that the method returns a boolean value from a Boolean", Boolean.TRUE, boolean.class, Boolean.TRUE},
+                {"Tests that the method returns a boolean value from a String", String.valueOf(Boolean.FALSE), boolean.class, Boolean.FALSE},
+                // byte conversion test cases
+                {"Tests that the method returns a byte value from a byte", Byte.MIN_VALUE, byte.class, Byte.MIN_VALUE},
+                {"Tests that the method returns a byte value from a short", Short.MIN_VALUE, byte.class, Short.valueOf(Short.MIN_VALUE).byteValue()},
+                {"Tests that the method returns a byte value from an Integer", Integer.MIN_VALUE, byte.class, Integer.valueOf(Integer.MIN_VALUE).byteValue()},
+                {"Tests that the method returns a byte value from a Long", Long.MIN_VALUE, byte.class, Long.valueOf(Long.MIN_VALUE).byteValue()},
+                {"Tests that the method returns a byte value from a Float", Float.MIN_VALUE, byte.class, Float.valueOf(Float.MIN_VALUE).byteValue()},
+                {"Tests that the method returns a byte value from a Double", Double.MIN_VALUE, byte.class, Double.valueOf(Double.MIN_VALUE).byteValue()},
+                {"Tests that the method returns a byte value from a char", CHAR_VALUE, byte.class, (byte) Character.valueOf(CHAR_VALUE).charValue()},
+                {"Tests that the method returns a byte value from a Boolean", Boolean.TRUE, byte.class, TRUE_AS_BYTE},
+                {"Tests that the method returns a byte value from a String", ONE_AS_STRING, byte.class, Byte.valueOf(ONE_AS_STRING)},
+
+
                 {"Tests that the method returns an int value from a String", ONE_AS_STRING, int.class, Integer.parseInt(ONE_AS_STRING)},
                 {"Tests that the method returns a byte value from a String", ONE_AS_STRING, byte.class, Byte.parseByte(ONE_AS_STRING)}
         };
