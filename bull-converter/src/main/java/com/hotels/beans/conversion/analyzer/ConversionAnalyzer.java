@@ -72,7 +72,8 @@ public final class ConversionAnalyzer {
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
             Optional conversionFunction = empty();
             if (!targetClass.getSimpleName().equalsIgnoreCase(sourceClass.getSimpleName()) && classUtils.isPrimitiveType(sourceClass)) {
-                conversionFunction = ofNullable(getConversionProcessor(targetClass))
+                conversionFunction =
+                        ofNullable(getConversionProcessor(targetClass))
                         .flatMap(cp -> getTypeConversionFunction(cp, sourceClass));
             }
             CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);
@@ -88,7 +89,7 @@ public final class ConversionAnalyzer {
      * @return the conversion function
      */
     private Optional<Function<?, ?>> getTypeConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
-        Optional<Function<?, ?>> conversionFunction = null;
+        Optional<Function<?, ?>> conversionFunction = empty();
         if (isString(sourceFieldType)) {
             conversionFunction = of(conversionProcessor.convertString());
         } else if (isByte(sourceFieldType)) {

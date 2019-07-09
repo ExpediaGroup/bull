@@ -34,6 +34,7 @@ import org.testng.annotations.BeforeClass;
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooAdvFields;
 import com.hotels.beans.sample.FromFooMap;
+import com.hotels.beans.sample.FromFooOnlyPrimitiveTypes;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSubClass;
 import com.hotels.beans.sample.FromFooWithPrimitiveFields;
@@ -52,6 +53,7 @@ public abstract class AbstractTransformerTest {
     static FromFooSubClass fromFooSubClass;
     static FromFooAdvFields fromFooAdvFields;
     static FromFooMap fromFooMap;
+    static FromFooOnlyPrimitiveTypes fromFooPrimitiveTypes;
     static final int AGE = 34;
     static final String AGE_FIELD_NAME = "age";
     static final String DEST_FIELD_NAME = "destFieldName";
@@ -107,6 +109,7 @@ public abstract class AbstractTransformerTest {
         fromFooWithPrimitiveFields = createFromFooWithPrimitiveFields();
         fromFooSubClass = createFromFooSubClass();
         fromFooAdvFields = createFromFooAdvFields();
+        fromFooPrimitiveTypes = createFromFooPrimitiveTypes();
         EXTREME_COMPLEX_MAP.put(fromFooSimple, SAMPLE_MAP);
         fromFooMap = new FromFooMap(SAMPLE_MAP, COMPLEX_MAP, VERY_COMPLEX_MAP, EXTREME_COMPLEX_MAP);
     }
@@ -127,7 +130,6 @@ public abstract class AbstractTransformerTest {
     private FromFooSimple createFromFooSimple() {
         return new FromFooSimple(NAME, ID, ACTIVE);
     }
-
 
     /**
      * Creates a {@link FromFooWithPrimitiveFields} instance.
@@ -151,5 +153,13 @@ public abstract class AbstractTransformerTest {
      */
     private FromFooAdvFields createFromFooAdvFields() {
         return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage(), PRICE);
+    }
+
+    /**
+     * Creates a {@link FromFooOnlyPrimitiveTypes} instance.
+     * @return the {@link FromFooOnlyPrimitiveTypes} instance.
+     */
+    private FromFooOnlyPrimitiveTypes createFromFooPrimitiveTypes() {
+        return new FromFooOnlyPrimitiveTypes(ID.toString(), ID.intValue(), PRICE, String.valueOf(ACTIVE));
     }
 }
