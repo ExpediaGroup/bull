@@ -79,7 +79,6 @@ public class ReflectionUtilsTest {
     private static final String INVOKE_METHOD_NAME = "invokeMethod";
     private static final String VERY_COMPLEX_MAP_FIELD_NAME = "veryComplexMap";
     private static final String GET_GETTER_METHOD_NAME = "getGetterMethod";
-    private static final String NAME = "Donald Duck";
     private static final String SET_NAME_METHOD_NAME = "setName";
     private static final String SET_INDEX_METHOD_NAME = "setIndex";
     private static final String INDEX_NUMBER = "123";
@@ -444,15 +443,27 @@ public class ReflectionUtilsTest {
     /**
      * Tests that the method {@code getDeclaredField} works properly.
      */
-    @Test
-    public void testGetDeclaredFieldWorksProperly() {
+    @Test(dataProvider = "dataGetDeclaredFieldTesting")
+    public void testGetDeclaredFieldWorksProperly(final String testDescription, final String fieldName, final Class<?> targetClass) {
         // GIVEN
 
         // WHEN
-        Field actual = underTest.getDeclaredField(ID_FIELD_NAME, FromFooSubClass.class);
+        Field actual = underTest.getDeclaredField(fieldName, targetClass);
 
         // THEN
         assertNotNull(actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getDeclaredField}.
+     * @return parameters to be used for testing the the method {@code getDeclaredField}.
+     */
+    @DataProvider
+    private Object[][] dataGetDeclaredFieldTesting() {
+        return new Object[][] {
+                {"Tests that the method returns the class field from first object", ID_FIELD_NAME, FromFooSubClass.class},
+                {"Tests that the method returns the class field from a nested object", NESTED_OBJECT_FIELD_NAME, MutableToFoo.class}
+        };
     }
 
     /**

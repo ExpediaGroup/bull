@@ -16,6 +16,8 @@
 
 package com.hotels.beans.transformer;
 
+import static java.lang.Integer.parseInt;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
@@ -35,6 +37,7 @@ import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFooNoField;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
+import com.hotels.beans.sample.mixed.MutableToFooOnlyPrimitiveTypes;
 import com.hotels.beans.sample.mutable.MutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooInvalid;
 import com.hotels.beans.sample.mutable.MutableToFooNotExistingFields;
@@ -47,6 +50,7 @@ import com.hotels.beans.sample.mutable.MutableToFooSubClass;
  */
 public class MutableObjectTransformationTest extends AbstractTransformerTest {
     private static final boolean ACTIVE = true;
+
     /**
      * The class to be tested.
      */
@@ -277,5 +281,25 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
         assertNull(actual.getName());
         assertNull(actual.getNestedObject().getPhoneNumbers());
         underTest.resetFieldsTransformationSkip();
+    }
+
+    /**
+     * Test that the automatic primitive type conversion works properly.
+     */
+    @Test
+    public void testAutomaticPrimitiveTypeTransformationWorksProperly() {
+        //GIVEN
+        double delta = 0d;
+        underTest.setDefaultPrimitiveTypeConversionEnabled(true);
+
+        //WHEN
+        MutableToFooOnlyPrimitiveTypes actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
+
+        //THEN
+        assertEquals(parseInt(fromFooPrimitiveTypes.getCode()), actual.getCode());
+        assertEquals(String.valueOf(fromFooPrimitiveTypes.getId()), actual.getId());
+        assertEquals(Float.valueOf(fromFooPrimitiveTypes.getPrice()).doubleValue(), actual.getPrice(), delta);
+        assertEquals(ACTIVE, actual.isActive());
+        underTest.setDefaultPrimitiveTypeConversionEnabled(false);
     }
 }
