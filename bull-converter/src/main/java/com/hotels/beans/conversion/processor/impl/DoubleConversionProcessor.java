@@ -16,6 +16,7 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.lang.Character.getNumericValue;
 import static java.lang.Double.valueOf;
 
 import java.util.function.Function;
@@ -79,7 +80,7 @@ public final class DoubleConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Character, Double> convertCharacter() {
-        return Double::valueOf;
+        return val -> (double) getNumericValue(val);
     }
 
     /**

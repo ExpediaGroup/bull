@@ -19,6 +19,8 @@ package com.hotels.beans.conversion;
 import java.util.Optional;
 import java.util.function.Function;
 
+import com.hotels.beans.conversion.error.TypeConversionException;
+
 /**
  * It allows to convert any primitive type into another.
  */
@@ -39,7 +41,7 @@ public interface Converter {
      * @return the converted value
      * @param <T> the value to convert type
      * @param <K> the target object type
-     * @throws com.hotels.beans.conversion.error.NoConverterAvailableException in case there is no converter for the given class
+     * @throws TypeConversionException in case there is no converter for the given class
      * @throws IllegalArgumentException in case the destination field type is null.
      */
     <T, K> K convertValue(T valueToConvert, Class<K> targetClass);

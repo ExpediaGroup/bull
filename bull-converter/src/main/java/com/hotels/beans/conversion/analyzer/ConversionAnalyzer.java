@@ -70,9 +70,7 @@ public final class ConversionAnalyzer {
         final String cacheKey = "ConversionFunction-" + sourceClass.getName() + "-" + targetClass.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
             Optional conversionFunction = empty();
-            if (targetClass.getSimpleName().equalsIgnoreCase(sourceClass.getSimpleName())) {
-                conversionFunction = of((Function<?, ?>) val -> val);
-            } else if (classUtils.isPrimitiveType(sourceClass)) {
+            if (!targetClass.getSimpleName().equalsIgnoreCase(sourceClass.getSimpleName()) && classUtils.isPrimitiveType(sourceClass)) {
                 conversionFunction = getConversionProcessor(targetClass)
                         .flatMap(cp -> getTypeConversionFunction(cp, sourceClass));
             }

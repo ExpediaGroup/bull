@@ -17,16 +17,16 @@
 package com.hotels.beans.conversion.error;
 
 /**
- * Converter not available exception class.
+ * Automatic type conversion exception class.
  */
-public class NoConverterAvailableException extends RuntimeException {
+public class TypeConversionException extends RuntimeException {
     /**
-     * Constructs a new {@link NoConverterAvailableException} with the specified detail message.
+     * Constructs a new {@link TypeConversionException} with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a call to {@link #initCause}.
      * @param message the detail message. The detail message is saved for later
      *                retrieval by the {@link #getMessage()} method.
      */
-    public NoConverterAvailableException(final String message) {
+    public TypeConversionException(final String message) {
         super(message);
     }
 }
