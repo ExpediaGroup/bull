@@ -32,7 +32,7 @@ public final class FloatConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Byte, Float> convertByte() {
-        return Float::valueOf;
+        return Byte::floatValue;
     }
 
     /**

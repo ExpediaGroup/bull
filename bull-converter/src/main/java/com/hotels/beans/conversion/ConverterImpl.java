@@ -24,8 +24,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.analyzer.ConversionAnalyzer;
-import com.hotels.beans.conversion.error.NoConverterAvailableException;
-import com.hotels.beans.validator.Validator;
+import com.hotels.beans.conversion.error.TypeConversionException;
 
 /**
  * This class provides method for converting a primitive input into another.
@@ -60,9 +59,11 @@ public class ConverterImpl implements Converter {
         notNull(targetClass, "The destination field type cannot be null.");
         if (isNull(valueToConvert)) {
             return null;
+        } else if (targetClass.getSimpleName().equalsIgnoreCase(valueToConvert.getClass().getSimpleName())) {
+            return (K) valueToConvert;
         }
         return (K) getConversionFunction(valueToConvert.getClass(), targetClass)
                 .map(processor -> processor.apply(valueToConvert))
-                .orElseThrow(() -> new NoConverterAvailableException("No converter available for type: " + targetClass.getName()));
+                .orElseThrow(() -> new TypeConversionException("No converter available for type: " + targetClass.getName()));
     }
 }
