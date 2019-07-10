@@ -25,8 +25,8 @@ public abstract class AbstractConversionProcessorTest {
     static final Integer INTEGER_VALUE = 10;
     static final Long LONG_VALUE = 10L;
     static final Float FLOAT_VALUE = 10f;
-    static final Double DOUBLE_VALUE = 10.51;
-    static final char CHAR_VALUE = 'c';
+    static final Double DOUBLE_VALUE = 10d;
+    static final char CHAR_VALUE = '1';
     static final Boolean BOOLEAN_VALUE = Boolean.TRUE;
     static final String STRING_VALUE = "140";
 }
