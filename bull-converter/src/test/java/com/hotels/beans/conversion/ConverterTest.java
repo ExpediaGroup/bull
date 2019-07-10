@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.hotels.beans.conversion;
 
 import static java.lang.Character.getNumericValue;
@@ -233,9 +234,45 @@ public class ConverterTest {
                 {"Tests that the method returns a float value from a Boolean", Boolean.TRUE, float.class, (float) TRUE_AS_INT},
                 {"Tests that the method returns a float value from a String", ONE_AS_STRING, float.class, Float.valueOf(ONE_AS_STRING)},
                 // integer conversion test cases
+                {"Tests that the method returns an int value from a byte", Byte.MIN_VALUE, int.class, Byte.valueOf(Byte.MIN_VALUE).intValue()},
+                {"Tests that the method returns an int value from a short", Short.MIN_VALUE, int.class, Short.valueOf(Short.MIN_VALUE).intValue()},
+                {"Tests that the method returns an int value from an Integer", Integer.MIN_VALUE, int.class, Integer.MIN_VALUE},
+                {"Tests that the method returns an int value from a Long", Long.MIN_VALUE, int.class, Long.valueOf(Long.MIN_VALUE).intValue()},
+                {"Tests that the method returns an int value from a Float", Float.MIN_VALUE, int.class, Float.valueOf(Float.MIN_VALUE).intValue()},
+                {"Tests that the method returns an int value from a Double", Double.MIN_VALUE, int.class, Double.valueOf(Double.MIN_VALUE).intValue()},
+                {"Tests that the method returns an int value from a char", CHAR_INT_VALUE, int.class, getNumericValue(CHAR_INT_VALUE)},
+                {"Tests that the method returns an int value from a Boolean", Boolean.TRUE, int.class, TRUE_AS_INT},
+                {"Tests that the method returns an int value from a String", ONE_AS_STRING, int.class, Integer.valueOf(ONE_AS_STRING)},
                 // long conversion test cases
+                {"Tests that the method returns a long value from a byte", Byte.MIN_VALUE, long.class, Byte.valueOf(Byte.MIN_VALUE).longValue()},
+                {"Tests that the method returns a long value from a short", Short.MIN_VALUE, long.class, Short.valueOf(Short.MIN_VALUE).longValue()},
+                {"Tests that the method returns a long value from an Integer", Integer.MIN_VALUE, long.class, Integer.valueOf(Integer.MIN_VALUE).longValue()},
+                {"Tests that the method returns a long value from a Long", Long.MIN_VALUE, long.class, Long.MIN_VALUE},
+                {"Tests that the method returns a long value from a Float", Float.MIN_VALUE, long.class, Float.valueOf(Float.MIN_VALUE).longValue()},
+                {"Tests that the method returns a long value from a Double", Double.MIN_VALUE, long.class, Double.valueOf(Double.MIN_VALUE).longValue()},
+                {"Tests that the method returns a long value from a char", CHAR_INT_VALUE, long.class, (long) getNumericValue(CHAR_INT_VALUE)},
+                {"Tests that the method returns a long value from a Boolean", Boolean.TRUE, long.class, (long) TRUE_AS_INT},
+                {"Tests that the method returns a long value from a String", ONE_AS_STRING, long.class, Long.valueOf(ONE_AS_STRING)},
                 // short conversion test cases
+                {"Tests that the method returns a short value from a byte", Byte.MIN_VALUE, short.class, Byte.valueOf(Byte.MIN_VALUE).shortValue()},
+                {"Tests that the method returns a short value from a short", Short.MIN_VALUE, short.class, Short.MIN_VALUE},
+                {"Tests that the method returns a short value from an Integer", Integer.MIN_VALUE, short.class, Integer.valueOf(Integer.MIN_VALUE).shortValue()},
+                {"Tests that the method returns a short value from a Long", Long.MIN_VALUE, short.class, Long.valueOf(Long.MIN_VALUE).shortValue()},
+                {"Tests that the method returns a short value from a Float", Float.MIN_VALUE, short.class, Float.valueOf(Float.MIN_VALUE).shortValue()},
+                {"Tests that the method returns a short value from a Double", Double.MIN_VALUE, short.class, Double.valueOf(Double.MIN_VALUE).shortValue()},
+                {"Tests that the method returns a short value from a char", CHAR_INT_VALUE, short.class, (short) getNumericValue(CHAR_INT_VALUE)},
+                {"Tests that the method returns a short value from a Boolean", Boolean.TRUE, short.class, (short) TRUE_AS_INT},
+                {"Tests that the method returns a short value from a String", ONE_AS_STRING, short.class, Short.valueOf(ONE_AS_STRING)},
                 // string conversion test cases
+                {"Tests that the method returns a String value from a byte", Byte.MIN_VALUE, String.class, Byte.valueOf(Byte.MIN_VALUE).toString()},
+                {"Tests that the method returns a String value from a short", Short.MIN_VALUE, String.class, Short.valueOf(Short.MIN_VALUE).toString()},
+                {"Tests that the method returns a String value from an Integer", Integer.MIN_VALUE, String.class, String.valueOf(Integer.MIN_VALUE)},
+                {"Tests that the method returns a String value from a Long", Long.MIN_VALUE, String.class, String.valueOf(Long.MIN_VALUE)},
+                {"Tests that the method returns a String value from a Float", Float.MIN_VALUE, String.class, String.valueOf(Float.MIN_VALUE)},
+                {"Tests that the method returns a String value from a Double", Double.MIN_VALUE, String.class, String.valueOf(Double.MIN_VALUE)},
+                {"Tests that the method returns a String value from a char", CHAR_INT_VALUE, String.class, String.valueOf(CHAR_INT_VALUE)},
+                {"Tests that the method returns a String value from a Boolean", Boolean.TRUE, String.class, String.valueOf(Boolean.TRUE)},
+                {"Tests that the method returns a String value from a String", ONE_AS_STRING, String.class, ONE_AS_STRING},
         };
     }
 

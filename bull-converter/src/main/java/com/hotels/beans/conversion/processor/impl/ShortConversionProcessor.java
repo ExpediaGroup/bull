@@ -16,6 +16,7 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.lang.Character.getNumericValue;
 import static java.lang.Short.valueOf;
 
 import java.util.function.Function;
@@ -77,7 +78,7 @@ public final class ShortConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Character, Short> convertCharacter() {
-        return val -> valueOf((short) val.charValue());
+        return val -> (short) getNumericValue(val);
     }
 
     /**
