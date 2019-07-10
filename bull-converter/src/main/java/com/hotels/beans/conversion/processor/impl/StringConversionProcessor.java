@@ -46,7 +46,7 @@ public final class StringConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Integer, String> convertInteger() {
-        return Object::toString;
+        return String::valueOf;
     }
 
     /**
@@ -54,7 +54,7 @@ public final class StringConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Long, String> convertLong() {
-        return Object::toString;
+        return String::valueOf;
     }
 
     /**
@@ -62,7 +62,7 @@ public final class StringConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Float, String> convertFloat() {
-        return Object::toString;
+        return String::valueOf;
     }
 
     /**
@@ -70,7 +70,7 @@ public final class StringConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Double, String> convertDouble() {
-        return Object::toString;
+        return String::valueOf;
     }
 
     /**
@@ -78,7 +78,7 @@ public final class StringConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Character, String> convertCharacter() {
-        return Object::toString;
+        return String::valueOf;
     }
 
     /**
@@ -86,7 +86,7 @@ public final class StringConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Boolean, String> convertBoolean() {
-        return Object::toString;
+        return String::valueOf;
     }
 
     /**
