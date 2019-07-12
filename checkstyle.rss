@@ -25,9 +25,9 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2019 Hotels.com (Data Platform Team)</copyright>
     <item>
-      <title>File: 42,
+      <title>File: 45,
              Errors: 0,
-             Warnings: 1092,
+             Warnings: 1141,
              Infos: 0
       </title>
             <link>https://github.com/HotelsDotCom/bull/checkstyle.html</link>
@@ -52,7 +52,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  3
                 </td>
                 <td>
                   0
@@ -66,7 +66,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  310
+                  294
                 </td>
                 <td>
                   0
@@ -80,7 +80,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  6
                 </td>
                 <td>
                   0
@@ -136,7 +136,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  78
+                  82
                 </td>
                 <td>
                   0
@@ -220,7 +220,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  9
                 </td>
                 <td>
                   0
@@ -234,7 +234,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  12
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.error.InstanceCreationException.java">com/hotels/beans/error/InstanceCreationException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
                 </td>
                 <td>
                   0
@@ -270,20 +284,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.populator.ArrayPopulator.java">com/hotels/beans/populator/ArrayPopulator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  16
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.constant.MethodPrefix.java">com/hotels/beans/constant/MethodPrefix.java</a>
                 </td>
                 <td>
@@ -298,13 +298,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.populator.ArrayPopulator.java">com/hotels/beans/populator/ArrayPopulator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  17
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.annotation.ConstructorArg.java">com/hotels/beans/annotation/ConstructorArg.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  2
                 </td>
                 <td>
                   0
@@ -318,7 +332,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  168
+                  171
                 </td>
                 <td>
                   0
@@ -346,7 +360,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  264
+                  279
                 </td>
                 <td>
                   0
@@ -360,7 +374,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  19
+                  20
                 </td>
                 <td>
                   0
@@ -389,6 +403,20 @@ under the License.
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.validator.ValidatorImpl.java">com/hotels/beans/validator/ValidatorImpl.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  24
                 </td>
                 <td>
                   0
@@ -444,21 +472,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  20
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.BeanUtils.java">com/hotels/beans/BeanUtils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  10
+                  21
                 </td>
                 <td>
                   0
@@ -480,13 +494,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.utils.package-info.java">com/hotels/beans/utils/package-info.java</a>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.BeanUtils.java">com/hotels/beans/BeanUtils.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  0
+                  13
                 </td>
                 <td>
                   0
@@ -494,13 +508,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.populator.OptionalPopulator.java">com/hotels/beans/populator/OptionalPopulator.java</a>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.utils.package-info.java">com/hotels/beans/utils/package-info.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  13
+                  0
                 </td>
                 <td>
                   0
@@ -522,13 +536,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.utils.ValidationUtils.java">com/hotels/beans/utils/ValidationUtils.java</a>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.populator.OptionalPopulator.java">com/hotels/beans/populator/OptionalPopulator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  28
+                  14
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.validator.Validator.java">com/hotels/beans/validator/Validator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  14
                 </td>
                 <td>
                   0
@@ -570,7 +598,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  10
+                  11
                 </td>
                 <td>
                   0
@@ -585,20 +613,6 @@ under the License.
                 </td>
                 <td>
                   18
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.populator.MapPopulator.java">com/hotels/beans/populator/MapPopulator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  36
                 </td>
                 <td>
                   0
@@ -621,6 +635,34 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.annotation.package-info.java">com/hotels/beans/annotation/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.populator.MapPopulator.java">com/hotels/beans/populator/MapPopulator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  37
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/HotelsDotCom/bull/checkstyle.html#com.hotels.beans.validator.package-info.java">com/hotels/beans/validator/package-info.java</a>
                 </td>
                 <td>
                   0
