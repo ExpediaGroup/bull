@@ -51,7 +51,7 @@ public class BooleanConversionProcessorTest extends AbstractConversionProcessorT
      * @param expectedResult the expected result
      */
     @Test(dataProvider = "byteToBooleanConvertValueTesting")
-    public void testConvertByteShouldReturnProperResult(final String testCaseDescription, final byte valueToConvert, boolean expectedResult) {
+    public void testConvertByteShouldReturnProperResult(final String testCaseDescription, final byte valueToConvert, final boolean expectedResult) {
         // GIVEN
 
         // WHEN
@@ -73,59 +73,149 @@ public class BooleanConversionProcessorTest extends AbstractConversionProcessorT
         };
     }
 
-    @Test
-    public void testConvertShortShouldReturnProperResult() {
+    /**
+     * Tests that the method {@code convertShort} returns the expected boolean.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "shortToBooleanConvertValueTesting")
+    public void testConvertShortShouldReturnProperResult(final String testCaseDescription, final short valueToConvert, final boolean expectedResult) {
         // GIVEN
 
         // WHEN
-        boolean actual = underTest.convertShort().apply(SHORT_VALUE);
+        boolean actual = underTest.convertShort().apply(valueToConvert);
 
         // THEN
-        assertTrue(actual);
+        assertEquals(expectedResult, actual);
     }
 
-    @Test
-    public void testConvertIntegerShouldReturnProperResult() {
-        // GIVEN
-
-        // WHEN
-        boolean actual = underTest.convertInteger().apply(INTEGER_VALUE);
-
-        // THEN
-        assertTrue(actual);
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertShort} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertShort} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] shortToBooleanConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns true if the value is not 0", SHORT_VALUE, true},
+                {"Tests that the method returns false if the value is 0", SHORT_VALUE_ZERO, false}
+        };
     }
 
-    @Test
-    public void testConvertLongShouldReturnProperResult() {
+    /**
+     * Tests that the method {@code convertInteger} returns the expected boolean.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "intToBooleanConvertValueTesting")
+    public void testConvertIntegerShouldReturnProperResult(final String testCaseDescription, final int valueToConvert, final boolean expectedResult) {
         // GIVEN
 
         // WHEN
-        boolean actual = underTest.convertLong().apply(LONG_VALUE);
+        boolean actual = underTest.convertInteger().apply(valueToConvert);
 
         // THEN
-        assertTrue(actual);
+        assertEquals(expectedResult, actual);
     }
 
-    @Test
-    public void testConvertFloatShouldReturnProperResult() {
-        // GIVEN
-
-        // WHEN
-        boolean actual = underTest.convertFloat().apply(FLOAT_VALUE);
-
-        // THEN
-        assertTrue(actual);
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertInteger} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertInteger} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] intToBooleanConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns true if the value is not 0", INTEGER_VALUE, true},
+                {"Tests that the method returns false if the value is 0", INTEGER_VALUE_ZERO, false}
+        };
     }
 
-    @Test
-    public void testConvertDoubleShouldReturnProperResult() {
+    /**
+     * Tests that the method {@code convertLong} returns the expected boolean.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "longToBooleanConvertValueTesting")
+    public void testConvertLongShouldReturnProperResult(final String testCaseDescription, final long valueToConvert, final boolean expectedResult) {
         // GIVEN
 
         // WHEN
-        boolean actual = underTest.convertDouble().apply(DOUBLE_VALUE);
+        boolean actual = underTest.convertLong().apply(valueToConvert);
 
         // THEN
-        assertTrue(actual);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertLong} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertLong} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] longToBooleanConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns true if the value is not 0", LONG_VALUE, true},
+                {"Tests that the method returns false if the value is 0", LONG_VALUE_ZERO, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code convertFloat} returns the expected boolean.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "floatToBooleanConvertValueTesting")
+    public void testConvertFloatShouldReturnProperResult(final String testCaseDescription, final float valueToConvert, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.convertFloat().apply(valueToConvert);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertFloat} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertFloat} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] floatToBooleanConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns true if the value is not 0", FLOAT_VALUE, true},
+                {"Tests that the method returns false if the value is 0", FLOAT_VALUE_ZERO, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code convertDouble} returns the expected boolean.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "floatToBooleanConvertValueTesting")
+    public void testConvertDoubleShouldReturnProperResult(final String testCaseDescription, final double valueToConvert, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.convertDouble().apply(valueToConvert);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertDouble} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertDouble} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] doubleToBooleanConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns true if the value is not 0", DOUBLE_VALUE, true},
+                {"Tests that the method returns false if the value is 0", DOUBLE_VALUE_ZERO, false}
+        };
     }
 
     @Test
