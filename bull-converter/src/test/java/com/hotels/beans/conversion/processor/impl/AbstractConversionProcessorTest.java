@@ -29,4 +29,5 @@ public abstract class AbstractConversionProcessorTest {
     static final char CHAR_VALUE = '1';
     static final Boolean BOOLEAN_VALUE = Boolean.TRUE;
     static final String STRING_VALUE = "140";
+    static final String TRUE_AS_STRING = "true";
 }
