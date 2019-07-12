@@ -16,8 +16,6 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Byte.valueOf;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -26,14 +24,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
- * Unit test for {@link ByteConversionProcessor}.
+ * Unit test for {@link CharacterConversionProcessor}.
  */
-public class ByteConversionProcessorTest extends AbstractConversionProcessorTest {
+public class CharacterConversionProcessorTest  extends AbstractConversionProcessorTest {
     /**
      * The class to be tested.
      */
     @InjectMocks
-    private ByteConversionProcessor underTest;
+    private CharacterConversionProcessor underTest;
 
     /**
      * Initializes mock.
@@ -48,10 +46,10 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
         // GIVEN
 
         // WHEN
-        Byte actual = underTest.convertByte().apply(BYTE_VALUE);
+        char actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals(BYTE_VALUE, actual);
+        assertEquals((char) BYTE_VALUE.byteValue(), actual);
     }
 
     @Test
@@ -59,10 +57,10 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
         // GIVEN
 
         // WHEN
-        byte actual = underTest.convertShort().apply(SHORT_VALUE);
+        char actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals(SHORT_VALUE.byteValue(), actual);
+        assertEquals((char) SHORT_VALUE.byteValue(), actual);
     }
 
     @Test
@@ -70,10 +68,10 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
         // GIVEN
 
         // WHEN
-        byte actual = underTest.convertInteger().apply(INTEGER_VALUE);
+        char actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals(INTEGER_VALUE.byteValue(), actual);
+        assertEquals((char) INTEGER_VALUE.intValue(), actual);
     }
 
     @Test
@@ -81,10 +79,10 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
         // GIVEN
 
         // WHEN
-        byte actual = underTest.convertLong().apply(LONG_VALUE);
+        char actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals(LONG_VALUE.byteValue(), actual);
+        assertEquals((char) LONG_VALUE.longValue(), actual);
     }
 
     @Test
@@ -92,10 +90,10 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
         // GIVEN
 
         // WHEN
-        byte actual = underTest.convertFloat().apply(FLOAT_VALUE);
+        char actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals(FLOAT_VALUE.byteValue(), actual);
+        assertEquals((char) FLOAT_VALUE.floatValue(), actual);
     }
 
     @Test
@@ -103,10 +101,10 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
         // GIVEN
 
         // WHEN
-        byte actual = underTest.convertDouble().apply(DOUBLE_VALUE);
+        char actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals(DOUBLE_VALUE.byteValue(), actual);
+        assertEquals((char) DOUBLE_VALUE.doubleValue(), actual);
     }
 
     @Test
@@ -114,10 +112,10 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
         // GIVEN
 
         // WHEN
-        byte actual = underTest.convertCharacter().apply(CHAR_VALUE);
+        char actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals((byte) CHAR_VALUE, actual);
+        assertEquals(CHAR_VALUE, actual);
     }
 
     @Test
@@ -125,10 +123,10 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
         // GIVEN
 
         // WHEN
-        byte actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
+        char actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
 
         // THEN
-        assertEquals(1, actual);
+        assertEquals(TRUE_AS_CHAR, actual);
     }
 
     @Test
@@ -136,9 +134,9 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
         // GIVEN
 
         // WHEN
-        Byte actual = underTest.convertString().apply(STRING_VALUE);
+        char actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(valueOf(STRING_VALUE), actual);
+        assertEquals(STRING_VALUE.charAt(0), actual);
     }
 }

@@ -21,6 +21,7 @@ package com.hotels.beans.conversion.processor.impl;
  */
 public abstract class AbstractConversionProcessorTest {
     static final Byte BYTE_VALUE = 10;
+    static final Byte BYTE_VALUE_ZERO = 0;
     static final Short SHORT_VALUE = 10;
     static final Integer INTEGER_VALUE = 10;
     static final Long LONG_VALUE = 10L;
@@ -30,4 +31,5 @@ public abstract class AbstractConversionProcessorTest {
     static final Boolean BOOLEAN_VALUE = Boolean.TRUE;
     static final String STRING_VALUE = "10";
     static final String TRUE_AS_STRING = "true";
+    static final char TRUE_AS_CHAR = 'T';
 }

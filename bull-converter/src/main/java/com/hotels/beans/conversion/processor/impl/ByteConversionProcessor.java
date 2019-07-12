@@ -88,7 +88,7 @@ public final class ByteConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Boolean, Byte> convertBoolean() {
-        return val -> valueOf(val ? (byte) 1 : (byte) 0);
+        return val -> val ? (byte) 1 : (byte) 0;
     }
 
     /**

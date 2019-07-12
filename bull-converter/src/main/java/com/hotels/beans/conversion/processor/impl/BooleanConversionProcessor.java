@@ -74,7 +74,7 @@ public final class BooleanConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Character, Boolean> convertCharacter() {
-        return Character::isLetter;
+        return val -> val == 'T';
     }
 
     /**
