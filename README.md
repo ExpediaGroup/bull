@@ -72,12 +72,14 @@ mvnw.cmd clean install -P relaxed
 * easy usage, declarative way to define the property mapping (in case of different names) or simply adding the lombok annotations.
 * allows to set the default value for all objects not existing in the source object.
 * allows to skip transformation for a given set of fields.
-* supports the values retrieval from getters if a field does not exists in the source object
+* supports the values retrieval from getters if a field does not exists in the source object.
+* supports the automatic conversion of primitive types.
 
 # Feature samples
 
 * [Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
 * [Validation](https://github.com/HotelsDotCom/bull#validation-samples)
+* [Primitive Type automatic conversion](https://github.com/HotelsDotCom/bull#validation-samples)
 
 ## Transformation samples
 
@@ -663,6 +665,32 @@ this will returns a list containing a constraint validation message for the `id`
 in case it's needed to have the `ConstraintViolation` object:
 ~~~Java
 Set<ConstraintViolation<Object>> violatedConstraints = beanUtils.getValidator().getConstraintViolations(sampleBean);
+~~~
+
+### Transform primitive types automatically
+
+Given the following Java Bean:
+
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+   private final String indexNumber;                           private final int indexNumber;                                 
+   private final BigInteger id;                                public Long id;                      
+
+   // constructors...                                          // constructors...
+   // getters...                                               // getters and setters...
+
+}                                                           }
+~~~
+
+as, by default the primitive type conversion is disabled, to get the above object converted we should have
+implemented transformer functions for both field `indexNumber` and `id`, but this can be done automatically from enabling the
+functionality described above.
+
+~~~Java
+Transformer transformer = beanUtils.getTransformer()
+                             .setDefaultPrimitiveTypeConversionEnabled(true);
+
+ToBean toBean = transformer.transform(fromBean, ToBean.class);
 ~~~
 
 ## Constraints:

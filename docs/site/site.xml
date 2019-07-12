@@ -35,6 +35,9 @@
         <menu name="Bean Validation">
             <item name="Samples" href="/validator/samples.html" />
         </menu>
+        <menu name="Primitive type conversion">
+            <item name="Samples" href="/converter/samples.html" />
+        </menu>
         <menu name="Quality check">
             <item name="SonarCloud" href="https://sonarcloud.io/dashboard?id=BULL" />
         </menu>

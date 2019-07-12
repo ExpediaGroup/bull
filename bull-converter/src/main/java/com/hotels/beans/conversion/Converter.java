@@ -33,7 +33,7 @@ public interface Converter {
 
 
     /**
-     * Converts a given primitive value into the given type.
+     * Converts a given primitive value into the given primitive type.
      * @param valueToConvert the value to be converted
      * @param targetClass the destination field class
      * @return the converted value
