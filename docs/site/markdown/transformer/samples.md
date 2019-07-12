@@ -438,6 +438,7 @@ beanUtils.getTransformer()
 ~~~
 
 ### Not existing field in the source object:
+
 In case the destination class has a field that does not exist in the source object, but it contains a getter method returning the value, the library gets the field value from that method.
 ~~~Java
 public class FromBean {                                     public class ToBean {                           
@@ -451,6 +452,32 @@ public class FromBean {                                     public class ToBean 
 And one line code as:
 ~~~Java
 ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
+~~~
+
+### Transform primitive types automatically
+
+Given the following Java Bean:
+
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+   private final String indexNumber;                           private final int indexNumber;                                 
+   private final BigInteger id;                                public Long id;                      
+
+   // constructors...                                          // constructors...
+   // getters...                                               // getters and setters...
+
+}                                                           }
+~~~
+
+as, by default the primitive type conversion is disabled, to get the above object converted we should have
+implemented transformer functions for both field `indexNumber` and `id`, but this can be done automatically from enabling the
+functionality described above.
+
+~~~Java
+Transformer transformer = beanUtils.getTransformer()
+                             .setDefaultPrimitiveTypeConversionEnabled(true);
+
+ToBean toBean = transformer.transform(fromBean, ToBean.class);
 ~~~
 
 More sample beans can be found in the test package: `com.hotels.beans.sample` or on DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)

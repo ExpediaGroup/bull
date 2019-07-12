@@ -44,9 +44,24 @@ The validation works with both the default `javax.constraints` provided by Java 
 * Java Bean validation
 * Retrieve the violated constraints
 
-#### Primitive object automatic conversion: 
+#### Primitive type object automatic conversion: 
 
-Transforms any primitive type value into another one.
+Converts a given primitive value into the given primitive type.
+The supported types, in which an object can be converted (from / to), are: 
+
+* `Byte` or `byte`
+* `Short` or `short`
+* `Integer` or `int`
+* `Long` or `long`
+* `Float` or `float`
+* `Double` or `double`
+* `Character` or `char`
+* `Boolean` or `boolean`
+* `String`
+
+##### Features:
+* Primitive type conversion
+* Get a conversion function that converts a primitive type into the given one 
     
 #### Related articles
 
