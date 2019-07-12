@@ -28,6 +28,6 @@ public abstract class AbstractConversionProcessorTest {
     static final Double DOUBLE_VALUE = 10d;
     static final char CHAR_VALUE = '1';
     static final Boolean BOOLEAN_VALUE = Boolean.TRUE;
-    static final String STRING_VALUE = "140";
+    static final String STRING_VALUE = "10";
     static final String TRUE_AS_STRING = "true";
 }
