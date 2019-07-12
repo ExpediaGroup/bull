@@ -533,6 +533,36 @@ And one line code as:
 ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
 ~~~
 
+### Transform primitive types automatically
+
+Given the following Java Bean:
+
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+   private final String indexNumber;                           private final int indexNumber;                                 
+   private final BigInteger id;                                public Long id;                      
+
+   // constructors...                                          // constructors...
+   // getters...                                               // getters and setters...
+
+}                                                           }
+~~~
+
+as, by default the primitive type conversion is disabled, to get the above object converted we should have
+implemented transformer functions for both field `indexNumber` and `id`, but this can be done automatically from enabling the
+functionality described above.
+
+~~~Java
+Transformer transformer = beanUtils.getTransformer()
+                             .setDefaultPrimitiveTypeConversionEnabled(true);
+
+ToBean toBean = transformer.transform(fromBean, ToBean.class);
+~~~
+
+## Constraints:
+
+* the class's fields that have to be copied must not be static
+
 More sample beans can be found in the test package: `com.hotels.beans.sample`
 
 ## Third party library comparison
@@ -667,35 +697,55 @@ in case it's needed to have the `ConstraintViolation` object:
 Set<ConstraintViolation<Object>> violatedConstraints = beanUtils.getValidator().getConstraintViolations(sampleBean);
 ~~~
 
-### Transform primitive types automatically
+## Primitive type object converter
 
-Given the following Java Bean:
+Converts a given primitive value into the given primitive type.
+The supported types, in which an object can be converted (from / to), are: 
+
+* `Byte` or `byte`
+* `Short` or `short`
+* `Integer` or `int`
+* `Long` or `long`
+* `Float` or `float`
+* `Double` or `double`
+* `Character` or `char`
+* `Boolean` or `boolean`
+* `String`
+
+### Convert a String into an int:
+
+Given the following variable:
 
 ~~~Java
-public class FromBean {                                     public class ToBean {                           
-   private final String indexNumber;                           private final int indexNumber;                                 
-   private final BigInteger id;                                public Long id;                      
-
-   // constructors...                                          // constructors...
-   // getters...                                               // getters and setters...
-
-}                                                           }
+String indexNumber = "26062019";                                                        
 ~~~
 
-as, by default the primitive type conversion is disabled, to get the above object converted we should have
-implemented transformer functions for both field `indexNumber` and `id`, but this can be done automatically from enabling the
-functionality described above.
+to convert it in an `int`:
 
 ~~~Java
-Transformer transformer = beanUtils.getTransformer()
-                             .setDefaultPrimitiveTypeConversionEnabled(true);
-
-ToBean toBean = transformer.transform(fromBean, ToBean.class);
+Converter converter = new BeanUtils().getPrimitiveTypeConverter();
+int indexNumber = converter.convertValue(indexNumber, int.class);
 ~~~
 
-## Constraints:
+### Obtain a conversion function that convert from char to byte:
 
-* the class's fields that have to be copied must not be static
+It's possible to obtain a type conversion function, reusable several time in different places.
+Assuming that the required conversion is from `char` to `byte
+
+~~~Java
+char c = '1';                                                        
+~~~
+
+the conversion function is retrieved through:
+
+~~~Java
+Converter converter = new BeanUtils().getPrimitiveTypeConverter();
+Optional<Function<Object, Object>> conversionFunction = converter.getConversionFunction(char.class, byte.class);
+byte converted = conversionFunction.map(processor -> processor.apply(c)).orElse(0);
+~~~
+
+* in case the conversion is not needed as the primitive type and the destination type are the same it will return an empty `Optional`
+* in case the conversion function is unavailable or no not possible the method throws a : `TypeConversionException`
 
 ## Documentation
 
