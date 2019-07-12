@@ -79,7 +79,7 @@ mvnw.cmd clean install -P relaxed
 
 * [Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
 * [Validation](https://github.com/HotelsDotCom/bull#validation-samples)
-* [Primitive Type automatic conversion](https://github.com/HotelsDotCom/bull/tree/feature/basic-type-automatic-conversion#primitive-type-object-converter)
+* [Primitive Type conversion](https://github.com/HotelsDotCom/bull#primitive-type-object-converter)
 
 ## Transformation samples
 
