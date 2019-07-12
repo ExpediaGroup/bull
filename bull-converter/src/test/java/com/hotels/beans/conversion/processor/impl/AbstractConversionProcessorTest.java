@@ -36,6 +36,4 @@ public abstract class AbstractConversionProcessorTest {
     static final Boolean BOOLEAN_VALUE = Boolean.TRUE;
     static final String STRING_VALUE = "10";
     static final String TRUE_AS_STRING = "true";
-    static final char TRUE_AS_CHAR = 'T';
-    static final char FALSE_AS_CHAR = 'F';
 }

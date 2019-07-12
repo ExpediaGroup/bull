@@ -24,12 +24,16 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
  * Unit test for {@link FloatConversionProcessor}.
  */
 public class FloatConversionProcessorTest extends AbstractConversionProcessorTest {
+    private static final float TRUE_AS_FLOAT = 1f;
+    private static final float FALSE_AS_FLOAT = 0f;
+
     /**
      * The class to be tested.
      */
@@ -121,15 +125,33 @@ public class FloatConversionProcessorTest extends AbstractConversionProcessorTes
         assertEquals(Float.valueOf(getNumericValue(CHAR_VALUE)), actual);
     }
 
-    @Test
-    public void testConvertBooleanShouldReturnProperResult() {
+    /**
+     * Tests that the method {@code convertBoolean} returns the expected float.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "booleanToFloatConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final float expectedResult) {
         // GIVEN
 
         // WHEN
-        Float actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
+        Float actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertEquals(BOOLEAN_VALUE, actual.equals(1f));
+        assertEquals(expectedResult, actual, 0.0);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] booleanToFloatConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_FLOAT},
+                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_FLOAT}
+        };
     }
 
     @Test
