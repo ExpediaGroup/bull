@@ -24,12 +24,16 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
  * Unit test for {@link ShortConversionProcessor}.
  */
 public class ShortConversionProcessorTest extends AbstractConversionProcessorTest {
+    private static final short TRUE_AS_SHORT = 1;
+    private static final short FALSE_AS_SHORT = 0;
+
     /**
      * The class to be tested.
      */
@@ -121,15 +125,33 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
         assertEquals(valueOf((short) getNumericValue(CHAR_VALUE)), actual);
     }
 
-    @Test
-    public void testConvertBooleanShouldReturnProperResult() {
+    /**
+     * Tests that the method {@code convertBoolean} returns the expected short.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "booleanToShortConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final short expectedResult) {
         // GIVEN
 
         // WHEN
-        Short actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
+        short actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertEquals(BOOLEAN_VALUE, actual.equals((short) 1));
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] booleanToShortConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_SHORT},
+                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_SHORT}
+        };
     }
 
     @Test

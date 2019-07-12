@@ -24,12 +24,16 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
  * Unit test for {@link LongConversionProcessor}.
  */
 public class LongConversionProcessorTest  extends AbstractConversionProcessorTest {
+    private static final long TRUE_AS_LONG = 1L;
+    private static final long FALSE_AS_LONG = 0L;
+
     /**
      * The class to be tested.
      */
@@ -121,15 +125,33 @@ public class LongConversionProcessorTest  extends AbstractConversionProcessorTes
         assertEquals(valueOf(getNumericValue(CHAR_VALUE)), actual);
     }
 
-    @Test
-    public void testConvertBooleanShouldReturnProperResult() {
+    /**
+     * Tests that the method {@code convertBoolean} returns the expected long.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "booleanToLongConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final long expectedResult) {
         // GIVEN
 
         // WHEN
-        Long actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
+        long actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertEquals(BOOLEAN_VALUE, actual.equals(1L));
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] booleanToLongConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_LONG},
+                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_LONG}
+        };
     }
 
     @Test

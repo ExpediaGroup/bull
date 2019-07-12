@@ -28,6 +28,9 @@ import org.testng.annotations.Test;
  * Unit test for {@link CharacterConversionProcessor}.
  */
 public class CharacterConversionProcessorTest  extends AbstractConversionProcessorTest {
+    private static final char TRUE_AS_CHAR = 'T';
+    private static final char FALSE_AS_CHAR = 'F';
+
     /**
      * The class to be tested.
      */
