@@ -23,6 +23,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
@@ -43,15 +44,33 @@ public class BooleanConversionProcessorTest extends AbstractConversionProcessorT
         initMocks(this);
     }
 
-    @Test
-    public void testConvertByteShouldReturnProperResult() {
+    /**
+     * Tests that the method {@code convertByte} returns the expected boolean.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "byteToBooleanConvertValueTesting")
+    public void testConvertByteShouldReturnProperResult(final String testCaseDescription, final byte valueToConvert, boolean expectedResult) {
         // GIVEN
 
         // WHEN
-        boolean actual = underTest.convertByte().apply(BYTE_VALUE);
+        boolean actual = underTest.convertByte().apply(valueToConvert);
 
         // THEN
-        assertTrue(actual);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertByte} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertByte} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] byteToBooleanConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns true if the value is not 0", BYTE_VALUE, true},
+                {"Tests that the method returns false if the value is 0", BYTE_VALUE_ZERO, false}
+        };
     }
 
     @Test
