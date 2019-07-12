@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Filters.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Bean Utils Light Library</a> &gt; <a href="index.source.html" class="el_package">com.hotels.beans.constant</a> &gt; <span class="el_source">Filters.java</span></div><h1>Filters.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019 Expedia Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.beans.constant;
+
+import static java.lang.reflect.Modifier.isFinal;
+import static java.lang.reflect.Modifier.isStatic;
+
+import static lombok.AccessLevel.PRIVATE;
+
+import java.lang.reflect.Field;
+import java.util.function.Predicate;
+
+import lombok.NoArgsConstructor;
+
+/**
+ * Filters conditions.
+ */
+@NoArgsConstructor(access = PRIVATE)
+public final class Filters {
+    /**
+     * Returns only the final not static field.
+     */
+<span class="fc" id="L37">    public static final Predicate&lt;Field&gt; IS_FINAL_AND_NOT_STATIC_FIELD = field -&gt; {</span>
+<span class="fc" id="L38">        int modifiers = field.getModifiers();</span>
+<span class="pc bpc" id="L39" title="1 of 4 branches missed.">        return isFinal(modifiers) &amp;&amp; !isStatic(modifiers);</span>
+    };
+
+    /**
+     * Returns only the not final not static field.
+     */
+<span class="fc" id="L45">    public static final Predicate&lt;Field&gt; IS_NOT_FINAL_AND_NOT_STATIC_FIELD = field -&gt; {</span>
+<span class="fc" id="L46">        int modifiers = field.getModifiers();</span>
+<span class="fc bfc" id="L47" title="All 4 branches covered.">        return !isFinal(modifiers) &amp;&amp; !isStatic(modifiers);</span>
+    };
+
+    /**
+     * Returns only the final field.
+     */
+<span class="fc" id="L53">    private static final Predicate&lt;Field&gt; IS_FINAL_FIELD = field -&gt; isFinal(field.getModifiers());</span>
+
+    /**
+     * Returns only the not final field.
+     */
+<span class="fc" id="L58">    public static final Predicate&lt;Field&gt; IS_NOT_FINAL_FIELD = IS_FINAL_FIELD.negate();</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

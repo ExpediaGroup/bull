@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapPopulator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Bean Utils Light Library</a> &gt; <a href="index.source.html" class="el_package">com.hotels.beans.populator</a> &gt; <span class="el_source">MapPopulator.java</span></div><h1>MapPopulator.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019 Expedia Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.beans.populator;
+
+import static java.util.stream.Collectors.toMap;
+
+import java.lang.reflect.Field;
+import java.util.Map;
+
+import com.hotels.beans.model.ItemType;
+import com.hotels.beans.model.MapElemType;
+import com.hotels.beans.model.MapType;
+import com.hotels.beans.transformer.Transformer;
+
+/**
+ * Populator for Map types object {@link Map}.
+ */
+class MapPopulator extends Populator&lt;Map&lt;?, ?&gt;&gt; {
+
+    /**
+     * Default constructor.
+     * @param beanTransformer the bean transformer containing the field name mapping and transformation functions
+     */
+    MapPopulator(final Transformer beanTransformer) {
+<span class="fc" id="L39">        super(beanTransformer);</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Map&lt;?, ?&gt; getPopulatedObject(final Field field, final Map&lt;?, ?&gt; fieldValue) {
+<span class="fc" id="L47">        final MapType mapGenericType = reflectionUtils.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());</span>
+<span class="fc" id="L48">        return getPopulatedObject(fieldValue, mapGenericType);</span>
+    }
+
+    /**
+     * Populates the Map objects.
+     * @param fieldValue the source Map.
+     * @param mapType the map key, elem types {@link MapType}
+     * @return the populated map
+     */
+    private Map&lt;?, ?&gt; getPopulatedObject(final Map&lt;?, ?&gt; fieldValue, final MapType mapType) {
+<span class="fc" id="L58">        final MapElemType keyType = mapType.getKeyType();</span>
+<span class="fc" id="L59">        final MapElemType elemType = mapType.getElemType();</span>
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">        final boolean keyIsPrimitive = keyType.getClass().equals(ItemType.class) &amp;&amp; classUtils.isPrimitiveOrSpecialType(((ItemType) keyType).getObjectClass());</span>
+<span class="fc bfc" id="L61" title="All 4 branches covered.">        final boolean elemIsPrimitive = elemType.getClass().equals(ItemType.class) &amp;&amp; classUtils.isPrimitiveOrSpecialType(((ItemType) elemType).getObjectClass());</span>
+        Map&lt;?, ?&gt; populatedObject;
+<span class="fc bfc" id="L63" title="All 4 branches covered.">        if (keyIsPrimitive &amp;&amp; elemIsPrimitive) {</span>
+<span class="fc" id="L64">            populatedObject = fieldValue;</span>
+        } else {
+<span class="fc" id="L66">            populatedObject = fieldValue.keySet()</span>
+<span class="fc" id="L67">                    .stream()</span>
+//                    .parallelStream()
+<span class="fc" id="L69">                    .collect(toMap(</span>
+<span class="fc" id="L70">                        key -&gt; getElemValue(keyType, keyIsPrimitive, key),</span>
+<span class="fc" id="L71">                        key -&gt; getElemValue(elemType, elemIsPrimitive, fieldValue.get(key))));</span>
+        }
+<span class="fc" id="L73">        return populatedObject;</span>
+    }
+
+    /**
+     * Gets the value of a given key/elem (including complex types).
+     * @param &lt;T&gt; the object type
+     * @param mapElemType the map key, elem types {@link MapElemType}
+     * @param elemIsPrimitiveType true if the elem map is primitive type, false otherwise.
+     * @param value the elem value
+     * @return the element value
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private &lt;T&gt; T getElemValue(final MapElemType mapElemType, final boolean elemIsPrimitiveType, final T value) {
+        final T elemValue;
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">        if (elemIsPrimitiveType || classUtils.isPrimitiveOrSpecialType(value.getClass())) {</span>
+<span class="fc" id="L88">            elemValue = value;</span>
+        } else {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            if (mapElemType.getClass().equals(ItemType.class)) {</span>
+<span class="fc" id="L91">                elemValue = (T) transform(value, ((ItemType) mapElemType).getObjectClass(), ((ItemType) mapElemType).getGenericClass());</span>
+            } else {
+<span class="fc" id="L93">                elemValue = (T) getPopulatedObject((Map) value, (MapType) mapElemType);</span>
+            }
+        }
+<span class="fc" id="L96">        return elemValue;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidationUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Bean Utils Light Library</a> &gt; <a href="index.source.html" class="el_package">com.hotels.beans.utils</a> &gt; <span class="el_source">ValidationUtils.java</span></div><h1>ValidationUtils.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019 Expedia Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.beans.utils;
+
+import static java.util.Objects.isNull;
+import static java.util.stream.Collectors.joining;
+
+import static javax.validation.Validation.buildDefaultValidatorFactory;
+
+import static org.apache.commons.lang3.StringUtils.SPACE;
+
+import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.beans.constant.Punctuation.DOT;
+import static com.hotels.beans.constant.Punctuation.SEMICOLON;
+
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+
+import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.error.InvalidBeanException;
+
+/**
+ * Validation utils for Class objects.
+ */
+public class ValidationUtils {
+    /**
+     * CacheManager class {@link CacheManager}.
+     */
+    private final CacheManager cacheManager;
+
+    /**
+     * Default constructor.
+     */
+<span class="fc" id="L50">    public ValidationUtils() {</span>
+<span class="fc" id="L51">        this.cacheManager = getCacheManager(&quot;validationUtils&quot;);</span>
+<span class="fc" id="L52">    }</span>
+
+    /**
+     * Validate that the specified argument is not {@code null};
+     * otherwise throws an {@link IllegalArgumentException} with the specified message.
+     * @param object  the object to check
+     * @param &lt;T&gt; the object type
+     * @throws IllegalArgumentException if the object is {@code null}
+     */
+    public static &lt;T&gt; void notNull(final T object) {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (isNull(object)) {</span>
+<span class="fc" id="L63">            throw new IllegalArgumentException();</span>
+        }
+<span class="fc" id="L65">    }</span>
+
+    /**
+     * Validate that the specified argument is not {@code null};
+     * otherwise throws an {@link IllegalArgumentException} with the specified message.
+     * @param object  the object to check
+     * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
+     * @param &lt;T&gt; the object type
+     * @throws IllegalArgumentException if the object is {@code null}
+     */
+    public static &lt;T&gt; void notNull(final T object, final String message) {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (isNull(object)) {</span>
+<span class="fc" id="L77">            throw new IllegalArgumentException(message);</span>
+        }
+<span class="fc" id="L79">    }</span>
+
+    /**
+     * Checks if an object is valid.
+     * @param k the object to check
+     * @param &lt;K&gt; the object class
+     * @throws InvalidBeanException {@link InvalidBeanException} if the validation fails
+     */
+    public final &lt;K&gt; void validate(final K k) {
+<span class="fc" id="L88">        final Set&lt;ConstraintViolation&lt;Object&gt;&gt; constraintViolations = getValidator().validate(k);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (!constraintViolations.isEmpty()) {</span>
+<span class="fc" id="L90">            final String errors = constraintViolations.stream()</span>
+<span class="fc" id="L91">                    .map(cv -&gt; cv.getRootBeanClass().getName()</span>
+<span class="fc" id="L92">                            + DOT.getSymbol()</span>
+<span class="fc" id="L93">                            + cv.getPropertyPath()</span>
+                            + SPACE
+<span class="fc" id="L95">                            + cv.getMessage())</span>
+<span class="fc" id="L96">                    .collect(joining(SEMICOLON.getSymbol()));</span>
+<span class="fc" id="L97">            throw new InvalidBeanException(errors);</span>
+        }
+<span class="fc" id="L99">    }</span>
+
+    /**
+     * Creates the validator.
+     * @return a {@link Validator} instance.
+     */
+    private Validator getValidator() {
+<span class="fc" id="L106">        String cacheKey = &quot;BeanValidator&quot;;</span>
+<span class="fc" id="L107">        return cacheManager.getFromCache(cacheKey, Validator.class)</span>
+<span class="fc" id="L108">                .orElseGet(() -&gt; {</span>
+<span class="fc" id="L109">                    Validator validator = buildDefaultValidatorFactory().getValidator();</span>
+<span class="fc" id="L110">                    cacheManager.cacheObject(cacheKey, validator);</span>
+<span class="fc" id="L111">                    return validator;</span>
+                });
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
