@@ -21,6 +21,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
@@ -118,15 +119,33 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
         assertEquals(CHAR_VALUE, actual);
     }
 
-    @Test
-    public void testConvertBooleanShouldReturnProperResult() {
+    /**
+     * Tests that the method {@code convertBoolean} returns the expected char.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "booleanToCharConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final char expectedResult) {
         // GIVEN
 
         // WHEN
-        char actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
+        char actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertEquals(TRUE_AS_CHAR, actual);
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] booleanToCharConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns T if the value is true", BOOLEAN_VALUE, TRUE_AS_CHAR},
+                {"Tests that the method returns F if the value is false", Boolean.FALSE, FALSE_AS_CHAR}
+        };
     }
 
     @Test
