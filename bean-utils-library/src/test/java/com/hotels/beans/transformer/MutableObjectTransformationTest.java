@@ -21,6 +21,7 @@ import static java.lang.Integer.parseInt;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -33,6 +34,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFooNoField;
 import com.hotels.beans.sample.FromFooSimple;
@@ -228,6 +230,48 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(mutableObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
+    }
+
+    /**
+     * Test that a bean containing a field not existing in the source object, and without a transformer function defined throws
+     * MissingFieldException even if the primitiveTypeConversionFunction is enabled.
+     */
+    @Test
+    public void testTransformerThrowsExceptionIfAFieldIsMissingAndThePrimitiveTypeConversionIsEnabled() {
+        //GIVEN
+        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
+        underTest.setDefaultPrimitiveTypeConversionEnabled(true);
+
+        //WHEN
+        Exception raisedException = null;
+        try {
+            underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
+        } catch (final Exception e) {
+            raisedException = e;
+        }
+
+        //THEN
+        assertEquals(MissingFieldException.class, raisedException.getCause().getClass());
+        underTest.setDefaultPrimitiveTypeConversionEnabled(false);
+    }
+
+    /**
+     * Test that a bean containing a field not existing in the source object, and without a transformer function defined throws
+     * MissingFieldException even if the primitiveTypeConversionFunction is enabled.
+     */
+    @Test
+    public void testTransformerDoesNotThrowExceptionIfAFieldIsMissingAndTheDefaultValueSetIsEnabled() {
+        //GIVEN
+        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
+        underTest.setDefaultPrimitiveTypeConversionEnabled(true).setDefaultValueForMissingField(true);
+
+        //WHEN
+        MutableToFooNotExistingFields actual = underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
+
+        //THEN
+        assertEquals(actual.getId(), fromFooSimple.getId());
+        assertEquals(actual.getName(), fromFooSimple.getName());
+        underTest.setDefaultPrimitiveTypeConversionEnabled(false).setDefaultValueForMissingField(false);
     }
 
     /**
