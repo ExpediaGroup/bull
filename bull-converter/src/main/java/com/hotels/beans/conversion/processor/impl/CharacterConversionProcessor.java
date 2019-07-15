@@ -23,7 +23,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Character}.
  */
-public final class CharacterConversionProcessor implements ConversionProcessor {
+public final class CharacterConversionProcessor implements ConversionProcessor<Character> {
 
     /**
      * {@inheritDoc}

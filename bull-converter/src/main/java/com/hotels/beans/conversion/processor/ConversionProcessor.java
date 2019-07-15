@@ -20,59 +20,60 @@ import java.util.function.Function;
 
 /**
  * Conversion methods for all primitive types.
+ * @param <T> indicates any primitve type object
  */
-public interface ConversionProcessor {
+public interface ConversionProcessor<T> {
     /**
      * Converts a {@link Byte} type.
      * @return the converted value
      */
-    Function<Byte, ?> convertByte();
+    Function<Byte, T> convertByte();
 
     /**
      * Converts a {@link Short} type.
      * @return the converted value
      */
-    Function<Short, ?> convertShort();
+    Function<Short, T> convertShort();
 
     /**
      * Converts an {@link Integer} type.
      * @return the converted value
      */
-    Function<Integer, ?> convertInteger();
+    Function<Integer, T> convertInteger();
 
     /**
      * Converts a {@link Long} type.
      * @return the converted value
      */
-    Function<Long, ?> convertLong();
+    Function<Long, T> convertLong();
 
     /**
      * Converts an {@link Float} type.
      * @return the converted value
      */
-    Function<Float, ?> convertFloat();
+    Function<Float, T> convertFloat();
 
     /**
      * Converts a {@link Double} type.
      * @return the converted value
      */
-    Function<Double, ?> convertDouble();
+    Function<Double, T> convertDouble();
 
     /**
      * Converts a {@link Character} type.
      * @return the converted value
      */
-    Function<Character, ?> convertCharacter();
+    Function<Character, T> convertCharacter();
 
     /**
      * Converts a {@link Boolean} type.
      * @return the converted value
      */
-    Function<Boolean, ?> convertBoolean();
+    Function<Boolean, T> convertBoolean();
 
     /**
      * Converts a {@link String} type.
      * @return the converted value
      */
-    Function<String, ?> convertString();
+    Function<String, T> convertString();
 }

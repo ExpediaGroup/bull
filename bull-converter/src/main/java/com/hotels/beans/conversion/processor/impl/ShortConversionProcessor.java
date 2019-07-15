@@ -26,7 +26,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Short}.
  */
-public final class ShortConversionProcessor implements ConversionProcessor {
+public final class ShortConversionProcessor implements ConversionProcessor<Short> {
 
     @Override
     public Function<Byte, Short> convertByte() {

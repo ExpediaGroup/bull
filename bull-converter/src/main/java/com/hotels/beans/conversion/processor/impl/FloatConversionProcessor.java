@@ -26,7 +26,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Float}.
  */
-public final class FloatConversionProcessor implements ConversionProcessor {
+public final class FloatConversionProcessor implements ConversionProcessor<Float> {
     /**
      * {@inheritDoc}
      */
