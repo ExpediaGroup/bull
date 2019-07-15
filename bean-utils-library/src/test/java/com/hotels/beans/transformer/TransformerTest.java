@@ -48,6 +48,7 @@ import org.testng.annotations.Test;
 
 import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.conversion.analyzer.ConversionAnalyzer;
+import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
@@ -186,6 +187,44 @@ public class TransformerTest extends AbstractTransformerTest {
 
         //WHEN
         getSourceFieldValueMethod.invoke(underTest, null, null, null, false);
+    }
+
+    /**
+     * Test that the method: {@code getSourceFieldValue} throws no Exceptions in case reflectionUtils throws exception and
+     * a field transformer is defined for the given field.
+     * @throws Exception if the invoke method fails
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testGetSourceFieldValueThrowsNoExceptionIfAFieldTransformerIsDefined() throws Exception {
+        //GIVEN
+        ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
+        Field field = mock(Field.class);
+        Class fieldType = Integer.class;
+
+        when(reflectionUtils.getFieldValue(FromFooSimple.class, AGE_FIELD_NAME, fieldType)).thenThrow(InvalidBeanException.class);
+        when(field.getType()).thenReturn(fieldType);
+
+        setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
+
+        Method getSourceFieldValueMethod = underTest.getClass().getDeclaredMethod(GET_SOURCE_FIELD_VALUE_METHOD_NAME, Object.class, String.class, Field.class, boolean.class);
+        getSourceFieldValueMethod.setAccessible(true);
+
+        //WHEN
+        Exception raisedException = null;
+        Object actual = null;
+        try {
+            actual = getSourceFieldValueMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME, field, true);
+        } catch (final Exception e) {
+            raisedException = e;
+        }
+
+        //THEN
+        verify(reflectionUtils).getFieldValue(FromFooSimple.class, AGE_FIELD_NAME, fieldType);
+        verify(field).getType();
+        assertNull(raisedException);
+        assertNull(actual);
+        restoreUnderTestObject();
     }
 
     /**
