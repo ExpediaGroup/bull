@@ -21,7 +21,6 @@ import static java.lang.Integer.parseInt;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -230,6 +229,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(mutableObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
+        underTest.resetFieldsTransformer();
     }
 
     /**
