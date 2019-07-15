@@ -16,19 +16,43 @@
 
 package com.hotels.beans.transformer;
 
+import static java.math.BigInteger.ONE;
+import static java.math.BigInteger.ZERO;
+import static java.util.Collections.emptyMap;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+import static java.util.Optional.ofNullable;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.conversion.analyzer.ConversionAnalyzer;
+import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
+import com.hotels.beans.sample.FromFooSimple;
+import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
 
 /**
@@ -39,7 +63,13 @@ public class TransformerTest extends AbstractTransformerTest {
     private static final String SOURCE_FIELD_NAME_2 = "sourceFieldName2";
     private static final String TRANSFORMER_SETTINGS_FIELD_NAME = "settings";
     private static final String GET_SOURCE_FIELD_VALUE_METHOD_NAME = "getSourceFieldValue";
+    private static final String GET_SOURCE_FIELD_TYPE_METHOD_NAME = "getSourceFieldType";
     private static final ReflectionUtils REFLECTION_UTILS = new ReflectionUtils();
+    private static final String CACHE_MANAGER_FIELD_NAME = "cacheManager";
+    private static final String REFLECTION_UTILS_FIELD_NAME = "reflectionUtils";
+    private static final String CLASS_UTILS_FIELD_NAME = "classUtils";
+    private static final String GET_TRANSFORMER_FUNCTION_METHOD_NAME = "getTransformerFunction";
+    private static final String CONVERSION_ANALYZER_FIELD_NAME = "conversionAnalyzer";
 
     /**
      * The class to be tested.
@@ -186,5 +216,198 @@ public class TransformerTest extends AbstractTransformerTest {
         //THEN
         assertTrue(actual);
         underTest.setDefaultPrimitiveTypeConversionEnabled(false);
+    }
+
+    /**
+     * Test that the method: {@code getSourceFieldType} returns the source object class in case the given field does not
+     * exists in the given class and the source object class is primitive.
+     * @throws Exception if the invoke method fails
+     */
+    @Test
+    public void testGetSourceFieldTypeReturnsTheSourceObjectClass() throws Exception {
+        //GIVEN
+        CacheManager cacheManager = mock(CacheManager.class);
+        ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
+        ClassUtils classUtils = mock(ClassUtils.class);
+
+        when(cacheManager.getFromCache(anyString(), any(Class.class))).thenReturn(empty());
+        when(reflectionUtils.getDeclaredFieldType(AGE_FIELD_NAME, Integer.class)).thenThrow(MissingFieldException.class);
+        when(classUtils.isPrimitiveType(Integer.class)).thenReturn(true);
+
+        setField(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
+        setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
+        setField(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
+
+        Method getSourceFieldTypeMethod = underTest.getClass().getDeclaredMethod(GET_SOURCE_FIELD_TYPE_METHOD_NAME, Class.class, String.class);
+        getSourceFieldTypeMethod.setAccessible(true);
+
+        //WHEN
+        Class<?> actual = (Class<?>) getSourceFieldTypeMethod.invoke(underTest, Integer.class, AGE_FIELD_NAME);
+
+        //THEN
+        verify(cacheManager).getFromCache(anyString(), any(Class.class));
+        verify(reflectionUtils).getDeclaredFieldType(AGE_FIELD_NAME, Integer.class);
+        verify(classUtils).isPrimitiveType(Integer.class);
+        assertEquals(Integer.class, actual);
+        restoreUnderTestObject();
+    }
+
+    /**
+     * Test that the method: {@code getSourceFieldType} returns nulls in case the given field does not
+     * exists in the given class, the source object class is not primitive and the default value set for missing
+     * fields feature is enabled.
+     * @throws Exception if the invoke method fails
+     */
+    @Test
+    public void testGetSourceFieldTypeReturnsNull() throws Exception {
+        //GIVEN
+        CacheManager cacheManager = mock(CacheManager.class);
+        ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
+        ClassUtils classUtils = mock(ClassUtils.class);
+        TransformerSettings settings = mock(TransformerSettings.class);
+
+        when(cacheManager.getFromCache(anyString(), any(Class.class))).thenReturn(empty());
+        when(reflectionUtils.getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class)).thenThrow(MissingFieldException.class);
+        when(classUtils.isPrimitiveType(Integer.class)).thenReturn(true);
+        when(settings.isSetDefaultValueForMissingFields()).thenReturn(true);
+
+        setField(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
+        setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
+        setField(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
+        setField(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, settings);
+
+        Method getSourceFieldTypeMethod = underTest.getClass().getDeclaredMethod(GET_SOURCE_FIELD_TYPE_METHOD_NAME, Class.class, String.class);
+        getSourceFieldTypeMethod.setAccessible(true);
+
+        //WHEN
+        Class<?> actual = (Class<?>) getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME);
+
+        //THEN
+        verify(cacheManager).getFromCache(anyString(), any(Class.class));
+        verify(reflectionUtils).getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class);
+        verify(classUtils).isPrimitiveType(FromFooSimple.class);
+        verify(settings).isSetDefaultValueForMissingFields();
+        assertNull(actual);
+        restoreUnderTestObject();
+    }
+
+    /**
+     * Test that the method: {@code getSourceFieldType} throws {@link MissingFieldException} in case the given field does not exists
+     * in the given class and the source object class is not primitive and the default value set for missing fields feature is disabled.
+     * @throws Exception if the invoke method fails
+     */
+    @Test
+    public void testGetSourceFieldTypeThrowsMissingFieldException() throws Exception {
+        //GIVEN
+        CacheManager cacheManager = mock(CacheManager.class);
+        ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
+        ClassUtils classUtils = mock(ClassUtils.class);
+        TransformerSettings settings = mock(TransformerSettings.class);
+
+        when(cacheManager.getFromCache(anyString(), any(Class.class))).thenReturn(empty());
+        when(reflectionUtils.getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class)).thenThrow(MissingFieldException.class);
+        when(classUtils.isPrimitiveType(Integer.class)).thenReturn(false);
+        when(settings.isSetDefaultValueForMissingFields()).thenReturn(false);
+
+        setField(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
+        setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
+        setField(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
+        setField(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, settings);
+
+        Method getSourceFieldTypeMethod = underTest.getClass().getDeclaredMethod(GET_SOURCE_FIELD_TYPE_METHOD_NAME, Class.class, String.class);
+        getSourceFieldTypeMethod.setAccessible(true);
+
+        //WHEN
+        Exception raisedException = null;
+        try {
+            getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME);
+        } catch (final Exception e) {
+            raisedException = e;
+        }
+
+        //THEN
+        verify(cacheManager).getFromCache(anyString(), any(Class.class));
+        verify(reflectionUtils).getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class);
+        verify(classUtils).isPrimitiveType(FromFooSimple.class);
+        verify(settings).isSetDefaultValueForMissingFields();
+        assertNotNull(raisedException);
+        assertEquals(MissingFieldException.class, raisedException.getCause().getClass());
+        restoreUnderTestObject();
+    }
+
+    /**
+     * Test that the {@code getTransformerFunction} works as expected.
+     * @param testCaseDescription the test case description
+     * @param fieldName the field name to which the transformer function has to be applied
+     * @param isDefaultPrimitiveTypeConversionEnabled indicates if the automatic conversion function is enabled
+     * @param isDestinationFieldPrimitiveType indicates if the destination field type is primitive or not
+     * @param fieldTransformers the field transformer associated to the given field
+     * @param sourceFieldType the source field type
+     * @param expectedFieldTransformerSize the total number of transformation function expected for the given field
+     * @throws Exception if the method invocation fails
+     */
+    @Test(dataProvider = "dataGetTransformerFunctionTesting")
+    @SuppressWarnings("unchecked")
+    public void testGetTransformerFunctionWorksProperly(final String testCaseDescription, final String fieldName, final boolean isDefaultPrimitiveTypeConversionEnabled,
+        final boolean isDestinationFieldPrimitiveType, final Map<String, FieldTransformer> fieldTransformers, final Class sourceFieldType, final int expectedFieldTransformerSize)
+        throws Exception {
+        //GIVEN
+        Field field = mock(Field.class);
+        CacheManager cacheManager = mock(CacheManager.class);
+        TransformerSettings settings = mock(TransformerSettings.class);
+        ConversionAnalyzer conversionAnalyzer = mock(ConversionAnalyzer.class);
+        ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
+
+        when(cacheManager.getFromCache(anyString(), any(Class.class))).thenReturn(ofNullable(sourceFieldType));
+        when(settings.isFlatFieldNameTransformation()).thenReturn(false);
+        when(settings.isDefaultPrimitiveTypeConversionEnabled()).thenReturn(isDefaultPrimitiveTypeConversionEnabled);
+        when(settings.getFieldsTransformers()).thenReturn(fieldTransformers);
+        when(conversionAnalyzer.getConversionFunction(any(Class.class), any(Class.class))).thenReturn(of(Object::toString));
+        when(field.getType()).thenReturn(sourceFieldType);
+        when(reflectionUtils.getDeclaredFieldType(fieldName, FromFooSimple.class)).thenReturn(sourceFieldType);
+
+        setField(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
+        setField(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, settings);
+        setField(underTest, CONVERSION_ANALYZER_FIELD_NAME, conversionAnalyzer);
+        setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
+
+        Method getTransformerFunctionMethod = underTest.getClass()
+                .getDeclaredMethod(GET_TRANSFORMER_FUNCTION_METHOD_NAME, Class.class, String.class, Field.class, boolean.class, String.class);
+        getTransformerFunctionMethod.setAccessible(true);
+
+        //WHEN
+        List<FieldTransformer> actual =
+                (List<FieldTransformer>) getTransformerFunctionMethod.invoke(underTest, FromFooSimple.class, fieldName, field, isDestinationFieldPrimitiveType, fieldName);
+
+        //THEN
+        assertEquals(expectedFieldTransformerSize, actual.size());
+        restoreUnderTestObject();
+    }
+
+    /**
+     * Creates the parameters to be used for testing method {@code getTransformerFunction}.
+     * @return parameters to be used for testing method {@code getTransformerFunction}.
+     */
+    @DataProvider
+    private Object[][] dataGetTransformerFunctionTesting() {
+        return new Object[][] {
+                {"Test that a type conversion function is added to the existing one if all the conditions are met",
+                        AGE_FIELD_NAME, true, true, emptyMap(), int.class, ONE.intValue()},
+                {"Test that no type conversion function is added to the existing one if the source type field is null",
+                        AGE_FIELD_NAME, true, true, emptyMap(), null, ZERO.intValue()},
+                {"Test that no conversion function is added to the existing one if the primitive type conversion is disabled",
+                        AGE_FIELD_NAME, false, true, emptyMap(), null, ZERO.intValue()},
+                {"Test that no conversion function is added to the existing one if the destination field type is not primitive",
+                        AGE_FIELD_NAME, true, false, emptyMap(), null, ZERO.intValue()},
+                {"Test that no conversion function is added to the existing one if there is a field transformer function defined for the existing field",
+                        AGE_FIELD_NAME, true, true, Map.of(AGE_FIELD_NAME, new FieldTransformer<>(AGE_FIELD_NAME, () -> null)), null, ONE.intValue()}
+        };
+    }
+
+    /**
+     * Restores the underTest object removing all defined mocks.
+     */
+    private void restoreUnderTestObject() {
+        underTest = new TransformerImpl();
     }
 }

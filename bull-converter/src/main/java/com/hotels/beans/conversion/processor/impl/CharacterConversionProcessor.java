@@ -20,8 +20,6 @@ import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
-import lombok.val;
-
 /**
  * Provides all method for converting any primitive type to a {@link Character}.
  */

@@ -314,7 +314,7 @@ public class ReflectionUtilsTest {
      */
     @Test(dataProvider = "dataGetFieldAnnotationTesting")
     public void testGetFieldAnnotationWorksProperly(final String testCaseDescription, final Class<? extends Annotation> annotationToGet,
-        final boolean expectNull) throws NoSuchFieldException {
+        final boolean expectNull) {
         // GIVEN
         Field nameField = underTest.getDeclaredField(ID_FIELD_NAME, ImmutableToFoo.class);
 

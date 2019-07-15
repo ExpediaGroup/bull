@@ -105,7 +105,7 @@ public class PerformanceTest {
      * @param sourceObject the Source object to copy
      * @param destObjectClass the total destination object
      * @param maxTransformationTime expected maximum transformation time
-     * @throws InterruptedException
+     * @throws InterruptedException if an error occurs during the thread sleep
      */
     @Test(dataProvider = "dataPerformanceTest")
     public void testCopyPropertiesGetsCompletedInTheExpectedTime(final double totalTransformation, final int waitInterval,
