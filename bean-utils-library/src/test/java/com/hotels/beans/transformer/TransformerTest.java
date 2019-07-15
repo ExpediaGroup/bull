@@ -31,13 +31,16 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +56,7 @@ import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFooSimple;
+import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
 
@@ -71,6 +75,7 @@ public class TransformerTest extends AbstractTransformerTest {
     private static final String CLASS_UTILS_FIELD_NAME = "classUtils";
     private static final String GET_TRANSFORMER_FUNCTION_METHOD_NAME = "getTransformerFunction";
     private static final String CONVERSION_ANALYZER_FIELD_NAME = "conversionAnalyzer";
+    private static final String GET_CONSTRUCTOR_ARGS_VALUES_METHOD_NAME = "getConstructorArgsValues";
 
     /**
      * The class to be tested.
@@ -441,6 +446,45 @@ public class TransformerTest extends AbstractTransformerTest {
                 {"Test that no conversion function is added to the existing one if there is a field transformer function defined for the existing field",
                         AGE_FIELD_NAME, true, true, Map.of(AGE_FIELD_NAME, new FieldTransformer<>(AGE_FIELD_NAME, () -> null)), null, ONE.intValue()}
         };
+    }
+
+    /**
+     * Test that the method: {@code getConstructorArgsValues} returns the default type value if the parameter name cannot be retrieved from the constructor.
+     * @throws Exception if the invoke method fails
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testGetConstructorArgsValuesReturnsTheDefaultTypeIfTheDestinationFieldNameIsNull() throws Exception {
+        //GIVEN
+        Constructor constructor = mock(Constructor.class);
+        ClassUtils classUtils = mock(ClassUtils.class);
+        Parameter constructorParameter = mock(Parameter.class);
+        Parameter[] constructorParameters = {constructorParameter};
+
+        when(classUtils.getConstructorParameters(constructor)).thenReturn(constructorParameters);
+        when(constructorParameter.isNamePresent()).thenReturn(true);
+        when(constructorParameter.getName()).thenReturn(null);
+        when(constructorParameter.getType()).thenReturn((Class) Integer.class);
+        when(classUtils.getDefaultTypeValue(Integer.class)).thenReturn(ZERO.intValue());
+
+        setField(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
+
+        Method getConstructorArgsValuesMethod = underTest.getClass()
+                .getDeclaredMethod(GET_CONSTRUCTOR_ARGS_VALUES_METHOD_NAME, Object.class, Class.class, Constructor.class, String.class);
+        getConstructorArgsValuesMethod.setAccessible(true);
+
+        //WHEN
+        Object[] actual = (Object[]) getConstructorArgsValuesMethod.invoke(underTest, fromFoo, ImmutableToFoo.class, constructor, ID_FIELD_NAME);
+
+        //THEN
+        verify(classUtils).getConstructorParameters(constructor);
+        verify(constructorParameter).isNamePresent();
+        verify(constructorParameter, times(2)).getName();
+        verify(constructorParameter).getType();
+        verify(classUtils).getDefaultTypeValue(Integer.class);
+        assertEquals(ONE.intValue(), actual.length);
+        assertEquals(ZERO.intValue(), actual[ZERO.intValue()]);
+        restoreUnderTestObject();
     }
 
     /**
