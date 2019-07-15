@@ -20,6 +20,8 @@ import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
+import lombok.val;
+
 /**
  * Provides all method for converting any primitive type to a {@link Character}.
  */
@@ -30,7 +32,7 @@ public final class CharacterConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Byte, Character> convertByte() {
-        return val -> val.toString().charAt(0);
+        return val -> (char) val.byteValue();
     }
 
     /**
@@ -38,7 +40,7 @@ public final class CharacterConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Short, Character> convertShort() {
-        return val -> val.toString().charAt(0);
+        return val -> (char) val.shortValue();
     }
 
     /**
@@ -46,7 +48,7 @@ public final class CharacterConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Integer, Character> convertInteger() {
-        return val -> val.toString().charAt(0);
+        return val -> (char) val.intValue();
     }
 
     /**
@@ -54,7 +56,7 @@ public final class CharacterConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Long, Character> convertLong() {
-        return val -> val.toString().charAt(0);
+        return val -> (char) val.longValue();
     }
 
     /**
@@ -62,7 +64,7 @@ public final class CharacterConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Float, Character> convertFloat() {
-        return val -> val.toString().charAt(0);
+        return val -> (char) val.floatValue();
     }
 
     /**
@@ -70,7 +72,7 @@ public final class CharacterConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Double, Character> convertDouble() {
-        return val -> val.toString().charAt(0);
+        return val -> (char) val.doubleValue();
     }
 
     /**
@@ -86,7 +88,7 @@ public final class CharacterConversionProcessor implements ConversionProcessor {
      */
     @Override
     public Function<Boolean, Character> convertBoolean() {
-        return val -> val.toString().charAt(0);
+        return val -> val ? 'T' : 'F';
     }
 
     /**

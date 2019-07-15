@@ -24,12 +24,16 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
  * Unit test for {@link IntegerConversionProcessor}.
  */
 public class IntegerConversionProcessorTest extends AbstractConversionProcessorTest {
+    private static final int TRUE_AS_INT = 1;
+    private static final int FALSE_AS_INT = 0;
+
     /**
      * The class to be tested.
      */
@@ -121,15 +125,33 @@ public class IntegerConversionProcessorTest extends AbstractConversionProcessorT
         assertEquals((Integer) getNumericValue(CHAR_VALUE), actual);
     }
 
-    @Test
-    public void testConvertBooleanShouldReturnProperResult() {
+    /**
+     * Tests that the method {@code convertBoolean} returns the expected int.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "booleanToIntConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final int expectedResult) {
         // GIVEN
 
         // WHEN
-        Integer actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
+        int actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertEquals(BOOLEAN_VALUE, actual.equals(1));
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] booleanToIntConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_INT},
+                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_INT}
+        };
     }
 
     @Test

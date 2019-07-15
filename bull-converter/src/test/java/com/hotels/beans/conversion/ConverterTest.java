@@ -46,7 +46,7 @@ import com.hotels.beans.conversion.processor.impl.StringConversionProcessor;
  */
 public class ConverterTest {
     private static final String ONE_AS_STRING = "1";
-    private static final char CHAR_VALUE = 'x';
+    private static final char CHAR_VALUE = 'T';
     private static final char CHAR_INT_VALUE = '1';
     private static final byte TRUE_AS_BYTE = 1;
     private static final int TRUE_AS_INT = 1;
@@ -204,14 +204,14 @@ public class ConverterTest {
                 {"Tests that the method returns a byte value from a Boolean", Boolean.TRUE, byte.class, TRUE_AS_BYTE},
                 {"Tests that the method returns a byte value from a String", ONE_AS_STRING, byte.class, Byte.valueOf(ONE_AS_STRING)},
                 // char conversion test cases
-                {"Tests that the method returns a char value from a byte", Byte.MIN_VALUE, char.class, Byte.valueOf(Byte.MIN_VALUE).toString().charAt(0)},
-                {"Tests that the method returns a char value from a short", Short.MIN_VALUE, char.class, Short.valueOf(Short.MIN_VALUE).toString().charAt(0)},
-                {"Tests that the method returns a char value from an Integer", Integer.MIN_VALUE, char.class, Integer.valueOf(Integer.MIN_VALUE).toString().charAt(0)},
-                {"Tests that the method returns a char value from a Long", Long.MIN_VALUE, char.class, Long.valueOf(Long.MIN_VALUE).toString().charAt(0)},
-                {"Tests that the method returns a char value from a Float", Float.MIN_VALUE, char.class, Float.valueOf(Float.MIN_VALUE).toString().charAt(0)},
-                {"Tests that the method returns a char value from a Double", Double.MIN_VALUE, char.class, Double.valueOf(Double.MIN_VALUE).toString().charAt(0)},
+                {"Tests that the method returns a char value from a byte", Byte.MIN_VALUE, char.class, (char) Byte.MIN_VALUE},
+                {"Tests that the method returns a char value from a short", Short.MIN_VALUE, char.class, (char) Short.MIN_VALUE},
+                {"Tests that the method returns a char value from an Integer", Integer.MIN_VALUE, char.class, (char) Integer.MIN_VALUE},
+                {"Tests that the method returns a char value from a Long", Long.MIN_VALUE, char.class, (char) Long.MIN_VALUE},
+                {"Tests that the method returns a char value from a Float", Float.MIN_VALUE, char.class, (char) Float.MIN_VALUE},
+                {"Tests that the method returns a char value from a Double", Double.MIN_VALUE, char.class, (char) Double.MIN_VALUE},
                 {"Tests that the method returns a char value from a char", CHAR_VALUE, char.class, CHAR_VALUE},
-                {"Tests that the method returns a char value from a Boolean", Boolean.TRUE, char.class, Boolean.TRUE.toString().charAt(0)},
+                {"Tests that the method returns a char value from a Boolean", Boolean.TRUE, char.class, CHAR_VALUE},
                 {"Tests that the method returns a char value from a String", ONE_AS_STRING, char.class, ONE_AS_STRING.charAt(0)},
                 // double conversion test cases
                 {"Tests that the method returns a double value from a byte", Byte.MIN_VALUE, double.class, Byte.valueOf(Byte.MIN_VALUE).doubleValue()},
