@@ -16,9 +16,6 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Character.getNumericValue;
-import static java.lang.Long.valueOf;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -28,17 +25,17 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
- * Unit test for {@link LongConversionProcessor}.
+ * Unit test for {@link CharacterConversionProcessor}.
  */
-public class LongConversionProcessorTest  extends AbstractConversionProcessorTest {
-    private static final long TRUE_AS_LONG = 1L;
-    private static final long FALSE_AS_LONG = 0L;
+public class CharacterConversionProcessorTest  extends AbstractConversionProcessorTest {
+    private static final char TRUE_AS_CHAR = 'T';
+    private static final char FALSE_AS_CHAR = 'F';
 
     /**
      * The class to be tested.
      */
     @InjectMocks
-    private LongConversionProcessor underTest;
+    private CharacterConversionProcessor underTest;
 
     /**
      * Initializes mock.
@@ -53,10 +50,10 @@ public class LongConversionProcessorTest  extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Long actual = underTest.convertByte().apply(BYTE_VALUE);
+        char actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals((Long) BYTE_VALUE.longValue(), actual);
+        assertEquals((char) BYTE_VALUE.byteValue(), actual);
     }
 
     @Test
@@ -64,10 +61,10 @@ public class LongConversionProcessorTest  extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Long actual = underTest.convertShort().apply(SHORT_VALUE);
+        char actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals((Long) SHORT_VALUE.longValue(), actual);
+        assertEquals((char) SHORT_VALUE.byteValue(), actual);
     }
 
     @Test
@@ -75,10 +72,10 @@ public class LongConversionProcessorTest  extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Long actual = underTest.convertInteger().apply(INTEGER_VALUE);
+        char actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals((Long) INTEGER_VALUE.longValue(), actual);
+        assertEquals((char) INTEGER_VALUE.intValue(), actual);
     }
 
     @Test
@@ -86,10 +83,10 @@ public class LongConversionProcessorTest  extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Long actual = underTest.convertLong().apply(LONG_VALUE);
+        char actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals(LONG_VALUE, actual);
+        assertEquals((char) LONG_VALUE.longValue(), actual);
     }
 
     @Test
@@ -97,10 +94,10 @@ public class LongConversionProcessorTest  extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Long actual = underTest.convertFloat().apply(FLOAT_VALUE);
+        char actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals((Long) FLOAT_VALUE.longValue(), actual);
+        assertEquals((char) FLOAT_VALUE.floatValue(), actual);
     }
 
     @Test
@@ -108,10 +105,10 @@ public class LongConversionProcessorTest  extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Long actual = underTest.convertDouble().apply(DOUBLE_VALUE);
+        char actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals((Long) DOUBLE_VALUE.longValue(), actual);
+        assertEquals((char) DOUBLE_VALUE.doubleValue(), actual);
     }
 
     @Test
@@ -119,24 +116,24 @@ public class LongConversionProcessorTest  extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Long actual = underTest.convertCharacter().apply(CHAR_VALUE);
+        char actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals(valueOf(getNumericValue(CHAR_VALUE)), actual);
+        assertEquals(CHAR_VALUE, actual);
     }
 
     /**
-     * Tests that the method {@code convertBoolean} returns the expected long.
+     * Tests that the method {@code convertBoolean} returns the expected char.
      * @param testCaseDescription the test case description
      * @param valueToConvert the value to be converted
      * @param expectedResult the expected result
      */
-    @Test(dataProvider = "booleanToLongConvertValueTesting")
-    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final long expectedResult) {
+    @Test(dataProvider = "booleanToCharConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final char expectedResult) {
         // GIVEN
 
         // WHEN
-        long actual = underTest.convertBoolean().apply(valueToConvert);
+        char actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
         assertEquals(expectedResult, actual);
@@ -147,10 +144,10 @@ public class LongConversionProcessorTest  extends AbstractConversionProcessorTes
      * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
      */
     @DataProvider
-    private Object[][] booleanToLongConvertValueTesting() {
+    private Object[][] booleanToCharConvertValueTesting() {
         return new Object[][]{
-                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_LONG},
-                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_LONG}
+                {"Tests that the method returns T if the value is true", BOOLEAN_VALUE, TRUE_AS_CHAR},
+                {"Tests that the method returns F if the value is false", Boolean.FALSE, FALSE_AS_CHAR}
         };
     }
 
@@ -159,10 +156,9 @@ public class LongConversionProcessorTest  extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Long actual = underTest.convertString().apply(STRING_VALUE);
+        char actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(valueOf(STRING_VALUE), actual);
+        assertEquals(STRING_VALUE.charAt(0), actual);
     }
 }
-

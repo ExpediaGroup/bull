@@ -24,12 +24,16 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
  * Unit test for {@link DoubleConversionProcessor}.
  */
 public class DoubleConversionProcessorTest extends AbstractConversionProcessorTest {
+    private static final double TRUE_AS_DOUBLE = 1d;
+    private static final double FALSE_AS_DOUBLE = 0d;
+
     /**
      * The class to be tested.
      */
@@ -121,15 +125,33 @@ public class DoubleConversionProcessorTest extends AbstractConversionProcessorTe
         assertEquals(valueOf((short) getNumericValue(CHAR_VALUE)), actual);
     }
 
-    @Test
-    public void testConvertBooleanShouldReturnProperResult() {
+    /**
+     * Tests that the method {@code convertBoolean} returns the expected double.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "booleanToDoubleConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final double expectedResult) {
         // GIVEN
 
         // WHEN
-        Double actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
+        Double actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertEquals(BOOLEAN_VALUE, actual.equals((double) 1));
+        assertEquals(expectedResult, actual, 0.0);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] booleanToDoubleConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_DOUBLE},
+                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_DOUBLE}
+        };
     }
 
     @Test
