@@ -26,7 +26,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Long}.
  */
-public final class LongConversionProcessor implements ConversionProcessor {
+public final class LongConversionProcessor implements ConversionProcessor<Long> {
 
     /**
      * {@inheritDoc}

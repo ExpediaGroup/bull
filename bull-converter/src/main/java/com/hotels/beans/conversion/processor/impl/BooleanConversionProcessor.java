@@ -23,7 +23,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Boolean}.
  */
-public final class BooleanConversionProcessor implements ConversionProcessor {
+public final class BooleanConversionProcessor implements ConversionProcessor<Boolean> {
     @Override
     public Function<Byte, Boolean> convertByte() {
         return val -> val != 0;

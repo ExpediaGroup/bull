@@ -25,7 +25,7 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
 /**
  * Provides all method for converting any primitive type to a {@link Integer}.
  */
-public final class IntegerConversionProcessor implements ConversionProcessor {
+public final class IntegerConversionProcessor implements ConversionProcessor<Integer> {
 
     @Override
     public Function<Byte, Integer> convertByte() {
