@@ -57,6 +57,7 @@ import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
+import com.hotels.beans.sample.mutable.MutableToFooAdvFields;
 import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
 
@@ -474,7 +475,7 @@ public class TransformerTest extends AbstractTransformerTest {
         getConstructorArgsValuesMethod.setAccessible(true);
 
         //WHEN
-        Object[] actual = (Object[]) getConstructorArgsValuesMethod.invoke(underTest, fromFoo, ImmutableToFoo.class, constructor, ID_FIELD_NAME);
+        Object[] actual = (Object[]) getConstructorArgsValuesMethod.invoke(underTest, fromFoo, MutableToFooAdvFields.class, constructor, ID_FIELD_NAME);
 
         //THEN
         verify(classUtils).getConstructorParameters(constructor);
