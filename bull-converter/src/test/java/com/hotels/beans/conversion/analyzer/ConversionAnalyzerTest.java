@@ -21,6 +21,7 @@ import static java.util.Optional.empty;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -87,7 +88,9 @@ public class ConversionAnalyzerTest {
             {"Tests that the method returns an empty optional in case the source field type is not equal to the source field type but it's not primitive",
                 Pair.class, int.class},
             {"Tests that the method returns an empty optional in case the source field type is not equal to the source field type and the destination type is void",
-                int.class, Void.class}
+                int.class, Void.class},
+            {"Tests that the method returns an empty optional in case the source field type has no processor defined",
+                BigDecimal.class, Integer.class}
         };
     }
 
