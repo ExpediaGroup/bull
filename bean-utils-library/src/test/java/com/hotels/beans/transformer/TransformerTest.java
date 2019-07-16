@@ -493,4 +493,64 @@ public class TransformerTest extends AbstractTransformerTest {
     private void restoreUnderTestObject() {
         underTest = new TransformerImpl();
     }
+
+    /**
+     * Tests that an instance fo {@link com.hotels.beans.validator.Validator} is created only if the validation is enabled.
+     * @param testCaseDescription the test case description
+     * @param validationEnabled true if the validation is enabled, false otherwise
+     * @param expectedNull the expected result
+     */
+    @Test(dataProvider = "dataValidationInitializationTesting")
+    public void testValidatorIsInitializedOnlyIfValidationIsEnabled(final String testCaseDescription, final boolean validationEnabled, final boolean expectedNull) {
+        // GIVEN
+
+        // WHEN
+        underTest.setValidationEnabled(validationEnabled);
+
+        // THEN
+        assertEquals(expectedNull, underTest.validator == null);
+        underTest.setValidationEnabled(false);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code setValidationEnabled}.
+     * @return parameters to be used for testing the the method {@code setValidationEnabled}.
+     */
+    @DataProvider
+    private Object[][] dataValidationInitializationTesting() {
+        return new Object[][] {
+                {"Tests that the Validator object is not created if the validation is disabled", false, true},
+                {"Tests that the Validator object is created if the validation is enabled", true, false}
+        };
+    }
+
+    /**
+     * Tests that an instance fo {@link ConversionAnalyzer} is created only if the automatic conversion is enabled.
+     * @param testCaseDescription the test case description
+     * @param autoConversionEnabled true if the automatic conversion is enabled, false otherwise
+     * @param expectedNull the expected result
+     */
+    @Test(dataProvider = "dataConversionAnalyzerInitializationTesting")
+    public void testConversionAnalyzerIsInitializedOnlyIfValidationIsEnabled(final String testCaseDescription, final boolean autoConversionEnabled, final boolean expectedNull) {
+        // GIVEN
+
+        // WHEN
+        underTest.setDefaultPrimitiveTypeConversionEnabled(autoConversionEnabled);
+
+        // THEN
+        assertEquals(expectedNull, underTest.conversionAnalyzer == null);
+        underTest.setDefaultPrimitiveTypeConversionEnabled(false);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code setValidationEnabled}.
+     * @return parameters to be used for testing the the method {@code setValidationEnabled}.
+     */
+    @DataProvider
+    private Object[][] dataConversionAnalyzerInitializationTesting() {
+        return new Object[][] {
+                {"Tests that the ConversionAnalyzer object is not created if the automatic conversion is disabled", false, true},
+                {"Tests that the ConversionAnalyzer object is created if the automatic conversion is enabled", true, false}
+        };
+    }
 }
