@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.23] TBD
+#### Added
+* Implemented automatic conversion of basic types (see: [Issue 61](https://github.com/HotelsDotCom/bull/issues/61)).
+
 ### [1.1.22] 2019.07.03
 #### Added
 * Implemented possibility to disable the default value set for primitive types in case its value is null (see: [Issue 73](https://github.com/HotelsDotCom/bull/issues/73)).

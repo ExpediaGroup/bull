@@ -38,6 +38,7 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -82,6 +83,7 @@ public class ReflectionUtilsTest {
     private static final String SET_NAME_METHOD_NAME = "setName";
     private static final String SET_INDEX_METHOD_NAME = "setIndex";
     private static final String INDEX_NUMBER = "123";
+    private static final String GET_REAL_TARGET_METHOD_NAME = "getRealTarget";
 
     /**
      * The class to be tested.
@@ -689,6 +691,22 @@ public class ReflectionUtilsTest {
                 {"Tests that the method raises an IllegalAccessException in case the method is not accessible", new MutableToFooAdvFields(), SET_INDEX_METHOD_NAME,
                     INDEX_NUMBER, false, IllegalStateException.class}
         };
+    }
+
+    /**
+     * Test that the method: {@code getRealTarget} returns the object contained in the Optional.
+     */
+    @Test
+    public void testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull() throws Exception {
+        //GIVEN
+        Method getRealTargetMethod = getMethod(underTest.getClass(), GET_REAL_TARGET_METHOD_NAME, true, Object.class);
+        Optional<BigInteger> optionalBigInteger = Optional.of(ZERO);
+
+        //WHEN
+        Object actual = getRealTargetMethod.invoke(underTest, optionalBigInteger);
+
+        //THEN
+        assertEquals(ZERO, actual);
     }
 
     /**
