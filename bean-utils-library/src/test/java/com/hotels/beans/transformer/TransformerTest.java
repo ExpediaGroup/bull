@@ -233,20 +233,6 @@ public class TransformerTest extends AbstractTransformerTest {
     }
 
     /**
-     * Test that by default the primitive type conversion is disabled.
-     */
-    @Test
-    public void testThatDefaultPrimitiveTypeConversionIsDisabledByDefault() {
-        //GIVEN
-
-        //WHEN
-        boolean actual = underTest.settings.isDefaultPrimitiveTypeConversionEnabled();
-
-        //THEN
-        assertFalse(actual);
-    }
-
-    /**
      * Test that the primitive type conversion is correctly enabled.
      */
     @Test
