@@ -435,8 +435,10 @@ public class TransformerImpl extends AbstractTransformer {
                         .ifPresent(conversionFunction -> fieldTransformers.add(new FieldTransformer<>(fieldTransformerKey, conversionFunction)));
             }
         }
-        ofNullable(settings.getFieldsTransformers().get(fieldTransformerKey))
-                .ifPresent(fieldTransformers::add);
+        FieldTransformer fieldTransformer = settings.getFieldsTransformers().get(fieldTransformerKey);
+        if (nonNull(fieldTransformer)) {
+            fieldTransformers.add(fieldTransformer);
+        }
         return fieldTransformers;
     }
 
