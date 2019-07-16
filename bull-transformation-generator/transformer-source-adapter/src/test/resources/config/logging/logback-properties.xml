@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<included>
-	<property name="ROOT_LOG_DIR" value="logs"/>
-	<property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] [%level] %logger{36} - %msg%n"/>
-</included>
