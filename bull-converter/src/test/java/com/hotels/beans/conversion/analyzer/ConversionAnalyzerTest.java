@@ -30,6 +30,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.processor.impl.BooleanConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.CharacterConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.DoubleConversionProcessor;
@@ -117,23 +118,25 @@ public class ConversionAnalyzerTest {
     private Object[][] dataGetConversionFunctionTesting() {
         return new Object[][] {
             {"Tests that the method returns a IntegerConversionProcessor that converts from String to int",
-                    String.class, int.class, new IntegerConversionProcessor().convertString()},
+                String.class, int.class, new IntegerConversionProcessor().convertString()},
             {"Tests that the method returns a StringConversionProcessor that converts from byte to String",
-                    byte.class, String.class, new StringConversionProcessor().convertByte()},
+                byte.class, String.class, new StringConversionProcessor().convertByte()},
             {"Tests that the method returns a ShortConversionProcessor that converts from short to byte",
-                    short.class, byte.class, new ByteConversionProcessor().convertShort()},
+                short.class, byte.class, new ByteConversionProcessor().convertShort()},
             {"Tests that the method returns a StringConversionProcessor that converts from int to String",
-                    int.class, String.class, new StringConversionProcessor().convertInteger()},
+                int.class, String.class, new StringConversionProcessor().convertInteger()},
             {"Tests that the method returns a IntegerConversionProcessor that converts from long to int",
-                    long.class, int.class, new IntegerConversionProcessor().convertLong()},
+                long.class, int.class, new IntegerConversionProcessor().convertLong()},
             {"Tests that the method returns a DoubleConversionProcessor that converts from float to double",
-                    float.class, double.class, new DoubleConversionProcessor().convertFloat()},
+                float.class, double.class, new DoubleConversionProcessor().convertFloat()},
             {"Tests that the method returns a FloatConversionProcessor that converts from double to float",
-                    double.class, float.class, new FloatConversionProcessor().convertDouble()},
+                double.class, float.class, new FloatConversionProcessor().convertDouble()},
             {"Tests that the method returns a StringConversionProcessor that converts from char to String",
-                    char.class, String.class, new StringConversionProcessor().convertCharacter()},
+                char.class, String.class, new StringConversionProcessor().convertCharacter()},
             {"Tests that the method returns a CharacterConversionProcessor that converts from char to boolean",
-                    boolean.class, char.class, new CharacterConversionProcessor().convertBoolean()}
+                boolean.class, char.class, new CharacterConversionProcessor().convertBoolean()},
+            {"Tests that the method returns a BooleanConversionProcessor that converts from String to boolean",
+                String.class, boolean.class, new BooleanConversionProcessor().convertString()}
         };
     }
 }
