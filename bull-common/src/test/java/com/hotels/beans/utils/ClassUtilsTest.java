@@ -815,4 +815,33 @@ public class ClassUtilsTest {
                 {"Tests that the method returns false if the constructor is private", MutableToFooWithBuilder.class, false}
         };
     }
+
+    /**
+     * Tests that the method {@code isString} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataIsStringTesting")
+    public void testIsStringWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.isString(testClass);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isString}.
+     * @return parameters to be used for testing the the method {@code isString}.
+     */
+    @DataProvider
+    private Object[][] dataIsStringTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class is a String", String.class, true},
+                {"Tests that the method returns false if the class is not a String", BigDecimal.class, false}
+        };
+    }
 }
