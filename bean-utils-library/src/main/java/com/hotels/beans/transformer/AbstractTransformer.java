@@ -142,7 +142,7 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final Transformer setDefaultValueForMissingField(final boolean useDefaultValue) {
-        settings.setSetDefaultValueForMissingFields(useDefaultValue);
+        settings.setSetDefaultValueForMissingField(useDefaultValue);
         return this;
     }
 
