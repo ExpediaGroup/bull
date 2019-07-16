@@ -56,7 +56,6 @@ import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFooSimple;
-import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooAdvFields;
 import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
