@@ -48,7 +48,7 @@
         <jacoco.version>0.8.2</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
         <jacoco.instructionRatio>0.90</jacoco.instructionRatio>
-        <jacoco.methodRatio>0.9</jacoco.methodRatio>
+        <jacoco.methodRatio>1.0</jacoco.methodRatio>
         <jacoco.branchRatio>0.85</jacoco.branchRatio>
         <jacoco.complexityRatio>0.88</jacoco.complexityRatio>
         <jacoco.lineRatio>0.90</jacoco.lineRatio>
