@@ -60,12 +60,12 @@ abstract class AbstractTransformer implements Transformer {
     /**
      * Bean Validator. It offers the possibility to validate a given Java Bean against a set of defined constraints.
      */
-    final Validator validator;
+    Validator validator;
 
     /**
      * Conversion analyzer. It allows to automatically convert common field types.
      */
-    final ConversionAnalyzer conversionAnalyzer;
+    ConversionAnalyzer conversionAnalyzer;
 
     /**
      * Default constructor.
@@ -73,9 +73,7 @@ abstract class AbstractTransformer implements Transformer {
     AbstractTransformer() {
         this.reflectionUtils = new ReflectionUtils();
         this.classUtils = new ClassUtils();
-        this.validator = new ValidatorImpl();
         this.settings = new TransformerSettings();
-        this.conversionAnalyzer = new ConversionAnalyzer();
         this.cacheManager = getCacheManager("transformer");
     }
 
@@ -161,6 +159,9 @@ abstract class AbstractTransformer implements Transformer {
     @Override
     public Transformer setValidationEnabled(final boolean validationEnabled) {
         settings.setValidationEnabled(validationEnabled);
+        if (validationEnabled) {
+            validator = new ValidatorImpl();
+        }
         return this;
     }
 
@@ -179,6 +180,9 @@ abstract class AbstractTransformer implements Transformer {
     @Override
     public Transformer setDefaultPrimitiveTypeConversionEnabled(final boolean defaultPrimitiveTypeConversionEnabled) {
         settings.setDefaultPrimitiveTypeConversionEnabled(defaultPrimitiveTypeConversionEnabled);
+        if (defaultPrimitiveTypeConversionEnabled) {
+            conversionAnalyzer = new ConversionAnalyzer();
+        }
         return this;
     }
 
