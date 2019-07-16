@@ -313,7 +313,7 @@ public class TransformerTest extends AbstractTransformerTest {
         when(cacheManager.getFromCache(anyString(), any(Class.class))).thenReturn(empty());
         when(reflectionUtils.getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class)).thenThrow(MissingFieldException.class);
         when(classUtils.isPrimitiveType(Integer.class)).thenReturn(true);
-        when(settings.isSetDefaultValueForMissingFields()).thenReturn(true);
+        when(settings.isSetDefaultValueForMissingField()).thenReturn(true);
 
         setField(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
         setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
@@ -330,7 +330,7 @@ public class TransformerTest extends AbstractTransformerTest {
         verify(cacheManager).getFromCache(anyString(), any(Class.class));
         verify(reflectionUtils).getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class);
         verify(classUtils).isPrimitiveType(FromFooSimple.class);
-        verify(settings).isSetDefaultValueForMissingFields();
+        verify(settings).isSetDefaultValueForMissingField();
         assertNull(actual);
         restoreUnderTestObject();
     }
@@ -351,7 +351,7 @@ public class TransformerTest extends AbstractTransformerTest {
         when(cacheManager.getFromCache(anyString(), any(Class.class))).thenReturn(empty());
         when(reflectionUtils.getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class)).thenThrow(MissingFieldException.class);
         when(classUtils.isPrimitiveType(Integer.class)).thenReturn(false);
-        when(settings.isSetDefaultValueForMissingFields()).thenReturn(false);
+        when(settings.isSetDefaultValueForMissingField()).thenReturn(false);
 
         setField(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
         setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
@@ -373,7 +373,7 @@ public class TransformerTest extends AbstractTransformerTest {
         verify(cacheManager).getFromCache(anyString(), any(Class.class));
         verify(reflectionUtils).getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class);
         verify(classUtils).isPrimitiveType(FromFooSimple.class);
-        verify(settings).isSetDefaultValueForMissingFields();
+        verify(settings).isSetDefaultValueForMissingField();
         assertNotNull(raisedException);
         assertEquals(MissingFieldException.class, raisedException.getCause().getClass());
         restoreUnderTestObject();
