@@ -53,7 +53,7 @@
             <item name="DZone" href="https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li" />
             <item name="InfoQ" collapse="true" href="index.html">
                 <item name="English" href="https://www.infoq.com/articles/expedia-rid-of-bean-transformers/" />
-                <item name="Portuguese" href="https://www.infoq.com/articles/expedia-rid-of-bean-transformers/" />
+                <item name="Portuguese" href="https://www.infoq.com/br/articles/expedia-rid-of-bean-transformers/" />
             </item>
         </menu>
         <menu ref="reports" />
