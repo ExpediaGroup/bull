@@ -1,0 +1,13 @@
+com/hotels/beans/conversion/processor/impl/BooleanConversionProcessorTest.class
+com/hotels/beans/conversion/processor/impl/AbstractConversionProcessorTest.class
+com/hotels/beans/conversion/ConverterTest.class
+com/hotels/beans/conversion/processor/impl/IntegerConversionProcessorTest.class
+com/hotels/beans/conversion/processor/impl/ByteConversionProcessorTest.class
+com/hotels/beans/conversion/analyzer/ConversionAnalyzerTest.class
+com/hotels/beans/conversion/processor/impl/CharacterConversionProcessorTest.class
+com/hotels/beans/conversion/processor/impl/ShortConversionProcessorTest.class
+com/hotels/beans/conversion/processor/impl/DoubleConversionProcessorTest.class
+com/hotels/beans/conversion/processor/impl/LongConversionProcessorTest.class
+com/hotels/beans/conversion/processor/ConversionProcessorFactoryTest.class
+com/hotels/beans/conversion/processor/impl/StringConversionProcessorTest.class
+com/hotels/beans/conversion/processor/impl/FloatConversionProcessorTest.class

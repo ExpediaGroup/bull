@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LongConversionProcessor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Converter</a> &gt; <a href="index.source.html" class="el_package">com.hotels.beans.conversion.processor.impl</a> &gt; <span class="el_source">LongConversionProcessor.java</span></div><h1>LongConversionProcessor.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.beans.conversion.processor.impl;
+
+import static java.lang.Character.getNumericValue;
+import static java.lang.Long.valueOf;
+
+import java.util.function.Function;
+
+import com.hotels.beans.conversion.processor.ConversionProcessor;
+
+/**
+ * Provides all method for converting any primitive type to a {@link Long}.
+ */
+<span class="fc" id="L29">public final class LongConversionProcessor implements ConversionProcessor&lt;Long&gt; {</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Byte, Long&gt; convertByte() {
+<span class="fc" id="L36">        return Byte::longValue;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Short, Long&gt; convertShort() {
+<span class="fc" id="L44">        return Short::longValue;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Integer, Long&gt; convertInteger() {
+<span class="fc" id="L52">        return Integer::longValue;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Long, Long&gt; convertLong() {
+<span class="fc" id="L60">        return Long::longValue;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Float, Long&gt; convertFloat() {
+<span class="fc" id="L68">        return Float::longValue;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Double, Long&gt; convertDouble() {
+<span class="fc" id="L76">        return Double::longValue;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Character, Long&gt; convertCharacter() {
+<span class="fc" id="L84">        return val -&gt; valueOf(getNumericValue(val));</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Boolean, Long&gt; convertBoolean() {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        return val -&gt; valueOf(val ? (long) 1 : (long) 0);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;String, Long&gt; convertString() {
+<span class="fc" id="L100">        return Long::valueOf;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
