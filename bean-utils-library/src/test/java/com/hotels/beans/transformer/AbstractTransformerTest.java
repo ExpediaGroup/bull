@@ -19,6 +19,8 @@ package com.hotels.beans.transformer;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
+import static org.mockito.MockitoAnnotations.initMocks;
+
 import static com.hotels.beans.constant.ClassType.IMMUTABLE;
 
 import java.math.BigDecimal;
@@ -29,7 +31,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooAdvFields;
@@ -86,11 +90,25 @@ public abstract class AbstractTransformerTest {
     private static FromSubFoo fromSubFoo;
 
     /**
+     * The class to be tested.
+     */
+    @InjectMocks
+    TransformerImpl underTest;
+
+    /**
      * Initializes the arguments and objects.
      */
     @BeforeClass
     public void beforeClass() {
         initObjects();
+    }
+
+    /**
+     * Initialized mocks.
+     */
+    @BeforeMethod
+    public void beforeMethod() {
+        initMocks(this);
     }
 
     /**

@@ -27,7 +27,6 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
@@ -39,9 +38,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import org.mockito.InjectMocks;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -81,20 +78,6 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
     private static final String NET_PRICE_FIELD_NAME = "price.netPrice";
     private static final String GROSS_PRICE_FIELD_NAME = "price.grossPrice";
     private static final boolean ACTIVE = true;
-
-    /**
-     * The class to be tested.
-     */
-    @InjectMocks
-    private TransformerImpl underTest;
-
-    /**
-     * Initialized mocks.
-     */
-    @BeforeMethod
-    public void beforeMethod() {
-        initMocks(this);
-    }
 
     @AfterMethod
     public void afterMethod() {

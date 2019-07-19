@@ -34,7 +34,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import java.lang.reflect.Constructor;
@@ -44,8 +43,6 @@ import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Map;
 
-import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -76,20 +73,6 @@ public class TransformerTest extends AbstractTransformerTest {
     private static final String GET_TRANSFORMER_FUNCTION_METHOD_NAME = "getTransformerFunction";
     private static final String CONVERSION_ANALYZER_FIELD_NAME = "conversionAnalyzer";
     private static final String GET_CONSTRUCTOR_ARGS_VALUES_METHOD_NAME = "getConstructorArgsValues";
-
-    /**
-     * The class to be tested.
-     */
-    @InjectMocks
-    private TransformerImpl underTest;
-
-    /**
-     * Initialized mocks.
-     */
-    @BeforeMethod
-    public void beforeMethod() {
-        initMocks(this);
-    }
 
     /**
      * Test that is possible to remove a field mapping for a given field.
