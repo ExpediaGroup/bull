@@ -23,12 +23,9 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
-import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -51,20 +48,6 @@ import com.hotels.beans.sample.mutable.MutableToFooSubClass;
  */
 public class MutableObjectTransformationTest extends AbstractTransformerTest {
     private static final boolean ACTIVE = true;
-
-    /**
-     * The class to be tested.
-     */
-    @InjectMocks
-    private TransformerImpl underTest;
-
-    /**
-     * Initialized mocks.
-     */
-    @BeforeMethod
-    public void beforeMethod() {
-        initMocks(this);
-    }
 
     /**
      * Test that an exception is thrown if there is no default constructor defined for the mutable bean object.
