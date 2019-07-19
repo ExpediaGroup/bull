@@ -21,7 +21,6 @@ import static java.math.BigInteger.ZERO;
 import static java.util.Collections.emptyMap;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
-import static java.util.Optional.ofNullable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -54,6 +53,7 @@ import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.mutable.MutableToFooAdvFields;
+import com.hotels.beans.sample.mutable.MutableToFooSimple;
 import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
 
@@ -371,11 +371,12 @@ public class TransformerTest extends AbstractTransformerTest {
         ConversionAnalyzer conversionAnalyzer = mock(ConversionAnalyzer.class);
         ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
 
-        when(cacheManager.getFromCache(anyString(), any(Class.class))).thenReturn(ofNullable(sourceFieldType));
+        when(cacheManager.getFromCache(anyString(), any())).thenReturn(empty());
         when(settings.isFlatFieldNameTransformation()).thenReturn(false);
         when(settings.isDefaultPrimitiveTypeConversionEnabled()).thenReturn(isDefaultPrimitiveTypeConversionEnabled);
         when(settings.getFieldsTransformers()).thenReturn(fieldTransformers);
         when(conversionAnalyzer.getConversionFunction(any(Class.class), any(Class.class))).thenReturn(of(Object::toString));
+        when(field.getName()).thenReturn(fieldName);
         when(field.getType()).thenReturn(sourceFieldType);
         when(reflectionUtils.getDeclaredFieldType(fieldName, FromFooSimple.class)).thenReturn(sourceFieldType);
 
@@ -385,12 +386,12 @@ public class TransformerTest extends AbstractTransformerTest {
         setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
 
         Method getTransformerFunctionMethod = underTest.getClass()
-                .getDeclaredMethod(GET_TRANSFORMER_FUNCTION_METHOD_NAME, Class.class, String.class, Field.class, boolean.class, String.class);
+                .getDeclaredMethod(GET_TRANSFORMER_FUNCTION_METHOD_NAME, Class.class, String.class, Class.class, Field.class, boolean.class, String.class);
         getTransformerFunctionMethod.setAccessible(true);
 
         //WHEN
-        List<FieldTransformer> actual =
-                (List<FieldTransformer>) getTransformerFunctionMethod.invoke(underTest, FromFooSimple.class, fieldName, field, isDestinationFieldPrimitiveType, fieldName);
+        List<FieldTransformer> actual = (List<FieldTransformer>)
+                getTransformerFunctionMethod.invoke(underTest, FromFooSimple.class, fieldName, MutableToFooSimple.class, field, isDestinationFieldPrimitiveType, fieldName);
 
         //THEN
         assertEquals(expectedFieldTransformerSize, actual.size());
@@ -404,16 +405,16 @@ public class TransformerTest extends AbstractTransformerTest {
     @DataProvider
     private Object[][] dataGetTransformerFunctionTesting() {
         return new Object[][] {
-                {"Test that a type conversion function is added to the existing one if all the conditions are met",
-                        AGE_FIELD_NAME, true, true, emptyMap(), int.class, ONE.intValue()},
-                {"Test that no type conversion function is added to the existing one if the source type field is null",
-                        AGE_FIELD_NAME, true, true, emptyMap(), null, ZERO.intValue()},
-                {"Test that no conversion function is added to the existing one if the primitive type conversion is disabled",
-                        AGE_FIELD_NAME, false, true, emptyMap(), null, ZERO.intValue()},
-                {"Test that no conversion function is added to the existing one if the destination field type is not primitive",
-                        AGE_FIELD_NAME, true, false, emptyMap(), null, ZERO.intValue()},
-                {"Test that no conversion function is added to the existing one if there is a field transformer function defined for the existing field",
-                        AGE_FIELD_NAME, true, true, Map.of(AGE_FIELD_NAME, new FieldTransformer<>(AGE_FIELD_NAME, () -> null)), null, ONE.intValue()}
+            {"Test that a type conversion function is added to the existing one if all the conditions are met",
+                    AGE_FIELD_NAME, true, true, emptyMap(), int.class, ONE.intValue()},
+            {"Test that no type conversion function is added to the existing one if the source type field is null",
+                    AGE_FIELD_NAME, true, true, emptyMap(), null, ZERO.intValue()},
+            {"Test that no conversion function is added to the existing one if the primitive type conversion is disabled",
+                    AGE_FIELD_NAME, false, true, emptyMap(), null, ZERO.intValue()},
+            {"Test that no conversion function is added to the existing one if the destination field type is not primitive",
+                    AGE_FIELD_NAME, true, false, emptyMap(), null, ZERO.intValue()},
+            {"Test that no conversion function is added to the existing one if there is a field transformer function defined for the existing field",
+                    AGE_FIELD_NAME, true, true, Map.of(AGE_FIELD_NAME, new FieldTransformer<>(AGE_FIELD_NAME, () -> null)), null, ONE.intValue()}
         };
     }
 
