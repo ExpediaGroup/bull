@@ -431,13 +431,13 @@ public class TransformerImpl extends AbstractTransformer {
         List<FieldTransformer> fieldTransformers = new ArrayList<>();
         String fieldTransformerKey = settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;
         FieldTransformer fieldTransformer = settings.getFieldsTransformers().get(fieldTransformerKey);
-        boolean hasFieldTransformerDefined = nonNull(fieldTransformer);
+        boolean isFieldTransformerDefined = nonNull(fieldTransformer);
         FieldTransformer defaultPrimitiveTypeTransformer = getDefaultPrimitiveTypeTransformer(sourceObjectClass, sourceFieldName, targetClass, field,
-                        isDestinationFieldPrimitiveType, fieldTransformerKey, hasFieldTransformerDefined);
+                        isDestinationFieldPrimitiveType, fieldTransformerKey, isFieldTransformerDefined);
         if (nonNull(defaultPrimitiveTypeTransformer)) {
             fieldTransformers.add(defaultPrimitiveTypeTransformer);
         }
-        if (hasFieldTransformerDefined) {
+        if (isFieldTransformerDefined) {
             fieldTransformers.add(fieldTransformer);
         }
         return fieldTransformers;
@@ -451,19 +451,19 @@ public class TransformerImpl extends AbstractTransformer {
      * @param field the field on which the transformation should be applied.
      * @param isDestinationFieldPrimitiveType indicates if the destination field type is primitive or not
      * @param fieldTransformerKey the field name or the full path to the field to which assign the transformer
-     * @param hasFieldTransformerDefined indicates if there is a transformer defined
+     * @param isFieldTransformerDefined indicates if there is a transformer defined
      * @param <K> the target object type
      * @return the default type transformer function
      */
     private <K> FieldTransformer getDefaultPrimitiveTypeTransformer(final Class<?> sourceObjectClass, final String sourceFieldName, final Class<K> targetClass,
-        final Field field, final boolean isDestinationFieldPrimitiveType, final String fieldTransformerKey, final boolean hasFieldTransformerDefined) {
+        final Field field, final boolean isDestinationFieldPrimitiveType, final String fieldTransformerKey, final boolean isFieldTransformerDefined) {
         String cacheKey = TRANSFORMER_FUNCTION_CACHE_PREFIX + "-" + targetClass
-                + "-" + fieldTransformerKey + "-" + hasFieldTransformerDefined
+                + "-" + fieldTransformerKey + "-" + isFieldTransformerDefined
                 + "-" + settings.isDefaultPrimitiveTypeConversionEnabled() + "-" + field.getName();
         return cacheManager.getFromCache(cacheKey, FieldTransformer.class)
                 .orElseGet(() -> {
                     FieldTransformer defaultPrimitiveTypeTransformer = null;
-                    if (settings.isDefaultPrimitiveTypeConversionEnabled() && isDestinationFieldPrimitiveType && !hasFieldTransformerDefined) {
+                    if (settings.isDefaultPrimitiveTypeConversionEnabled() && isDestinationFieldPrimitiveType && !isFieldTransformerDefined) {
                         Class<?> sourceFieldType = getSourceFieldType(sourceObjectClass, sourceFieldName);
                         if (nonNull(sourceFieldType)) {
                             defaultPrimitiveTypeTransformer = conversionAnalyzer.getConversionFunction(sourceFieldType, field.getType())
