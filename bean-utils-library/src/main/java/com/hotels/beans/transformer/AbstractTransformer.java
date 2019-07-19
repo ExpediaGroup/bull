@@ -18,8 +18,8 @@ package com.hotels.beans.transformer;
 
 import static java.util.Arrays.asList;
 
-import static com.hotels.beans.validator.Validator.notNull;
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.beans.validator.Validator.notNull;
 
 import java.util.Map;
 
@@ -37,6 +37,16 @@ import com.hotels.beans.validator.ValidatorImpl;
  * Contains all method implementation that will be common to any {@link Transformer} implementation.
  */
 abstract class AbstractTransformer implements Transformer {
+    /**
+     * The cache key prefix for the Transformer Functions.
+     */
+    static final String TRANSFORMER_FUNCTION_CACHE_PREFIX = "TransformerFunction";
+
+    /**
+     * A regex that returns all the transformer function cached items.
+     */
+    private static final String TRANSFORMER_FUNCTION_REGEX = "^" + TRANSFORMER_FUNCTION_CACHE_PREFIX + ".*";
+
     /**
      * Reflection utils instance {@link ReflectionUtils}.
      */
@@ -125,6 +135,7 @@ abstract class AbstractTransformer implements Transformer {
     public final void removeFieldTransformer(final String destFieldName) {
         notNull(destFieldName, "The field name for which the transformer function has to be removed cannot be null!");
         settings.getFieldsTransformers().remove(destFieldName);
+        cacheManager.removeMatchingKeys(TRANSFORMER_FUNCTION_REGEX + destFieldName);
     }
 
     /**
@@ -133,6 +144,7 @@ abstract class AbstractTransformer implements Transformer {
     @Override
     public final void resetFieldsTransformer() {
         settings.getFieldsTransformers().clear();
+        cacheManager.removeMatchingKeys(TRANSFORMER_FUNCTION_REGEX);
     }
 
     /**
