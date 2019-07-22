@@ -18,13 +18,13 @@ jobs:
     # If the branch is not master it just builds the application
     - stage: "Build"
       name: "Build and Test"
-      install: travis_retry mvn clean install -DskipTests
+      install: travis_retry mvn clean install -DskipTests -P transformer-generator
     - stage: "Site Build and Quality check"
       name: "Publishing site and performing a code quality check"
       if: type NOT IN (pull_request) AND tag IS present
       before_deploy:
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
-        - travis_retry mvn install sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} site:site javadoc:aggregate -P site-release
+        - travis_retry mvn install sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} site:site javadoc:aggregate -P transformer-generator,site-release
       deploy:
         provider: pages
         local-dir: target/site
@@ -41,7 +41,7 @@ jobs:
       before_script:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
-        - mvn install -DskipTests -Dmaven.test.skip=true javadoc:aggregate
+        - mvn install -Dmaven.test.skip=true -P transformer-generator javadoc:aggregate
       deploy:
         - provider: script
           script: config/travis/deploy.sh
