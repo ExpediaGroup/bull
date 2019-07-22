@@ -219,16 +219,16 @@ public class TransformerTest extends AbstractTransformerTest {
      * Test that the primitive type conversion is correctly enabled.
      */
     @Test
-    public void testThatDefaultPrimitiveTypeConversionIsCorrectlyEnabled() {
+    public void testThatPrimitiveTypeConversionIsCorrectlyEnabled() {
         //GIVEN
-        underTest.setDefaultPrimitiveTypeConversionEnabled(true);
+        underTest.setPrimitiveTypeConversionEnabled(true);
 
         //WHEN
-        boolean actual = underTest.settings.isDefaultPrimitiveTypeConversionEnabled();
+        boolean actual = underTest.settings.isPrimitiveTypeConversionEnabled();
 
         //THEN
         assertTrue(actual);
-        underTest.setDefaultPrimitiveTypeConversionEnabled(false);
+        underTest.setPrimitiveTypeConversionEnabled(false);
     }
 
     /**
@@ -352,7 +352,7 @@ public class TransformerTest extends AbstractTransformerTest {
      * Test that the {@code getTransformerFunction} works as expected.
      * @param testCaseDescription the test case description
      * @param fieldName the field name to which the transformer function has to be applied
-     * @param isDefaultPrimitiveTypeConversionEnabled indicates if the automatic conversion function is enabled
+     * @param isPrimitiveTypeConversionEnabled indicates if the automatic conversion function is enabled
      * @param isDestinationFieldPrimitiveType indicates if the destination field type is primitive or not
      * @param fieldTransformers the field transformer associated to the given field
      * @param sourceFieldType the source field type
@@ -361,7 +361,7 @@ public class TransformerTest extends AbstractTransformerTest {
      */
     @Test(dataProvider = "dataGetTransformerFunctionTesting")
     @SuppressWarnings("unchecked")
-    public void testGetTransformerFunctionWorksProperly(final String testCaseDescription, final String fieldName, final boolean isDefaultPrimitiveTypeConversionEnabled,
+    public void testGetTransformerFunctionWorksProperly(final String testCaseDescription, final String fieldName, final boolean isPrimitiveTypeConversionEnabled,
         final boolean isDestinationFieldPrimitiveType, final Map<String, FieldTransformer> fieldTransformers, final Class sourceFieldType, final int expectedFieldTransformerSize)
         throws Exception {
         //GIVEN
@@ -373,7 +373,7 @@ public class TransformerTest extends AbstractTransformerTest {
 
         when(cacheManager.getFromCache(anyString(), any())).thenReturn(empty());
         when(settings.isFlatFieldNameTransformation()).thenReturn(false);
-        when(settings.isDefaultPrimitiveTypeConversionEnabled()).thenReturn(isDefaultPrimitiveTypeConversionEnabled);
+        when(settings.isPrimitiveTypeConversionEnabled()).thenReturn(isPrimitiveTypeConversionEnabled);
         when(settings.getFieldsTransformers()).thenReturn(fieldTransformers);
         when(conversionAnalyzer.getConversionFunction(any(Class.class), any(Class.class))).thenReturn(of(Object::toString));
         when(field.getName()).thenReturn(fieldName);
@@ -505,11 +505,11 @@ public class TransformerTest extends AbstractTransformerTest {
         // GIVEN
 
         // WHEN
-        underTest.setDefaultPrimitiveTypeConversionEnabled(autoConversionEnabled);
+        underTest.setPrimitiveTypeConversionEnabled(autoConversionEnabled);
 
         // THEN
         assertEquals(expectedNull, underTest.conversionAnalyzer == null);
-        underTest.setDefaultPrimitiveTypeConversionEnabled(false);
+        underTest.setPrimitiveTypeConversionEnabled(false);
     }
 
     /**
