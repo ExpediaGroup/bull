@@ -16,7 +16,7 @@
     <modules>
         <module>transformer-bytecode-adapter</module>
         <module>transformer-source-adapter</module>
-        <module>transformer-generator-registry</module>
+        <module>transformer-registry</module>
         <module>transformer-generator-core</module>
     </modules>
 
