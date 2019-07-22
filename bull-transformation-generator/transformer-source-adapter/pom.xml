@@ -4,7 +4,7 @@
     <name>BULL - Transformer Source Adapter</name>
     <artifactId>transformer-source-adapter</artifactId>
     <packaging>jar</packaging>
-    <description>Transformer Source Adapter</description>
+    <description>Takes the transformers generated from the Core module and write them into files.</description>
 
     <parent>
         <groupId>com.hotels.beans</groupId>

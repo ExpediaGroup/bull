@@ -4,7 +4,7 @@
     <name>BULL - Transformer Registry</name>
     <artifactId>transformer-registry</artifactId>
     <packaging>jar</packaging>
-    <description>Transformer Registry</description>
+    <description>Map the generated transformers instances with a (source, destination) type pair.</description>
 
     <parent>
         <groupId>com.hotels.beans</groupId>

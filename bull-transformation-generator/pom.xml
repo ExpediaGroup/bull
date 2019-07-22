@@ -5,7 +5,7 @@
     <artifactId>bull-transformer-generator-parent</artifactId>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
-    <description>TODO: description</description>
+    <description>Generate Java Bean Transformers in the form of source code and/or bytecode.</description>
 
     <parent>
         <groupId>com.hotels.beans</groupId>
@@ -19,6 +19,4 @@
         <module>transformer-registry</module>
         <module>transformer-generator-core</module>
     </modules>
-
-
 </project>

@@ -4,7 +4,10 @@
     <name>BULL - Transformer Generator Core</name>
     <artifactId>transformer-generator-core</artifactId>
     <packaging>jar</packaging>
-    <description>Contains the core functions required for the transformer generation</description>
+    <description>
+        Contains the core functions required for the transformer generation.
+        Analyzes the source class and generates a Transformer that maps a given Java Bean type into another one.
+    </description>
 
     <parent>
         <groupId>com.hotels.beans</groupId>

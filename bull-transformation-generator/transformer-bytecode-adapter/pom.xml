@@ -4,7 +4,9 @@
     <name>BULL - Transformer Bytecode Adapter</name>
     <artifactId>transformer-bytecode-adapter</artifactId>
     <packaging>jar</packaging>
-    <description>Transformer Bytecode Adapter</description>
+    <description>
+        Takes the Transformers generated from the Core module, compiles them and then loads everything in memory
+    </description>
 
     <parent>
         <groupId>com.hotels.beans</groupId>
