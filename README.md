@@ -554,7 +554,7 @@ functionality described above.
 
 ~~~Java
 Transformer transformer = beanUtils.getTransformer()
-                             .setDefaultPrimitiveTypeConversionEnabled(true);
+                             .setPrimitiveTypeConversionEnabled(true);
 
 ToBean toBean = transformer.transform(fromBean, ToBean.class);
 ~~~
