@@ -31,6 +31,8 @@ import static com.hotels.beans.utils.ClassUtils.isLong;
 import static com.hotels.beans.utils.ClassUtils.isShort;
 import static com.hotels.beans.utils.ClassUtils.isString;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -106,6 +108,10 @@ public final class ConversionAnalyzer {
             conversionFunction = of(conversionProcessor.convertCharacter());
         } else if (isBoolean(sourceFieldType)) {
             conversionFunction = of(conversionProcessor.convertBoolean());
+        } else if (sourceFieldType == BigInteger.class) {
+            conversionFunction = of(conversionProcessor.convertBigInteger());
+        } else if (sourceFieldType == BigDecimal.class) {
+            conversionFunction = of(conversionProcessor.convertBigDecimal());
         }
         return conversionFunction;
     }
