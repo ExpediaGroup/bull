@@ -297,7 +297,7 @@
         <profile>
             <id>transformer-generator</id>
             <modules>
-                <module>bull-transformation-generator</module>
+                <module>bull-transformer-generator</module>
             </modules>
         </profile>
     </profiles>
