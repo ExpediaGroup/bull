@@ -293,6 +293,13 @@
                 </plugins>
             </build>
         </profile>
+        <!-- Transformer generation project profile -->
+        <profile>
+            <id>transformer-generator</id>
+            <modules>
+                <module>bull-transformer-generator</module>
+            </modules>
+        </profile>
     </profiles>
 
     <!-- build configuration -->
