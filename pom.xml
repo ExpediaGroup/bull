@@ -44,7 +44,7 @@
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <glassfish.javax.el.version>2.2.6</glassfish.javax.el.version>
         <!-- JaCoCo properties -->
-        <jacoco.version>0.8.2</jacoco.version>
+        <jacoco.version>0.8.4</jacoco.version>
         <jacoco.classRatio>0.85</jacoco.classRatio>
         <jacoco.instructionRatio>0.85</jacoco.instructionRatio>
         <jacoco.methodRatio>0.85</jacoco.methodRatio>
