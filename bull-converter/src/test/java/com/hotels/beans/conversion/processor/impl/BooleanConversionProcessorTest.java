@@ -21,6 +21,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -249,5 +252,63 @@ public class BooleanConversionProcessorTest extends AbstractConversionProcessorT
 
         // THEN
         assertTrue(actual);
+    }
+
+    /**
+     * Tests that the method {@code convertBigInteger} returns the expected boolean.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "bigIntegerToBooleanConvertValueTesting")
+    public void testConvertBigIntegerShouldReturnProperResult(final String testCaseDescription, final BigInteger valueToConvert, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.convertBigInteger().apply(valueToConvert);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertFloat} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertFloat} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] bigIntegerToBooleanConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns true if the value is not 0", BigInteger.ONE, true},
+                {"Tests that the method returns false if the value is 0", BigInteger.ZERO, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code convertBigDecimal} returns the expected boolean.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "bigDecimalToBooleanConvertValueTesting")
+    public void testConvertBigIntegerShouldReturnProperResult(final String testCaseDescription, final BigDecimal valueToConvert, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.convertBigDecimal().apply(valueToConvert);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertFloat} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertFloat} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] bigDecimalToBooleanConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns true if the value is not 0", BigDecimal.ONE, true},
+                {"Tests that the method returns false if the value is 0", BigDecimal.ZERO, false}
+        };
     }
 }

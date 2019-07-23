@@ -16,6 +16,8 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
@@ -24,7 +26,6 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
  * Provides all method for converting any primitive type to a {@link Character}.
  */
 public final class CharacterConversionProcessor implements ConversionProcessor<Character> {
-
     /**
      * {@inheritDoc}
      */
@@ -95,5 +96,21 @@ public final class CharacterConversionProcessor implements ConversionProcessor<C
     @Override
     public Function<String, Character> convertString() {
         return val -> val.charAt(0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigInteger, Character> convertBigInteger() {
+        return val -> (char) val.intValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigDecimal, Character> convertBigDecimal() {
+        return val -> (char) val.doubleValue();
     }
 }

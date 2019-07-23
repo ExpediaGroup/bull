@@ -18,6 +18,8 @@ package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Integer.valueOf;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
@@ -26,7 +28,9 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
  * Provides all method for converting any primitive type to a {@link Integer}.
  */
 public final class IntegerConversionProcessor implements ConversionProcessor<Integer> {
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Function<Byte, Integer> convertByte() {
         return Byte::intValue;
@@ -94,5 +98,21 @@ public final class IntegerConversionProcessor implements ConversionProcessor<Int
     @Override
     public Function<String, Integer> convertString() {
         return Integer::valueOf;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigInteger, Integer> convertBigInteger() {
+        return BigInteger::intValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigDecimal, Integer> convertBigDecimal() {
+        return BigDecimal::intValue;
     }
 }

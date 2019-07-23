@@ -22,7 +22,7 @@ import java.util.function.Function;
 
 /**
  * Conversion methods for all primitive types.
- * @param <T> indicates any primitve type object
+ * @param <T> indicates any primitive type object
  */
 public interface ConversionProcessor<T> {
     /**

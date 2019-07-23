@@ -16,6 +16,8 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
@@ -24,6 +26,9 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
  * Provides all method for converting any primitive type to a {@link Boolean}.
  */
 public final class BooleanConversionProcessor implements ConversionProcessor<Boolean> {
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Function<Byte, Boolean> convertByte() {
         return val -> val != 0;
@@ -91,5 +96,21 @@ public final class BooleanConversionProcessor implements ConversionProcessor<Boo
     @Override
     public Function<String, Boolean> convertString() {
         return Boolean::valueOf;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigInteger, Boolean> convertBigInteger() {
+        return val -> val.intValue() != 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigDecimal, Boolean> convertBigDecimal() {
+        return val -> val.intValue() != 0;
     }
 }
