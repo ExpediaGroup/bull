@@ -16,6 +16,8 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
@@ -24,7 +26,6 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
  * Provides all method for converting any primitive type to a {@link String}.
  */
 public final class StringConversionProcessor implements ConversionProcessor<String> {
-
     /**
      * {@inheritDoc}
      */
@@ -95,5 +96,21 @@ public final class StringConversionProcessor implements ConversionProcessor<Stri
     @Override
     public Function<String, String> convertString() {
         return val -> val;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigInteger, String> convertBigInteger() {
+        return BigInteger::toString;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigDecimal, String> convertBigDecimal() {
+        return BigDecimal::toPlainString;
     }
 }

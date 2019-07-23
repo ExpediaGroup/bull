@@ -243,7 +243,7 @@ public final class ClassUtils {
      * @return true if is String
      */
     public static boolean isString(final Class<?> type) {
-        return String.class.isAssignableFrom(type);
+        return type == String.class;
     }
 
     /**

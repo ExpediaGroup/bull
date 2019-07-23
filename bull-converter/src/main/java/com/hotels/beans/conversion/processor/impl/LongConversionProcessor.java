@@ -19,6 +19,8 @@ package com.hotels.beans.conversion.processor.impl;
 import static java.lang.Character.getNumericValue;
 import static java.lang.Long.valueOf;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
@@ -27,7 +29,6 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
  * Provides all method for converting any primitive type to a {@link Long}.
  */
 public final class LongConversionProcessor implements ConversionProcessor<Long> {
-
     /**
      * {@inheritDoc}
      */
@@ -98,5 +99,21 @@ public final class LongConversionProcessor implements ConversionProcessor<Long> 
     @Override
     public Function<String, Long> convertString() {
         return Long::valueOf;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigInteger, Long> convertBigInteger() {
+        return BigInteger::longValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigDecimal, Long> convertBigDecimal() {
+        return BigDecimal::longValue;
     }
 }

@@ -1,6 +1,23 @@
+/**
+ * Copyright (C) 2019 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Integer.valueOf;
+import static java.lang.Character.getNumericValue;
+import static java.math.BigInteger.valueOf;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -8,16 +25,16 @@ import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
-import lombok.val;
-
 /**
  * Provides all method for converting any primitive type to a {@link BigInteger}.
  */
-public class BigIntegerConversionProcessor implements ConversionProcessor<BigInteger> {
-
+public final class BigIntegerConversionProcessor implements ConversionProcessor<BigInteger> {
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Function<Byte, BigInteger> convertByte() {
-        return Byte::intValue;
+        return val -> valueOf(val.longValue());
     }
 
     /**
@@ -25,7 +42,7 @@ public class BigIntegerConversionProcessor implements ConversionProcessor<BigInt
      */
     @Override
     public Function<Short, BigInteger> convertShort() {
-        return Short::intValue;
+        return BigInteger::valueOf;
     }
 
     /**
@@ -33,7 +50,7 @@ public class BigIntegerConversionProcessor implements ConversionProcessor<BigInt
      */
     @Override
     public Function<Integer, BigInteger> convertInteger() {
-        return val -> val;
+        return BigInteger::valueOf;
     }
 
     /**
@@ -41,7 +58,7 @@ public class BigIntegerConversionProcessor implements ConversionProcessor<BigInt
      */
     @Override
     public Function<Long, BigInteger> convertLong() {
-        return Long::intValue;
+        return BigInteger::valueOf;
     }
 
     /**
@@ -49,7 +66,7 @@ public class BigIntegerConversionProcessor implements ConversionProcessor<BigInt
      */
     @Override
     public Function<Float, BigInteger> convertFloat() {
-        return Float::intValue;
+        return val -> valueOf(val.intValue());
     }
 
     /**
@@ -57,7 +74,7 @@ public class BigIntegerConversionProcessor implements ConversionProcessor<BigInt
      */
     @Override
     public Function<Double, BigInteger> convertDouble() {
-        return Double::intValue;
+        return val -> valueOf(val.intValue());
     }
 
     /**
@@ -65,7 +82,7 @@ public class BigIntegerConversionProcessor implements ConversionProcessor<BigInt
      */
     @Override
     public Function<Character, BigInteger> convertCharacter() {
-        return Character::getNumericValue;
+        return val -> valueOf(getNumericValue(val));
     }
 
     /**
@@ -81,22 +98,22 @@ public class BigIntegerConversionProcessor implements ConversionProcessor<BigInt
      */
     @Override
     public Function<String, BigInteger> convertString() {
-        return Integer::valueOf;
+        return BigInteger::new;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<BigInteger, BigBigInteger> convertBigInteger() {
-        return null;
+    public Function<BigInteger, BigInteger> convertBigInteger() {
+        return val -> val;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<BigDecimal, BigBigInteger> convertBigDecimal() {
-        return null;
+    public Function<BigDecimal, BigInteger> convertBigDecimal() {
+        return BigDecimal::toBigInteger;
     }
 }

@@ -18,6 +18,8 @@ package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Byte.valueOf;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
@@ -26,7 +28,6 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
  * Provides all method for converting any primitive type to a {@link Byte}.
  */
 public final class ByteConversionProcessor implements ConversionProcessor<Byte> {
-
     /**
      * {@inheritDoc}
      */
@@ -97,5 +98,21 @@ public final class ByteConversionProcessor implements ConversionProcessor<Byte> 
     @Override
     public Function<String, Byte> convertString() {
         return Byte::valueOf;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigInteger, Byte> convertBigInteger() {
+        return Number::byteValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigDecimal, Byte> convertBigDecimal() {
+        return Number::byteValue;
     }
 }

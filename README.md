@@ -708,6 +708,8 @@ The supported types, in which an object can be converted (from / to), are:
 * `Long` or `long`
 * `Float` or `float`
 * `Double` or `double`
+* `BigDecimal`
+* `BigInteger`
 * `Character` or `char`
 * `Boolean` or `boolean`
 * `String`
