@@ -22,6 +22,9 @@ import static java.lang.Short.valueOf;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -163,5 +166,29 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
 
         // THEN
         assertEquals(valueOf(STRING_VALUE), actual);
+    }
+
+    @Test
+    public void testConvertBigIntegerShouldReturnProperResult() {
+        // GIVEN
+        short expectedValue = BigInteger.ZERO.shortValue();
+
+        // WHEN
+        short actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual);
+    }
+
+    @Test
+    public void testConvertBigDecimalShouldReturnProperResult() {
+        // GIVEN
+        short expectedValue = BigDecimal.ZERO.shortValue();
+
+        // WHEN
+        short actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual);
     }
 }

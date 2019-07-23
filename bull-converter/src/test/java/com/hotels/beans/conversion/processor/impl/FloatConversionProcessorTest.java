@@ -22,6 +22,9 @@ import static java.lang.Float.valueOf;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -33,6 +36,7 @@ import org.testng.annotations.Test;
 public class FloatConversionProcessorTest extends AbstractConversionProcessorTest {
     private static final float TRUE_AS_FLOAT = 1f;
     private static final float FALSE_AS_FLOAT = 0f;
+    private static final double DELTA = 0.0;
 
     /**
      * The class to be tested.
@@ -139,7 +143,7 @@ public class FloatConversionProcessorTest extends AbstractConversionProcessorTes
         Float actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual, 0.0);
+        assertEquals(expectedResult, actual, DELTA);
     }
 
     /**
@@ -163,6 +167,30 @@ public class FloatConversionProcessorTest extends AbstractConversionProcessorTes
 
         // THEN
         assertEquals(valueOf(STRING_VALUE), actual);
+    }
+
+    @Test
+    public void testConvertBigIntegerShouldReturnProperResult() {
+        // GIVEN
+        double expectedValue = BigInteger.ZERO.floatValue();
+
+        // WHEN
+        double actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual, DELTA);
+    }
+
+    @Test
+    public void testConvertBigDecimalShouldReturnProperResult() {
+        // GIVEN
+        float expectedValue = BigDecimal.ZERO.floatValue();
+
+        // WHEN
+        float actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual, DELTA);
     }
 }
 

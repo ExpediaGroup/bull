@@ -35,6 +35,7 @@ import org.testng.annotations.Test;
 public class ByteConversionProcessorTest extends AbstractConversionProcessorTest {
     private static final byte TRUE_AS_BYTE = 1;
     private static final byte FALSE_AS_BYTE = 0;
+
     /**
      * The class to be tested.
      */
@@ -172,10 +173,10 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
         byte expectedValue = BigInteger.ZERO.byteValue();
 
         // WHEN
-        Byte actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+        byte actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual.byteValue());
+        assertEquals(expectedValue, actual);
     }
 
     @Test
@@ -184,9 +185,9 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
         byte expectedValue = BigDecimal.ZERO.byteValue();
 
         // WHEN
-        Byte actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+        byte actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual.byteValue());
+        assertEquals(expectedValue, actual);
     }
 }

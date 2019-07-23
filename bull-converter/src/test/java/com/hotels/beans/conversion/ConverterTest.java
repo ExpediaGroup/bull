@@ -23,6 +23,7 @@ import static java.util.Optional.empty;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Optional;
 import java.util.function.Function;
@@ -50,6 +51,9 @@ public class ConverterTest {
     private static final char CHAR_INT_VALUE = '1';
     private static final byte TRUE_AS_BYTE = 1;
     private static final int TRUE_AS_INT = 1;
+    private static final char BIG_DECIMAL_ZERO_AS_CHAR = (char) BigDecimal.ZERO.doubleValue();
+    private static final char BIG_INTEGER_ZERO_AS_CHAR = (char) BigInteger.ZERO.intValue();
+    private static final double TRUE_AS_DOUBLE = 1.0;
     /**
      * The class to be tested.
      */
@@ -193,6 +197,8 @@ public class ConverterTest {
                 {"Tests that the method returns a boolean value from a char", CHAR_VALUE, boolean.class, Boolean.TRUE},
                 {"Tests that the method returns a boolean value from a Boolean", Boolean.TRUE, boolean.class, Boolean.TRUE},
                 {"Tests that the method returns a boolean value from a String", String.valueOf(Boolean.FALSE), boolean.class, Boolean.FALSE},
+                {"Tests that the method returns a boolean value from a BigInteger", BigInteger.ZERO, boolean.class, Boolean.FALSE},
+                {"Tests that the method returns a boolean value from a BigDecimal", BigDecimal.ZERO, boolean.class, Boolean.FALSE},
                 // byte conversion test cases
                 {"Tests that the method returns a byte value from a byte", Byte.MIN_VALUE, byte.class, Byte.MIN_VALUE},
                 {"Tests that the method returns a byte value from a short", Short.MIN_VALUE, byte.class, Short.valueOf(Short.MIN_VALUE).byteValue()},
@@ -203,6 +209,8 @@ public class ConverterTest {
                 {"Tests that the method returns a byte value from a char", CHAR_VALUE, byte.class, (byte) Character.valueOf(CHAR_VALUE).charValue()},
                 {"Tests that the method returns a byte value from a Boolean", Boolean.TRUE, byte.class, TRUE_AS_BYTE},
                 {"Tests that the method returns a byte value from a String", ONE_AS_STRING, byte.class, Byte.valueOf(ONE_AS_STRING)},
+                {"Tests that the method returns a byte value from a BigInteger", BigInteger.ZERO, byte.class, BigInteger.ZERO.byteValue()},
+                {"Tests that the method returns a byte value from a BigDecimal", BigDecimal.ZERO, byte.class, BigDecimal.ZERO.byteValue()},
                 // char conversion test cases
                 {"Tests that the method returns a char value from a byte", Byte.MIN_VALUE, char.class, (char) Byte.MIN_VALUE},
                 {"Tests that the method returns a char value from a short", Short.MIN_VALUE, char.class, (char) Short.MIN_VALUE},
@@ -213,6 +221,8 @@ public class ConverterTest {
                 {"Tests that the method returns a char value from a char", CHAR_VALUE, char.class, CHAR_VALUE},
                 {"Tests that the method returns a char value from a Boolean", Boolean.TRUE, char.class, CHAR_VALUE},
                 {"Tests that the method returns a char value from a String", ONE_AS_STRING, char.class, ONE_AS_STRING.charAt(0)},
+                {"Tests that the method returns a char value from a BigInteger", BigInteger.ZERO, char.class, BIG_INTEGER_ZERO_AS_CHAR},
+                {"Tests that the method returns a char value from a BigDecimal", BigDecimal.ZERO, char.class, BIG_DECIMAL_ZERO_AS_CHAR},
                 // double conversion test cases
                 {"Tests that the method returns a double value from a byte", Byte.MIN_VALUE, double.class, Byte.valueOf(Byte.MIN_VALUE).doubleValue()},
                 {"Tests that the method returns a double value from a short", Short.MIN_VALUE, double.class, Short.valueOf(Short.MIN_VALUE).doubleValue()},
@@ -223,6 +233,8 @@ public class ConverterTest {
                 {"Tests that the method returns a double value from a char", CHAR_INT_VALUE, double.class, Double.valueOf(String.valueOf(CHAR_INT_VALUE))},
                 {"Tests that the method returns a double value from a Boolean", Boolean.TRUE, double.class, (double) TRUE_AS_INT},
                 {"Tests that the method returns a double value from a String", ONE_AS_STRING, double.class, Double.valueOf(ONE_AS_STRING)},
+                {"Tests that the method returns a double value from a BigInteger", BigInteger.ZERO, double.class, BigInteger.ZERO.doubleValue()},
+                {"Tests that the method returns a double value from a BigDecimal", BigDecimal.ZERO, double.class, BigDecimal.ZERO.doubleValue()},
                 // float conversion test cases
                 {"Tests that the method returns a float value from a byte", Byte.MIN_VALUE, float.class, Byte.valueOf(Byte.MIN_VALUE).floatValue()},
                 {"Tests that the method returns a float value from a short", Short.MIN_VALUE, float.class, Short.valueOf(Short.MIN_VALUE).floatValue()},
@@ -233,6 +245,8 @@ public class ConverterTest {
                 {"Tests that the method returns a float value from a char", CHAR_INT_VALUE, float.class, (float) getNumericValue(CHAR_INT_VALUE)},
                 {"Tests that the method returns a float value from a Boolean", Boolean.TRUE, float.class, (float) TRUE_AS_INT},
                 {"Tests that the method returns a float value from a String", ONE_AS_STRING, float.class, Float.valueOf(ONE_AS_STRING)},
+                {"Tests that the method returns a float value from a BigInteger", BigInteger.ZERO, float.class, BigInteger.ZERO.floatValue()},
+                {"Tests that the method returns a float value from a BigDecimal", BigDecimal.ZERO, float.class, BigDecimal.ZERO.floatValue()},
                 // integer conversion test cases
                 {"Tests that the method returns an int value from a byte", Byte.MIN_VALUE, int.class, Byte.valueOf(Byte.MIN_VALUE).intValue()},
                 {"Tests that the method returns an int value from a short", Short.MIN_VALUE, int.class, Short.valueOf(Short.MIN_VALUE).intValue()},
@@ -243,6 +257,8 @@ public class ConverterTest {
                 {"Tests that the method returns an int value from a char", CHAR_INT_VALUE, int.class, getNumericValue(CHAR_INT_VALUE)},
                 {"Tests that the method returns an int value from a Boolean", Boolean.TRUE, int.class, TRUE_AS_INT},
                 {"Tests that the method returns an int value from a String", ONE_AS_STRING, int.class, Integer.valueOf(ONE_AS_STRING)},
+                {"Tests that the method returns an int value from a BigInteger", BigInteger.ZERO, int.class, BigInteger.ZERO.intValue()},
+                {"Tests that the method returns an int value from a BigDecimal", BigDecimal.ZERO, int.class, BigDecimal.ZERO.intValue()},
                 // long conversion test cases
                 {"Tests that the method returns a long value from a byte", Byte.MIN_VALUE, long.class, Byte.valueOf(Byte.MIN_VALUE).longValue()},
                 {"Tests that the method returns a long value from a short", Short.MIN_VALUE, long.class, Short.valueOf(Short.MIN_VALUE).longValue()},
@@ -253,6 +269,8 @@ public class ConverterTest {
                 {"Tests that the method returns a long value from a char", CHAR_INT_VALUE, long.class, (long) getNumericValue(CHAR_INT_VALUE)},
                 {"Tests that the method returns a long value from a Boolean", Boolean.TRUE, long.class, (long) TRUE_AS_INT},
                 {"Tests that the method returns a long value from a String", ONE_AS_STRING, long.class, Long.valueOf(ONE_AS_STRING)},
+                {"Tests that the method returns a long value from a BigInteger", BigInteger.ZERO, long.class, BigInteger.ZERO.longValue()},
+                {"Tests that the method returns a long value from a BigDecimal", BigDecimal.ZERO, long.class, BigDecimal.ZERO.longValue()},
                 // short conversion test cases
                 {"Tests that the method returns a short value from a byte", Byte.MIN_VALUE, short.class, Byte.valueOf(Byte.MIN_VALUE).shortValue()},
                 {"Tests that the method returns a short value from a short", Short.MIN_VALUE, short.class, Short.MIN_VALUE},
@@ -263,6 +281,8 @@ public class ConverterTest {
                 {"Tests that the method returns a short value from a char", CHAR_INT_VALUE, short.class, (short) getNumericValue(CHAR_INT_VALUE)},
                 {"Tests that the method returns a short value from a Boolean", Boolean.TRUE, short.class, (short) TRUE_AS_INT},
                 {"Tests that the method returns a short value from a String", ONE_AS_STRING, short.class, Short.valueOf(ONE_AS_STRING)},
+                {"Tests that the method returns a short value from a BigInteger", BigInteger.ZERO, short.class, BigInteger.ZERO.shortValue()},
+                {"Tests that the method returns a short value from a BigDecimal", BigDecimal.ZERO, short.class, BigDecimal.ZERO.shortValue()},
                 // string conversion test cases
                 {"Tests that the method returns a String value from a byte", Byte.MIN_VALUE, String.class, Byte.valueOf(Byte.MIN_VALUE).toString()},
                 {"Tests that the method returns a String value from a short", Short.MIN_VALUE, String.class, Short.valueOf(Short.MIN_VALUE).toString()},
@@ -273,6 +293,33 @@ public class ConverterTest {
                 {"Tests that the method returns a String value from a char", CHAR_INT_VALUE, String.class, String.valueOf(CHAR_INT_VALUE)},
                 {"Tests that the method returns a String value from a Boolean", Boolean.TRUE, String.class, String.valueOf(Boolean.TRUE)},
                 {"Tests that the method returns a String value from a String", ONE_AS_STRING, String.class, ONE_AS_STRING},
+                {"Tests that the method returns a String value from a BigInteger", BigInteger.ZERO, String.class, BigInteger.ZERO.toString()},
+                {"Tests that the method returns a String value from a BigDecimal", BigDecimal.ZERO, String.class, BigDecimal.ZERO.toPlainString()},
+                // BigInteger conversion test cases
+                {"Tests that the method returns a BigInteger value from a byte", Byte.MIN_VALUE, BigInteger.class, BigInteger.valueOf(Byte.valueOf(Byte.MIN_VALUE).longValue())},
+                {"Tests that the method returns a BigInteger value from a short", Short.MIN_VALUE, BigInteger.class, BigInteger.valueOf(Short.MIN_VALUE)},
+                {"Tests that the method returns a BigInteger value from an Integer", Integer.MIN_VALUE, BigInteger.class, BigInteger.valueOf(Integer.MIN_VALUE)},
+                {"Tests that the method returns a BigInteger value from a Long", Long.MIN_VALUE, BigInteger.class, BigInteger.valueOf(Long.MIN_VALUE)},
+                {"Tests that the method returns a BigInteger value from a Float", Float.MIN_VALUE, BigInteger.class, BigInteger.valueOf(Float.valueOf(Float.MIN_VALUE).intValue())},
+                {"Tests that the method returns a BigInteger value from a Double", Double.MIN_VALUE, BigInteger.class,
+                        BigInteger.valueOf(Double.valueOf(Double.MIN_VALUE).intValue())},
+                {"Tests that the method returns a BigInteger value from a char", CHAR_INT_VALUE, BigInteger.class, BigInteger.valueOf(getNumericValue(CHAR_INT_VALUE))},
+                {"Tests that the method returns a BigInteger value from a Boolean", Boolean.TRUE, BigInteger.class, BigInteger.valueOf(TRUE_AS_INT)},
+                {"Tests that the method returns a BigInteger value from a String", ONE_AS_STRING, BigInteger.class, new BigInteger(ONE_AS_STRING)},
+                {"Tests that the method returns a BigInteger value from a BigInteger", BigInteger.ZERO, BigInteger.class, BigInteger.ZERO},
+                {"Tests that the method returns a BigInteger value from a BigDecimal", BigDecimal.ZERO, BigInteger.class, BigDecimal.ZERO.toBigInteger()},
+                // BigDecimal conversion test cases
+                {"Tests that the method returns a BigDecimal value from a byte", Byte.MIN_VALUE, BigDecimal.class, BigDecimal.valueOf(Byte.valueOf(Byte.MIN_VALUE).doubleValue())},
+                {"Tests that the method returns a BigDecimal value from a short", Short.MIN_VALUE, BigDecimal.class, BigDecimal.valueOf(Short.MIN_VALUE)},
+                {"Tests that the method returns a BigDecimal value from an Integer", Integer.MIN_VALUE, BigDecimal.class, BigDecimal.valueOf(Integer.MIN_VALUE)},
+                {"Tests that the method returns a BigDecimal value from a Long", Long.MIN_VALUE, BigDecimal.class, BigDecimal.valueOf(Long.MIN_VALUE)},
+                {"Tests that the method returns a BigDecimal value from a Float", Float.MIN_VALUE, BigDecimal.class, BigDecimal.valueOf(Float.MIN_VALUE)},
+                {"Tests that the method returns a BigDecimal value from a Double", Double.MIN_VALUE, BigDecimal.class, BigDecimal.valueOf(Double.MIN_VALUE)},
+                {"Tests that the method returns a BigDecimal value from a char", CHAR_INT_VALUE, BigDecimal.class, BigDecimal.valueOf(getNumericValue(CHAR_INT_VALUE))},
+                {"Tests that the method returns a BigDecimal value from a Boolean", Boolean.TRUE, BigDecimal.class, BigDecimal.valueOf(TRUE_AS_DOUBLE)},
+                {"Tests that the method returns a BigDecimal value from a String", ONE_AS_STRING, BigDecimal.class, new BigDecimal(ONE_AS_STRING)},
+                {"Tests that the method returns a BigDecimal value from a BigInteger", BigInteger.ZERO, BigDecimal.class, BigDecimal.valueOf(BigInteger.ZERO.intValue())},
+                {"Tests that the method returns a BigDecimal value from a BigDecimal", BigDecimal.ZERO, BigDecimal.class, BigDecimal.ZERO},
         };
     }
 
