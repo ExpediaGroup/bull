@@ -223,7 +223,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     public void testTransformerThrowsExceptionIfAFieldIsMissingAndThePrimitiveTypeConversionIsEnabled() {
         //GIVEN
         FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
-        underTest.setDefaultPrimitiveTypeConversionEnabled(true);
+        underTest.setPrimitiveTypeConversionEnabled(true);
 
         //WHEN
         Exception raisedException = null;
@@ -235,7 +235,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertEquals(MissingFieldException.class, raisedException.getCause().getClass());
-        underTest.setDefaultPrimitiveTypeConversionEnabled(false);
+        underTest.setPrimitiveTypeConversionEnabled(false);
     }
 
     /**
@@ -246,7 +246,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     public void testTransformerDoesNotThrowExceptionIfAFieldIsMissingAndTheDefaultValueSetIsEnabled() {
         //GIVEN
         FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
-        underTest.setDefaultPrimitiveTypeConversionEnabled(true).setDefaultValueForMissingField(true);
+        underTest.setPrimitiveTypeConversionEnabled(true).setDefaultValueForMissingField(true);
 
         //WHEN
         MutableToFooNotExistingFields actual = underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
@@ -254,7 +254,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
         //THEN
         assertEquals(actual.getId(), fromFooSimple.getId());
         assertEquals(actual.getName(), fromFooSimple.getName());
-        underTest.setDefaultPrimitiveTypeConversionEnabled(false).setDefaultValueForMissingField(false);
+        underTest.setPrimitiveTypeConversionEnabled(false).setDefaultValueForMissingField(false);
     }
 
     /**
@@ -317,7 +317,7 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     public void testAutomaticPrimitiveTypeTransformationWorksProperly() {
         //GIVEN
         double delta = 0d;
-        underTest.setDefaultPrimitiveTypeConversionEnabled(true);
+        underTest.setPrimitiveTypeConversionEnabled(true);
 
         //WHEN
         MutableToFooOnlyPrimitiveTypes actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
@@ -327,6 +327,6 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
         assertEquals(String.valueOf(fromFooPrimitiveTypes.getId()), actual.getId());
         assertEquals(Float.valueOf(fromFooPrimitiveTypes.getPrice()).doubleValue(), actual.getPrice(), delta);
         assertEquals(ACTIVE, actual.isActive());
-        underTest.setDefaultPrimitiveTypeConversionEnabled(false);
+        underTest.setPrimitiveTypeConversionEnabled(false);
     }
 }

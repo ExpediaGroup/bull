@@ -22,6 +22,9 @@ import static java.lang.Long.valueOf;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -163,6 +166,30 @@ public class LongConversionProcessorTest  extends AbstractConversionProcessorTes
 
         // THEN
         assertEquals(valueOf(STRING_VALUE), actual);
+    }
+
+    @Test
+    public void testConvertBigIntegerShouldReturnProperResult() {
+        // GIVEN
+        long expectedValue = BigInteger.ZERO.longValue();
+
+        // WHEN
+        long actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual);
+    }
+
+    @Test
+    public void testConvertBigDecimalShouldReturnProperResult() {
+        // GIVEN
+        long expectedValue = BigDecimal.ZERO.longValue();
+
+        // WHEN
+        long actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual);
     }
 }
 

@@ -17,7 +17,7 @@
 package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
-import static java.lang.Short.valueOf;
+import static java.math.BigDecimal.valueOf;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -31,17 +31,14 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
- * Unit test for {@link ShortConversionProcessor}.
+ * Unit test for {@link  BigDecimalConversionProcessor}.
  */
-public class ShortConversionProcessorTest extends AbstractConversionProcessorTest {
-    private static final short TRUE_AS_SHORT = 1;
-    private static final short FALSE_AS_SHORT = 0;
-
+public class BigDecimalConversionProcessorTest extends AbstractConversionProcessorTest {
     /**
      * The class to be tested.
      */
     @InjectMocks
-    private ShortConversionProcessor underTest;
+    private BigDecimalConversionProcessor underTest;
 
     /**
      * Initializes mock.
@@ -54,92 +51,99 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
     @Test
     public void testConvertByteShouldReturnProperResult() {
         // GIVEN
+        BigDecimal expected = valueOf(BYTE_VALUE.doubleValue());
 
         // WHEN
-        Short actual = underTest.convertByte().apply(BYTE_VALUE);
+        BigDecimal actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals((Short) BYTE_VALUE.shortValue(), actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testConvertShortShouldReturnProperResult() {
         // GIVEN
+        BigDecimal expected = valueOf(SHORT_VALUE);
 
         // WHEN
-        Short actual = underTest.convertShort().apply(SHORT_VALUE);
+        BigDecimal actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals(SHORT_VALUE, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testConvertIntegerShouldReturnProperResult() {
         // GIVEN
+        BigDecimal expected = valueOf(INTEGER_VALUE);
 
         // WHEN
-        Short actual = underTest.convertInteger().apply(INTEGER_VALUE);
+        BigDecimal actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals((Short) INTEGER_VALUE.shortValue(), actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testConvertLongShouldReturnProperResult() {
         // GIVEN
+        BigDecimal expected = valueOf(LONG_VALUE);
 
         // WHEN
-        Short actual = underTest.convertLong().apply(LONG_VALUE);
+        BigDecimal actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals((Short) LONG_VALUE.shortValue(), actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testConvertFloatShouldReturnProperResult() {
         // GIVEN
+        BigDecimal expected = valueOf(FLOAT_VALUE);
 
         // WHEN
-        Short actual = underTest.convertFloat().apply(FLOAT_VALUE);
+        BigDecimal actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals((Short) FLOAT_VALUE.shortValue(), actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testConvertDoubleShouldReturnProperResult() {
         // GIVEN
+        BigDecimal expected = valueOf(DOUBLE_VALUE);
 
         // WHEN
-        Short actual = underTest.convertDouble().apply(DOUBLE_VALUE);
+        BigDecimal actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals((Short) DOUBLE_VALUE.shortValue(), actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testConvertCharacterShouldReturnProperResult() {
         // GIVEN
+        BigDecimal expected = valueOf(getNumericValue(CHAR_VALUE));
 
         // WHEN
-        Short actual = underTest.convertCharacter().apply(CHAR_VALUE);
+        BigDecimal actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals(valueOf((short) getNumericValue(CHAR_VALUE)), actual);
+        assertEquals(expected, actual);
     }
 
     /**
-     * Tests that the method {@code convertBoolean} returns the expected short.
+     * Tests that the method {@code convertBoolean} returns the expected BigDecimal.
      * @param testCaseDescription the test case description
      * @param valueToConvert the value to be converted
      * @param expectedResult the expected result
      */
-    @Test(dataProvider = "booleanToShortConvertValueTesting")
-    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final short expectedResult) {
+    @Test(dataProvider = "booleanToIntConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final BigDecimal expectedResult) {
         // GIVEN
 
         // WHEN
-        short actual = underTest.convertBoolean().apply(valueToConvert);
+        BigDecimal actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
         assertEquals(expectedResult, actual);
@@ -150,43 +154,44 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
      * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
      */
     @DataProvider
-    private Object[][] booleanToShortConvertValueTesting() {
+    private Object[][] booleanToIntConvertValueTesting() {
         return new Object[][]{
-                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_SHORT},
-                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_SHORT}
+                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, BigDecimal.ONE},
+                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, BigDecimal.ZERO}
         };
     }
 
     @Test
     public void testConvertStringShouldReturnProperResult() {
         // GIVEN
+        BigDecimal expected = new BigDecimal(STRING_VALUE);
 
         // WHEN
-        Short actual = underTest.convertString().apply(STRING_VALUE);
+        BigDecimal actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(valueOf(STRING_VALUE), actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        short expectedValue = BigInteger.ZERO.shortValue();
+        BigDecimal expected = valueOf(BigInteger.ZERO.intValue());
 
         // WHEN
-        short actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+        BigDecimal actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        short expectedValue = BigDecimal.ZERO.shortValue();
+        BigDecimal expectedValue = BigDecimal.ZERO;
 
         // WHEN
-        short actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+        BigDecimal actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
         assertEquals(expectedValue, actual);

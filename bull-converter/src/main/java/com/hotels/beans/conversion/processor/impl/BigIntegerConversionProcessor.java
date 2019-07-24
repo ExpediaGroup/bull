@@ -17,7 +17,7 @@
 package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
-import static java.lang.Long.valueOf;
+import static java.math.BigInteger.valueOf;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -26,62 +26,62 @@ import java.util.function.Function;
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
 /**
- * Provides all method for converting any primitive type to a {@link Long}.
+ * Provides all method for converting any primitive type to a {@link BigInteger}.
  */
-public final class LongConversionProcessor implements ConversionProcessor<Long> {
+public final class BigIntegerConversionProcessor implements ConversionProcessor<BigInteger> {
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<Byte, Long> convertByte() {
-        return Byte::longValue;
+    public Function<Byte, BigInteger> convertByte() {
+        return val -> valueOf(val.longValue());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<Short, Long> convertShort() {
-        return Short::longValue;
+    public Function<Short, BigInteger> convertShort() {
+        return BigInteger::valueOf;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<Integer, Long> convertInteger() {
-        return Integer::longValue;
+    public Function<Integer, BigInteger> convertInteger() {
+        return BigInteger::valueOf;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<Long, Long> convertLong() {
-        return Long::longValue;
+    public Function<Long, BigInteger> convertLong() {
+        return BigInteger::valueOf;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<Float, Long> convertFloat() {
-        return Float::longValue;
+    public Function<Float, BigInteger> convertFloat() {
+        return val -> valueOf(val.intValue());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<Double, Long> convertDouble() {
-        return Double::longValue;
+    public Function<Double, BigInteger> convertDouble() {
+        return val -> valueOf(val.intValue());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<Character, Long> convertCharacter() {
+    public Function<Character, BigInteger> convertCharacter() {
         return val -> valueOf(getNumericValue(val));
     }
 
@@ -89,31 +89,31 @@ public final class LongConversionProcessor implements ConversionProcessor<Long> 
      * {@inheritDoc}
      */
     @Override
-    public Function<Boolean, Long> convertBoolean() {
-        return val -> valueOf(val ? (long) 1 : (long) 0);
+    public Function<Boolean, BigInteger> convertBoolean() {
+        return val -> valueOf(val ? 1 : 0);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<String, Long> convertString() {
-        return Long::valueOf;
+    public Function<String, BigInteger> convertString() {
+        return BigInteger::new;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<BigInteger, Long> convertBigInteger() {
-        return BigInteger::longValue;
+    public Function<BigInteger, BigInteger> convertBigInteger() {
+        return val -> val;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<BigDecimal, Long> convertBigDecimal() {
-        return BigDecimal::longValue;
+    public Function<BigDecimal, BigInteger> convertBigDecimal() {
+        return BigDecimal::toBigInteger;
     }
 }

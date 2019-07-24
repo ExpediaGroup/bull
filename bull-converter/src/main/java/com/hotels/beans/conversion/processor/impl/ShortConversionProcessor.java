@@ -19,6 +19,8 @@ package com.hotels.beans.conversion.processor.impl;
 import static java.lang.Character.getNumericValue;
 import static java.lang.Short.valueOf;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
@@ -27,7 +29,9 @@ import com.hotels.beans.conversion.processor.ConversionProcessor;
  * Provides all method for converting any primitive type to a {@link Short}.
  */
 public final class ShortConversionProcessor implements ConversionProcessor<Short> {
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Function<Byte, Short> convertByte() {
         return Byte::shortValue;
@@ -95,5 +99,21 @@ public final class ShortConversionProcessor implements ConversionProcessor<Short
     @Override
     public Function<String, Short> convertString() {
         return Short::valueOf;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigInteger, Short> convertBigInteger() {
+        return Number::shortValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigDecimal, Short> convertBigDecimal() {
+        return Number::shortValue;
     }
 }

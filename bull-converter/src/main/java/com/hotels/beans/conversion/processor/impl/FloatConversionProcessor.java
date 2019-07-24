@@ -19,6 +19,8 @@ package com.hotels.beans.conversion.processor.impl;
 import static java.lang.Character.getNumericValue;
 import static java.lang.Float.valueOf;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
@@ -97,5 +99,15 @@ public final class FloatConversionProcessor implements ConversionProcessor<Float
     @Override
     public Function<String, Float> convertString() {
         return Float::valueOf;
+    }
+
+    @Override
+    public Function<BigInteger, Float> convertBigInteger() {
+        return BigInteger::floatValue;
+    }
+
+    @Override
+    public Function<BigDecimal, Float> convertBigDecimal() {
+        return BigDecimal::floatValue;
     }
 }

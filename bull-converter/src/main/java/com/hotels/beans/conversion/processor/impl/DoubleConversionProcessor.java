@@ -19,6 +19,8 @@ package com.hotels.beans.conversion.processor.impl;
 import static java.lang.Character.getNumericValue;
 import static java.lang.Double.valueOf;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.processor.ConversionProcessor;
@@ -97,5 +99,21 @@ public final class DoubleConversionProcessor implements ConversionProcessor<Doub
     @Override
     public Function<String, Double> convertString() {
         return Double::valueOf;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigInteger, Double> convertBigInteger() {
+        return BigInteger::doubleValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigDecimal, Double> convertBigDecimal() {
+        return BigDecimal::doubleValue;
     }
 }

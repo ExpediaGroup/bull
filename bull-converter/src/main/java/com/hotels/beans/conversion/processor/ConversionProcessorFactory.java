@@ -31,8 +31,12 @@ import static com.hotels.beans.utils.ClassUtils.isString;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Optional;
 
+import com.hotels.beans.conversion.processor.impl.BigDecimalConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.BigIntegerConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.BooleanConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.CharacterConversionProcessor;
@@ -75,6 +79,10 @@ public final class ConversionProcessorFactory {
             conversionProcessor = of(new StringConversionProcessor());
         } else if (isBoolean(clazz)) {
             conversionProcessor = of(new BooleanConversionProcessor());
+        } else if (clazz == BigInteger.class) {
+            conversionProcessor = of(new BigIntegerConversionProcessor());
+        } else if (clazz == BigDecimal.class) {
+            conversionProcessor = of(new BigDecimalConversionProcessor());
         }
         return conversionProcessor;
     }

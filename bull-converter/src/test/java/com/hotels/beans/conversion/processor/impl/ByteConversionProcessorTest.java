@@ -21,6 +21,9 @@ import static java.lang.Byte.valueOf;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -32,6 +35,7 @@ import org.testng.annotations.Test;
 public class ByteConversionProcessorTest extends AbstractConversionProcessorTest {
     private static final byte TRUE_AS_BYTE = 1;
     private static final byte FALSE_AS_BYTE = 0;
+
     /**
      * The class to be tested.
      */
@@ -161,5 +165,29 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
 
         // THEN
         assertEquals(valueOf(STRING_VALUE), actual);
+    }
+
+    @Test
+    public void testConvertBigIntegerShouldReturnProperResult() {
+        // GIVEN
+        byte expectedValue = BigInteger.ZERO.byteValue();
+
+        // WHEN
+        byte actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual);
+    }
+
+    @Test
+    public void testConvertBigDecimalShouldReturnProperResult() {
+        // GIVEN
+        byte expectedValue = BigDecimal.ZERO.byteValue();
+
+        // WHEN
+        byte actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual);
     }
 }

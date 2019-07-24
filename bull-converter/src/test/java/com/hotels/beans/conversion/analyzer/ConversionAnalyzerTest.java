@@ -19,9 +19,11 @@ package com.hotels.beans.conversion.analyzer;
 import static java.util.Optional.empty;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -31,6 +33,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.processor.impl.BigDecimalConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.BigIntegerConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.BooleanConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.CharacterConversionProcessor;
@@ -89,8 +93,8 @@ public class ConversionAnalyzerTest {
                 Pair.class, int.class},
             {"Tests that the method returns an empty optional in case the source field type is not equal to the source field type and the destination type is void",
                 int.class, Void.class},
-            {"Tests that the method returns an empty optional in case the source field type has no processor defined",
-                BigDecimal.class, Integer.class}
+            {"Tests that the method returns an empty optional in case the source field type is not equal to the source field type and the source type is void",
+                Void.class, int.class}
         };
     }
 
@@ -110,6 +114,7 @@ public class ConversionAnalyzerTest {
         Optional<Function<Object, Object>> actual = underTest.getConversionFunction(sourceFieldType, destinationFieldType);
 
         // THEN
+        assertTrue(actual.isPresent());
         assertEquals(expectedConversionFunction, actual.get());
     }
 
@@ -139,7 +144,11 @@ public class ConversionAnalyzerTest {
             {"Tests that the method returns a CharacterConversionProcessor that converts from char to boolean",
                 boolean.class, char.class, new CharacterConversionProcessor().convertBoolean()},
             {"Tests that the method returns a BooleanConversionProcessor that converts from String to boolean",
-                String.class, boolean.class, new BooleanConversionProcessor().convertString()}
+                String.class, boolean.class, new BooleanConversionProcessor().convertString()},
+            {"Tests that the method returns a BigIntegerConversionProcessor that converts from BigDecimal to BigInteger",
+                BigDecimal.class, BigInteger.class, new BigIntegerConversionProcessor().convertBigDecimal()},
+            {"Tests that the method returns a BigDecimalConversionProcessor that converts from String to BigDecimal",
+                String.class, BigDecimal.class, new BigDecimalConversionProcessor().convertString()},
         };
     }
 }

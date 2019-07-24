@@ -190,9 +190,9 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
-    public Transformer setDefaultPrimitiveTypeConversionEnabled(final boolean defaultPrimitiveTypeConversionEnabled) {
-        settings.setDefaultPrimitiveTypeConversionEnabled(defaultPrimitiveTypeConversionEnabled);
-        if (defaultPrimitiveTypeConversionEnabled) {
+    public Transformer setPrimitiveTypeConversionEnabled(final boolean primitiveTypeConversionEnabled) {
+        settings.setPrimitiveTypeConversionEnabled(primitiveTypeConversionEnabled);
+        if (primitiveTypeConversionEnabled) {
             conversionAnalyzer = new ConversionAnalyzer();
         }
         return this;
