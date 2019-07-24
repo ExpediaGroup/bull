@@ -38,6 +38,7 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -79,10 +80,10 @@ public class ReflectionUtilsTest {
     private static final String INVOKE_METHOD_NAME = "invokeMethod";
     private static final String VERY_COMPLEX_MAP_FIELD_NAME = "veryComplexMap";
     private static final String GET_GETTER_METHOD_NAME = "getGetterMethod";
-    private static final String NAME = "Donald Duck";
     private static final String SET_NAME_METHOD_NAME = "setName";
     private static final String SET_INDEX_METHOD_NAME = "setIndex";
     private static final String INDEX_NUMBER = "123";
+    private static final String GET_REAL_TARGET_METHOD_NAME = "getRealTarget";
 
     /**
      * The class to be tested.
@@ -315,7 +316,7 @@ public class ReflectionUtilsTest {
      */
     @Test(dataProvider = "dataGetFieldAnnotationTesting")
     public void testGetFieldAnnotationWorksProperly(final String testCaseDescription, final Class<? extends Annotation> annotationToGet,
-        final boolean expectNull) throws NoSuchFieldException {
+        final boolean expectNull) {
         // GIVEN
         Field nameField = underTest.getDeclaredField(ID_FIELD_NAME, ImmutableToFoo.class);
 
@@ -443,16 +444,31 @@ public class ReflectionUtilsTest {
 
     /**
      * Tests that the method {@code getDeclaredField} works properly.
+     * @param testCaseDescription the test case description
+     * @param fieldName the field to retrieve
+     * @param targetClass the class where the field has to be searched
      */
-    @Test
-    public void testGetDeclaredFieldWorksProperly() {
+    @Test(dataProvider = "dataGetDeclaredFieldTesting")
+    public void testGetDeclaredFieldWorksProperly(final String testCaseDescription, final String fieldName, final Class<?> targetClass) {
         // GIVEN
 
         // WHEN
-        Field actual = underTest.getDeclaredField(ID_FIELD_NAME, FromFooSubClass.class);
+        Field actual = underTest.getDeclaredField(fieldName, targetClass);
 
         // THEN
         assertNotNull(actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getDeclaredField}.
+     * @return parameters to be used for testing the the method {@code getDeclaredField}.
+     */
+    @DataProvider
+    private Object[][] dataGetDeclaredFieldTesting() {
+        return new Object[][] {
+                {"Tests that the method returns the class field from first object", ID_FIELD_NAME, FromFooSubClass.class},
+                {"Tests that the method returns the class field from a nested object", NESTED_OBJECT_FIELD_NAME, MutableToFoo.class}
+        };
     }
 
     /**
@@ -675,6 +691,22 @@ public class ReflectionUtilsTest {
                 {"Tests that the method raises an IllegalAccessException in case the method is not accessible", new MutableToFooAdvFields(), SET_INDEX_METHOD_NAME,
                     INDEX_NUMBER, false, IllegalStateException.class}
         };
+    }
+
+    /**
+     * Test that the method: {@code getRealTarget} returns the object contained in the Optional.
+     */
+    @Test
+    public void testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull() throws Exception {
+        //GIVEN
+        Method getRealTargetMethod = getMethod(underTest.getClass(), GET_REAL_TARGET_METHOD_NAME, true, Object.class);
+        Optional<BigInteger> optionalBigInteger = Optional.of(ZERO);
+
+        //WHEN
+        Object actual = getRealTargetMethod.invoke(underTest, optionalBigInteger);
+
+        //THEN
+        assertEquals(ZERO, actual);
     }
 
     /**

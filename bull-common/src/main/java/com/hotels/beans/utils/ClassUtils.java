@@ -126,13 +126,13 @@ public final class ClassUtils {
 
     /**
      * Checks if an object is a primitive type array.
-     * @param object the object to check
+     * @param clazz the class to check
      * @return true if is primitive type array, false otherwise
      */
-    public boolean isPrimitiveTypeArray(final Object object) {
-        final String cacheKey = "isPrimitiveTypeArray-" + object.getClass().getName();
+    public boolean isPrimitiveTypeArray(final Class<?> clazz) {
+        final String cacheKey = "isPrimitiveTypeArray-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final Boolean res = isPrimitiveType(object.getClass().getComponentType());
+            final Boolean res = isPrimitiveType(clazz.getComponentType());
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -224,6 +224,15 @@ public final class ClassUtils {
      */
     public static boolean isBoolean(final Class<?> type) {
         return Boolean.class.isAssignableFrom(type) || type == boolean.class;
+    }
+
+    /**
+     * Checks if the given type is a String.
+     * @param type the class to check
+     * @return true if is String
+     */
+    public static boolean isString(final Class<?> type) {
+        return type == String.class;
     }
 
     /**

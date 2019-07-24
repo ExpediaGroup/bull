@@ -60,7 +60,7 @@ final class TransformerSettings {
      * If set to true the default value is set, if false if it raises a: {@link com.hotels.beans.error.MissingFieldException} in case of missing fields.
      */
     @Setter
-    private boolean setDefaultValue;
+    private boolean setDefaultValueForMissingField;
 
     /**
      * It allows to apply a transformation to all fields matching with the provided name without using their whole path.
@@ -82,4 +82,11 @@ final class TransformerSettings {
      */
     @Setter
     private boolean defaultValueSetEnabled = true;
+
+    /**
+     * It allows to enable/disable the automatic conversion of primitive types.
+     * If set to true primitive types are transformed automatically.
+     */
+    @Setter
+    private boolean primitiveTypeConversionEnabled;
 }

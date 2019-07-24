@@ -5,7 +5,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>1.1.22</version>
+    <version>1.1.23-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -23,6 +23,7 @@
     <modules>
         <module>bean-utils-library</module>
         <module>bull-common</module>
+        <module>bull-converter</module>
     </modules>
 
     <properties>
@@ -44,13 +45,13 @@
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <glassfish.javax.el.version>2.2.6</glassfish.javax.el.version>
         <!-- JaCoCo properties -->
-        <jacoco.version>0.8.2</jacoco.version>
-        <jacoco.classRatio>0.85</jacoco.classRatio>
-        <jacoco.instructionRatio>0.85</jacoco.instructionRatio>
-        <jacoco.methodRatio>0.85</jacoco.methodRatio>
+        <jacoco.version>0.8.3</jacoco.version>
+        <jacoco.classRatio>1.0</jacoco.classRatio>
+        <jacoco.instructionRatio>0.90</jacoco.instructionRatio>
+        <jacoco.methodRatio>1.0</jacoco.methodRatio>
         <jacoco.branchRatio>0.85</jacoco.branchRatio>
-        <jacoco.complexityRatio>0.85</jacoco.complexityRatio>
-        <jacoco.lineRatio>0.85</jacoco.lineRatio>
+        <jacoco.complexityRatio>0.88</jacoco.complexityRatio>
+        <jacoco.lineRatio>0.90</jacoco.lineRatio>
         <!-- site properties -->
         <wagon-ssh.version>3.3.3</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
@@ -68,18 +69,8 @@
         <connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
         <developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
         <url>https://github.com/HotelsDotCom/bull</url>
-        <tag>1.1.22</tag>
+        <tag>HEAD</tag>
     </scm>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype-nexus-snapshot</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>
@@ -550,6 +541,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
+                    <version>${maven.versions.plugin.version}</version>
                     <configuration>
                         <rulesUri>file:///${project.basedir}/config/maven/versions-plugin-rules.xml</rulesUri>
                     </configuration>

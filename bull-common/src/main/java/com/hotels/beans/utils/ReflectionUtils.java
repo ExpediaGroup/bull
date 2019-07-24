@@ -218,7 +218,7 @@ public final class ReflectionUtils {
      * @param targetClass the field's class
      * @return the field corresponding to the given name.
      */
-    public Field getDeclaredField(final String fieldName, final Class<?> targetClass) {
+    private Field getClassDeclaredField(final String fieldName, final Class<?> targetClass) {
         final String cacheKey = "ClassDeclaredField-" + targetClass.getName() + "-" + fieldName;
         return CACHE_MANAGER.getFromCache(cacheKey, Field.class).orElseGet(() -> {
             Field field;
@@ -228,13 +228,33 @@ public final class ReflectionUtils {
             } catch (NoSuchFieldException e) {
                 Class<?> superclass = targetClass.getSuperclass();
                 if (!superclass.equals(Object.class)) {
-                    field = getDeclaredField(fieldName, superclass);
+                    field = getClassDeclaredField(fieldName, superclass);
                 } else {
                     throw new MissingFieldException(targetClass.getName() + " does not contain field: " + fieldName);
                 }
             } catch (final Exception e) {
                 handleReflectionException(e);
                 throw new IllegalStateException(e);
+            }
+            CACHE_MANAGER.cacheObject(cacheKey, field);
+            return field;
+        });
+    }
+
+    /**
+     * Return the field of the given class.
+     * @param fieldName the name of the field to retrieve.
+     * @param targetClass the field's class
+     * @return the field corresponding to the given name.
+     */
+    public Field getDeclaredField(final String fieldName, final Class<?> targetClass) {
+        final String cacheKey = "ClassDeclaredFieldDotNotation-" + targetClass.getName() + "-" + fieldName;
+        return CACHE_MANAGER.getFromCache(cacheKey, Field.class).orElseGet(() -> {
+            Field field = null;
+            Class<?> currentClass = targetClass;
+            for (String currFieldName : fieldName.split(DOT_SPLIT_REGEX)) {
+                field = getClassDeclaredField(currFieldName, currentClass);
+                currentClass = field.getType();
             }
             CACHE_MANAGER.cacheObject(cacheKey, field);
             return field;
@@ -250,22 +270,7 @@ public final class ReflectionUtils {
     public Class<?> getDeclaredFieldType(final String fieldName, final Class<?> clazz) {
         final String cacheKey = "FieldType-" + clazz.getName() + "-" + fieldName;
         return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
-            Class<?> fieldType;
-            Field field;
-            try {
-                field = clazz.getDeclaredField(fieldName);
-            } catch (NoSuchFieldException e) {
-                Class<?> superclass = clazz.getSuperclass();
-                if (!superclass.equals(Object.class)) {
-                    field = getDeclaredField(fieldName, superclass);
-                } else {
-                    throw new MissingFieldException(clazz.getName() + " does not contain field: " + fieldName);
-                }
-            } catch (final Exception e) {
-                handleReflectionException(e);
-                throw new IllegalStateException(e);
-            }
-            fieldType = field.getType();
+            Class<?> fieldType = getDeclaredField(fieldName, clazz).getType();
             CACHE_MANAGER.cacheObject(cacheKey, fieldType);
             return fieldType;
         });

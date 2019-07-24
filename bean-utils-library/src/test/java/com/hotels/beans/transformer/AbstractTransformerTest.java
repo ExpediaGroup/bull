@@ -19,6 +19,8 @@ package com.hotels.beans.transformer;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
+import static org.mockito.MockitoAnnotations.initMocks;
+
 import static com.hotels.beans.constant.ClassType.IMMUTABLE;
 
 import java.math.BigDecimal;
@@ -29,11 +31,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooAdvFields;
 import com.hotels.beans.sample.FromFooMap;
+import com.hotels.beans.sample.FromFooOnlyPrimitiveTypes;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSubClass;
 import com.hotels.beans.sample.FromFooWithPrimitiveFields;
@@ -52,6 +57,7 @@ public abstract class AbstractTransformerTest {
     static FromFooSubClass fromFooSubClass;
     static FromFooAdvFields fromFooAdvFields;
     static FromFooMap fromFooMap;
+    static FromFooOnlyPrimitiveTypes fromFooPrimitiveTypes;
     static final int AGE = 34;
     static final String AGE_FIELD_NAME = "age";
     static final String DEST_FIELD_NAME = "destFieldName";
@@ -84,11 +90,25 @@ public abstract class AbstractTransformerTest {
     private static FromSubFoo fromSubFoo;
 
     /**
+     * The class to be tested.
+     */
+    @InjectMocks
+    TransformerImpl underTest;
+
+    /**
      * Initializes the arguments and objects.
      */
     @BeforeClass
     public void beforeClass() {
         initObjects();
+    }
+
+    /**
+     * Initialized mocks.
+     */
+    @BeforeMethod
+    public void beforeMethod() {
+        initMocks(this);
     }
 
     /**
@@ -107,6 +127,7 @@ public abstract class AbstractTransformerTest {
         fromFooWithPrimitiveFields = createFromFooWithPrimitiveFields();
         fromFooSubClass = createFromFooSubClass();
         fromFooAdvFields = createFromFooAdvFields();
+        fromFooPrimitiveTypes = createFromFooPrimitiveTypes();
         EXTREME_COMPLEX_MAP.put(fromFooSimple, SAMPLE_MAP);
         fromFooMap = new FromFooMap(SAMPLE_MAP, COMPLEX_MAP, VERY_COMPLEX_MAP, EXTREME_COMPLEX_MAP);
     }
@@ -127,7 +148,6 @@ public abstract class AbstractTransformerTest {
     private FromFooSimple createFromFooSimple() {
         return new FromFooSimple(NAME, ID, ACTIVE);
     }
-
 
     /**
      * Creates a {@link FromFooWithPrimitiveFields} instance.
@@ -151,5 +171,13 @@ public abstract class AbstractTransformerTest {
      */
     private FromFooAdvFields createFromFooAdvFields() {
         return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage(), PRICE);
+    }
+
+    /**
+     * Creates a {@link FromFooOnlyPrimitiveTypes} instance.
+     * @return the {@link FromFooOnlyPrimitiveTypes} instance.
+     */
+    private FromFooOnlyPrimitiveTypes createFromFooPrimitiveTypes() {
+        return new FromFooOnlyPrimitiveTypes(ID.toString(), ID.intValue(), PRICE, String.valueOf(ACTIVE));
     }
 }

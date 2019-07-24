@@ -49,7 +49,7 @@ class ArrayPopulator extends Populator<Object> implements ICollectionPopulator<O
     @Override
     public Object getPopulatedObject(final Class<?> fieldType, final Class<?> genericFieldType, final Object fieldValue, final Class<?> nestedGenericClass) {
         final Object res;
-        if (classUtils.isPrimitiveTypeArray(fieldValue) || classUtils.isPrimitiveOrSpecialType(genericFieldType)) {
+        if (classUtils.isPrimitiveTypeArray(fieldValue.getClass()) || classUtils.isPrimitiveOrSpecialType(genericFieldType)) {
             res = fieldValue;
         } else {
             res = stream((Object[]) fieldValue)

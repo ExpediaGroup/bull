@@ -19,9 +19,20 @@
         </fluidoSkin>
     </custom>
     <body>
+        <head>
+            <![CDATA[
+                <link rel="apple-touch-icon" sizes="180x180" href="images/icon/apple-touch-icon.png">
+                <link rel="icon" type="image/png" sizes="32x32" href="images/icon/favicon-32x32.png">
+                <link rel="icon" type="image/png" sizes="16x16" href="images/icon/favicon-16x16.png">
+                <link rel="manifest" href="images/icon/site.webmanifest">
+                <link rel="mask-icon" href="images/icon/safari-pinned-tab.svg" color="#5bbad5">
+                <meta name="msapplication-TileColor" content="#ffffff">
+                <meta name="theme-color" content="#ffffff">
+            ]]>
+        </head>
         <breadcrumbs>
             <item name="Home" href="../"/>
-            <item name="${project.name}" href="${project.url}"/>
+            <item name=" Bean Utils Light Library" href="${project.url}"/>
         </breadcrumbs>
         <menu name="Project info">
             <item name="Glossary" href="/glossary.html" />
@@ -35,12 +46,18 @@
         <menu name="Bean Validation">
             <item name="Samples" href="/validator/samples.html" />
         </menu>
+        <menu name="Primitive type conversion">
+            <item name="Samples" href="/converter/samples.html" />
+        </menu>
         <menu name="Quality check">
             <item name="SonarCloud" href="https://sonarcloud.io/dashboard?id=BULL" />
         </menu>
         <menu name="Related Articles">
             <item name="DZone" href="https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li" />
-            <item name="InfoQ" href="https://www.infoq.com/articles/expedia-rid-of-bean-transformers/" />
+            <item name="InfoQ" collapse="true" href="/articles.html">
+                <item name="English" href="https://www.infoq.com/articles/expedia-rid-of-bean-transformers/" />
+                <item name="Portuguese" href="https://www.infoq.com/br/articles/expedia-rid-of-bean-transformers/" />
+            </item>
         </menu>
         <menu ref="reports" />
     </body>

@@ -14,113 +14,80 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.conversion;
+package com.hotels.beans.conversion.processor;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Function;
 
 /**
  * Conversion methods for all primitive types.
+ * @param <T> indicates any primitive type object
  */
-public interface ConversionProcessor {
-    /**
-     * Converts a byte type.
-     * @return the converted value
-     */
-    Function<Byte, ?> convertPrimitiveByte();
-
+public interface ConversionProcessor<T> {
     /**
      * Converts a {@link Byte} type.
      * @return the converted value
      */
-    Function<Byte, ?> convertByte();
-
-    /**
-     * Converts a short type.
-     * @return the converted value
-     */
-    Function<Short, ?> convertPrimitiveShort();
+    Function<Byte, T> convertByte();
 
     /**
      * Converts a {@link Short} type.
      * @return the converted value
      */
-    Function<Short, ?> convertShort();
-
-    /**
-     * Converts an int type.
-     * @return the converted value
-     */
-    Function<Integer, ?> convertInt();
+    Function<Short, T> convertShort();
 
     /**
      * Converts an {@link Integer} type.
      * @return the converted value
      */
-    Function<Integer, ?> convertInteger();
-
-    /**
-     * Converts a long type.
-     * @return the converted value
-     */
-    Function<Long, ?> convertPrimitiveLong();
+    Function<Integer, T> convertInteger();
 
     /**
      * Converts a {@link Long} type.
      * @return the converted value
      */
-    Function<Long, ?> convertLong();
-
-    /**
-     * Converts a float type.
-     * @return the converted value
-     */
-    Function<Float, ?> convertPrimitiveFloat();
+    Function<Long, T> convertLong();
 
     /**
      * Converts an {@link Float} type.
      * @return the converted value
      */
-    Function<Float, ?> convertFloat();
-
-    /**
-     * Converts a double type.
-     * @return the converted value
-     */
-    Function<Double, ?> convertPrimitiveDouble();
+    Function<Float, T> convertFloat();
 
     /**
      * Converts a {@link Double} type.
      * @return the converted value
      */
-    Function<Double, ?> convertDouble();
-
-    /**
-     * Converts a char type.
-     * @return the converted value
-     */
-    Function<Character, ?> convertChar();
+    Function<Double, T> convertDouble();
 
     /**
      * Converts a {@link Character} type.
      * @return the converted value
      */
-    Function<Character, ?> convertCharacter();
-
-    /**
-     * Converts a boolean type.
-     * @return the converted value
-     */
-    Function<Boolean, ?> convertPrimitiveBoolean();
+    Function<Character, T> convertCharacter();
 
     /**
      * Converts a {@link Boolean} type.
      * @return the converted value
      */
-    Function<Boolean, ?> convertBoolean();
+    Function<Boolean, T> convertBoolean();
 
     /**
      * Converts a {@link String} type.
      * @return the converted value
      */
-    Function<String, ?> convertString();
+    Function<String, T> convertString();
+
+    /**
+     * Converts an {@link BigInteger} type.
+     * @return the converted value
+     */
+    Function<BigInteger, T> convertBigInteger();
+
+    /**
+     * Converts an {@link BigDecimal} type.
+     * @return the converted value
+     */
+    Function<BigDecimal, T> convertBigDecimal();
 }

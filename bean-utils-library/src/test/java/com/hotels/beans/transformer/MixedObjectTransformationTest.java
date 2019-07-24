@@ -21,15 +21,12 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import java.math.BigInteger;
 import java.util.stream.IntStream;
 
-import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.error.MissingFieldException;
@@ -47,19 +44,6 @@ import com.hotels.beans.sample.mixed.MixedToFooNotExistingFields;
  */
 public class MixedObjectTransformationTest extends AbstractTransformerTest {
     private static final boolean ACTIVE = true;
-    /**
-     * The class to be tested.
-     */
-    @InjectMocks
-    private TransformerImpl underTest;
-
-    /**
-     * Initialized mocks.
-     */
-    @BeforeMethod
-    public void beforeMethod() {
-        initMocks(this);
-    }
 
     /**
      * Test that a Mixed bean with a constructor containing the final field only is correctly copied.
