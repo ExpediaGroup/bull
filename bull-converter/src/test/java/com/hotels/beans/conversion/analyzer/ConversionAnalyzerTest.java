@@ -91,7 +91,9 @@ public class ConversionAnalyzerTest {
             {"Tests that the method returns an empty optional in case the source field type is not equal to the source field type but it's not primitive",
                 Pair.class, int.class},
             {"Tests that the method returns an empty optional in case the source field type is not equal to the source field type and the destination type is void",
-                int.class, Void.class}
+                int.class, Void.class},
+            {"Tests that the method returns an empty optional in case the source field type is not equal to the source field type and the source type is void",
+                Void.class, int.class}
         };
     }
 
@@ -141,8 +143,8 @@ public class ConversionAnalyzerTest {
                 boolean.class, char.class, new CharacterConversionProcessor().convertBoolean()},
             {"Tests that the method returns a BooleanConversionProcessor that converts from String to boolean",
                 String.class, boolean.class, new BooleanConversionProcessor().convertString()},
-            {"Tests that the method returns a BigIntegerConversionProcessor that converts from String to BigInteger",
-                String.class, BigInteger.class, new BigIntegerConversionProcessor().convertString()},
+            {"Tests that the method returns a BigIntegerConversionProcessor that converts from BigDecimal to BigInteger",
+                BigDecimal.class, BigInteger.class, new BigIntegerConversionProcessor().convertBigDecimal()},
             {"Tests that the method returns a BigDecimalConversionProcessor that converts from String to BigDecimal",
                 String.class, BigDecimal.class, new BigDecimalConversionProcessor().convertString()},
         };

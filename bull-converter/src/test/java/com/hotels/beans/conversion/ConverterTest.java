@@ -316,7 +316,7 @@ public class ConverterTest {
                 {"Tests that the method returns a BigDecimal value from a Float", Float.MIN_VALUE, BigDecimal.class, BigDecimal.valueOf(Float.MIN_VALUE)},
                 {"Tests that the method returns a BigDecimal value from a Double", Double.MIN_VALUE, BigDecimal.class, BigDecimal.valueOf(Double.MIN_VALUE)},
                 {"Tests that the method returns a BigDecimal value from a char", CHAR_INT_VALUE, BigDecimal.class, BigDecimal.valueOf(getNumericValue(CHAR_INT_VALUE))},
-                {"Tests that the method returns a BigDecimal value from a Boolean", Boolean.TRUE, BigDecimal.class, BigDecimal.valueOf(TRUE_AS_DOUBLE)},
+                {"Tests that the method returns a BigDecimal value from a Boolean", Boolean.TRUE, BigDecimal.class, BigDecimal.valueOf(TRUE_AS_INT)},
                 {"Tests that the method returns a BigDecimal value from a String", ONE_AS_STRING, BigDecimal.class, new BigDecimal(ONE_AS_STRING)},
                 {"Tests that the method returns a BigDecimal value from a BigInteger", BigInteger.ZERO, BigDecimal.class, BigDecimal.valueOf(BigInteger.ZERO.intValue())},
                 {"Tests that the method returns a BigDecimal value from a BigDecimal", BigDecimal.ZERO, BigDecimal.class, BigDecimal.ZERO},
