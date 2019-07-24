@@ -90,7 +90,7 @@ public final class BigDecimalConversionProcessor implements ConversionProcessor<
      */
     @Override
     public Function<Boolean, BigDecimal> convertBoolean() {
-        return val -> valueOf(val ? (double) 1 : (double) 0);
+        return val -> valueOf(val ? 1 : 0);
     }
 
     /**
