@@ -19,6 +19,7 @@ package com.hotels.beans.conversion.analyzer;
 import static java.util.Optional.empty;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigDecimal;
@@ -113,6 +114,7 @@ public class ConversionAnalyzerTest {
         Optional<Function<Object, Object>> actual = underTest.getConversionFunction(sourceFieldType, destinationFieldType);
 
         // THEN
+        assertTrue(actual.isPresent());
         assertEquals(expectedConversionFunction, actual.get());
     }
 
