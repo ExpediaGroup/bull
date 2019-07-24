@@ -19,6 +19,9 @@ package com.hotels.beans.conversion.processor.impl;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -160,5 +163,29 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
 
         // THEN
         assertEquals(STRING_VALUE.charAt(0), actual);
+    }
+
+    @Test
+    public void testConvertBigIntegerShouldReturnProperResult() {
+        // GIVEN
+        char expectedValue = (char) BigInteger.ZERO.intValue();
+
+        // WHEN
+        char actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual);
+    }
+
+    @Test
+    public void testConvertBigDecimalShouldReturnProperResult() {
+        // GIVEN
+        char expectedValue = (char) BigDecimal.ZERO.doubleValue();
+
+        // WHEN
+        char actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual);
     }
 }

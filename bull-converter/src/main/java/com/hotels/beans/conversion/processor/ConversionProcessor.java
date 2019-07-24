@@ -16,11 +16,13 @@
 
 package com.hotels.beans.conversion.processor;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Function;
 
 /**
  * Conversion methods for all primitive types.
- * @param <T> indicates any primitve type object
+ * @param <T> indicates any primitive type object
  */
 public interface ConversionProcessor<T> {
     /**
@@ -76,4 +78,16 @@ public interface ConversionProcessor<T> {
      * @return the converted value
      */
     Function<String, T> convertString();
+
+    /**
+     * Converts an {@link BigInteger} type.
+     * @return the converted value
+     */
+    Function<BigInteger, T> convertBigInteger();
+
+    /**
+     * Converts an {@link BigDecimal} type.
+     * @return the converted value
+     */
+    Function<BigDecimal, T> convertBigDecimal();
 }

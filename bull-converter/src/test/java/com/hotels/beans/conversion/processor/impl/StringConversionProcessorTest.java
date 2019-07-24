@@ -21,6 +21,9 @@ import static java.lang.String.valueOf;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -140,5 +143,29 @@ public class StringConversionProcessorTest extends AbstractConversionProcessorTe
 
         // THEN
         assertEquals(STRING_VALUE, actual);
+    }
+
+    @Test
+    public void testConvertBigIntegerShouldReturnProperResult() {
+        // GIVEN
+        String expectedValue = BigDecimal.ZERO.toPlainString();
+
+        // WHEN
+        String actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual);
+    }
+
+    @Test
+    public void testConvertBigDecimalShouldReturnProperResult() {
+        // GIVEN
+        String expectedValue = BigDecimal.ZERO.toPlainString();
+
+        // WHEN
+        String actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+
+        // THEN
+        assertEquals(expectedValue, actual);
     }
 }
