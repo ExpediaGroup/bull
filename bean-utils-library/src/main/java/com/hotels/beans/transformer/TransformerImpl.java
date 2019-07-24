@@ -426,8 +426,8 @@ public class TransformerImpl extends AbstractTransformer {
      * @param <K> the target object type
      * @return the transformer function.
      */
-    private <K> List<FieldTransformer> getTransformerFunction(final Class<?> sourceObjectClass, final String sourceFieldName, final Class<K> targetClass,
-        final Field field, final boolean isDestinationFieldPrimitiveType, final String breadcrumb) {
+    private <K> List<FieldTransformer> getTransformerFunction(final Class<?> sourceObjectClass, final String sourceFieldName,
+        final Class<K> targetClass, final Field field, final boolean isDestinationFieldPrimitiveType, final String breadcrumb) {
         List<FieldTransformer> fieldTransformers = new ArrayList<>();
         String fieldTransformerKey = settings.isFlatFieldNameTransformation() ? field.getName() : breadcrumb;
         FieldTransformer fieldTransformer = settings.getFieldsTransformers().get(fieldTransformerKey);
@@ -457,23 +457,27 @@ public class TransformerImpl extends AbstractTransformer {
      */
     private <K> FieldTransformer getPrimitiveTypeTransformer(final Class<?> sourceObjectClass, final String sourceFieldName, final Class<K> targetClass,
         final Field field, final boolean isDestinationFieldPrimitiveType, final String fieldTransformerKey, final boolean isFieldTransformerDefined) {
-        String cacheKey = TRANSFORMER_FUNCTION_CACHE_PREFIX + "-" + targetClass
-                + "-" + fieldTransformerKey + "-" + isFieldTransformerDefined
-                + "-" + settings.isPrimitiveTypeConversionEnabled() + "-" + field.getName();
-        return cacheManager.getFromCache(cacheKey, FieldTransformer.class)
-                .orElseGet(() -> {
-                    FieldTransformer defaultPrimitiveTypeTransformer = null;
-                    if (settings.isPrimitiveTypeConversionEnabled() && isDestinationFieldPrimitiveType && !isFieldTransformerDefined) {
-                        Class<?> sourceFieldType = getSourceFieldType(sourceObjectClass, sourceFieldName);
-                        if (nonNull(sourceFieldType)) {
-                            defaultPrimitiveTypeTransformer = conversionAnalyzer.getConversionFunction(sourceFieldType, field.getType())
-                                    .map(conversionFunction -> new FieldTransformer<>(fieldTransformerKey, conversionFunction))
-                                    .orElse(null);
+        FieldTransformer fieldTransformer = null;
+        if (settings.isPrimitiveTypeConversionEnabled()) {
+            String cacheKey = TRANSFORMER_FUNCTION_CACHE_PREFIX + "-" + targetClass.getName()
+                    + "-" + fieldTransformerKey + "-" + isFieldTransformerDefined
+                    + "-" + field.getName();
+            fieldTransformer = cacheManager.getFromCache(cacheKey, FieldTransformer.class)
+                    .orElseGet(() -> {
+                        FieldTransformer primitiveTypeTransformer = null;
+                        if (isDestinationFieldPrimitiveType && !isFieldTransformerDefined) {
+                            Class<?> sourceFieldType = getSourceFieldType(sourceObjectClass, sourceFieldName);
+                            if (nonNull(sourceFieldType)) {
+                                primitiveTypeTransformer = conversionAnalyzer.getConversionFunction(sourceFieldType, field.getType())
+                                        .map(conversionFunction -> new FieldTransformer<>(fieldTransformerKey, conversionFunction))
+                                        .orElse(null);
+                            }
                         }
-                    }
-                    cacheManager.cacheObject(cacheKey, defaultPrimitiveTypeTransformer);
-                    return defaultPrimitiveTypeTransformer;
-                });
+                        cacheManager.cacheObject(cacheKey, primitiveTypeTransformer);
+                        return primitiveTypeTransformer;
+                    });
+        }
+        return fieldTransformer;
     }
 
     /**
