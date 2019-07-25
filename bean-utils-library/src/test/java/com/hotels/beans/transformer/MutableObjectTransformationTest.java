@@ -239,8 +239,8 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
     }
 
     /**
-     * Test that a bean containing a field not existing in the source object, and without a transformer function defined throws
-     * MissingFieldException even if the primitiveTypeConversionFunction is enabled.
+     * Test that a bean containing a field not existing in the source object, and without a transformer function defined,
+     * does not throws MissingFieldException and the primitiveTypeConversionFunction is enabled.
      */
     @Test
     public void testTransformerDoesNotThrowExceptionIfAFieldIsMissingAndTheDefaultValueSetIsEnabled() {
