@@ -30,9 +30,9 @@ import static com.hotels.beans.utils.ClassUtils.isInt;
 import static com.hotels.beans.utils.ClassUtils.isLong;
 import static com.hotels.beans.utils.ClassUtils.isShort;
 import static com.hotels.beans.utils.ClassUtils.isString;
+import static com.hotels.beans.utils.ClassUtils.isBigDecimal;
+import static com.hotels.beans.utils.ClassUtils.isBigInteger;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -109,9 +109,9 @@ public final class ConversionAnalyzer {
             conversionFunction = of(conversionProcessor.convertCharacter());
         } else if (isBoolean(sourceFieldType)) {
             conversionFunction = of(conversionProcessor.convertBoolean());
-        } else if (sourceFieldType == BigInteger.class) {
+        } else if (isBigInteger(sourceFieldType)) {
             conversionFunction = of(conversionProcessor.convertBigInteger());
-        } else if (sourceFieldType == BigDecimal.class) {
+        } else if (isBigDecimal(sourceFieldType)) {
             conversionFunction = of(conversionProcessor.convertBigDecimal());
         }
         return conversionFunction;
