@@ -36,6 +36,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.conversion.error.TypeConversionException;
+import com.hotels.beans.conversion.processor.impl.BigDecimalConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.BigIntegerConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.BooleanConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.CharacterConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.DoubleConversionProcessor;
@@ -144,8 +147,15 @@ public class ConverterTest {
                         double.class, float.class, new FloatConversionProcessor().convertDouble()},
                 {"Tests that the method returns a StringConversionProcessor that converts from char to String",
                         char.class, String.class, new StringConversionProcessor().convertCharacter()},
+                {"Tests that the method returns a BooleanConversionProcessor that converts from boolean to char",
+                        char.class, boolean.class, new BooleanConversionProcessor().convertCharacter()},
                 {"Tests that the method returns a CharacterConversionProcessor that converts from char to boolean",
-                        boolean.class, char.class, new CharacterConversionProcessor().convertBoolean()}
+                        boolean.class, char.class, new CharacterConversionProcessor().convertBoolean()},
+                {"Tests that the method returns a CharacterConversionProcessor that converts from BigInteger to BigDecimal",
+                        BigInteger.class, BigDecimal.class, new BigDecimalConversionProcessor().convertBigInteger()},
+                {"Tests that the method returns a CharacterConversionProcessor that converts from BigDecimal to BigInteger",
+                        BigDecimal.class, BigInteger.class, new BigIntegerConversionProcessor().convertBigDecimal()}
+
         };
     }
 

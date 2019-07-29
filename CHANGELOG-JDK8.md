@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 * Implemented automatic conversion of basic types (see: [Issue 61](https://github.com/HotelsDotCom/bull/issues/61)).
 #### Changed
 * Modified Transformer initialization in order to create a `Validator` instance only if the validation is enabled
-* Modified Transformer initialization in order to create a `ConversionAnalyzed` instance only if the automatic conversion is enabled
+* Modified Transformer initialization in order to create a `ConversionAnalyzer` instance only if the automatic conversion is enabled
 
 ### [1.1.22] 2019.07.03
 #### Added
