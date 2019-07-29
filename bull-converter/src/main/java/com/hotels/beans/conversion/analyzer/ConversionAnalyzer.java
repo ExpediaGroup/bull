@@ -88,6 +88,7 @@ public final class ConversionAnalyzer {
      * @param sourceFieldType he source field class
      * @return the conversion function
      */
+    @SuppressWarnings("unchecked")
     private Optional<Function<?, ?>> getTypeConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
         Optional<Function<?, ?>> conversionFunction = empty();
         if (isString(sourceFieldType)) {
