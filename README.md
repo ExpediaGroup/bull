@@ -1,4 +1,4 @@
-<h1 align="left">
+<h1>
   <img width="420" alt="BULL" src="./docs/site/resources/images/BullBranding_03.png">
 </h1>
 

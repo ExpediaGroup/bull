@@ -1,9 +1,8 @@
-target/
 !.mvn/wrapper/maven-wrapper.jar
 temp/
 
 #---------------------------------------#
-# STS                                   #
+# STS and Eclipse                       #
 #---------------------------------------#
 .apt_generated
 .classpath
@@ -19,8 +18,11 @@ temp/
 *.iws
 *.iml
 *.ipr
+.idea/
 
-### NetBeans ###
+#---------------------------------------#
+# NetBeans                              #
+#---------------------------------------#
 nbproject/private/
 build/
 !config/build/
@@ -85,19 +87,6 @@ logs/
 
 # VS Code
 /.vscode
-
-#---------------------------------------#
-# JetBrains Ignores                     #
-#---------------------------------------#
-.idea/
-*.iml
-
-#---------------------------------------#
-# Eclipse                               #
-#---------------------------------------#
-.project
-.classpath
-.settings
 
 #---------------------------------------#
 # Netbeans Ignores                      #

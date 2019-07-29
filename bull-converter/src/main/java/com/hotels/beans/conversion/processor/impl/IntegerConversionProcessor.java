@@ -16,8 +16,6 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Integer.valueOf;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.function.Function;
