@@ -82,7 +82,7 @@ public final class FloatConversionProcessor implements ConversionProcessor<Float
      */
     @Override
     public Function<Character, Float> convertCharacter() {
-        return val -> valueOf(getNumericValue(val));
+        return val -> (float) getNumericValue(val);
     }
 
     /**
@@ -90,7 +90,7 @@ public final class FloatConversionProcessor implements ConversionProcessor<Float
      */
     @Override
     public Function<Boolean, Float> convertBoolean() {
-        return val -> valueOf(val ? (float) 1 : (float) 0);
+        return val -> val ? (float) 1 : (float) 0;
     }
 
     /**

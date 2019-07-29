@@ -82,7 +82,7 @@ public final class LongConversionProcessor implements ConversionProcessor<Long> 
      */
     @Override
     public Function<Character, Long> convertCharacter() {
-        return val -> valueOf(getNumericValue(val));
+        return val -> (long) getNumericValue(val);
     }
 
     /**
@@ -90,7 +90,7 @@ public final class LongConversionProcessor implements ConversionProcessor<Long> 
      */
     @Override
     public Function<Boolean, Long> convertBoolean() {
-        return val -> valueOf(val ? (long) 1 : (long) 0);
+        return val -> val ? (long) 1 : (long) 0;
     }
 
     /**
