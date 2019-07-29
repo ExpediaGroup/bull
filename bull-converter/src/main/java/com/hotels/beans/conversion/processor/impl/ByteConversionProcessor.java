@@ -16,8 +16,6 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Byte.valueOf;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.function.Function;
@@ -81,7 +79,7 @@ public final class ByteConversionProcessor implements ConversionProcessor<Byte> 
      */
     @Override
     public Function<Character, Byte> convertCharacter() {
-        return val -> valueOf((byte) val.charValue());
+        return val -> (byte) val.charValue();
     }
 
     /**

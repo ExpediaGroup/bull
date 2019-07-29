@@ -89,7 +89,7 @@ public final class IntegerConversionProcessor implements ConversionProcessor<Int
      */
     @Override
     public Function<Boolean, Integer> convertBoolean() {
-        return val -> valueOf(val ? 1 : 0);
+        return val -> val ? 1 : 0;
     }
 
     /**

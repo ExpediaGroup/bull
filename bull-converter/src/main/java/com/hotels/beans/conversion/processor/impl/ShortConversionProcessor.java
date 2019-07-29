@@ -90,7 +90,7 @@ public final class ShortConversionProcessor implements ConversionProcessor<Short
      */
     @Override
     public Function<Boolean, Short> convertBoolean() {
-        return val -> valueOf(val ? (short) 1 : (short) 0);
+        return val -> val ? (short) 1 : (short) 0;
     }
 
     /**

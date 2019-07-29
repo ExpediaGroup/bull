@@ -90,7 +90,7 @@ public final class DoubleConversionProcessor implements ConversionProcessor<Doub
      */
     @Override
     public Function<Boolean, Double> convertBoolean() {
-        return val -> valueOf(val ? (double) 1 : (double) 0);
+        return val -> val ? (double) 1 : (double) 0;
     }
 
     /**
