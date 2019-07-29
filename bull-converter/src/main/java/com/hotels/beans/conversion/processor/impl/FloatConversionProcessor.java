@@ -17,7 +17,6 @@
 package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
-import static java.lang.Float.valueOf;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
