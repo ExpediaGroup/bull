@@ -16,8 +16,6 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Character.getNumericValue;
-import static java.lang.Short.valueOf;
 import static java.nio.ByteBuffer.wrap;
 
 import static org.junit.Assert.assertEquals;
@@ -31,20 +29,21 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.AbstractConversionTest;
 import com.hotels.beans.conversion.error.TypeConversionException;
 
 /**
- * Unit test for {@link ShortConversionProcessor}.
+ * Unit test for {@link CharacterConversionProcessor}.
  */
-public class ShortConversionProcessorTest extends AbstractConversionProcessorTest {
-    private static final short TRUE_AS_SHORT = 1;
-    private static final short FALSE_AS_SHORT = 0;
+public class CharacterConversionTest extends AbstractConversionTest {
+    private static final char TRUE_AS_CHAR = 'T';
+    private static final char FALSE_AS_CHAR = 'F';
 
     /**
      * The class to be tested.
      */
     @InjectMocks
-    private ShortConversionProcessor underTest;
+    private CharacterConversionProcessor underTest;
 
     /**
      * Initializes mock.
@@ -59,30 +58,19 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Short actual = underTest.convertByte().apply(BYTE_VALUE);
+        char actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals((Short) BYTE_VALUE.shortValue(), actual);
-    }
-
-    @Test
-    public void testConvertShortShouldReturnProperResult() {
-        // GIVEN
-
-        // WHEN
-        Short actual = underTest.convertShort().apply(SHORT_VALUE);
-
-        // THEN
-        assertEquals(SHORT_VALUE, actual);
+        assertEquals((char) BYTE_VALUE.byteValue(), actual);
     }
 
     @Test
     public void testConvertByteArrayShouldReturnProperResult() {
         // GIVEN
-        Short expected = wrap(EIGHT_BYTE_BYTE_ARRAY).getShort();
+        char expected = wrap(EIGHT_BYTE_BYTE_ARRAY).getChar();
 
         // WHEN
-        Short actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
+        char actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
 
         // THEN
         assertEquals(expected, actual);
@@ -97,14 +85,25 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
     }
 
     @Test
+    public void testConvertShortShouldReturnProperResult() {
+        // GIVEN
+
+        // WHEN
+        char actual = underTest.convertShort().apply(SHORT_VALUE);
+
+        // THEN
+        assertEquals((char) SHORT_VALUE.byteValue(), actual);
+    }
+
+    @Test
     public void testConvertIntegerShouldReturnProperResult() {
         // GIVEN
 
         // WHEN
-        Short actual = underTest.convertInteger().apply(INTEGER_VALUE);
+        char actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals((Short) INTEGER_VALUE.shortValue(), actual);
+        assertEquals((char) INTEGER_VALUE.intValue(), actual);
     }
 
     @Test
@@ -112,10 +111,10 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Short actual = underTest.convertLong().apply(LONG_VALUE);
+        char actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals((Short) LONG_VALUE.shortValue(), actual);
+        assertEquals((char) LONG_VALUE.longValue(), actual);
     }
 
     @Test
@@ -123,10 +122,10 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Short actual = underTest.convertFloat().apply(FLOAT_VALUE);
+        char actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals((Short) FLOAT_VALUE.shortValue(), actual);
+        assertEquals((char) FLOAT_VALUE.floatValue(), actual);
     }
 
     @Test
@@ -134,10 +133,10 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Short actual = underTest.convertDouble().apply(DOUBLE_VALUE);
+        char actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals((Short) DOUBLE_VALUE.shortValue(), actual);
+        assertEquals((char) DOUBLE_VALUE.doubleValue(), actual);
     }
 
     @Test
@@ -145,24 +144,24 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Short actual = underTest.convertCharacter().apply(CHAR_VALUE);
+        char actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals(valueOf((short) getNumericValue(CHAR_VALUE)), actual);
+        assertEquals(CHAR_VALUE, actual);
     }
 
     /**
-     * Tests that the method {@code convertBoolean} returns the expected short.
+     * Tests that the method {@code convertBoolean} returns the expected char.
      * @param testCaseDescription the test case description
      * @param valueToConvert the value to be converted
      * @param expectedResult the expected result
      */
-    @Test(dataProvider = "booleanToShortConvertValueTesting")
-    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final short expectedResult) {
+    @Test(dataProvider = "booleanToCharConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final char expectedResult) {
         // GIVEN
 
         // WHEN
-        short actual = underTest.convertBoolean().apply(valueToConvert);
+        char actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
         assertEquals(expectedResult, actual);
@@ -173,10 +172,10 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
      * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
      */
     @DataProvider
-    private Object[][] booleanToShortConvertValueTesting() {
+    private Object[][] booleanToCharConvertValueTesting() {
         return new Object[][]{
-                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_SHORT},
-                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_SHORT}
+                {"Tests that the method returns T if the value is true", BOOLEAN_VALUE, TRUE_AS_CHAR},
+                {"Tests that the method returns F if the value is false", Boolean.FALSE, FALSE_AS_CHAR}
         };
     }
 
@@ -185,19 +184,19 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
         // GIVEN
 
         // WHEN
-        Short actual = underTest.convertString().apply(STRING_VALUE);
+        char actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(valueOf(STRING_VALUE), actual);
+        assertEquals(STRING_VALUE.charAt(0), actual);
     }
 
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        short expectedValue = BigInteger.ZERO.shortValue();
+        char expectedValue = (char) BigInteger.ZERO.intValue();
 
         // WHEN
-        short actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+        char actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
         assertEquals(expectedValue, actual);
@@ -206,10 +205,10 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        short expectedValue = BigDecimal.ZERO.shortValue();
+        char expectedValue = (char) BigDecimal.ZERO.doubleValue();
 
         // WHEN
-        short actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+        char actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
         assertEquals(expectedValue, actual);

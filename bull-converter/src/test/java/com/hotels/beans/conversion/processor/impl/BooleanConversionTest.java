@@ -29,10 +29,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.AbstractConversionTest;
+
 /**
  * Unit test for {@link BooleanConversionProcessor}.
  */
-public class BooleanConversionProcessorTest extends AbstractConversionProcessorTest {
+public class BooleanConversionTest extends AbstractConversionTest {
     /**
      * The class to be tested.
      */

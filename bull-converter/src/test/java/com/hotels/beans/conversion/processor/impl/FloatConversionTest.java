@@ -31,12 +31,13 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.AbstractConversionTest;
 import com.hotels.beans.conversion.error.TypeConversionException;
 
 /**
  * Unit test for {@link FloatConversionProcessor}.
  */
-public class FloatConversionProcessorTest extends AbstractConversionProcessorTest {
+public class FloatConversionTest extends AbstractConversionTest {
     private static final float TRUE_AS_FLOAT = 1f;
     private static final float FALSE_AS_FLOAT = 0f;
     private static final double DELTA = 0.0;
