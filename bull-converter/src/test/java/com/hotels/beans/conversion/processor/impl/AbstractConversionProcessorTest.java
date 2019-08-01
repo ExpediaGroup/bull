@@ -36,4 +36,6 @@ public abstract class AbstractConversionProcessorTest {
     static final Boolean BOOLEAN_VALUE = Boolean.TRUE;
     static final String STRING_VALUE = "10";
     static final String TRUE_AS_STRING = "true";
+    static final byte[] ONE_BYTE_BYTE_ARRAY = new byte[] {1};
+    static final byte[] EIGHT_BYTE_BYTE_ARRAY = new byte[] {1, 2, 3, 4, 5, 6, 7, 8};
 }

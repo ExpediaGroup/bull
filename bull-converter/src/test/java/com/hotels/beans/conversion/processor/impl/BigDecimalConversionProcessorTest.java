@@ -18,6 +18,7 @@ package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
 import static java.math.BigDecimal.valueOf;
+import static java.nio.ByteBuffer.wrap;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -29,6 +30,8 @@ import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import com.hotels.beans.conversion.error.TypeConversionException;
 
 /**
  * Unit test for {@link  BigDecimalConversionProcessor}.
@@ -58,6 +61,26 @@ public class BigDecimalConversionProcessorTest extends AbstractConversionProcess
 
         // THEN
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testConvertByteArrayShouldReturnProperResult() {
+        // GIVEN
+        BigDecimal expected = valueOf(wrap(EIGHT_BYTE_BYTE_ARRAY).getDouble());
+
+        // WHEN
+        BigDecimal actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
+
+        // THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test(expectedExceptions = TypeConversionException.class)
+    public void testConvertByteArrayShouldThrowExceptionIfByteArrayIsTooSmall() {
+        // GIVEN
+
+        // WHEN
+        underTest.convertByteArray().apply(ONE_BYTE_BYTE_ARRAY);
     }
 
     @Test

@@ -49,7 +49,7 @@ The validation works with both the default `javax.constraints` provided by Java 
 Converts a given primitive value into the given primitive type.
 The supported types, in which an object can be converted (from / to), are: 
 
-* `Byte` or `byte`
+* `Byte`, `byte` or `byte[]`
 * `Short` or `short`
 * `Integer` or `int`
 * `Long` or `long`

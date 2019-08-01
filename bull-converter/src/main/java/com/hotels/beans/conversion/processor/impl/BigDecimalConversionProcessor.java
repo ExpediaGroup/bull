@@ -18,11 +18,14 @@ package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
 import static java.math.BigDecimal.valueOf;
+import static java.nio.ByteBuffer.wrap;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.BufferUnderflowException;
 import java.util.function.Function;
 
+import com.hotels.beans.conversion.error.TypeConversionException;
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
 /**
@@ -35,6 +38,20 @@ public final class BigDecimalConversionProcessor implements ConversionProcessor<
     @Override
     public Function<Byte, BigDecimal> convertByte() {
         return val -> valueOf(val.doubleValue());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<byte[], BigDecimal> convertByteArray() {
+        return val -> {
+            try {
+                return valueOf(wrap(val).getDouble());
+            } catch (BufferUnderflowException e) {
+                throw new TypeConversionException("Not enough byte to represents a BigDecimal. At least 8 bytes are required.");
+            }
+        };
     }
 
     /**

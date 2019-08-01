@@ -36,6 +36,7 @@ import org.testng.annotations.Test;
 import com.hotels.beans.conversion.processor.impl.BigDecimalConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.BigIntegerConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.BooleanConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.ByteArrayConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.CharacterConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.DoubleConversionProcessor;
@@ -149,6 +150,8 @@ public class ConversionAnalyzerTest {
                 BigDecimal.class, BigInteger.class, new BigIntegerConversionProcessor().convertBigDecimal()},
             {"Tests that the method returns a BigDecimalConversionProcessor that converts from String to BigDecimal",
                 String.class, BigDecimal.class, new BigDecimalConversionProcessor().convertString()},
+            {"Tests that the method returns a ByteConversionProcessor that converts from String to byte[]",
+                String.class, byte[].class, new ByteArrayConversionProcessor().convertString()}
         };
     }
 }

@@ -17,11 +17,14 @@
 package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
+import static java.nio.ByteBuffer.wrap;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.BufferUnderflowException;
 import java.util.function.Function;
 
+import com.hotels.beans.conversion.error.TypeConversionException;
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
 /**
@@ -34,6 +37,20 @@ public final class FloatConversionProcessor implements ConversionProcessor<Float
     @Override
     public Function<Byte, Float> convertByte() {
         return Byte::floatValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<byte[], Float> convertByteArray() {
+        return val -> {
+            try {
+                return wrap(val).getFloat();
+            } catch (BufferUnderflowException e) {
+                throw new TypeConversionException("Not enough byte to represents a Float. At least 4 bytes are required.");
+            }
+        };
     }
 
     /**

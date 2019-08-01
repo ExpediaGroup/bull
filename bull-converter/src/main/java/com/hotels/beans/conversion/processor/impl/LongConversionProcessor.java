@@ -17,11 +17,14 @@
 package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
+import static java.nio.ByteBuffer.wrap;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.BufferUnderflowException;
 import java.util.function.Function;
 
+import com.hotels.beans.conversion.error.TypeConversionException;
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
 /**
@@ -34,6 +37,20 @@ public final class LongConversionProcessor implements ConversionProcessor<Long> 
     @Override
     public Function<Byte, Long> convertByte() {
         return Byte::longValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<byte[], Long> convertByteArray() {
+        return val -> {
+            try {
+                return wrap(val).getLong();
+            } catch (BufferUnderflowException e) {
+                throw new TypeConversionException("Not enough byte to represents a Long. At least 8 bytes are required.");
+            }
+        };
     }
 
     /**

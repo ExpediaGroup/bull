@@ -32,6 +32,14 @@ public interface ConversionProcessor<T> {
     Function<Byte, T> convertByte();
 
     /**
+     * Converts a byte[] type.
+     * @return the converted value
+     * @throws com.hotels.beans.conversion.error.TypeConversionException if the number of bytes in the array is less
+     * than the minimum required to create the destination type
+     */
+    Function<byte[], T> convertByteArray();
+
+    /**
      * Converts a {@link Short} type.
      * @return the converted value
      */
