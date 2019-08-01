@@ -350,6 +350,7 @@ public class ConverterTest {
         };
     }
 
+    
     /**
      * Tests that the method {@code convertValue} returns the expected converted byte[] value.
      * @param testCaseDescription the test case description
@@ -362,7 +363,7 @@ public class ConverterTest {
         // GIVEN
 
         // WHEN
-        byte[] actual = (byte[]) underTest.convertValue(valueToConvert, byte[].class);
+        byte[] actual = underTest.convertValue(valueToConvert, byte[].class);
 
         // THEN
         assertArrayEquals(expectedValue, actual);
