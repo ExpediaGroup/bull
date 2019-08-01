@@ -28,10 +28,12 @@ import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.AbstractConversionTest;
+
 /**
  * Unit test for {@link StringConversionProcessor}.
  */
-public class StringConversionProcessorTest extends AbstractConversionProcessorTest {
+public class StringConversionTest extends AbstractConversionTest {
     /**
      * The class to be tested.
      */

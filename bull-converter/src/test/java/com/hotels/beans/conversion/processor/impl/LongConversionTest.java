@@ -17,7 +17,7 @@
 package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
-import static java.math.BigInteger.valueOf;
+import static java.lang.Long.valueOf;
 import static java.nio.ByteBuffer.wrap;
 
 import static org.junit.Assert.assertEquals;
@@ -31,17 +31,21 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.AbstractConversionTest;
 import com.hotels.beans.conversion.error.TypeConversionException;
 
 /**
- * Unit test for {@link  BigIntegerConversionProcessor}.
+ * Unit test for {@link LongConversionProcessor}.
  */
-public class BigIntegerConversionProcessorTest  extends AbstractConversionProcessorTest {
+public class LongConversionTest extends AbstractConversionTest {
+    private static final long TRUE_AS_LONG = 1L;
+    private static final long FALSE_AS_LONG = 0L;
+
     /**
      * The class to be tested.
      */
     @InjectMocks
-    private BigIntegerConversionProcessor underTest;
+    private LongConversionProcessor underTest;
 
     /**
      * Initializes mock.
@@ -54,22 +58,21 @@ public class BigIntegerConversionProcessorTest  extends AbstractConversionProces
     @Test
     public void testConvertByteShouldReturnProperResult() {
         // GIVEN
-        BigInteger expected = valueOf(BYTE_VALUE.longValue());
 
         // WHEN
-        BigInteger actual = underTest.convertByte().apply(BYTE_VALUE);
+        Long actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertEquals((Long) BYTE_VALUE.longValue(), actual);
     }
 
     @Test
     public void testConvertByteArrayShouldReturnProperResult() {
         // GIVEN
-        BigInteger expected = valueOf(wrap(EIGHT_BYTE_BYTE_ARRAY).getLong());
+        Long expected = wrap(EIGHT_BYTE_BYTE_ARRAY).getLong();
 
         // WHEN
-        BigInteger actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
+        Long actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
 
         // THEN
         assertEquals(expected, actual);
@@ -86,87 +89,81 @@ public class BigIntegerConversionProcessorTest  extends AbstractConversionProces
     @Test
     public void testConvertShortShouldReturnProperResult() {
         // GIVEN
-        BigInteger expected = valueOf(SHORT_VALUE);
 
         // WHEN
-        BigInteger actual = underTest.convertShort().apply(SHORT_VALUE);
+        Long actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertEquals((Long) SHORT_VALUE.longValue(), actual);
     }
 
     @Test
     public void testConvertIntegerShouldReturnProperResult() {
         // GIVEN
-        BigInteger expected = valueOf(INTEGER_VALUE);
 
         // WHEN
-        BigInteger actual = underTest.convertInteger().apply(INTEGER_VALUE);
+        Long actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertEquals((Long) INTEGER_VALUE.longValue(), actual);
     }
 
     @Test
     public void testConvertLongShouldReturnProperResult() {
         // GIVEN
-        BigInteger expected = valueOf(LONG_VALUE);
 
         // WHEN
-        BigInteger actual = underTest.convertLong().apply(LONG_VALUE);
+        Long actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertEquals(LONG_VALUE, actual);
     }
 
     @Test
     public void testConvertFloatShouldReturnProperResult() {
         // GIVEN
-        BigInteger expected = valueOf(FLOAT_VALUE.intValue());
 
         // WHEN
-        BigInteger actual = underTest.convertFloat().apply(FLOAT_VALUE);
+        Long actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertEquals((Long) FLOAT_VALUE.longValue(), actual);
     }
 
     @Test
     public void testConvertDoubleShouldReturnProperResult() {
         // GIVEN
-        BigInteger expected = valueOf(DOUBLE_VALUE.intValue());
 
         // WHEN
-        BigInteger actual = underTest.convertDouble().apply(DOUBLE_VALUE);
+        Long actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertEquals((Long) DOUBLE_VALUE.longValue(), actual);
     }
 
     @Test
     public void testConvertCharacterShouldReturnProperResult() {
         // GIVEN
-        BigInteger expected = valueOf(getNumericValue(CHAR_VALUE));
 
         // WHEN
-        BigInteger actual = underTest.convertCharacter().apply(CHAR_VALUE);
+        Long actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertEquals(valueOf(getNumericValue(CHAR_VALUE)), actual);
     }
 
     /**
-     * Tests that the method {@code convertBoolean} returns the expected BigInteger.
+     * Tests that the method {@code convertBoolean} returns the expected long.
      * @param testCaseDescription the test case description
      * @param valueToConvert the value to be converted
      * @param expectedResult the expected result
      */
-    @Test(dataProvider = "booleanToIntConvertValueTesting")
-    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final BigInteger expectedResult) {
+    @Test(dataProvider = "booleanToLongConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final long expectedResult) {
         // GIVEN
 
         // WHEN
-        BigInteger actual = underTest.convertBoolean().apply(valueToConvert);
+        long actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
         assertEquals(expectedResult, actual);
@@ -177,45 +174,46 @@ public class BigIntegerConversionProcessorTest  extends AbstractConversionProces
      * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
      */
     @DataProvider
-    private Object[][] booleanToIntConvertValueTesting() {
+    private Object[][] booleanToLongConvertValueTesting() {
         return new Object[][]{
-                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, BigInteger.ONE},
-                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, BigInteger.ZERO}
+                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_LONG},
+                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_LONG}
         };
     }
 
     @Test
     public void testConvertStringShouldReturnProperResult() {
         // GIVEN
-        BigInteger expected = new BigInteger(STRING_VALUE);
 
         // WHEN
-        BigInteger actual = underTest.convertString().apply(STRING_VALUE);
+        Long actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertEquals(valueOf(STRING_VALUE), actual);
     }
 
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
+        long expectedValue = BigInteger.ZERO.longValue();
 
         // WHEN
-        BigInteger actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+        long actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertEquals(BigInteger.ZERO, actual);
+        assertEquals(expectedValue, actual);
     }
 
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        BigInteger expectedValue = BigDecimal.ZERO.toBigInteger();
+        long expectedValue = BigDecimal.ZERO.longValue();
 
         // WHEN
-        BigInteger actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+        long actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
         assertEquals(expectedValue, actual);
     }
 }
+
