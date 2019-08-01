@@ -132,7 +132,7 @@ public final class ClassUtils {
     public boolean isPrimitiveTypeArray(final Class<?> clazz) {
         final String cacheKey = "isPrimitiveTypeArray-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final Boolean res = isPrimitiveType(clazz.getComponentType());
+            final Boolean res = clazz.isArray() && isPrimitiveType(clazz.getComponentType());
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -155,7 +155,7 @@ public final class ClassUtils {
     }
 
     /**
-     * Checks if the given type is a Double.
+     * Checks if the given type is a {@link Double}.
      * @param type the class to check
      * @return true if is Double
      */
@@ -164,7 +164,7 @@ public final class ClassUtils {
     }
 
     /**
-     * Checks if the given type is a Float.
+     * Checks if the given type is a {@link Float}.
      * @param type the class to check
      * @return true if is Float
      */
@@ -173,7 +173,7 @@ public final class ClassUtils {
     }
 
     /**
-     * Checks if the given type is a Long.
+     * Checks if the given type is a {@link Long}.
      * @param type the class to check
      * @return true if is Long
      */
@@ -182,7 +182,7 @@ public final class ClassUtils {
     }
 
     /**
-     * Checks if the given type is a Short.
+     * Checks if the given type is a {@link Short}.
      * @param type the class to check
      * @return true if is Short
      */
@@ -191,7 +191,7 @@ public final class ClassUtils {
     }
 
     /**
-     * Checks if the given type is a Integer.
+     * Checks if the given type is an {@link Integer}.
      * @param type the class to check
      * @return true if is Integer
      */
@@ -200,7 +200,7 @@ public final class ClassUtils {
     }
 
     /**
-     * Checks if the given type is a Byte.
+     * Checks if the given type is a {@link Byte}.
      * @param type the class to check
      * @return true if is Byte
      */
@@ -209,7 +209,7 @@ public final class ClassUtils {
     }
 
     /**
-     * Checks if the given type is a Boolean.
+     * Checks if the given type is a {@link Character}.
      * @param type the class to check
      * @return true if is Character
      */
@@ -218,7 +218,7 @@ public final class ClassUtils {
     }
 
     /**
-     * Checks if the given type is a Boolean.
+     * Checks if the given type is a {@link Boolean}.
      * @param type the class to check
      * @return true if is Boolean
      */
@@ -233,6 +233,33 @@ public final class ClassUtils {
      */
     public static boolean isString(final Class<?> type) {
         return type == String.class;
+    }
+
+    /**
+     * Checks if the given type is a {@link BigInteger}.
+     * @param type the class to check
+     * @return true if is String
+     */
+    public static boolean isBigInteger(final Class<?> type) {
+        return type == BigInteger.class;
+    }
+
+    /**
+     * Checks if the given type is a {@link BigDecimal}.
+     * @param type the class to check
+     * @return true if is String
+     */
+    public static boolean isBigDecimal(final Class<?> type) {
+        return type == BigDecimal.class;
+    }
+
+    /**
+     * Checks if the given type is a byte[].
+     * @param type the class to check
+     * @return true if is String
+     */
+    public static boolean isByteArray(final Class<?> type) {
+        return type == byte[].class;
     }
 
     /**

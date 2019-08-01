@@ -18,6 +18,7 @@ package com.hotels.beans.conversion.processor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigDecimal;
@@ -33,6 +34,7 @@ import org.testng.annotations.Test;
 import com.hotels.beans.conversion.processor.impl.BigDecimalConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.BigIntegerConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.BooleanConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.ByteArrayConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.CharacterConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.DoubleConversionProcessor;
@@ -89,6 +91,7 @@ public class ConversionProcessorFactoryTest {
         Optional<ConversionProcessor> actual = underTest.getConversionProcessor(targetClass);
 
         // THEN
+        assertTrue(actual.isPresent());
         assertEquals(expectedResult, actual.get().getClass());
     }
 
@@ -117,7 +120,8 @@ public class ConversionProcessorFactoryTest {
                 {"Tests that the method returns a BooleanConversionProcessor is case the target class is a Boolean", Boolean.class, BooleanConversionProcessor.class},
                 {"Tests that the method returns a BooleanConversionProcessor is case the target class is a boolean", boolean.class, BooleanConversionProcessor.class},
                 {"Tests that the method returns a BigIntegerConversionProcessor is case the target class is a BigInteger", BigInteger.class, BigIntegerConversionProcessor.class},
-                {"Tests that the method returns a BigDecimalConversionProcessor is case the target class is a BigDecimal", BigDecimal.class, BigDecimalConversionProcessor.class}
+                {"Tests that the method returns a BigDecimalConversionProcessor is case the target class is a BigDecimal", BigDecimal.class, BigDecimalConversionProcessor.class},
+                {"Tests that the method returns a ByteConversionProcessor is case the target class is a byte[]", byte[].class, ByteArrayConversionProcessor.class}
         };
     }
 }

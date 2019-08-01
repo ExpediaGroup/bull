@@ -18,6 +18,7 @@ package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
 import static java.lang.Short.valueOf;
+import static java.nio.ByteBuffer.wrap;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -29,6 +30,8 @@ import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import com.hotels.beans.conversion.error.TypeConversionException;
 
 /**
  * Unit test for {@link ShortConversionProcessor}.
@@ -71,6 +74,26 @@ public class ShortConversionProcessorTest extends AbstractConversionProcessorTes
 
         // THEN
         assertEquals(SHORT_VALUE, actual);
+    }
+
+    @Test
+    public void testConvertByteArrayShouldReturnProperResult() {
+        // GIVEN
+        Short expected = wrap(EIGHT_BYTE_BYTE_ARRAY).getShort();
+
+        // WHEN
+        Short actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
+
+        // THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test(expectedExceptions = TypeConversionException.class)
+    public void testConvertByteArrayShouldThrowExceptionIfByteArrayIsTooSmall() {
+        // GIVEN
+
+        // WHEN
+        underTest.convertByteArray().apply(ONE_BYTE_BYTE_ARRAY);
     }
 
     @Test

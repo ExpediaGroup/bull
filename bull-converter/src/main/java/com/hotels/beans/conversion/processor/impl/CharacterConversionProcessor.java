@@ -16,10 +16,14 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.nio.ByteBuffer.wrap;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.BufferUnderflowException;
 import java.util.function.Function;
 
+import com.hotels.beans.conversion.error.TypeConversionException;
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
 /**
@@ -32,6 +36,20 @@ public final class CharacterConversionProcessor implements ConversionProcessor<C
     @Override
     public Function<Byte, Character> convertByte() {
         return val -> (char) val.byteValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<byte[], Character> convertByteArray() {
+        return val -> {
+            try {
+                return wrap(val).getChar();
+            } catch (BufferUnderflowException e) {
+                throw new TypeConversionException("Not enough byte to represents a Char. At least 2 bytes are required.");
+            }
+        };
     }
 
     /**

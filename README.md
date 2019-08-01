@@ -1,4 +1,4 @@
-<h1 align="left">
+<h1>
   <img width="420" alt="BULL" src="./docs/site/resources/images/BullBranding_03.png">
 </h1>
 
@@ -702,7 +702,7 @@ Set<ConstraintViolation<Object>> violatedConstraints = beanUtils.getValidator().
 Converts a given primitive value into the given primitive type.
 The supported types, in which an object can be converted (from / to), are: 
 
-* `Byte` or `byte`
+* `Byte`, `byte` or `byte[]`
 * `Short` or `short`
 * `Integer` or `int`
 * `Long` or `long`

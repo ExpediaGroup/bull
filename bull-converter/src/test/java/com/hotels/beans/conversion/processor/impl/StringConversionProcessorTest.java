@@ -58,6 +58,18 @@ public class StringConversionProcessorTest extends AbstractConversionProcessorTe
     }
 
     @Test
+    public void testConvertByteArrayShouldReturnProperResult() {
+        // GIVEN
+        String expected = new String(EIGHT_BYTE_BYTE_ARRAY);
+
+        // WHEN
+        String actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
+
+        // THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testConvertShortShouldReturnProperResult() {
         // GIVEN
 

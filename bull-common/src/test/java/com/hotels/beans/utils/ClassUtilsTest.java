@@ -33,6 +33,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
@@ -841,6 +842,93 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns true if the class is a String", String.class, true},
                 {"Tests that the method returns false if the class is not a String", BigDecimal.class, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code isBigInteger} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataIsBigIntegerTesting")
+    public void testIsBigIntegerWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.isBigInteger(testClass);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isBigInteger}.
+     * @return parameters to be used for testing the the method {@code isBigInteger}.
+     */
+    @DataProvider
+    private Object[][] dataIsBigIntegerTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class is a BigInteger", BigInteger.class, true},
+                {"Tests that the method returns false if the class is not a BigInteger", BigDecimal.class, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code isBigDecimal} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataIsBigDecimalTesting")
+    public void testIsBigDecimalWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.isBigDecimal(testClass);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isBigDecimal}.
+     * @return parameters to be used for testing the the method {@code isBigDecimal}.
+     */
+    @DataProvider
+    private Object[][] dataIsBigDecimalTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class is a BigDecimal", BigDecimal.class, true},
+                {"Tests that the method returns false if the class is not a BigDecimal", BigInteger.class, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code isByteArray} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataIsByteArrayTesting")
+    public void testIsBiteArrayWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.isByteArray(testClass);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isByteArray}.
+     * @return parameters to be used for testing the the method {@code isByteArray}.
+     */
+    @DataProvider
+    private Object[][] dataIsByteArrayTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class is a byte[]", byte[].class, true},
+                {"Tests that the method returns false if the class is not a byte[]", byte.class, false}
         };
     }
 }
