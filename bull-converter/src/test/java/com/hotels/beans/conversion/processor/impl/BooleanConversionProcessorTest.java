@@ -77,6 +77,35 @@ public class BooleanConversionProcessorTest extends AbstractConversionProcessorT
     }
 
     /**
+     * Tests that the method {@code convertByteArray} returns the expected boolean.
+     * @param testCaseDescription the test case description
+     * @param valueToConvert the value to be converted
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "byteArrayToBooleanConvertValueTesting")
+    public void testConvertByteArrayShouldReturnProperResult(final String testCaseDescription, final byte[] valueToConvert, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.convertByteArray().apply(valueToConvert);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertByte} returns the expected result.
+     * @return parameters to be used for testing that the method {@code convertByte} returns the expected result.
+     */
+    @DataProvider
+    private Object[][] byteArrayToBooleanConvertValueTesting() {
+        return new Object[][]{
+                {"Tests that the method returns true if the value is not 0", new byte[] {BYTE_VALUE}, true},
+                {"Tests that the method returns false if the value is 0", new byte[] {BYTE_VALUE_ZERO}, false}
+        };
+    }
+
+    /**
      * Tests that the method {@code convertShort} returns the expected boolean.
      * @param testCaseDescription the test case description
      * @param valueToConvert the value to be converted

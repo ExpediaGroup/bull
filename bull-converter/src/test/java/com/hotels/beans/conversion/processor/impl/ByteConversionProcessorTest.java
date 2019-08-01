@@ -62,6 +62,17 @@ public class ByteConversionProcessorTest extends AbstractConversionProcessorTest
     }
 
     @Test
+    public void testConvertByteArrayShouldReturnProperResult() {
+        // GIVEN
+
+        // WHEN
+        byte actual = underTest.convertByteArray().apply(ONE_BYTE_BYTE_ARRAY);
+
+        // THEN
+        assertEquals(ONE_BYTE_BYTE_ARRAY[0], actual);
+    }
+
+    @Test
     public void testConvertShortShouldReturnProperResult() {
         // GIVEN
 

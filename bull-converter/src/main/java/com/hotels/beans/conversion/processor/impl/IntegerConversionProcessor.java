@@ -16,10 +16,14 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.nio.ByteBuffer.wrap;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.BufferUnderflowException;
 import java.util.function.Function;
 
+import com.hotels.beans.conversion.error.TypeConversionException;
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
 /**
@@ -32,6 +36,20 @@ public final class IntegerConversionProcessor implements ConversionProcessor<Int
     @Override
     public Function<Byte, Integer> convertByte() {
         return Byte::intValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<byte[], Integer> convertByteArray() {
+        return val -> {
+            try {
+                return wrap(val).getInt();
+            } catch (BufferUnderflowException e) {
+                throw new TypeConversionException("Not enough byte to represents an Integer. At least 4 bytes are required.");
+            }
+        };
     }
 
     /**

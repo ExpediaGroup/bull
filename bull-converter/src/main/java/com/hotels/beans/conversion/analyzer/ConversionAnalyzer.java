@@ -32,6 +32,7 @@ import static com.hotels.beans.utils.ClassUtils.isShort;
 import static com.hotels.beans.utils.ClassUtils.isString;
 import static com.hotels.beans.utils.ClassUtils.isBigDecimal;
 import static com.hotels.beans.utils.ClassUtils.isBigInteger;
+import static com.hotels.beans.utils.ClassUtils.isByteArray;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -72,7 +73,8 @@ public final class ConversionAnalyzer {
         final String cacheKey = "ConversionFunction-" + sourceClass.getName() + "-" + targetClass.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
             Optional conversionFunction = empty();
-            if (!targetClass.getSimpleName().equalsIgnoreCase(sourceClass.getSimpleName()) && classUtils.isPrimitiveType(sourceClass)) {
+            if (!targetClass.getSimpleName().equalsIgnoreCase(sourceClass.getSimpleName())
+                    && (classUtils.isPrimitiveType(sourceClass) || classUtils.isPrimitiveTypeArray(sourceClass))) {
                 conversionFunction = getConversionProcessor(targetClass)
                         .flatMap(cp -> getTypeConversionFunction(cp, sourceClass));
             }
@@ -113,6 +115,8 @@ public final class ConversionAnalyzer {
             conversionFunction = of(conversionProcessor.convertBigInteger());
         } else if (isBigDecimal(sourceFieldType)) {
             conversionFunction = of(conversionProcessor.convertBigDecimal());
+        } else if (isByteArray(sourceFieldType)) {
+            conversionFunction = of(conversionProcessor.convertByteArray());
         }
         return conversionFunction;
     }

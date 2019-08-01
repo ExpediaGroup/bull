@@ -38,6 +38,14 @@ public final class ByteConversionProcessor implements ConversionProcessor<Byte> 
      * {@inheritDoc}
      */
     @Override
+    public Function<byte[], Byte> convertByteArray() {
+        return val -> val[0];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Function<Short, Byte> convertShort() {
         return Short::byteValue;
     }

@@ -23,86 +23,22 @@ import java.util.function.Function;
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
 /**
- * Provides all method for converting any primitive type to a {@link String}.
+ * Provides all method for converting any primitive type to a byte[].
  */
-public final class StringConversionProcessor implements ConversionProcessor<String> {
+public final class ByteArrayConversionProcessor implements ConversionProcessor<byte[]> {
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<Byte, String> convertByte() {
-        return Object::toString;
+    public Function<Byte, byte[]> convertByte() {
+        return val -> new byte[] {val};
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<byte[], String> convertByteArray() {
-        return String::new;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Short, String> convertShort() {
-        return Object::toString;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Integer, String> convertInteger() {
-        return String::valueOf;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Long, String> convertLong() {
-        return String::valueOf;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Float, String> convertFloat() {
-        return String::valueOf;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Double, String> convertDouble() {
-        return String::valueOf;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Character, String> convertCharacter() {
-        return String::valueOf;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<Boolean, String> convertBoolean() {
-        return String::valueOf;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Function<String, String> convertString() {
+    public Function<byte[], byte[]> convertByteArray() {
         return val -> val;
     }
 
@@ -110,15 +46,79 @@ public final class StringConversionProcessor implements ConversionProcessor<Stri
      * {@inheritDoc}
      */
     @Override
-    public Function<BigInteger, String> convertBigInteger() {
-        return BigInteger::toString;
+    public Function<Short, byte[]> convertShort() {
+        return val -> new byte[] {val.byteValue()};
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Function<BigDecimal, String> convertBigDecimal() {
-        return BigDecimal::toPlainString;
+    public Function<Integer, byte[]> convertInteger() {
+        return val -> new byte[] {val.byteValue()};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<Long, byte[]> convertLong() {
+        return val -> new byte[] {val.byteValue()};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<Float, byte[]> convertFloat() {
+        return val -> new byte[] {val.byteValue()};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<Double, byte[]> convertDouble() {
+        return val -> new byte[] {val.byteValue()};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<Character, byte[]> convertCharacter() {
+        return val -> new byte[] {(byte) val.charValue()};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<Boolean, byte[]> convertBoolean() {
+        return val -> new byte[] {val ? (byte) 1 : (byte) 0};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<String, byte[]> convertString() {
+        return String::getBytes;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigInteger, byte[]> convertBigInteger() {
+        return val -> new byte[] {val.byteValue()};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<BigDecimal, byte[]> convertBigDecimal() {
+        return val -> new byte[] {val.byteValue()};
     }
 }

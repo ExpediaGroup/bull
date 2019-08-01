@@ -21,6 +21,7 @@ import static java.util.Optional.of;
 
 import static com.hotels.beans.utils.ClassUtils.isBigDecimal;
 import static com.hotels.beans.utils.ClassUtils.isBigInteger;
+import static com.hotels.beans.utils.ClassUtils.isByteArray;
 import static com.hotels.beans.utils.ClassUtils.isBoolean;
 import static com.hotels.beans.utils.ClassUtils.isByte;
 import static com.hotels.beans.utils.ClassUtils.isChar;
@@ -38,6 +39,7 @@ import java.util.Optional;
 import com.hotels.beans.conversion.processor.impl.BigDecimalConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.BigIntegerConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.BooleanConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.ByteArrayConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.CharacterConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.DoubleConversionProcessor;
@@ -83,6 +85,8 @@ public final class ConversionProcessorFactory {
             conversionProcessor = of(new BigIntegerConversionProcessor());
         } else if (isBigDecimal(clazz)) {
             conversionProcessor = of(new BigDecimalConversionProcessor());
+        } else if (isByteArray(clazz)) {
+            conversionProcessor = of(new ByteArrayConversionProcessor());
         }
         return conversionProcessor;
     }
