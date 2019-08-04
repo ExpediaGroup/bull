@@ -591,9 +591,6 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <skip>${javadoc.skip}</skip>
-                    <links>
-                        <link>https://www.javadoc.io/doc/com.hotels.beans/bean-utils-library</link>
-                    </links>
                 </configuration>
                 <executions>
                     <execution>
