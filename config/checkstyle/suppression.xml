@@ -10,7 +10,10 @@
               files=".*[\\/]src[\\/](test|it)[\\/]|.*Test.java"/>
 
     <!-- Checks for Javadoc comments. -->
-    <suppress checks="JavadocVariable" files="Filters.java"/>
+<!--    <suppress checks="JavadocVariable" files="Filters.java"/>-->
+
+    <!-- Checks for Parameter number. -->
+    <suppress checks="ParameterNumber" files="TransformerImpl.java"/>
 
     <!-- Checks for Braces into online instructions. -->
     <suppress checks="VisibilityModifier" files=".*.java"/>
