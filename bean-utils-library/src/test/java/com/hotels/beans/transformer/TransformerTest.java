@@ -18,9 +18,7 @@ package com.hotels.beans.transformer;
 
 import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
-import static java.util.Collections.emptyMap;
 import static java.util.Optional.empty;
-import static java.util.Optional.of;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -39,8 +37,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.List;
-import java.util.Map;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -70,7 +66,7 @@ public class TransformerTest extends AbstractTransformerTest {
     private static final String CACHE_MANAGER_FIELD_NAME = "cacheManager";
     private static final String REFLECTION_UTILS_FIELD_NAME = "reflectionUtils";
     private static final String CLASS_UTILS_FIELD_NAME = "classUtils";
-    private static final String GET_TRANSFORMER_FUNCTION_METHOD_NAME = "getTransformerFunction";
+    private static final String GET_TRANSFORMER_VALUE_METHOD_NAME = "getTransformedValue";
     private static final String CONVERSION_ANALYZER_FIELD_NAME = "conversionAnalyzer";
     private static final String GET_CONSTRUCTOR_ARGS_VALUES_METHOD_NAME = "getConstructorArgsValues";
 
@@ -166,6 +162,7 @@ public class TransformerTest extends AbstractTransformerTest {
 
     /**
      * Test that the method: {@code getSourceFieldValue} raises a {@link NullPointerException} in case any of the parameters null.
+     * @throws Exception uf the invocation fails
      */
     @Test(expectedExceptions = Exception.class)
     public void testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull() throws Exception {
@@ -349,72 +346,52 @@ public class TransformerTest extends AbstractTransformerTest {
     }
 
     /**
-     * Test that the {@code getTransformerFunction} works as expected.
+     * Test that the {@code getTransformedValue} works as expected.
      * @param testCaseDescription the test case description
      * @param fieldName the field name to which the transformer function has to be applied
+     * @param fieldValue the field value before the transformation
+     * @param fieldTransformer the field transformer associated to the given field
      * @param isPrimitiveTypeConversionEnabled indicates if the automatic conversion function is enabled
      * @param isDestinationFieldPrimitiveType indicates if the destination field type is primitive or not
-     * @param fieldTransformers the field transformer associated to the given field
-     * @param sourceFieldType the source field type
-     * @param expectedFieldTransformerSize the total number of transformation function expected for the given field
+     * @param expectedValue the expected value after the transformation
      * @throws Exception if the method invocation fails
      */
     @Test(dataProvider = "dataGetTransformerFunctionTesting")
-    @SuppressWarnings("unchecked")
-    public void testGetTransformerFunctionWorksProperly(final String testCaseDescription, final String fieldName, final boolean isPrimitiveTypeConversionEnabled,
-        final boolean isDestinationFieldPrimitiveType, final Map<String, FieldTransformer> fieldTransformers, final Class sourceFieldType, final int expectedFieldTransformerSize)
+    public void testGetTransformedValueWorksProperly(final String testCaseDescription, final String fieldName, final Object fieldValue, final FieldTransformer fieldTransformer,
+        final boolean isPrimitiveTypeConversionEnabled, final boolean isDestinationFieldPrimitiveType, final Object expectedValue)
         throws Exception {
         //GIVEN
         Field field = mock(Field.class);
-        CacheManager cacheManager = mock(CacheManager.class);
         TransformerSettings settings = mock(TransformerSettings.class);
-        ConversionAnalyzer conversionAnalyzer = mock(ConversionAnalyzer.class);
-        ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
-
-        when(cacheManager.getFromCache(anyString(), any())).thenReturn(empty());
-        when(settings.isFlatFieldNameTransformation()).thenReturn(false);
         when(settings.isPrimitiveTypeConversionEnabled()).thenReturn(isPrimitiveTypeConversionEnabled);
-        when(settings.getFieldsTransformers()).thenReturn(fieldTransformers);
-        when(conversionAnalyzer.getConversionFunction(any(Class.class), any(Class.class))).thenReturn(of(Object::toString));
-        when(field.getName()).thenReturn(fieldName);
-        when(field.getType()).thenReturn(sourceFieldType);
-        when(reflectionUtils.getDeclaredFieldType(fieldName, FromFooSimple.class)).thenReturn(sourceFieldType);
-
-        setField(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
         setField(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, settings);
-        setField(underTest, CONVERSION_ANALYZER_FIELD_NAME, conversionAnalyzer);
-        setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
 
-        Method getTransformerFunctionMethod = underTest.getClass()
-                .getDeclaredMethod(GET_TRANSFORMER_FUNCTION_METHOD_NAME, Class.class, String.class, Class.class, Field.class, boolean.class, String.class);
+        Class[] transformedValueMethodParams = {FieldTransformer.class, Object.class, Class.class, String.class, Class.class, Field.class, boolean.class, String.class};
+        Method getTransformerFunctionMethod = underTest.getClass().getDeclaredMethod(GET_TRANSFORMER_VALUE_METHOD_NAME, transformedValueMethodParams);
         getTransformerFunctionMethod.setAccessible(true);
 
         //WHEN
-        List<FieldTransformer> actual = (List<FieldTransformer>)
-                getTransformerFunctionMethod.invoke(underTest, FromFooSimple.class, fieldName, MutableToFooSimple.class, field, isDestinationFieldPrimitiveType, fieldName);
+        Object actual = getTransformerFunctionMethod
+                .invoke(underTest, fieldTransformer, fieldValue, FromFooSimple.class, fieldName, MutableToFooSimple.class, field, isDestinationFieldPrimitiveType, fieldName);
 
         //THEN
-        assertEquals(expectedFieldTransformerSize, actual.size());
+        assertEquals(expectedValue, actual);
         restoreUnderTestObject();
     }
 
     /**
-     * Creates the parameters to be used for testing method {@code getTransformerFunction}.
-     * @return parameters to be used for testing method {@code getTransformerFunction}.
+     * Creates the parameters to be used for testing method {@code getTransformedValue}.
+     * @return parameters to be used for testing method {@code getTransformedValue}.
      */
     @DataProvider
     private Object[][] dataGetTransformerFunctionTesting() {
         return new Object[][] {
-            {"Test that a type conversion function is added to the existing one if all the conditions are met",
-                    AGE_FIELD_NAME, true, true, emptyMap(), int.class, ONE.intValue()},
-            {"Test that no type conversion function is added to the existing one if the source type field is null",
-                    AGE_FIELD_NAME, true, true, emptyMap(), null, ZERO.intValue()},
-            {"Test that no conversion function is added to the existing one if the primitive type conversion is disabled",
-                    AGE_FIELD_NAME, false, true, emptyMap(), null, ZERO.intValue()},
-            {"Test that no conversion function is added to the existing one if the destination field type is not primitive",
-                    AGE_FIELD_NAME, true, false, emptyMap(), null, ZERO.intValue()},
-            {"Test that no conversion function is added to the existing one if there is a field transformer function defined for the existing field",
-                    AGE_FIELD_NAME, true, true, Map.of(AGE_FIELD_NAME, new FieldTransformer<>(AGE_FIELD_NAME, () -> null)), null, ONE.intValue()}
+                {"Test that the primitive type conversion function is not executed if the primitive type conversion is disabled",
+                        AGE_FIELD_NAME, ZERO.intValue(), null, false, true, ZERO.intValue()},
+                {"Test that the primitive type conversion function is not executed if the destination field type is not primitive",
+                        AGE_FIELD_NAME, null, null, true, false, null},
+                {"Test that the primitive type conversion function is not executed if a field transformer is defined for the given field",
+                        AGE_FIELD_NAME, ZERO.intValue(), new FieldTransformer<>(AGE_FIELD_NAME, ONE::intValue), true, true, ONE.intValue()}
         };
     }
 
