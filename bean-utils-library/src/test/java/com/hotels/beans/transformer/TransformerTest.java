@@ -49,7 +49,6 @@ import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.mutable.MutableToFooAdvFields;
-import com.hotels.beans.sample.mutable.MutableToFooSimple;
 import com.hotels.beans.utils.ClassUtils;
 import com.hotels.beans.utils.ReflectionUtils;
 
@@ -366,13 +365,13 @@ public class TransformerTest extends AbstractTransformerTest {
         when(settings.isPrimitiveTypeConversionEnabled()).thenReturn(isPrimitiveTypeConversionEnabled);
         setField(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, settings);
 
-        Class[] transformedValueMethodParams = {FieldTransformer.class, Object.class, Class.class, String.class, Class.class, Field.class, boolean.class, String.class};
+        Class[] transformedValueMethodParams = {FieldTransformer.class, Object.class, Class.class, String.class, Field.class, boolean.class, String.class};
         Method getTransformerFunctionMethod = underTest.getClass().getDeclaredMethod(GET_TRANSFORMER_VALUE_METHOD_NAME, transformedValueMethodParams);
         getTransformerFunctionMethod.setAccessible(true);
 
         //WHEN
         Object actual = getTransformerFunctionMethod
-                .invoke(underTest, fieldTransformer, fieldValue, FromFooSimple.class, fieldName, MutableToFooSimple.class, field, isDestinationFieldPrimitiveType, fieldName);
+                .invoke(underTest, fieldTransformer, fieldValue, FromFooSimple.class, fieldName, field, isDestinationFieldPrimitiveType, fieldName);
 
         //THEN
         assertEquals(expectedValue, actual);
