@@ -16,6 +16,8 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.lang.Character.getNumericValue;
+import static java.lang.Integer.valueOf;
 import static java.nio.ByteBuffer.wrap;
 
 import static org.junit.Assert.assertEquals;
@@ -29,20 +31,21 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.AbstractConversionTest;
 import com.hotels.beans.conversion.error.TypeConversionException;
 
 /**
- * Unit test for {@link CharacterConversionProcessor}.
+ * Unit test for {@link IntegerConversionProcessor}.
  */
-public class CharacterConversionProcessorTest  extends AbstractConversionProcessorTest {
-    private static final char TRUE_AS_CHAR = 'T';
-    private static final char FALSE_AS_CHAR = 'F';
+public class IntegerConversionTest extends AbstractConversionTest {
+    private static final int TRUE_AS_INT = 1;
+    private static final int FALSE_AS_INT = 0;
 
     /**
      * The class to be tested.
      */
     @InjectMocks
-    private CharacterConversionProcessor underTest;
+    private IntegerConversionProcessor underTest;
 
     /**
      * Initializes mock.
@@ -57,19 +60,19 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
         // GIVEN
 
         // WHEN
-        char actual = underTest.convertByte().apply(BYTE_VALUE);
+        Integer actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals((char) BYTE_VALUE.byteValue(), actual);
+        assertEquals((Integer) BYTE_VALUE.intValue(), actual);
     }
 
     @Test
     public void testConvertByteArrayShouldReturnProperResult() {
         // GIVEN
-        char expected = wrap(EIGHT_BYTE_BYTE_ARRAY).getChar();
+        Integer expected = wrap(EIGHT_BYTE_BYTE_ARRAY).getInt();
 
         // WHEN
-        char actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
+        Integer actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
 
         // THEN
         assertEquals(expected, actual);
@@ -88,10 +91,10 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
         // GIVEN
 
         // WHEN
-        char actual = underTest.convertShort().apply(SHORT_VALUE);
+        Integer actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals((char) SHORT_VALUE.byteValue(), actual);
+        assertEquals((Integer) SHORT_VALUE.intValue(), actual);
     }
 
     @Test
@@ -99,10 +102,10 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
         // GIVEN
 
         // WHEN
-        char actual = underTest.convertInteger().apply(INTEGER_VALUE);
+        Integer actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals((char) INTEGER_VALUE.intValue(), actual);
+        assertEquals(INTEGER_VALUE, actual);
     }
 
     @Test
@@ -110,10 +113,10 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
         // GIVEN
 
         // WHEN
-        char actual = underTest.convertLong().apply(LONG_VALUE);
+        Integer actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals((char) LONG_VALUE.longValue(), actual);
+        assertEquals((Integer) LONG_VALUE.intValue(), actual);
     }
 
     @Test
@@ -121,10 +124,10 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
         // GIVEN
 
         // WHEN
-        char actual = underTest.convertFloat().apply(FLOAT_VALUE);
+        Integer actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals((char) FLOAT_VALUE.floatValue(), actual);
+        assertEquals((Integer) FLOAT_VALUE.intValue(), actual);
     }
 
     @Test
@@ -132,10 +135,10 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
         // GIVEN
 
         // WHEN
-        char actual = underTest.convertDouble().apply(DOUBLE_VALUE);
+        Integer actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals((char) DOUBLE_VALUE.doubleValue(), actual);
+        assertEquals((Integer) DOUBLE_VALUE.intValue(), actual);
     }
 
     @Test
@@ -143,24 +146,24 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
         // GIVEN
 
         // WHEN
-        char actual = underTest.convertCharacter().apply(CHAR_VALUE);
+        Integer actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals(CHAR_VALUE, actual);
+        assertEquals((Integer) getNumericValue(CHAR_VALUE), actual);
     }
 
     /**
-     * Tests that the method {@code convertBoolean} returns the expected char.
+     * Tests that the method {@code convertBoolean} returns the expected int.
      * @param testCaseDescription the test case description
      * @param valueToConvert the value to be converted
      * @param expectedResult the expected result
      */
-    @Test(dataProvider = "booleanToCharConvertValueTesting")
-    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final char expectedResult) {
+    @Test(dataProvider = "booleanToIntConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final int expectedResult) {
         // GIVEN
 
         // WHEN
-        char actual = underTest.convertBoolean().apply(valueToConvert);
+        int actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
         assertEquals(expectedResult, actual);
@@ -171,10 +174,10 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
      * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
      */
     @DataProvider
-    private Object[][] booleanToCharConvertValueTesting() {
+    private Object[][] booleanToIntConvertValueTesting() {
         return new Object[][]{
-                {"Tests that the method returns T if the value is true", BOOLEAN_VALUE, TRUE_AS_CHAR},
-                {"Tests that the method returns F if the value is false", Boolean.FALSE, FALSE_AS_CHAR}
+                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_INT},
+                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_INT}
         };
     }
 
@@ -183,19 +186,19 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
         // GIVEN
 
         // WHEN
-        char actual = underTest.convertString().apply(STRING_VALUE);
+        Integer actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(STRING_VALUE.charAt(0), actual);
+        assertEquals(valueOf(STRING_VALUE), actual);
     }
 
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        char expectedValue = (char) BigInteger.ZERO.intValue();
+        int expectedValue = BigInteger.ZERO.intValue();
 
         // WHEN
-        char actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+        int actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
         assertEquals(expectedValue, actual);
@@ -204,12 +207,13 @@ public class CharacterConversionProcessorTest  extends AbstractConversionProcess
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        char expectedValue = (char) BigDecimal.ZERO.doubleValue();
+        int expectedValue = BigDecimal.ZERO.intValue();
 
         // WHEN
-        char actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+        int actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
         assertEquals(expectedValue, actual);
     }
 }
+
