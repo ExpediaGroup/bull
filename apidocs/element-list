@@ -3,6 +3,11 @@ com.hotels.beans.annotation
 com.hotels.beans.base
 com.hotels.beans.cache
 com.hotels.beans.constant
+com.hotels.beans.conversion
+com.hotels.beans.conversion.analyzer
+com.hotels.beans.conversion.error
+com.hotels.beans.conversion.processor
+com.hotels.beans.conversion.processor.impl
 com.hotels.beans.error
 com.hotels.beans.model
 com.hotels.beans.populator

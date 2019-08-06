@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.hotels.beans"},{"l":"com.hotels.beans.model"},{"l":"com.hotels.beans.populator"},{"l":"com.hotels.beans.transformer"}]

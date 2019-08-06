@@ -57,7 +57,7 @@
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      @Override
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">public</strong> Object getPopulatedObject(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; fieldType, <strong class="jxr_keyword">final</strong> Class&lt;?&gt; genericFieldType, <strong class="jxr_keyword">final</strong> Object fieldValue, <strong class="jxr_keyword">final</strong> Class&lt;?&gt; nestedGenericClass) {
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>          <strong class="jxr_keyword">final</strong> Object res;
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>          <strong class="jxr_keyword">if</strong> (classUtils.isPrimitiveTypeArray(fieldValue) || classUtils.isPrimitiveOrSpecialType(genericFieldType)) {
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          <strong class="jxr_keyword">if</strong> (classUtils.isPrimitiveTypeArray(fieldValue.getClass()) || classUtils.isPrimitiveOrSpecialType(genericFieldType)) {
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>              res = fieldValue;
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>          } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>              res = stream((Object[]) fieldValue)
