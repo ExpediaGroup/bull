@@ -194,6 +194,8 @@ abstract class AbstractTransformer implements Transformer {
         settings.setPrimitiveTypeConversionEnabled(primitiveTypeConversionEnabled);
         if (primitiveTypeConversionEnabled) {
             conversionAnalyzer = new ConversionAnalyzer();
+        } else {
+            cacheManager.removeMatchingKeys(TRANSFORMER_FUNCTION_REGEX);
         }
         return this;
     }

@@ -347,10 +347,11 @@ public class TransformerImpl extends AbstractTransformer {
         final Class<?> sourceObjectClass, final String sourceFieldName, final Field field,
         final boolean isDestinationFieldPrimitiveType, final String breadcrumb) {
         Object transformedValue = fieldValue;
+        if (settings.isPrimitiveTypeConversionEnabled() && isDestinationFieldPrimitiveType) {
+            transformedValue = applyPrimitiveTypeConversion(sourceObjectClass, sourceFieldName, field, breadcrumb, transformedValue);
+        }
         if (transformerFunction != null) {
             transformedValue = transformerFunction.getTransformedObject(transformedValue);
-        } else if (settings.isPrimitiveTypeConversionEnabled() && isDestinationFieldPrimitiveType) {
-            transformedValue = applyPrimitiveTypeConversion(sourceObjectClass, sourceFieldName, field, breadcrumb, transformedValue);
         }
         return transformedValue;
     }

@@ -559,6 +559,9 @@ Transformer transformer = beanUtils.getTransformer()
 ToBean toBean = transformer.transform(fromBean, ToBean.class);
 ~~~
 
+**IMPORTANT:** The primitive type transformation (if enabled) is executed before any other `FieldTransformer` function defined on a specific field.
+This means that the once the `FieldTransformer` function will be executed the field value has already been transformed.
+
 ## Constraints:
 
 * the class's fields that have to be copied must not be static

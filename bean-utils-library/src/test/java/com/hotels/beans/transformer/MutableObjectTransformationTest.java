@@ -48,6 +48,7 @@ import com.hotels.beans.sample.mutable.MutableToFooSubClass;
  */
 public class MutableObjectTransformationTest extends AbstractTransformerTest {
     private static final boolean ACTIVE = true;
+    private static final String PRICE_FIELD_NAME = "price";
 
     /**
      * Test that an exception is thrown if there is no default constructor defined for the mutable bean object.
@@ -328,5 +329,28 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
         assertEquals(Float.valueOf(fromFooPrimitiveTypes.getPrice()).doubleValue(), actual.getPrice(), delta);
         assertEquals(ACTIVE, actual.isActive());
         underTest.setPrimitiveTypeConversionEnabled(false);
+    }
+
+    /**
+     * Test that both primitive type transformation and custom transformation are executed.
+     */
+    @Test
+    public void testThatBothPrimitiveTypeTransformationAndCustomTransformationAreExecuted() {
+        //GIVEN
+        double delta = 0d;
+        double newPrice = PRICE * PRICE;
+        FieldTransformer<Void, Double> priceTransformer = new FieldTransformer<>(PRICE_FIELD_NAME, () -> newPrice);
+        underTest.setPrimitiveTypeConversionEnabled(true).withFieldTransformer(priceTransformer);
+
+        //WHEN
+        MutableToFooOnlyPrimitiveTypes actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
+
+        //THEN
+        assertEquals(parseInt(fromFooPrimitiveTypes.getCode()), actual.getCode());
+        assertEquals(String.valueOf(fromFooPrimitiveTypes.getId()), actual.getId());
+        assertEquals(newPrice, actual.getPrice(), delta);
+        assertEquals(ACTIVE, actual.isActive());
+        underTest.setPrimitiveTypeConversionEnabled(false);
+        underTest.removeFieldTransformer(PRICE_FIELD_NAME);
     }
 }
