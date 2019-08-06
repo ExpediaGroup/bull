@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.5.0] TBD
+### [1.5.0] 2019.08.06
 #### Added
 * Implemented automatic conversion of basic types (see: [Issue 61](https://github.com/HotelsDotCom/bull/issues/61)).
 #### Changed
