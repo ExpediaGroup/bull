@@ -16,25 +16,26 @@
 
 package com.hotels.beans.transformer;
 
+import static java.lang.Integer.parseInt;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
-import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.beans.error.MissingFieldException;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFooNoField;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
+import com.hotels.beans.sample.mixed.MutableToFooOnlyPrimitiveTypes;
 import com.hotels.beans.sample.mutable.MutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooInvalid;
 import com.hotels.beans.sample.mutable.MutableToFooNotExistingFields;
@@ -47,19 +48,7 @@ import com.hotels.beans.sample.mutable.MutableToFooSubClass;
  */
 public class MutableObjectTransformationTest extends AbstractTransformerTest {
     private static final boolean ACTIVE = true;
-    /**
-     * The class to be tested.
-     */
-    @InjectMocks
-    private TransformerImpl underTest;
-
-    /**
-     * Initialized mocks.
-     */
-    @BeforeMethod
-    public void beforeMethod() {
-        initMocks(this);
-    }
+    private static final String PRICE_FIELD_NAME = "price";
 
     /**
      * Test that an exception is thrown if there is no default constructor defined for the mutable bean object.
@@ -224,6 +213,49 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(mutableObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
+        underTest.resetFieldsTransformer();
+    }
+
+    /**
+     * Test that a bean containing a field not existing in the source object, and without a transformer function defined throws
+     * MissingFieldException even if the primitiveTypeConversionFunction is enabled.
+     */
+    @Test
+    public void testTransformerThrowsExceptionIfAFieldIsMissingAndThePrimitiveTypeConversionIsEnabled() {
+        //GIVEN
+        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
+        underTest.setPrimitiveTypeConversionEnabled(true);
+
+        //WHEN
+        Exception raisedException = null;
+        try {
+            underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
+        } catch (final Exception e) {
+            raisedException = e;
+        }
+
+        //THEN
+        assertEquals(MissingFieldException.class, raisedException.getCause().getClass());
+        underTest.setPrimitiveTypeConversionEnabled(false);
+    }
+
+    /**
+     * Test that a bean containing a field not existing in the source object, and without a transformer function defined,
+     * does not throws MissingFieldException and the primitiveTypeConversionFunction is enabled.
+     */
+    @Test
+    public void testTransformerDoesNotThrowExceptionIfAFieldIsMissingAndTheDefaultValueSetIsEnabled() {
+        //GIVEN
+        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
+        underTest.setPrimitiveTypeConversionEnabled(true).setDefaultValueForMissingField(true);
+
+        //WHEN
+        MutableToFooNotExistingFields actual = underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
+
+        //THEN
+        assertEquals(actual.getId(), fromFooSimple.getId());
+        assertEquals(actual.getName(), fromFooSimple.getName());
+        underTest.setPrimitiveTypeConversionEnabled(false).setDefaultValueForMissingField(false);
     }
 
     /**
@@ -277,5 +309,48 @@ public class MutableObjectTransformationTest extends AbstractTransformerTest {
         assertNull(actual.getName());
         assertNull(actual.getNestedObject().getPhoneNumbers());
         underTest.resetFieldsTransformationSkip();
+    }
+
+    /**
+     * Test that the automatic primitive type conversion works properly.
+     */
+    @Test
+    public void testAutomaticPrimitiveTypeTransformationWorksProperly() {
+        //GIVEN
+        double delta = 0d;
+        underTest.setPrimitiveTypeConversionEnabled(true);
+
+        //WHEN
+        MutableToFooOnlyPrimitiveTypes actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
+
+        //THEN
+        assertEquals(parseInt(fromFooPrimitiveTypes.getCode()), actual.getCode());
+        assertEquals(String.valueOf(fromFooPrimitiveTypes.getId()), actual.getId());
+        assertEquals(Float.valueOf(fromFooPrimitiveTypes.getPrice()).doubleValue(), actual.getPrice(), delta);
+        assertEquals(ACTIVE, actual.isActive());
+        underTest.setPrimitiveTypeConversionEnabled(false);
+    }
+
+    /**
+     * Test that both primitive type transformation and custom transformation are executed.
+     */
+    @Test
+    public void testThatBothPrimitiveTypeTransformationAndCustomTransformationAreExecuted() {
+        //GIVEN
+        double delta = 0d;
+        double newPrice = PRICE * PRICE;
+        FieldTransformer<Void, Double> priceTransformer = new FieldTransformer<>(PRICE_FIELD_NAME, () -> newPrice);
+        underTest.setPrimitiveTypeConversionEnabled(true).withFieldTransformer(priceTransformer);
+
+        //WHEN
+        MutableToFooOnlyPrimitiveTypes actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
+
+        //THEN
+        assertEquals(parseInt(fromFooPrimitiveTypes.getCode()), actual.getCode());
+        assertEquals(String.valueOf(fromFooPrimitiveTypes.getId()), actual.getId());
+        assertEquals(newPrice, actual.getPrice(), delta);
+        assertEquals(ACTIVE, actual.isActive());
+        underTest.setPrimitiveTypeConversionEnabled(false);
+        underTest.removeFieldTransformer(PRICE_FIELD_NAME);
     }
 }

@@ -35,6 +35,8 @@ public class CacheManagerTest {
     private static final String DEFAULT_VALUE = "defaultValue";
     private static final String CACHE_KEY = "cacheKey";
     private static final Class<String> CACHED_OBJECT_CLASS = String.class;
+    private static final String STARTS_WITH_REGEX = "^ca.*";
+
     /**
      * The class to be tested.
      */
@@ -92,6 +94,22 @@ public class CacheManagerTest {
 
         // WHEN
         underTest.removeFromCache(CACHE_KEY);
+        Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
+
+        // THEN
+        assertFalse(actual.isPresent());
+    }
+
+    /**
+     * Tests that the method {@code removeMatchingKeys} really removes the object with the matching key from the cache.
+     */
+    @Test
+    public void testRemoveMatchingKeysFromCacheRemovesTheObject() {
+        // GIVEN
+        underTest.cacheObject(CACHE_KEY, VALUE);
+
+        // WHEN
+        underTest.removeMatchingKeys(STARTS_WITH_REGEX);
         Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN

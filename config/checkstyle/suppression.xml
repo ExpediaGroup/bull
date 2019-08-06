@@ -9,9 +9,6 @@
     <suppress checks="JavadocMethod|JavadocType|JavadocVariable|JavadocStyle|TodoComment"
               files=".*[\\/]src[\\/](test|it)[\\/]|.*Test.java"/>
 
-    <!-- Checks for Javadoc comments. -->
-    <suppress checks="JavadocVariable" files="Filters.java"/>
-
     <!-- Checks for Braces into online instructions. -->
     <suppress checks="VisibilityModifier" files=".*.java"/>
 

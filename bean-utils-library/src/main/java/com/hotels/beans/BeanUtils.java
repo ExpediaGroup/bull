@@ -20,6 +20,8 @@ import static com.hotels.beans.validator.Validator.notNull;
 
 import java.util.function.Function;
 
+import com.hotels.beans.conversion.Converter;
+import com.hotels.beans.conversion.ConverterImpl;
 import com.hotels.beans.transformer.Transformer;
 import com.hotels.beans.transformer.TransformerImpl;
 import com.hotels.beans.validator.Validator;
@@ -58,7 +60,7 @@ public class BeanUtils {
 
     /**
      * Returns a Bean Transformer.
-     * @return a Bean Transformer instance.
+     * @return a {@link Transformer} instance.
      */
     public final Transformer getTransformer() {
         return new TransformerImpl();
@@ -70,6 +72,14 @@ public class BeanUtils {
      */
     public final Validator getValidator() {
         return new ValidatorImpl();
+    }
+
+    /**
+     * Returns a primitive type converter.
+     * @return a {@link Converter} instance.
+     */
+    public final Converter getPrimitiveTypeConverter() {
+        return new ConverterImpl();
     }
 
 }

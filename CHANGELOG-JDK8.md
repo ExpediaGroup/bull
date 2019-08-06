@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.23] 2019.08.06
+#### Added
+* Implemented automatic conversion of basic types (see: [Issue 61](https://github.com/HotelsDotCom/bull/issues/61)).
+#### Changed
+* Modified Transformer initialization in order to create a `Validator` instance only if the validation is enabled
+* Modified Transformer initialization in order to create a `ConversionAnalyzer` instance only if the automatic conversion is enabled
+
 ### [1.1.22] 2019.07.03
 #### Added
 * Implemented possibility to disable the default value set for primitive types in case its value is null (see: [Issue 73](https://github.com/HotelsDotCom/bull/issues/73)).

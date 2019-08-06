@@ -18,12 +18,13 @@ package com.hotels.beans.transformer;
 
 import static java.util.Arrays.asList;
 
-import static com.hotels.beans.validator.Validator.notNull;
 import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.beans.validator.Validator.notNull;
 
 import java.util.Map;
 
 import com.hotels.beans.cache.CacheManager;
+import com.hotels.beans.conversion.analyzer.ConversionAnalyzer;
 import com.hotels.beans.model.FieldMapping;
 import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.utils.ClassUtils;
@@ -36,6 +37,16 @@ import com.hotels.beans.validator.ValidatorImpl;
  * Contains all method implementation that will be common to any {@link Transformer} implementation.
  */
 abstract class AbstractTransformer implements Transformer {
+    /**
+     * The cache key prefix for the Transformer Functions.
+     */
+    static final String TRANSFORMER_FUNCTION_CACHE_PREFIX = "TransformerFunction";
+
+    /**
+     * A regex that returns all the transformer function cached items.
+     */
+    private static final String TRANSFORMER_FUNCTION_REGEX = "^" + TRANSFORMER_FUNCTION_CACHE_PREFIX + ".*";
+
     /**
      * Reflection utils instance {@link ReflectionUtils}.
      */
@@ -59,7 +70,12 @@ abstract class AbstractTransformer implements Transformer {
     /**
      * Bean Validator. It offers the possibility to validate a given Java Bean against a set of defined constraints.
      */
-    final Validator validator;
+    Validator validator;
+
+    /**
+     * Conversion analyzer. It allows to automatically convert common field types.
+     */
+    ConversionAnalyzer conversionAnalyzer;
 
     /**
      * Default constructor.
@@ -67,7 +83,6 @@ abstract class AbstractTransformer implements Transformer {
     AbstractTransformer() {
         this.reflectionUtils = new ReflectionUtils();
         this.classUtils = new ClassUtils();
-        this.validator = new ValidatorImpl();
         this.settings = new TransformerSettings();
         this.cacheManager = getCacheManager("transformer");
     }
@@ -120,6 +135,7 @@ abstract class AbstractTransformer implements Transformer {
     public final void removeFieldTransformer(final String destFieldName) {
         notNull(destFieldName, "The field name for which the transformer function has to be removed cannot be null!");
         settings.getFieldsTransformers().remove(destFieldName);
+        cacheManager.removeMatchingKeys(TRANSFORMER_FUNCTION_REGEX + destFieldName);
     }
 
     /**
@@ -128,6 +144,7 @@ abstract class AbstractTransformer implements Transformer {
     @Override
     public final void resetFieldsTransformer() {
         settings.getFieldsTransformers().clear();
+        cacheManager.removeMatchingKeys(TRANSFORMER_FUNCTION_REGEX);
     }
 
     /**
@@ -135,7 +152,7 @@ abstract class AbstractTransformer implements Transformer {
      */
     @Override
     public final Transformer setDefaultValueForMissingField(final boolean useDefaultValue) {
-        settings.setSetDefaultValue(useDefaultValue);
+        settings.setSetDefaultValueForMissingField(useDefaultValue);
         return this;
     }
 
@@ -154,6 +171,9 @@ abstract class AbstractTransformer implements Transformer {
     @Override
     public Transformer setValidationEnabled(final boolean validationEnabled) {
         settings.setValidationEnabled(validationEnabled);
+        if (validationEnabled) {
+            validator = new ValidatorImpl();
+        }
         return this;
     }
 
@@ -163,6 +183,20 @@ abstract class AbstractTransformer implements Transformer {
     @Override
     public Transformer setDefaultValueSetEnabled(final boolean defaultValueSetEnabled) {
         settings.setDefaultValueSetEnabled(defaultValueSetEnabled);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Transformer setPrimitiveTypeConversionEnabled(final boolean primitiveTypeConversionEnabled) {
+        settings.setPrimitiveTypeConversionEnabled(primitiveTypeConversionEnabled);
+        if (primitiveTypeConversionEnabled) {
+            conversionAnalyzer = new ConversionAnalyzer();
+        } else {
+            cacheManager.removeMatchingKeys(TRANSFORMER_FUNCTION_REGEX);
+        }
         return this;
     }
 
