@@ -25,7 +25,7 @@ public class InvalidBeanException extends RuntimeException {
      * detail message of {@code (cause==null ? null : cause.toString())}
      * (which typically contains the class and detail message of
      * {@code cause}).  This constructor is useful for invalid bean exceptions
-     * that are little more than wrappers for other throwables.
+     * that are little more than wrappers for other throwable.
      *
      * @param  cause the cause (which is saved for later retrieval by the
      *         {@link #getCause()} method).  (A {@code null} value is

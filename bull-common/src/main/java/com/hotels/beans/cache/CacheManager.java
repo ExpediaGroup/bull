@@ -79,4 +79,12 @@ public final class CacheManager {
     public void removeFromCache(final String cacheKey) {
         ofNullable(cacheKey).ifPresent(cacheMap::remove);
     }
+
+    /**
+     * Removes all items matching with the given regex.
+     * @param regex the regex key.
+     */
+    public void removeMatchingKeys(final String regex) {
+        cacheMap.keySet().removeIf(key -> key.matches(regex));
+    }
 }

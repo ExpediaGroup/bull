@@ -1,4 +1,4 @@
-<h1 align="left">
+<h1>
   <img width="420" alt="BULL" src="./docs/site/resources/images/BullBranding_03.png">
 </h1>
 
@@ -72,12 +72,14 @@ mvnw.cmd clean install -P relaxed
 * easy usage, declarative way to define the property mapping (in case of different names) or simply adding the lombok annotations.
 * allows to set the default value for all objects not existing in the source object.
 * allows to skip transformation for a given set of fields.
-* supports the values retrieval from getters if a field does not exists in the source object
+* supports the values retrieval from getters if a field does not exists in the source object.
+* supports the automatic conversion of primitive types.
 
 # Feature samples
 
 * [Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
 * [Validation](https://github.com/HotelsDotCom/bull#validation-samples)
+* [Primitive Type conversion](https://github.com/HotelsDotCom/bull#primitive-type-object-converter)
 
 ## Transformation samples
 
@@ -531,6 +533,39 @@ And one line code as:
 ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
 ~~~
 
+### Transform primitive types automatically
+
+Given the following Java Bean:
+
+~~~Java
+public class FromBean {                                     public class ToBean {                           
+   private final String indexNumber;                           private final int indexNumber;                                 
+   private final BigInteger id;                                public Long id;                      
+
+   // constructors...                                          // constructors...
+   // getters...                                               // getters and setters...
+
+}                                                           }
+~~~
+
+as, by default the primitive type conversion is disabled, to get the above object converted we should have
+implemented transformer functions for both field `indexNumber` and `id`, but this can be done automatically from enabling the
+functionality described above.
+
+~~~Java
+Transformer transformer = beanUtils.getTransformer()
+                             .setPrimitiveTypeConversionEnabled(true);
+
+ToBean toBean = transformer.transform(fromBean, ToBean.class);
+~~~
+
+**IMPORTANT:** The primitive type transformation (if enabled) is executed before any other `FieldTransformer` function defined on a specific field.
+This means that the once the `FieldTransformer` function will be executed the field value has already been transformed.
+
+## Constraints:
+
+* the class's fields that have to be copied must not be static
+
 More sample beans can be found in the test package: `com.hotels.beans.sample`
 
 ## Third party library comparison
@@ -665,9 +700,57 @@ in case it's needed to have the `ConstraintViolation` object:
 Set<ConstraintViolation<Object>> violatedConstraints = beanUtils.getValidator().getConstraintViolations(sampleBean);
 ~~~
 
-## Constraints:
+## Primitive type object converter
 
-* the class's fields that have to be copied must not be static
+Converts a given primitive value into the given primitive type.
+The supported types, in which an object can be converted (from / to), are: 
+
+* `Byte`, `byte` or `byte[]`
+* `Short` or `short`
+* `Integer` or `int`
+* `Long` or `long`
+* `Float` or `float`
+* `Double` or `double`
+* `BigDecimal`
+* `BigInteger`
+* `Character` or `char`
+* `Boolean` or `boolean`
+* `String`
+
+### Convert a String into an int:
+
+Given the following variable:
+
+~~~Java
+String indexNumber = "26062019";                                                        
+~~~
+
+to convert it in an `int`:
+
+~~~Java
+Converter converter = new BeanUtils().getPrimitiveTypeConverter();
+int indexNumber = converter.convertValue(indexNumber, int.class);
+~~~
+
+### Obtain a conversion function that convert from char to byte:
+
+It's possible to obtain a type conversion function, reusable several time in different places.
+Assuming that the required conversion is from `char` to `byte
+
+~~~Java
+char c = '1';                                                        
+~~~
+
+the conversion function is retrieved through:
+
+~~~Java
+Converter converter = new BeanUtils().getPrimitiveTypeConverter();
+Optional<Function<Object, Object>> conversionFunction = converter.getConversionFunction(char.class, byte.class);
+byte converted = conversionFunction.map(processor -> processor.apply(c)).orElse(0);
+~~~
+
+* in case the conversion is not needed as the primitive type and the destination type are the same it will return an empty `Optional`
+* in case the conversion function is unavailable or no not possible the method throws a : `TypeConversionException`
 
 ## Documentation
 

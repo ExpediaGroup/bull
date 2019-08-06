@@ -33,6 +33,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
@@ -136,11 +137,11 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns true if the class is a primitive type object", BigDecimal.class, true},
                 {"Tests that the method returns false if the class is not a primitive type object", FromFoo.class, false},
-                {"Tests that the method returns true if the class is not a Boolean", Boolean.class, true},
-                {"Tests that the method returns true if the class is not a Character", Character.class, true},
-                {"Tests that the method returns true if the class is not a Byte", Byte.class, true},
-                {"Tests that the method returns true if the class is not a Void", Void.class, true},
-                {"Tests that the method returns true if the class is not a String", String.class, true},
+                {"Tests that the method returns true if the class is a Boolean", Boolean.class, true},
+                {"Tests that the method returns true if the class is a Character", Character.class, true},
+                {"Tests that the method returns true if the class is a Byte", Byte.class, true},
+                {"Tests that the method returns true if the class is a Void", Void.class, true},
+                {"Tests that the method returns true if the class is a String", String.class, true},
         };
     }
 
@@ -215,7 +216,7 @@ public class ClassUtilsTest {
         // GIVEN
 
         // WHEN
-        boolean actual = underTest.isPrimitiveTypeArray(testArray);
+        boolean actual = underTest.isPrimitiveTypeArray(testArray.getClass());
 
         // THEN
         assertEquals(expectedResult, actual);
@@ -267,7 +268,7 @@ public class ClassUtilsTest {
                 {"Tests that the method returns 0 if the given class has no private final fields", CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, ZERO},
                 {"Tests that the method returns the expected value if the class has private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, EXPECTED_PRIVATE_FINAL_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields and extends another class",
-                        CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, EXPECTED_SUB_CLASS_PRIVATE_FIELDS}
+                    CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, EXPECTED_SUB_CLASS_PRIVATE_FIELDS}
         };
     }
 
@@ -297,7 +298,7 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns 0 if the given class has only private fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, ZERO},
                 {"Tests that the method returns the expected value if the class has private final fields",
-                        CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, EXPECTED_MIXED_CLASS_TOTAL_NOT_FINAL_FIELDS}
+                    CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, EXPECTED_MIXED_CLASS_TOTAL_NOT_FINAL_FIELDS}
         };
     }
 
@@ -328,7 +329,7 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns 0 if the given class has no private final fields", CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, IS_FINAL_FIELD_PREDICATE, ZERO},
                 {"Tests that the method returns the expected value if the class has private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, IS_FINAL_FIELD_PREDICATE,
-                        EXPECTED_PRIVATE_FINAL_FIELDS}
+                    EXPECTED_PRIVATE_FINAL_FIELDS}
         };
     }
 
@@ -358,19 +359,19 @@ public class ClassUtilsTest {
     private Object[][] dataGetPrivateFieldsTesting() {
         return new Object[][] {
                 {"Tests that the method returns the expected value if the class has private and public fields", CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, false,
-                        EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS},
+                    EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS},
                 {"Tests that the method returns the expected value if the class has private and public fields and skipFinal is not passed as param",
-                        CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, null, EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS},
+                    CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, null, EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields only", CLASS_WITH_PRIVATE_FINAL_FIELDS, false,
-                        EXPECTED_PRIVATE_FINAL_FIELDS},
+                    EXPECTED_PRIVATE_FINAL_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields only and skipFinal is not passed as param",
-                        CLASS_WITH_PRIVATE_FINAL_FIELDS, null, EXPECTED_PRIVATE_FINAL_FIELDS},
+                    CLASS_WITH_PRIVATE_FINAL_FIELDS, null, EXPECTED_PRIVATE_FINAL_FIELDS},
                 {"Tests that the method returns the expected value if the class extends another class", ImmutableToFooSubClass.class, false,
-                        EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
+                    EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
                 {"Tests that the method returns the expected value if the class extends another class and skipFinal is not passed as param",
-                        ImmutableToFooSubClass.class, null, EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
+                    ImmutableToFooSubClass.class, null, EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
                 {"Tests that the method returns the expected value if the skipFinal is enabled", CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, true,
-                        EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_NOT_FINAL_FIELDS}
+                    EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_NOT_FINAL_FIELDS}
         };
     }
 
@@ -400,11 +401,11 @@ public class ClassUtilsTest {
     private Object[][] dataGetDeclaredFieldsTesting() {
         return new Object[][] {
                 {"Tests that the method returns the expected total number of fields when the skipStatic param is true", CLASS_WITH_STATIC_FIELDS, true,
-                        EXPECTED_NOT_STATIC_FIELDS},
+                    EXPECTED_NOT_STATIC_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields only", CLASS_WITH_STATIC_FIELDS, false,
-                        CLASS_WITH_STATIC_FIELDS.getDeclaredFields().length},
+                    CLASS_WITH_STATIC_FIELDS.getDeclaredFields().length},
                 {"Tests that the method returns the expected total number of fields when the skipStatic param is true and the class extends another class",
-                        CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, true, EXPECTED_SUB_CLASS_PRIVATE_FIELDS}
+                    CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, true, EXPECTED_SUB_CLASS_PRIVATE_FIELDS}
         };
     }
 
@@ -433,9 +434,9 @@ public class ClassUtilsTest {
     private Object[][] dataGetDeclaredClassesTesting() {
         return new Object[][] {
                 {"Test that the a manual declared Builder is returned by method: {@code getDeclaredClasses}", MutableToFooWithBuilder.class,
-                        MutableToFooWithBuilder.Builder.class},
+                    MutableToFooWithBuilder.Builder.class},
                 {"Test that the a Builder created by lombok is returned by method: {@code getDeclaredClasses}", MixedToFooWithBuilder.class,
-                        MixedToFooWithBuilder.builder().getClass()}
+                    MixedToFooWithBuilder.builder().getClass()}
         };
     }
 
@@ -813,6 +814,122 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns false if the constructor is public", FromFoo.class, true},
                 {"Tests that the method returns false if the constructor is private", MutableToFooWithBuilder.class, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code isString} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataIsStringTesting")
+    public void testIsStringWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.isString(testClass);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isString}.
+     * @return parameters to be used for testing the the method {@code isString}.
+     */
+    @DataProvider
+    private Object[][] dataIsStringTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class is a String", String.class, true},
+                {"Tests that the method returns false if the class is not a String", BigDecimal.class, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code isBigInteger} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataIsBigIntegerTesting")
+    public void testIsBigIntegerWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.isBigInteger(testClass);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isBigInteger}.
+     * @return parameters to be used for testing the the method {@code isBigInteger}.
+     */
+    @DataProvider
+    private Object[][] dataIsBigIntegerTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class is a BigInteger", BigInteger.class, true},
+                {"Tests that the method returns false if the class is not a BigInteger", BigDecimal.class, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code isBigDecimal} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataIsBigDecimalTesting")
+    public void testIsBigDecimalWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.isBigDecimal(testClass);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isBigDecimal}.
+     * @return parameters to be used for testing the the method {@code isBigDecimal}.
+     */
+    @DataProvider
+    private Object[][] dataIsBigDecimalTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class is a BigDecimal", BigDecimal.class, true},
+                {"Tests that the method returns false if the class is not a BigDecimal", BigInteger.class, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code isByteArray} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataIsByteArrayTesting")
+    public void testIsBiteArrayWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.isByteArray(testClass);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isByteArray}.
+     * @return parameters to be used for testing the the method {@code isByteArray}.
+     */
+    @DataProvider
+    private Object[][] dataIsByteArrayTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true if the class is a byte[]", byte[].class, true},
+                {"Tests that the method returns false if the class is not a byte[]", byte.class, false}
         };
     }
 }
