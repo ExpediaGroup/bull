@@ -38,6 +38,14 @@ public final class BooleanConversionProcessor implements ConversionProcessor<Boo
      * {@inheritDoc}
      */
     @Override
+    public Function<byte[], Boolean> convertByteArray() {
+        return val -> val[0] != 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Function<Short, Boolean> convertShort() {
         return val -> val != 0;
     }

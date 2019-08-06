@@ -1,4 +1,4 @@
-<h1 align="left">
+<h1>
   <img width="420" alt="BULL" src="./docs/site/resources/images/BullBranding_03.png">
 </h1>
 
@@ -559,6 +559,9 @@ Transformer transformer = beanUtils.getTransformer()
 ToBean toBean = transformer.transform(fromBean, ToBean.class);
 ~~~
 
+**IMPORTANT:** The primitive type transformation (if enabled) is executed before any other `FieldTransformer` function defined on a specific field.
+This means that the once the `FieldTransformer` function will be executed the field value has already been transformed.
+
 ## Constraints:
 
 * the class's fields that have to be copied must not be static
@@ -702,7 +705,7 @@ Set<ConstraintViolation<Object>> violatedConstraints = beanUtils.getValidator().
 Converts a given primitive value into the given primitive type.
 The supported types, in which an object can be converted (from / to), are: 
 
-* `Byte` or `byte`
+* `Byte`, `byte` or `byte[]`
 * `Short` or `short`
 * `Integer` or `int`
 * `Long` or `long`

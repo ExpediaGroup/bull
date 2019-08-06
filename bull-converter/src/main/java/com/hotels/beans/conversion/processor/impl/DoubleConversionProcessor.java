@@ -17,12 +17,14 @@
 package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
-import static java.lang.Double.valueOf;
+import static java.nio.ByteBuffer.wrap;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.BufferUnderflowException;
 import java.util.function.Function;
 
+import com.hotels.beans.conversion.error.TypeConversionException;
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
 /**
@@ -35,6 +37,20 @@ public final class DoubleConversionProcessor implements ConversionProcessor<Doub
     @Override
     public Function<Byte, Double> convertByte() {
         return Byte::doubleValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<byte[], Double> convertByteArray() {
+        return val -> {
+            try {
+                return wrap(val).getDouble();
+            } catch (BufferUnderflowException e) {
+                throw new TypeConversionException("Not enough byte to represents a Double. At least 8 bytes are required.");
+            }
+        };
     }
 
     /**
@@ -90,7 +106,7 @@ public final class DoubleConversionProcessor implements ConversionProcessor<Doub
      */
     @Override
     public Function<Boolean, Double> convertBoolean() {
-        return val -> valueOf(val ? (double) 1 : (double) 0);
+        return val -> val ? (double) 1 : (double) 0;
     }
 
     /**

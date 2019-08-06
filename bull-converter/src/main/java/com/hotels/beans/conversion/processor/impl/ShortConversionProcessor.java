@@ -17,12 +17,14 @@
 package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
-import static java.lang.Short.valueOf;
+import static java.nio.ByteBuffer.wrap;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.BufferUnderflowException;
 import java.util.function.Function;
 
+import com.hotels.beans.conversion.error.TypeConversionException;
 import com.hotels.beans.conversion.processor.ConversionProcessor;
 
 /**
@@ -35,6 +37,20 @@ public final class ShortConversionProcessor implements ConversionProcessor<Short
     @Override
     public Function<Byte, Short> convertByte() {
         return Byte::shortValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function<byte[], Short> convertByteArray() {
+        return val -> {
+            try {
+                return wrap(val).getShort();
+            } catch (BufferUnderflowException e) {
+                throw new TypeConversionException("Not enough byte to represents a Short. At least 2 bytes are required.");
+            }
+        };
     }
 
     /**
@@ -90,7 +106,7 @@ public final class ShortConversionProcessor implements ConversionProcessor<Short
      */
     @Override
     public Function<Boolean, Short> convertBoolean() {
-        return val -> valueOf(val ? (short) 1 : (short) 0);
+        return val -> val ? (short) 1 : (short) 0;
     }
 
     /**

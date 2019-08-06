@@ -19,6 +19,7 @@ package com.hotels.beans.conversion.analyzer;
 import static java.util.Optional.empty;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigDecimal;
@@ -35,6 +36,7 @@ import org.testng.annotations.Test;
 import com.hotels.beans.conversion.processor.impl.BigDecimalConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.BigIntegerConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.BooleanConversionProcessor;
+import com.hotels.beans.conversion.processor.impl.ByteArrayConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.ByteConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.CharacterConversionProcessor;
 import com.hotels.beans.conversion.processor.impl.DoubleConversionProcessor;
@@ -113,6 +115,7 @@ public class ConversionAnalyzerTest {
         Optional<Function<Object, Object>> actual = underTest.getConversionFunction(sourceFieldType, destinationFieldType);
 
         // THEN
+        assertTrue(actual.isPresent());
         assertEquals(expectedConversionFunction, actual.get());
     }
 
@@ -147,6 +150,8 @@ public class ConversionAnalyzerTest {
                 BigDecimal.class, BigInteger.class, new BigIntegerConversionProcessor().convertBigDecimal()},
             {"Tests that the method returns a BigDecimalConversionProcessor that converts from String to BigDecimal",
                 String.class, BigDecimal.class, new BigDecimalConversionProcessor().convertString()},
+            {"Tests that the method returns a ByteConversionProcessor that converts from String to byte[]",
+                String.class, byte[].class, new ByteArrayConversionProcessor().convertString()}
         };
     }
 }

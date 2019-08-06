@@ -38,3 +38,6 @@ byte converted = conversionFunction.map(processor -> processor.apply(c)).orElse(
 
 * in case the conversion is not needed as the primitive type and the destination type are the same it will return an empty `Optional`
 * in case the conversion function is unavailable or no not possible the method throws a : `TypeConversionException`
+
+**IMPORTANT:** The primitive type transformation (if enabled) is executed before any other `FieldTransformer` function defined on a specific field.
+This means that the once the `FieldTransformer` function will be executed the field value has already been transformed.
