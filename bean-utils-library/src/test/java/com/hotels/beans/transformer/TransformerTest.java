@@ -66,7 +66,6 @@ public class TransformerTest extends AbstractTransformerTest {
     private static final String REFLECTION_UTILS_FIELD_NAME = "reflectionUtils";
     private static final String CLASS_UTILS_FIELD_NAME = "classUtils";
     private static final String GET_TRANSFORMER_VALUE_METHOD_NAME = "getTransformedValue";
-    private static final String CONVERSION_ANALYZER_FIELD_NAME = "conversionAnalyzer";
     private static final String GET_CONSTRUCTOR_ARGS_VALUES_METHOD_NAME = "getConstructorArgsValues";
 
     /**
@@ -388,9 +387,7 @@ public class TransformerTest extends AbstractTransformerTest {
                 {"Test that the primitive type conversion function is not executed if the primitive type conversion is disabled",
                         AGE_FIELD_NAME, ZERO.intValue(), null, false, true, ZERO.intValue()},
                 {"Test that the primitive type conversion function is not executed if the destination field type is not primitive",
-                        AGE_FIELD_NAME, null, null, true, false, null},
-                {"Test that the primitive type conversion function is not executed if a field transformer is defined for the given field",
-                        AGE_FIELD_NAME, ZERO.intValue(), new FieldTransformer<>(AGE_FIELD_NAME, ONE::intValue), true, true, ONE.intValue()}
+                        AGE_FIELD_NAME, null, null, true, false, null}
         };
     }
 
