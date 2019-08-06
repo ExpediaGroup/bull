@@ -124,4 +124,11 @@ public interface Transformer {
      * @return the {@link Transformer} instance
      */
     Transformer setDefaultValueSetEnabled(boolean defaultValueSetEnabled);
+
+    /**
+     * It allows to enable/disable the automatic conversion of primitive types.
+     * @param primitiveTypeConversionEnabled if true primitive types are transformed automatically. By default it's false.
+     * @return the {@link Transformer} instance
+     */
+    Transformer setPrimitiveTypeConversionEnabled(boolean primitiveTypeConversionEnabled);
 }

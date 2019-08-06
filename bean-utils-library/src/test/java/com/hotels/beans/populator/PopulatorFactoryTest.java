@@ -59,26 +59,6 @@ public class PopulatorFactoryTest {
     }
 
     /**
-     * Tests that the method: {@code defaultValue} returns the expected result for the given type.
-     * @param type the type for which a populator needs to be found
-     * @param expectedResult the expected populator
-     */
-    @Test(dataProvider = "dataProvider")
-    public void testGetPopulatorReturnsTheExpectedResult(final Class type, final Class<? extends Populator> expectedResult) {
-        // GIVEN
-
-        // WHEN
-        Optional<Populator> populator = underTest.getPopulator(type, type, transformer);
-
-        // THEN
-        final boolean isNonNullObjectExpected = nonNull(expectedResult);
-        assertEquals(populator.isPresent(), isNonNullObjectExpected);
-        if (isNonNullObjectExpected) {
-            assertEquals(expectedResult, populator.get().getClass());
-        }
-    }
-
-    /**
      * Data provider for the required test cases.
      * @return the test cases.
      */
@@ -91,5 +71,26 @@ public class PopulatorFactoryTest {
                 {FromFoo.class, null},
                 {Optional.class, OptionalPopulator.class}
         };
+    }
+
+    /**
+     * Tests that the method: {@code defaultValue} returns the expected result for the given type.
+     * @param type the type for which a populator needs to be found
+     * @param expectedResult the expected populator
+     */
+    @Test(dataProvider = "dataProvider")
+    @SuppressWarnings("unchecked")
+    public void testGetPopulatorReturnsTheExpectedResult(final Class type, final Class<? extends Populator> expectedResult) {
+        // GIVEN
+
+        // WHEN
+        Optional<Populator> populator = underTest.getPopulator(type, type, transformer);
+
+        // THEN
+        final boolean isNonNullObjectExpected = nonNull(expectedResult);
+        assertEquals(populator.isPresent(), isNonNullObjectExpected);
+        if (isNonNullObjectExpected) {
+            assertEquals(expectedResult, populator.get().getClass());
+        }
     }
 }

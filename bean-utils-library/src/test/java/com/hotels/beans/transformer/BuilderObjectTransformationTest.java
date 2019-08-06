@@ -17,12 +17,9 @@
 package com.hotels.beans.transformer;
 
 import static org.junit.Assert.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
-import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -35,20 +32,6 @@ import com.hotels.beans.sample.mutable.MutableToFooWithBuilderMultipleConstructo
  * Unit test for all {@link Transformer} functions related to Object based on Builder Pattern.
  */
 public class BuilderObjectTransformationTest extends AbstractTransformerTest {
-    /**
-     * The class to be tested.
-     */
-    @InjectMocks
-    private TransformerImpl underTest;
-
-    /**
-     * Initialized mocks.
-     */
-    @BeforeMethod
-    public void beforeMethod() {
-        initMocks(this);
-    }
-
     /**
      * Test mutable,immutable,mixed beans are correctly copied through builder.
      * @param testDescription the test case description
