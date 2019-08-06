@@ -18,6 +18,7 @@ package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
 import static java.lang.Float.valueOf;
+import static java.nio.ByteBuffer.wrap;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -30,10 +31,13 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.AbstractConversionTest;
+import com.hotels.beans.conversion.error.TypeConversionException;
+
 /**
  * Unit test for {@link FloatConversionProcessor}.
  */
-public class FloatConversionProcessorTest extends AbstractConversionProcessorTest {
+public class FloatConversionTest extends AbstractConversionTest {
     private static final float TRUE_AS_FLOAT = 1f;
     private static final float FALSE_AS_FLOAT = 0f;
     private static final double DELTA = 0.0;
@@ -61,6 +65,26 @@ public class FloatConversionProcessorTest extends AbstractConversionProcessorTes
 
         // THEN
         assertEquals((Float) BYTE_VALUE.floatValue(), actual);
+    }
+
+    @Test
+    public void testConvertByteArrayShouldReturnProperResult() {
+        // GIVEN
+        Float expected = wrap(EIGHT_BYTE_BYTE_ARRAY).getFloat();
+
+        // WHEN
+        Float actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
+
+        // THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test(expectedExceptions = TypeConversionException.class)
+    public void testConvertByteArrayShouldThrowExceptionIfByteArrayIsTooSmall() {
+        // GIVEN
+
+        // WHEN
+        underTest.convertByteArray().apply(ONE_BYTE_BYTE_ARRAY);
     }
 
     @Test

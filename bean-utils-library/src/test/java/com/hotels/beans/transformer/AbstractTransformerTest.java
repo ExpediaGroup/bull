@@ -69,6 +69,7 @@ public abstract class AbstractTransformerTest {
     static final String PHONE_NUMBER_DEST_FIELD_NAME = "phoneNumbers";
     static final String PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME = "nestedObject.phoneNumbers";
     static final String NAME_FIELD_NAME = "name";
+    static final float PRICE = 10.0f;
 
     private static final String ITEM_1 = "donald";
     private static final String ITEM_2 = "duck";
@@ -80,7 +81,6 @@ public abstract class AbstractTransformerTest {
     private static final BigDecimal AMOUNT = new BigDecimal(10);
     private static final String SUB_FOO_NAME = "Smith";
     private static final int[] SUB_FOO_PHONE_NUMBERS = {12345, 6892, 10873};
-    private static final float PRICE = 10.0f;
     private static final Map<String, String> SAMPLE_MAP = new HashMap<>();
     private static final Map<String, List<String>> COMPLEX_MAP = new HashMap<>();
     private static final Map<String, Map<String, String>> VERY_COMPLEX_MAP = new HashMap<>();

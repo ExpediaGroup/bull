@@ -28,10 +28,12 @@ import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.AbstractConversionTest;
+
 /**
  * Unit test for {@link StringConversionProcessor}.
  */
-public class StringConversionProcessorTest extends AbstractConversionProcessorTest {
+public class StringConversionTest extends AbstractConversionTest {
     /**
      * The class to be tested.
      */
@@ -55,6 +57,18 @@ public class StringConversionProcessorTest extends AbstractConversionProcessorTe
 
         // THEN
         assertEquals(BYTE_VALUE.toString(), actual);
+    }
+
+    @Test
+    public void testConvertByteArrayShouldReturnProperResult() {
+        // GIVEN
+        String expected = new String(EIGHT_BYTE_BYTE_ARRAY);
+
+        // WHEN
+        String actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
+
+        // THEN
+        assertEquals(expected, actual);
     }
 
     @Test

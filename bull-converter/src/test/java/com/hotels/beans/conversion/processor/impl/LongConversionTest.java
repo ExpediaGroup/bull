@@ -17,7 +17,8 @@
 package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.Character.getNumericValue;
-import static java.lang.Double.valueOf;
+import static java.lang.Long.valueOf;
+import static java.nio.ByteBuffer.wrap;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -30,19 +31,21 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.conversion.AbstractConversionTest;
+import com.hotels.beans.conversion.error.TypeConversionException;
+
 /**
- * Unit test for {@link DoubleConversionProcessor}.
+ * Unit test for {@link LongConversionProcessor}.
  */
-public class DoubleConversionProcessorTest extends AbstractConversionProcessorTest {
-    private static final double TRUE_AS_DOUBLE = 1d;
-    private static final double FALSE_AS_DOUBLE = 0d;
-    private static final double DELTA = 0.0;
+public class LongConversionTest extends AbstractConversionTest {
+    private static final long TRUE_AS_LONG = 1L;
+    private static final long FALSE_AS_LONG = 0L;
 
     /**
      * The class to be tested.
      */
     @InjectMocks
-    private DoubleConversionProcessor underTest;
+    private LongConversionProcessor underTest;
 
     /**
      * Initializes mock.
@@ -57,10 +60,30 @@ public class DoubleConversionProcessorTest extends AbstractConversionProcessorTe
         // GIVEN
 
         // WHEN
-        Double actual = underTest.convertByte().apply(BYTE_VALUE);
+        Long actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals((Double) BYTE_VALUE.doubleValue(), actual);
+        assertEquals((Long) BYTE_VALUE.longValue(), actual);
+    }
+
+    @Test
+    public void testConvertByteArrayShouldReturnProperResult() {
+        // GIVEN
+        Long expected = wrap(EIGHT_BYTE_BYTE_ARRAY).getLong();
+
+        // WHEN
+        Long actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
+
+        // THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test(expectedExceptions = TypeConversionException.class)
+    public void testConvertByteArrayShouldThrowExceptionIfByteArrayIsTooSmall() {
+        // GIVEN
+
+        // WHEN
+        underTest.convertByteArray().apply(ONE_BYTE_BYTE_ARRAY);
     }
 
     @Test
@@ -68,10 +91,10 @@ public class DoubleConversionProcessorTest extends AbstractConversionProcessorTe
         // GIVEN
 
         // WHEN
-        Double actual = underTest.convertShort().apply(SHORT_VALUE);
+        Long actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals(DOUBLE_VALUE, actual);
+        assertEquals((Long) SHORT_VALUE.longValue(), actual);
     }
 
     @Test
@@ -79,10 +102,10 @@ public class DoubleConversionProcessorTest extends AbstractConversionProcessorTe
         // GIVEN
 
         // WHEN
-        Double actual = underTest.convertInteger().apply(INTEGER_VALUE);
+        Long actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals((Double) INTEGER_VALUE.doubleValue(), actual);
+        assertEquals((Long) INTEGER_VALUE.longValue(), actual);
     }
 
     @Test
@@ -90,10 +113,10 @@ public class DoubleConversionProcessorTest extends AbstractConversionProcessorTe
         // GIVEN
 
         // WHEN
-        Double actual = underTest.convertLong().apply(LONG_VALUE);
+        Long actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals((Double) LONG_VALUE.doubleValue(), actual);
+        assertEquals(LONG_VALUE, actual);
     }
 
     @Test
@@ -101,10 +124,10 @@ public class DoubleConversionProcessorTest extends AbstractConversionProcessorTe
         // GIVEN
 
         // WHEN
-        Double actual = underTest.convertFloat().apply(FLOAT_VALUE);
+        Long actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals((Double) FLOAT_VALUE.doubleValue(), actual);
+        assertEquals((Long) FLOAT_VALUE.longValue(), actual);
     }
 
     @Test
@@ -112,10 +135,10 @@ public class DoubleConversionProcessorTest extends AbstractConversionProcessorTe
         // GIVEN
 
         // WHEN
-        Double actual = underTest.convertDouble().apply(DOUBLE_VALUE);
+        Long actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals(DOUBLE_VALUE, actual);
+        assertEquals((Long) DOUBLE_VALUE.longValue(), actual);
     }
 
     @Test
@@ -123,27 +146,27 @@ public class DoubleConversionProcessorTest extends AbstractConversionProcessorTe
         // GIVEN
 
         // WHEN
-        Double actual = underTest.convertCharacter().apply(CHAR_VALUE);
+        Long actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals(valueOf((short) getNumericValue(CHAR_VALUE)), actual);
+        assertEquals(valueOf(getNumericValue(CHAR_VALUE)), actual);
     }
 
     /**
-     * Tests that the method {@code convertBoolean} returns the expected double.
+     * Tests that the method {@code convertBoolean} returns the expected long.
      * @param testCaseDescription the test case description
      * @param valueToConvert the value to be converted
      * @param expectedResult the expected result
      */
-    @Test(dataProvider = "booleanToDoubleConvertValueTesting")
-    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final double expectedResult) {
+    @Test(dataProvider = "booleanToLongConvertValueTesting")
+    public void testConvertBooleanShouldReturnProperResult(final String testCaseDescription, final boolean valueToConvert, final long expectedResult) {
         // GIVEN
 
         // WHEN
-        Double actual = underTest.convertBoolean().apply(valueToConvert);
+        long actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual, DELTA);
+        assertEquals(expectedResult, actual);
     }
 
     /**
@@ -151,10 +174,10 @@ public class DoubleConversionProcessorTest extends AbstractConversionProcessorTe
      * @return parameters to be used for testing that the method {@code convertBoolean} returns the expected result.
      */
     @DataProvider
-    private Object[][] booleanToDoubleConvertValueTesting() {
+    private Object[][] booleanToLongConvertValueTesting() {
         return new Object[][]{
-                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_DOUBLE},
-                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_DOUBLE}
+                {"Tests that the method returns 1 if the value is true", BOOLEAN_VALUE, TRUE_AS_LONG},
+                {"Tests that the method returns 0 if the value is false", Boolean.FALSE, FALSE_AS_LONG}
         };
     }
 
@@ -163,7 +186,7 @@ public class DoubleConversionProcessorTest extends AbstractConversionProcessorTe
         // GIVEN
 
         // WHEN
-        Double actual = underTest.convertString().apply(STRING_VALUE);
+        Long actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
         assertEquals(valueOf(STRING_VALUE), actual);
@@ -172,25 +195,25 @@ public class DoubleConversionProcessorTest extends AbstractConversionProcessorTe
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        double expectedValue = BigInteger.ZERO.doubleValue();
+        long expectedValue = BigInteger.ZERO.longValue();
 
         // WHEN
-        double actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
+        long actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual, DELTA);
+        assertEquals(expectedValue, actual);
     }
 
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        double expectedValue = BigDecimal.ZERO.doubleValue();
+        long expectedValue = BigDecimal.ZERO.longValue();
 
         // WHEN
-        double actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
+        long actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual, DELTA);
+        assertEquals(expectedValue, actual);
     }
 }
 
