@@ -28,7 +28,6 @@ import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.Collections.max;
 import static java.util.Comparator.comparing;
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.Set.of;
@@ -98,7 +97,6 @@ public final class ClassUtils {
      * Reflection utils instance {@link ReflectionUtils}.
      */
     private final ReflectionUtils reflectionUtils;
-
 
     /**
      * Default constructor.
@@ -284,7 +282,7 @@ public final class ClassUtils {
         final String cacheKey = "PrivateFinalFields-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
             final List<Field> res = new ArrayList<>();
-            if (nonNull(clazz.getSuperclass()) && !clazz.getSuperclass().equals(Object.class)) {
+            if (hasSuperclass(clazz.getSuperclass())) {
                 res.addAll(getPrivateFinalFields(clazz.getSuperclass()));
             }
             res.addAll(stream(getDeclaredFields(clazz))
@@ -294,6 +292,15 @@ public final class ClassUtils {
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
+    }
+
+    /**
+     * Checks if a class has a clazz different from {@link Object}.
+     * @param clazz the class to check.
+     * @return true if the given class extends another class different from object
+     */
+    private boolean hasSuperclass(final Class<?> clazz) {
+        return nonNull(clazz) && !clazz.equals(Object.class);
     }
 
     /**
@@ -336,7 +343,7 @@ public final class ClassUtils {
         final String cacheKey = "PrivateFields-" + clazz.getName() + "-skipFinal-" + skipFinal;
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
             final List<Field> res = new ArrayList<>();
-            if (nonNull(clazz.getSuperclass()) && !clazz.getSuperclass().equals(Object.class)) {
+            if (hasSuperclass(clazz.getSuperclass())) {
                 res.addAll(getPrivateFields(clazz.getSuperclass(), skipFinal));
             }
             res.addAll(stream(getDeclaredFields(clazz))
@@ -361,7 +368,7 @@ public final class ClassUtils {
         final String cacheKey = "DeclaredFields-" + clazz.getName() + "-skipStatic-" + skipStatic;
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
             final List<Field> res = new ArrayList<>();
-            if (nonNull(clazz.getSuperclass()) && !clazz.getSuperclass().equals(Object.class)) {
+            if (hasSuperclass(clazz.getSuperclass())) {
                 res.addAll(getDeclaredFields(clazz.getSuperclass(), skipStatic));
             }
             stream(getDeclaredFields(clazz))
@@ -507,7 +514,7 @@ public final class ClassUtils {
             } catch (final NoSuchFieldException e) {
                 hasField = false;
                 final Class<?> superclass = target.getClass().getSuperclass();
-                if (nonNull(superclass) && !superclass.equals(Object.class)) {
+                if (hasSuperclass(superclass)) {
                     hasField = hasField(superclass, fieldName);
                 }
             }
@@ -590,22 +597,6 @@ public final class ClassUtils {
     }
 
     /**
-     * Checks if the class constructor's parameters are annotated with the given class.
-     * @param constructor the constructor to check.
-     * @param annotationClass the annotation class to retrieve
-     * @return true if any of the parameter contains the annotation, false otherwise.
-     */
-    public boolean containsAnnotation(final Constructor constructor, final Class<? extends Annotation> annotationClass) {
-        final String cacheKey = "ConstructorHasAnnotation-" + constructor.getDeclaringClass().getName() + '-' + annotationClass.getName();
-        return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final boolean containsAnnotation = stream(constructor.getParameters())
-                    .noneMatch(parameter -> isNull(parameter.getAnnotation(annotationClass)));
-            CACHE_MANAGER.cacheObject(cacheKey, containsAnnotation);
-            return containsAnnotation;
-        });
-    }
-
-    /**
      * Checks if any of the class constructor's parameters are not annotated with the given class.
      * @param constructor the constructor to check.
      * @param annotationClass the annotation class to retrieve
@@ -672,7 +663,7 @@ public final class ClassUtils {
         final String cacheKey = "SetterMethods-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
             final List<Method> setterMethods = new LinkedList<>();
-            if (nonNull(clazz.getSuperclass()) && !clazz.getSuperclass().equals(Object.class)) {
+            if (hasSuperclass(clazz.getSuperclass())) {
                 setterMethods.addAll(getSetterMethods(clazz.getSuperclass()));
             }
             setterMethods.addAll(stream(getDeclaredMethods(clazz))

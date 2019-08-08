@@ -642,37 +642,6 @@ public class ClassUtilsTest {
     }
 
     /**
-     * Tests that the method {@code containsAnnotation} works as expected.
-     * @param testCaseDescription the test case description
-     * @param annotationClass the annotation to search
-     * @param expectedResult the expected result
-     */
-    @Test(dataProvider = "dataContainsAnnotationTesting")
-    public void testContainsAnnotationWorksAsExpected(final String testCaseDescription, final Class<? extends Annotation> annotationClass, final boolean expectedResult) {
-        // GIVEN
-        Constructor<?> constructor = ImmutableToFooCustomAnnotation.class.getConstructors()[0];
-
-
-        // WHEN
-        boolean actual = underTest.containsAnnotation(constructor, annotationClass);
-
-        // THEN
-        assertEquals(expectedResult, actual);
-    }
-
-    /**
-     * Creates the parameters to be used for testing the method {@code containsAnnotation}.
-     * @return parameters to be used for testing the the method {@code containsAnnotation}.
-     */
-    @DataProvider
-    private Object[][] dataContainsAnnotationTesting() {
-        return new Object[][] {
-                {"Tests that the method returns true if the constructor contains parameters annotated with @ConstructorArg", ConstructorArg.class, true},
-                {"Tests that the method returns false if the constructor does not contain parameters annotated with @NotNull", NotNull.class, false},
-        };
-    }
-
-    /**
      * Tests that the method {@code notAllParameterAnnotatedWith} works as expected.
      * @param testCaseDescription the test case description
      * @param annotationClass the annotation to search
@@ -699,7 +668,7 @@ public class ClassUtilsTest {
     private Object[][] dataNotAllParameterAnnotatedWithTesting() {
         return new Object[][] {
                 {"Tests that the method returns true if all constructor's parameter are annotated with @ConstructorArg", ConstructorArg.class, true},
-                {"Tests that the method returns false if not all constructor's parameter are annotated with @NotNull", NotNull.class, false},
+                {"Tests that the method returns false if not all constructor's parameter are annotated with @NotNull", NotNull.class, false}
         };
     }
 

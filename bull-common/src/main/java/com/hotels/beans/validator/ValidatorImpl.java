@@ -29,6 +29,7 @@ import static com.hotels.beans.constant.Punctuation.SEMICOLON;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.validation.ConstraintViolation;
 
@@ -66,11 +67,7 @@ public class ValidatorImpl implements Validator {
     @Override
     public final <K> List<String> getConstraintViolationsMessages(final K k) {
         return getConstraintViolations(k).stream()
-                .map(cv -> cv.getRootBeanClass().getName()
-                        + DOT.getSymbol()
-                        + cv.getPropertyPath()
-                        + SPACE
-                        + cv.getMessage())
+                .map(getConstraintViolationMessage())
                 .collect(toList());
     }
 
@@ -82,14 +79,22 @@ public class ValidatorImpl implements Validator {
         final Set<ConstraintViolation<Object>> constraintViolations = getConstraintViolations(k);
         if (!constraintViolations.isEmpty()) {
             final String errors = constraintViolations.stream()
-                    .map(cv -> cv.getRootBeanClass().getName()
-                            + DOT.getSymbol()
-                            + cv.getPropertyPath()
-                            + SPACE
-                            + cv.getMessage())
+                    .map(getConstraintViolationMessage())
                     .collect(joining(SEMICOLON.getSymbol()));
             throw new InvalidBeanException(errors);
         }
+    }
+
+    /**
+     * Creates a function that, given a constraint error, builds a violation message.
+     * @return the constaint violation message
+     */
+    private Function<ConstraintViolation<Object>, String> getConstraintViolationMessage() {
+        return cv -> cv.getRootBeanClass().getName()
+                + DOT.getSymbol()
+                + cv.getPropertyPath()
+                + SPACE
+                + cv.getMessage();
     }
 
     /**
