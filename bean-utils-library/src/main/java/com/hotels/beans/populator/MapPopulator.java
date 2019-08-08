@@ -57,8 +57,8 @@ class MapPopulator extends Populator<Map<?, ?>> {
     private Map<?, ?> getPopulatedObject(final Map<?, ?> fieldValue, final MapType mapType) {
         final MapElemType keyType = mapType.getKeyType();
         final MapElemType elemType = mapType.getElemType();
-        final boolean keyIsPrimitive = keyType.getClass().equals(ItemType.class) && classUtils.isPrimitiveOrSpecialType(((ItemType) keyType).getObjectClass());
-        final boolean elemIsPrimitive = elemType.getClass().equals(ItemType.class) && classUtils.isPrimitiveOrSpecialType(((ItemType) elemType).getObjectClass());
+        final boolean keyIsPrimitive = isPrimitive(keyType);
+        final boolean elemIsPrimitive = isPrimitive(elemType);
         Map<?, ?> populatedObject;
         if (keyIsPrimitive && elemIsPrimitive) {
             populatedObject = fieldValue;
@@ -71,6 +71,15 @@ class MapPopulator extends Populator<Map<?, ?>> {
                         key -> getElemValue(elemType, elemIsPrimitive, fieldValue.get(key))));
         }
         return populatedObject;
+    }
+
+    /**
+     * Checks if the map element type is primitive or not.
+     * @param mapElemType the map element to check
+     * @return true if it's primitive, false otherwise
+     */
+    private boolean isPrimitive(final MapElemType mapElemType) {
+        return mapElemType.getClass().equals(ItemType.class) && classUtils.isPrimitiveOrSpecialType(((ItemType) mapElemType).getObjectClass());
     }
 
     /**

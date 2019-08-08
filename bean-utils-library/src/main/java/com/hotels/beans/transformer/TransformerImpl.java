@@ -40,6 +40,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.constant.ClassType;
@@ -258,7 +259,21 @@ public class TransformerImpl extends AbstractTransformer {
         final Class<?> targetObjectClass = targetObject.getClass();
         classUtils.getDeclaredFields(targetObjectClass, true)
                 //.parallelStream()
-                .forEach(field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));
+                .forEach(setFieldValue(sourceObj, targetObject, breadcrumb, targetObjectClass));
+    }
+
+    /**
+     * Creates a {@link Consumer} that sets the field value in the given class.
+     * @param sourceObj sourceObj the source object
+     * @param targetObject the destination object instance
+     * @param breadcrumb  the full path of the current field starting from his ancestor
+     * @param targetObjectClass  the target object class
+     * @param <T>  the sourceObj object type
+     * @param <K> the target object type
+     * @return a {@link Consumer} that sets the field value in the target object
+     */
+    private <T, K> Consumer<Field> setFieldValue(final T sourceObj, final K targetObject, final String breadcrumb, final Class<?> targetObjectClass) {
+        return field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb));
     }
 
     /**
@@ -274,7 +289,7 @@ public class TransformerImpl extends AbstractTransformer {
         final Class<?> targetObjectClass = targetObject.getClass();
         classUtils.getNotFinalFields(targetObjectClass, true)
                 //.parallelStream()
-                .forEach(field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));
+                .forEach(setFieldValue(sourceObj, targetObject, breadcrumb, targetObjectClass));
     }
 
     /**
