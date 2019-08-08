@@ -28,6 +28,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -197,153 +200,244 @@ public class ConverterTest extends AbstractConversionTest {
      * @return parameters to be used for testing that the method {@code convertValue} returns the expected result.
      */
     @DataProvider
-    private Object[][] dataConvertValueTesting() {
-        return new Object[][]{
-            {"Tests that the method returns a null value in case the value to convert is null", null, BigInteger.class, null},
-            // boolean conversion test cases
-            {"Tests that the method returns a boolean value from a byte", BYTE_VALUE, boolean.class, BOOLEAN_VALUE},
-            {"Tests that the method returns a boolean value from a short", SHORT_VALUE, boolean.class, BOOLEAN_VALUE},
-            {"Tests that the method returns a boolean value from an Integer", INTEGER_VALUE, boolean.class, BOOLEAN_VALUE},
-            {"Tests that the method returns a boolean value from a Long", LONG_VALUE, boolean.class, BOOLEAN_VALUE},
-            {"Tests that the method returns a boolean value from a Float", FLOAT_VALUE, boolean.class, BOOLEAN_VALUE},
-            {"Tests that the method returns a boolean value from a Double", DOUBLE_VALUE, boolean.class, BOOLEAN_VALUE},
-            {"Tests that the method returns a boolean value from a char", TRUE_AS_CHAR_VALUE, boolean.class, BOOLEAN_VALUE},
-            {"Tests that the method returns a boolean value from a Boolean", BOOLEAN_VALUE, boolean.class, BOOLEAN_VALUE},
-            {"Tests that the method returns a boolean value from a String", TRUE_AS_STRING, boolean.class, BOOLEAN_VALUE},
-            {"Tests that the method returns a boolean value from a BigInteger", BigInteger.ZERO, boolean.class, Boolean.FALSE},
-            {"Tests that the method returns a boolean value from a BigDecimal", BigDecimal.ZERO, boolean.class, Boolean.FALSE},
-            {"Tests that the method returns a boolean value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, boolean.class, BOOLEAN_VALUE},
-            // byte conversion test cases
-            {"Tests that the method returns a byte value from a byte", BYTE_VALUE, byte.class, BYTE_VALUE},
-            {"Tests that the method returns a byte value from a short", SHORT_VALUE, byte.class, SHORT_VALUE.byteValue()},
-            {"Tests that the method returns a byte value from an Integer", INTEGER_VALUE, byte.class, INTEGER_VALUE.byteValue()},
-            {"Tests that the method returns a byte value from a Long", LONG_VALUE, byte.class, LONG_VALUE.byteValue()},
-            {"Tests that the method returns a byte value from a Float", FLOAT_VALUE, byte.class, FLOAT_VALUE.byteValue()},
-            {"Tests that the method returns a byte value from a Double", DOUBLE_VALUE, byte.class, DOUBLE_VALUE.byteValue()},
-            {"Tests that the method returns a byte value from a char", TRUE_AS_CHAR_VALUE, byte.class, (byte) TRUE_AS_CHAR_VALUE.charValue()},
-            {"Tests that the method returns a byte value from a Boolean", BOOLEAN_VALUE, byte.class, TRUE_AS_BYTE},
-            {"Tests that the method returns a byte value from a String", ONE_AS_STRING, byte.class, Byte.valueOf(ONE_AS_STRING)},
-            {"Tests that the method returns a byte value from a BigInteger", BigInteger.ZERO, byte.class, BigInteger.ZERO.byteValue()},
-            {"Tests that the method returns a byte value from a BigDecimal", BigDecimal.ZERO, byte.class, BigDecimal.ZERO.byteValue()},
-            {"Tests that the method returns a byte value from a byte[]", ONE_BYTE_BYTE_ARRAY, byte.class, TRUE_AS_BYTE},
-            // char conversion test cases
-            {"Tests that the method returns a char value from a byte", BYTE_VALUE, char.class, (char) BYTE_VALUE.byteValue()},
-            {"Tests that the method returns a char value from a short", SHORT_VALUE, char.class, (char) SHORT_VALUE.byteValue()},
-            {"Tests that the method returns a char value from an Integer", INTEGER_VALUE, char.class, (char) INTEGER_VALUE.byteValue()},
-            {"Tests that the method returns a char value from a Long", LONG_VALUE, char.class, (char) LONG_VALUE.byteValue()},
-            {"Tests that the method returns a char value from a Float", FLOAT_VALUE, char.class, (char) FLOAT_VALUE.byteValue()},
-            {"Tests that the method returns a char value from a Double", DOUBLE_VALUE, char.class, (char) DOUBLE_VALUE.byteValue()},
-            {"Tests that the method returns a char value from a char", TRUE_AS_CHAR_VALUE, char.class, TRUE_AS_CHAR_VALUE},
-            {"Tests that the method returns a char value from a Boolean", BOOLEAN_VALUE, char.class, TRUE_AS_CHAR_VALUE},
-            {"Tests that the method returns a char value from a String", ONE_AS_STRING, char.class, ONE_AS_STRING.charAt(0)},
-            {"Tests that the method returns a char value from a BigInteger", BigInteger.ZERO, char.class, BIG_INTEGER_ZERO_AS_CHAR},
-            {"Tests that the method returns a char value from a BigDecimal", BigDecimal.ZERO, char.class, BIG_DECIMAL_ZERO_AS_CHAR},
-            {"Tests that the method returns a char value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, char.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getChar()},
-            // double conversion test cases
-            {"Tests that the method returns a double value from a byte", BYTE_VALUE, double.class, BYTE_VALUE.doubleValue()},
-            {"Tests that the method returns a double value from a short", SHORT_VALUE, double.class, SHORT_VALUE.doubleValue()},
-            {"Tests that the method returns a double value from an Integer", INTEGER_VALUE, double.class, INTEGER_VALUE.doubleValue()},
-            {"Tests that the method returns a double value from a Long", LONG_VALUE, double.class, LONG_VALUE.doubleValue()},
-            {"Tests that the method returns a double value from a Float", FLOAT_VALUE, double.class, FLOAT_VALUE.doubleValue()},
-            {"Tests that the method returns a double value from a Double", DOUBLE_VALUE, double.class, DOUBLE_VALUE},
-            {"Tests that the method returns a double value from a char", CHAR_VALUE, double.class, Double.valueOf(String.valueOf(CHAR_VALUE))},
-            {"Tests that the method returns a double value from a Boolean", BOOLEAN_VALUE, double.class, (double) TRUE_AS_INT},
-            {"Tests that the method returns a double value from a String", ONE_AS_STRING, double.class, Double.valueOf(ONE_AS_STRING)},
-            {"Tests that the method returns a double value from a BigInteger", BigInteger.ZERO, double.class, BigInteger.ZERO.doubleValue()},
-            {"Tests that the method returns a double value from a BigDecimal", BigDecimal.ZERO, double.class, BigDecimal.ZERO.doubleValue()},
-            {"Tests that the method returns a double value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, double.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getDouble()},
-            // float conversion test cases
-            {"Tests that the method returns a float value from a byte", BYTE_VALUE, float.class, BYTE_VALUE.floatValue()},
-            {"Tests that the method returns a float value from a short", SHORT_VALUE, float.class, SHORT_VALUE.floatValue()},
-            {"Tests that the method returns a float value from an Integer", INTEGER_VALUE, float.class, INTEGER_VALUE.floatValue()},
-            {"Tests that the method returns a float value from a Long", LONG_VALUE, float.class, LONG_VALUE.floatValue()},
-            {"Tests that the method returns a float value from a Float", FLOAT_VALUE, float.class, FLOAT_VALUE},
-            {"Tests that the method returns a float value from a Double", DOUBLE_VALUE, float.class, DOUBLE_VALUE.floatValue()},
-            {"Tests that the method returns a float value from a char", CHAR_VALUE, float.class, (float) getNumericValue(CHAR_VALUE)},
-            {"Tests that the method returns a float value from a Boolean", BOOLEAN_VALUE, float.class, (float) TRUE_AS_INT},
-            {"Tests that the method returns a float value from a String", ONE_AS_STRING, float.class, Float.valueOf(ONE_AS_STRING)},
-            {"Tests that the method returns a float value from a BigInteger", BigInteger.ZERO, float.class, BigInteger.ZERO.floatValue()},
-            {"Tests that the method returns a float value from a BigDecimal", BigDecimal.ZERO, float.class, BigDecimal.ZERO.floatValue()},
-            {"Tests that the method returns a float value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, float.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getFloat()},
-            // integer conversion test cases
-            {"Tests that the method returns an int value from a byte", BYTE_VALUE, int.class, BYTE_VALUE.intValue()},
-            {"Tests that the method returns an int value from a short", SHORT_VALUE, int.class, SHORT_VALUE.intValue()},
-            {"Tests that the method returns an int value from an Integer", INTEGER_VALUE, int.class, INTEGER_VALUE},
-            {"Tests that the method returns an int value from a Long", LONG_VALUE, int.class, LONG_VALUE.intValue()},
-            {"Tests that the method returns an int value from a Float", FLOAT_VALUE, int.class, FLOAT_VALUE.intValue()},
-            {"Tests that the method returns an int value from a Double", DOUBLE_VALUE, int.class, DOUBLE_VALUE.intValue()},
-            {"Tests that the method returns an int value from a char", CHAR_VALUE, int.class, getNumericValue(CHAR_VALUE)},
-            {"Tests that the method returns an int value from a Boolean", BOOLEAN_VALUE, int.class, TRUE_AS_INT},
-            {"Tests that the method returns an int value from a String", ONE_AS_STRING, int.class, Integer.valueOf(ONE_AS_STRING)},
-            {"Tests that the method returns an int value from a BigInteger", BigInteger.ZERO, int.class, BigInteger.ZERO.intValue()},
-            {"Tests that the method returns an int value from a BigDecimal", BigDecimal.ZERO, int.class, BigDecimal.ZERO.intValue()},
-            {"Tests that the method returns a int value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, int.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getInt()},
-            // long conversion test cases
-            {"Tests that the method returns a long value from a byte", BYTE_VALUE, long.class, BYTE_VALUE.longValue()},
-            {"Tests that the method returns a long value from a short", SHORT_VALUE, long.class, SHORT_VALUE.longValue()},
-            {"Tests that the method returns a long value from an Integer", INTEGER_VALUE, long.class, INTEGER_VALUE.longValue()},
-            {"Tests that the method returns a long value from a Long", LONG_VALUE, long.class, LONG_VALUE},
-            {"Tests that the method returns a long value from a Float", FLOAT_VALUE, long.class, FLOAT_VALUE.longValue()},
-            {"Tests that the method returns a long value from a Double", DOUBLE_VALUE, long.class, DOUBLE_VALUE.longValue()},
-            {"Tests that the method returns a long value from a char", CHAR_VALUE, long.class, (long) getNumericValue(CHAR_VALUE)},
-            {"Tests that the method returns a long value from a Boolean", BOOLEAN_VALUE, long.class, (long) TRUE_AS_INT},
-            {"Tests that the method returns a long value from a String", ONE_AS_STRING, long.class, Long.valueOf(ONE_AS_STRING)},
-            {"Tests that the method returns a long value from a BigInteger", BigInteger.ZERO, long.class, BigInteger.ZERO.longValue()},
-            {"Tests that the method returns a long value from a BigDecimal", BigDecimal.ZERO, long.class, BigDecimal.ZERO.longValue()},
-            {"Tests that the method returns a long value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, long.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getLong()},
-            // short conversion test cases
-            {"Tests that the method returns a short value from a byte", BYTE_VALUE, short.class, BYTE_VALUE.shortValue()},
-            {"Tests that the method returns a short value from a short", SHORT_VALUE, short.class, SHORT_VALUE},
-            {"Tests that the method returns a short value from an Integer", INTEGER_VALUE, short.class, INTEGER_VALUE.shortValue()},
-            {"Tests that the method returns a short value from a Long", LONG_VALUE, short.class, LONG_VALUE.shortValue()},
-            {"Tests that the method returns a short value from a Float", FLOAT_VALUE, short.class, FLOAT_VALUE.shortValue()},
-            {"Tests that the method returns a short value from a Double", DOUBLE_VALUE, short.class, DOUBLE_VALUE.shortValue()},
-            {"Tests that the method returns a short value from a char", CHAR_VALUE, short.class, (short) getNumericValue(CHAR_VALUE)},
-            {"Tests that the method returns a short value from a Boolean", BOOLEAN_VALUE, short.class, (short) TRUE_AS_INT},
-            {"Tests that the method returns a short value from a String", ONE_AS_STRING, short.class, Short.valueOf(ONE_AS_STRING)},
-            {"Tests that the method returns a short value from a BigInteger", BigInteger.ZERO, short.class, BigInteger.ZERO.shortValue()},
-            {"Tests that the method returns a short value from a BigDecimal", BigDecimal.ZERO, short.class, BigDecimal.ZERO.shortValue()},
-            {"Tests that the method returns a short value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, short.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getShort()},
-            // string conversion test cases
-            {"Tests that the method returns a String value from a byte", BYTE_VALUE, String.class, BYTE_VALUE.toString()},
-            {"Tests that the method returns a String value from a short", SHORT_VALUE, String.class, SHORT_VALUE.toString()},
-            {"Tests that the method returns a String value from an Integer", INTEGER_VALUE, String.class, String.valueOf(INTEGER_VALUE)},
-            {"Tests that the method returns a String value from a Long", LONG_VALUE, String.class, String.valueOf(LONG_VALUE)},
-            {"Tests that the method returns a String value from a Float", FLOAT_VALUE, String.class, String.valueOf(FLOAT_VALUE)},
-            {"Tests that the method returns a String value from a Double", DOUBLE_VALUE, String.class, String.valueOf(DOUBLE_VALUE)},
-            {"Tests that the method returns a String value from a char", CHAR_VALUE, String.class, String.valueOf(CHAR_VALUE)},
-            {"Tests that the method returns a String value from a Boolean", BOOLEAN_VALUE, String.class, String.valueOf(BOOLEAN_VALUE)},
-            {"Tests that the method returns a String value from a String", ONE_AS_STRING, String.class, ONE_AS_STRING},
-            {"Tests that the method returns a String value from a BigInteger", BigInteger.ZERO, String.class, BigInteger.ZERO.toString()},
-            {"Tests that the method returns a String value from a BigDecimal", BigDecimal.ZERO, String.class, BigDecimal.ZERO.toPlainString()},
-            {"Tests that the method returns a String value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, String.class, new String(EIGHT_BYTE_BYTE_ARRAY)},
-            // BigInteger conversion test cases
-            {"Tests that the method returns a BigInteger value from a byte", BYTE_VALUE, BigInteger.class, BigInteger.valueOf(BYTE_VALUE.longValue())},
-            {"Tests that the method returns a BigInteger value from a short", SHORT_VALUE, BigInteger.class, BigInteger.valueOf(SHORT_VALUE)},
-            {"Tests that the method returns a BigInteger value from an Integer", INTEGER_VALUE, BigInteger.class, BigInteger.valueOf(INTEGER_VALUE)},
-            {"Tests that the method returns a BigInteger value from a Long", LONG_VALUE, BigInteger.class, BigInteger.valueOf(LONG_VALUE)},
-            {"Tests that the method returns a BigInteger value from a Float", FLOAT_VALUE, BigInteger.class, BigInteger.valueOf(FLOAT_VALUE.intValue())},
-            {"Tests that the method returns a BigInteger value from a Double", DOUBLE_VALUE, BigInteger.class, BigInteger.valueOf(DOUBLE_VALUE.intValue())},
-            {"Tests that the method returns a BigInteger value from a char", CHAR_VALUE, BigInteger.class, BigInteger.valueOf(getNumericValue(CHAR_VALUE))},
-            {"Tests that the method returns a BigInteger value from a Boolean", BOOLEAN_VALUE, BigInteger.class, BigInteger.valueOf(TRUE_AS_INT)},
-            {"Tests that the method returns a BigInteger value from a String", ONE_AS_STRING, BigInteger.class, new BigInteger(ONE_AS_STRING)},
-            {"Tests that the method returns a BigInteger value from a BigInteger", BigInteger.ZERO, BigInteger.class, BigInteger.ZERO},
-            {"Tests that the method returns a BigInteger value from a BigDecimal", BigDecimal.ZERO, BigInteger.class, BigDecimal.ZERO.toBigInteger()},
-            {"Tests that the method returns a BigInteger value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, BigInteger.class, BigInteger.valueOf(wrap(EIGHT_BYTE_BYTE_ARRAY).getLong())},
-            // BigDecimal conversion test cases
-            {"Tests that the method returns a BigDecimal value from a byte", BYTE_VALUE, BigDecimal.class, BigDecimal.valueOf(BYTE_VALUE.doubleValue())},
-            {"Tests that the method returns a BigDecimal value from a short", SHORT_VALUE, BigDecimal.class, BigDecimal.valueOf(SHORT_VALUE)},
-            {"Tests that the method returns a BigDecimal value from an Integer", INTEGER_VALUE, BigDecimal.class, BigDecimal.valueOf(INTEGER_VALUE)},
-            {"Tests that the method returns a BigDecimal value from a Long", LONG_VALUE, BigDecimal.class, BigDecimal.valueOf(LONG_VALUE)},
-            {"Tests that the method returns a BigDecimal value from a Float", FLOAT_VALUE, BigDecimal.class, BigDecimal.valueOf(FLOAT_VALUE)},
-            {"Tests that the method returns a BigDecimal value from a Double", DOUBLE_VALUE, BigDecimal.class, BigDecimal.valueOf(DOUBLE_VALUE)},
-            {"Tests that the method returns a BigDecimal value from a char", CHAR_VALUE, BigDecimal.class, BigDecimal.valueOf(getNumericValue(CHAR_VALUE))},
-            {"Tests that the method returns a BigDecimal value from a Boolean", BOOLEAN_VALUE, BigDecimal.class, BigDecimal.valueOf(TRUE_AS_INT)},
-            {"Tests that the method returns a BigDecimal value from a String", ONE_AS_STRING, BigDecimal.class, new BigDecimal(ONE_AS_STRING)},
-            {"Tests that the method returns a BigDecimal value from a BigInteger", BigInteger.ZERO, BigDecimal.class, BigDecimal.valueOf(BigInteger.ZERO.intValue())},
-            {"Tests that the method returns a BigDecimal value from a BigDecimal", BigDecimal.ZERO, BigDecimal.class, BigDecimal.ZERO},
-            {"Tests that the method returns a BigDecimal value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, BigDecimal.class, BigDecimal.valueOf(wrap(EIGHT_BYTE_BYTE_ARRAY).getDouble())}
-        };
+    private Iterator<Object[]> dataConvertValueTesting() {
+        List<Object[]> testCases = new ArrayList<>();
+        testCases.add(new Object[]{"Tests that the method returns a null value in case the value to convert is null", null, BigInteger.class, null});
+        testCases.addAll(dataConvertBooleanValueTesting());
+        testCases.addAll(dataConvertByteValueTesting());
+        testCases.addAll(dataConvertCharValueTesting());
+        testCases.addAll(dataConvertDoubleValueTesting());
+        testCases.addAll(dataConvertFloatValueTesting());
+        testCases.addAll(dataConvertIntValueTesting());
+        testCases.addAll(dataConvertLongValueTesting());
+        testCases.addAll(dataConvertShortValueTesting());
+        testCases.addAll(dataConvertStringValueTesting());
+        testCases.addAll(dataConvertBigIntegerValueTesting());
+        testCases.addAll(dataConvertBigDecimalValueTesting());
+        return testCases.iterator();
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertValue} returns the expected result for boolean type.
+     * @return parameters to be used for testing that the method {@code convertValue} returns the expected result for boolean type.
+     */
+    private List<Object[]> dataConvertBooleanValueTesting() {
+        return List.of(
+                new Object[]{"Tests that the method returns a boolean value from a byte", BYTE_VALUE, boolean.class, BOOLEAN_VALUE},
+                new Object[]{"Tests that the method returns a boolean value from a short", SHORT_VALUE, boolean.class, BOOLEAN_VALUE},
+                new Object[]{"Tests that the method returns a boolean value from an Integer", INTEGER_VALUE, boolean.class, BOOLEAN_VALUE},
+                new Object[]{"Tests that the method returns a boolean value from a Long", LONG_VALUE, boolean.class, BOOLEAN_VALUE},
+                new Object[]{"Tests that the method returns a boolean value from a Float", FLOAT_VALUE, boolean.class, BOOLEAN_VALUE},
+                new Object[]{"Tests that the method returns a boolean value from a Double", DOUBLE_VALUE, boolean.class, BOOLEAN_VALUE},
+                new Object[]{"Tests that the method returns a boolean value from a char", TRUE_AS_CHAR_VALUE, boolean.class, BOOLEAN_VALUE},
+                new Object[]{"Tests that the method returns a boolean value from a Boolean", BOOLEAN_VALUE, boolean.class, BOOLEAN_VALUE},
+                new Object[]{"Tests that the method returns a boolean value from a String", TRUE_AS_STRING, boolean.class, BOOLEAN_VALUE},
+                new Object[]{"Tests that the method returns a boolean value from a BigInteger", BigInteger.ZERO, boolean.class, Boolean.FALSE},
+                new Object[]{"Tests that the method returns a boolean value from a BigDecimal", BigDecimal.ZERO, boolean.class, Boolean.FALSE},
+                new Object[]{"Tests that the method returns a boolean value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, boolean.class, BOOLEAN_VALUE});
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertValue} returns the expected result for byte type.
+     * @return parameters to be used for testing that the method {@code convertValue} returns the expected result for byte type.
+     */
+    private List<Object[]> dataConvertByteValueTesting() {
+        return List.of(
+                new Object[]{"Tests that the method returns a byte value from a byte", BYTE_VALUE, byte.class, BYTE_VALUE},
+                new Object[]{"Tests that the method returns a byte value from a short", SHORT_VALUE, byte.class, SHORT_VALUE.byteValue()},
+                new Object[]{"Tests that the method returns a byte value from an Integer", INTEGER_VALUE, byte.class, INTEGER_VALUE.byteValue()},
+                new Object[]{"Tests that the method returns a byte value from a Long", LONG_VALUE, byte.class, LONG_VALUE.byteValue()},
+                new Object[]{"Tests that the method returns a byte value from a Float", FLOAT_VALUE, byte.class, FLOAT_VALUE.byteValue()},
+                new Object[]{"Tests that the method returns a byte value from a Double", DOUBLE_VALUE, byte.class, DOUBLE_VALUE.byteValue()},
+                new Object[]{"Tests that the method returns a byte value from a char", TRUE_AS_CHAR_VALUE, byte.class, (byte) TRUE_AS_CHAR_VALUE.charValue()},
+                new Object[]{"Tests that the method returns a byte value from a Boolean", BOOLEAN_VALUE, byte.class, TRUE_AS_BYTE},
+                new Object[]{"Tests that the method returns a byte value from a String", ONE_AS_STRING, byte.class, Byte.valueOf(ONE_AS_STRING)},
+                new Object[]{"Tests that the method returns a byte value from a BigInteger", ZERO, byte.class, ZERO.byteValue()},
+                new Object[]{"Tests that the method returns a byte value from a BigDecimal", BigDecimal.ZERO, byte.class, BigDecimal.ZERO.byteValue()},
+                new Object[]{"Tests that the method returns a byte value from a byte[]", ONE_BYTE_BYTE_ARRAY, byte.class, TRUE_AS_BYTE}
+        );
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertValue} returns the expected result for char type.
+     * @return parameters to be used for testing that the method {@code convertValue} returns the expected result for char type.
+     */
+    private List<Object[]> dataConvertCharValueTesting() {
+        return List.of(
+                new Object[]{"Tests that the method returns a char value from a byte", BYTE_VALUE, char.class, (char) BYTE_VALUE.byteValue()},
+                new Object[]{"Tests that the method returns a char value from a short", SHORT_VALUE, char.class, (char) SHORT_VALUE.byteValue()},
+                new Object[]{"Tests that the method returns a char value from an Integer", INTEGER_VALUE, char.class, (char) INTEGER_VALUE.byteValue()},
+                new Object[]{"Tests that the method returns a char value from a Long", LONG_VALUE, char.class, (char) LONG_VALUE.byteValue()},
+                new Object[]{"Tests that the method returns a char value from a Float", FLOAT_VALUE, char.class, (char) FLOAT_VALUE.byteValue()},
+                new Object[]{"Tests that the method returns a char value from a Double", DOUBLE_VALUE, char.class, (char) DOUBLE_VALUE.byteValue()},
+                new Object[]{"Tests that the method returns a char value from a char", TRUE_AS_CHAR_VALUE, char.class, TRUE_AS_CHAR_VALUE},
+                new Object[]{"Tests that the method returns a char value from a Boolean", BOOLEAN_VALUE, char.class, TRUE_AS_CHAR_VALUE},
+                new Object[]{"Tests that the method returns a char value from a String", ONE_AS_STRING, char.class, ONE_AS_STRING.charAt(0)},
+                new Object[]{"Tests that the method returns a char value from a BigInteger", ZERO, char.class, BIG_INTEGER_ZERO_AS_CHAR},
+                new Object[]{"Tests that the method returns a char value from a BigDecimal", BigDecimal.ZERO, char.class, BIG_DECIMAL_ZERO_AS_CHAR},
+                new Object[]{"Tests that the method returns a char value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, char.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getChar()});
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertValue} returns the expected result for double type.
+     * @return parameters to be used for testing that the method {@code convertValue} returns the expected result for double type.
+     */
+    private List<Object[]> dataConvertDoubleValueTesting() {
+        return List.of(
+                new Object[]{"Tests that the method returns a double value from a byte", BYTE_VALUE, double.class, BYTE_VALUE.doubleValue()},
+                new Object[]{"Tests that the method returns a double value from a short", SHORT_VALUE, double.class, SHORT_VALUE.doubleValue()},
+                new Object[]{"Tests that the method returns a double value from an Integer", INTEGER_VALUE, double.class, INTEGER_VALUE.doubleValue()},
+                new Object[]{"Tests that the method returns a double value from a Long", LONG_VALUE, double.class, LONG_VALUE.doubleValue()},
+                new Object[]{"Tests that the method returns a double value from a Float", FLOAT_VALUE, double.class, FLOAT_VALUE.doubleValue()},
+                new Object[]{"Tests that the method returns a double value from a Double", DOUBLE_VALUE, double.class, DOUBLE_VALUE},
+                new Object[]{"Tests that the method returns a double value from a char", CHAR_VALUE, double.class, Double.valueOf(String.valueOf(CHAR_VALUE))},
+                new Object[]{"Tests that the method returns a double value from a Boolean", BOOLEAN_VALUE, double.class, (double) TRUE_AS_INT},
+                new Object[]{"Tests that the method returns a double value from a String", ONE_AS_STRING, double.class, Double.valueOf(ONE_AS_STRING)},
+                new Object[]{"Tests that the method returns a double value from a BigInteger", ZERO, double.class, ZERO.doubleValue()},
+                new Object[]{"Tests that the method returns a double value from a BigDecimal", BigDecimal.ZERO, double.class, BigDecimal.ZERO.doubleValue()},
+                new Object[]{"Tests that the method returns a double value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, double.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getDouble()});
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertValue} returns the expected result for float type.
+     * @return parameters to be used for testing that the method {@code convertValue} returns the expected result for float type.
+     */
+    private List<Object[]> dataConvertFloatValueTesting() {
+        return List.of(
+                new Object[]{"Tests that the method returns a float value from a byte", BYTE_VALUE, float.class, BYTE_VALUE.floatValue()},
+                new Object[]{"Tests that the method returns a float value from a short", SHORT_VALUE, float.class, SHORT_VALUE.floatValue()},
+                new Object[]{"Tests that the method returns a float value from an Integer", INTEGER_VALUE, float.class, INTEGER_VALUE.floatValue()},
+                new Object[]{"Tests that the method returns a float value from a Long", LONG_VALUE, float.class, LONG_VALUE.floatValue()},
+                new Object[]{"Tests that the method returns a float value from a Float", FLOAT_VALUE, float.class, FLOAT_VALUE},
+                new Object[]{"Tests that the method returns a float value from a Double", DOUBLE_VALUE, float.class, DOUBLE_VALUE.floatValue()},
+                new Object[]{"Tests that the method returns a float value from a char", CHAR_VALUE, float.class, (float) getNumericValue(CHAR_VALUE)},
+                new Object[]{"Tests that the method returns a float value from a Boolean", BOOLEAN_VALUE, float.class, (float) TRUE_AS_INT},
+                new Object[]{"Tests that the method returns a float value from a String", ONE_AS_STRING, float.class, Float.valueOf(ONE_AS_STRING)},
+                new Object[]{"Tests that the method returns a float value from a BigInteger", ZERO, float.class, ZERO.floatValue()},
+                new Object[]{"Tests that the method returns a float value from a BigDecimal", BigDecimal.ZERO, float.class, BigDecimal.ZERO.floatValue()},
+                new Object[]{"Tests that the method returns a float value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, float.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getFloat()});
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertValue} returns the expected result for int type.
+     * @return parameters to be used for testing that the method {@code convertValue} returns the expected result for int type.
+     */
+    private List<Object[]> dataConvertIntValueTesting() {
+        return List.of(
+                new Object[]{"Tests that the method returns an int value from a byte", BYTE_VALUE, int.class, BYTE_VALUE.intValue()},
+                new Object[]{"Tests that the method returns an int value from a short", SHORT_VALUE, int.class, SHORT_VALUE.intValue()},
+                new Object[]{"Tests that the method returns an int value from an Integer", INTEGER_VALUE, int.class, INTEGER_VALUE},
+                new Object[]{"Tests that the method returns an int value from a Long", LONG_VALUE, int.class, LONG_VALUE.intValue()},
+                new Object[]{"Tests that the method returns an int value from a Float", FLOAT_VALUE, int.class, FLOAT_VALUE.intValue()},
+                new Object[]{"Tests that the method returns an int value from a Double", DOUBLE_VALUE, int.class, DOUBLE_VALUE.intValue()},
+                new Object[]{"Tests that the method returns an int value from a char", CHAR_VALUE, int.class, getNumericValue(CHAR_VALUE)},
+                new Object[]{"Tests that the method returns an int value from a Boolean", BOOLEAN_VALUE, int.class, TRUE_AS_INT},
+                new Object[]{"Tests that the method returns an int value from a String", ONE_AS_STRING, int.class, Integer.valueOf(ONE_AS_STRING)},
+                new Object[]{"Tests that the method returns an int value from a BigInteger", ZERO, int.class, ZERO.intValue()},
+                new Object[]{"Tests that the method returns an int value from a BigDecimal", BigDecimal.ZERO, int.class, BigDecimal.ZERO.intValue()},
+                new Object[]{"Tests that the method returns a int value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, int.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getInt()});
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertValue} returns the expected result for long type.
+     * @return parameters to be used for testing that the method {@code convertValue} returns the expected result for long type.
+     */
+    private List<Object[]> dataConvertLongValueTesting() {
+        return List.of(
+                new Object[]{"Tests that the method returns a long value from a byte", BYTE_VALUE, long.class, BYTE_VALUE.longValue()},
+                new Object[]{"Tests that the method returns a long value from a short", SHORT_VALUE, long.class, SHORT_VALUE.longValue()},
+                new Object[]{"Tests that the method returns a long value from an Integer", INTEGER_VALUE, long.class, INTEGER_VALUE.longValue()},
+                new Object[]{"Tests that the method returns a long value from a Long", LONG_VALUE, long.class, LONG_VALUE},
+                new Object[]{"Tests that the method returns a long value from a Float", FLOAT_VALUE, long.class, FLOAT_VALUE.longValue()},
+                new Object[]{"Tests that the method returns a long value from a Double", DOUBLE_VALUE, long.class, DOUBLE_VALUE.longValue()},
+                new Object[]{"Tests that the method returns a long value from a char", CHAR_VALUE, long.class, (long) getNumericValue(CHAR_VALUE)},
+                new Object[]{"Tests that the method returns a long value from a Boolean", BOOLEAN_VALUE, long.class, (long) TRUE_AS_INT},
+                new Object[]{"Tests that the method returns a long value from a String", ONE_AS_STRING, long.class, Long.valueOf(ONE_AS_STRING)},
+                new Object[]{"Tests that the method returns a long value from a BigInteger", ZERO, long.class, ZERO.longValue()},
+                new Object[]{"Tests that the method returns a long value from a BigDecimal", BigDecimal.ZERO, long.class, BigDecimal.ZERO.longValue()},
+                new Object[]{"Tests that the method returns a long value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, long.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getLong()});
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertValue} returns the expected result for short type.
+     * @return parameters to be used for testing that the method {@code convertValue} returns the expected result for short type.
+     */
+    private List<Object[]> dataConvertShortValueTesting() {
+        return List.of(
+                new Object[]{"Tests that the method returns a short value from a byte", BYTE_VALUE, short.class, BYTE_VALUE.shortValue()},
+                new Object[]{"Tests that the method returns a short value from a short", SHORT_VALUE, short.class, SHORT_VALUE},
+                new Object[]{"Tests that the method returns a short value from an Integer", INTEGER_VALUE, short.class, INTEGER_VALUE.shortValue()},
+                new Object[]{"Tests that the method returns a short value from a Long", LONG_VALUE, short.class, LONG_VALUE.shortValue()},
+                new Object[]{"Tests that the method returns a short value from a Float", FLOAT_VALUE, short.class, FLOAT_VALUE.shortValue()},
+                new Object[]{"Tests that the method returns a short value from a Double", DOUBLE_VALUE, short.class, DOUBLE_VALUE.shortValue()},
+                new Object[]{"Tests that the method returns a short value from a char", CHAR_VALUE, short.class, (short) getNumericValue(CHAR_VALUE)},
+                new Object[]{"Tests that the method returns a short value from a Boolean", BOOLEAN_VALUE, short.class, (short) TRUE_AS_INT},
+                new Object[]{"Tests that the method returns a short value from a String", ONE_AS_STRING, short.class, Short.valueOf(ONE_AS_STRING)},
+                new Object[]{"Tests that the method returns a short value from a BigInteger", ZERO, short.class, ZERO.shortValue()},
+                new Object[]{"Tests that the method returns a short value from a BigDecimal", BigDecimal.ZERO, short.class, BigDecimal.ZERO.shortValue()},
+                new Object[]{"Tests that the method returns a short value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, short.class, wrap(EIGHT_BYTE_BYTE_ARRAY).getShort()});
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertValue} returns the expected result for String type.
+     * @return parameters to be used for testing that the method {@code convertValue} returns the expected result for String type.
+     */
+    private List<Object[]> dataConvertStringValueTesting() {
+        return List.of(
+                new Object[]{"Tests that the method returns a String value from a byte", BYTE_VALUE, String.class, BYTE_VALUE.toString()},
+                new Object[]{"Tests that the method returns a String value from a short", SHORT_VALUE, String.class, SHORT_VALUE.toString()},
+                new Object[]{"Tests that the method returns a String value from an Integer", INTEGER_VALUE, String.class, String.valueOf(INTEGER_VALUE)},
+                new Object[]{"Tests that the method returns a String value from a Long", LONG_VALUE, String.class, String.valueOf(LONG_VALUE)},
+                new Object[]{"Tests that the method returns a String value from a Float", FLOAT_VALUE, String.class, String.valueOf(FLOAT_VALUE)},
+                new Object[]{"Tests that the method returns a String value from a Double", DOUBLE_VALUE, String.class, String.valueOf(DOUBLE_VALUE)},
+                new Object[]{"Tests that the method returns a String value from a char", CHAR_VALUE, String.class, String.valueOf(CHAR_VALUE)},
+                new Object[]{"Tests that the method returns a String value from a Boolean", BOOLEAN_VALUE, String.class, String.valueOf(BOOLEAN_VALUE)},
+                new Object[]{"Tests that the method returns a String value from a String", ONE_AS_STRING, String.class, ONE_AS_STRING},
+                new Object[]{"Tests that the method returns a String value from a BigInteger", ZERO, String.class, ZERO.toString()},
+                new Object[]{"Tests that the method returns a String value from a BigDecimal", BigDecimal.ZERO, String.class, BigDecimal.ZERO.toPlainString()},
+                new Object[]{"Tests that the method returns a String value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, String.class, new String(EIGHT_BYTE_BYTE_ARRAY)});
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertValue} returns the expected result for BigInteger type.
+     * @return parameters to be used for testing that the method {@code convertValue} returns the expected result for BigInteger type.
+     */
+    private List<Object[]> dataConvertBigIntegerValueTesting() {
+        return List.of(
+                new Object[]{"Tests that the method returns a BigInteger value from a byte", BYTE_VALUE, BigInteger.class, BigInteger.valueOf(BYTE_VALUE.longValue())},
+                new Object[]{"Tests that the method returns a BigInteger value from a short", SHORT_VALUE, BigInteger.class, BigInteger.valueOf(SHORT_VALUE)},
+                new Object[]{"Tests that the method returns a BigInteger value from an Integer", INTEGER_VALUE, BigInteger.class, BigInteger.valueOf(INTEGER_VALUE)},
+                new Object[]{"Tests that the method returns a BigInteger value from a Long", LONG_VALUE, BigInteger.class, BigInteger.valueOf(LONG_VALUE)},
+                new Object[]{"Tests that the method returns a BigInteger value from a Float", FLOAT_VALUE, BigInteger.class, BigInteger.valueOf(FLOAT_VALUE.intValue())},
+                new Object[]{"Tests that the method returns a BigInteger value from a Double", DOUBLE_VALUE, BigInteger.class, BigInteger.valueOf(DOUBLE_VALUE.intValue())},
+                new Object[]{"Tests that the method returns a BigInteger value from a char", CHAR_VALUE, BigInteger.class, BigInteger.valueOf(getNumericValue(CHAR_VALUE))},
+                new Object[]{"Tests that the method returns a BigInteger value from a Boolean", BOOLEAN_VALUE, BigInteger.class, BigInteger.valueOf(TRUE_AS_INT)},
+                new Object[]{"Tests that the method returns a BigInteger value from a String", ONE_AS_STRING, BigInteger.class, new BigInteger(ONE_AS_STRING)},
+                new Object[]{"Tests that the method returns a BigInteger value from a BigInteger", ZERO, BigInteger.class, ZERO},
+                new Object[]{"Tests that the method returns a BigInteger value from a BigDecimal", BigDecimal.ZERO, BigInteger.class, BigDecimal.ZERO.toBigInteger()},
+                new Object[]{"Tests that the method returns a BigInteger value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, BigInteger.class,
+                        BigInteger.valueOf(wrap(EIGHT_BYTE_BYTE_ARRAY).getLong())});
+    }
+
+    /**
+     * Creates the parameters to be used for testing that the method {@code convertValue} returns the expected result for BigDecimal type.
+     * @return parameters to be used for testing that the method {@code convertValue} returns the expected result for BigDecimal type.
+     */
+    private List<Object[]> dataConvertBigDecimalValueTesting() {
+        return List.of(
+                new Object[]{"Tests that the method returns a BigDecimal value from a byte", BYTE_VALUE, BigDecimal.class, BigDecimal.valueOf(BYTE_VALUE.doubleValue())},
+                new Object[]{"Tests that the method returns a BigDecimal value from a short", SHORT_VALUE, BigDecimal.class, BigDecimal.valueOf(SHORT_VALUE)},
+                new Object[]{"Tests that the method returns a BigDecimal value from an Integer", INTEGER_VALUE, BigDecimal.class, BigDecimal.valueOf(INTEGER_VALUE)},
+                new Object[]{"Tests that the method returns a BigDecimal value from a Long", LONG_VALUE, BigDecimal.class, BigDecimal.valueOf(LONG_VALUE)},
+                new Object[]{"Tests that the method returns a BigDecimal value from a Float", FLOAT_VALUE, BigDecimal.class, BigDecimal.valueOf(FLOAT_VALUE)},
+                new Object[]{"Tests that the method returns a BigDecimal value from a Double", DOUBLE_VALUE, BigDecimal.class, BigDecimal.valueOf(DOUBLE_VALUE)},
+                new Object[]{"Tests that the method returns a BigDecimal value from a char", CHAR_VALUE, BigDecimal.class, BigDecimal.valueOf(getNumericValue(CHAR_VALUE))},
+                new Object[]{"Tests that the method returns a BigDecimal value from a Boolean", BOOLEAN_VALUE, BigDecimal.class, BigDecimal.valueOf(TRUE_AS_INT)},
+                new Object[]{"Tests that the method returns a BigDecimal value from a String", ONE_AS_STRING, BigDecimal.class, new BigDecimal(ONE_AS_STRING)},
+                new Object[]{"Tests that the method returns a BigDecimal value from a BigInteger", ZERO, BigDecimal.class, BigDecimal.valueOf(ZERO.intValue())},
+                new Object[]{"Tests that the method returns a BigDecimal value from a BigDecimal", BigDecimal.ZERO, BigDecimal.class, BigDecimal.ZERO},
+                new Object[]{"Tests that the method returns a BigDecimal value from a byte[]", EIGHT_BYTE_BYTE_ARRAY, BigDecimal.class,
+                        BigDecimal.valueOf(wrap(EIGHT_BYTE_BYTE_ARRAY).getDouble())});
     }
 
     /**
