@@ -56,7 +56,7 @@ public abstract class Populator<O> {
     }
 
     /**
-     * Populates the array of the target object with the values into the source object.
+     * Populates the target object with the values into the source object.
      * @param field the field to be populated
      * @param fieldValue the source object from which extract the values
      * @return a populated list of elements
@@ -64,7 +64,7 @@ public abstract class Populator<O> {
     protected abstract O getPopulatedObject(Field field, O fieldValue);
 
     /**
-     * Populates the array of the target object with the values into the source object.
+     * Populates the target object with the values into the source object.
      * @param <K> the target object type
      * @param targetClass the destination object class
      * @param fieldName the field to be populated
@@ -76,7 +76,7 @@ public abstract class Populator<O> {
     }
 
     /**
-     * Wrapper method for BeanUtil transform method.
+     * Wrapper method for {@link com.hotels.beans.BeanUtils} transform method.
      * @param sourceObj the source object
      * @param targetClass the destination object class
      * @param <T> the Source object type
