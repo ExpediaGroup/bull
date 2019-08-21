@@ -29,20 +29,20 @@ import java.util.stream.IntStream;
 
 import org.testng.annotations.Test;
 
-import com.hotels.beans.error.MissingFieldException;
-import com.hotels.beans.model.FieldMapping;
-import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.mixed.MixedToFoo;
 import com.hotels.beans.sample.mixed.MixedToFooDiffFields;
 import com.hotels.beans.sample.mixed.MixedToFooMissingAllArgsConstructor;
 import com.hotels.beans.sample.mixed.MixedToFooMissingField;
 import com.hotels.beans.sample.mixed.MixedToFooNotExistingFields;
+import com.hotels.transformer.error.MissingFieldException;
+import com.hotels.transformer.model.FieldMapping;
+import com.hotels.transformer.model.FieldTransformer;
 
 /**
- * Unit test for all {@link Transformer} functions related to Mixed type Java Beans.
+ * Unit test for all {@link BeanTransformer} functions related to Mixed type Java Beans.
  */
-public class MixedObjectTransformationTest extends AbstractTransformerTest {
+public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
     private static final boolean ACTIVE = true;
 
     /**
@@ -81,7 +81,7 @@ public class MixedObjectTransformationTest extends AbstractTransformerTest {
         //GIVEN
 
         //WHEN
-        final Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
+        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         MixedToFooDiffFields actual = beanTransformer.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN

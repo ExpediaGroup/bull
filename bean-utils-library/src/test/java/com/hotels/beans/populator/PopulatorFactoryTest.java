@@ -32,7 +32,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.sample.FromFoo;
-import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.transformer.BeanTransformer;
 
 /**
  * Unit test for class: {@link PopulatorFactory}.
@@ -48,7 +48,7 @@ public class PopulatorFactoryTest {
      * Transformer object.
      */
     @Mock
-    private Transformer transformer;
+    private BeanTransformer transformer;
 
     /**
      * Initializes mock.

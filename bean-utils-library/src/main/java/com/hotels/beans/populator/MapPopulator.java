@@ -21,10 +21,10 @@ import static java.util.stream.Collectors.toMap;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import com.hotels.beans.model.ItemType;
-import com.hotels.beans.model.MapElemType;
-import com.hotels.beans.model.MapType;
-import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.transformer.BeanTransformer;
+import com.hotels.transformer.model.ItemType;
+import com.hotels.transformer.model.MapElemType;
+import com.hotels.transformer.model.MapType;
 
 /**
  * Populator for Map types object {@link Map}.
@@ -35,7 +35,7 @@ class MapPopulator extends Populator<Map<?, ?>> {
      * Default constructor.
      * @param beanTransformer the bean transformer containing the field name mapping and transformation functions
      */
-    MapPopulator(final Transformer beanTransformer) {
+    MapPopulator(final BeanTransformer beanTransformer) {
         super(beanTransformer);
     }
 

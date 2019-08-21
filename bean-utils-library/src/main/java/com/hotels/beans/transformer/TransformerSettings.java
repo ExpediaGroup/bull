@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.hotels.beans.model.FieldTransformer;
+import com.hotels.transformer.model.FieldTransformer;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -57,7 +57,7 @@ final class TransformerSettings {
 
     /**
      * It allows to configure the transformer in order to set a default value in case some field is missing in the source object.
-     * If set to true the default value is set, if false if it raises a: {@link com.hotels.beans.error.MissingFieldException} in case of missing fields.
+     * If set to true the default value is set, if false if it raises a: {@link com.hotels.transformer.error.MissingFieldException} in case of missing fields.
      */
     @Setter
     private boolean setDefaultValueForMissingField;

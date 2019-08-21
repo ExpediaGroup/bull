@@ -21,9 +21,9 @@ import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 import java.lang.reflect.Field;
 import java.util.Optional;
 
-import com.hotels.beans.transformer.Transformer;
-import com.hotels.beans.utils.ClassUtils;
-import com.hotels.beans.utils.ReflectionUtils;
+import com.hotels.beans.transformer.BeanTransformer;
+import com.hotels.transformer.utils.ClassUtils;
+import com.hotels.transformer.utils.ReflectionUtils;
 
 /**
  * Populator for collection or map objects.
@@ -41,15 +41,15 @@ public abstract class Populator<O> {
     final ClassUtils classUtils;
 
     /**
-     * Transformer class instance {@link Transformer} containing the field mapping and transformation functions.
+     * Transformer class instance {@link BeanTransformer} containing the field mapping and transformation functions.
      */
-    private final Transformer transformer;
+    private final BeanTransformer transformer;
 
     /**
      * Default constructor.
      * @param beanTransformer the bean transformer containing the field name mapping and transformation functions
      */
-    Populator(final Transformer beanTransformer) {
+    Populator(final BeanTransformer beanTransformer) {
         transformer = beanTransformer;
         reflectionUtils = new ReflectionUtils();
         classUtils = new ClassUtils();

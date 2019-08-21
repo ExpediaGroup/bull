@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collector;
 
-import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.transformer.BeanTransformer;
 
 /**
  * Populator for Collections types object {@link java.util.Collections}.
@@ -37,7 +37,7 @@ class CollectionPopulator<K> extends Populator<Collection> implements ICollectio
      * Default constructor.
      * @param beanTransformer the bean transformer containing the field name mapping and transformation functions
      */
-    CollectionPopulator(final Transformer beanTransformer) {
+    CollectionPopulator(final BeanTransformer beanTransformer) {
         super(beanTransformer);
     }
 

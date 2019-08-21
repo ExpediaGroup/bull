@@ -43,11 +43,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.BeanUtils;
-import com.hotels.beans.annotation.ConstructorArg;
-import com.hotels.beans.cache.CacheManager;
-import com.hotels.beans.error.InvalidBeanException;
-import com.hotels.beans.model.FieldMapping;
-import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooAdvFields;
 import com.hotels.beans.sample.FromFooSimple;
@@ -65,12 +60,17 @@ import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleBoolean;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
-import com.hotels.beans.utils.ReflectionUtils;
+import com.hotels.transformer.annotation.ConstructorArg;
+import com.hotels.transformer.cache.CacheManager;
+import com.hotels.transformer.error.InvalidBeanException;
+import com.hotels.transformer.model.FieldMapping;
+import com.hotels.transformer.model.FieldTransformer;
+import com.hotels.transformer.utils.ReflectionUtils;
 
 /**
- * Unit test for all {@link Transformer} functions related to Immutable Java Beans.
+ * Unit test for all {@link BeanTransformer} functions related to Immutable Java Beans.
  */
-public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
+public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTest {
     private static final int TOTAL_ADV_CLASS_FIELDS = 6;
     private static final String GET_DEST_FIELD_NAME_METHOD_NAME = "getDestFieldName";
     private static final String GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME = "getConstructorValuesFromFields";
@@ -92,8 +92,8 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      * @param targetObjectClass the target object class
      */
     @Test(dataProvider = "dataDefaultTransformationTesting")
-    public void testImmutableBeanIsCorrectlyCopied(final String testCaseDescription, final Transformer transformer, final Object sourceObject,
-        final Class<?> targetObjectClass) {
+    public void testImmutableBeanIsCorrectlyCopied(final String testCaseDescription, final BeanTransformer transformer, final Object sourceObject,
+                                                   final Class<?> targetObjectClass) {
         //GIVEN
 
         //WHEN
@@ -227,7 +227,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
      */
     @DataProvider(parallel = true)
     private Object[][] dataInvalidBeanExceptionTesting() throws CloneNotSupportedException {
-        FromFoo fromFooNullId = AbstractTransformerTest.fromFoo.clone();
+        FromFoo fromFooNullId = AbstractBeanTransformerTest.fromFoo.clone();
         fromFooNullId.setId(null);
         return new Object[][] {
                 {"Test that an exception is thrown if there the constructor args parameters have a different order for the mutable bean object.",
@@ -260,7 +260,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         //GIVEN
 
         //WHEN
-        final Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
+        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         ImmutableToFooDiffFields actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.class);
 
         //THEN
@@ -285,7 +285,7 @@ public class ImmutableObjectTransformationTest extends AbstractTransformerTest {
         //GIVEN
 
         //WHEN
-        final Transformer beanTransformer = underTest
+        final BeanTransformer beanTransformer = underTest
                 .withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
                 .withFieldMapping(new FieldMapping(PRICE_FIELD_NAME, NET_PRICE_FIELD_NAME))
                 .withFieldMapping(new FieldMapping(PRICE_FIELD_NAME, GROSS_PRICE_FIELD_NAME))
