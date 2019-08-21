@@ -26,13 +26,13 @@ import static java.util.stream.IntStream.range;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
-import static com.hotels.beans.base.Defaults.defaultValue;
-import static com.hotels.beans.constant.ClassType.MIXED;
-import static com.hotels.beans.constant.ClassType.MUTABLE;
-import static com.hotels.beans.constant.Punctuation.COMMA;
-import static com.hotels.beans.constant.Punctuation.DOT;
-import static com.hotels.beans.constant.Punctuation.LPAREN;
-import static com.hotels.beans.constant.Punctuation.RPAREN;
+import static com.hotels.transformer.base.Defaults.defaultValue;
+import static com.hotels.transformer.constant.ClassType.MIXED;
+import static com.hotels.transformer.constant.ClassType.MUTABLE;
+import static com.hotels.transformer.constant.Punctuation.COMMA;
+import static com.hotels.transformer.constant.Punctuation.DOT;
+import static com.hotels.transformer.constant.Punctuation.LPAREN;
+import static com.hotels.transformer.constant.Punctuation.RPAREN;
 import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 
 import java.lang.reflect.Constructor;
@@ -42,11 +42,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import com.hotels.beans.annotation.ConstructorArg;
-import com.hotels.beans.constant.ClassType;
-import com.hotels.beans.error.InvalidBeanException;
-import com.hotels.beans.error.MissingFieldException;
-import com.hotels.beans.model.FieldTransformer;
+import com.hotels.transformer.annotation.ConstructorArg;
+import com.hotels.transformer.constant.ClassType;
+import com.hotels.transformer.error.InvalidBeanException;
+import com.hotels.transformer.error.MissingFieldException;
+import com.hotels.transformer.model.FieldTransformer;
 
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.

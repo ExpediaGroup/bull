@@ -29,9 +29,9 @@ import com.hotels.beans.sample.mutable.MutableToFooWithBuilder;
 import com.hotels.beans.sample.mutable.MutableToFooWithBuilderMultipleConstructor;
 
 /**
- * Unit test for all {@link Transformer} functions related to Object based on Builder Pattern.
+ * Unit test for all {@link BeanTransformer} functions related to Object based on Builder Pattern.
  */
-public class BuilderObjectTransformationTest extends AbstractTransformerTest {
+public class BuilderObjectTransformationTest extends AbstractBeanTransformerTest {
     /**
      * Test mutable,immutable,mixed beans are correctly copied through builder.
      * @param testDescription the test case description

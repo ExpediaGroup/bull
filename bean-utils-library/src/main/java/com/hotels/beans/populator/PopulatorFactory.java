@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
-import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.transformer.BeanTransformer;
 
 import lombok.NoArgsConstructor;
 
@@ -43,7 +43,7 @@ public final class PopulatorFactory {
      * @param transformer the bean transformer containing the field name mapping and transformation functions
      * @return the populator instance
      */
-    public static <O, T> Optional<Populator> getPopulator(final Class<O> destObjectClass, final Class<T> sourceObjectClass, final Transformer transformer) {
+    public static <O, T> Optional<Populator> getPopulator(final Class<O> destObjectClass, final Class<T> sourceObjectClass, final BeanTransformer transformer) {
         Optional<Populator> populator = empty();
         if (destObjectClass.isArray()) {
             populator = of(new ArrayPopulator(transformer));

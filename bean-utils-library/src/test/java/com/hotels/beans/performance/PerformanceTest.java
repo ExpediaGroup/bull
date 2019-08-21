@@ -48,7 +48,7 @@ import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
 import com.hotels.beans.sample.mixed.MixedToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooSimple;
 import com.hotels.beans.sample.mutable.MutableToFooSubClass;
-import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.transformer.BeanTransformer;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -116,7 +116,7 @@ public class PerformanceTest {
         //WHEN
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        Transformer transformer = underTest.getTransformer();
+        BeanTransformer transformer = underTest.getTransformer();
         for (int i = 0; i <= totalTransformation; i++) {
             stopWatch.suspend();
             sleep(waitInterval);

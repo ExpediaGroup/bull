@@ -18,25 +18,25 @@ package com.hotels.beans.transformer;
 
 import static java.util.Arrays.asList;
 
-import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
-import static com.hotels.beans.validator.Validator.notNull;
+import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.transformer.validator.Validator.notNull;
 
 import java.util.Map;
 
-import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.conversion.analyzer.ConversionAnalyzer;
-import com.hotels.beans.model.FieldMapping;
-import com.hotels.beans.model.FieldTransformer;
-import com.hotels.beans.utils.ClassUtils;
-import com.hotels.beans.utils.ReflectionUtils;
-import com.hotels.beans.validator.Validator;
-import com.hotels.beans.validator.ValidatorImpl;
+import com.hotels.transformer.cache.CacheManager;
+import com.hotels.transformer.model.FieldMapping;
+import com.hotels.transformer.model.FieldTransformer;
+import com.hotels.transformer.utils.ClassUtils;
+import com.hotels.transformer.utils.ReflectionUtils;
+import com.hotels.transformer.validator.Validator;
+import com.hotels.transformer.validator.ValidatorImpl;
 
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
- * Contains all method implementation that will be common to any {@link Transformer} implementation.
+ * Contains all method implementation that will be common to any {@link BeanTransformer} implementation.
  */
-abstract class AbstractTransformer implements Transformer {
+abstract class AbstractTransformer implements BeanTransformer {
     /**
      * The cache key prefix for the Transformer Functions.
      */
@@ -91,7 +91,7 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
-    public final Transformer withFieldMapping(final FieldMapping... fieldMapping) {
+    public final BeanTransformer withFieldMapping(final FieldMapping... fieldMapping) {
         final Map<String, String> fieldsNameMapping = settings.getFieldsNameMapping();
         for (FieldMapping mapping : fieldMapping) {
             fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());
@@ -120,7 +120,7 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
-    public final Transformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
+    public final BeanTransformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
         Map<String, FieldTransformer> fieldsTransformers = settings.getFieldsTransformers();
         for (FieldTransformer transformer : fieldTransformer) {
             fieldsTransformers.put(transformer.getDestFieldName(), transformer);
@@ -151,7 +151,7 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
-    public final Transformer setDefaultValueForMissingField(final boolean useDefaultValue) {
+    public final BeanTransformer setDefaultValueForMissingField(final boolean useDefaultValue) {
         settings.setSetDefaultValueForMissingField(useDefaultValue);
         return this;
     }
@@ -160,7 +160,7 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
-    public final Transformer setFlatFieldNameTransformation(final boolean useFlatTransformation) {
+    public final BeanTransformer setFlatFieldNameTransformation(final boolean useFlatTransformation) {
         settings.setFlatFieldNameTransformation(useFlatTransformation);
         return this;
     }
@@ -169,7 +169,7 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
-    public Transformer setValidationEnabled(final boolean validationEnabled) {
+    public BeanTransformer setValidationEnabled(final boolean validationEnabled) {
         settings.setValidationEnabled(validationEnabled);
         if (validationEnabled) {
             validator = new ValidatorImpl();
@@ -181,7 +181,7 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
-    public Transformer setDefaultValueSetEnabled(final boolean defaultValueSetEnabled) {
+    public BeanTransformer setDefaultValueSetEnabled(final boolean defaultValueSetEnabled) {
         settings.setDefaultValueSetEnabled(defaultValueSetEnabled);
         return this;
     }
@@ -190,7 +190,7 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
-    public Transformer setPrimitiveTypeConversionEnabled(final boolean primitiveTypeConversionEnabled) {
+    public BeanTransformer setPrimitiveTypeConversionEnabled(final boolean primitiveTypeConversionEnabled) {
         settings.setPrimitiveTypeConversionEnabled(primitiveTypeConversionEnabled);
         if (primitiveTypeConversionEnabled) {
             conversionAnalyzer = new ConversionAnalyzer();
@@ -235,7 +235,7 @@ abstract class AbstractTransformer implements Transformer {
      * {@inheritDoc}
      */
     @Override
-    public Transformer skipTransformationForField(final String... fieldName) {
+    public BeanTransformer skipTransformationForField(final String... fieldName) {
         if (fieldName.length != 0) {
             settings.getFieldsToSkip().addAll(asList(fieldName));
         }

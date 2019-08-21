@@ -21,7 +21,7 @@ import static java.util.Optional.ofNullable;
 import java.lang.reflect.Field;
 import java.util.Optional;
 
-import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.transformer.BeanTransformer;
 
 /**
  * Populator for {@link Optional} type.
@@ -32,7 +32,7 @@ class OptionalPopulator extends Populator<Object> {
      * Default constructor.
      * @param beanTransformer the bean transformer containing the field name mapping and transformation functions
      */
-    OptionalPopulator(final Transformer beanTransformer) {
+    OptionalPopulator(final BeanTransformer beanTransformer) {
         super(beanTransformer);
     }
 

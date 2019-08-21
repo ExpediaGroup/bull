@@ -19,27 +19,27 @@ package com.hotels.beans.conversion.analyzer;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
-import static com.hotels.beans.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.beans.conversion.processor.ConversionProcessorFactory.getConversionProcessor;
-import static com.hotels.beans.utils.ClassUtils.isBoolean;
-import static com.hotels.beans.utils.ClassUtils.isByte;
-import static com.hotels.beans.utils.ClassUtils.isChar;
-import static com.hotels.beans.utils.ClassUtils.isDouble;
-import static com.hotels.beans.utils.ClassUtils.isFloat;
-import static com.hotels.beans.utils.ClassUtils.isInt;
-import static com.hotels.beans.utils.ClassUtils.isLong;
-import static com.hotels.beans.utils.ClassUtils.isShort;
-import static com.hotels.beans.utils.ClassUtils.isString;
-import static com.hotels.beans.utils.ClassUtils.isBigDecimal;
-import static com.hotels.beans.utils.ClassUtils.isBigInteger;
-import static com.hotels.beans.utils.ClassUtils.isByteArray;
+import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.transformer.utils.ClassUtils.isBoolean;
+import static com.hotels.transformer.utils.ClassUtils.isByte;
+import static com.hotels.transformer.utils.ClassUtils.isChar;
+import static com.hotels.transformer.utils.ClassUtils.isDouble;
+import static com.hotels.transformer.utils.ClassUtils.isFloat;
+import static com.hotels.transformer.utils.ClassUtils.isInt;
+import static com.hotels.transformer.utils.ClassUtils.isLong;
+import static com.hotels.transformer.utils.ClassUtils.isShort;
+import static com.hotels.transformer.utils.ClassUtils.isString;
+import static com.hotels.transformer.utils.ClassUtils.isBigDecimal;
+import static com.hotels.transformer.utils.ClassUtils.isBigInteger;
+import static com.hotels.transformer.utils.ClassUtils.isByteArray;
 
 import java.util.Optional;
 import java.util.function.Function;
 
-import com.hotels.beans.cache.CacheManager;
 import com.hotels.beans.conversion.processor.ConversionProcessor;
-import com.hotels.beans.utils.ClassUtils;
+import com.hotels.transformer.cache.CacheManager;
+import com.hotels.transformer.utils.ClassUtils;
 
 /**
  * This class provides method for converting a primitive input into another.

@@ -29,9 +29,6 @@ import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.hotels.beans.error.InvalidBeanException;
-import com.hotels.beans.error.MissingFieldException;
-import com.hotels.beans.model.FieldTransformer;
 import com.hotels.beans.sample.FromFooNoField;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
@@ -42,11 +39,14 @@ import com.hotels.beans.sample.mutable.MutableToFooNotExistingFields;
 import com.hotels.beans.sample.mutable.MutableToFooSimple;
 import com.hotels.beans.sample.mutable.MutableToFooSimpleNoSetters;
 import com.hotels.beans.sample.mutable.MutableToFooSubClass;
+import com.hotels.transformer.error.InvalidBeanException;
+import com.hotels.transformer.error.MissingFieldException;
+import com.hotels.transformer.model.FieldTransformer;
 
 /**
- * Unit test for all {@link Transformer} functions related to Mutable type Java Beans.
+ * Unit test for all {@link BeanTransformer} functions related to Mutable type Java Beans.
  */
-public class MutableObjectTransformationTest extends AbstractTransformerTest {
+public class MutableObjectTransformationTest extends AbstractBeanTransformerTest {
     private static final boolean ACTIVE = true;
     private static final String PRICE_FIELD_NAME = "price";
 

@@ -20,7 +20,7 @@ import static java.util.Arrays.stream;
 
 import java.lang.reflect.Field;
 
-import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.transformer.BeanTransformer;
 
 /**
  * Populator for primitive types array.
@@ -31,7 +31,7 @@ class ArrayPopulator extends Populator<Object> implements ICollectionPopulator<O
      * Default constructor.
      * @param beanTransformer the bean transformer containing the field name mapping and transformation functions
      */
-    ArrayPopulator(final Transformer beanTransformer) {
+    ArrayPopulator(final BeanTransformer beanTransformer) {
         super(beanTransformer);
     }
 

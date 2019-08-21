@@ -35,7 +35,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.sample.mixed.MixedToFooStaticField;
-import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.transformer.BeanTransformer;
 
 /**
  * Unit test for class: {@link ArrayPopulator}.
@@ -51,7 +51,7 @@ public class ArrayPopulatorTest {
     private static final MixedToFooStaticField MIXED_TO_FOO_STATIC_FIELDS_OBJECTS = new MixedToFooStaticField();
 
     @Mock
-    private Transformer transformer;
+    private BeanTransformer transformer;
 
     /**
      * The class to be tested.

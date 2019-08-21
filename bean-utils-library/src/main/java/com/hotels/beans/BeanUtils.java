@@ -16,16 +16,16 @@
 
 package com.hotels.beans;
 
-import static com.hotels.beans.validator.Validator.notNull;
+import static com.hotels.transformer.validator.Validator.notNull;
 
 import java.util.function.Function;
 
 import com.hotels.beans.conversion.Converter;
 import com.hotels.beans.conversion.ConverterImpl;
-import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.transformer.BeanTransformer;
 import com.hotels.beans.transformer.TransformerImpl;
-import com.hotels.beans.validator.Validator;
-import com.hotels.beans.validator.ValidatorImpl;
+import com.hotels.transformer.validator.Validator;
+import com.hotels.transformer.validator.ValidatorImpl;
 
 /**
  * Set of Bean utilities.
@@ -47,22 +47,22 @@ public class BeanUtils {
     /**
      * Returns a function that transforms an object T in an object K.
      * @param beanTransformer the transformer to be used.
-     * @param targetClass the destination object class
+     * @param targetClass the destination object classClassUtilsTest.java
      * @param <T> the Source object type
      * @param <K> the target object type
      * @return a function that copies of the source object into the destination object
      * @throws IllegalArgumentException if any parameter is invalid
      */
-    public static <T, K> Function<T, K> getTransformer(final Transformer beanTransformer, final Class<K> targetClass) {
+    public static <T, K> Function<T, K> getTransformer(final BeanTransformer beanTransformer, final Class<K> targetClass) {
         notNull(beanTransformer, "beanTransformer cannot be null!");
         return fromBean -> beanTransformer.transform(fromBean, targetClass);
     }
 
     /**
      * Returns a Bean Transformer.
-     * @return a {@link Transformer} instance.
+     * @return a {@link BeanTransformer} instance.
      */
-    public final Transformer getTransformer() {
+    public final BeanTransformer getTransformer() {
         return new TransformerImpl();
     }
 

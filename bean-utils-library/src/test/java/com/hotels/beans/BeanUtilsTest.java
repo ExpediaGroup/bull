@@ -35,12 +35,12 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.conversion.Converter;
-import com.hotels.beans.error.InvalidBeanException;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
-import com.hotels.beans.transformer.Transformer;
+import com.hotels.beans.transformer.BeanTransformer;
+import com.hotels.transformer.error.InvalidBeanException;
 
 /**
  * Unit test for {@link BeanUtils}.
@@ -72,7 +72,7 @@ public class BeanUtilsTest {
         //GIVEN
 
         //WHEN
-        final Transformer transformer = underTest.getTransformer();
+        final BeanTransformer transformer = underTest.getTransformer();
 
         //THEN
         assertNotNull(transformer);
