@@ -17,4 +17,4 @@
  * Transformer model package.
  * @deprecated This package will be removed since version 1.6.0 please use {@link com.hotels.transformer.model} instead.
  */
-package com.hotels.beans.transformer.model;
+package com.hotels.beans.model;
