@@ -23,6 +23,7 @@ import java.util.function.Function;
 import com.hotels.beans.conversion.Converter;
 import com.hotels.beans.conversion.ConverterImpl;
 import com.hotels.beans.transformer.BeanTransformer;
+import com.hotels.beans.transformer.Transformer;
 import com.hotels.beans.transformer.TransformerImpl;
 import com.hotels.transformer.validator.Validator;
 import com.hotels.transformer.validator.ValidatorImpl;
@@ -64,6 +65,14 @@ public class BeanUtils {
      */
     public final BeanTransformer getTransformer() {
         return new TransformerImpl();
+    }
+
+    /**
+     * Returns a Bean Transformer.
+     * @return a {@link BeanTransformer} instance.
+     */
+    public final Transformer getTransformer() {
+        return null;
     }
 
     /**

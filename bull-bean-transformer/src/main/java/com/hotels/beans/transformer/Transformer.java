@@ -16,10 +16,51 @@
 
 package com.hotels.beans.transformer;
 
+import static java.util.Arrays.stream;
+import static java.util.Objects.isNull;
+
+import com.hotels.beans.transformer.model.FieldMapping;
+import com.hotels.beans.transformer.model.FieldTransformer;
+
 /**
  * Utility methods for all objects transformation.
  * @deprecated This class will be removed since version 1.6.0 please use {@link com.hotels.transformer.Transformer} instead.
  */
 @Deprecated(since = "1.6.0", forRemoval = true)
-public interface Transformer extends com.hotels.transformer.Transformer {
+public interface Transformer extends BeanTransformer {
+    /**
+     * Initializes the mapping between fields in the source object and the destination one.
+     * @param fieldMapping the field mapping
+     * @return the {@link Transformer} instance
+     * @deprecated use {@code withFieldMapping(com.hotels.transformer.model.FieldMapping)} instead.
+     */
+    @Deprecated(since = "1.6.0", forRemoval = true)
+    default Transformer withFieldMapping(FieldMapping... fieldMapping) {
+        com.hotels.transformer.model.FieldMapping[] fieldMappings = stream(fieldMapping)
+                .map(fm -> new com.hotels.transformer.model.FieldMapping(fm.getSourceFieldName(), fm.getDestFieldName()))
+                .toArray(com.hotels.transformer.model.FieldMapping[]::new);
+        return (Transformer) withFieldMapping(fieldMappings);
+    }
+
+    /**
+     * Initializes the field transformer functions. The transformer function returns directly the field value.
+     * @param fieldTransformer the fields transformer function
+     * @return the {@link Transformer} instance
+     * @deprecated use {@code withFieldMapping(com.hotels.transformer.model.FieldTransformer)} instead.
+     */
+    @Deprecated(since = "1.6.0", forRemoval = true)
+    @SuppressWarnings("unchecked")
+    default Transformer withFieldTransformer(FieldTransformer... fieldTransformer) {
+        com.hotels.transformer.model.FieldTransformer[] fieldTransformers = stream(fieldTransformer)
+                .map(tmpFt -> {
+                    com.hotels.transformer.model.FieldTransformer ft;
+                    if (isNull(tmpFt.getTransformerFunction())) {
+                        ft = new com.hotels.transformer.model.FieldTransformer<>(tmpFt.getDestFieldName(), tmpFt.getTransformerSupplier());
+                    } else {
+                        ft = new com.hotels.transformer.model.FieldTransformer<>(tmpFt.getDestFieldName(), tmpFt.getTransformerFunction());
+                    }
+                    return ft;
+                }).toArray(com.hotels.transformer.model.FieldTransformer[]::new);
+        return (Transformer) withFieldTransformer(fieldTransformers);
+    }
 }
