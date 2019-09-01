@@ -186,7 +186,6 @@
             </activation>
             <modules>
                 <module>bean-utils-library</module>
-                <module>bull-bean-transformer</module>
                 <module>bull-converter</module>
             </modules>
         </profile>

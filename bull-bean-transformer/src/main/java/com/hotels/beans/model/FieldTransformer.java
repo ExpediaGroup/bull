@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.transformer.model;
+package com.hotels.beans.model;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
