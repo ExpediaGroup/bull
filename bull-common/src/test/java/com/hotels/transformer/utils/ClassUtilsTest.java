@@ -47,22 +47,22 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.sample.AbstractClass;
+import com.hotels.beans.sample.FromFoo;
+import com.hotels.beans.sample.immutable.ImmutableToFoo;
+import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
+import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
+import com.hotels.beans.sample.mixed.MixedToFoo;
+import com.hotels.beans.sample.mixed.MixedToFooMissingConstructor;
+import com.hotels.beans.sample.mixed.MixedToFooStaticField;
+import com.hotels.beans.sample.mixed.MixedToFooWithBuilder;
+import com.hotels.beans.sample.mutable.MutableToFoo;
+import com.hotels.beans.sample.mutable.MutableToFooSubClass;
+import com.hotels.beans.sample.mutable.MutableToFooWithBuilder;
 import com.hotels.transformer.annotation.ConstructorArg;
 import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.error.InstanceCreationException;
 import com.hotels.transformer.error.InvalidBeanException;
-import com.hotels.transformer.sample.AbstractClass;
-import com.hotels.transformer.sample.FromFoo;
-import com.hotels.transformer.sample.immutable.ImmutableToFoo;
-import com.hotels.transformer.sample.immutable.ImmutableToFooCustomAnnotation;
-import com.hotels.transformer.sample.immutable.ImmutableToFooSubClass;
-import com.hotels.transformer.sample.mixed.MixedToFoo;
-import com.hotels.transformer.sample.mixed.MixedToFooMissingConstructor;
-import com.hotels.transformer.sample.mixed.MixedToFooStaticField;
-import com.hotels.transformer.sample.mixed.MixedToFooWithBuilder;
-import com.hotels.transformer.sample.mutable.MutableToFoo;
-import com.hotels.transformer.sample.mutable.MutableToFooSubClass;
-import com.hotels.transformer.sample.mutable.MutableToFooWithBuilder;
 
 /**
  * Unit test for {@link ClassUtils}.

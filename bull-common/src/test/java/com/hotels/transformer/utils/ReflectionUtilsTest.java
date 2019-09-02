@@ -48,20 +48,20 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.sample.FromFooSimple;
+import com.hotels.beans.sample.FromFooSimpleNoGetters;
+import com.hotels.beans.sample.FromFooSubClass;
+import com.hotels.beans.sample.FromSubFoo;
+import com.hotels.beans.sample.immutable.ImmutableToFoo;
+import com.hotels.beans.sample.immutable.ImmutableToSubFoo;
+import com.hotels.beans.sample.mutable.MutableToFoo;
+import com.hotels.beans.sample.mutable.MutableToFooAdvFields;
+import com.hotels.beans.sample.mutable.MutableToFooSimple;
 import com.hotels.transformer.error.MissingFieldException;
 import com.hotels.transformer.error.MissingMethodException;
 import com.hotels.transformer.model.ItemType;
 import com.hotels.transformer.model.MapElemType;
 import com.hotels.transformer.model.MapType;
-import com.hotels.transformer.sample.FromFooSimple;
-import com.hotels.transformer.sample.FromFooSimpleNoGetters;
-import com.hotels.transformer.sample.FromFooSubClass;
-import com.hotels.transformer.sample.FromSubFoo;
-import com.hotels.transformer.sample.immutable.ImmutableToFoo;
-import com.hotels.transformer.sample.immutable.ImmutableToSubFoo;
-import com.hotels.transformer.sample.mutable.MutableToFoo;
-import com.hotels.transformer.sample.mutable.MutableToFooAdvFields;
-import com.hotels.transformer.sample.mutable.MutableToFooSimple;
 
 /**
  * Unit tests fro class: {@link ReflectionUtils}.

@@ -24,7 +24,7 @@ import org.mockito.InjectMocks;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.hotels.transformer.sample.FromFoo;
+import com.hotels.beans.sample.FromFoo;
 
 /**
  * Unit test for {@link Defaults}.

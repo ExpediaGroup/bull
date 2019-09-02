@@ -32,8 +32,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.sample.mixed.MixedToFoo;
 import com.hotels.transformer.error.InvalidBeanException;
-import com.hotels.transformer.sample.mixed.MixedToFoo;
 
 /**
  * Unit test for {@link Validator}.

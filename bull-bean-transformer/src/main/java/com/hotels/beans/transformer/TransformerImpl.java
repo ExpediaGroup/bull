@@ -40,7 +40,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import com.hotels.transformer.annotation.ConstructorArg;
 import com.hotels.transformer.constant.ClassType;
@@ -62,7 +61,7 @@ public class TransformerImpl extends AbstractTransformer {
         final ClassType classType = classUtils.getClassType(targetClass);
         if (classType.is(MUTABLE)) {
             try {
-                k = classUtils.getNoArgsConstructor(targetClass).get();
+                k = classUtils.getInstance(classUtils.getNoArgsConstructor(targetClass));
                 injectAllFields(sourceObj, k, breadcrumb);
             } catch (Exception e) {
                 throw new InvalidBeanException(e.getMessage(), e);
@@ -259,21 +258,7 @@ public class TransformerImpl extends AbstractTransformer {
         final Class<?> targetObjectClass = targetObject.getClass();
         classUtils.getDeclaredFields(targetObjectClass, true)
                 //.parallelStream()
-                .forEach(setFieldValue(sourceObj, targetObject, breadcrumb, targetObjectClass));
-    }
-
-    /**
-     * Creates a {@link Consumer} that sets the field value in the given class.
-     * @param sourceObj sourceObj the source object
-     * @param targetObject the destination object instance
-     * @param breadcrumb  the full path of the current field starting from his ancestor
-     * @param targetObjectClass  the target object class
-     * @param <T>  the sourceObj object type
-     * @param <K> the target object type
-     * @return a {@link Consumer} that sets the field value in the target object
-     */
-    private <T, K> Consumer<Field> setFieldValue(final T sourceObj, final K targetObject, final String breadcrumb, final Class<?> targetObjectClass) {
-        return field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb));
+                .forEach(field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));
     }
 
     /**
@@ -289,7 +274,7 @@ public class TransformerImpl extends AbstractTransformer {
         final Class<?> targetObjectClass = targetObject.getClass();
         classUtils.getNotFinalFields(targetObjectClass, true)
                 //.parallelStream()
-                .forEach(setFieldValue(sourceObj, targetObject, breadcrumb, targetObjectClass));
+                .forEach(field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));
     }
 
     /**
@@ -359,8 +344,8 @@ public class TransformerImpl extends AbstractTransformer {
      */
     @SuppressWarnings("unchecked")
     private Object getTransformedValue(final FieldTransformer transformerFunction, final Object fieldValue,
-        final Class<?> sourceObjectClass, final String sourceFieldName, final Field field,
-        final boolean isDestinationFieldPrimitiveType, final String breadcrumb) {
+                                       final Class<?> sourceObjectClass, final String sourceFieldName, final Field field,
+                                       final boolean isDestinationFieldPrimitiveType, final String breadcrumb) {
         Object transformedValue = fieldValue;
         if (settings.isPrimitiveTypeConversionEnabled() && isDestinationFieldPrimitiveType) {
             transformedValue = applyPrimitiveTypeConversion(sourceObjectClass, sourceFieldName, field, breadcrumb, transformedValue);
@@ -458,7 +443,7 @@ public class TransformerImpl extends AbstractTransformer {
      */
     @SuppressWarnings("unchecked")
     private Object applyPrimitiveTypeConversion(final Class<?> sourceObjectClass, final String sourceFieldName,
-        final Field field, final String fieldTransformerKey, final Object fieldValue) {
+                                                final Field field, final String fieldTransformerKey, final Object fieldValue) {
         Object transformedValue = fieldValue;
         FieldTransformer primitiveTypeTransformer = getPrimitiveTypeTransformer(sourceObjectClass, sourceFieldName, field, fieldTransformerKey);
         if (nonNull(primitiveTypeTransformer)) {
@@ -476,7 +461,7 @@ public class TransformerImpl extends AbstractTransformer {
      * @return the default type transformer function
      */
     private FieldTransformer getPrimitiveTypeTransformer(final Class<?> sourceObjectClass, final String sourceFieldName,
-        final Field field, final String fieldTransformerKey) {
+                                                         final Field field, final String fieldTransformerKey) {
         String cacheKey = TRANSFORMER_FUNCTION_CACHE_PREFIX + "-" + field.getDeclaringClass().getName() + "-" + fieldTransformerKey + "-" + field.getName();
         return cacheManager.getFromCache(cacheKey, FieldTransformer.class)
                 .orElseGet(() -> {
