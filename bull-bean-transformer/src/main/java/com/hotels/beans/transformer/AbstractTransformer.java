@@ -17,15 +17,12 @@
 package com.hotels.beans.transformer;
 
 import static java.util.Arrays.asList;
-import static java.util.Arrays.stream;
 
 import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.transformer.validator.Validator.notNull;
 
 import java.util.Map;
-import java.util.function.Function;
 
-import com.hotels.beans.BeanUtils;
 import com.hotels.beans.conversion.analyzer.ConversionAnalyzer;
 import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.model.FieldMapping;
@@ -107,10 +104,11 @@ abstract class AbstractTransformer implements BeanTransformer {
      */
     @Deprecated(since = "1.6.0", forRemoval = true)
     public final Transformer withFieldMapping(final com.hotels.beans.model.FieldMapping... fieldMapping) {
-        com.hotels.transformer.model.FieldMapping[] fieldMappings = stream(fieldMapping)
-                .map(fm -> new com.hotels.transformer.model.FieldMapping(fm.getSourceFieldName(), fm.getDestFieldName()))
-                .toArray(com.hotels.transformer.model.FieldMapping[]::new);
-        return withFieldMapping(fieldMappings);
+        final Map<String, String> fieldsNameMapping = settings.getFieldsNameMapping();
+        for (FieldMapping mapping : fieldMapping) {
+            fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());
+        }
+        return this;
     }
 
     /**
@@ -147,10 +145,11 @@ abstract class AbstractTransformer implements BeanTransformer {
      */
     @Deprecated(since = "1.6.0", forRemoval = true)
     public final Transformer withFieldTransformer(final com.hotels.beans.model.FieldTransformer... fieldTransformer) {
-        Function<com.hotels.beans.model.FieldTransformer, FieldTransformer> transformerFunction = BeanUtils.getTransformer(FieldTransformer.class);
-        com.hotels.transformer.model.FieldTransformer[] fieldTransformers = stream(fieldTransformer)
-                .map(transformerFunction).toArray(com.hotels.transformer.model.FieldTransformer[]::new);
-        return withFieldTransformer(fieldTransformers);
+        Map<String, FieldTransformer> fieldsTransformers = settings.getFieldsTransformers();
+        for (FieldTransformer transformer : fieldTransformer) {
+            fieldsTransformers.put(transformer.getDestFieldName(), transformer);
+        }
+        return this;
     }
 
     /**
