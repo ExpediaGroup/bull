@@ -17,4 +17,4 @@
 /**
  * Converter module exceptions.
  */
-package com.hotels.beans.conversion.error;
+package com.hotels.transformer.conversion.error;

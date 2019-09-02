@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Main package.
+ * Transformer package.
  */
 
 package com.hotels.transformer;

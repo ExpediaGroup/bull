@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Type conversion Analyzer package.
+ * Transformer model package.
+ * @deprecated This package will be removed since version 1.1.25 please use {@link com.hotels.transformer.model} instead.
  */
-package com.hotels.transformer.conversion.analyzer;
+package com.hotels.beans.model;

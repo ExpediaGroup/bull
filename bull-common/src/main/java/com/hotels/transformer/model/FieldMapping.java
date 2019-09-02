@@ -14,7 +14,26 @@
  * limitations under the License.
  */
 
+package com.hotels.transformer.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
 /**
- * Type conversion Analyzer package.
+ * Specifies the field's name mapping between the source object and destination one.
  */
-package com.hotels.transformer.conversion.analyzer;
+@AllArgsConstructor
+@Getter
+@ToString
+public class FieldMapping {
+    /**
+     * The field name in the source object.
+     */
+    private final String sourceFieldName;
+
+    /**
+     * The field name in the destination object.
+     */
+    private final String destFieldName;
+}
