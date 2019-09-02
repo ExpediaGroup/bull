@@ -17,4 +17,4 @@
 /**
  * Type conversion Analyzer package.
  */
-package com.hotels.transformer.conversion.analyzer;
+package com.hotels.beans.conversion.analyzer;

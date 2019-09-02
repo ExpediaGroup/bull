@@ -9,7 +9,7 @@
     <suppress checks="JavadocMethod|JavadocType|JavadocVariable|JavadocStyle|TodoComment"
               files=".*[\\/]src[\\/](test|it)[\\/]|.*Test.java"/>
 
-    <!-- Checks for Braces into online instructions. -->
+    <!-- Checks for Visibility Modifier. -->
     <suppress checks="VisibilityModifier" files=".*.java"/>
 
     <!-- Checks for class design  -->
@@ -20,7 +20,4 @@
 
    <!-- Checks for parameter number  -->
    <suppress checks="ParameterNumber" files=".*[\\/]src[\\/](test|it)[\\/]|.*Test.java"/>
-
-    <!-- Checks for Visibility Modifier                        -->
-    <suppress checks="VisibilityModifier" files=".*[\\/]src[\\/](test|it)[\\/]|.*Test.java"/>
 </suppressions>
