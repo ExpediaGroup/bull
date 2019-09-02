@@ -27,7 +27,6 @@ import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import java.math.BigInteger;
 import java.util.stream.IntStream;
 
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.sample.FromFooSimple;
@@ -96,21 +95,18 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
 
     /**
      * Test that bean containing both final fields (with different names) and not are correctly copied through field transformer.
-     * @param testCaseDescription the test case description
-     * @param fieldMapping the field mapping definition
-     * @param fieldTransformer the transformer function to apply
      */
-    @Test(dataProvider = "dataTransformationTesting")
-    public void testMixedBeanWithDifferentFieldNamesIsCorrectlyCopiedThroughFieldTransformer(final String testCaseDescription,
-        final FieldMapping fieldMapping, final FieldTransformer fieldTransformer) {
+    @Test
+    public void testMixedBeanWithDifferentFieldNamesIsCorrectlyCopiedThroughFieldTransformer() {
         //GIVEN
         /* Extended FieldTransformer function declaration.
          * Function<BigInteger, BigInteger> idTransformer = value -> value.negate();
          * FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", idTransformer);
          */
+        FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>(IDENTIFIER_FIELD_NAME, BigInteger::negate);
 
         //WHEN
-        underTest.withFieldMapping(fieldMapping).withFieldTransformer(fieldTransformer);
+        underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME)).withFieldTransformer(fieldTransformer);
         MixedToFooDiffFields actual = underTest.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN
@@ -120,21 +116,6 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         IntStream.range(0, actual.getNestedObjectList().size())
                 .forEach(i -> assertThat(actual.getNestedObjectList().get(i), sameBeanAs(fromFoo.getNestedObjectList().get(i))));
         assertThat(actual.getNestedObject(), sameBeanAs(fromFoo.getNestedObject()));
-    }
-
-    /**
-     * Creates the parameters to be used for testing the transformation with field transformer.
-     * @return parameters to be used for testing the transformation with field transformer.
-     */
-    @DataProvider
-    private Object[][] dataTransformationTesting() {
-        return new Object[][] {
-            {"Test that bean containing both final fields (with different names) and not are correctly copied through field transformer.",
-                new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME), new FieldTransformer<>(IDENTIFIER_FIELD_NAME, BigInteger::negate)},
-            {"Test that bean containing both final fields (with different names) and not are correctly copied through the old field mapping and field transformer classes.",
-                new com.hotels.beans.model.FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME),
-                new com.hotels.beans.model.FieldTransformer<>(IDENTIFIER_FIELD_NAME, BigInteger::negate)}
-        };
     }
 
     /**

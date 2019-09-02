@@ -16,6 +16,7 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.lang.Character.getNumericValue;
 import static java.nio.ByteBuffer.wrap;
 
@@ -106,7 +107,7 @@ public final class LongConversionProcessor implements ConversionProcessor<Long> 
      */
     @Override
     public Function<Boolean, Long> convertBoolean() {
-        return val -> val ? (long) 1 : (long) 0;
+        return val -> TRUE.equals(val) ? (long) 1 : (long) 0;
     }
 
     /**

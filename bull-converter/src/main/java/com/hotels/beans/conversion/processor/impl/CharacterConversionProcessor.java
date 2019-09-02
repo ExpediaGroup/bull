@@ -16,6 +16,7 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.nio.ByteBuffer.wrap;
 
 import java.math.BigDecimal;
@@ -105,7 +106,7 @@ public final class CharacterConversionProcessor implements ConversionProcessor<C
      */
     @Override
     public Function<Boolean, Character> convertBoolean() {
-        return val -> val ? 'T' : 'F';
+        return val -> TRUE.equals(val) ? 'T' : 'F';
     }
 
     /**

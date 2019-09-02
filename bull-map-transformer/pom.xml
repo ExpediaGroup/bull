@@ -11,6 +11,6 @@
     <parent>
         <artifactId>bean-utils-library-parent</artifactId>
         <groupId>com.hotels.beans</groupId>
-        <version>1.5.1-SNAPSHOT</version>
+        <version>1.6.0-SNAPSHOT</version>
     </parent>
 </project>
