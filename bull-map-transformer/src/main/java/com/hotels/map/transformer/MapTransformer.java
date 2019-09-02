@@ -16,10 +16,36 @@
 
 package com.hotels.map.transformer;
 
+import java.util.Map;
+
 import com.hotels.transformer.Transformer;
 
 /**
  * Utility methods for populating {@link java.util.Map} elements via reflection.
  */
 public interface MapTransformer extends Transformer {
+    /**
+     * Copies all properties from a map to a new one.
+     * @param sourceMap the source map
+     * @param targetMapClass the target map class
+     * @param <T> the key object type in the source map
+     * @param <K> the elem object type in the source map
+     * @param <R> the key object type in the target map
+     * @param <V> the elem object type in the target map
+     * @return a copy of the source object into the destination object
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    <T, K, R, V> Map<R, V> transform(Map<T, K> sourceMap, Class<? extends Map<R, V>> targetMapClass);
+
+    /**
+     * Copies all properties from a map to a new one.
+     * @param sourceMap the source object
+     * @param targetMap the destination object
+     * @param <T> the key object type in the source map
+     * @param <K> the elem object type in the source map
+     * @param <R> the key object type in the target map
+     * @param <V> the elem object type in the target map
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    <T, K, R, V> void transform(Map<T, K> sourceMap, Map<R, V> targetMap);
 }
