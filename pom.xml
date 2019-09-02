@@ -188,7 +188,6 @@
                 <module>bean-utils-library</module>
                 <module>bull-bean-transformer</module>
                 <module>bull-converter</module>
-                <module>bull-map-transformer</module>
             </modules>
         </profile>
         <profile>
@@ -196,12 +195,6 @@
             <modules>
                 <module>bean-utils-library</module>
                 <module>bull-converter</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>map-transformer</id>
-            <modules>
-                <module>bull-map-transformer</module>
             </modules>
         </profile>
         <profile>
