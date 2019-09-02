@@ -47,7 +47,7 @@ public class BeanUtils {
     /**
      * Returns a function that transforms an object T in an object K.
      * @param beanTransformer the transformer to be used.
-     * @param targetClass the destination object classClassUtilsTest.java
+     * @param targetClass the destination object
      * @param <T> the Source object type
      * @param <K> the target object type
      * @return a function that copies of the source object into the destination object

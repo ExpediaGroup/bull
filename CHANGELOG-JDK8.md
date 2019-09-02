@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.1.24] TBD
+### [1.1.24] 2019.09.02
 #### Changed
 * **The module `bean-utils-library` has been deprecated and will be no longer available since version `1.1.25`, use `bull-bean-transformer` instead.**
     ~~~
