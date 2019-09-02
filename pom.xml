@@ -186,6 +186,15 @@
             </activation>
             <modules>
                 <module>bean-utils-library</module>
+                <module>bull-bean-transformer</module>
+                <module>bull-converter</module>
+                <module>bull-map-transformer</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>bean-transformer</id>
+            <modules>
+                <module>bean-utils-library</module>
                 <module>bull-converter</module>
             </modules>
         </profile>
