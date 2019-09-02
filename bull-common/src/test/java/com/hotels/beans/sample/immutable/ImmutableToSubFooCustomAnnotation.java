@@ -21,7 +21,7 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
-import com.hotels.beans.annotation.ConstructorArg;
+import com.hotels.transformer.annotation.ConstructorArg;
 
 import lombok.Getter;
 import lombok.ToString;
