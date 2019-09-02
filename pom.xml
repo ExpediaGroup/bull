@@ -5,7 +5,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>1.5.1-SNAPSHOT</version>
+    <version>1.6.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -185,7 +185,6 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>bean-utils-library</module>
                 <module>bull-bean-transformer</module>
                 <module>bull-converter</module>
                 <module>bull-map-transformer</module>
@@ -194,7 +193,7 @@
         <profile>
             <id>bean-transformer</id>
             <modules>
-                <module>bean-utils-library</module>
+                <module>bull-bean-transformer</module>
                 <module>bull-converter</module>
             </modules>
         </profile>

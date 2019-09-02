@@ -16,6 +16,7 @@
 
 package com.hotels.beans.transformer;
 
+import com.hotels.transformer.Transformer;
 import com.hotels.transformer.model.FieldMapping;
 import com.hotels.transformer.model.FieldTransformer;
 
