@@ -16,6 +16,7 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.lang.Character.getNumericValue;
 import static java.nio.ByteBuffer.wrap;
 
@@ -106,7 +107,7 @@ public final class ShortConversionProcessor implements ConversionProcessor<Short
      */
     @Override
     public Function<Boolean, Short> convertBoolean() {
-        return val -> val ? (short) 1 : (short) 0;
+        return val -> TRUE.equals(val) ? (short) 1 : (short) 0;
     }
 
     /**

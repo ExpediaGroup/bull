@@ -16,6 +16,7 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.lang.Character.getNumericValue;
 import static java.nio.ByteBuffer.wrap;
 
@@ -106,7 +107,7 @@ public final class FloatConversionProcessor implements ConversionProcessor<Float
      */
     @Override
     public Function<Boolean, Float> convertBoolean() {
-        return val -> val ? (float) 1 : (float) 0;
+        return val -> TRUE.equals(val) ? (float) 1 : (float) 0;
     }
 
     /**
