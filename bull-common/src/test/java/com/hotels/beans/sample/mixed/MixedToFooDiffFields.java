@@ -19,8 +19,8 @@ package com.hotels.beans.sample.mixed;
 import java.math.BigInteger;
 import java.util.List;
 
-import com.hotels.beans.annotation.ConstructorArg;
 import com.hotels.beans.sample.immutable.ImmutableToSubFoo;
+import com.hotels.transformer.annotation.ConstructorArg;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.24] 2019.09.02
+#### Changed
+* **The module `bean-utils-library` has been deprecated and will be no longer available since version `1.1.25`, use `bull-bean-transformer` instead.**
+    ~~~
+    <dependency>
+        <groupId>com.hotels.beans</groupId>
+        <artifactId>bull-bean-transformer</artifactId>
+        <version>x.y.z</version>
+    </dependency>
+    ~~~
+* Module `bean-utils-library` has been relocated into `bull-bean-transformer`.
+* The following classes has been deprecated, please find below the complete list and the new one to be used:
+
+    | Deprecated | **New one** |
+    | :----------- | :----------- |
+    | `com.hotels.beans.model.FieldMapping` | `com.hotels.transformer.model.FieldMapping` |
+    | `com.hotels.beans.model.FieldTransformer` | `com.hotels.transformer.model.FieldTransformer` |
+    | `com.hotels.beans.Transformer` | `com.hotels.transformer.Transformer` |
+    
 ### [1.1.23] 2019.08.06
 #### Added
 * Implemented automatic conversion of basic types (see: [Issue 61](https://github.com/HotelsDotCom/bull/issues/61)).

@@ -80,8 +80,8 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 
 import com.hotels.beans.transformer.BeanUtils;
-import com.hotels.beans.transformer.Transformer;
-import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.transformer.Transformer;
+import com.hotels.transformer.error.InvalidBeanException;
 
 /**
  * Unit test for {@link SampleClass}.
@@ -197,8 +197,8 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 
 import com.hotels.beans.transformer.BeanUtils;
-import com.hotels.beans.transformer.Transformer;
-import com.hotels.beans.error.InvalidBeanException;
+import com.hotels.transformer.Transformer;
+import com.hotels.transformer.error.InvalidBeanException;
 
 /**
  * Unit test for {@link SampleClass}.

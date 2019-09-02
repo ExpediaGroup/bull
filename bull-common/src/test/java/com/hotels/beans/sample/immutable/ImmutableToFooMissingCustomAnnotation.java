@@ -18,7 +18,7 @@ package com.hotels.beans.sample.immutable;
 
 import javax.validation.constraints.NotNull;
 
-import com.hotels.beans.annotation.ConstructorArg;
+import com.hotels.transformer.annotation.ConstructorArg;
 
 import lombok.Getter;
 import lombok.ToString;

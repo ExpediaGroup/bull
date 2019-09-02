@@ -19,7 +19,7 @@ package com.hotels.beans.sample.mutable;
 import java.util.Locale;
 import java.util.Optional;
 
-import com.hotels.beans.constant.ClassType;
+import com.hotels.transformer.constant.ClassType;
 
 import lombok.Getter;
 import lombok.Setter;
