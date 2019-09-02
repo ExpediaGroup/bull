@@ -8,8 +8,7 @@ BULL is a Java Bean to Java Bean transformer that recursively copies data from o
 It's the only library able to transform Mutable, Immutable and Mixed bean without any custom configuration. 
 
 ## Start using
-
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer/badge.svg?subject=maven-central)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer)
 [![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bull-bean-transformer.svg)](http://www.javadoc.io/doc/com.hotels.beans/bull-bean-transformer)
 [![Build Status](https://travis-ci.org/HotelsDotCom/bull.svg?branch=master)](https://travis-ci.org/HotelsDotCom/bull)
 [![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWQxOWZiYjAwOThlY2FmNjYxZDY1ZDNlZTdlNTZlY2Y2YmE0MjcxMzNjZjNjOTY3OWJkNzdmM2ViNmQ2NjUyNDE](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWQxOWZiYjAwOThlY2FmNjYxZDY1ZDNlZTdlNTZlY2Y2YmE0MjcxMzNjZjNjOTY3OWJkNzdmM2ViNmQ2NjUyNDE)
