@@ -13,8 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Bean transformer main package.
- */
 
-package com.hotels.beans;
+package com.hotels.map;
+
+import com.hotels.map.transformer.MapTransformer;
+import com.hotels.map.transformer.MapTransformerImpl;
+
+/**
+ * Set of Map utilities.
+ */
+public class MapUtils {
+    /**
+     * Returns a Map Transformer.
+     * @return a {@link MapTransformer} instance.
+     */
+    public final MapTransformer getTransformer() {
+        return new MapTransformerImpl();
+    }
+}

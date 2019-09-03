@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Bean transformer main package.
+ * Map transformer main package.
  */
 
-package com.hotels.beans;
+package com.hotels.map;
