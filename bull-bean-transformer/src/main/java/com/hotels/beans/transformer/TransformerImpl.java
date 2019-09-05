@@ -52,7 +52,7 @@ import com.hotels.transformer.model.FieldTransformer;
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
  * The implementations are provided by BeanUtils.
  */
-public class TransformerImpl extends AbstractTransformer {
+public class TransformerImpl extends AbstractBeanTransformer {
     /**
      * {@inheritDoc}
      */

@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.transformer;
+package com.hotels.transformer.model;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.hotels.transformer.model.FieldTransformer;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +32,7 @@ import lombok.Setter;
  *  3) Other configurations.
  */
 @Getter
-final class TransformerSettings {
+public class TransformerSettings {
     /**
      * Contains the mapping between fields's name in the source object and the destination one.
      */
