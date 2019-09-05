@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Utility methods for populating {@link java.util.Map} elements via reflection.
  */
-public class MapTransformerImpl implements MapTransformer {
+public class MapTransformerImpl extends AbstractMapTransformer {
     /**
      * {@inheritDoc}
      */

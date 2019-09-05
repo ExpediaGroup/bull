@@ -19,6 +19,7 @@ package com.hotels.map.transformer;
 import java.util.Map;
 
 import com.hotels.transformer.Transformer;
+import com.hotels.transformer.model.FieldTransformer;
 
 /**
  * Utility methods for populating {@link java.util.Map} elements via reflection.
@@ -49,4 +50,11 @@ public interface MapTransformer extends Transformer {
      * @throws IllegalArgumentException if any parameter is invalid
      */
     <T, K, R, V> void transform(Map<T, K> sourceMap, Map<R, V> targetMap);
+
+    /**
+     * Initializes the transformer functions to apply on a Map key. The transformer function returns directly the field value.
+     * @param keyFieldTransformer the fields transformer function
+     * @return the {@link Transformer} instance
+     */
+    MapTransformer withKeyTransformer(FieldTransformer... keyFieldTransformer);
 }

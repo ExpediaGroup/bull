@@ -18,17 +18,15 @@ package com.hotels.beans.transformer;
 
 import static java.util.Arrays.asList;
 
-import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.transformer.validator.Validator.notNull;
 
 import java.util.Map;
 
 import com.hotels.beans.conversion.analyzer.ConversionAnalyzer;
-import com.hotels.transformer.cache.CacheManager;
+import com.hotels.transformer.AbstractTransformer;
 import com.hotels.transformer.model.FieldMapping;
 import com.hotels.transformer.model.FieldTransformer;
-import com.hotels.transformer.utils.ClassUtils;
-import com.hotels.transformer.utils.ReflectionUtils;
+import com.hotels.transformer.model.TransformerSettings;
 import com.hotels.transformer.validator.Validator;
 import com.hotels.transformer.validator.ValidatorImpl;
 
@@ -36,36 +34,11 @@ import com.hotels.transformer.validator.ValidatorImpl;
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
  * Contains all method implementation that will be common to any {@link BeanTransformer} implementation.
  */
-abstract class AbstractTransformer implements BeanTransformer {
+abstract class AbstractBeanTransformer extends AbstractTransformer<TransformerSettings> implements BeanTransformer {
     /**
      * The cache key prefix for the Transformer Functions.
      */
-    static final String TRANSFORMER_FUNCTION_CACHE_PREFIX = "TransformerFunction";
-
-    /**
-     * A regex that returns all the transformer function cached items.
-     */
-    private static final String TRANSFORMER_FUNCTION_REGEX = "^" + TRANSFORMER_FUNCTION_CACHE_PREFIX + ".*";
-
-    /**
-     * Reflection utils instance {@link ReflectionUtils}.
-     */
-    final ReflectionUtils reflectionUtils;
-
-    /**
-     * Class utils instance {@link ClassUtils}.
-     */
-    final ClassUtils classUtils;
-
-    /**
-     * CacheManager instance {@link CacheManager}.
-     */
-    final CacheManager cacheManager;
-
-    /**
-     * Contains both the field name mapping and the lambda function to be applied on fields.
-     */
-    final TransformerSettings settings;
+    static final String TRANSFORMER_FUNCTION_CACHE_PREFIX = "BeanTransformerFunction";
 
     /**
      * Bean Validator. It offers the possibility to validate a given Java Bean against a set of defined constraints.
@@ -80,16 +53,13 @@ abstract class AbstractTransformer implements BeanTransformer {
     /**
      * Default constructor.
      */
-    AbstractTransformer() {
-        this.reflectionUtils = new ReflectionUtils();
-        this.classUtils = new ClassUtils();
-        this.settings = new TransformerSettings();
-        this.cacheManager = getCacheManager("transformer");
+    AbstractBeanTransformer() {
+        super(TRANSFORMER_FUNCTION_CACHE_PREFIX, "beanTransformer", new TransformerSettings());
     }
 
     /**
-     * {@inheritDoc}
-     */
+      * {@inheritDoc}
+      */
     @Override
     public final BeanTransformer withFieldMapping(final FieldMapping... fieldMapping) {
         final Map<String, String> fieldsNameMapping = settings.getFieldsNameMapping();
@@ -103,17 +73,9 @@ abstract class AbstractTransformer implements BeanTransformer {
      * {@inheritDoc}
      */
     @Override
-    public final void removeFieldMapping(final String destFieldName) {
-        notNull(destFieldName, "The field name for which the mapping has to be removed cannot be null!");
-        settings.getFieldsNameMapping().remove(destFieldName);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void resetFieldsMapping() {
-        settings.getFieldsNameMapping().clear();
+    public final BeanTransformer setDefaultValueForMissingField(final boolean useDefaultValue) {
+        settings.setSetDefaultValueForMissingField(useDefaultValue);
+        return this;
     }
 
     /**
@@ -125,34 +87,6 @@ abstract class AbstractTransformer implements BeanTransformer {
         for (FieldTransformer transformer : fieldTransformer) {
             fieldsTransformers.put(transformer.getDestFieldName(), transformer);
         }
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void removeFieldTransformer(final String destFieldName) {
-        notNull(destFieldName, "The field name for which the transformer function has to be removed cannot be null!");
-        settings.getFieldsTransformers().remove(destFieldName);
-        cacheManager.removeMatchingKeys(TRANSFORMER_FUNCTION_REGEX + destFieldName);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void resetFieldsTransformer() {
-        settings.getFieldsTransformers().clear();
-        cacheManager.removeMatchingKeys(TRANSFORMER_FUNCTION_REGEX);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final BeanTransformer setDefaultValueForMissingField(final boolean useDefaultValue) {
-        settings.setSetDefaultValueForMissingField(useDefaultValue);
         return this;
     }
 
@@ -195,7 +129,7 @@ abstract class AbstractTransformer implements BeanTransformer {
         if (primitiveTypeConversionEnabled) {
             conversionAnalyzer = new ConversionAnalyzer();
         } else {
-            cacheManager.removeMatchingKeys(TRANSFORMER_FUNCTION_REGEX);
+            cacheManager.removeMatchingKeys(transformerFunctionRegex);
         }
         return this;
     }

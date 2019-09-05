@@ -49,6 +49,7 @@ import com.hotels.transformer.error.InvalidBeanException;
 import com.hotels.transformer.error.MissingFieldException;
 import com.hotels.transformer.model.FieldMapping;
 import com.hotels.transformer.model.FieldTransformer;
+import com.hotels.transformer.model.TransformerSettings;
 import com.hotels.transformer.utils.ClassUtils;
 import com.hotels.transformer.utils.ReflectionUtils;
 
@@ -219,7 +220,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         underTest.setPrimitiveTypeConversionEnabled(true);
 
         //WHEN
-        boolean actual = underTest.settings.isPrimitiveTypeConversionEnabled();
+        boolean actual = underTest.getSettings().isPrimitiveTypeConversionEnabled();
 
         //THEN
         assertTrue(actual);

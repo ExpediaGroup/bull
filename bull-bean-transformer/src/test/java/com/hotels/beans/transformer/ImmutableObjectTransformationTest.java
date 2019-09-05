@@ -60,6 +60,7 @@ import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleBoolean;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
+import com.hotels.transformer.Transformer;
 import com.hotels.transformer.annotation.ConstructorArg;
 import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.error.InvalidBeanException;
@@ -260,7 +261,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
 
         //WHEN
-        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
+        final Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         ImmutableToFooDiffFields actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.class);
 
         //THEN
@@ -285,7 +286,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
 
         //WHEN
-        final BeanTransformer beanTransformer = underTest
+        final Transformer beanTransformer = underTest
                 .withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
                 .withFieldMapping(new FieldMapping(PRICE_FIELD_NAME, NET_PRICE_FIELD_NAME))
                 .withFieldMapping(new FieldMapping(PRICE_FIELD_NAME, GROSS_PRICE_FIELD_NAME))

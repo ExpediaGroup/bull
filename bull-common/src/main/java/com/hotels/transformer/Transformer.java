@@ -16,6 +16,9 @@
 
 package com.hotels.transformer;
 
+import com.hotels.transformer.model.FieldMapping;
+import com.hotels.transformer.model.FieldTransformer;
+
 /**
  * Utility methods for all objects transformation.
  */
@@ -40,4 +43,40 @@ public interface Transformer {
      * @throws IllegalArgumentException if any parameter is invalid
      */
     <T, K> void transform(T sourceObj, K targetObject);
+
+    /**
+     * Initializes the mapping between fields in the source object and the destination one.
+     * @param fieldMapping the field mapping
+     * @return the {@link Transformer} instance
+     */
+    Transformer withFieldMapping(FieldMapping... fieldMapping);
+
+    /**
+     * Removes the field mapping for the given field.
+     * @param destFieldName the field name in the destination object
+     */
+    void removeFieldMapping(String destFieldName);
+
+    /**
+     * Removes all the configured fields mapping.
+     */
+    void resetFieldsMapping();
+
+    /**
+     * Initializes the field transformer functions. The transformer function returns directly the field value.
+     * @param fieldTransformer the fields transformer function
+     * @return the {@link Transformer} instance
+     */
+    Transformer withFieldTransformer(FieldTransformer... fieldTransformer);
+
+    /**
+     * Removes the field transformer for the given field.
+     * @param destFieldName the field name in the destination object
+     */
+    void removeFieldTransformer(String destFieldName);
+
+    /**
+     * Removes all the configured fields transformer.
+     */
+    void resetFieldsTransformer();
 }

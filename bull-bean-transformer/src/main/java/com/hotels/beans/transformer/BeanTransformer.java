@@ -17,50 +17,12 @@
 package com.hotels.beans.transformer;
 
 import com.hotels.transformer.Transformer;
-import com.hotels.transformer.model.FieldMapping;
-import com.hotels.transformer.model.FieldTransformer;
 
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
  * The implementations are provided by {@link TransformerImpl}.
  */
 public interface BeanTransformer extends Transformer {
-    /**
-     * Initializes the mapping between fields in the source object and the destination one.
-     * @param fieldMapping the field mapping
-     * @return the {@link BeanTransformer} instance
-     */
-    BeanTransformer withFieldMapping(FieldMapping... fieldMapping);
-
-    /**
-     * Removes the field mapping for the given field.
-     * @param destFieldName the field name in the destination object
-     */
-    void removeFieldMapping(String destFieldName);
-
-    /**
-     * Removes all the configured fields mapping.
-     */
-    void resetFieldsMapping();
-
-    /**
-     * Initializes the field transformer functions. The transformer function returns directly the field value.
-     * @param fieldTransformer the fields transformer function
-     * @return the {@link BeanTransformer} instance
-     */
-    BeanTransformer withFieldTransformer(FieldTransformer... fieldTransformer);
-
-    /**
-     * Removes the field transformer for the given field.
-     * @param destFieldName the field name in the destination object
-     */
-    void removeFieldTransformer(String destFieldName);
-
-    /**
-     * Removes all the configured fields transformer.
-     */
-    void resetFieldsTransformer();
-
     /**
      * It allows to configure the transformer in order to set a default value in case some field is missing in the source object.
      * If set to true the default value is set, if false if it raises a: {@link com.hotels.transformer.error.MissingFieldException} in case of missing fields.
