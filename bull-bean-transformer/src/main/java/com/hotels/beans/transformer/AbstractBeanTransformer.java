@@ -20,12 +20,8 @@ import static java.util.Arrays.asList;
 
 import static com.hotels.transformer.validator.Validator.notNull;
 
-import java.util.Map;
-
 import com.hotels.beans.conversion.analyzer.ConversionAnalyzer;
 import com.hotels.transformer.AbstractTransformer;
-import com.hotels.transformer.model.FieldMapping;
-import com.hotels.transformer.model.FieldTransformer;
 import com.hotels.transformer.model.TransformerSettings;
 import com.hotels.transformer.validator.Validator;
 import com.hotels.transformer.validator.ValidatorImpl;
@@ -34,7 +30,7 @@ import com.hotels.transformer.validator.ValidatorImpl;
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
  * Contains all method implementation that will be common to any {@link BeanTransformer} implementation.
  */
-abstract class AbstractBeanTransformer extends AbstractTransformer<TransformerSettings> implements BeanTransformer {
+abstract class AbstractBeanTransformer extends AbstractTransformer<BeanTransformer, TransformerSettings> implements BeanTransformer {
     /**
      * The cache key prefix for the Transformer Functions.
      */
@@ -58,35 +54,11 @@ abstract class AbstractBeanTransformer extends AbstractTransformer<TransformerSe
     }
 
     /**
-      * {@inheritDoc}
-      */
-    @Override
-    public final BeanTransformer withFieldMapping(final FieldMapping... fieldMapping) {
-        final Map<String, String> fieldsNameMapping = settings.getFieldsNameMapping();
-        for (FieldMapping mapping : fieldMapping) {
-            fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());
-        }
-        return this;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public final BeanTransformer setDefaultValueForMissingField(final boolean useDefaultValue) {
         settings.setSetDefaultValueForMissingField(useDefaultValue);
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final BeanTransformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
-        Map<String, FieldTransformer> fieldsTransformers = settings.getFieldsTransformers();
-        for (FieldTransformer transformer : fieldTransformer) {
-            fieldsTransformers.put(transformer.getDestFieldName(), transformer);
-        }
         return this;
     }
 

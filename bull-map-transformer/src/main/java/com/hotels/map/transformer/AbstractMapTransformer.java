@@ -20,14 +20,13 @@ import java.util.Map;
 
 import com.hotels.map.transformer.model.MapTransformerSettings;
 import com.hotels.transformer.AbstractTransformer;
-import com.hotels.transformer.model.FieldMapping;
 import com.hotels.transformer.model.FieldTransformer;
 
 /**
  * Utility methods for populating {@link java.util.Map} elements via reflection..
  * Contains all method implementation that will be common to any {@link MapTransformer} implementation.
  */
-abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformerSettings> implements MapTransformer {
+abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer, MapTransformerSettings> implements MapTransformer {
     /**
      * The cache key prefix for the Transformer Functions.
      */
@@ -38,30 +37,6 @@ abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer
      */
     AbstractMapTransformer() {
         super(TRANSFORMER_FUNCTION_CACHE_PREFIX, "mapTransformer", new MapTransformerSettings());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final MapTransformer withFieldMapping(final FieldMapping... fieldMapping) {
-        final Map<String, String> fieldsNameMapping = settings.getFieldsNameMapping();
-        for (FieldMapping mapping : fieldMapping) {
-            fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());
-        }
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final MapTransformer withFieldTransformer(final FieldTransformer... fieldTransformer) {
-        Map<String, FieldTransformer> fieldsTransformers = settings.getFieldsTransformers();
-        for (FieldTransformer transformer : fieldTransformer) {
-            fieldsTransformers.put(transformer.getDestFieldName(), transformer);
-        }
-        return this;
     }
 
     /**
