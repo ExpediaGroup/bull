@@ -19,7 +19,11 @@ package com.hotels.transformer;
 import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.transformer.validator.Validator.notNull;
 
+import java.util.Map;
+
 import com.hotels.transformer.cache.CacheManager;
+import com.hotels.transformer.model.FieldMapping;
+import com.hotels.transformer.model.FieldTransformer;
 import com.hotels.transformer.model.TransformerSettings;
 import com.hotels.transformer.utils.ClassUtils;
 import com.hotels.transformer.utils.ReflectionUtils;
@@ -28,9 +32,10 @@ import lombok.Getter;
 
 /**
  * Abstract class containing all method implementation that will be common to any {@link Transformer}.
+ * @param <T> the {@link Transformer} implementation.
  * @param <S> the {@link TransformerSettings} implementation.
  */
-public abstract class AbstractTransformer<S extends TransformerSettings> implements Transformer {
+public abstract class AbstractTransformer<T extends Transformer, S extends TransformerSettings> implements Transformer {
     /**
      * Reflection utils instance {@link ReflectionUtils}.
      */
@@ -69,6 +74,32 @@ public abstract class AbstractTransformer<S extends TransformerSettings> impleme
         this.settings = transformerSettings;
         this.transformerFunctionRegex = "^" + transformerFunctionCachePrefix + ".*";
         this.cacheManager = getCacheManager(cacheName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public final T withFieldMapping(final FieldMapping... fieldMapping) {
+        final Map<String, String> fieldsNameMapping = settings.getFieldsNameMapping();
+        for (FieldMapping mapping : fieldMapping) {
+            fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());
+        }
+        return (T) this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public final T withFieldTransformer(final FieldTransformer... fieldTransformer) {
+        Map<String, FieldTransformer> fieldsTransformers = settings.getFieldsTransformers();
+        for (FieldTransformer transformer : fieldTransformer) {
+            fieldsTransformers.put(transformer.getDestFieldName(), transformer);
+        }
+        return (T) this;
     }
 
     /**
