@@ -438,6 +438,7 @@ public class ReflectionUtilsTest {
         }
 
         // THEN
+        assertNotNull(actualException);
         assertEquals(IllegalArgumentException.class, actualException.getTargetException().getClass());
     }
 
@@ -611,6 +612,7 @@ public class ReflectionUtilsTest {
         }
 
         // THEN
+        assertNotNull(actualException);
         assertEquals(MissingFieldException.class, actualException.getTargetException().getClass());
     }
 
@@ -675,6 +677,7 @@ public class ReflectionUtilsTest {
         }
 
         // THEN
+        assertNotNull(actualException);
         assertEquals(expectedException, actualException.getClass());
     }
 

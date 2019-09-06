@@ -22,7 +22,7 @@ import com.hotels.transformer.Transformer;
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
  * The implementations are provided by {@link TransformerImpl}.
  */
-public interface BeanTransformer extends Transformer {
+public interface BeanTransformer extends Transformer<BeanTransformer> {
     /**
      * It allows to configure the transformer in order to set a default value in case some field is missing in the source object.
      * If set to true the default value is set, if false if it raises a: {@link com.hotels.transformer.error.MissingFieldException} in case of missing fields.

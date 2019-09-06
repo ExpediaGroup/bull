@@ -23,5 +23,5 @@ import lombok.NoArgsConstructor;
  * Immutable object without constructor.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ImmutableToFooNoConstructors {
+public final class ImmutableToFooNoConstructors {
 }

@@ -261,7 +261,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
 
         //WHEN
-        final Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
+        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         ImmutableToFooDiffFields actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.class);
 
         //THEN
@@ -297,6 +297,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         assertNotNull(actual.getName());
         assertEquals(isNameFieldEmpty, actual.getName().isPresent());
         sourceObject.getName().ifPresent(name -> assertEquals(name, actual.getName().get()));
+        assertTrue(sourceObject.getAge().isPresent());
         assertEquals(sourceObject.getAge().get(), actual.getAge());
         assertEquals(sourceObject.getClassType(), actual.getClassType());
         assertEquals(sourceObject.getLocale(), actual.getLocale().getLanguage());

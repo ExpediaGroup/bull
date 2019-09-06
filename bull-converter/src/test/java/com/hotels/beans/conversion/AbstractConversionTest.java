@@ -20,18 +20,17 @@ package com.hotels.beans.conversion;
  * Abstract class containing all methods/fields common to all Conversion test classes.
  */
 public abstract class AbstractConversionTest {
-    public static final Byte BYTE_VALUE = 10;
-    public static final Short SHORT_VALUE = 10;
-    public static final Integer INTEGER_VALUE = 10;
-    public static final Long LONG_VALUE = 10L;
-    public static final Float FLOAT_VALUE = 10f;
-    public static final Double DOUBLE_VALUE = 10d;
-    public static final char CHAR_VALUE = '1';
-    public static final Boolean BOOLEAN_VALUE = Boolean.TRUE;
-    public static final String STRING_VALUE = "10";
-    public static final byte[] ONE_BYTE_BYTE_ARRAY = new byte[] {1};
-    public static final byte[] EIGHT_BYTE_BYTE_ARRAY = new byte[] {1, 2, 3, 4, 5, 6, 7, 8};
-
+    protected static final Byte BYTE_VALUE = 10;
+    protected static final Short SHORT_VALUE = 10;
+    protected static final Integer INTEGER_VALUE = 10;
+    protected static final Long LONG_VALUE = 10L;
+    protected static final Float FLOAT_VALUE = 10f;
+    protected static final Double DOUBLE_VALUE = 10d;
+    protected static final char CHAR_VALUE = '1';
+    protected static final Boolean BOOLEAN_VALUE = Boolean.TRUE;
+    protected static final String STRING_VALUE = "10";
+    protected static final byte[] ONE_BYTE_BYTE_ARRAY = new byte[] {1};
+    protected static final byte[] EIGHT_BYTE_BYTE_ARRAY = new byte[] {1, 2, 3, 4, 5, 6, 7, 8};
     protected static final Byte BYTE_VALUE_ZERO = 0;
     protected static final Short SHORT_VALUE_ZERO = 0;
     protected static final Integer INTEGER_VALUE_ZERO = 0;

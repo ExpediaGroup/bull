@@ -87,7 +87,7 @@ public class ValidatorImpl implements Validator {
 
     /**
      * Creates a function that, given a constraint error, builds a violation message.
-     * @return the constaint violation message
+     * @return the constant violation message
      */
     private Function<ConstraintViolation<Object>, String> getConstraintViolationMessage() {
         return cv -> cv.getRootBeanClass().getName()
