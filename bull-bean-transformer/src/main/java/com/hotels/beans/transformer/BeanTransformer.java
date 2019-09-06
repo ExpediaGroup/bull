@@ -24,6 +24,27 @@ import com.hotels.transformer.Transformer;
  */
 public interface BeanTransformer extends Transformer<BeanTransformer> {
     /**
+     * Copies all properties from an object to a new one.
+     * @param sourceObj the source object
+     * @param targetClass the destination object class
+     * @param <T> the Source object type
+     * @param <K> the target object type
+     * @return a copy of the source object into the destination object
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    <T, K> K transform(T sourceObj, Class<? extends K> targetClass);
+
+    /**
+     * Copies all properties from an object to a new one.
+     * @param sourceObj the source object
+     * @param targetObject the destination object
+     * @param <T> the Source object type
+     * @param <K> the target object type
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    <T, K> void transform(T sourceObj, K targetObject);
+
+    /**
      * It allows to configure the transformer in order to set a default value in case some field is missing in the source object.
      * If set to true the default value is set, if false if it raises a: {@link com.hotels.transformer.error.MissingFieldException} in case of missing fields.
      * @param useDefaultValue true in case the default value should be set, false if it should raise a:
