@@ -25,27 +25,6 @@ import com.hotels.transformer.model.FieldTransformer;
  */
 public interface Transformer<N extends Transformer> {
     /**
-     * Copies all properties from an object to a new one.
-     * @param sourceObj the source object
-     * @param targetClass the destination object class
-     * @param <T> the Source object type
-     * @param <K> the target object type
-     * @return a copy of the source object into the destination object
-     * @throws IllegalArgumentException if any parameter is invalid
-     */
-    <T, K> K transform(T sourceObj, Class<? extends K> targetClass);
-
-    /**
-     * Copies all properties from an object to a new one.
-     * @param sourceObj the source object
-     * @param targetObject the destination object
-     * @param <T> the Source object type
-     * @param <K> the target object type
-     * @throws IllegalArgumentException if any parameter is invalid
-     */
-    <T, K> void transform(T sourceObj, K targetObject);
-
-    /**
      * Initializes the mapping between fields in the source object and the destination one.
      * @param fieldMapping the field mapping
      * @return the {@link Transformer} instance

@@ -50,5 +50,4 @@ abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer
         }
         return this;
     }
-
 }

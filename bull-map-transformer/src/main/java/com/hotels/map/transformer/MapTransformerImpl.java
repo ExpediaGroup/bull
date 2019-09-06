@@ -37,20 +37,4 @@ public class MapTransformerImpl extends AbstractMapTransformer {
     public <T, K, R, V> void transform(final Map<T, K> sourceMap, final Map<R, V> targetMap) {
 
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass) {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <T, K> void transform(final T sourceObj, final K targetObject) {
-
-    }
 }
