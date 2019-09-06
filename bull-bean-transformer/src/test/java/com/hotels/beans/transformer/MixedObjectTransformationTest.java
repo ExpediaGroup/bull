@@ -35,7 +35,6 @@ import com.hotels.beans.sample.mixed.MixedToFooDiffFields;
 import com.hotels.beans.sample.mixed.MixedToFooMissingAllArgsConstructor;
 import com.hotels.beans.sample.mixed.MixedToFooMissingField;
 import com.hotels.beans.sample.mixed.MixedToFooNotExistingFields;
-import com.hotels.transformer.Transformer;
 import com.hotels.transformer.error.MissingFieldException;
 import com.hotels.transformer.model.FieldMapping;
 import com.hotels.transformer.model.FieldTransformer;
@@ -82,7 +81,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         //GIVEN
 
         //WHEN
-        final Transformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
+        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         MixedToFooDiffFields actual = beanTransformer.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN

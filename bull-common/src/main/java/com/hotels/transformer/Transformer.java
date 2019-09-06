@@ -21,8 +21,9 @@ import com.hotels.transformer.model.FieldTransformer;
 
 /**
  * Utility methods for all objects transformation.
+ * @param <N> the {@link Transformer} implementation.
  */
-public interface Transformer {
+public interface Transformer<N extends Transformer> {
     /**
      * Copies all properties from an object to a new one.
      * @param sourceObj the source object
@@ -49,7 +50,7 @@ public interface Transformer {
      * @param fieldMapping the field mapping
      * @return the {@link Transformer} instance
      */
-    Transformer withFieldMapping(FieldMapping... fieldMapping);
+    N withFieldMapping(FieldMapping... fieldMapping);
 
     /**
      * Removes the field mapping for the given field.
@@ -67,7 +68,7 @@ public interface Transformer {
      * @param fieldTransformer the fields transformer function
      * @return the {@link Transformer} instance
      */
-    Transformer withFieldTransformer(FieldTransformer... fieldTransformer);
+    N withFieldTransformer(FieldTransformer... fieldTransformer);
 
     /**
      * Removes the field transformer for the given field.

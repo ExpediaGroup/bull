@@ -493,20 +493,19 @@ public class ClassUtilsTest {
     @DataProvider
     private Object[][] dataAreParameterNamesAvailableTesting() {
         return new Object[][] {
-                {"Tests that the method returns false if the constructor parameter names are not available", createMockedConstructor(false), false},
+                {"Tests that the method returns false if the constructor parameter names are not available", createMockedConstructor(), false},
                 {"Tests that the method returns false if the constructor parameter names are available", underTest.getAllArgsConstructor(MixedToFoo.class), true}
         };
     }
 
     /**
      * Creates a mocked constructor for testing method {@code areParameterNamesAvailable}.
-     * @param isNamePresent the value it should return when invoking the {@code isNamePresent} method
      * @return a mocked {@link Constructor} instance
      */
-    private Constructor createMockedConstructor(final boolean isNamePresent) {
+    private Constructor createMockedConstructor() {
         Parameter parameter = mock(Parameter.class);
         ReflectionTestUtils.setField(parameter, "name", "paramName");
-        when(parameter.isNamePresent()).thenReturn(isNamePresent);
+        when(parameter.isNamePresent()).thenReturn(false);
         Constructor constructor = mock(Constructor.class);
         when(constructor.getDeclaringClass()).thenReturn(ImmutableToFoo.class);
         when(constructor.getParameters()).thenReturn(new Parameter[] {parameter});

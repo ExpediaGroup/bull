@@ -25,7 +25,7 @@ import com.hotels.transformer.model.FieldTransformer;
  * Utility methods for populating {@link java.util.Map} elements via reflection.
  * The implementations are provided by {@link MapTransformerImpl}.
  */
-public interface MapTransformer extends Transformer {
+public interface MapTransformer extends Transformer<MapTransformer> {
     /**
      * Copies all properties from a map to a new one.
      * @param sourceMap the source map

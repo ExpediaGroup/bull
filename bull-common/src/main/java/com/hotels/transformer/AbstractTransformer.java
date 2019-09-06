@@ -35,7 +35,7 @@ import lombok.Getter;
  * @param <T> the {@link Transformer} implementation.
  * @param <S> the {@link TransformerSettings} implementation.
  */
-public abstract class AbstractTransformer<T extends Transformer, S extends TransformerSettings> implements Transformer {
+public abstract class AbstractTransformer<T extends Transformer, S extends TransformerSettings> implements Transformer<T> {
     /**
      * Reflection utils instance {@link ReflectionUtils}.
      */
