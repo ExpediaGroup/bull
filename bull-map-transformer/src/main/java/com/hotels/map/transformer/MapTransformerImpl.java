@@ -26,7 +26,7 @@ public class MapTransformerImpl extends AbstractMapTransformer {
      * {@inheritDoc}
      */
     @Override
-    public <T, K, R, V> Map<R, V> transform(final Map<T, K> sourceMap, final Class<? extends Map<R, V>> targetMapClass) {
+    public <T, K, R, V> Map<R, V> transform(final Map<T, K> sourceMap, final Class<? extends Map<R, V>> targetMapClass, final BeanTransformer beanTransformer) {
         return null;
     }
 
@@ -34,7 +34,7 @@ public class MapTransformerImpl extends AbstractMapTransformer {
      * {@inheritDoc}
      */
     @Override
-    public <T, K, R, V> void transform(final Map<T, K> sourceMap, final Map<R, V> targetMap) {
+    public <T, K, R, V> void transform(final Map<T, K> sourceMap, final Map<R, V> targetMap, final BeanTransformer beanTransformer) {
 
     }
 }
