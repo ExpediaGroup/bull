@@ -48,6 +48,12 @@ class MapPopulator extends Populator<Map<?, ?>> {
         return getPopulatedObject(fieldValue, mapGenericType);
     }
 
+    @Override
+    public Map<?, ?> getPopulatedObject(final Class<?> fieldClass, final Map<?, ?> fieldValue) {
+        MapType mapGenericType = reflectionUtils.getMapGenericType(fieldValue.getClass().getGenericSuperclass(), fieldClass);
+        return getPopulatedObject(fieldValue, mapGenericType);
+    }
+
     /**
      * Populates the Map objects.
      * @param fieldValue the source Map.

@@ -30,29 +30,31 @@ public interface MapTransformer extends Transformer<MapTransformer> {
     /**
      * Copies all properties from a map to a new one.
      * @param sourceMap the source map
-     * @param targetMapClass the target map class
+//     * @param targetMapClass the target map class
      * @param <T> the key object type in the source map
      * @param <K> the elem object type in the source map
-     * @param <R> the key object type in the target map
-     * @param <V> the elem object type in the target map
+//     * @param <R> the key object type in the target map
+//     * @param <V> the elem object type in the target map
      * @return a copy of the source object into the destination object
      * @throws IllegalArgumentException if any parameter is invalid
      */
-    <T, K, R, V> Map<R, V> transform(Map<T, K> sourceMap, Class<? extends Map<R, V>> targetMapClass);
+//    <T, K, R, V> Map<R, V> transform(Map<T, K> sourceMap, Class<? extends Map<R, V>> targetMapClass);
+    <T, K> Map<T, K> transform(Map<T, K> sourceMap);
 
     /**
      * Copies all properties from a map to a new one.
      * @param sourceMap the source map
-     * @param targetMapClass the target map class
+//     * @param targetMapClass the target map class
      * @param beanTransformer the bean transformer to use for the map elements transformation
      * @param <T> the key object type in the source map
      * @param <K> the elem object type in the source map
-     * @param <R> the key object type in the target map
-     * @param <V> the elem object type in the target map
+//     * @param <R> the key object type in the target map
+//     * @param <V> the elem object type in the target map
      * @return a copy of the source object into the destination object
      * @throws IllegalArgumentException if any parameter is invalid
      */
-    <T, K, R, V> Map<R, V> transform(Map<T, K> sourceMap, Class<? extends Map<R, V>> targetMapClass, BeanTransformer beanTransformer);
+//    <T, K, R, V> Map<R, V> transform(Map<T, K> sourceMap, Class<? extends Map<R, V>> targetMapClass, BeanTransformer beanTransformer);
+    <T, K> Map<T, K> transform(Map<T, K> sourceMap, BeanTransformer beanTransformer);
 
     /**
      * Copies all properties from a map to a new one.

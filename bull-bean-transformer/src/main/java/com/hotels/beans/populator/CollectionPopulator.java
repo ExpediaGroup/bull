@@ -53,6 +53,16 @@ class CollectionPopulator<K> extends Populator<Collection> implements ICollectio
     /**
      * {@inheritDoc}
      */
+    @Override
+    public Collection getPopulatedObject(final Class<?> fieldClass, final Collection fieldValue) {
+        final Class<?> genericClass = reflectionUtils.getArgumentTypeClass(fieldValue, true);
+//        return getPopulatedObject(fieldClass, reflectionUtils.getGenericFieldType(fieldClass.getGenericSuperclass()), fieldValue, genericClass);
+        return getPopulatedObject(fieldClass, fieldClass, fieldValue, genericClass);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public Collection<K> getPopulatedObject(final Class<?> fieldType, final Class<?> genericFieldType, final Object fieldValue, final Class<?> nestedGenericClass) {
