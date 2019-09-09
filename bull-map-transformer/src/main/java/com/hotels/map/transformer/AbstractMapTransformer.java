@@ -18,6 +18,7 @@ package com.hotels.map.transformer;
 
 import java.util.Map;
 
+import com.hotels.beans.BeanUtils;
 import com.hotels.map.transformer.model.MapTransformerSettings;
 import com.hotels.transformer.AbstractTransformer;
 import com.hotels.transformer.model.FieldTransformer;
@@ -43,8 +44,9 @@ abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer
      * {@inheritDoc}
      */
     @Override
-    public <T, K, R, V> Map<R, V> transform(final Map<T, K> sourceMap, final Class<? extends Map<R, V>> targetMapClass) {
-        return transform(sourceMap, targetMapClass, new BeanUtils());
+//    public <T, K, R, V> Map<R, V> transform(final Map<T, K> sourceMap, final Class<? extends Map<R, V>> targetMapClass) {
+    public <T, K> Map<T, K> transform(final Map<T, K> sourceMap) {
+        return transform(sourceMap, new BeanUtils().getTransformer());
     }
 
     /**
@@ -52,7 +54,7 @@ abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer
      */
     @Override
     public <T, K, R, V> void transform(final Map<T, K> sourceMap, final Map<R, V> targetMap) {
-
+        transform(sourceMap, targetMap, new BeanUtils().getTransformer());
     }
 
     /**

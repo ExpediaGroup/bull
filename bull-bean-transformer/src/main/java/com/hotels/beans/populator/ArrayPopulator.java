@@ -24,6 +24,7 @@ import com.hotels.beans.transformer.BeanTransformer;
 
 /**
  * Populator for primitive types array.
+ * TODO: parametrized guide: https://www.javacodegeeks.com/2013/12/advanced-java-generics-retreiving-generic-type-arguments.html
  */
 class ArrayPopulator extends Populator<Object> implements ICollectionPopulator<Object> {
 
@@ -40,7 +41,15 @@ class ArrayPopulator extends Populator<Object> implements ICollectionPopulator<O
      */
     @Override
     public Object getPopulatedObject(final Field field, final Object fieldValue) {
-        return getPopulatedObject(field.getType(), reflectionUtils.getArrayType(field), fieldValue, null);
+        return getPopulatedObject(field.getType(), fieldValue);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getPopulatedObject(final Class<?> fieldClass, final Object fieldValue) {
+        return getPopulatedObject(fieldClass, fieldClass.getComponentType(), fieldValue, null);
     }
 
     /**

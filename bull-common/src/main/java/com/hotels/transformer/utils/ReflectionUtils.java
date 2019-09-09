@@ -421,16 +421,26 @@ public final class ReflectionUtils {
     public Class<?> getGenericFieldType(final Field field) {
         final String cacheKey = "GenericFieldType-" + field.getDeclaringClass().getName() + '-' + field.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
-            Class<?> res = null;
-            if (ParameterizedType.class.isAssignableFrom(field.getGenericType().getClass())) {
-                final Type[] fieldArgTypes = ((ParameterizedType) field.getGenericType()).getActualTypeArguments();
-                if (fieldArgTypes.length != 0) {
-                    res = (Class<?>) fieldArgTypes[0];
-                }
-            }
+            Class<?> res = getGenericFieldType(field.getGenericType());
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
+    }
+
+    /**
+     * Gets the generic infer type of an object.
+     * @param objectType the element object type containing the generic
+     * @return the generic type class
+     */
+    public Class<?> getGenericFieldType(final Type objectType) {
+        Class<?> res = null;
+        if (ParameterizedType.class.isAssignableFrom(objectType.getClass())) {
+            final Type[] fieldArgTypes = ((ParameterizedType) objectType).getActualTypeArguments();
+            if (fieldArgTypes.length != 0) {
+                res = (Class<?>) fieldArgTypes[0];
+            }
+        }
+        return res;
     }
 
     /**
@@ -444,54 +454,99 @@ public final class ReflectionUtils {
         final Class<?> fieldClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);
         final String cacheKey = "MapGenericFieldType-" + fieldClass.getName() + '-' + fieldName;
         return CACHE_MANAGER.getFromCache(cacheKey, MapType.class).orElseGet(() -> {
-            if (!Map.class.isAssignableFrom(fieldClass)) {
+            MapType mapType;
+            try {
+                mapType = getMapGenericType(fieldType, fieldClass);
+                CACHE_MANAGER.cacheObject(cacheKey, mapType);
+            } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException("Type for object: " + fieldName + " is invalid. "
-                                + "It cannot be assigned from: " + Map.class.getName() + ".");
+                        + "It cannot be assigned from: " + Map.class.getName() + ".");
             }
-            final ParameterizedType genericType = (ParameterizedType) fieldType;
-            final MapElemType keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);
-            final MapElemType elemType = getMapElemType(genericType.getActualTypeArguments()[1], declaringClass, fieldName);
-            final MapType mapType = new MapType(keyType, elemType);
-            CACHE_MANAGER.cacheObject(cacheKey, mapType);
             return mapType;
         });
     }
+
+    /**
+     * Gets the generic infer type of a map object.
+     * @param fieldType the field containing the generic
+     * @param fieldClass the field class
+     * @return the generic type class
+     */
+    public MapType getMapGenericType(final Type fieldType, final Class<?> fieldClass) {
+        if (!Map.class.isAssignableFrom(fieldClass)) {
+            throw new IllegalArgumentException("Type: " + fieldClass.getName() + " cannot be assigned from: " + Map.class.getName() + ".");
+        }
+        final ParameterizedType genericType = (ParameterizedType) fieldType;
+        final MapElemType keyType = getMapElemType(genericType.getActualTypeArguments()[0]);
+        final MapElemType elemType = getMapElemType(genericType.getActualTypeArguments()[1]);
+        return new MapType(keyType, elemType);
+    }
+
+//    /**
+//     * Retrieves the generic class of the objects contained in the map.
+//     * It could be {@link ItemType} in case the object is primitive or is a collection
+//     * It could be {@link MapType} in case the object is a {@link Map}
+//     * @param fieldType the field containing the generic
+//     * @param declaringClass the class containing the field
+//     * @param fieldName the field name
+//     * @return the generic class of the objects contained in the map.
+//     */
+//    private MapElemType getMapElemType(final Type fieldType, final String declaringClass, final String fieldName) {
+//        final String cacheKey = "MapElemType-" + declaringClass + "-" + fieldType.getTypeName() + '-' + fieldName;
+//        return CACHE_MANAGER.getFromCache(cacheKey, MapElemType.class).orElseGet(() -> {
+//            final Class<?> argumentTypeClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);
+//            final MapElemType res;
+//            if (Map.class.isAssignableFrom(argumentTypeClass)) {
+//                res = getMapGenericType(fieldType, declaringClass, fieldName);
+//            } else {
+//                res = buildItemType(fieldType, declaringClass, fieldName);
+//            }
+//            CACHE_MANAGER.cacheObject(cacheKey, res);
+//            return res;
+//        });
+//    }
 
     /**
      * Retrieves the generic class of the objects contained in the map.
      * It could be {@link ItemType} in case the object is primitive or is a collection
      * It could be {@link MapType} in case the object is a {@link Map}
      * @param fieldType the field containing the generic
-     * @param declaringClass the class containing the field
-     * @param fieldName the field name
      * @return the generic class of the objects contained in the map.
      */
-    private MapElemType getMapElemType(final Type fieldType, final String declaringClass, final String fieldName) {
-        final String cacheKey = "MapElemType-" + declaringClass + "-" + fieldType.getTypeName() + '-' + fieldName;
-        return CACHE_MANAGER.getFromCache(cacheKey, MapElemType.class).orElseGet(() -> {
-            final Class<?> argumentTypeClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);
-            final MapElemType res;
-            if (Map.class.isAssignableFrom(argumentTypeClass)) {
-                res = getMapGenericType(fieldType, declaringClass, fieldName);
-            } else {
-                res = buildItemType(fieldType, declaringClass, fieldName);
-            }
-            CACHE_MANAGER.cacheObject(cacheKey, res);
-            return res;
-        });
+    private MapElemType getMapElemType(final Type fieldType) {
+        final Class<?> argumentTypeClass = getArgumentTypeClass(fieldType, false);
+        final MapElemType res;
+        if (Map.class.isAssignableFrom(argumentTypeClass)) {
+            res = getMapGenericType(fieldType, argumentTypeClass);
+        } else {
+            res = buildItemType(fieldType);
+        }
+        return res;
     }
+
+//    /**
+//     * Builds the {@link ItemType} object from a given object.
+//     * @param argument the object from which the class has to be retrieved
+//     * @param declaringClass the class containing the field of which the argument belongs to
+//     * @param fieldName the field name of which the argument belongs to
+//     * @return the {@link ItemType} object
+//     */
+//    private ItemType buildItemType(final Object argument, final String declaringClass, final String fieldName) {
+//        return ItemType.builder()
+//                .objectClass(getArgumentTypeClass(argument, declaringClass, fieldName, false))
+//                .genericClass(getArgumentTypeClass(argument, declaringClass, fieldName, true))
+//                .build();
+//    }
 
     /**
      * Builds the {@link ItemType} object from a given object.
      * @param argument the object from which the class has to be retrieved
-     * @param declaringClass the class containing the field of which the argument belongs to
-     * @param fieldName the field name of which the argument belongs to
      * @return the {@link ItemType} object
      */
-    private ItemType buildItemType(final Object argument, final String declaringClass, final String fieldName) {
+    private ItemType buildItemType(final Object argument) {
         return ItemType.builder()
-                .objectClass(getArgumentTypeClass(argument, declaringClass, fieldName, false))
-                .genericClass(getArgumentTypeClass(argument, declaringClass, fieldName, true))
+                .objectClass(getArgumentTypeClass(argument, false))
+                .genericClass(getArgumentTypeClass(argument, true))
                 .build();
     }
 
@@ -511,17 +566,30 @@ public final class ReflectionUtils {
         return CACHE_MANAGER.getFromCache(cacheKey, Class.class)
                 .map(atc -> atc == EmptyValue.class ? null : atc)
                 .orElseGet(() -> {
-                    Class<?> res = null;
-                    if (argumentIsTypeClass) {
-                        res = getNestedGenericClass ? null : (Class<?>) argument;
-                    } else if (ParameterizedType.class.isAssignableFrom(argument.getClass())) {
-                        res = getNestedGenericClass
-                                ? getArgumentTypeClass(((ParameterizedType) argument).getActualTypeArguments()[0], declaringClass, fieldName, false)
-                                : (Class<?>) ((ParameterizedType) argument).getRawType();
-                    }
+                    Class<?> res = getArgumentTypeClass(argument, getNestedGenericClass);
                     CACHE_MANAGER.cacheObject(cacheKey, res, EmptyValue.class);
                     return res;
                 });
+    }
+
+    /**
+     * Gets the class of a given object.
+     * @param argument the object from which the class has to be retrieved
+     * @param getNestedGenericClass if true it retrieves the class of the object generic (if any). i.e. {@code argument = List<String>;}
+     *                              returns {@code String}, if false returns {@code List}
+     * @return the given argument class type
+     */
+    public Class<?> getArgumentTypeClass(final Object argument, final boolean getNestedGenericClass) {
+        final boolean argumentIsTypeClass = argument instanceof Class;
+        Class<?> res = null;
+        if (argumentIsTypeClass) {
+            res = getNestedGenericClass ? null : (Class<?>) argument;
+        } else if (ParameterizedType.class.isAssignableFrom(argument.getClass())) {
+            res = getNestedGenericClass
+                    ? getArgumentTypeClass(((ParameterizedType) argument).getActualTypeArguments()[0], false)
+                    : (Class<?>) ((ParameterizedType) argument).getRawType();
+        }
+        return res;
     }
 
     /**
