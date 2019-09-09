@@ -18,6 +18,7 @@ package com.hotels.map.transformer;
 
 import java.util.Map;
 
+import com.hotels.beans.transformer.BeanTransformer;
 import com.hotels.transformer.Transformer;
 import com.hotels.transformer.model.FieldTransformer;
 
@@ -41,6 +42,20 @@ public interface MapTransformer extends Transformer<MapTransformer> {
 
     /**
      * Copies all properties from a map to a new one.
+     * @param sourceMap the source map
+     * @param targetMapClass the target map class
+     * @param beanTransformer the bean transformer to use for the map elements transformation
+     * @param <T> the key object type in the source map
+     * @param <K> the elem object type in the source map
+     * @param <R> the key object type in the target map
+     * @param <V> the elem object type in the target map
+     * @return a copy of the source object into the destination object
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    <T, K, R, V> Map<R, V> transform(Map<T, K> sourceMap, Class<? extends Map<R, V>> targetMapClass, BeanTransformer beanTransformer);
+
+    /**
+     * Copies all properties from a map to a new one.
      * @param sourceMap the source object
      * @param targetMap the destination object
      * @param <T> the key object type in the source map
@@ -50,6 +65,19 @@ public interface MapTransformer extends Transformer<MapTransformer> {
      * @throws IllegalArgumentException if any parameter is invalid
      */
     <T, K, R, V> void transform(Map<T, K> sourceMap, Map<R, V> targetMap);
+
+    /**
+     * Copies all properties from a map to a new one.
+     * @param sourceMap the source object
+     * @param targetMap the destination object
+     * @param beanTransformer the bean transformer to use for the map elements transformation
+     * @param <T> the key object type in the source map
+     * @param <K> the elem object type in the source map
+     * @param <R> the key object type in the target map
+     * @param <V> the elem object type in the target map
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    <T, K, R, V> void transform(Map<T, K> sourceMap, Map<R, V> targetMap, BeanTransformer beanTransformer);
 
     /**
      * Initializes the transformer functions to apply on a Map key. The transformer function returns directly the field value.
