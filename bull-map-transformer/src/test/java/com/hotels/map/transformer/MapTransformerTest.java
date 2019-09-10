@@ -16,7 +16,6 @@
 
 package com.hotels.map.transformer;
 
-import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
 import static org.junit.Assert.assertNotNull;
@@ -87,8 +86,8 @@ public class MapTransformerTest {
     @DataProvider
     private Object[][] dataMapTransformerObject() {
         return new Object[][] {
-//                {"Test that a simple Map is correctly transformed", SAMPLE_MAP},
-                {"Test that a Map containing a list is correctly transformed", COMPLEX_MAP},
+                {"Test that a simple Map is correctly transformed", SAMPLE_MAP},
+//                {"Test that a Map containing a list is correctly transformed", COMPLEX_MAP},
 //                {"Test that a Map containing a Map is correctly transformed", VERY_COMPLEX_MAP},
 //                {"Test that a Map containing a Map that has an object as key, is correctly transformed", EXTREME_COMPLEX_MAP}
         };

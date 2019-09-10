@@ -22,6 +22,8 @@
 
     <modules>
         <module>bull-common</module>
+        <module>bull-bean-transformer</module>
+        <module>bull-converter</module>
     </modules>
 
     <properties>
@@ -185,16 +187,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>bull-bean-transformer</module>
-                <module>bull-converter</module>
                 <module>bull-map-transformer</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>bean-transformer</id>
-            <modules>
-                <module>bull-bean-transformer</module>
-                <module>bull-converter</module>
             </modules>
         </profile>
         <profile>

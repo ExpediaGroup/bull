@@ -32,11 +32,11 @@ import lombok.Setter;
  *  3) Other configurations.
  */
 @Getter
-public class TransformerSettings {
+public class TransformerSettings<T> {
     /**
      * Contains the mapping between fields's name in the source object and the destination one.
      */
-    private final Map<String, String> fieldsNameMapping = new ConcurrentHashMap<>();
+    private final Map<T, T> fieldsNameMapping = new ConcurrentHashMap<>();
 
     /**
      * Contains the lambda functions to be applied on a given fields.
@@ -46,7 +46,7 @@ public class TransformerSettings {
      *      FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::negate);
      * }
      */
-    private final Map<String, FieldTransformer> fieldsTransformers = new ConcurrentHashMap<>();
+    private final Map<T, FieldTransformer> fieldsTransformers = new ConcurrentHashMap<>();
 
     /**
      * Contains the list of fields that don't need to be transformed.

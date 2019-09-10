@@ -24,7 +24,6 @@ import com.hotels.beans.transformer.BeanTransformer;
 
 /**
  * Populator for primitive types array.
- * TODO: parametrized guide: https://www.javacodegeeks.com/2013/12/advanced-java-generics-retreiving-generic-type-arguments.html
  */
 class ArrayPopulator extends Populator<Object> implements ICollectionPopulator<Object> {
 
