@@ -30,7 +30,7 @@ import lombok.Getter;
  *  1) The lambda function to apply on a Map key.
  */
 @Getter
-public class MapTransformerSettings extends TransformerSettings {
+public class MapTransformerSettings extends TransformerSettings<Object> {
     /**
      * Contains the lambda functions to be applied on a given map key.
      * This features allows to apply transformation on the destination object value.
@@ -39,5 +39,5 @@ public class MapTransformerSettings extends TransformerSettings {
      *      FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::negate);
      * }
      */
-    private final Map<String, FieldTransformer> keyFieldsTransformers = new ConcurrentHashMap<>();
+    private final Map<Object, FieldTransformer> keyFieldsTransformers = new ConcurrentHashMap<>();
 }

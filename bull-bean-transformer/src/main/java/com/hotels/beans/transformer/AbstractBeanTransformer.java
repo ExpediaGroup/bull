@@ -30,7 +30,7 @@ import com.hotels.transformer.validator.ValidatorImpl;
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
  * Contains all method implementation that will be common to any {@link BeanTransformer} implementation.
  */
-abstract class AbstractBeanTransformer extends AbstractTransformer<BeanTransformer, TransformerSettings> implements BeanTransformer {
+abstract class AbstractBeanTransformer extends AbstractTransformer<BeanTransformer, String, TransformerSettings<String>> implements BeanTransformer {
     /**
      * The cache key prefix for the Transformer Functions.
      */
@@ -50,7 +50,7 @@ abstract class AbstractBeanTransformer extends AbstractTransformer<BeanTransform
      * Default constructor.
      */
     AbstractBeanTransformer() {
-        super(TRANSFORMER_FUNCTION_CACHE_PREFIX, "beanTransformer", new TransformerSettings());
+        super(TRANSFORMER_FUNCTION_CACHE_PREFIX, "beanTransformer", new TransformerSettings<>());
     }
 
     /**

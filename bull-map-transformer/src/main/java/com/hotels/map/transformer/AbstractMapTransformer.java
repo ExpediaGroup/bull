@@ -1,12 +1,9 @@
 /**
  * Copyright (C) 2019 Expedia, Inc.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
  * http://www.apache.org/licenses/LICENSE-2.0
- *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,7 +24,7 @@ import com.hotels.transformer.model.FieldTransformer;
  * Utility methods for populating {@link java.util.Map} elements via reflection..
  * Contains all method implementation that will be common to any {@link MapTransformer} implementation.
  */
-abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer, MapTransformerSettings> implements MapTransformer {
+abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer, Object, MapTransformerSettings> implements MapTransformer {
     /**
      * The cache key prefix for the Transformer Functions.
      */
@@ -44,7 +41,6 @@ abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer
      * {@inheritDoc}
      */
     @Override
-//    public <T, K, R, V> Map<R, V> transform(final Map<T, K> sourceMap, final Class<? extends Map<R, V>> targetMapClass) {
     public <T, K> Map<T, K> transform(final Map<T, K> sourceMap) {
         return transform(sourceMap, new BeanUtils().getTransformer());
     }
@@ -61,8 +57,16 @@ abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer
      * {@inheritDoc}
      */
     @Override
+    public <T, K, R, V> Map<R, V> transform(final Map<T, K> sourceMap, final Class<R> targetKeyClass, final Class<V> targetElemClass) {
+        return transform(sourceMap, targetKeyClass, targetElemClass, new BeanUtils().getTransformer());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public MapTransformer withKeyTransformer(final FieldTransformer... keyFieldTransformer) {
-        final Map<String, FieldTransformer> keyFieldsTransformers = settings.getKeyFieldsTransformers();
+        final Map<Object, FieldTransformer> keyFieldsTransformers = settings.getKeyFieldsTransformers();
         for (FieldTransformer transformer : keyFieldTransformer) {
             keyFieldsTransformers.put(transformer.getDestFieldName(), transformer);
         }

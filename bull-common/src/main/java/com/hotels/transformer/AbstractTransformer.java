@@ -34,8 +34,9 @@ import lombok.Getter;
  * Abstract class containing all method implementation that will be common to any {@link Transformer}.
  * @param <T> the {@link Transformer} implementation.
  * @param <S> the {@link TransformerSettings} implementation.
+ * @param <P> the {@link FieldMapping} and {@link FieldTransformer} key class type.
  */
-public abstract class AbstractTransformer<T extends Transformer, S extends TransformerSettings> implements Transformer<T> {
+public abstract class AbstractTransformer<T extends Transformer, P, S extends TransformerSettings<P>> implements Transformer<T> {
     /**
      * Reflection utils instance {@link ReflectionUtils}.
      */
@@ -82,9 +83,9 @@ public abstract class AbstractTransformer<T extends Transformer, S extends Trans
     @Override
     @SuppressWarnings("unchecked")
     public final T withFieldMapping(final FieldMapping... fieldMapping) {
-        final Map<String, String> fieldsNameMapping = settings.getFieldsNameMapping();
+        final Map<P, P> fieldsNameMapping = settings.getFieldsNameMapping();
         for (FieldMapping mapping : fieldMapping) {
-            fieldsNameMapping.put(mapping.getDestFieldName(), mapping.getSourceFieldName());
+            fieldsNameMapping.put((P) mapping.getDestFieldName(), (P) mapping.getSourceFieldName());
         }
         return (T) this;
     }
@@ -95,9 +96,9 @@ public abstract class AbstractTransformer<T extends Transformer, S extends Trans
     @Override
     @SuppressWarnings("unchecked")
     public final T withFieldTransformer(final FieldTransformer... fieldTransformer) {
-        Map<String, FieldTransformer> fieldsTransformers = settings.getFieldsTransformers();
+        Map<P, FieldTransformer> fieldsTransformers = settings.getFieldsTransformers();
         for (FieldTransformer transformer : fieldTransformer) {
-            fieldsTransformers.put(transformer.getDestFieldName(), transformer);
+            fieldsTransformers.put((P) transformer.getDestFieldName(), transformer);
         }
         return (T) this;
     }
