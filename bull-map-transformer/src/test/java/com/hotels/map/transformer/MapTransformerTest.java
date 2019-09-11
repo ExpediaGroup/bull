@@ -87,9 +87,9 @@ public class MapTransformerTest {
     private Object[][] dataMapTransformerObject() {
         return new Object[][] {
                 {"Test that a simple Map is correctly transformed", SAMPLE_MAP},
-//                {"Test that a Map containing a list is correctly transformed", COMPLEX_MAP},
-//                {"Test that a Map containing a Map is correctly transformed", VERY_COMPLEX_MAP},
-//                {"Test that a Map containing a Map that has an object as key, is correctly transformed", EXTREME_COMPLEX_MAP}
+                {"Test that a Map containing a list is correctly transformed", COMPLEX_MAP},
+                {"Test that a Map containing a Map is correctly transformed", VERY_COMPLEX_MAP},
+                {"Test that a Map containing a Map that has an object as key, is correctly transformed", EXTREME_COMPLEX_MAP}
         };
     }
 
