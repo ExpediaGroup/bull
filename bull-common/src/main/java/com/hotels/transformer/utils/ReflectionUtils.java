@@ -482,30 +482,6 @@ public final class ReflectionUtils {
         return new MapType(keyType, elemType);
     }
 
-//    /**
-//     * Retrieves the generic class of the objects contained in the map.
-//     * It could be {@link ItemType} in case the object is primitive or is a collection
-//     * It could be {@link MapType} in case the object is a {@link Map}
-//     * @param fieldType the field containing the generic
-//     * @param declaringClass the class containing the field
-//     * @param fieldName the field name
-//     * @return the generic class of the objects contained in the map.
-//     */
-//    private MapElemType getMapElemType(final Type fieldType, final String declaringClass, final String fieldName) {
-//        final String cacheKey = "MapElemType-" + declaringClass + "-" + fieldType.getTypeName() + '-' + fieldName;
-//        return CACHE_MANAGER.getFromCache(cacheKey, MapElemType.class).orElseGet(() -> {
-//            final Class<?> argumentTypeClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);
-//            final MapElemType res;
-//            if (Map.class.isAssignableFrom(argumentTypeClass)) {
-//                res = getMapGenericType(fieldType, declaringClass, fieldName);
-//            } else {
-//                res = buildItemType(fieldType, declaringClass, fieldName);
-//            }
-//            CACHE_MANAGER.cacheObject(cacheKey, res);
-//            return res;
-//        });
-//    }
-
     /**
      * Retrieves the generic class of the objects contained in the map.
      * It could be {@link ItemType} in case the object is primitive or is a collection
@@ -523,20 +499,6 @@ public final class ReflectionUtils {
         }
         return res;
     }
-
-//    /**
-//     * Builds the {@link ItemType} object from a given object.
-//     * @param argument the object from which the class has to be retrieved
-//     * @param declaringClass the class containing the field of which the argument belongs to
-//     * @param fieldName the field name of which the argument belongs to
-//     * @return the {@link ItemType} object
-//     */
-//    private ItemType buildItemType(final Object argument, final String declaringClass, final String fieldName) {
-//        return ItemType.builder()
-//                .objectClass(getArgumentTypeClass(argument, declaringClass, fieldName, false))
-//                .genericClass(getArgumentTypeClass(argument, declaringClass, fieldName, true))
-//                .build();
-//    }
 
     /**
      * Builds the {@link ItemType} object from a given object.
