@@ -151,7 +151,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     public void testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected(final String testCaseDescription, final Object sourceObject, final String expectedName,
         final BigInteger expectedId, final int[] expectedPhoneNumbers) {
         //GIVEN
-        FieldMapping phoneNumbersMapping = new FieldMapping(PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME, PHONE_NUMBER_DEST_FIELD_NAME);
+        FieldMapping phoneNumbersMapping = new FieldMapping<>(PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME, PHONE_NUMBER_DEST_FIELD_NAME);
 
         //WHEN
         ImmutableFlatToFoo actual = underTest.withFieldMapping(phoneNumbersMapping).transform(sourceObject, ImmutableFlatToFoo.class);
@@ -227,7 +227,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @DataProvider(parallel = true)
     private Object[][] dataInvalidBeanExceptionTesting() throws CloneNotSupportedException {
-        FromFoo fromFooNullId = AbstractBeanTransformerTest.fromFoo.clone();
+        FromFoo fromFooNullId = AbstractTransformerTest.fromFoo.clone();
         fromFooNullId.setId(null);
         return new Object[][] {
                 {"Test that an exception is thrown if there the constructor args parameters have a different order for the mutable bean object.",

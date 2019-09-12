@@ -30,6 +30,7 @@ import lombok.Setter;
  *  1) The field name mapping
  *  2) The lambda function to apply on a field.
  *  3) Other configurations.
+ * @param <T> source element type
  */
 @Getter
 public class TransformerSettings<T> {

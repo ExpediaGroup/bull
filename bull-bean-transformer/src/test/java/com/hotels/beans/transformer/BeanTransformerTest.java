@@ -75,7 +75,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     @Test
     public void testRemoveFieldMappingWorksProperly() {
         //GIVEN
-        BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping(SOURCE_FIELD_NAME, DEST_FIELD_NAME));
+        BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping<>(SOURCE_FIELD_NAME, DEST_FIELD_NAME));
 
         //WHEN
         beanTransformer.removeFieldMapping(DEST_FIELD_NAME);
@@ -91,7 +91,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testRemoveFieldMappingRaisesExceptionIfItsCalledWithNullParam() {
         //GIVEN
-        BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping(SOURCE_FIELD_NAME, DEST_FIELD_NAME));
+        BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping<>(SOURCE_FIELD_NAME, DEST_FIELD_NAME));
 
         //WHEN
         beanTransformer.removeFieldMapping(null);
@@ -104,7 +104,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     public void testResetFieldsMappingWorksProperly() {
         //GIVEN
         BeanTransformer beanTransformer = underTest
-                .withFieldMapping(new FieldMapping(SOURCE_FIELD_NAME, DEST_FIELD_NAME), new FieldMapping(SOURCE_FIELD_NAME_2, DEST_FIELD_NAME));
+                .withFieldMapping(new FieldMapping<>(SOURCE_FIELD_NAME, DEST_FIELD_NAME), new FieldMapping<>(SOURCE_FIELD_NAME_2, DEST_FIELD_NAME));
 
         //WHEN
         beanTransformer.resetFieldsMapping();
