@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Test package.
+ * Map Transformer Test package.
  */
 
 package com.hotels.map;

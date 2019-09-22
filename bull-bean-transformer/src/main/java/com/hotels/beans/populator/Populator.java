@@ -65,14 +65,6 @@ public abstract class Populator<O> {
 
     /**
      * Populates the target object with the values into the source object.
-     * @param fieldClass the field class
-     * @param fieldValue the source object from which extract the values
-     * @return a populated list of elements
-     */
-    public abstract O getPopulatedObject(Class<?> fieldClass, O fieldValue);
-
-    /**
-     * Populates the target object with the values into the source object.
      * @param <K> the target object type
      * @param targetClass the destination object class
      * @param fieldName the field to be populated

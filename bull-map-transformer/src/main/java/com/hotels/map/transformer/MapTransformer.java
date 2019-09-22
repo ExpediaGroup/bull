@@ -49,60 +49,6 @@ public interface MapTransformer extends Transformer<MapTransformer> {
     <T, K> Map<T, K> transform(Map<T, K> sourceMap, BeanTransformer beanTransformer);
 
     /**
-     * Transforms the given Map into a new one. All the Map key, element are transformed into the given class types
-     * @param sourceMap the source map
-     * @param targetKeyClass the Map key class type in the target Map
-     * @param targetElemClass the Map element class type in the target Map
-     * @param <T> the key object type in the source map
-     * @param <K> the elem object type in the source map
-     * @param <R> the key object type in the target map
-     * @param <V> the elem object type in the target map
-     * @return a copy of the source object into the destination object
-     * @throws IllegalArgumentException if any parameter is invalid
-     */
-    <T, K, R, V> Map<R, V> transform(Map<T, K> sourceMap, Class<R> targetKeyClass, Class<V> targetElemClass);
-
-    /**
-     * Transforms the given Map into a new one. All the Map key, element are transformed into the given class types
-     * @param sourceMap the source map
-     * @param targetKeyClass the Map key class type in the target Map
-     * @param targetElemClass the Map element class type in the target Map
-     * @param beanTransformer the bean transformer to use for the map elements transformation
-     * @param <T> the key object type in the source map
-     * @param <K> the elem object type in the source map
-     * @param <R> the key object type in the target map
-     * @param <V> the elem object type in the target map
-     * @return a copy of the source object into the destination object
-     * @throws IllegalArgumentException if any parameter is invalid
-     */
-    <T, K, R, V> Map<R, V> transform(Map<T, K> sourceMap, Class<R> targetKeyClass, Class<V> targetElemClass, BeanTransformer beanTransformer);
-
-    /**
-     * Copies all properties from a map to the given one.
-     * @param sourceMap the source object
-     * @param targetMap the destination object
-     * @param <T> the key object type in the source map
-     * @param <K> the elem object type in the source map
-     * @param <R> the key object type in the target map
-     * @param <V> the elem object type in the target map
-     * @throws IllegalArgumentException if any parameter is invalid
-     */
-    <T, K, R, V> void transform(Map<T, K> sourceMap, Map<R, V> targetMap);
-
-    /**
-     * Copies all properties from a map to the given one.
-     * @param sourceMap the source object
-     * @param targetMap the destination object
-     * @param beanTransformer the bean transformer to use for the map elements transformation
-     * @param <T> the key object type in the source map
-     * @param <K> the elem object type in the source map
-     * @param <R> the key object type in the target map
-     * @param <V> the elem object type in the target map
-     * @throws IllegalArgumentException if any parameter is invalid
-     */
-    <T, K, R, V> void transform(Map<T, K> sourceMap, Map<R, V> targetMap, BeanTransformer beanTransformer);
-
-    /**
      * Initializes the transformer functions to apply on a Map key. The transformer function returns directly the field value.
      * @param keyFieldTransformer the fields transformer function
      * @return the {@link Transformer} instance

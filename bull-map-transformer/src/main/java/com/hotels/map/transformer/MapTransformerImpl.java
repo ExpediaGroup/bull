@@ -1,9 +1,12 @@
 /**
  * Copyright (C) 2019 Expedia, Inc.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,14 +19,13 @@ package com.hotels.map.transformer;
 import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toMap;
 
-import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 import static com.hotels.transformer.validator.Validator.notNull;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.hotels.beans.transformer.BeanTransformer;
 import com.hotels.transformer.model.FieldTransformer;
-import com.hotels.transformer.utils.ReflectionUtils;
 
 /**
  * Utility methods for populating {@link java.util.Map} elements via reflection.
@@ -40,7 +42,7 @@ public class MapTransformerImpl extends AbstractMapTransformer {
         Map<?, FieldTransformer> keyFieldsTransformers = settings.getKeyFieldsTransformers();
         Map<T, K> res;
         if (settings.getFieldsNameMapping().isEmpty() && keyFieldsTransformers.isEmpty()) {
-            res = Map.copyOf(sourceMap);
+            res = new HashMap<>(sourceMap);
         } else {
             res = (Map<T, K>) sourceMap.entrySet().stream()
                     .collect(toMap(
@@ -66,46 +68,11 @@ public class MapTransformerImpl extends AbstractMapTransformer {
     }
 
     /**
-     * {@inheritDoc}
+     * Applies the {@link FieldTransformer} function (if any) to the given Map element value.
+     * @param fieldTransformer the {@link FieldTransformer} function to apply
+     * @param value the object on which the function has to be applied
+     * @return the transformed value
      */
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T, K, R, V> Map<R, V> transform(final Map<T, K> sourceMap, final Class<R> targetKeyClass, final Class<V> targetElemClass, final BeanTransformer beanTransformer) {
-        notNull(sourceMap, "The source map to copy cannot be null!");
-        notNull(targetKeyClass, "The target key class cannot be null!");
-        notNull(targetElemClass, "The target element class cannot be null!");
-        notNull(beanTransformer, "The bean transformer to use cannot be null!");
-        return (Map<R, V>) sourceMap.entrySet().stream()
-                .collect(toMap(
-                    e -> getFieldValue(e.getKey(), targetKeyClass, settings.getKeyFieldsTransformers().get(e.getKey()), beanTransformer),
-                    e -> getFieldValue(getMapValue(e, sourceMap), targetElemClass, settings.getFieldsTransformers().get(e.getKey()), beanTransformer)
-                ));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <T, K, R, V> void transform(final Map<T, K> sourceMap, final Map<R, V> targetMap, final BeanTransformer beanTransformer) {
-        notNull(sourceMap, "The source map to copy cannot be null!");
-        notNull(targetMap, "The target map cannot be null!");
-        notNull(beanTransformer, "The bean transformer to use cannot be null!");
-    }
-
-    private Object getFieldValue(final Object value, final Class<?> targetClass, final FieldTransformer fieldTransformer, final BeanTransformer beanTransformer) {
-        Object newValue;
-        Class<?> fieldType = value.getClass();
-        if (classUtils.isPrimitiveOrSpecialType(fieldType)) {
-            newValue = value;
-        } else {
-            newValue = getPopulator(fieldType, fieldType, beanTransformer)
-                    .map(populator -> populator.getPopulatedObject(fieldType, value))
-                    .orElseGet(() -> beanTransformer.transform(value, targetClass));
-        }
-        newValue = getTransformedObject(fieldTransformer, newValue);
-        return newValue;
-    }
-
     private Object getTransformedObject(final FieldTransformer<Object, Object> fieldTransformer, final Object value) {
         Object newValue = value;
         if (nonNull(fieldTransformer)) {

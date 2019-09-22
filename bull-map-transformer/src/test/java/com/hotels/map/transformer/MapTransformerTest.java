@@ -16,11 +16,14 @@
 
 package com.hotels.map.transformer;
 
+import static org.hamcrest.Matchers.both;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.isIn;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
-
-import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,18 +34,14 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.BeanUtils;
-import com.hotels.beans.sample.FromFoo;
-import com.hotels.beans.sample.FromFooSimple;
-import com.hotels.beans.sample.immutable.ImmutableToFoo;
-import com.hotels.beans.sample.mutable.MutableToFooSimple;
 import com.hotels.beans.transformer.AbstractTransformerTest;
 import com.hotels.beans.transformer.BeanTransformer;
+import com.hotels.transformer.model.FieldMapping;
 
 /**
  * Unit test for {@link MapTransformer}.
  */
 public class MapTransformerTest extends AbstractTransformerTest {
-    private static final Map<FromFooSimple, FromFoo> COMPLEX_OBJECT_MAP = new HashMap<>();
     private static final BeanTransformer BEAN_TRANSFORMER = new BeanUtils().getTransformer();
 
     /**
@@ -67,7 +66,8 @@ public class MapTransformerTest extends AbstractTransformerTest {
      * @param beanTransformer the bean transformer
      */
     @Test(expectedExceptions = IllegalArgumentException.class, dataProvider = "dataTransformMethodWithTwoArgument")
-    public <T, K> void testTransformRaisesExceptionIfItsCalledWithNullParameter(final String testCaseDescription, final Map<T, K> sourceMap, final BeanTransformer beanTransformer) {
+    public <T, K> void testTransformRaisesExceptionIfItsCalledWithNullParameter(final String testCaseDescription,
+        final Map<T, K> sourceMap, final BeanTransformer beanTransformer) {
         //GIVEN
 
         //WHEN
@@ -87,97 +87,6 @@ public class MapTransformerTest extends AbstractTransformerTest {
     }
 
     /**
-     * Test that the method {@code transform} raises an {@link IllegalArgumentException} with an invalid parameter.
-     * @param testCaseDescription the test case description
-     * @param sourceMap the map to transform
-     * @param targetMap the target map
-     * @param beanTransformer the bean transformer
-     * @param <T> the key type
-     * @param <K> the element type
-     */
-    @Test(expectedExceptions = IllegalArgumentException.class, dataProvider = "dataTransformMethodWithThreeArgument")
-    public <T, K> void testTransformRaisesExceptionIfItsCalledWithAnyNullParameter(final String testCaseDescription, final Map<T, K> sourceMap,
-                                                                                   final Map<T, K> targetMap, final BeanTransformer beanTransformer) {
-        //GIVEN
-
-        //WHEN
-        underTest.transform(sourceMap, targetMap, beanTransformer);
-    }
-
-    /**
-     * Created the parameter to test that the method {@code transform} raises an {@link IllegalArgumentException} with an invalid parameter.
-     * @return parameters to be used for testing.
-     */
-    @DataProvider
-    private Object[][] dataTransformMethodWithThreeArgument() {
-        return new Object[][] {
-                {"Test that an IllegalArgumentException is thrown if the sourceMap is null", null, SAMPLE_MAP, BEAN_TRANSFORMER},
-                {"Test that an IllegalArgumentException is thrown if the targetMap is null", SAMPLE_MAP, null, BEAN_TRANSFORMER},
-                {"Test that an IllegalArgumentException is thrown if the bean transformer is null", SAMPLE_MAP, SAMPLE_MAP, null}
-        };
-    }
-
-    /**
-     * Test that the method {@code transform} raises an {@link IllegalArgumentException} if any parameter is null.
-     * @param testCaseDescription the test case description
-     * @param sourceMap the map to transform
-     * @param targetKeyClass the Map key class type in the target Map
-     * @param targetElemClass the Map element class type in the target Map
-     * @param beanTransformer the bean transformer
-     */
-    @Test(expectedExceptions = IllegalArgumentException.class, dataProvider = "dataTransformMethodWithFourArgument")
-    public <T, K> void testTransformRaisesExceptionIfItsCalledWithNullParameter(final String testCaseDescription, final Map<T, K> sourceMap,
-        final Class<T> targetKeyClass, final Class<K> targetElemClass, final BeanTransformer beanTransformer) {
-        //GIVEN
-
-        //WHEN
-        underTest.transform(sourceMap, targetKeyClass, targetElemClass, beanTransformer);
-    }
-
-    /**
-     * Created the parameter to test that the method {@code transform} raises an {@link IllegalArgumentException} with an invalid parameter.
-     * @return parameters to be used for testing.
-     */
-    @DataProvider
-    private Object[][] dataTransformMethodWithFourArgument() {
-        return new Object[][] {
-                {"Test that an IllegalArgumentException is thrown if the sourceMap is null", null, String.class, String.class, BEAN_TRANSFORMER},
-                {"Test that an IllegalArgumentException is thrown if the targetKeyClass is null", SAMPLE_MAP, null, String.class, BEAN_TRANSFORMER},
-                {"Test that an IllegalArgumentException is thrown if the targetElemClass is null", SAMPLE_MAP, String.class, null, BEAN_TRANSFORMER},
-                {"Test that an IllegalArgumentException is thrown if the bean transformer is null", SAMPLE_MAP, String.class, String.class, null}
-        };
-    }
-
-    /**
-     * Test that the method {@code transform} raises an {@link IllegalArgumentException} with an invalid parameter.
-     * @param testCaseDescription the test case description
-     * @param sourceMap the map to transform
-     * @param sourceMap the map to transform
-     * @param <T> the key type
-     * @param <K> the element type
-     */
-    @Test(expectedExceptions = IllegalArgumentException.class, dataProvider = "dataTransformWithTargetClassesAndInvalidParameter")
-    public <T, K> void testTransformRaisesExceptionIfItsCalledWithAnyNullParameter(final String testCaseDescription, final Map<T, K> sourceMap, final Class<T> targetKeyClass, final Class<K> targetElemClass) {
-        //GIVEN
-
-        //WHEN
-        underTest.transform(sourceMap, targetKeyClass, targetElemClass);
-    }
-
-    /**
-     * Created the parameter to test that the method {@code transform} raises an {@link IllegalArgumentException} with an invalid parameter.
-     * @return parameters to be used for testing.
-     */
-    @DataProvider
-    private Object[][] dataTransformWithTargetClassesAndInvalidParameter() {
-        return new Object[][] {
-                {"Test that an IllegalArgumentException is thrown if the sourceMap is null", null, String.class, String.class},
-                {"Test that an IllegalArgumentException is thrown if the targetKeyClass is null", SAMPLE_MAP, null, String.class},
-                {"Test that an IllegalArgumentException is thrown if the targetElemClass is null", SAMPLE_MAP, String.class, null},
-        };
-    }
-
-    /**
      * Test that the given map is correctly transformed.
      * @param testCaseDescription the test case description
      * @param sourceMap the map to transform
@@ -193,6 +102,8 @@ public class MapTransformerTest extends AbstractTransformerTest {
 
         //THEN
         assertNotNull(actual);
+        assertEquals(actual.size(), sourceMap.size());
+        assertThat(actual.entrySet(), both(everyItem(isIn(sourceMap.entrySet()))).and(containsInAnyOrder(sourceMap.entrySet().toArray())));
     }
 
     /**
@@ -210,22 +121,24 @@ public class MapTransformerTest extends AbstractTransformerTest {
     }
 
     /**
-     * Test that the given map is correctly transformed.
+     * Test that the given map is correctly transformed if key mappings are defined.
      */
     @Test
-    public void testTransformWorksProperly() {
+    public void testTransformWorksProperlyWithKeyMapping() {
         //GIVEN
-        COMPLEX_OBJECT_MAP.put(fromFooSimple, fromFoo);
+        Map<String, Integer> sourceMap = new HashMap<>();
+        sourceMap.put("key1", 1);
+        sourceMap.put("key2", 2);
+        underTest.withFieldMapping(new FieldMapping<>("key1", "key2"));
 
         //WHEN
-        Map<MutableToFooSimple, ImmutableToFoo> actual = underTest.transform(COMPLEX_OBJECT_MAP, MutableToFooSimple.class, ImmutableToFoo.class);
+        Map<String, Integer> actual = underTest.transform(sourceMap);
 
         //THEN
         assertNotNull(actual);
-        for (Map.Entry<MutableToFooSimple, ImmutableToFoo> entry : actual.entrySet()) {
-            assertThat(entry.getKey(), sameBeanAs(fromFooSimple));
-            assertThat(entry.getValue(), sameBeanAs(fromFoo));
-
-        }
+        assertEquals(actual.size(), sourceMap.size());
+        assertEquals(actual.get("key1"), sourceMap.get("key1"));
+        assertEquals(actual.get("key2"), sourceMap.get("key1"));
+        underTest.resetFieldsMapping();
     }
 }

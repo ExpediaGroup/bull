@@ -40,15 +40,7 @@ class ArrayPopulator extends Populator<Object> implements ICollectionPopulator<O
      */
     @Override
     public Object getPopulatedObject(final Field field, final Object fieldValue) {
-        return getPopulatedObject(field.getType(), fieldValue);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object getPopulatedObject(final Class<?> fieldClass, final Object fieldValue) {
-        return getPopulatedObject(fieldClass, fieldClass.getComponentType(), fieldValue, null);
+        return getPopulatedObject(field.getType(), reflectionUtils.getArrayType(field), fieldValue, null);
     }
 
     /**

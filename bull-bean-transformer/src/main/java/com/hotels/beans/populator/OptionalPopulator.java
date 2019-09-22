@@ -52,13 +52,4 @@ class OptionalPopulator extends Populator<Object> {
         }
         return res;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object getPopulatedObject(final Class<?> fieldClass, final Object fieldValue) {
-        return null; // no implementation needed.
-    }
-
 }
