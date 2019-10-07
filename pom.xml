@@ -30,7 +30,7 @@
         <jdk.version>11</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
-        <spring-boot.version>2.1.8.RELEASE</spring-boot.version>
+        <spring-boot.version>2.1.9.RELEASE</spring-boot.version>
         <lombok.version>1.18.10</lombok.version>
         <apache.commons-lang3.version>3.9</apache.commons-lang3.version>
         <shazamcrest.version>0.11</shazamcrest.version>
