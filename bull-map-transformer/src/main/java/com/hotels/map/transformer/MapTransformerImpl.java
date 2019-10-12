@@ -19,6 +19,7 @@ package com.hotels.map.transformer;
 import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toMap;
 
+import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 import static com.hotels.transformer.validator.Validator.notNull;
 
 import java.util.HashMap;
@@ -54,6 +55,22 @@ public class MapTransformerImpl extends AbstractMapTransformer {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T, K, R, V> Map<R, V> transform(final Map<T, K> sourceMap, final BeanTransformer beanTransformer, final Class<R> targetKeyType, final Class<V> targetElemType) {
+        notNull(sourceMap, "The map to copy cannot be null!");
+        notNull(beanTransformer, "The bean transformer to use cannot be null!");
+        Map<?, FieldTransformer> keyFieldsTransformers = settings.getKeyFieldsTransformers();
+        return (Map<R, V>) sourceMap.entrySet().stream()
+                    .collect(toMap(
+                            e -> getTransformedObject(keyFieldsTransformers.get(e.getKey()), e.getKey(), beanTransformer, targetKeyType),
+                            e -> getTransformedObject(settings.getFieldsTransformers().get(e.getKey()), getMapValue(e, sourceMap), beanTransformer, targetElemType)
+                    ));
+    }
+
+    /**
      * Checks if a mapping has been defined between one key and the other.
      * In case a mapping exists, it returns the Map value for the new key.
      * @param entry the Map entry from which extract the key and the value.
@@ -71,13 +88,32 @@ public class MapTransformerImpl extends AbstractMapTransformer {
      * Applies the {@link FieldTransformer} function (if any) to the given Map element value.
      * @param fieldTransformer the {@link FieldTransformer} function to apply
      * @param value the object on which the function has to be applied
+     * @param beanTransformer the bean transformer to use for the map elements transformation
+     * @param targetClass the destination object class
+     * @param <K> the return class type
+     * @return the transformed value
+     */
+    @SuppressWarnings("unchecked")
+    private <K> K getTransformedObject(final FieldTransformer<Object, Object> fieldTransformer, final Object value,
+        final BeanTransformer beanTransformer, final Class<K> targetClass) {
+        K newValue;
+        if (Map.class.isAssignableFrom(value.getClass())) {
+            newValue = (K) transform((Map) value, beanTransformer);
+        } else {
+            newValue = (K) getPopulator(targetClass, value.getClass(), beanTransformer)
+                .map(populator -> populator.transform(value, targetClass))
+                .orElseGet(() -> beanTransformer.transform(value, targetClass));
+        }
+        return (K) getTransformedObject(fieldTransformer, newValue);
+    }
+
+    /**
+     * Applies the {@link FieldTransformer} function (if any) to the given Map element value.
+     * @param fieldTransformer the {@link FieldTransformer} function to apply
+     * @param value the object on which the function has to be applied
      * @return the transformed value
      */
     private Object getTransformedObject(final FieldTransformer<Object, Object> fieldTransformer, final Object value) {
-        Object newValue = value;
-        if (nonNull(fieldTransformer)) {
-            newValue = fieldTransformer.getTransformedObject(value);
-        }
-        return newValue;
+        return nonNull(fieldTransformer) ? fieldTransformer.getTransformedObject(value) : value;
     }
 }

@@ -52,6 +52,14 @@ abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer
      * {@inheritDoc}
      */
     @Override
+    public <T, K, R, V> Map<R, V> transform(final Map<T, K> sourceMap, final Class<R> targetKeyType, final Class<V> targetElemType) {
+        return transform(sourceMap, new BeanUtils().getTransformer(), targetKeyType, targetElemType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public MapTransformer withKeyTransformer(final FieldTransformer... keyFieldTransformer) {
         final Map<Object, FieldTransformer> keyFieldsTransformers = settings.getKeyFieldsTransformers();
         for (FieldTransformer transformer : keyFieldTransformer) {
