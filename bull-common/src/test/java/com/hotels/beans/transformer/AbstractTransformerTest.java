@@ -68,7 +68,7 @@ public abstract class AbstractTransformerTest {
     protected static final Map<String, List<String>> COMPLEX_MAP = new HashMap<>();
     protected static final Map<String, Map<String, String>> VERY_COMPLEX_MAP = new HashMap<>();
     protected static final Map<FromFooSimple, Map<String, String>> EXTREME_COMPLEX_MAP = new HashMap<>();
-    private static final String ITEM_1 = "donald";
+    protected static final String ITEM_1 = "donald";
     private static final String ITEM_2 = "duck";
     private static final String SURNAME = "surname";
     private static final boolean ACTIVE = true;
