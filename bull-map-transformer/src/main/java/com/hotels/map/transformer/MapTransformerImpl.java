@@ -38,8 +38,7 @@ public class MapTransformerImpl extends AbstractMapTransformer {
     @Override
     @SuppressWarnings("unchecked")
     public <T, K> Map<T, K> transform(final Map<T, K> sourceMap, final BeanTransformer beanTransformer) {
-        notNull(sourceMap, "The map to copy cannot be null!");
-        notNull(beanTransformer, "The bean transformer to use cannot be null!");
+        validateParameters(sourceMap, beanTransformer);
         Map<?, FieldTransformer> keyFieldsTransformers = settings.getKeyFieldsTransformers();
         Map<T, K> res;
         if (settings.getFieldsNameMapping().isEmpty() && keyFieldsTransformers.isEmpty()) {
@@ -60,14 +59,25 @@ public class MapTransformerImpl extends AbstractMapTransformer {
     @Override
     @SuppressWarnings("unchecked")
     public <T, K, R, V> Map<R, V> transform(final Map<T, K> sourceMap, final BeanTransformer beanTransformer, final Class<R> targetKeyType, final Class<V> targetElemType) {
-        notNull(sourceMap, "The map to copy cannot be null!");
-        notNull(beanTransformer, "The bean transformer to use cannot be null!");
+        validateParameters(sourceMap, beanTransformer);
         Map<?, FieldTransformer> keyFieldsTransformers = settings.getKeyFieldsTransformers();
         return (Map<R, V>) sourceMap.entrySet().stream()
                     .collect(toMap(
                             e -> getTransformedObject(keyFieldsTransformers.get(e.getKey()), e.getKey(), beanTransformer, targetKeyType),
                             e -> getTransformedObject(settings.getFieldsTransformers().get(e.getKey()), getMapValue(e, sourceMap), beanTransformer, targetElemType)
                     ));
+    }
+
+    /**
+     * Checks that the input parameter are valid.
+     * @param sourceMap the Map to transform
+     * @param beanTransformer the {@link BeanTransformer} instance
+     * @param <T> the key object type in the source map
+     * @param <K> the elem object type in the source map
+     */
+    private <T, K> void validateParameters(final Map<T, K> sourceMap, final BeanTransformer beanTransformer) {
+        notNull(sourceMap, "The map to copy cannot be null!");
+        notNull(beanTransformer, "The bean transformer to use cannot be null!");
     }
 
     /**
