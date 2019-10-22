@@ -63,6 +63,7 @@ import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
 import com.hotels.transformer.annotation.ConstructorArg;
 import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.error.InvalidBeanException;
+import com.hotels.transformer.error.InvalidFunctionException;
 import com.hotels.transformer.model.FieldMapping;
 import com.hotels.transformer.model.FieldTransformer;
 import com.hotels.transformer.utils.ReflectionUtils;
@@ -79,9 +80,13 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     private static final String GROSS_PRICE_FIELD_NAME = "price.grossPrice";
     private static final boolean ACTIVE = true;
 
+    /**
+     * After method actions.
+     */
     @AfterMethod
     public void afterMethod() {
         underTest.setValidationEnabled(false);
+        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -286,9 +291,9 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
 
         //WHEN
         final BeanTransformer beanTransformer = underTest
-                .withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
-                .withFieldMapping(new FieldMapping(PRICE_FIELD_NAME, NET_PRICE_FIELD_NAME))
-                .withFieldMapping(new FieldMapping(PRICE_FIELD_NAME, GROSS_PRICE_FIELD_NAME))
+                .withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
+                .withFieldMapping(new FieldMapping<>(PRICE_FIELD_NAME, NET_PRICE_FIELD_NAME))
+                .withFieldMapping(new FieldMapping<>(PRICE_FIELD_NAME, GROSS_PRICE_FIELD_NAME))
                 .withFieldTransformer(new FieldTransformer<>(LOCALE_FIELD_NAME, Locale::forLanguageTag));
         ImmutableToFooAdvFields actual = (ImmutableToFooAdvFields) beanTransformer.transform(sourceObject, targetObjectClass);
 
@@ -492,6 +497,23 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //THEN
         assertTrue(actual.getWork());
         underTest.resetFieldsTransformer();
+    }
+
+    /**
+     * Test that an {@link InvalidFunctionException} is raised if the transformer function defined is not valid.
+     */
+    @Test(expectedExceptions = InvalidFunctionException.class)
+    public void testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid() {
+        //GIVEN
+        FromFooSimpleBooleanField fromFooSimpleNullFields = new FromFooSimpleBooleanField();
+        FieldTransformer<String, String> upperCase =
+                new FieldTransformer<>("work", String::toUpperCase);
+
+        //WHEN
+        ImmutableToFooSimpleBoolean actual = underTest
+                .withFieldTransformer(upperCase)
+                .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
+
     }
 
     /**

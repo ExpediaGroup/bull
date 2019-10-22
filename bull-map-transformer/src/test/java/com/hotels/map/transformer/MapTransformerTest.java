@@ -27,6 +27,7 @@ import static org.hamcrest.Matchers.isIn;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigInteger;
@@ -35,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.mockito.InjectMocks;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -44,7 +46,11 @@ import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.mutable.MutableToFooSimple;
 import com.hotels.beans.transformer.AbstractTransformerTest;
 import com.hotels.beans.transformer.BeanTransformer;
+import com.hotels.map.transformer.model.MapTransformerSettings;
+import com.hotels.transformer.error.InvalidFunctionException;
 import com.hotels.transformer.model.FieldMapping;
+import com.hotels.transformer.model.FieldTransformer;
+import com.hotels.transformer.model.TransformerSettings;
 
 /**
  * Unit test for {@link MapTransformer}.
@@ -67,6 +73,14 @@ public class MapTransformerTest extends AbstractTransformerTest {
     public void beforeClass() {
         initMocks(this);
         initObjects();
+    }
+
+    /**
+     * After method actions.
+     */
+    @AfterMethod
+    public void afterMethod() {
+        underTest.resetKeyTransformer();
     }
 
     /**
@@ -154,6 +168,40 @@ public class MapTransformerTest extends AbstractTransformerTest {
     }
 
     /**
+     * Test that the given map is correctly transformed if key transformers are defined.
+     */
+    @Test
+    public void testTransformWorksProperlyWithTransformer() {
+        //GIVEN
+        Map<String, BigInteger> sourceMap = new HashMap<>();
+        sourceMap.put(MAP_KEY_1, ZERO);
+        sourceMap.put(MAP_KEY_2, ONE);
+        underTest.withKeyTransformer(new FieldTransformer<String, String>(MAP_KEY_1, String::toUpperCase));
+
+        //WHEN
+        Map<String, BigInteger> actual = underTest.transform(sourceMap);
+
+        //THEN
+        assertNotNull(actual);
+        assertEquals(actual.size(), sourceMap.size());
+        assertTrue(actual.containsKey(MAP_KEY_1.toUpperCase()));
+    }
+
+    /**
+     * Test that an {@link InvalidFunctionException} is raised if the transformer function defined is not valid.
+     */
+    @Test(expectedExceptions = InvalidFunctionException.class)
+    public void testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid() {
+        //GIVEN
+        Map<String, BigInteger> sourceMap = new HashMap<>();
+        sourceMap.put(MAP_KEY_1, ZERO);
+        underTest.withKeyTransformer(new FieldTransformer<>(MAP_KEY_1, ONE::add));
+
+        //WHEN
+        underTest.transform(sourceMap);
+    }
+
+    /**
      * Test that the given map is correctly transformed and the elements are correctly transformed.
      */
     @Test
@@ -192,5 +240,23 @@ public class MapTransformerTest extends AbstractTransformerTest {
             assertEquals(MutableToFooSimple.class, entry.getKey().getClass());
             assertEquals(sampleList, entry.getValue());
         }
+    }
+
+    /**
+     * Test that is possible to remove all the key transformer defined.
+     */
+    @Test
+    public void testResetKeyTransformerWorksProperly() {
+        //GIVEN
+        underTest.withKeyTransformer(new FieldTransformer<String, String>(MAP_KEY_1, String::toUpperCase));
+
+        //WHEN
+        underTest.resetKeyTransformer();
+        MapTransformerSettings transformerSettings =
+                (MapTransformerSettings) REFLECTION_UTILS.getFieldValue(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
+
+        //THEN
+        assertTrue(transformerSettings.getKeyFieldsTransformers().isEmpty());
+        underTest.resetKeyTransformer();
     }
 }

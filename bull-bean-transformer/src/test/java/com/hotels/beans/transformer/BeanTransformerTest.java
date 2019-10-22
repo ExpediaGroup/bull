@@ -59,10 +59,8 @@ import com.hotels.transformer.utils.ReflectionUtils;
 public class BeanTransformerTest extends AbstractBeanTransformerTest {
     private static final String SOURCE_FIELD_NAME = "sourceFieldName";
     private static final String SOURCE_FIELD_NAME_2 = "sourceFieldName2";
-    private static final String TRANSFORMER_SETTINGS_FIELD_NAME = "settings";
     private static final String GET_SOURCE_FIELD_VALUE_METHOD_NAME = "getSourceFieldValue";
     private static final String GET_SOURCE_FIELD_TYPE_METHOD_NAME = "getSourceFieldType";
-    private static final ReflectionUtils REFLECTION_UTILS = new ReflectionUtils();
     private static final String CACHE_MANAGER_FIELD_NAME = "cacheManager";
     private static final String REFLECTION_UTILS_FIELD_NAME = "reflectionUtils";
     private static final String CLASS_UTILS_FIELD_NAME = "classUtils";

@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.hotels.beans.transformer.BeanTransformer;
+import com.hotels.transformer.error.InvalidFunctionException;
 import com.hotels.transformer.model.FieldTransformer;
 
 /**
@@ -122,8 +123,13 @@ public class MapTransformerImpl extends AbstractMapTransformer {
      * @param fieldTransformer the {@link FieldTransformer} function to apply
      * @param value the object on which the function has to be applied
      * @return the transformed value
+     * @throws InvalidFunctionException if the defined function is not valid
      */
     private Object getTransformedObject(final FieldTransformer<Object, Object> fieldTransformer, final Object value) {
-        return nonNull(fieldTransformer) ? fieldTransformer.getTransformedObject(value) : value;
+        try {
+            return nonNull(fieldTransformer) ? fieldTransformer.getTransformedObject(value) : value;
+        } catch (final Exception e) {
+            throw new InvalidFunctionException("The transformer function defined for the map key is not valid.", e);
+        }
     }
 }
