@@ -83,4 +83,9 @@ public interface MapTransformer extends Transformer<MapTransformer> {
      * @return the {@link Transformer} instance
      */
     MapTransformer withKeyTransformer(FieldTransformer... keyFieldTransformer);
+
+    /**
+     * Removes all the configured key transformer.
+     */
+    void resetKeyTransformer();
 }

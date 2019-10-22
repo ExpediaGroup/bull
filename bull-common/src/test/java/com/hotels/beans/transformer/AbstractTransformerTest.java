@@ -37,6 +37,7 @@ import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSubClass;
 import com.hotels.beans.sample.FromFooWithPrimitiveFields;
 import com.hotels.beans.sample.FromSubFoo;
+import com.hotels.transformer.utils.ReflectionUtils;
 
 /**
  * Unit test for {@link com.hotels.transformer.Transformer}.
@@ -68,6 +69,8 @@ public abstract class AbstractTransformerTest {
     protected static final Map<String, List<String>> COMPLEX_MAP = new HashMap<>();
     protected static final Map<String, Map<String, String>> VERY_COMPLEX_MAP = new HashMap<>();
     protected static final Map<FromFooSimple, Map<String, String>> EXTREME_COMPLEX_MAP = new HashMap<>();
+    protected static final String TRANSFORMER_SETTINGS_FIELD_NAME = "settings";
+    protected static final ReflectionUtils REFLECTION_UTILS = new ReflectionUtils();
     protected static final String ITEM_1 = "donald";
     private static final String ITEM_2 = "duck";
     private static final String SURNAME = "surname";

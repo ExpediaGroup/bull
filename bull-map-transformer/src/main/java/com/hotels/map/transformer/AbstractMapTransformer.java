@@ -67,4 +67,13 @@ abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer
         }
         return this;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void resetKeyTransformer() {
+        settings.getKeyFieldsTransformers().clear();
+        cacheManager.removeMatchingKeys(transformerFunctionRegex);
+    }
 }
