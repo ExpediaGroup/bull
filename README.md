@@ -136,7 +136,7 @@ public class FromBean {                                     public class ToBean 
 And one line code as:
 
 ~~~Java                                                                
-beanUtils.getTransformer().withFieldMapping(new FieldMapping("name", "differentName")).transform(fromBean, ToBean.class);                                                               
+beanUtils.getTransformer().withFieldMapping(new FieldMapping<>("name", "differentName")).transform(fromBean, ToBean.class);                                                               
 ~~~
 
 ### Mapping destination fields with correspondent fields contained inside one of the nested object in the source object:
@@ -168,8 +168,8 @@ public class FromBean {                                     public class ToBean 
 ~~~
 the fields: `serialNumber` and `creationDate` needs to be retrieved from `subObject`, this can be done defining the whole path to the end property:
 ~~~Java  
-FieldMapping serialNumberMapping = new FieldMapping("subObject.serialNumber", "serialNumber");                                                             
-FieldMapping creationDateMapping = new FieldMapping("subObject.creationDate", "creationDate");
+FieldMapping serialNumberMapping = new FieldMapping<>("subObject.serialNumber", "serialNumber");                                                             
+FieldMapping creationDateMapping = new FieldMapping<>("subObject.creationDate", "creationDate");
                                                              
 beanUtils.getTransformer()
          .withFieldMapping(serialNumberMapping, creationDateMapping)
@@ -231,7 +231,7 @@ public class FromBean {                                     public class ToBean 
 FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::negate);
 FieldTransformer<String, Locale> localeTransformer = new FieldTransformer<>("locale", Locale::forLanguageTag);
 beanUtils.getTransformer()
-    .withFieldMapping(new FieldMapping("id", "identifier"))
+    .withFieldMapping(new FieldMapping<>("id", "identifier"))
     .withFieldTransformer(fieldTransformer).transform(fromBean, ToBean.class)
     .withFieldTransformer(localeTransformer);
 ~~~
@@ -366,7 +366,7 @@ Assuming that the value `x` should be mapped into field: `x` contained into the 
 follow:
 ~~~Java
 ToBean toBean = beanUtils.getTransformer()
-                    .withFieldMapping(new FieldMapping("x", "nestedObject.x"));
+                    .withFieldMapping(new FieldMapping<>("x", "nestedObject.x"));
 ~~~
 
 ### Apply a transformation function on all fields matching with the given one:

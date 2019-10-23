@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.transformer;
+package com.hotels.transformer;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;

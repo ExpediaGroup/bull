@@ -45,7 +45,7 @@
         <slf4j-api.version>1.7.28</slf4j-api.version>
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <glassfish.javax.el.version>2.2.6</glassfish.javax.el.version>
-        <!-- JaCoCo properties -->
+        <!-- JaCoCo & Sonar properties -->
         <jacoco.version>0.8.3</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
         <jacoco.instructionRatio>0.90</jacoco.instructionRatio>
@@ -53,6 +53,7 @@
         <jacoco.branchRatio>0.85</jacoco.branchRatio>
         <jacoco.complexityRatio>0.88</jacoco.complexityRatio>
         <jacoco.lineRatio>0.90</jacoco.lineRatio>
+        <sonar.coverage.exclusions>**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*</sonar.coverage.exclusions>
         <!-- site properties -->
         <wagon-ssh.version>3.3.3</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
@@ -418,16 +419,19 @@
                             <configuration>
                                 <skip>${jacoco.check.skip}</skip>
                                 <includes>
+                                    <include>com/hotels/transformer/**</include>
                                     <include>com/hotels/beans/**</include>
+                                    <include>com/hotels/map/**</include>
                                 </includes>
                                 <excludes>
                                     <exclude>**/Test*.*</exclude>
                                     <exclude>**/*Test.*</exclude>
                                     <exclude>**/*Application.*</exclude>
-                                    <exclude>com/hotels/beans/model/**</exclude>
-                                    <exclude>com/hotels/beans/constant/**</exclude>
-                                    <exclude>com/hotels/beans/error/**</exclude>
-                                    <exclude>com/hotels/beans/annotation/**</exclude>
+                                    <exclude>com/hotels/transformer/AbstractTransformer.*</exclude>
+                                    <exclude>**/model/**</exclude>
+                                    <exclude>**/constant/**</exclude>
+                                    <exclude>**/error/**</exclude>
+                                    <exclude>**/annotation/**</exclude>
                                 </excludes>
                                 <rules>
                                     <rule>
