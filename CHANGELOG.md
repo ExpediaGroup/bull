@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file.
     * `com.hotels.beans.model.FieldMapping`
     * `com.hotels.beans.model.FieldTransformer`
     * `com.hotels.beans.Transformer`
+### Added
+* New specific exception in case the Field Transformation function defined is not valid
+* Implemented a new functionality that allows to transform also Map object applying transformation function and mappings
     
 ### [1.5.1] 2019.09.02
 #### Changed
