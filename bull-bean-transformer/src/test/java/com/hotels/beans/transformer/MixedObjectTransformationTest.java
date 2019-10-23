@@ -81,7 +81,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         //GIVEN
 
         //WHEN
-        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
+        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         MixedToFooDiffFields actual = beanTransformer.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN
@@ -106,7 +106,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>(IDENTIFIER_FIELD_NAME, BigInteger::negate);
 
         //WHEN
-        underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME)).withFieldTransformer(fieldTransformer);
+        underTest.withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME)).withFieldTransformer(fieldTransformer);
         MixedToFooDiffFields actual = underTest.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN

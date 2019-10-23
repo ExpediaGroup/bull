@@ -17,4 +17,4 @@
  * Transformer test package.
  */
 
-package com.hotels.beans.transformer;
+package com.hotels.transformer;

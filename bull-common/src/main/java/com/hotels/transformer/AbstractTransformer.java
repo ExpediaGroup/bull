@@ -69,7 +69,7 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
      * @param cacheName the cache key prefix for the transformer.
      * @param transformerSettings contains the transformer configuration.
      */
-    protected AbstractTransformer(final String transformerFunctionCachePrefix, final String cacheName, final S transformerSettings) {
+    public AbstractTransformer(final String transformerFunctionCachePrefix, final String cacheName, final S transformerSettings) {
         this.reflectionUtils = new ReflectionUtils();
         this.classUtils = new ClassUtils();
         this.settings = transformerSettings;

@@ -44,9 +44,9 @@ import org.testng.annotations.Test;
 import com.hotels.beans.BeanUtils;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.mutable.MutableToFooSimple;
-import com.hotels.beans.transformer.AbstractTransformerTest;
 import com.hotels.beans.transformer.BeanTransformer;
 import com.hotels.map.transformer.model.MapTransformerSettings;
+import com.hotels.transformer.AbstractTransformerTest;
 import com.hotels.transformer.error.InvalidFunctionException;
 import com.hotels.transformer.model.FieldMapping;
 import com.hotels.transformer.model.FieldTransformer;
@@ -88,6 +88,8 @@ public class MapTransformerTest extends AbstractTransformerTest {
      * @param testCaseDescription the test case description
      * @param sourceMap the map to transform
      * @param beanTransformer the bean transformer
+     * @param <T> the key type
+     * @param <K> the element type
      */
     @Test(expectedExceptions = IllegalArgumentException.class, dataProvider = "dataTransformMethodWithTwoArgument")
     public <T, K> void testTransformRaisesExceptionIfItsCalledWithNullParameter(final String testCaseDescription,

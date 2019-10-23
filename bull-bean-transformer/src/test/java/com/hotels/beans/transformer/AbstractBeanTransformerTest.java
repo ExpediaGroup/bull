@@ -22,6 +22,8 @@ import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
+import com.hotels.transformer.AbstractTransformerTest;
+
 /**
  * Unit test for {@link BeanTransformer}.
  */

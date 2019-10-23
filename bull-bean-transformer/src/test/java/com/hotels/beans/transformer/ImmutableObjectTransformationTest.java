@@ -60,6 +60,7 @@ import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleBoolean;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
+import com.hotels.transformer.AbstractTransformerTest;
 import com.hotels.transformer.annotation.ConstructorArg;
 import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.error.InvalidBeanException;
@@ -78,6 +79,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     private static final String PRICE_FIELD_NAME = "price";
     private static final String NET_PRICE_FIELD_NAME = "price.netPrice";
     private static final String GROSS_PRICE_FIELD_NAME = "price.grossPrice";
+    private static final String WORK_FIELD_NAME = "work";
     private static final boolean ACTIVE = true;
 
     /**
@@ -265,7 +267,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
 
         //WHEN
-        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
+        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         ImmutableToFooDiffFields actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.class);
 
         //THEN
@@ -487,7 +489,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
         FromFooSimpleBooleanField fromFooSimpleNullFields = new FromFooSimpleBooleanField();
         FieldTransformer<Boolean, Boolean> nullToTrue =
-            new FieldTransformer<>("work", aBoolean -> aBoolean == null || aBoolean);
+            new FieldTransformer<>(WORK_FIELD_NAME, aBoolean -> aBoolean == null || aBoolean);
 
         //WHEN
         ImmutableToFooSimpleBoolean actual = underTest
@@ -507,11 +509,10 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
         FromFooSimpleBooleanField fromFooSimpleNullFields = new FromFooSimpleBooleanField();
         FieldTransformer<String, String> upperCase =
-                new FieldTransformer<>("work", String::toUpperCase);
+                new FieldTransformer<>(WORK_FIELD_NAME, String::toUpperCase);
 
         //WHEN
-        ImmutableToFooSimpleBoolean actual = underTest
-                .withFieldTransformer(upperCase)
+        underTest.withFieldTransformer(upperCase)
                 .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
 
     }
