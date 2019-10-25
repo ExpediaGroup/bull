@@ -19,12 +19,24 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=security_rating)](https://sonarcloud.io/dashboard?id=BULL)
 ![GitHub license](https://img.shields.io/github/license/HotelsDotCom/bull.svg)
 
-You can obtain BULL from Maven Central: 
+All BULL modules are available on Maven Central: 
+
+* ### Bean Transformer
 
 ~~~
 <dependency>
     <groupId>com.hotels.beans</groupId>
     <artifactId>bull-bean-transformer</artifactId>
+    <version>x.y.z</version>
+</dependency>
+~~~
+
+* ### `Map` Transformer
+
+~~~
+<dependency>
+    <groupId>com.hotels.beans</groupId>
+    <artifactId>bull-map-transformer</artifactId>
     <version>x.y.z</version>
 </dependency>
 ~~~
@@ -77,11 +89,12 @@ mvnw.cmd clean install -P relaxed
 
 # Feature samples
 
-* [Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
-* [Validation](https://github.com/HotelsDotCom/bull#validation-samples)
+* [Bean Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
+* [Bean Validation](https://github.com/HotelsDotCom/bull#validation-samples)
 * [Primitive Type conversion](https://github.com/HotelsDotCom/bull#primitive-type-object-converter)
+* [Map Transformation](https://hotelsdotcom.github.io/bull/transformer/map/samples.html)
 
-## Transformation samples
+## Bean transformation samples
 
 ### Simple case:
 
@@ -751,6 +764,10 @@ byte converted = conversionFunction.map(processor -> processor.apply(c)).orElse(
 
 * in case the conversion is not needed as the primitive type and the destination type are the same it will return an empty `Optional`
 * in case the conversion function is unavailable or no not possible the method throws a : `TypeConversionException`
+
+## `Map` transformation samples
+
+Samples on how to transform a `Map` and all others function applicable on it can be viewed [here](https://hotelsdotcom.github.io/bull/transformer/mapTransformer.html)
 
 ## Documentation
 
