@@ -104,3 +104,5 @@ the output will be:
 ~~~Java
 900
 ~~~
+
+### Transform `Map` `key` or `value` object into a different object
