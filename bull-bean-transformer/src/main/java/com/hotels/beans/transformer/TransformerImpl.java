@@ -257,22 +257,20 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     private <T, K> void injectAllFields(final T sourceObj, final K targetObject, final String breadcrumb) {
         final Class<?> targetObjectClass = targetObject.getClass();
-        classUtils.getDeclaredFields(targetObjectClass, true)
-                //.parallelStream()
-                .forEach(setFieldValue(sourceObj, targetObject, breadcrumb, targetObjectClass));
+        injectFields(classUtils.getDeclaredFields(targetObjectClass, true), sourceObj, targetObject, targetObjectClass, breadcrumb);
     }
 
     /**
      * Creates a {@link Consumer} that sets the field value in the given class.
      * @param sourceObj sourceObj the source object
      * @param targetObject the destination object instance
-     * @param breadcrumb  the full path of the current field starting from his ancestor
      * @param targetObjectClass  the target object class
+     * @param breadcrumb  the full path of the current field starting from his ancestor
      * @param <T>  the sourceObj object type
      * @param <K> the target object type
      * @return a {@link Consumer} that sets the field value in the target object
      */
-    private <T, K> Consumer<Field> setFieldValue(final T sourceObj, final K targetObject, final String breadcrumb, final Class<?> targetObjectClass) {
+    private <T, K> Consumer<Field> setFieldValue(final T sourceObj, final K targetObject, final Class<?> targetObjectClass, final String breadcrumb) {
         return field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb));
     }
 
@@ -287,9 +285,24 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     private <T, K> void injectNotFinalFields(final T sourceObj, final K targetObject, final String breadcrumb) {
         final Class<?> targetObjectClass = targetObject.getClass();
-        classUtils.getNotFinalFields(targetObjectClass, true)
+        injectFields(classUtils.getNotFinalFields(targetObjectClass, true), sourceObj, targetObject, targetObjectClass, breadcrumb);
+    }
+
+    /**
+     * Injects the values for given final fields.
+     * @param fieldList the list of field to inject
+     * @param sourceObj sourceObj the source object
+     * @param targetObject the destination object instance
+     * @param targetObjectClass the destination object class
+     * @param breadcrumb  the full path of the current field starting from his ancestor
+     * @param <T>  the sourceObj object type
+     * @param <K> the target object type
+     * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
+     */
+    private <T, K> void injectFields(final List<Field> fieldList, final T sourceObj, final K targetObject, final Class<?> targetObjectClass, final String breadcrumb) {
+        fieldList
                 //.parallelStream()
-                .forEach(setFieldValue(sourceObj, targetObject, breadcrumb, targetObjectClass));
+                .forEach(setFieldValue(sourceObj, targetObject, targetObjectClass, breadcrumb));
     }
 
     /**
