@@ -107,6 +107,7 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("SuspiciousMethodCalls")
     public final void removeFieldMapping(final String destFieldName) {
         notNull(destFieldName, "The field name for which the mapping has to be removed cannot be null!");
         settings.getFieldsNameMapping().remove(destFieldName);
@@ -124,6 +125,7 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("SuspiciousMethodCalls")
     public final void removeFieldTransformer(final String destFieldName) {
         notNull(destFieldName, "The field name for which the transformer function has to be removed cannot be null!");
         settings.getFieldsTransformers().remove(destFieldName);
