@@ -104,13 +104,12 @@ public class FromBean {                                     public class ToBean 
    private final BigInteger id;                                public BigInteger id;                      
    private final List<FromSubBean> subBeanList;                private final String name;                 
    private List<String> list;                                  private final List<String> list;                    
-   private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
-                                                               private ImmutableToSubFoo nestedObject;
+   private final FromSubBean subObject;                        private final List<ToSubBean> subBeanList;                    
+                                                               private ImmutableToSubFoo subObject;
    
    // all constructors                                         // all args constructor
-   // getters and setters...                                   // getters... 
-}                                                               
-                                                            }
+   // getters and setters...                                   // getters and setters... 
+}    
 ~~~
 And one line code as:
 ~~~Java
@@ -129,7 +128,7 @@ public class FromBean {                                     public class ToBean 
    private final List<String> list;                            private final List<String> list;                    
    private final FromSubBean subObject;                        private final ToSubBean subObject;                    
     
-   // getters and setters...
+   // getters...
                                                                public ToBean(final String differentName, 
                                                                         final int id,
 }                                                                       final List<ToSubBean> subBeanList,
@@ -142,7 +141,7 @@ public class FromBean {                                     public class ToBean 
                                                                         this.subObject = subObject; 
                                                                     }
                                                                 
-                                                                    // getters and setters...           
+                                                                    // getters...           
                                               
                                                                 }
 ~~~
