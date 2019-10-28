@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.6.0] TBD
 ### Removed
-* Removed deprecated module `bean-utils-library`
+* Removed deprecated module `bean-utils-library`, the new one is: `bean-bean-transformer`
 * The following deprecated classes has been removed:
     * `com.hotels.beans.model.FieldMapping`
     * `com.hotels.beans.model.FieldTransformer`
