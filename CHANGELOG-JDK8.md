@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 * Implemented a new functionality that allows to transform also Map object applying transformation function and mappings
 #### Changed
 * `Transformer` class previously in charge of the Java Bean transformation has been moved to `BeanTransformer`
-* Updated `spring-boot-starter-test` version to `2.1.8.RELEASE` (was `2.1.7.RELEASE`).
+* Updated `spring-boot-starter-test` version to `2.2.0.RELEASE` (was `2.1.7.RELEASE`).
 * Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
 * Updated `testng` version to `7.0.0` (was `6.14.3`).
 * Updated `slf4j-api` version to `1.7.28` (was `1.7.27`).
