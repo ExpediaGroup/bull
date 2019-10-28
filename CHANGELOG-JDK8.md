@@ -12,6 +12,14 @@ All notable changes to this project will be documented in this file.
 ### Added
 * New specific exception in case the Field Transformation function defined is not valid
 * Implemented a new functionality that allows to transform also Map object applying transformation function and mappings
+#### Changed
+* Updated `spring-boot-starter-test` version to `2.1.8.RELEASE` (was `2.1.7.RELEASE`).
+* Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
+* Updated `testng` version to `7.0.0` (was `6.14.3`).
+* Updated `slf4j-api` version to `1.7.28` (was `1.7.27`).
+* Updated `jacoco-maven-plugin` version to `0.8.4` (was `0.8.2`).
+* Updated `lombok` version to `1.18.10` (was `1.18.8`).
+* Updated `hibernate-validator` version to `6.1.0.Final` (was `6.0.17.Final`).
 
 ### [1.1.24] 2019.09.02
 #### Changed
