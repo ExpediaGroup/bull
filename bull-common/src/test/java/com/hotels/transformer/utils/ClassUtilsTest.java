@@ -38,7 +38,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import javax.validation.constraints.NotNull;
 
@@ -462,7 +461,7 @@ public class ClassUtilsTest {
         // GIVEN
 
         // WHEN
-        Supplier<MutableToFooSubClass> actual = underTest.getNoArgsConstructor(CLASS_WITHOUT_PRIVATE_FINAL_FIELDS);
+        Constructor actual = underTest.getNoArgsConstructor(CLASS_WITHOUT_PRIVATE_FINAL_FIELDS);
 
         // THEN
         assertNotNull(actual);

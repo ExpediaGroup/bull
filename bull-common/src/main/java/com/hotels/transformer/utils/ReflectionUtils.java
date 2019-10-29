@@ -16,10 +16,6 @@
 
 package com.hotels.transformer.utils;
 
-import static java.lang.invoke.LambdaMetafactory.metafactory;
-import static java.lang.invoke.MethodHandles.lookup;
-import static java.lang.invoke.MethodHandles.privateLookupIn;
-import static java.lang.invoke.MethodType.methodType;
 import static java.lang.reflect.Modifier.isPublic;
 
 import static org.apache.commons.lang3.StringUtils.capitalize;
@@ -30,8 +26,6 @@ import static com.hotels.transformer.constant.MethodPrefix.IS;
 import static com.hotels.transformer.constant.MethodPrefix.SET;
 
 import java.lang.annotation.Annotation;
-import java.lang.invoke.CallSite;
-import java.lang.invoke.MethodHandles;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -43,10 +37,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Function;
 
 import com.hotels.transformer.cache.CacheManager;
-import com.hotels.transformer.error.InvalidBeanException;
 import com.hotels.transformer.error.MissingFieldException;
 import com.hotels.transformer.error.MissingMethodException;
 import com.hotels.transformer.model.EmptyValue;
@@ -72,11 +64,6 @@ public final class ReflectionUtils {
      * Regex for identify dots into a string.
      */
     private static final String DOT_SPLIT_REGEX = "\\.";
-
-    /**
-     * Method Handles lookup.
-     */
-    private static final MethodHandles.Lookup METHOD_HANDLES_LOOKUP = lookup();
 
     /**
      * CacheManager instance {@link CacheManager}.
@@ -141,8 +128,6 @@ public final class ReflectionUtils {
                 break;
             }
             try {
-                fieldValue = getGetterMethodFunction(fieldValue.getClass(), currFieldName).apply(fieldValue);
-            } catch (final ClassCastException | MissingMethodException | InvalidBeanException e) {
                 fieldValue = getFieldValueDirectAccess(fieldValue, currFieldName);
             } catch (final MissingFieldException e) {
                 fieldValue = invokeMethod(getGetterMethod(fieldValue.getClass(), currFieldName, fieldType), fieldValue);
@@ -169,38 +154,6 @@ public final class ReflectionUtils {
             } catch (NoSuchMethodException e) {
                 throw new MissingFieldException(fieldClass.getName() + " hasn't a field called: " + fieldName + ".");
             }
-        });
-    }
-
-    /**
-     * Returns the getter method for the given field.
-     * @param fieldClass the field's class
-     * @param fieldName the field name
-     * @return the getter method
-     */
-    private Function getGetterMethodFunction(final Class<?> fieldClass, final String fieldName) {
-        final String cacheKey = "getGetterMethodFunction-" + fieldClass.getName() + '-' + fieldName;
-        return CACHE_MANAGER.getFromCache(cacheKey, Function.class).orElseGet(() -> {
-            Function function;
-            try {
-                Class<?> fieldType = getDeclaredFieldType(fieldName, fieldClass);
-                MethodHandles.Lookup privateLookupIn = privateLookupIn(fieldClass, METHOD_HANDLES_LOOKUP);
-                CallSite site = metafactory(privateLookupIn,
-                        "apply",
-                        methodType(Function.class),
-                        methodType(Object.class, Object.class),
-                        privateLookupIn.findVirtual(fieldClass, getGetterMethodPrefix(fieldType) + capitalize(fieldName), methodType(fieldType)),
-                        methodType(fieldType, fieldClass));
-                function = (Function) site.getTarget().invokeExact();
-            } catch (NoSuchFieldException | MissingFieldException e) {
-                throw new MissingFieldException(e.getMessage());
-            } catch (NoSuchMethodException e) {
-                throw new MissingMethodException();
-            } catch (Throwable e) {
-                throw new InvalidBeanException(e);
-            }
-            CACHE_MANAGER.cacheObject(cacheKey, function);
-            return function;
         });
     }
 
