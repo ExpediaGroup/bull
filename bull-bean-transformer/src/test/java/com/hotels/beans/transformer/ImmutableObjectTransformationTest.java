@@ -502,22 +502,6 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     }
 
     /**
-     * Test that an {@link InvalidFunctionException} is raised if the transformer function defined is not valid.
-     */
-    @Test(expectedExceptions = InvalidFunctionException.class)
-    public void testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid() {
-        //GIVEN
-        FromFooSimpleBooleanField fromFooSimpleNullFields = new FromFooSimpleBooleanField();
-        FieldTransformer<String, String> upperCase =
-                new FieldTransformer<>(WORK_FIELD_NAME, String::toUpperCase);
-
-        //WHEN
-        underTest.withFieldTransformer(upperCase)
-                .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
-
-    }
-
-    /**
      * Initializes the mocks required for testing method: {@code getDestFieldName}.
      * @param declaringClassName the declaring class name
      * @param constructorParameter the constructor parameter
