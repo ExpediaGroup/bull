@@ -64,7 +64,6 @@ import com.hotels.transformer.AbstractTransformerTest;
 import com.hotels.transformer.annotation.ConstructorArg;
 import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.error.InvalidBeanException;
-import com.hotels.transformer.error.InvalidFunctionException;
 import com.hotels.transformer.model.FieldMapping;
 import com.hotels.transformer.model.FieldTransformer;
 import com.hotels.transformer.utils.ReflectionUtils;
