@@ -17,6 +17,7 @@
 package com.hotels.beans.conversion.processor;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -72,7 +73,7 @@ public class ConversionProcessorFactoryTest {
         Optional<ConversionProcessor> actual = underTest.getConversionProcessor(Pair.class);
 
         // THEN
-        assertTrue(actual.isEmpty());
+        assertFalse(actual.isPresent());
     }
 
     /**
