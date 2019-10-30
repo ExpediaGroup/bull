@@ -4,9 +4,11 @@ com.hotels.beans.conversion.analyzer
 com.hotels.beans.conversion.error
 com.hotels.beans.conversion.processor
 com.hotels.beans.conversion.processor.impl
-com.hotels.beans.model
 com.hotels.beans.populator
 com.hotels.beans.transformer
+com.hotels.map
+com.hotels.map.transformer
+com.hotels.map.transformer.model
 com.hotels.transformer
 com.hotels.transformer.annotation
 com.hotels.transformer.base
