@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.6.0.1] 2019.10.30
+### [1.6.0] 2019.10.30
 ### Removed
 * Removed deprecated module `bean-utils-library`, the new one is: `bean-bean-transformer`
 * The following deprecated classes has been removed:
