@@ -23,6 +23,8 @@ import static lombok.AccessLevel.PRIVATE;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.hotels.transformer.error.InvalidFunctionException;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -74,8 +76,13 @@ public class FieldTransformer<T, K> {
      * Returns a transformed object by applying the defined transformed function or the supplier.
      * @param objectToTransform the object to transform
      * @return the transformed object
+     * @throws InvalidFunctionException if the defined function cannot be applied to the given type
      */
     public final K getTransformedObject(final T objectToTransform) {
-        return nonNull(transformerFunction) ? transformerFunction.apply(objectToTransform) : transformerSupplier.get();
+        try {
+            return nonNull(transformerFunction) ? transformerFunction.apply(objectToTransform) : transformerSupplier.get();
+        } catch (final Exception e) {
+            throw new InvalidFunctionException("The transformer function defined for the field is not valid.", e);
+        }
     }
 }

@@ -19,12 +19,24 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=security_rating)](https://sonarcloud.io/dashboard?id=BULL)
 ![GitHub license](https://img.shields.io/github/license/HotelsDotCom/bull.svg)
 
-You can obtain BULL from Maven Central: 
+All BULL modules are available on Maven Central: 
+
+* ### Bean Transformer
 
 ~~~
 <dependency>
     <groupId>com.hotels.beans</groupId>
     <artifactId>bull-bean-transformer</artifactId>
+    <version>x.y.z</version>
+</dependency>
+~~~
+
+* ### `Map` Transformer
+
+~~~
+<dependency>
+    <groupId>com.hotels.beans</groupId>
+    <artifactId>bull-map-transformer</artifactId>
     <version>x.y.z</version>
 </dependency>
 ~~~
@@ -77,11 +89,12 @@ mvnw.cmd clean install -P relaxed
 
 # Feature samples
 
-* [Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
-* [Validation](https://github.com/HotelsDotCom/bull#validation-samples)
+* [Bean Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
+* [Bean Validation](https://github.com/HotelsDotCom/bull#validation-samples)
 * [Primitive Type conversion](https://github.com/HotelsDotCom/bull#primitive-type-object-converter)
+* [Map Transformation](https://hotelsdotcom.github.io/bull/transformer/map/samples.html)
 
-## Transformation samples
+## Bean transformation samples
 
 ### Simple case:
 
@@ -91,13 +104,12 @@ public class FromBean {                                     public class ToBean 
    private final BigInteger id;                                public BigInteger id;                      
    private final List<FromSubBean> subBeanList;                private final String name;                 
    private List<String> list;                                  private final List<String> list;                    
-   private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
-                                                               private ImmutableToSubFoo nestedObject;
+   private final FromSubBean subObject;                        private final List<ToSubBean> subBeanList;                    
+                                                               private ImmutableToSubFoo subObject;
    
    // all constructors                                         // all args constructor
-   // getters and setters...                                   // getters... 
-}                                                               
-                                                            }
+   // getters and setters...                                   // getters and setters... 
+}    
 ~~~
 And one line code as:
 ~~~Java
@@ -116,7 +128,7 @@ public class FromBean {                                     public class ToBean 
    private final List<String> list;                            private final List<String> list;                    
    private final FromSubBean subObject;                        private final ToSubBean subObject;                    
     
-   // getters and setters...
+   // getters...
                                                                public ToBean(final String differentName, 
                                                                         final int id,
 }                                                                       final List<ToSubBean> subBeanList,
@@ -129,14 +141,14 @@ public class FromBean {                                     public class ToBean 
                                                                         this.subObject = subObject; 
                                                                     }
                                                                 
-                                                                    // getters and setters...           
+                                                                    // getters...           
                                               
                                                                 }
 ~~~
 And one line code as:
 
 ~~~Java                                                                
-beanUtils.getTransformer().withFieldMapping(new FieldMapping("name", "differentName")).transform(fromBean, ToBean.class);                                                               
+beanUtils.getTransformer().withFieldMapping(new FieldMapping<>("name", "differentName")).transform(fromBean, ToBean.class);                                                               
 ~~~
 
 ### Mapping destination fields with correspondent fields contained inside one of the nested object in the source object:
@@ -168,8 +180,8 @@ public class FromBean {                                     public class ToBean 
 ~~~
 the fields: `serialNumber` and `creationDate` needs to be retrieved from `subObject`, this can be done defining the whole path to the end property:
 ~~~Java  
-FieldMapping serialNumberMapping = new FieldMapping("subObject.serialNumber", "serialNumber");                                                             
-FieldMapping creationDateMapping = new FieldMapping("subObject.creationDate", "creationDate");
+FieldMapping serialNumberMapping = new FieldMapping<>("subObject.serialNumber", "serialNumber");                                                             
+FieldMapping creationDateMapping = new FieldMapping<>("subObject.creationDate", "creationDate");
                                                              
 beanUtils.getTransformer()
          .withFieldMapping(serialNumberMapping, creationDateMapping)
@@ -231,7 +243,7 @@ public class FromBean {                                     public class ToBean 
 FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::negate);
 FieldTransformer<String, Locale> localeTransformer = new FieldTransformer<>("locale", Locale::forLanguageTag);
 beanUtils.getTransformer()
-    .withFieldMapping(new FieldMapping("id", "identifier"))
+    .withFieldMapping(new FieldMapping<>("id", "identifier"))
     .withFieldTransformer(fieldTransformer).transform(fromBean, ToBean.class)
     .withFieldTransformer(localeTransformer);
 ~~~
@@ -366,7 +378,7 @@ Assuming that the value `x` should be mapped into field: `x` contained into the 
 follow:
 ~~~Java
 ToBean toBean = beanUtils.getTransformer()
-                    .withFieldMapping(new FieldMapping("x", "nestedObject.x"));
+                    .withFieldMapping(new FieldMapping<>("x", "nestedObject.x"));
 ~~~
 
 ### Apply a transformation function on all fields matching with the given one:
@@ -751,6 +763,10 @@ byte converted = conversionFunction.map(processor -> processor.apply(c)).orElse(
 
 * in case the conversion is not needed as the primitive type and the destination type are the same it will return an empty `Optional`
 * in case the conversion function is unavailable or no not possible the method throws a : `TypeConversionException`
+
+## `Map` transformation samples
+
+Samples on how to transform a `Map` and all others function applicable on it can be viewed [here](https://hotelsdotcom.github.io/bull/transformer/mapTransformer.html)
 
 ## Documentation
 

@@ -16,49 +16,33 @@
 
 package com.hotels.beans.transformer;
 
-import com.hotels.transformer.model.FieldMapping;
-import com.hotels.transformer.model.FieldTransformer;
+import com.hotels.transformer.Transformer;
 
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
- * The implementations are provided by BeanUtils.
+ * The implementations are provided by {@link TransformerImpl}.
  */
-public interface BeanTransformer extends Transformer {
+public interface BeanTransformer extends Transformer<BeanTransformer> {
     /**
-     * Initializes the mapping between fields in the source object and the destination one.
-     * @param fieldMapping the field mapping
-     * @return the {@link BeanTransformer} instance
+     * Copies all properties from an object to a new one.
+     * @param sourceObj the source object
+     * @param targetClass the destination object class
+     * @param <T> the Source object type
+     * @param <K> the target object type
+     * @return a copy of the source object into the destination object
+     * @throws IllegalArgumentException if any parameter is invalid
      */
-    BeanTransformer withFieldMapping(FieldMapping... fieldMapping);
+    <T, K> K transform(T sourceObj, Class<? extends K> targetClass);
 
     /**
-     * Removes the field mapping for the given field.
-     * @param destFieldName the field name in the destination object
+     * Copies all properties from an object to a new one.
+     * @param sourceObj the source object
+     * @param targetObject the destination object
+     * @param <T> the Source object type
+     * @param <K> the target object type
+     * @throws IllegalArgumentException if any parameter is invalid
      */
-    void removeFieldMapping(String destFieldName);
-
-    /**
-     * Removes all the configured fields mapping.
-     */
-    void resetFieldsMapping();
-
-    /**
-     * Initializes the field transformer functions. The transformer function returns directly the field value.
-     * @param fieldTransformer the fields transformer function
-     * @return the {@link BeanTransformer} instance
-     */
-    BeanTransformer withFieldTransformer(FieldTransformer... fieldTransformer);
-
-    /**
-     * Removes the field transformer for the given field.
-     * @param destFieldName the field name in the destination object
-     */
-    void removeFieldTransformer(String destFieldName);
-
-    /**
-     * Removes all the configured fields transformer.
-     */
-    void resetFieldsTransformer();
+    <T, K> void transform(T sourceObj, K targetObject);
 
     /**
      * It allows to configure the transformer in order to set a default value in case some field is missing in the source object.

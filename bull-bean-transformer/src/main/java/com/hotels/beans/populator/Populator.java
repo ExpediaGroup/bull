@@ -83,7 +83,7 @@ public abstract class Populator<O> {
      * @param <K> the target object type
      * @return a copy of the source object into the destination object
      */
-    final <T, K> K transform(final T sourceObj, final Class<K> targetClass) {
+    public final <T, K> K transform(final T sourceObj, final Class<K> targetClass) {
         return transform(sourceObj, targetClass, null);
     }
 

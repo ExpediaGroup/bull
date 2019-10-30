@@ -79,7 +79,7 @@ public class PopulatorFactoryTest {
      * @param expectedResult the expected populator
      */
     @Test(dataProvider = "dataProvider")
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "OptionalGetWithoutIsPresent"})
     public void testGetPopulatorReturnsTheExpectedResult(final Class type, final Class<? extends Populator> expectedResult) {
         // GIVEN
 
