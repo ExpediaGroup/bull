@@ -15,10 +15,10 @@ env:
 install: skip
 jobs:
   include:
-    # If the branch is not master it just builds the application
     - stage: "Build"
       name: "Build and Test"
       script: travis_retry mvn clean install
+    # If is not a PR and a tag is available
     - stage: "Site Build and Quality check"
       name: "Publishing site and performing a code quality check"
       if: type NOT IN (pull_request) AND tag IS present
@@ -34,6 +34,7 @@ jobs:
         keep-history: true
         on:
           tags: true
+    # If is not a PR and a tag is available
     - stage: "Release"
       name: "Releasing artifacts"
       if: type NOT IN (pull_request) AND tag IS present
