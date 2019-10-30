@@ -32,6 +32,7 @@ import static com.hotels.transformer.constant.MethodPrefix.SET;
 import java.lang.annotation.Annotation;
 import java.lang.invoke.CallSite;
 import java.lang.invoke.MethodHandles;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -212,14 +213,7 @@ public final class ReflectionUtils {
      */
     public <A extends Annotation> A getFieldAnnotation(final Field field, final Class<A> annotationClazz) {
         final String cacheKey = "FieldAnnotation-" + field.getDeclaringClass().getName() + "-" + field.getName() + "-" + annotationClazz.getName();
-        return CACHE_MANAGER.getFromCache(cacheKey, annotationClazz).orElseGet(() -> {
-            A annotation = null;
-            if (field.isAnnotationPresent(annotationClazz)) {
-                annotation = field.getAnnotation(annotationClazz);
-            }
-            CACHE_MANAGER.cacheObject(cacheKey, annotation);
-            return annotation;
-        });
+        return getAnnotation(field, annotationClazz, cacheKey);
     }
 
     /**
@@ -232,10 +226,22 @@ public final class ReflectionUtils {
      */
     public <A extends Annotation> A getParameterAnnotation(final Parameter parameter, final Class<A> annotationClazz, final String declaringClassName) {
         final String cacheKey = "ParameterAnnotation-" + declaringClassName + "-" + parameter.getName() + "-" + annotationClazz.getName();
+        return getAnnotation(parameter, annotationClazz, cacheKey);
+    }
+
+    /**
+     * Returns (if existing) the element's given type annotation.
+     * @param element the element that should have the annotation
+     * @param annotationClazz the annotation type
+     * @param cacheKey the cache key to use
+     * @param <A> the annotation type object
+     * @return the annotation
+     */
+    private <A extends Annotation> A getAnnotation(final AnnotatedElement element, final Class<A> annotationClazz, final String cacheKey) {
         return CACHE_MANAGER.getFromCache(cacheKey, annotationClazz).orElseGet(() -> {
             A annotation = null;
-            if (parameter.isAnnotationPresent(annotationClazz)) {
-                annotation = parameter.getAnnotation(annotationClazz);
+            if (element.isAnnotationPresent(annotationClazz)) {
+                annotation = element.getAnnotation(annotationClazz);
             }
             CACHE_MANAGER.cacheObject(cacheKey, annotation);
             return annotation;

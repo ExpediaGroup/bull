@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.transformer;
+package com.hotels.transformer.model;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.hotels.transformer.model.FieldTransformer;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,13 +30,14 @@ import lombok.Setter;
  *  1) The field name mapping
  *  2) The lambda function to apply on a field.
  *  3) Other configurations.
+ * @param <T> source element type
  */
 @Getter
-final class TransformerSettings {
+public class TransformerSettings<T> {
     /**
      * Contains the mapping between fields's name in the source object and the destination one.
      */
-    private final Map<String, String> fieldsNameMapping = new ConcurrentHashMap<>();
+    private final Map<T, T> fieldsNameMapping = new ConcurrentHashMap<>();
 
     /**
      * Contains the lambda functions to be applied on a given fields.
@@ -48,7 +47,7 @@ final class TransformerSettings {
      *      FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::negate);
      * }
      */
-    private final Map<String, FieldTransformer> fieldsTransformers = new ConcurrentHashMap<>();
+    private final Map<T, FieldTransformer> fieldsTransformers = new ConcurrentHashMap<>();
 
     /**
      * Contains the list of fields that don't need to be transformed.

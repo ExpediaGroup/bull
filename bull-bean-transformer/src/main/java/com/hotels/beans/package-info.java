@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Main package.
+ * Bean transformer main package.
  */
 
 package com.hotels.beans;

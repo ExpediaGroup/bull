@@ -60,9 +60,11 @@ import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleBoolean;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
+import com.hotels.transformer.AbstractTransformerTest;
 import com.hotels.transformer.annotation.ConstructorArg;
 import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.error.InvalidBeanException;
+import com.hotels.transformer.error.InvalidFunctionException;
 import com.hotels.transformer.model.FieldMapping;
 import com.hotels.transformer.model.FieldTransformer;
 import com.hotels.transformer.utils.ReflectionUtils;
@@ -77,11 +79,16 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     private static final String PRICE_FIELD_NAME = "price";
     private static final String NET_PRICE_FIELD_NAME = "price.netPrice";
     private static final String GROSS_PRICE_FIELD_NAME = "price.grossPrice";
+    private static final String WORK_FIELD_NAME = "work";
     private static final boolean ACTIVE = true;
 
+    /**
+     * After method actions.
+     */
     @AfterMethod
     public void afterMethod() {
         underTest.setValidationEnabled(false);
+        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -151,7 +158,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     public void testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected(final String testCaseDescription, final Object sourceObject, final String expectedName,
         final BigInteger expectedId, final int[] expectedPhoneNumbers) {
         //GIVEN
-        FieldMapping phoneNumbersMapping = new FieldMapping(PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME, PHONE_NUMBER_DEST_FIELD_NAME);
+        FieldMapping phoneNumbersMapping = new FieldMapping<>(PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME, PHONE_NUMBER_DEST_FIELD_NAME);
 
         //WHEN
         ImmutableFlatToFoo actual = underTest.withFieldMapping(phoneNumbersMapping).transform(sourceObject, ImmutableFlatToFoo.class);
@@ -227,7 +234,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @DataProvider(parallel = true)
     private Object[][] dataInvalidBeanExceptionTesting() throws CloneNotSupportedException {
-        FromFoo fromFooNullId = AbstractBeanTransformerTest.fromFoo.clone();
+        FromFoo fromFooNullId = AbstractTransformerTest.fromFoo.clone();
         fromFooNullId.setId(null);
         return new Object[][] {
                 {"Test that an exception is thrown if there the constructor args parameters have a different order for the mutable bean object.",
@@ -260,7 +267,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
 
         //WHEN
-        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
+        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         ImmutableToFooDiffFields actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.class);
 
         //THEN
@@ -286,9 +293,9 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
 
         //WHEN
         final BeanTransformer beanTransformer = underTest
-                .withFieldMapping(new FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
-                .withFieldMapping(new FieldMapping(PRICE_FIELD_NAME, NET_PRICE_FIELD_NAME))
-                .withFieldMapping(new FieldMapping(PRICE_FIELD_NAME, GROSS_PRICE_FIELD_NAME))
+                .withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
+                .withFieldMapping(new FieldMapping<>(PRICE_FIELD_NAME, NET_PRICE_FIELD_NAME))
+                .withFieldMapping(new FieldMapping<>(PRICE_FIELD_NAME, GROSS_PRICE_FIELD_NAME))
                 .withFieldTransformer(new FieldTransformer<>(LOCALE_FIELD_NAME, Locale::forLanguageTag));
         ImmutableToFooAdvFields actual = (ImmutableToFooAdvFields) beanTransformer.transform(sourceObject, targetObjectClass);
 
@@ -296,6 +303,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         assertNotNull(actual.getName());
         assertEquals(isNameFieldEmpty, actual.getName().isPresent());
         sourceObject.getName().ifPresent(name -> assertEquals(name, actual.getName().get()));
+        assertTrue(sourceObject.getAge().isPresent());
         assertEquals(sourceObject.getAge().get(), actual.getAge());
         assertEquals(sourceObject.getClassType(), actual.getClassType());
         assertEquals(sourceObject.getLocale(), actual.getLocale().getLanguage());
@@ -481,7 +489,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
         FromFooSimpleBooleanField fromFooSimpleNullFields = new FromFooSimpleBooleanField();
         FieldTransformer<Boolean, Boolean> nullToTrue =
-            new FieldTransformer<>("work", aBoolean -> aBoolean == null || aBoolean);
+            new FieldTransformer<>(WORK_FIELD_NAME, aBoolean -> aBoolean == null || aBoolean);
 
         //WHEN
         ImmutableToFooSimpleBoolean actual = underTest
@@ -491,6 +499,22 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //THEN
         assertTrue(actual.getWork());
         underTest.resetFieldsTransformer();
+    }
+
+    /**
+     * Test that an {@link InvalidFunctionException} is raised if the transformer function defined is not valid.
+     */
+    @Test(expectedExceptions = InvalidFunctionException.class)
+    public void testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid() {
+        //GIVEN
+        FromFooSimpleBooleanField fromFooSimpleNullFields = new FromFooSimpleBooleanField();
+        FieldTransformer<String, String> upperCase =
+                new FieldTransformer<>(WORK_FIELD_NAME, String::toUpperCase);
+
+        //WHEN
+        underTest.withFieldTransformer(upperCase)
+                .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
+
     }
 
     /**

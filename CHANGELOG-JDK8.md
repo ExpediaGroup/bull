@@ -2,9 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.1.25] TBD
+### [1.1.25] 2019.10.30
+### Removed
+* Removed deprecated module `bean-utils-library`, the new one is: `bean-bean-transformer`
+* The following deprecated classes has been removed:
+    * `com.hotels.beans.model.FieldMapping`
+    * `com.hotels.beans.model.FieldTransformer`
+    * `com.hotels.beans.Transformer`
+### Added
+* New specific exception in case the Field Transformation function defined is not valid
+* Implemented a new functionality that allows to transform also Map object applying transformation function and mappings
 #### Changed
-* Updated `spring-boot-starter-test` version to `2.1.8.RELEASE` (was `2.1.7.RELEASE`).
+* `Transformer` class previously in charge of the Java Bean transformation has been moved to `BeanTransformer`
+* Updated `spring-boot-starter-test` version to `2.2.0.RELEASE` (was `2.1.7.RELEASE`).
 * Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
 * Updated `testng` version to `7.0.0` (was `6.14.3`).
 * Updated `slf4j-api` version to `1.7.28` (was `1.7.27`).
@@ -92,7 +102,7 @@ All notable changes to this project will be documented in this file.
 ### [1.1.10] 2019.03.31
 #### Added
 * Improved field value retrieval function.
-* Added ling to Gitter channel for BULL.
+* Added link to Gitter channel for BULL.
 * Integrated Gitter notification in order to keep up to date BULL community
 
 ### [1.1.9] 2019.03.23

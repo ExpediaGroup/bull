@@ -21,6 +21,7 @@ import static java.lang.Integer.parseInt;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
@@ -235,6 +236,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         }
 
         //THEN
+        assertNotNull(raisedException);
         assertEquals(MissingFieldException.class, raisedException.getCause().getClass());
         underTest.setPrimitiveTypeConversionEnabled(false);
     }

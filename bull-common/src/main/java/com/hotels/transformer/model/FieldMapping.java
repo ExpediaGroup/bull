@@ -22,18 +22,20 @@ import lombok.ToString;
 
 /**
  * Specifies the field's name mapping between the source object and destination one.
+ * @param <T> source element type
+ * @param <K> target element type
  */
 @AllArgsConstructor
 @Getter
 @ToString
-public class FieldMapping {
+public class FieldMapping<T, K> {
     /**
      * The field name in the source object.
      */
-    private final String sourceFieldName;
+    private final T sourceFieldName;
 
     /**
      * The field name in the destination object.
      */
-    private final String destFieldName;
+    private final K destFieldName;
 }

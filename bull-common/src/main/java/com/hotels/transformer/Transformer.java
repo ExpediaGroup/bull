@@ -16,28 +16,47 @@
 
 package com.hotels.transformer;
 
+import com.hotels.transformer.model.FieldMapping;
+import com.hotels.transformer.model.FieldTransformer;
+
 /**
  * Utility methods for all objects transformation.
+ * @param <N> the {@link Transformer} implementation.
  */
-public interface Transformer {
+public interface Transformer<N extends Transformer> {
     /**
-     * Copies all properties from an object to a new one.
-     * @param sourceObj the source object
-     * @param targetClass the destination object class
-     * @param <T> the Source object type
-     * @param <K> the target object type
-     * @return a copy of the source object into the destination object
-     * @throws IllegalArgumentException if any parameter is invalid
+     * Initializes the mapping between fields in the source object and the destination one.
+     * @param fieldMapping the field mapping
+     * @return the {@link Transformer} instance
      */
-    <T, K> K transform(T sourceObj, Class<? extends K> targetClass);
+    N withFieldMapping(FieldMapping... fieldMapping);
 
     /**
-     * Copies all properties from an object to a new one.
-     * @param sourceObj the source object
-     * @param targetObject the destination object
-     * @param <T> the Source object type
-     * @param <K> the target object type
-     * @throws IllegalArgumentException if any parameter is invalid
+     * Removes the field mapping for the given field.
+     * @param destFieldName the field name in the destination object
      */
-    <T, K> void transform(T sourceObj, K targetObject);
+    void removeFieldMapping(String destFieldName);
+
+    /**
+     * Removes all the configured fields mapping.
+     */
+    void resetFieldsMapping();
+
+    /**
+     * Initializes the field transformer functions. The transformer function returns directly the field value.
+     * @param fieldTransformer the fields transformer function
+     * @return the {@link Transformer} instance
+     */
+    N withFieldTransformer(FieldTransformer... fieldTransformer);
+
+    /**
+     * Removes the field transformer for the given field.
+     * @param destFieldName the field name in the destination object
+     */
+    void removeFieldTransformer(String destFieldName);
+
+    /**
+     * Removes all the configured fields transformer.
+     */
+    void resetFieldsTransformer();
 }

@@ -5,7 +5,7 @@
     <skin>
         <groupId>org.apache.maven.skins</groupId>
         <artifactId>maven-fluido-skin</artifactId>
-        <version>1.7</version>
+        <version>1.8</version>
     </skin>
     <custom>
         <fluidoSkin>
@@ -37,11 +37,16 @@
         <menu name="Project info">
             <item name="Glossary" href="/glossary.html" />
         </menu>
-        <menu name="Bean Transformer">
-            <item name="Samples" href="/transformer/samples.html" />
-            <item name="Performances" href="/transformer/performance.html" />
-            <item name="Third Party Lib Comparison" href="/transformer/thirdPartyLibComparison.html" />
-            <item name="How to test" href="/transformer/testing.html" />
+        <menu name="Transformer">
+            <item name="Bean Transformer" collapse="true" href="/transformer/beanTransformer.html">
+                <item name="Samples" href="/transformer/bean/samples.html" />
+                <item name="Performances" href="/transformer/bean/performance.html" />
+                <item name="Third Party Lib Comparison" href="/transformer/bean/thirdPartyLibComparison.html" />
+                <item name="How to test" href="/transformer/bean/testing.html" />
+            </item>
+            <item name="Map Transformer" collapse="true" href="/transformer/mapTransformer.html">
+                <item name="Samples" href="/transformer/map/samples.html" />
+            </item>
         </menu>
         <menu name="Bean Validation">
             <item name="Samples" href="/validator/samples.html" />

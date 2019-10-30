@@ -52,5 +52,4 @@ class OptionalPopulator extends Populator<Object> {
         }
         return res;
     }
-
 }

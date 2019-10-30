@@ -5,7 +5,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>1.5.2-SNAPSHOT</version>
+    <version>1.6.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -17,11 +17,13 @@
     <parent>
         <groupId>com.hotels</groupId>
         <artifactId>hotels-oss-parent</artifactId>
-        <version>4.2.0</version>
+        <version>4.1.0</version>
     </parent>
 
     <modules>
         <module>bull-common</module>
+        <module>bull-bean-transformer</module>
+        <module>bull-converter</module>
     </modules>
 
     <properties>
@@ -30,26 +32,28 @@
         <jdk.version>11</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
-        <spring-boot.version>2.1.9.RELEASE</spring-boot.version>
+        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
         <lombok.version>1.18.10</lombok.version>
         <apache.commons-lang3.version>3.9</apache.commons-lang3.version>
         <shazamcrest.version>0.11</shazamcrest.version>
         <gson.version>2.8.6</gson.version>
         <testng.version>7.0.0</testng.version>
-        <mockito.version>3.1.0</mockito.version>
+        <hotels.oss.plugin.config.version>1.3.0</hotels.oss.plugin.config.version>
         <!-- validation dependencies -->
         <validation-api.version>2.0.1.Final</validation-api.version>
         <hibernate-validator.version>6.1.0.Final</hibernate-validator.version>
         <slf4j-api.version>1.7.28</slf4j-api.version>
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <glassfish.javax.el.version>2.2.6</glassfish.javax.el.version>
-        <!-- JaCoCo properties -->
+        <!-- JaCoCo & Sonar properties -->
+        <jacoco.version>0.8.3</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
         <jacoco.instructionRatio>0.90</jacoco.instructionRatio>
         <jacoco.methodRatio>1.0</jacoco.methodRatio>
         <jacoco.branchRatio>0.85</jacoco.branchRatio>
         <jacoco.complexityRatio>0.88</jacoco.complexityRatio>
         <jacoco.lineRatio>0.90</jacoco.lineRatio>
+        <sonar.coverage.exclusions>**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*</sonar.coverage.exclusions>
         <!-- site properties -->
         <wagon-ssh.version>3.3.3</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
@@ -114,15 +118,9 @@
                 <exclusions>
                     <exclusion>
                         <groupId>org.mockito</groupId>
-                        <artifactId>mockito-core</artifactId>
+                        <artifactId>mockito-junit-jupiter</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>${mockito.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -181,11 +179,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <scope>test</scope>
@@ -201,16 +194,13 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>bean-utils-library</module>
-                <module>bull-bean-transformer</module>
-                <module>bull-converter</module>
+                <module>bull-map-transformer</module>
             </modules>
         </profile>
         <profile>
-            <id>bean-transformer</id>
+            <id>map-transformer</id>
             <modules>
-                <module>bean-utils-library</module>
-                <module>bull-converter</module>
+                <module>bull-map-transformer</module>
             </modules>
         </profile>
         <profile>
@@ -435,16 +425,19 @@
                             <configuration>
                                 <skip>${jacoco.check.skip}</skip>
                                 <includes>
+                                    <include>com/hotels/transformer/**</include>
                                     <include>com/hotels/beans/**</include>
+                                    <include>com/hotels/map/**</include>
                                 </includes>
                                 <excludes>
                                     <exclude>**/Test*.*</exclude>
                                     <exclude>**/*Test.*</exclude>
                                     <exclude>**/*Application.*</exclude>
-                                    <exclude>com/hotels/beans/model/**</exclude>
-                                    <exclude>com/hotels/beans/constant/**</exclude>
-                                    <exclude>com/hotels/beans/error/**</exclude>
-                                    <exclude>com/hotels/beans/annotation/**</exclude>
+                                    <exclude>com/hotels/transformer/AbstractTransformer.*</exclude>
+                                    <exclude>**/model/**</exclude>
+                                    <exclude>**/constant/**</exclude>
+                                    <exclude>**/error/**</exclude>
+                                    <exclude>**/annotation/**</exclude>
                                 </excludes>
                                 <rules>
                                     <rule>
