@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.6.1] TBD
 * Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
+* Updated `jacoco-maven-plugin` version to `0.8.5` (was `0.8.3`).
 
 ### [1.6.0.2] 2019.10.30
 ### Removed
