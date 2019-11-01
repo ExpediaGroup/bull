@@ -42,7 +42,7 @@
         <!-- validation dependencies -->
         <validation-api.version>2.0.1.Final</validation-api.version>
         <hibernate-validator.version>6.1.0.Final</hibernate-validator.version>
-        <slf4j-api.version>1.7.28</slf4j-api.version>
+        <slf4j-api.version>1.7.29</slf4j-api.version>
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <glassfish.javax.el.version>2.2.6</glassfish.javax.el.version>
         <!-- JaCoCo & Sonar properties -->
