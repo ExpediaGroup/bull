@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 * Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
 * Updated `jacoco-maven-plugin` version to `0.8.5` (was `0.8.3`).
 * Updated `slf4j-api` version to `1.7.29` (was `1.7.28`).
+* Updated `spring-boot-starter-test` version to `2.2.1.RELEASE` (was `2.2.0.RELEASE`).
 
 ### [1.6.0.2] 2019.10.30
 ### Removed
