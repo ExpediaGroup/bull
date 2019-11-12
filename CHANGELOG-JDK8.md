@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 * Updated `jacoco-maven-plugin` version to `0.8.5` (was `0.8.3`).
 * Updated `slf4j-api` version to `1.7.29` (was `1.7.28`).
 * Updated `spring-boot-starter-test` version to `2.2.1.RELEASE` (was `2.2.0.RELEASE`).
+* Updated `wagon-ssh` version to `3.3.4` (was `3.3.3`).
 
 ### [1.1.25] 2019.10.30
 ### Removed
