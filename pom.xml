@@ -55,7 +55,7 @@
         <jacoco.lineRatio>0.90</jacoco.lineRatio>
         <sonar.coverage.exclusions>**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*</sonar.coverage.exclusions>
         <!-- site properties -->
-        <wagon-ssh.version>3.3.3</wagon-ssh.version>
+        <wagon-ssh.version>3.3.4</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
         <github.global.server>github</github.global.server>
         <maven.site.plugin.version>3.8.2</maven.site.plugin.version>
