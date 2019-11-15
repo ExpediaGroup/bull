@@ -45,6 +45,34 @@ All BULL modules are available on Maven Central:
 
 In case you need to integrate it in a `jdk 8` (or above project) please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md) file or to [CHANGELOG](CHANGELOG.md) otherwise.
 
+* #### Suggestions
+
+Some jdk versions removes the Java Bean constructor's argument names from the compiled code and this may cause problems to the library.
+On top of that, it's suggested to configure the `maven-compiler-plugin`, inside your project, as follow:
+
+~~~
+<build>
+    ...
+    <pluginManagement>
+        <plugins>
+            ...
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <parameters>true</parameters>
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                </configuration>
+            </plugin>
+        </plugins>
+    </pluginManagement>
+    ...
+</build>
+~~~
+
 ## Maven build
 
 Full build
