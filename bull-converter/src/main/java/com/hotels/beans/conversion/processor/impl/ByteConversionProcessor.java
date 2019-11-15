@@ -16,6 +16,8 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.lang.Boolean.TRUE;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.function.Function;
@@ -95,7 +97,7 @@ public final class ByteConversionProcessor implements ConversionProcessor<Byte> 
      */
     @Override
     public Function<Boolean, Byte> convertBoolean() {
-        return val -> val ? (byte) 1 : (byte) 0;
+        return val -> TRUE.equals(val) ? (byte) 1 : (byte) 0;
     }
 
     /**

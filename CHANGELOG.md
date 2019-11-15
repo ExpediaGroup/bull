@@ -2,6 +2,51 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.1] TBD
+* Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
+* Updated `jacoco-maven-plugin` version to `0.8.5` (was `0.8.3`).
+* Updated `slf4j-api` version to `1.7.29` (was `1.7.28`).
+* Updated `spring-boot-starter-test` version to `2.2.1.RELEASE` (was `2.2.0.RELEASE`).
+* Updated `wagon-ssh` version to `3.3.4` (was `3.3.3`).
+
+### [1.6.0.2] 2019.10.30
+### Removed
+* Removed deprecated module `bean-utils-library`, the new one is: `bean-bean-transformer`
+* The following deprecated classes has been removed:
+    * `com.hotels.beans.model.FieldMapping`
+    * `com.hotels.beans.model.FieldTransformer`
+    * `com.hotels.beans.Transformer`
+### Added
+* New specific exception in case the Field Transformation function defined is not valid
+* Implemented a new functionality that allows to transform also Map object applying transformation function and mappings
+#### Changed
+* `Transformer` class previously in charge of the Java Bean transformation has been moved to `BeanTransformer`
+* Updated `spring-boot-starter-test` version to `2.2.0.RELEASE` (was `2.1.7.RELEASE`).
+* Updated `testng` version to `7.0.0` (was `6.14.3`).
+* Updated `slf4j-api` version to `1.7.28` (was `1.7.27`).
+* Updated `jacoco-maven-plugin` version to `0.8.4` (was `0.8.2`).
+* Updated `lombok` version to `1.18.10` (was `1.18.8`).
+* Updated `hibernate-validator` version to `6.1.0.Final` (was `6.0.17.Final`).
+
+### [1.5.1] 2019.09.02
+#### Changed
+* **The module `bean-utils-library` has been deprecated and will be no longer available since version `1.6.0`, use `bull-bean-transformer` instead.**
+    ~~~
+    <dependency>
+        <groupId>com.hotels.beans</groupId>
+        <artifactId>bull-bean-transformer</artifactId>
+        <version>x.y.z</version>
+    </dependency>
+    ~~~
+* Module `bean-utils-library` has been relocated into `bull-bean-transformer`.
+* The following classes has been deprecated, please find below the complete list and the new one to be used:
+
+    | Deprecated | **New one** |
+    | :----------- | :----------- |
+    | `com.hotels.beans.model.FieldMapping` | `com.hotels.transformer.model.FieldMapping` |
+    | `com.hotels.beans.model.FieldTransformer` | `com.hotels.transformer.model.FieldTransformer` |
+    | `com.hotels.beans.Transformer` | `com.hotels.transformer.Transformer` |
+
 ### [1.5.0] 2019.08.06
 #### Added
 * Implemented automatic conversion of basic types (see: [Issue 61](https://github.com/HotelsDotCom/bull/issues/61)).
@@ -80,7 +125,7 @@ All notable changes to this project will be documented in this file.
 ### [1.2.5] 2019.03.31
 #### Added
 * Improved field value retrieval function.
-* Added ling to Gitter channel for BULL.
+* Added link to Gitter channel for BULL.
 * Integrated Gitter notification in order to keep up to date BULL community
 
 ### [1.2.4] 2019.03.23

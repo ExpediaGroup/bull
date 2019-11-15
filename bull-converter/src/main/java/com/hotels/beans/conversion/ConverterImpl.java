@@ -18,7 +18,7 @@ package com.hotels.beans.conversion;
 
 import static java.util.Objects.isNull;
 
-import static com.hotels.beans.validator.Validator.notNull;
+import static com.hotels.transformer.validator.Validator.notNull;
 
 import java.util.Optional;
 import java.util.function.Function;

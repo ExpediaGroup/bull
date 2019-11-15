@@ -9,22 +9,34 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 
 ## Start using
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bean-utils-library/badge.svg?subject=maven-central)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bean-utils-library)
-[![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bean-utils-library.svg)](http://www.javadoc.io/doc/com.hotels.beans/bean-utils-library)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer/badge.svg?subject=maven-central)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer)
+[![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bull-bean-transformer.svg)](http://www.javadoc.io/doc/com.hotels.beans/bull-bean-transformer)
 [![Build Status](https://travis-ci.org/HotelsDotCom/bull.svg?branch=master)](https://travis-ci.org/HotelsDotCom/bull)
-[![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWQxOWZiYjAwOThlY2FmNjYxZDY1ZDNlZTdlNTZlY2Y2YmE0MjcxMzNjZjNjOTY3OWJkNzdmM2ViNmQ2NjUyNDE](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWQxOWZiYjAwOThlY2FmNjYxZDY1ZDNlZTdlNTZlY2Y2YmE0MjcxMzNjZjNjOTY3OWJkNzdmM2ViNmQ2NjUyNDE)
+[![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk)
 
 [![GitHub site](https://img.shields.io/badge/GitHub-site-blue.svg)](https://hotelsdotcom.github.io/bull/)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=coverage)](https://sonarcloud.io/dashboard?id=BULL)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=security_rating)](https://sonarcloud.io/dashboard?id=BULL)
 ![GitHub license](https://img.shields.io/github/license/HotelsDotCom/bull.svg)
 
-You can obtain BULL from Maven Central: 
+All BULL modules are available on Maven Central: 
+
+* ### Bean Transformer
 
 ~~~
 <dependency>
     <groupId>com.hotels.beans</groupId>
-    <artifactId>bean-utils-library</artifactId>
+    <artifactId>bull-bean-transformer</artifactId>
+    <version>x.y.z</version>
+</dependency>
+~~~
+
+* ### `Map` Transformer
+
+~~~
+<dependency>
+    <groupId>com.hotels.beans</groupId>
+    <artifactId>bull-map-transformer</artifactId>
     <version>x.y.z</version>
 </dependency>
 ~~~
@@ -35,7 +47,7 @@ In case you need to integrate it in a `jdk 8` (or above project) please refer to
 
 ## Maven build
 
-Full build
+Bean related module build
 ~~~
 ./mvnw clean install
 ~~~
@@ -44,9 +56,18 @@ or on Windows
 mvnw.cmd clean install
 ~~~
 
+Full build
+~~~
+./mvnw clean install -P build-all
+~~~
+or on Windows
+~~~
+mvnw.cmd clean install -P build-all
+~~~
+
 Skip test coverage and checkstyle check
 ~~~
-./mvnw clean install -P relaxed
+./mvnw clean install -P -P build-all, relaxed
 ~~~
 or on Windows
 ~~~
@@ -77,11 +98,12 @@ mvnw.cmd clean install -P relaxed
 
 # Feature samples
 
-* [Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
-* [Validation](https://github.com/HotelsDotCom/bull#validation-samples)
+* [Bean Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
+* [Bean Validation](https://github.com/HotelsDotCom/bull#validation-samples)
 * [Primitive Type conversion](https://github.com/HotelsDotCom/bull#primitive-type-object-converter)
+* [Map Transformation](https://hotelsdotcom.github.io/bull/transformer/map/samples.html)
 
-## Transformation samples
+## Bean transformation samples
 
 ### Simple case:
 
@@ -91,13 +113,12 @@ public class FromBean {                                     public class ToBean 
    private final BigInteger id;                                public BigInteger id;                      
    private final List<FromSubBean> subBeanList;                private final String name;                 
    private List<String> list;                                  private final List<String> list;                    
-   private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
-                                                               private ImmutableToSubFoo nestedObject;
+   private final FromSubBean subObject;                        private final List<ToSubBean> subBeanList;                    
+                                                               private ImmutableToSubFoo subObject;
    
    // all constructors                                         // all args constructor
-   // getters and setters...                                   // getters... 
-}                                                               
-                                                            }
+   // getters and setters...                                   // getters and setters... 
+}    
 ~~~
 And one line code as:
 ~~~Java
@@ -116,7 +137,7 @@ public class FromBean {                                     public class ToBean 
    private final List<String> list;                            private final List<String> list;                    
    private final FromSubBean subObject;                        private final ToSubBean subObject;                    
     
-   // getters and setters...
+   // getters...
                                                                public ToBean(final String differentName, 
                                                                         final int id,
 }                                                                       final List<ToSubBean> subBeanList,
@@ -129,14 +150,14 @@ public class FromBean {                                     public class ToBean 
                                                                         this.subObject = subObject; 
                                                                     }
                                                                 
-                                                                    // getters and setters...           
+                                                                    // getters...           
                                               
                                                                 }
 ~~~
 And one line code as:
 
 ~~~Java                                                                
-beanUtils.getTransformer().withFieldMapping(new FieldMapping("name", "differentName")).transform(fromBean, ToBean.class);                                                               
+beanUtils.getTransformer().withFieldMapping(new FieldMapping<>("name", "differentName")).transform(fromBean, ToBean.class);                                                               
 ~~~
 
 ### Mapping destination fields with correspondent fields contained inside one of the nested object in the source object:
@@ -168,8 +189,8 @@ public class FromBean {                                     public class ToBean 
 ~~~
 the fields: `serialNumber` and `creationDate` needs to be retrieved from `subObject`, this can be done defining the whole path to the end property:
 ~~~Java  
-FieldMapping serialNumberMapping = new FieldMapping("subObject.serialNumber", "serialNumber");                                                             
-FieldMapping creationDateMapping = new FieldMapping("subObject.creationDate", "creationDate");
+FieldMapping serialNumberMapping = new FieldMapping<>("subObject.serialNumber", "serialNumber");                                                             
+FieldMapping creationDateMapping = new FieldMapping<>("subObject.creationDate", "creationDate");
                                                              
 beanUtils.getTransformer()
          .withFieldMapping(serialNumberMapping, creationDateMapping)
@@ -231,7 +252,7 @@ public class FromBean {                                     public class ToBean 
 FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::negate);
 FieldTransformer<String, Locale> localeTransformer = new FieldTransformer<>("locale", Locale::forLanguageTag);
 beanUtils.getTransformer()
-    .withFieldMapping(new FieldMapping("id", "identifier"))
+    .withFieldMapping(new FieldMapping<>("id", "identifier"))
     .withFieldTransformer(fieldTransformer).transform(fromBean, ToBean.class)
     .withFieldTransformer(localeTransformer);
 ~~~
@@ -366,7 +387,7 @@ Assuming that the value `x` should be mapped into field: `x` contained into the 
 follow:
 ~~~Java
 ToBean toBean = beanUtils.getTransformer()
-                    .withFieldMapping(new FieldMapping("x", "nestedObject.x"));
+                    .withFieldMapping(new FieldMapping<>("x", "nestedObject.x"));
 ~~~
 
 ### Apply a transformation function on all fields matching with the given one:
@@ -751,6 +772,10 @@ byte converted = conversionFunction.map(processor -> processor.apply(c)).orElse(
 
 * in case the conversion is not needed as the primitive type and the destination type are the same it will return an empty `Optional`
 * in case the conversion function is unavailable or no not possible the method throws a : `TypeConversionException`
+
+## `Map` transformation samples
+
+Samples on how to transform a `Map` and all others function applicable on it can be viewed [here](https://hotelsdotcom.github.io/bull/transformer/mapTransformer.html)
 
 ## Documentation
 

@@ -12,14 +12,14 @@
 
     <!-- Main log file -->
     <appender name="MAIN_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${ROOT_LOG_DIR}/bean-utils-library.log</file>
+        <file>${ROOT_LOG_DIR}/bull-common.log</file>
         <append>true</append>
         <encoder>
             <charset>UTF-8</charset>
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${ROOT_LOG_DIR}/bean-utils-library-%d{yyyy-MM-dd}-%i.log.zip
+            <fileNamePattern>${ROOT_LOG_DIR}/bull-common-%d{yyyy-MM-dd}-%i.log.zip
             </fileNamePattern>
             <maxHistory>30</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">

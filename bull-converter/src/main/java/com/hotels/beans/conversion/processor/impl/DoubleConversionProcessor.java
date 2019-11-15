@@ -16,6 +16,7 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.lang.Character.getNumericValue;
 import static java.nio.ByteBuffer.wrap;
 
@@ -106,7 +107,7 @@ public final class DoubleConversionProcessor implements ConversionProcessor<Doub
      */
     @Override
     public Function<Boolean, Double> convertBoolean() {
-        return val -> val ? (double) 1 : (double) 0;
+        return val -> TRUE.equals(val) ? (double) 1 : (double) 0;
     }
 
     /**
