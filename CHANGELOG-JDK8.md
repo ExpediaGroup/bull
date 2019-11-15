@@ -2,7 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.1.25] TBD
+### [1.1.26] TBD
+### Fixed
+* Fixed check that was preventing the transformation of Mixed Java Beans without an all args constructor. 
+#### Changed
+* Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
+* Updated `jacoco-maven-plugin` version to `0.8.5` (was `0.8.3`).
+* Updated `slf4j-api` version to `1.7.29` (was `1.7.28`).
+* Updated `spring-boot-starter-test` version to `2.2.1.RELEASE` (was `2.2.0.RELEASE`).
+* Updated `wagon-ssh` version to `3.3.4` (was `3.3.3`).
+
+### [1.1.25] 2019.10.30
 ### Removed
 * Removed deprecated module `bean-utils-library`, the new one is: `bean-bean-transformer`
 * The following deprecated classes has been removed:
