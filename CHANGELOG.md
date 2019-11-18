@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ### [1.6.1] 2019.11.18
-### Fixed
+### Added
 * Added specific exception message in case the constructor invoke fails due to missing parameter name in the compiled code.
 #### Changed
 * Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
