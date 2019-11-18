@@ -664,7 +664,10 @@ public final class ClassUtils {
             final boolean res = stream(getConstructorParameters(constructor))
                     .anyMatch(Parameter::isNamePresent);
             if (!res) {
-                log.warn("WARNING: Constructor's parameters name have been removed from the compiled code. This may prevent the correct working to  library wo ");
+                log.warn("Constructor's parameters name have been removed from the compiled code. "
+                        + "This caused a problems with the Java Bean injection through constructor. "
+                        + "Consider to use: @ConstructorArg annotation: https://github.com/HotelsDotCom/bull#different-field-names-defining-constructor-args "
+                        + "or add the property: <parameters>true</parameters> to your maven-compiler configuration");
             }
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
