@@ -150,7 +150,8 @@ public class TransformerImpl extends AbstractBeanTransformer {
     private <K> boolean canBeInjectedByConstructorParams(final Constructor constructor, final Class<K> targetClass) {
         final String cacheKey = "CanBeInjectedByConstructorParams-" + constructor.getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final boolean res = classUtils.getPrivateFinalFields(targetClass).size() == constructor.getParameterCount();
+            final boolean res = classUtils.getPrivateFinalFields(targetClass).size() == constructor.getParameterCount()
+                    && (classUtils.areParameterNamesAvailable(constructor) || classUtils.allParameterAnnotatedWith(constructor, ConstructorArg.class));
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
