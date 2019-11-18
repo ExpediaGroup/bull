@@ -68,9 +68,12 @@ import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.error.InstanceCreationException;
 import com.hotels.transformer.error.InvalidBeanException;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Reflection utils for Class objects.
  */
+@Slf4j
 public final class ClassUtils {
     /**
      * Class nullability error message constant.
@@ -622,6 +625,10 @@ public final class ClassUtils {
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final boolean res = stream(getConstructorParameters(constructor))
                     .anyMatch(Parameter::isNamePresent);
+            if (!res) {
+                log.warn("WARNING: Constructor's parameters name have been removed from the compiled code."
+                        + "This may prevent the correct working to  library wo ");
+            }
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
