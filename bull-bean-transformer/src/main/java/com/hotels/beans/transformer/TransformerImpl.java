@@ -111,10 +111,18 @@ public class TransformerImpl extends AbstractBeanTransformer {
         try {
             return classUtils.getInstance(constructor, constructorArgs);
         } catch (final Exception e) {
-            throw new InvalidBeanException("Constructor invoked with arguments. Expected: " + constructor + "; Found: "
-                    + getFormattedConstructorArgs(targetClass, constructorArgs)
-                    + ". Double check that each " + targetClass.getSimpleName() + "'s field have the same type and name than the source object: "
-                    + sourceObj.getClass().getName() + " otherwise specify a transformer configuration. Error message: " + e.getMessage(), e);
+            String errorMsg;
+            if (!classUtils.areParameterNamesAvailable(constructor)) {
+                errorMsg = "Constructor's parameters name have been removed from the compiled code. "
+                + "This caused a problems during the: " + targetClass.getSimpleName() + " injection, "
+                + "consider to add the property: <parameters>true</parameters> to your maven-compiler configuration";
+            } else {
+                errorMsg = "Constructor invoked with arguments. Expected: " + constructor + "; Found: "
+                        + getFormattedConstructorArgs(targetClass, constructorArgs)
+                        + ". Double check that each " + targetClass.getSimpleName() + "'s field have the same type and name than the source object: "
+                        + sourceObj.getClass().getName() + " otherwise specify a transformer configuration. Error message: " + e.getMessage();
+            }
+            throw new InvalidBeanException(errorMsg, e);
         }
     }
 
@@ -141,7 +149,8 @@ public class TransformerImpl extends AbstractBeanTransformer {
     private <K> boolean canBeInjectedByConstructorParams(final Constructor constructor, final Class<K> targetClass) {
         final String cacheKey = "CanBeInjectedByConstructorParams-" + constructor.getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final boolean res = classUtils.getPrivateFinalFields(targetClass).size() == constructor.getParameterCount();
+            final boolean res = classUtils.getPrivateFinalFields(targetClass).size() == constructor.getParameterCount()
+                    && (classUtils.areParameterNamesAvailable(constructor) || classUtils.allParameterAnnotatedWith(constructor, ConstructorArg.class));
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
