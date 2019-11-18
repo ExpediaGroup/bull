@@ -424,7 +424,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
         Class<ImmutableToFooSimpleWrongTypes> targetClass = ImmutableToFooSimpleWrongTypes.class;
         final String expectedExceptionMessageFormat =
-                "Constructor invoked with arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String). "
+                "Constructor invoked with wrong arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String). "
                         + "Double check that each %s's field have the same type and name than the source object: %s otherwise specify a transformer configuration. "
                         + "Error message: argument type mismatch";
         String targetClassName = targetClass.getName();
