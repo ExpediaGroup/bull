@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.6.1] TBD
+### [1.6.1] 2019.11.18
 ### Fixed
 * Fixed check that was preventing the transformation of Mixed Java Beans without an all args constructor. 
 #### Changed
