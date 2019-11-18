@@ -115,7 +115,8 @@ public class TransformerImpl extends AbstractBeanTransformer {
             if (!classUtils.areParameterNamesAvailable(constructor)) {
                 errorMsg = "Constructor's parameters name have been removed from the compiled code. "
                 + "This caused a problems during the: " + targetClass.getSimpleName() + " injection, "
-                + "consider to add the property: <parameters>true</parameters> to your maven-compiler configuration";
+                + "consider to use: @ConstructorArg annotation: https://github.com/HotelsDotCom/bull#different-field-names-defining-constructor-args "
+                + "or add the property: <parameters>true</parameters> to your maven-compiler configuration";
             } else {
                 errorMsg = "Constructor invoked with wrong arguments. Expected: " + constructor + "; Found: "
                         + getFormattedConstructorArgs(targetClass, constructorArgs)

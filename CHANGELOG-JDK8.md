@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.1.26] TBD
-### Fixed
-* Fixed check that was preventing the transformation of Mixed Java Beans without an all args constructor. 
+### [1.1.26] 2019.11.18
+### Added
+* Added specific exception message in case the constructor invoke fails due to missing parameter name in the compiled code. 
 #### Changed
 * Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
 * Updated `jacoco-maven-plugin` version to `0.8.5` (was `0.8.3`).
