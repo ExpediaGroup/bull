@@ -52,6 +52,7 @@ import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooAdvFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooDiffFields;
+import com.hotels.beans.sample.immutable.ImmutableToFooDiffTypesFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooInvalid;
 import com.hotels.beans.sample.immutable.ImmutableToFooMap;
 import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
@@ -197,7 +198,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
 
         //WHEN
-        underTest.setValidationEnabled(true).transform(sourceObject, targetObjectClass);
+        underTest.setValidationEnabled(false).transform(sourceObject, targetObjectClass);
     }
 
     /**
@@ -208,7 +209,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     private Object[][] dataConstructorErrorTesting() {
         FromFoo actual = new FromFoo(NAME, ID, null, null, null);
         return new Object[][] {
-                {"Test that an exception is thrown if the constructor invocation throws exception", actual, ImmutableToFooCustomAnnotation.class}
+                {"Test that an exception is thrown if the constructor is invoked with wrong type arguments", actual, ImmutableToFooDiffTypesFields.class}
         };
     }
 
@@ -425,7 +426,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
         Class<ImmutableToFooSimpleWrongTypes> targetClass = ImmutableToFooSimpleWrongTypes.class;
         final String expectedExceptionMessageFormat =
-                "Constructor invoked with arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String). "
+                "Constructor invoked with wrong arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String). "
                         + "Double check that each %s's field have the same type and name than the source object: %s otherwise specify a transformer configuration. "
                         + "Error message: argument type mismatch";
         String targetClassName = targetClass.getName();
