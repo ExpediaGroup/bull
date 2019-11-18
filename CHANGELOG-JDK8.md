@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 #### Changed
 * `Transformer` class previously in charge of the Java Bean transformation has been moved to `BeanTransformer`
 * Updated `spring-boot-starter-test` version to `2.2.0.RELEASE` (was `2.1.7.RELEASE`).
+* Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
 * Updated `testng` version to `7.0.0` (was `6.14.3`).
 * Updated `slf4j-api` version to `1.7.28` (was `1.7.27`).
 * Updated `jacoco-maven-plugin` version to `0.8.4` (was `0.8.2`).
