@@ -126,7 +126,6 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j-api.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.shazam</groupId>
@@ -189,7 +188,10 @@
     <profiles>
         <!-- modules profiles -->
         <profile>
-            <id>build-all</id>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <modules>
                 <module>bull-map-transformer</module>
                 <module>bull-transformer-generator</module>
