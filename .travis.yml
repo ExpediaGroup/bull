@@ -2,9 +2,9 @@ language: java
 cache:
   directories:
     - "~/.m2/repository"
-jdk:
-  - openjdk11
-  - oraclejdk8
+#jdk:
+#  - openjdk11
+#  - oraclejdk8
 env:
   global:
     # HCOM OSS Sonatype jira info
@@ -25,7 +25,9 @@ jobs:
         - travis_retry mvn clean install
     - stage: "Build"
       name: "Build and Test"
-      script: travis_retry mvn clean install
+      script:
+        - jdk_switcher use openjdk11
+        - travis_retry mvn clean install
     # If is not a PR and a tag is available
     - stage: "Site Build and Quality check"
       name: "Publishing site and performing a code quality check"
