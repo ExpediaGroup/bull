@@ -2,7 +2,6 @@ language: java
 cache:
   directories:
     - "~/.m2/repository"
-jdk: openjdk11
 env:
   global:
     # HCOM OSS Sonatype jira info
