@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.1.1] 2019.11.22
+#### Changed
+* Removed warning leg message in case the constructor parameter names are not available in the compiled code.
+* Removed `slf4j-api` dependency from the library jar.
+
 ### [1.6.1] 2019.11.18
 ### Added
 * Added specific exception message in case the constructor invoke fails due to missing parameter name in the compiled code.
