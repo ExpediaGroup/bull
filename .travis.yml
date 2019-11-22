@@ -2,7 +2,9 @@ language: java
 cache:
   directories:
     - "~/.m2/repository"
-jdk: openjdk11
+jdk:
+  - openjdk11
+  - oraclejdk8
 env:
   global:
     # HCOM OSS Sonatype jira info
@@ -17,7 +19,14 @@ jobs:
   include:
     - stage: "Build"
       name: "Build and Test"
+      if: branch !=~ ^.*-jdk8$
       script: travis_retry mvn clean install
+    - stage: "JDK8 Build"
+      name: "Build and Test JDK8"
+      if: branch =~ ^.*-jdk8$
+      script:
+        - jdk_switcher use oraclejdk8
+        - travis_retry mvn clean install
     # If is not a PR and a tag is available
     - stage: "Site Build and Quality check"
       name: "Publishing site and performing a code quality check"
