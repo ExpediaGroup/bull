@@ -2,9 +2,7 @@ language: java
 cache:
   directories:
     - "~/.m2/repository"
-#jdk:
-#  - openjdk11
-#  - oraclejdk8
+jdk: openjdk11
 env:
   global:
     # HCOM OSS Sonatype jira info
@@ -19,6 +17,7 @@ jobs:
   include:
     - stage: "JDK8 Build"
       name: "Build and Test JDK8"
+      jdk: oraclejdk8
       if: branch =~ ^.*-jdk8$
       script:
         - jdk_switcher use oraclejdk8
