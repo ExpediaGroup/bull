@@ -2,9 +2,6 @@ language: java
 cache:
   directories:
     - $HOME/.m2
-jdk:
-  - openjdk11
-  - openjdk8
 env:
   global:
     # HCOM OSS Sonatype jira info
@@ -20,22 +17,22 @@ jobs:
     ### JDK11 build
     - stage: "JDK11 Build"
       name: "JDK11 Build and Test"
+      jdk: openjdk11
       if: branch =~ ^((?!-jdk8).)*$ OR tag =~ ^((?!-jdk8).)*$
       script:
-        - jdk_switcher use openjdk11
         - travis_retry mvn clean install
     ### JDK8 build
     - stage: "JDK8 Build"
       name: "JDK8 Build and Test"
+      jdk: openjdk8
       if: branch =~ ^.*-jdk8$ OR tag =~ ^.*-jdk8$
       script:
-        - jdk_switcher use openjdk8
         - travis_retry mvn clean install
     - stage: "Site Build and Quality check"
       name: "Publishing site and performing a code quality check"
+      jdk: openjdk8
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^((?!-jdk8).)*$
-      script:
-        - jdk_switcher use openjdk11
+      script: skip
       before_deploy:
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
         - travis_retry mvn install sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} site:site javadoc:aggregate -P default,site-release
@@ -50,9 +47,9 @@ jobs:
     ### JDK11 release
     - stage: "JDK11 Release"
       name: "Releasing artifacts for JDK11"
+      jdk: openjdk11
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^((?!-jdk8).)*$
-      script:
-        - jdk_switcher use openjdk11
+      script: skip
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
@@ -66,9 +63,9 @@ jobs:
     ### JDK8 release
     - stage: "JDK8 Release"
       name: "Releasing artifacts for JDK8"
+      jdk: openjdk8
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^.*-jdk8$
-      script:
-        - jdk_switcher use openjdk11
+      script: skip
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
