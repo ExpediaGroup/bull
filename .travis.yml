@@ -30,7 +30,7 @@ jobs:
         - travis_retry mvn clean install
     - stage: "Site Build and Quality check"
       name: "Publishing site and performing a code quality check"
-      jdk: openjdk8
+      jdk: openjdk11
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^((?!-jdk8).)*$
       script: skip
       before_deploy:
@@ -69,7 +69,7 @@ jobs:
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG}
-        - mvn install -DskipTests -Dmaven.test.skip=true javadoc:aggregate
+        - mvn install javadoc:aggregate -P default,site-release
       deploy:
         - provider: script
           script: config/travis/deploy.sh
