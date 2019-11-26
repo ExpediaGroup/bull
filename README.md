@@ -814,6 +814,10 @@ The application's logo has been designed by: Rob Light.
  - DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)
  - InfoQ: [How Expedia Is Getting Rid of Java Bean Transformers](https://www.infoq.com/articles/expedia-rid-of-bean-transformers/) [[EN](https://www.infoq.com/articles/expedia-rid-of-bean-transformers/)] [[PT-BR](https://www.infoq.com/br/articles/expedia-rid-of-bean-transformers/)]
 
+## Release
+
+All the instructions for releasing a new version are available at: [RELEASES.md](RELEASE.md)
+
 ## Legal
 
 This project is available under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).

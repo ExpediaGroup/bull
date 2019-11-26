@@ -10,190 +10,179 @@ Make the following checks before performing a release:
    * Do all unit tests pass?
    * Do all examples work?
    * Does documentation build?
-
+   * Have the new features been applied on a separate branch with compatibility with `jdk8?
 
 #### 2. Update VERSION and CHANGELOG
 
-##### Increment the version number.
+#### Increment the version number.
 
-The version number is in the [`VERSION`](VERSION) file. This is picked up by the documentation build process.
+The application is released with the compatibility for both: `jdk11` and `jdk8`, the latest version number are:
+in the [CHANGELOG](CHANGELOG.md) file for `jdk11` and [CHANGELOG-JDK](CHANGELOG-JDK8.md) file for `jdk8`. 
 
-It consists of two lines. The first carries the version number. The structure is: *major* **.** *minor* **.** *revision*.
-The *revision* part is *not included* if it is zero '0' (just after a *major* or *minor* increment).
+The version number structure is: *major* **.** *minor* **.** *revision*.
    * *major* = significant incompatible change (e.g. partial or whole rewrite).
    * *minor* = some new functionality or changes that are mostly/wholly backward compatible.
    * *revision* = very minor changes, e.g. bugfixes.
+   
+For `jdk8` only, the version number is the same as the `jdk11` one, with the suffix: `-jdk8`.
 
-The 2nd line carries the state - whether this is the "latest" code in the master branch, or whether it is a "release".
-Leave this as "latest" for the moment.
+e.g. if the new release version would be `1.8.0` then the `jdk8` correspondent one is: `1.8.0-jdk8
 
+#### Update the change log
 
-##### Update the change log
+The changes, that are going to be released, needs to be specified in the `CHANGELOG` file.
+Ensure it mentions any noteworthy changes since the previous release.
 
-The is in the [`CHANGELOG.md`](CHANGELOG.md) file. Ensure it mentions any noteworthy changes since the previous release.
+Make the following check before performing a release:
+* Add the version is going to be released
+* Place the release date next to the version number (the format is: `yyyy.mm.dd`)
+* Specify under the `### Added` label everything that has been introduced by the new version 
+* Specify under the `### Changed` label everything that has been changed in the new version 
+* Specify under the `### Removed` label everything that has been removed in the new version 
 
+the same changes must be reported in [CHANGELOG-JDK](CHANGELOG-JDK8.md)
 
-#### 3. Create release branch
+#### 3. Prepare the jdk8 release
 
-Create the branch, naming it after the release version number (just the number).
+All the changes implemented needs to be reported to the `jdk8` compatible version.
+The BULL code for the `jdk8` is slightly different so all the changes needs to be reported on the other version starting
+from it's latest release tag.
+The first thing to do is to create a branch (that would have the same name as the `jdk11` one plus the suffix: `-jd8`)
+starting from the latest `jdk8` release tag:
 
-In the branch, now modify (and commit) the VERSION file, changing "latest" to "release".
+~~~
+$ git checkout -b [branch name]-jdk8 [latest jdk8 release tag] 
+~~~
 
+e.g. if the latest `jdk8` release tag is: `1.7.0-jdk8` and the new feature branch is: `feature/my-new-feature`
+the command to perform is: 
 
-#### 4. Create a new release on GitHub based on the new branch
+~~~
+$ git checkout -b feature/my-new-feature-jdk8 1.7.0-jdk8 
+~~~
 
-Put a shorter summary of the new changelog items into the release notes. Make the tag name the version number
-- the same as the branch name.
+**IMPORTANT:** In the new branch, apply only the changes introduced comparing the code with the `jdk11` branch.
 
-
-#### 5. Update documentation builds on gh-pages
-
-Run the documentation build process to build documentation for:
-
-* This new "release" branch ("new")
-* *master* branch ("latest")
-
-Note that these are slightly different (because of the 2nd line in the `VERSION` file)
-
-Checkout the [gh-pages](https://github.com/bbc/dial-discovery-ios/tree/gh-pages) branch and make the following commits:
-
-* replace the contents of [`docs/latest`](https://github.com/bbc/dial-discovery-ios/tree/gh-pages/docs/latest)
-  with the documentation build for the "latest" state of master.
-
-* put into `docs/XXXX` the documentation build for the "new" release branch, where XXXX is the version number
-
-Then push the commits up to GitHub.
-
-#### 6. Release new CocoaPod version
-
-The process originally followed to register and setup first time was [this one](https://code.tutsplus.com/tutorials/creating-your-first-cocoapod--cms-24332). You need to be registered with CocoaPods Trunk
-repository to be able to publish a pod. Instructions to register with CocoaPods Trunk are available [here](https://guides.cocoapods.org/making/getting-setup-with-trunk.html)
-
-
-For subsequent releases, increment the version number in the PodSpec file and push the new pod version .
-
-    $ pod trunk push dial-discovery-ios.podspec
-
-
-- - - - -
+when completed, commit your code and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green. 
 
 ## Example of release process sequence
 
-This example assumes your local repository is a clone and the working copy is currently at the head of the master branch, and that this is all
-synced with GitHub. The following steps will do a release "X.Y.Z"
+The following examples assume that your local repository is:
 
-    $ git status
-    On branch master
-    Your branch is up-to-date with 'origin/master'.
-    nothing to commit, working directory clean
+* a clone and the working copy is currently at the head of the master branch
+* is all synced with GitHub
+* the Pull Request has been approved and merged on master
 
-### 1. Run checks
+### JDK8
 
-Run unit tests:
+The following steps will do a release "`X.Y.Z-jdk8`"
 
-    $ xcodebuild test -workspace Example/dial-discovery-ios.xcworkspace -scheme dial-discovery-ios-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
-    $ pod lib lint
+~~~
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+~~~
 
+#### 1. Create a branch from the latest JDK8 release tag
 
-Also check the documentation builds:
+Assuming that:
 
-    $ cd docs
-    $ jazzy --config jazzy.yaml
+* the latest release for `jdk8` was: `A.B.C-jdk8` 
+* your new feature branch is: `feature/my-new-feature`
+* the new release version is: `X.Y.Z-jdk8`
 
-... and manually review areas where it will have changed
+the release branch would be: `release/my-new-feature-jdk8`
 
-And run all examples and check they work!
+~~~
+$ git checkout -b release/my-new-feature-jdk8 A.B.C-jdk8 
+~~~
 
+#### 2. Apply the changes to the new branch
 
+Apply all the changes you implemented to this branch. 
 
-### 2. Update VERSION and CHANGELOG
+#### 3. Change the maven version
 
-Update the version number in `master`, e.g. using `vi`:
+The maven version is now set with the latest released, but you need to change it with the new one you are going to release:
 
-    $ vi VERSION
-        .. change version number line only ..
-    $ vi CHANGELOG.md
-        .. update change log  ..
-    $ git add VERSION
-    $ git add CHANGELOG.md
-    $ git commit -m "Version number increment and Changelog update ready for release"
+~~~
+$ mvn versions:set -D newVersion=X.Y.Z-jdk8
+~~~
 
-And push to GitHub:
+Commit all the changes.
 
-    $ git push origin master
+#### 4. Create a new tag for the release version
 
-### 3. Create release branch
+Once you will have created the tag, and pushed it to the remote repo, an automatic release will be performed by Travis.
 
-Create new branch (locally)
+~~~
+$ git tag -a X.Y.Z-jdk8 -m "my version X.Y.Z-jdk8"
+$ git push origin --tags
+~~~
 
-    $ git checkout -b 'X.Y.Z'
+#### 5. Remove the no longer needed branch
 
-Update VERSION to mark as "release" within the branch
+If the release went successfully, you can now delete the branch:
 
-    $ vi VERSION
-       .. change "latest" to "release"
-    $ git add VERSION
-    $ git commit -m "Version marked as release."
+~~~
+$ git branch -D release/my-new-feature-jdk8
+$ git push <remote_name> --delete release/my-new-feature-jdk8
+~~~
 
-Push branch up to github (and set local repository to track the upstream branch on origin):
+**IMPORTANT:** In case something goes wrong, do not leave ghost tags or tags not related to a successful release.
 
-    $ git push -u origin 'X.Y.Z'
+### JDK11
 
+The following steps will do a release "`X.Y.Z`"
 
-### 4. Create a new release on GitHub based on the new branch
+~~~
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+~~~
 
-Now use the [new release](https://github.com/bbc/dial-discovery-ios/releases/new) function on GitHub's web interface to
-mark the branch 'X.Y.Z' as a new release.
+#### 1. Create a branch from the master branch
 
-### 5. Update documentation builds on gh-pages
+Assuming that:
 
-First, build and copy the documentation for the release and stash it somewhere temporarily.
+* the latest release for `jdk11` was: `A.B.C` 
+* your new feature branch is: `feature/my-new-feature`
+* the new release version is: `X.Y.Z`
 
-    $ git status
-    On branch X.Y.Z
-    Your branch is up-to-date with 'origin/master'.
-    nothing to commit, working directory clean
+the release branch would be: `release/my-new-feature`
 
-    $ cd docs
-    $ jazzy --config jazzy.yaml
-    $ cp -R build/ /tmp/X.Y.Z
+~~~
+$ git checkout -b release/my-new-feature
+~~~
 
-Now switch back to master and do the same for the latest state of master:
+#### 2. Change the maven version
 
-    $ git checkout master
-    $ jazzy --config jazzy.yaml
-    $ cp -R build/ tmp/latest
-    $ cd ..
+The maven version is now set with the latest released, but you need to change it with the new one you are going to release:
 
-Now switch to gh-pages and ensure it is synced with GitHub:
+~~~
+$ mvn versions:set -D newVersion=X.Y.Z
+~~~
 
-    $ git checkout gh-pages
-    $ git pull origin gh-pages
+Commit all the changes.
 
-And put the new documentation builds in place:
+#### 3. Create a new tag for the release version
 
-    $ cp -R /tmp/X.Y.Z docs/X.Y.Z
-    $ git add docs/X.Y.Z
+Once you will have created the tag, and pushed it to the remote repo, an automatic release will be performed by Travis.
 
-    $ git rm docs/latest
-    $ cp -R /tmp/latest docs/latest
-    $ git add docs/latest
+~~~
+$ git tag -a X.Y.Z -m "my version X.Y.Z"
+$ git push origin --tags
+~~~
 
-    $ git commit -m "Updated docs for new release and latest changes in master"
+#### 4. Remove the no longer needed branch
 
-At this point the `docs` dir should contain:
+If the release went successfully, you can now delete the branch:
 
-* a subdir `X.Y.Z` (named after the release version) containing the HTML documentation for
-  that version. `index.html` should describe the release version as being *"X.Y.Z-release"*
+~~~
+$ git branch -D release/my-new-feature
+$ git push <remote_name> --delete release/my-new-feature-jdk8
+~~~
 
-* a subdir `latest` containing the HTML documentation built from *master*. `index.html` should describe the
-  release version as being *"X.Y.Z-latest"*
-
-Push to GitHub:
-
-    $ git push origin gh-pages
-
-Upload to CocoaPods Trunk:
-
-    $ git checkout <<release-branch>>
-    $ pod trunk push dial-discovery-ios.podspec
+**IMPORTANT:** In case something goes wrong, do not leave ghost tags or tags not related to a successful release.
