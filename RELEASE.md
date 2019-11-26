@@ -1,4 +1,4 @@
-# Release process for BULL
+# Release process
 
 ## Explanation of the process sequence
 
@@ -10,7 +10,7 @@ Make the following checks before performing a release:
    * Do all unit tests pass?
    * Do all examples work?
    * Does documentation build?
-   * Have the new features been applied on a separate branch with compatibility with `jdk8?
+   * Have the new features been applied on a separate branch with compatibility with `jdk8`?
 
 #### 2. Update VERSION and CHANGELOG
 
@@ -26,7 +26,7 @@ The version number structure is: *major* **.** *minor* **.** *revision*.
    
 For `jdk8` only, the version number is the same as the `jdk11` one, with the suffix: `-jdk8`.
 
-e.g. if the new release version would be `1.8.0` then the `jdk8` correspondent one is: `1.8.0-jdk8
+e.g. if the new release version would be `1.8.0` then the `jdk8` correspondent one is: `1.8.0-jdk8`
 
 #### Update the change log
 
@@ -62,8 +62,7 @@ $ git checkout -b feature/my-new-feature-jdk8 1.7.0-jdk8
 ~~~
 
 **IMPORTANT:** In the new branch, apply only the changes introduced comparing the code with the `jdk11` branch.
-
-when completed, commit your code and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green. 
+When completed, commit your code and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green. 
 
 ## Example of release process sequence
 
@@ -72,6 +71,11 @@ The following examples assume that your local repository is:
 * a clone and the working copy is currently at the head of the master branch
 * is all synced with GitHub
 * the Pull Request has been approved and merged on master
+
+* [JDK8](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk8)
+* [JDK11](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk11)
+
+**IMPORTANT:** In case something goes wrong, do not leave ghost tags or tags not related to a successful release.
 
 ### JDK8
 
@@ -130,8 +134,6 @@ $ git branch -D release/my-new-feature-jdk8
 $ git push <remote_name> --delete release/my-new-feature-jdk8
 ~~~
 
-**IMPORTANT:** In case something goes wrong, do not leave ghost tags or tags not related to a successful release.
-
 ### JDK11
 
 The following steps will do a release "`X.Y.Z`"
@@ -184,5 +186,3 @@ If the release went successfully, you can now delete the branch:
 $ git branch -D release/my-new-feature
 $ git push <remote_name> --delete release/my-new-feature-jdk8
 ~~~
-
-**IMPORTANT:** In case something goes wrong, do not leave ghost tags or tags not related to a successful release.
