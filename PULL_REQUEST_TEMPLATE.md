@@ -28,3 +28,6 @@ Please describe the tests that you ran to verify your changes. Please also note 
 - [ ] Any dependent changes have been merged and published in downstream modules
 - [ ] My changes have no bad impacts on performances
 - [ ] Any implemented change has been added in the [CHANGELOG.md](./CHANGELOG.md) file 
+- [ ] Any implemented change has been added in the [CHANGELOG-JDK8.md](./CHANGELOG-JDK8.md) file 
+- [ ] My changes have been applied on a separate branch too with compatibility with Java 8. Follow this (instructions)[https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#3-prepare-the-jdk8-release] for help. 
+- [ ] The maven version has been increased. 
