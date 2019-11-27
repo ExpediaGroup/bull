@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.1.1-jdk8] 2019.11.27
+#### Changed
+* Aligned `jdk8` version to the `jdk11` one
+
 ### [1.1.27] 2019.11.22
 #### Changed
 * Removed warning leg message in case the constructor parameter names are not available in the compiled code.
