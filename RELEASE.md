@@ -17,7 +17,7 @@ Make the following checks before performing a release:
 #### Increment the version number.
 
 The application is released with the compatibility for both: `jdk11` and `jdk8`, the latest version number are:
-in the [CHANGELOG](CHANGELOG.md) file for `jdk11` and [CHANGELOG-JDK](CHANGELOG-JDK8.md) file for `jdk8`. 
+in the [CHANGELOG.md](CHANGELOG.md) file for `jdk11` and [CHANGELOG-JDK8.md](CHANGELOG-JDK8.md) file for `jdk8`. 
 
 The version number structure is: *major* **.** *minor* **.** *revision*.
    * *major* = significant incompatible change (e.g. partial or whole rewrite).
@@ -26,7 +26,7 @@ The version number structure is: *major* **.** *minor* **.** *revision*.
    
 For `jdk8` only, the version number is the same as the `jdk11` one, with the suffix: `-jdk8`.
 
-e.g. if the new release version would be `1.8.0` then the `jdk8` correspondent one is: `1.8.0-jdk8`
+e.g. if the new release version would be `X.Y.Z` then the `jdk8` correspondent one is: `X.Y.Z-jdk8`
 
 #### Update the change log
 
@@ -40,13 +40,15 @@ Make the following check before performing a release:
 * Specify under the `### Changed` label everything that has been changed in the new version 
 * Specify under the `### Removed` label everything that has been removed in the new version 
 
-the same changes must be reported in [CHANGELOG-JDK](CHANGELOG-JDK8.md)
+the same changes must be reported in [CHANGELOG-JDK8.md](CHANGELOG-JDK8.md)
 
 #### 3. Prepare the jdk8 release
 
-All the changes implemented needs to be reported to the `jdk8` compatible version.
+All the changes implemented needs to be reported to a `jdk8` compatible version.
+
 The BULL code for the `jdk8` is slightly different so all the changes needs to be reported on the other version starting
 from it's latest release tag.
+
 The first thing to do is to create a branch (that would have the same name as the `jdk11` one plus the suffix: `-jd8`)
 starting from the latest `jdk8` release tag:
 
@@ -72,12 +74,14 @@ The following examples assume that your local repository is:
 * is all synced with GitHub
 * the Pull Request has been approved and merged on master
 
-* [JDK8](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk8)
-* [JDK11](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk11)
+The guide explains how to do a release both the `jdk11` and `jdk8` compatible:
+
+* [JDK8 Release](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk8)
+* [JDK11 Release](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk11)
 
 **IMPORTANT:** In case something goes wrong, do not leave ghost tags or tags not related to a successful release.
 
-### JDK8
+### JDK8 Release
 
 The following steps will do a release "`X.Y.Z-jdk8`"
 
@@ -134,7 +138,7 @@ $ git branch -D release/my-new-feature-jdk8
 $ git push <remote_name> --delete release/my-new-feature-jdk8
 ~~~
 
-### JDK11
+### JDK11 Release
 
 The following steps will do a release "`X.Y.Z`"
 
