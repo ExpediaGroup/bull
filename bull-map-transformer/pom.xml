@@ -9,7 +9,7 @@
     <parent>
         <artifactId>bean-utils-library-parent</artifactId>
         <groupId>com.hotels.beans</groupId>
-        <version>1.6.2-jdk8</version>
+        <version>1.6.2-jdk8-SNAPSHOT</version>
     </parent>
 
     <dependencies>
