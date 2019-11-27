@@ -20,7 +20,7 @@ jobs:
       jdk: openjdk11
       if: branch =~ ^((?!-jdk8).)*$ OR tag =~ ^((?!-jdk8).)*$
       script:
-        - travis_retry mvn clean install
+        - travis_retry mvn clean install -q
     ### JDK8 build
     - stage: "JDK8 Build"
       name: "JDK8 Build and Test"
@@ -34,8 +34,8 @@ jobs:
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^((?!-jdk8).)*$
       script: skip
       before_deploy:
-        - mvn versions:set -D newVersion=${TRAVIS_TAG}
-        - travis_retry mvn install sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} site:site javadoc:aggregate -P default,site-release
+        - mvn versions:set -D newVersion=${TRAVIS_TAG} -q
+        - travis_retry mvn install -q sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} site:site javadoc:aggregate -P default,site-release
       deploy:
         provider: pages
         local-dir: target/site
@@ -52,8 +52,8 @@ jobs:
       script: skip
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
-        - mvn versions:set -D newVersion=${TRAVIS_TAG}
-        - mvn install -DskipTests -Dmaven.test.skip=true javadoc:aggregate
+        - mvn versions:set -D newVersion=${TRAVIS_TAG} -q
+        - mvn install -q -DskipTests -Dmaven.test.skip=true javadoc:aggregate
       deploy:
         - provider: script
           script: config/travis/deploy.sh
@@ -68,8 +68,8 @@ jobs:
       script: skip
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
-        - mvn versions:set -D newVersion=${TRAVIS_TAG}
-        - mvn install javadoc:aggregate -P default,site-release
+        - mvn versions:set -D newVersion=${TRAVIS_TAG} -q
+        - mvn install -q javadoc:aggregate -P default,site-release
       deploy:
         - provider: script
           script: config/travis/deploy.sh
