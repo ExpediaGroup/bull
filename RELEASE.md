@@ -76,8 +76,8 @@ The following examples assume that your local repository is:
 
 The guide explains how to do a release both the `jdk11` and `jdk8` compatible:
 
-* [JDK8 Release](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk8)
-* [JDK11 Release](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk11)
+* [JDK8 Release](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk8-release)
+* [JDK11 Release](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk11-release)
 
 **IMPORTANT:** In case something goes wrong, do not leave ghost tags or tags not related to a successful release.
 
