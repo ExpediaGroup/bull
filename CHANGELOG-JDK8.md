@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.6.1.1-jdk8] 2019.11.27
+### [1.6.2-jdk8] 2019.11.27
 #### Changed
 * Aligned `jdk8` version to the `jdk11` one
 
