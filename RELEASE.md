@@ -109,7 +109,7 @@ $ git push --set-upstream origin release/my-new-feature-jdk8
 
 #### 2. Apply the changes to the new branch
 
-Apply all the changes you implemented to this branch. 
+Apply all the changes you implemented to this branch.
 
 #### 3. Change the maven version
 
@@ -119,7 +119,7 @@ The maven version is now set with the latest released, but you need to change it
 $ mvn versions:set -D newVersion=X.Y.Z-jdk8
 ~~~
 
-Commit all the changes.
+Commit all the changes and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green.
 
 #### 4. Create a new tag for the release version
 
@@ -172,7 +172,7 @@ The maven version is now set with the latest released, but you need to change it
 $ mvn versions:set -D newVersion=X.Y.Z
 ~~~
 
-Commit all the changes.
+Commit all the changes and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green.
 
 #### 3. Create a new tag for the release version
 
