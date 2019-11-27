@@ -23,12 +23,12 @@
     <logger name="springfox.documentation" level="ERROR" additivity="false"/>
     <logger name="net.sf.ehcache" level="ERROR" additivity="false"/>
 
-    <logger name="com.hotels.transformer" level="ERROR" additivity="false">
+    <logger name="com.hotels.transformer" level="INFO" additivity="false">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="MAIN_APPENDER" />
     </logger>
 
-    <root level="ERROR">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="MAIN_APPENDER" />
     </root>
