@@ -23,7 +23,7 @@
     <logger name="springfox.documentation" level="ERROR" additivity="false"/>
     <logger name="net.sf.ehcache" level="ERROR" additivity="false"/>
 
-    <logger name="com.hotels.map" level="INFO" additivity="false">
+    <logger name="com.hotels.map" level="ERROR" additivity="false">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="MAIN_APPENDER" />
     </logger>
