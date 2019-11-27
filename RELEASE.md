@@ -104,6 +104,7 @@ the release branch would be: `release/my-new-feature-jdk8`
 
 ~~~
 $ git checkout -b release/my-new-feature-jdk8 A.B.C-jdk8 
+$ git push --set-upstream origin release/my-new-feature-jdk8 
 ~~~
 
 #### 2. Apply the changes to the new branch
