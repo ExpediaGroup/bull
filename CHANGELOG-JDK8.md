@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.3-jdk8] TBD
+#### Changed
+* Updated maven wrapper version to `3.6.3` (was `3.6.2`).
+
 ### [1.6.2-jdk8] 2019.11.27
 #### Changed
 * Aligned `jdk8` version to the `jdk11` one
