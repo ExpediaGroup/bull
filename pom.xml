@@ -38,6 +38,7 @@
         <shazamcrest.version>0.11</shazamcrest.version>
         <gson.version>2.8.6</gson.version>
         <testng.version>7.0.0</testng.version>
+        <mockito-core.version>3.2.0</mockito-core.version>
         <hotels.oss.plugin.config.version>1.3.0</hotels.oss.plugin.config.version>
         <!-- validation dependencies -->
         <validation-api.version>2.0.1.Final</validation-api.version>
@@ -72,7 +73,7 @@
         <connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
         <developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
         <url>https://github.com/HotelsDotCom/bull</url>
-        <tag>1.6.2-jdk8</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencyManagement>
@@ -120,6 +121,10 @@
                         <groupId>org.mockito</groupId>
                         <artifactId>mockito-junit-jupiter</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>org.mockito</groupId>
+                        <artifactId>mockito-core</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
@@ -162,6 +167,12 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito-core.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -181,6 +192,11 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -254,6 +270,15 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>compatibility-mode</id>
+            <properties>
+                <javadoc.skip>true</javadoc.skip>
+            </properties>
+            <modules>
+                <module>bull-map-transformer</module>
+            </modules>
         </profile>
         <!-- release profile -->
         <profile>
