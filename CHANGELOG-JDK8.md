@@ -2,7 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.6.3-jdk8] TBD
+### [1.6.3-jdk8] 2019.12.02
+### Added
+* Added retry mechanism on the bean injection in case the parameter name are not available in the compiled code.
 #### Changed
 * Updated maven wrapper version to `3.6.3` (was `3.6.2`).
 
