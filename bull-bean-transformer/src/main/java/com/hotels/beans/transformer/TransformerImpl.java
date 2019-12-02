@@ -68,7 +68,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
                 throw new InvalidBeanException(e.getMessage(), e);
             }
         } else {
-            k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass), breadcrumb);
+            k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass), breadcrumb, false);
             if (classType.is(MIXED)) {
                 injectNotFinalFields(sourceObj, k, breadcrumb);
             }
@@ -96,14 +96,15 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param targetClass the destination object class
      * @param constructor the all args constructor
      * @param breadcrumb  the full path of the current field starting from his ancestor
+     * @param forceConstructorInjection  if true it forces the injection trough constructor
      * @param <T>         the sourceObj object type
      * @param <K>         the target object type
      * @return a copy of the source object into the destination object
      * @throws InvalidBeanException {@link InvalidBeanException} if the target object is not compliant with the requirements
      */
-    private <T, K> K injectValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
+    private <T, K> K injectValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb, final boolean forceConstructorInjection) {
         final Object[] constructorArgs;
-        if (canBeInjectedByConstructorParams(constructor, targetClass)) {
+        if (forceConstructorInjection || canBeInjectedByConstructorParams(constructor, targetClass)) {
             constructorArgs = getConstructorArgsValues(sourceObj, targetClass, constructor, breadcrumb);
         } else {
             constructorArgs = getConstructorValuesFromFields(sourceObj, targetClass, breadcrumb);
@@ -113,10 +114,14 @@ public class TransformerImpl extends AbstractBeanTransformer {
         } catch (final Exception e) {
             String errorMsg;
             if (!classUtils.areParameterNamesAvailable(constructor)) {
-                errorMsg = "Constructor's parameters name have been removed from the compiled code. "
-                + "This caused a problems during the: " + targetClass.getSimpleName() + " injection. "
-                + "Consider to use: @ConstructorArg annotation: https://github.com/HotelsDotCom/bull#different-field-names-defining-constructor-args "
-                + "or add the property: <parameters>true</parameters> to your maven-compiler configuration";
+                if (!forceConstructorInjection) {
+                    return injectValues(sourceObj, targetClass, constructor, breadcrumb, true);
+                } else {
+                    errorMsg = "Constructor's parameters name have been removed from the compiled code. "
+                            + "This caused a problems during the: " + targetClass.getSimpleName() + " injection. "
+                            + "Consider to use: @ConstructorArg annotation: https://github.com/HotelsDotCom/bull#different-field-names-defining-constructor-args "
+                            + "or add the property: <parameters>true</parameters> to your maven-compiler configuration";
+                }
             } else {
                 errorMsg = "Constructor invoked with wrong arguments. Expected: " + constructor + "; Found: "
                         + getFormattedConstructorArgs(targetClass, constructorArgs)
