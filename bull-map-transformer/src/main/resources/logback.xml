@@ -28,7 +28,7 @@
         <appender-ref ref="MAIN_APPENDER" />
     </logger>
 
-    <root level="ERROR">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="MAIN_APPENDER" />
     </root>

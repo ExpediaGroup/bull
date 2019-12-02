@@ -96,7 +96,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param targetClass the destination object class
      * @param constructor the all args constructor
      * @param breadcrumb  the full path of the current field starting from his ancestor
-     * @param forceConstructorInjection  if true it forces the injection trough constructor
+     * @param forceConstructorInjection if true it forces the injection trough constructor
      * @param <T>         the sourceObj object type
      * @param <K>         the target object type
      * @return a copy of the source object into the destination object
@@ -112,24 +112,44 @@ public class TransformerImpl extends AbstractBeanTransformer {
         try {
             return classUtils.getInstance(constructor, constructorArgs);
         } catch (final Exception e) {
-            String errorMsg;
-            if (!classUtils.areParameterNamesAvailable(constructor)) {
-                if (!forceConstructorInjection) {
-                    return injectValues(sourceObj, targetClass, constructor, breadcrumb, true);
-                } else {
-                    errorMsg = "Constructor's parameters name have been removed from the compiled code. "
-                            + "This caused a problems during the: " + targetClass.getSimpleName() + " injection. "
-                            + "Consider to use: @ConstructorArg annotation: https://github.com/HotelsDotCom/bull#different-field-names-defining-constructor-args "
-                            + "or add the property: <parameters>true</parameters> to your maven-compiler configuration";
-                }
-            } else {
-                errorMsg = "Constructor invoked with wrong arguments. Expected: " + constructor + "; Found: "
-                        + getFormattedConstructorArgs(targetClass, constructorArgs)
-                        + ". Double check that each " + targetClass.getSimpleName() + "'s field have the same type and name than the source object: "
-                        + sourceObj.getClass().getName() + " otherwise specify a transformer configuration. Error message: " + e.getMessage();
-            }
-            throw new InvalidBeanException(errorMsg, e);
+            return handleInjectionException(sourceObj, targetClass, constructor, breadcrumb, constructorArgs, forceConstructorInjection, e);
         }
+    }
+
+    /**
+     * Handles the exception thrown by method: {@code injectValues}.
+     * In case an exception is raised due to missing parameter names it tries to inject through the constructor anyway.
+     * @param sourceObj   sourceObj the source object
+     * @param targetClass the destination object class
+     * @param constructor the all args constructor
+     * @param breadcrumb  the full path of the current field starting from his ancestor
+     * @param constructorArgs the constructor arguments
+     * @param forceConstructorInjection if true it forces the injection trough constructor
+     * @param e the raised exception
+     * @param <T>         the sourceObj object type
+     * @param <K>         the target object type
+     * @return a copy of the source object into the destination object
+     * @throws InvalidBeanException {@link InvalidBeanException} if the target object is not compliant with the requirements
+     */
+    private <T, K> K handleInjectionException(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb,
+        final Object[] constructorArgs, final boolean forceConstructorInjection, final Exception e) {
+        String errorMsg;
+        if (!classUtils.areParameterNamesAvailable(constructor)) {
+            if (!forceConstructorInjection) {
+                return injectValues(sourceObj, targetClass, constructor, breadcrumb, true);
+            } else {
+                errorMsg = "Constructor's parameters name have been removed from the compiled code. "
+                        + "This caused a problems during the: " + targetClass.getSimpleName() + " injection. "
+                        + "Consider to use: @ConstructorArg annotation: https://github.com/HotelsDotCom/bull#different-field-names-defining-constructor-args "
+                        + "or add the property: <parameters>true</parameters> to your maven-compiler configuration";
+            }
+        } else {
+            errorMsg = "Constructor invoked with wrong arguments. Expected: " + constructor + "; Found: "
+                    + getFormattedConstructorArgs(targetClass, constructorArgs)
+                    + ". Double check that each " + targetClass.getSimpleName() + "'s field have the same type and name than the source object: "
+                    + sourceObj.getClass().getName() + " otherwise specify a transformer configuration. Error message: " + e.getMessage();
+        }
+        throw new InvalidBeanException(errorMsg, e);
     }
 
     /**

@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.3-jdk8] 2019.12.02
+### Added
+* Added retry mechanism on the bean injection in case the parameter name are not available in the compiled code.
+#### Changed
+* Updated maven wrapper version to `3.6.3` (was `3.6.2`).
+
+### [1.6.2-jdk8] 2019.11.27
+#### Changed
+* Aligned `jdk8` version to the `jdk11` one
+
 ### [1.1.27] 2019.11.22
 #### Changed
 * Removed warning leg message in case the constructor parameter names are not available in the compiled code.
