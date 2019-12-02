@@ -38,6 +38,7 @@
         <shazamcrest.version>0.11</shazamcrest.version>
         <gson.version>2.8.6</gson.version>
         <testng.version>7.0.0</testng.version>
+        <byte-buddy.version>1.10.4</byte-buddy.version>
         <hotels.oss.plugin.config.version>1.3.0</hotels.oss.plugin.config.version>
         <!-- validation dependencies -->
         <validation-api.version>2.0.1.Final</validation-api.version>
@@ -161,6 +162,12 @@
                         <artifactId>guava</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>${byte-buddy.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
