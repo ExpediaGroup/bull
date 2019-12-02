@@ -2,7 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.6.3] TBD
+### [1.6.3] 2019.12.02
+### Added
+* Added retry mechanism on the Bean injection in case the parameter names are not available in the compiled code.
+* Modified Travis configuration in order to test the compatibility with other JDKs versions
 #### Changed
 * Updated maven wrapper version to `3.6.3` (was `3.6.2`).
 
