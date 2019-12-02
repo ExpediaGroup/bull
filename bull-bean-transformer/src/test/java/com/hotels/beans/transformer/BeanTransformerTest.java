@@ -35,6 +35,7 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
@@ -43,6 +44,7 @@ import org.testng.annotations.Test;
 
 import com.hotels.beans.conversion.analyzer.ConversionAnalyzer;
 import com.hotels.beans.sample.FromFooSimple;
+import com.hotels.beans.sample.mutable.MutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooAdvFields;
 import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.error.InvalidBeanException;
@@ -66,6 +68,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     private static final String CLASS_UTILS_FIELD_NAME = "classUtils";
     private static final String GET_TRANSFORMER_VALUE_METHOD_NAME = "getTransformedValue";
     private static final String GET_CONSTRUCTOR_ARGS_VALUES_METHOD_NAME = "getConstructorArgsValues";
+    private static final String HANDLE_INJECTION_EXCEPTION_METHOD_NAME = "handleInjectionException";
 
     /**
      * Test that is possible to remove a field mapping for a given field.
@@ -493,6 +496,54 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         return new Object[][] {
                 {"Tests that the ConversionAnalyzer object is not created if the automatic conversion is disabled", false, true},
                 {"Tests that the ConversionAnalyzer object is created if the automatic conversion is enabled", true, false}
+        };
+    }
+
+    /**
+     * Test that the method: {@code handleInjectionException} works as expected.
+     * @param testCaseDescription the test case description
+     * @param forceConstructorInjection if true it forces the injection trough constructor
+     * @param expectedReturnType the expected return type class
+     * @throws Exception if the invoke method fails
+     */
+    @Test(dataProvider = "dataHandleInjectionExceptionTesting")
+    public void testHandleInjectionExceptionWorksAsExpected(final String testCaseDescription, final boolean forceConstructorInjection,
+        final Class<?> expectedReturnType) throws Exception {
+        //GIVEN
+        ClassUtils classUtils = mock(ClassUtils.class);
+        when(classUtils.areParameterNamesAvailable(any(Constructor.class))).thenReturn(false);
+        when(classUtils.getConstructorParameters(any())).thenReturn(new Parameter[] {});
+        when(classUtils.getInstance(any(), any())).thenReturn(new MutableToFoo());
+        setField(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
+
+        Method handleInjectionExceptionMethod = underTest.getClass().getDeclaredMethod(HANDLE_INJECTION_EXCEPTION_METHOD_NAME, Object.class,
+                Class.class, Constructor.class, String.class, Object[].class, boolean.class, Exception.class);
+        handleInjectionExceptionMethod.setAccessible(true);
+
+        //WHEN
+        Object actual;
+        try {
+            actual = handleInjectionExceptionMethod.invoke(underTest, fromFoo, MutableToFoo.class, null, "", null, forceConstructorInjection, new Exception());
+        } catch (InvocationTargetException e) {
+            actual = e.getTargetException();
+        }
+
+        //THEN
+        assertNotNull(actual);
+        assertEquals(expectedReturnType, actual.getClass());
+        restoreUnderTestObject();
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code handleInjectionExceptionTesting}.
+     * @return parameters to be used for testing the the method {@code handleInjectionExceptionTesting}.
+     */
+    @DataProvider
+    private Object[][] dataHandleInjectionExceptionTesting() {
+        return new Object[][] {
+            {"Tests that the handleInjectionException returns an error message if the forceConstructorInjection is true", true, InvalidBeanException.class},
+            {"Tests that the handleInjectionException invokes the injectValues (that throws a MutableToFoo object) if the forceConstructorInjection is false",
+                    false, MutableToFoo.class}
         };
     }
 }
