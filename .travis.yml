@@ -2,10 +2,6 @@ language: java
 cache:
   directories:
     - $HOME/.m2
-jdk:
-  - openjdk11
-  - openjdk12
-  - openjdk13
 env:
   global:
     # HCOM OSS Sonatype jira info
@@ -22,7 +18,10 @@ jobs:
     ### JDK11 build
     - stage: "JDK11 Build"
       name: "JDK11 Build and Test"
-#      jdk: openjdk11
+      jdk:
+        - openjdk11
+        - openjdk12
+        - openjdk13
       if: branch =~ ^((?!-jdk8).)*$ OR tag =~ ^((?!-jdk8).)*$
       script:
         - travis_retry mvn clean install -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
