@@ -287,6 +287,15 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>compatibility-mode</id>
+            <properties>
+                <javadoc.skip>true</javadoc.skip>
+            </properties>
+            <modules>
+                <module>bull-map-transformer</module>
+            </modules>
+        </profile>
         <!-- release profile -->
         <profile>
             <id>release</id>

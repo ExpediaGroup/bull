@@ -56,9 +56,11 @@ import java.math.BigInteger;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -157,7 +159,7 @@ public final class ClassUtils {
         final String cacheKey = "isSpecial-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || Temporal.class.isAssignableFrom(clazz)
-                    || clazz.isSynthetic();
+                    || clazz.equals(Date.class) || clazz.equals(Properties.class) || clazz.isSynthetic();
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -374,9 +376,9 @@ public final class ClassUtils {
             stream(getDeclaredFields(clazz))
                     .filter(field -> !skipStatic || !isStatic(field.getModifiers()))
                     .forEach(field -> {
-                field.setAccessible(true);
-                res.add(field);
-            });
+                        field.setAccessible(true);
+                        res.add(field);
+                    });
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -391,6 +393,22 @@ public final class ClassUtils {
         final String cacheKey = "ClassDeclaredFields-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Field[].class).orElseGet(() -> {
             Field[] res = clazz.getDeclaredFields();
+            CACHE_MANAGER.cacheObject(cacheKey, res);
+            return res;
+        });
+    }
+
+    /**
+     * Returns the concrete class of a field.
+     * @param field the field for which the concrete class has to be retrieved.
+     * @param objectInstance the object instance.
+     * @param <T> the object instance class.
+     * @return the concrete class of a field
+     */
+    public <T> Class<?> getConcreteClass(final Field field, final T objectInstance) {
+        final String cacheKey = "ConcreteFieldClass-" + field.getName() + "-" + field.getDeclaringClass();
+        return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
+            Class<?> res = reflectionUtils.getFieldValue(objectInstance, field).getClass();
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });

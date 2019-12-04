@@ -35,8 +35,10 @@ import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -171,7 +173,9 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns true if the class is a special type object", Locale.class, true},
                 {"Tests that the method returns false if the class is not a special type object", BigDecimal.class, false},
-                {"Tests that the method returns true if the class is an instance of Temporal interface", Instant.class, true}
+                {"Tests that the method returns true if the class is an instance of Temporal interface", Instant.class, true},
+                {"Tests that the method returns true if the class is an instance of Properties class", Properties.class, true},
+                {"Tests that the method returns true if the class is an instance of Date class", Date.class, true}
         };
     }
 
