@@ -36,6 +36,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -903,5 +904,23 @@ public class ClassUtilsTest {
                 {"Tests that the method returns true if the class is a byte[]", byte[].class, true},
                 {"Tests that the method returns false if the class is not a byte[]", byte.class, false}
         };
+    }
+
+    /**
+     * Tests that the method {@code getConcreteClass} works as expected.
+     * @throws Exception if the field is not retrieved
+     */
+    @Test
+    public void testGetConcreteClassWorksAsExpected() throws Exception {
+        // GIVEN
+        FromFoo fromFoo = new FromFoo(NAME, null, null, new LinkedList<>(), null);
+        Field listField = fromFoo.getClass().getDeclaredField("list");
+        listField.setAccessible(true);
+
+        // WHEN
+        Class<?> actual = underTest.getConcreteClass(listField, fromFoo);
+
+        // THEN
+        assertEquals(LinkedList.class, actual);
     }
 }
