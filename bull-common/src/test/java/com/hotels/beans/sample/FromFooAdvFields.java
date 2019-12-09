@@ -16,6 +16,7 @@
 
 package com.hotels.beans.sample;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.hotels.transformer.constant.ClassType;
@@ -39,6 +40,7 @@ public class FromFooAdvFields implements Cloneable {
     private final ClassType classType;
     private final String locale;
     private final float price;
+    private final List<?> list;
 
     public FromFooAdvFields clone() throws CloneNotSupportedException {
         return (FromFooAdvFields) super.clone();

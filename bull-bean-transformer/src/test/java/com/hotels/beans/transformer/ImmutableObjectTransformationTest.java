@@ -74,7 +74,7 @@ import com.hotels.transformer.utils.ReflectionUtils;
  * Unit test for all {@link BeanTransformer} functions related to Immutable Java Beans.
  */
 public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTest {
-    private static final int TOTAL_ADV_CLASS_FIELDS = 6;
+    private static final int TOTAL_ADV_CLASS_FIELDS = 7;
     private static final String GET_DEST_FIELD_NAME_METHOD_NAME = "getDestFieldName";
     private static final String GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME = "getConstructorValuesFromFields";
     private static final String PRICE_FIELD_NAME = "price";

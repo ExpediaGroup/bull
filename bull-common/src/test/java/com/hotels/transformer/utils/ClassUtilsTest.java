@@ -35,6 +35,7 @@ import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
+import java.util.Currency;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -176,6 +177,7 @@ public class ClassUtilsTest {
                 {"Tests that the method returns false if the class is not a special type object", BigDecimal.class, false},
                 {"Tests that the method returns true if the class is an instance of Temporal interface", Instant.class, true},
                 {"Tests that the method returns true if the class is an instance of Properties class", Properties.class, true},
+                {"Tests that the method returns true if the class is an instance of Currency class", Currency.class, true},
                 {"Tests that the method returns true if the class is an instance of Date class", Date.class, true}
         };
     }
