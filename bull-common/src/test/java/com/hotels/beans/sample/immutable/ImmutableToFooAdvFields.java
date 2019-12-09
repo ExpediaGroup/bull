@@ -16,6 +16,7 @@
 
 package com.hotels.beans.sample.immutable;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -38,6 +39,7 @@ public class ImmutableToFooAdvFields {
     private final ClassType classType;
     private final Locale locale;
     private final Price price;
+    private final List<?> list;
 }
 
 @AllArgsConstructor
