@@ -14,27 +14,10 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.sample.mutable;
-
-import java.util.List;
-import java.util.Map;
-
-import com.hotels.beans.sample.ISubClass;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+package com.hotels.beans.sample;
 
 /**
- * Sample mutable object.
+ * Sample interface for sub class Java Bean.
  */
-@Getter
-@Setter
-@ToString
-public class MutableToSubFoo implements ISubClass {
-    private String name;
-    private int[] phoneNumbers;
-    private Map<String, String> sampleMap;
-    private Map<String, List<String>> complexMap;
-    private Map<String, Map<String, String>> veryComplexMap;
+public interface ISubClass {
 }
