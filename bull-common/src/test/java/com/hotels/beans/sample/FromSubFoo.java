@@ -29,7 +29,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class FromSubFoo {
+public class FromSubFoo implements ISubClass {
     private final String name;
     private final int[] phoneNumbers;
     private final Map<String, String> sampleMap;

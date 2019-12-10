@@ -16,6 +16,7 @@
 
 package com.hotels.beans.sample;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -42,9 +43,10 @@ public class FromFooAdvFields implements Cloneable {
     private final String locale;
     private final float price;
     private final List<?> list;
-    private final List noGenericsList;
+    private final Collection<? super Object> collection;
     private final Map<?, ?> map;
-    private final Map noGenericsMap;
+    private final Map<? super Object, ? super Object> supertypeMap;
+    private final ISubClass nestedObject;
 
     public FromFooAdvFields clone() throws CloneNotSupportedException {
         return (FromFooAdvFields) super.clone();

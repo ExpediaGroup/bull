@@ -16,11 +16,13 @@
 
 package com.hotels.beans.sample.immutable;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+import com.hotels.beans.sample.ISubClass;
 import com.hotels.transformer.constant.ClassType;
 
 import lombok.AllArgsConstructor;
@@ -41,9 +43,10 @@ public class ImmutableToFooAdvFields {
     private final Locale locale;
     private final Price price;
     private final List<?> list;
-    private final List noGenericsList;
+    private final Collection<? super Object> collection;
     private final Map<?, ?> map;
-    private final Map noGenericsMap;
+    private final Map<? super Object, ? super Object> supertypeMap;
+    private final ISubClass nestedObject;
 }
 
 @AllArgsConstructor
