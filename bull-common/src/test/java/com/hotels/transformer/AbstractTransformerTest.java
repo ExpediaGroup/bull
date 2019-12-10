@@ -144,7 +144,8 @@ public abstract class AbstractTransformerTest {
      * @return the {@link FromFooAdvFields} instance.
      */
     private FromFooAdvFields createFromFooAdvFields() {
-        return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage(), PRICE, sourceFooSimpleList);
+        return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage(),
+                PRICE, sourceFooSimpleList, sourceFooSimpleList, SAMPLE_MAP, SAMPLE_MAP);
     }
 
     /**
