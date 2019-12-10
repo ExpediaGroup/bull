@@ -5,7 +5,6 @@ All notable changes to this project will be documented in this file.
 ### [1.6.4-jdk8] TBD
 #### Changed
 * Updated `spring-boot-starter-test` version to `2.2.2.RELEASE` (was `2.2.1.RELEASE`).
-* Updated `testng` version to `7.1.0` (was `7.0.0`).
 
 ### [1.6.3-jdk8] 2019.12.02
 ### Added

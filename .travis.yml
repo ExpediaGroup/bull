@@ -16,7 +16,7 @@ jdk:
   - openjdk11
   - openjdk12
   - openjdk13
-script: travis_retry mvn clean install -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode -U
+script: travis_retry mvn clean install -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 install: skip
 jobs:
   include:
@@ -26,7 +26,7 @@ jobs:
       jdk: openjdk8
       if: branch =~ ^.*-jdk8$ OR tag =~ ^.*-jdk8$
       script:
-        - travis_retry mvn clean install -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -U
+        - travis_retry mvn clean install -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
     - stage: "Site Build and Quality check"
       name: "Publishing site and performing a code quality check"
       jdk: openjdk11
@@ -34,7 +34,7 @@ jobs:
       script: skip
       before_deploy:
         - mvn versions:set -D newVersion=${TRAVIS_TAG} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-        - travis_retry mvn install sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} site:site javadoc:aggregate -P default,site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q -U
+        - travis_retry mvn install sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} site:site javadoc:aggregate -P default,site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
       deploy:
         provider: pages
         local-dir: target/site
@@ -52,7 +52,7 @@ jobs:
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-        - mvn install -DskipTests -Dmaven.test.skip=true javadoc:aggregate -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q -U
+        - mvn install -DskipTests -Dmaven.test.skip=true javadoc:aggregate -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
       deploy:
         - provider: script
           script: config/travis/deploy.sh
@@ -68,7 +68,7 @@ jobs:
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-        - mvn install javadoc:aggregate -P default,site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q -U
+        - mvn install javadoc:aggregate -P default,site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
       deploy:
         - provider: script
           script: config/travis/deploy.sh
