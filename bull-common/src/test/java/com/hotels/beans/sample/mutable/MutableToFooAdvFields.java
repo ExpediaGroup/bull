@@ -18,6 +18,7 @@ package com.hotels.beans.sample.mutable;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 import com.hotels.transformer.constant.ClassType;
@@ -39,6 +40,9 @@ public class MutableToFooAdvFields {
     private ClassType classType;
     private Locale locale;
     private List<?> list;
+    private List noGenericsList;
+    private Map<?, ?> map;
+    private Map noGenericsMap;
 
     private void setIndex(final String indexNumber) {
         this.indexNumber = indexNumber;

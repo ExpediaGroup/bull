@@ -28,6 +28,7 @@ import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.Collections.max;
 import static java.util.Comparator.comparing;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.Set.of;
@@ -113,6 +114,9 @@ public final class ClassUtils {
      * @return true if is primitive or special type, false otherwise
      */
     public boolean isPrimitiveOrSpecialType(final Class<?> clazz) {
+        if (isNull(clazz)) {
+            return false;
+        }
         final String cacheKey = "isPrimitiveOrSpecial-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final Boolean res = isPrimitiveType(clazz) || isSpecialType(clazz);
