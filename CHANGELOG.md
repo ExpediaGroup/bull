@@ -2,9 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.3.2] 2019.12.19
+#### Changed
+* Added method for retrieving the class getter methods.
+
+### [1.6.3.1] 2019.12.09
+#### Changed
+* Updated `spring-boot-starter-test` version to `2.2.2.RELEASE` (was `2.2.1.RELEASE`).
+
 ### [1.6.3] 2019.12.02
 ### Added
 * Added retry mechanism on the Bean injection in case the parameter names are not available in the compiled code.
+* Modified Travis configuration in order to test the compatibility with other JDKs versions
 #### Changed
 * Updated maven wrapper version to `3.6.3` (was `3.6.2`).
 

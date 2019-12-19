@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.3.1-jdk8] 2019.12.19
+#### Added
+* Added method for retrieving the class getter methods.
+
 ### [1.6.3-jdk8] 2019.12.02
 ### Added
 * Added retry mechanism on the Bean injection in case the parameter names are not available in the compiled code.
