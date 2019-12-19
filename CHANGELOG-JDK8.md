@@ -2,7 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.6.4-jdk8] TBD
+### [1.6.3.1-jdk8] 2019.12.19
+#### Added
+* Added method for retrieving the class getter methods.
 #### Changed
 * Updated `spring-boot-starter-test` version to `2.2.2.RELEASE` (was `2.2.1.RELEASE`).
 * Updated `mockito-core` version to `3.2.4` (was `3.2.0`).
