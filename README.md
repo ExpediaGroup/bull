@@ -18,6 +18,7 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=coverage)](https://sonarcloud.io/dashboard?id=BULL)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=security_rating)](https://sonarcloud.io/dashboard?id=BULL)
 ![GitHub license](https://img.shields.io/github/license/HotelsDotCom/bull.svg)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=HotelsDotCom/bull)](https://dependabot.com)
 
 All BULL modules are available on Maven Central: 
 
