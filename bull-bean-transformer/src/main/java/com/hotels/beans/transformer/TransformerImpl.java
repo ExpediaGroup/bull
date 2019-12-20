@@ -553,9 +553,14 @@ public class TransformerImpl extends AbstractBeanTransformer {
     private <K> Object getFieldValue(final Class<K> targetClass, final Field field, final Object fieldValue, final String breadcrumb) {
         return getPopulator(field.getType(), fieldValue.getClass(), this)
                 .map(populator -> populator.getPopulatedObject(targetClass, field.getName(), fieldValue))
-                .orElseGet(() ->
+                .orElseGet(() -> {
                         // recursively inject object
-                        transform(fieldValue, field.getType(), breadcrumb)
+                        Class<?> concreteType = field.getType();
+                        if (field.getType().isInterface()) {
+                            concreteType = fieldValue.getClass();
+                        }
+                        return transform(fieldValue, concreteType, breadcrumb);
+                    }
                 );
     }
 }

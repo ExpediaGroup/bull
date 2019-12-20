@@ -25,6 +25,7 @@ import static java.util.Arrays.stream;
 import static java.util.Collections.max;
 import static java.util.Collections.min;
 import static java.util.Comparator.comparing;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
@@ -50,10 +51,12 @@ import java.math.BigInteger;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -100,6 +103,9 @@ public final class ClassUtils {
      * @return true if is primitive or special type, false otherwise
      */
     public boolean isPrimitiveOrSpecialType(final Class<?> clazz) {
+        if (isNull(clazz)) {
+            return false;
+        }
         final String cacheKey = "isPrimitiveOrSpecial-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final Boolean res = isPrimitiveType(clazz) || isSpecialType(clazz);
@@ -146,7 +152,7 @@ public final class ClassUtils {
         final String cacheKey = "isSpecial-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || Temporal.class.isAssignableFrom(clazz)
-                    || clazz.isSynthetic();
+                    || clazz.equals(Date.class) || clazz.equals(Properties.class) || clazz.isSynthetic();
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -363,9 +369,9 @@ public final class ClassUtils {
             stream(getDeclaredFields(clazz))
                     .filter(field -> !skipStatic || !isStatic(field.getModifiers()))
                     .forEach(field -> {
-                field.setAccessible(true);
-                res.add(field);
-            });
+                        field.setAccessible(true);
+                        res.add(field);
+                    });
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -380,6 +386,22 @@ public final class ClassUtils {
         final String cacheKey = "ClassDeclaredFields-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Field[].class).orElseGet(() -> {
             Field[] res = clazz.getDeclaredFields();
+            CACHE_MANAGER.cacheObject(cacheKey, res);
+            return res;
+        });
+    }
+
+    /**
+     * Returns the concrete class of a field.
+     * @param field the field for which the concrete class has to be retrieved.
+     * @param objectInstance the object instance.
+     * @param <T> the object instance class.
+     * @return the concrete class of a field
+     */
+    public <T> Class<?> getConcreteClass(final Field field, final T objectInstance) {
+        final String cacheKey = "ConcreteFieldClass-" + field.getName() + "-" + field.getDeclaringClass();
+        return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
+            Class<?> res = reflectionUtils.getFieldValue(objectInstance, field).getClass();
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -653,6 +675,28 @@ public final class ClassUtils {
             }
             setterMethods.addAll(stream(getDeclaredMethods(clazz))
                     .filter(reflectionUtils::isSetter)
+                    .collect(toList()));
+            CACHE_MANAGER.cacheObject(cacheKey, setterMethods);
+            return setterMethods;
+        });
+    }
+
+    /**
+     * Retrieves all the setters method for the given class.
+     * @param clazz the clazz containing the methods.
+     * @return all the class setter methods
+     */
+    @SuppressWarnings("unchecked")
+    public List<Method> getGetterMethods(final Class<?> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        final String cacheKey = "GetterMethods-" + clazz.getName();
+        return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
+            final List<Method> setterMethods = new LinkedList<>();
+            if (hasSuperclass(clazz.getSuperclass())) {
+                setterMethods.addAll(getGetterMethods(clazz.getSuperclass()));
+            }
+            setterMethods.addAll(stream(getDeclaredMethods(clazz))
+                    .filter(reflectionUtils::isGetter)
                     .collect(toList()));
             CACHE_MANAGER.cacheObject(cacheKey, setterMethods);
             return setterMethods;

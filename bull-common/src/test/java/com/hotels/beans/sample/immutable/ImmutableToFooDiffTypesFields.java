@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 
-package com.hotels.beans.sample.mutable;
+package com.hotels.beans.sample.immutable;
 
 import java.util.List;
-import java.util.Map;
 
-import com.hotels.beans.sample.ISubClass;
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Sample mutable object.
+ * Sample immutable object with different fields type than source object.
  */
+@AllArgsConstructor
 @Getter
-@Setter
 @ToString
-public class MutableToSubFoo implements ISubClass {
-    private String name;
-    private int[] phoneNumbers;
-    private Map<String, String> sampleMap;
-    private Map<String, List<String>> complexMap;
-    private Map<String, Map<String, String>> veryComplexMap;
+public class ImmutableToFooDiffTypesFields {
+    private final String name;
+    private final String id;
+    private final List<String> list;
+    private final List<ImmutableToSubFoo> nestedObjectList;
+    private final ImmutableToSubFoo nestedObject;
 }

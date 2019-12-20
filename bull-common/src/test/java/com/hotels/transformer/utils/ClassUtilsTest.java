@@ -35,8 +35,12 @@ import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
+import java.util.Currency;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.function.Predicate;
 
 import javax.validation.constraints.NotNull;
@@ -49,6 +53,9 @@ import org.testng.annotations.Test;
 
 import com.hotels.beans.sample.AbstractClass;
 import com.hotels.beans.sample.FromFoo;
+import com.hotels.beans.sample.FromFooAdvFields;
+import com.hotels.beans.sample.FromFooSimple;
+import com.hotels.beans.sample.FromFooSimpleNoGetters;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
@@ -95,6 +102,8 @@ public class ClassUtilsTest {
     private static final long[] PRIMITIVE_LONG_ARRAY = {};
     private static final Integer[] PRIMITIVE_INTEGER_ARRAY = {};
     private static final FromFoo[] NOT_PRIMITIVE_ARRAY = {};
+    private static final int FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS = 11;
+    private static final int FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS = 3;
 
     /**
      * The class to be tested.
@@ -170,7 +179,10 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns true if the class is a special type object", Locale.class, true},
                 {"Tests that the method returns false if the class is not a special type object", BigDecimal.class, false},
-                {"Tests that the method returns true if the class is an instance of Temporal interface", Instant.class, true}
+                {"Tests that the method returns true if the class is an instance of Temporal interface", Instant.class, true},
+                {"Tests that the method returns true if the class is an instance of Properties class", Properties.class, true},
+                {"Tests that the method returns true if the class is an instance of Currency class", Currency.class, true},
+                {"Tests that the method returns true if the class is an instance of Date class", Date.class, true}
         };
     }
 
@@ -730,6 +742,36 @@ public class ClassUtilsTest {
     }
 
     /**
+     * Tests that the method {@code getGetterMethods} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedGetterMethods the total expected getter method
+     */
+    @Test(dataProvider = "dataGetGetterMethodsTesting")
+    public void testGetGetterMethodsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final int expectedGetterMethods) {
+        // GIVEN
+
+        // WHEN
+        final List<Method> actual = underTest.getGetterMethods(testClass);
+
+        // THEN
+        assertEquals(expectedGetterMethods, actual.size());
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getGetterMethods}.
+     * @return parameters to be used for testing the the method {@code getGetterMethods}.
+     */
+    @DataProvider
+    private Object[][] dataGetGetterMethodsTesting() {
+        return new Object[][] {
+                {"Tests that the method returns an empty list if the class has no getter methods", FromFooSimpleNoGetters.class, ZERO},
+                {"Tests that the method returns only the getter methods discarding the not valid one", FromFooAdvFields.class, FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS},
+                {"Tests that the method returns the boolean getter method too", FromFooSimple.class, FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS}
+        };
+    }
+
+    /**
      * Tests that the method {@code getDefaultTypeValue} works as expected.
      */
     @Test
@@ -898,5 +940,23 @@ public class ClassUtilsTest {
                 {"Tests that the method returns true if the class is a byte[]", byte[].class, true},
                 {"Tests that the method returns false if the class is not a byte[]", byte.class, false}
         };
+    }
+
+    /**
+     * Tests that the method {@code getConcreteClass} works as expected.
+     * @throws Exception if the field is not retrieved
+     */
+    @Test
+    public void testGetConcreteClassWorksAsExpected() throws Exception {
+        // GIVEN
+        FromFoo fromFoo = new FromFoo(NAME, null, null, new LinkedList<>(), null);
+        Field listField = fromFoo.getClass().getDeclaredField("list");
+        listField.setAccessible(true);
+
+        // WHEN
+        Class<?> actual = underTest.getConcreteClass(listField, fromFoo);
+
+        // THEN
+        assertEquals(LinkedList.class, actual);
     }
 }

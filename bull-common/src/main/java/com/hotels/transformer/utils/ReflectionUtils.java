@@ -63,6 +63,11 @@ public final class ReflectionUtils {
     private static final String SETTER_METHOD_NAME_REGEX = "^set[A-Z].*";
 
     /**
+     * Regex for identify getter methods.
+     */
+    private static final String GETTER_METHOD_NAME_REGEX = "^(get|is)[A-Z].*";
+
+    /**
      * Regex for identify dots into a string.
      */
     private static final String DOT_SPLIT_REGEX = "\\.";
@@ -100,6 +105,23 @@ public final class ReflectionUtils {
                     && method.getName().matches(SETTER_METHOD_NAME_REGEX)
                     && method.getParameterTypes().length == 1
                     && method.getReturnType().equals(void.class);
+            CACHE_MANAGER.cacheObject(cacheKey, res);
+            return res;
+        });
+    }
+
+    /**
+     * Checks if the given method is a getter.
+     * @param method the method to be checked
+     * @return true if the method is a getter method, false otherwise
+     */
+    public boolean isGetter(final Method method) {
+        final String cacheKey = "IsGetter-" + method.getDeclaringClass().getName() + '-' + method.getName();
+        return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
+            boolean res = isPublic(method.getModifiers())
+                    && method.getName().matches(GETTER_METHOD_NAME_REGEX)
+                    && method.getParameterTypes().length == 0
+                    && !method.getReturnType().equals(void.class);
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -382,29 +404,45 @@ public final class ReflectionUtils {
     public Class<?> getGenericFieldType(final Field field) {
         final String cacheKey = "GenericFieldType-" + field.getDeclaringClass().getName() + '-' + field.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
-            Class<?> res = getParametrizedTypeClass(field.getGenericType());
+            Class<?> res = null;
+            if (ParameterizedType.class.isAssignableFrom(field.getGenericType().getClass())) {
+                res = getGenericClassType((ParameterizedType) field.getGenericType());
+            }
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
     }
 
-    private Class<?> getParametrizedTypeClass(final Type genericType) {
-        Class<?> res = null;
-        if (ParameterizedType.class.isAssignableFrom(genericType.getClass())) {
-            Type[] fieldArgTypes = ((ParameterizedType) genericType).getActualTypeArguments();
-            res = getGenericClassType(fieldArgTypes);
-        }
-        return res;
+    /**
+     * Retrieves the generic class of a {@link ParameterizedType}.
+     * @param genericType the generic type for which the class has to be retrieved
+     * @return the generic class type
+     */
+    private Class<?> getGenericClassType(final ParameterizedType genericType) {
+        return getGenericClassType(genericType.getActualTypeArguments());
     }
 
-    private Class<?> getGenericClassType(final Type[] fieldArgTypes) {
+    /**
+     * Retrieves the generic class of a {@link WildcardType}.
+     * @param genericType the generic type for which the class has to be retrieved
+     * @return the generic class type
+     */
+    private Class<?> getGenericClassType(final WildcardType genericType) {
+        return getGenericClassType(isEmpty(genericType.getLowerBounds()) ? genericType.getUpperBounds() : genericType.getLowerBounds());
+    }
+
+    /**
+     * Retrieves the generic class from the field's argument types.
+     * @param actualTypeArguments the field type arguments
+     * @return the generic class type
+     */
+    private Class<?> getGenericClassType(final Type[] actualTypeArguments) {
         Class<?> res = null;
-        if (fieldArgTypes.length != 0) {
-            if (WildcardType.class.isAssignableFrom(fieldArgTypes[0].getClass())) {
-                final WildcardType fieldArgType = (WildcardType) fieldArgTypes[0];
-                res = getGenericClassType(isEmpty(fieldArgType.getLowerBounds()) ? fieldArgType.getUpperBounds() : fieldArgType.getLowerBounds());
+        if (actualTypeArguments.length != 0) {
+            if (WildcardType.class.isAssignableFrom(actualTypeArguments[0].getClass())) {
+                res = getGenericClassType((WildcardType) actualTypeArguments[0]);
             } else {
-                res = (Class<?>) fieldArgTypes[0];
+                res = (Class<?>) actualTypeArguments[0];
             }
         }
         return res;
@@ -425,17 +463,15 @@ public final class ReflectionUtils {
                 throw new IllegalArgumentException("Type for object: " + fieldName + " is invalid. "
                                 + "It cannot be assigned from: " + Map.class.getName() + ".");
             }
-            MapElemType keyType;
-            MapElemType elemType;
+            MapElemType keyType, elemType;
             if (ParameterizedType.class.isAssignableFrom(fieldType.getClass())) {
                 final ParameterizedType genericType = (ParameterizedType) fieldType;
                 keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);
                 elemType = getMapElemType(genericType.getActualTypeArguments()[1], declaringClass, fieldName);
-            } else  {
-                keyType = (C) fieldType;
-                elemType = fieldType
+            } else {
+                keyType = buildItemType(fieldType, declaringClass, fieldName);
+                elemType = buildItemType(fieldType, declaringClass, fieldName);
             }
-
             final MapType mapType = new MapType(keyType, elemType);
             CACHE_MANAGER.cacheObject(cacheKey, mapType);
             return mapType;
@@ -504,8 +540,7 @@ public final class ReflectionUtils {
                                 ? getArgumentTypeClass(((ParameterizedType) argument).getActualTypeArguments()[0], declaringClass, fieldName, false)
                                 : (Class<?>) ((ParameterizedType) argument).getRawType();
                     } else if (WildcardType.class.isAssignableFrom(argument.getClass())) {
-                        final WildcardType fieldArgType = (WildcardType) argument;
-                        res = getGenericClassType(isEmpty(fieldArgType.getLowerBounds()) ? fieldArgType.getUpperBounds() : fieldArgType.getLowerBounds());
+                        res = getGenericClassType((WildcardType) argument);
                     }
                     CACHE_MANAGER.cacheObject(cacheKey, res, EmptyValue.class);
                     return res;
