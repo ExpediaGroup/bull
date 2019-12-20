@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.4] TBD
+#### Added
+* Implemented Wildcards types support (see: [Issue 111](https://github.com/HotelsDotCom/bull/issues/111)).
+* Implemented transformation of field declared with their interface.
+
 ### [1.6.3.2] 2019.12.19
 #### Changed
 * Added method for retrieving the class getter methods.
