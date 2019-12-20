@@ -68,12 +68,9 @@ import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.error.InstanceCreationException;
 import com.hotels.transformer.error.InvalidBeanException;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Reflection utils for Class objects.
  */
-@Slf4j
 public final class ClassUtils {
     /**
      * Class nullability error message constant.
@@ -625,12 +622,6 @@ public final class ClassUtils {
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final boolean res = stream(getConstructorParameters(constructor))
                     .anyMatch(Parameter::isNamePresent);
-            if (!res) {
-                log.warn("Constructor's parameters name have been removed from the compiled code. "
-                        + "This caused a problems with the Java Bean injection through constructor. "
-                        + "Consider to use: @ConstructorArg annotation: https://github.com/HotelsDotCom/bull#different-field-names-defining-constructor-args "
-                        + "or add the property: <parameters>true</parameters> to your maven-compiler configuration");
-            }
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -677,6 +668,28 @@ public final class ClassUtils {
             }
             setterMethods.addAll(stream(getDeclaredMethods(clazz))
                     .filter(reflectionUtils::isSetter)
+                    .collect(toList()));
+            CACHE_MANAGER.cacheObject(cacheKey, setterMethods);
+            return setterMethods;
+        });
+    }
+
+    /**
+     * Retrieves all the setters method for the given class.
+     * @param clazz the clazz containing the methods.
+     * @return all the class setter methods
+     */
+    @SuppressWarnings("unchecked")
+    public List<Method> getGetterMethods(final Class<?> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        final String cacheKey = "GetterMethods-" + clazz.getName();
+        return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
+            final List<Method> setterMethods = new LinkedList<>();
+            if (hasSuperclass(clazz.getSuperclass())) {
+                setterMethods.addAll(getGetterMethods(clazz.getSuperclass()));
+            }
+            setterMethods.addAll(stream(getDeclaredMethods(clazz))
+                    .filter(reflectionUtils::isGetter)
                     .collect(toList()));
             CACHE_MANAGER.cacheObject(cacheKey, setterMethods);
             return setterMethods;

@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.3.1-jdk8] 2019.12.19
+#### Added
+* Added method for retrieving the class getter methods.
+#### Changed
+* Updated `spring-boot-starter-test` version to `2.2.2.RELEASE` (was `2.2.1.RELEASE`).
+* Updated `mockito-core` version to `3.2.4` (was `3.2.0`).
+* Updated `slf4j-api` version to `1.7.30` (was `1.7.29`).
+
+### [1.6.3-jdk8] 2019.12.02
+### Added
+* Added retry mechanism on the Bean injection in case the parameter names are not available in the compiled code.
+* Modified Travis configuration in order to test the compatibility with other JDKs versions
+#### Changed
+* Updated maven wrapper version to `3.6.3` (was `3.6.2`).
+
+### [1.6.2-jdk8] 2019.11.27
+#### Changed
+* Aligned `jdk8` version to the `jdk11` one
+
+### [1.1.27] 2019.11.22
+#### Changed
+* Removed warning leg message in case the constructor parameter names are not available in the compiled code.
+* Removed `slf4j-api` dependency from the library jar.
+
 ### [1.1.26] 2019.11.18
 ### Added
 * Added specific exception message in case the constructor invoke fails due to missing parameter name in the compiled code. 

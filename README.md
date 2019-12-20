@@ -18,6 +18,7 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=coverage)](https://sonarcloud.io/dashboard?id=BULL)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=security_rating)](https://sonarcloud.io/dashboard?id=BULL)
 ![GitHub license](https://img.shields.io/github/license/HotelsDotCom/bull.svg)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=HotelsDotCom/bull)](https://dependabot.com)
 
 All BULL modules are available on Maven Central: 
 
@@ -813,6 +814,10 @@ The application's logo has been designed by: Rob Light.
 
  - DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)
  - InfoQ: [How Expedia Is Getting Rid of Java Bean Transformers](https://www.infoq.com/articles/expedia-rid-of-bean-transformers/) [[EN](https://www.infoq.com/articles/expedia-rid-of-bean-transformers/)] [[PT-BR](https://www.infoq.com/br/articles/expedia-rid-of-bean-transformers/)]
+
+## Release
+
+All the instructions for releasing a new version are available at: [RELEASES.md](RELEASE.md)
 
 ## Legal
 
