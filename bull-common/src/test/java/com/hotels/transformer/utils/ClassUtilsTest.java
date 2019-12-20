@@ -103,7 +103,7 @@ public class ClassUtilsTest {
     private static final long[] PRIMITIVE_LONG_ARRAY = {};
     private static final Integer[] PRIMITIVE_INTEGER_ARRAY = {};
     private static final FromFoo[] NOT_PRIMITIVE_ARRAY = {};
-    private static final int FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS = 6;
+    private static final int FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS = 11;
     private static final int FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS = 3;
 
     /**
