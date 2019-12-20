@@ -697,6 +697,28 @@ public final class ClassUtils {
     }
 
     /**
+     * Retrieves all the setters method for the given class.
+     * @param clazz the clazz containing the methods.
+     * @return all the class setter methods
+     */
+    @SuppressWarnings("unchecked")
+    public List<Method> getGetterMethods(final Class<?> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        final String cacheKey = "GetterMethods-" + clazz.getName();
+        return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
+            final List<Method> setterMethods = new LinkedList<>();
+            if (hasSuperclass(clazz.getSuperclass())) {
+                setterMethods.addAll(getGetterMethods(clazz.getSuperclass()));
+            }
+            setterMethods.addAll(stream(getDeclaredMethods(clazz))
+                    .filter(reflectionUtils::isGetter)
+                    .collect(toList()));
+            CACHE_MANAGER.cacheObject(cacheKey, setterMethods);
+            return setterMethods;
+        });
+    }
+
+    /**
      * Gets the default value of a primitive type.
      * @param objectType the primitive object class
      * @return the default value of a primitive type
