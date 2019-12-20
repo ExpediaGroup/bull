@@ -54,6 +54,9 @@ import org.testng.annotations.Test;
 
 import com.hotels.beans.sample.AbstractClass;
 import com.hotels.beans.sample.FromFoo;
+import com.hotels.beans.sample.FromFooAdvFields;
+import com.hotels.beans.sample.FromFooSimple;
+import com.hotels.beans.sample.FromFooSimpleNoGetters;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
@@ -100,6 +103,8 @@ public class ClassUtilsTest {
     private static final long[] PRIMITIVE_LONG_ARRAY = {};
     private static final Integer[] PRIMITIVE_INTEGER_ARRAY = {};
     private static final FromFoo[] NOT_PRIMITIVE_ARRAY = {};
+    private static final int FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS = 6;
+    private static final int FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS = 3;
 
     /**
      * The class to be tested.
@@ -734,6 +739,36 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns an empty list if the class has no setter methods", ImmutableToFooSubClass.class, true},
                 {"Tests that the method returns a not empty list if the class has setter methods", MutableToFoo.class, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code getGetterMethods} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedGetterMethods the total expected getter method
+     */
+    @Test(dataProvider = "dataGetGetterMethodsTesting")
+    public void testGetGetterMethodsWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final int expectedGetterMethods) {
+        // GIVEN
+
+        // WHEN
+        final List<Method> actual = underTest.getGetterMethods(testClass);
+
+        // THEN
+        assertEquals(expectedGetterMethods, actual.size());
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getGetterMethods}.
+     * @return parameters to be used for testing the the method {@code getGetterMethods}.
+     */
+    @DataProvider
+    private Object[][] dataGetGetterMethodsTesting() {
+        return new Object[][] {
+                {"Tests that the method returns an empty list if the class has no getter methods", FromFooSimpleNoGetters.class, ZERO},
+                {"Tests that the method returns only the getter methods discarding the not valid one", FromFooAdvFields.class, FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS},
+                {"Tests that the method returns the boolean getter method too", FromFooSimple.class, FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS}
         };
     }
 

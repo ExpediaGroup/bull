@@ -2,9 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.3.2] 2019.12.19
+#### Changed
+* Added method for retrieving the class getter methods.
+
 ### [1.6.3.1] 2019.12.09
 #### Changed
 * Updated `spring-boot-starter-test` version to `2.2.2.RELEASE` (was `2.2.1.RELEASE`).
+* Updated `mockito-core` version to `3.2.4` (was `3.2.0`).
+* Updated `slf4j-api` version to `1.7.30` (was `1.7.29`).
 
 ### [1.6.3] 2019.12.02
 ### Added
