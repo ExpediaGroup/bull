@@ -69,6 +69,11 @@ public final class ReflectionUtils {
     private static final String SETTER_METHOD_NAME_REGEX = "^set[A-Z].*";
 
     /**
+     * Regex for identify getter methods.
+     */
+    private static final String GETTER_METHOD_NAME_REGEX = "^(get|is)[A-Z].*";
+
+    /**
      * Regex for identify dots into a string.
      */
     private static final String DOT_SPLIT_REGEX = "\\.";
@@ -111,6 +116,23 @@ public final class ReflectionUtils {
                     && method.getName().matches(SETTER_METHOD_NAME_REGEX)
                     && method.getParameterTypes().length == 1
                     && method.getReturnType().equals(void.class);
+            CACHE_MANAGER.cacheObject(cacheKey, res);
+            return res;
+        });
+    }
+
+    /**
+     * Checks if the given method is a getter.
+     * @param method the method to be checked
+     * @return true if the method is a getter method, false otherwise
+     */
+    public boolean isGetter(final Method method) {
+        final String cacheKey = "IsGetter-" + method.getDeclaringClass().getName() + '-' + method.getName();
+        return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
+            boolean res = isPublic(method.getModifiers())
+                    && method.getName().matches(GETTER_METHOD_NAME_REGEX)
+                    && method.getParameterTypes().length == 0
+                    && !method.getReturnType().equals(void.class);
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
