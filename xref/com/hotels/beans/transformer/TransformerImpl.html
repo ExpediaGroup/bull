@@ -563,7 +563,7 @@
 <a class="jxr_linenumber" name="L555" href="#L555">555</a>                 .map(populator -&gt; populator.getPopulatedObject(targetClass, field.getName(), fieldValue))
 <a class="jxr_linenumber" name="L556" href="#L556">556</a>                 .orElseGet(() -&gt;
 <a class="jxr_linenumber" name="L557" href="#L557">557</a>                         <em class="jxr_comment">// recursively inject object</em>
-<a class="jxr_linenumber" name="L558" href="#L558">558</a>                         transform(fieldValue, field.getType(), breadcrumb)
+<a class="jxr_linenumber" name="L558" href="#L558">558</a>                         transform(fieldValue, classUtils.getConcreteClass(field, fieldValue), breadcrumb)
 <a class="jxr_linenumber" name="L559" href="#L559">559</a>                 );
 <a class="jxr_linenumber" name="L560" href="#L560">560</a>     }
 <a class="jxr_linenumber" name="L561" href="#L561">561</a> }
