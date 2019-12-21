@@ -409,12 +409,28 @@ public final class ClassUtils {
      * @param <T> the object instance class.
      * @return the concrete class of a field
      */
-    public <T> Class<?> getConcreteClass(final Field field, final T objectInstance) {
+    public <T> Class<?> getFieldClass(final Field field, final T objectInstance) {
+        return getConcreteClass(field, reflectionUtils.getFieldValue(objectInstance, field));
+    }
+
+    /**
+     * Returns the concrete class of a field.
+     * @param field the field for which the concrete class has to be retrieved.
+     * @param fieldValue the field value.
+     * @return the concrete class of a field
+     */
+    public Class<?> getConcreteClass(final Field field, final Object fieldValue) {
         final String cacheKey = "ConcreteFieldClass-" + field.getName() + "-" + field.getDeclaringClass();
         return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
-            Class<?> res = reflectionUtils.getFieldValue(objectInstance, field).getClass();
-            CACHE_MANAGER.cacheObject(cacheKey, res);
-            return res;
+            Class<?> concreteType = field.getType();
+            boolean isFieldValueNull = isNull(fieldValue);
+            if (field.getType().isInterface()) {
+                concreteType = isFieldValueNull ? Object.class : fieldValue.getClass();
+            }
+            if (!isFieldValueNull) {
+                CACHE_MANAGER.cacheObject(cacheKey, concreteType);
+            }
+            return concreteType;
         });
     }
 
