@@ -21,7 +21,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>1.6.4-jdk8-SNAPSHOT</version>
+    <version>1.6.3.2-RC-jdk8</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -89,7 +89,7 @@
         <connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
         <developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
         <url>https://github.com/HotelsDotCom/bull</url>
-        <tag>HEAD</tag>
+        <tag>1.6.3.2-RC-jdk8</tag>
     </scm>
 
     <dependencyManagement>
