@@ -23,6 +23,7 @@ import static com.hotels.transformer.constant.ClassType.IMMUTABLE;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -132,8 +133,8 @@ public abstract class AbstractTransformerTest {
     }
 
     /**
-     * Creates a {@link FromFooSubClass} instance.
-     * @return the {@link FromFooSubClass} instance.
+     * Creates a {@link SubClass} instance.
+     * @return the {@link SubClass} instance.
      */
     private FromFooSubClass createFromFooSubClass() {
         return new FromFooSubClass(fromFoo.getName(), fromFoo.getId(), fromFoo.getNestedObjectList(), fromFoo.getList(), fromFoo.getNestedObject(), SURNAME, PHONE, CHECK, AMOUNT);
@@ -143,8 +144,10 @@ public abstract class AbstractTransformerTest {
      * Creates a {@link FromFooAdvFields} instance.
      * @return the {@link FromFooAdvFields} instance.
      */
+    @SuppressWarnings("unchecked")
     private FromFooAdvFields createFromFooAdvFields() {
-        return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage(), PRICE);
+        return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage(),
+                PRICE, sourceFooSimpleList, (Collection) sourceFooSimpleList, SAMPLE_MAP, (Map) SAMPLE_MAP, fromSubFoo);
     }
 
     /**

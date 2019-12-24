@@ -16,7 +16,7 @@ jdk:
   - openjdk11
   - openjdk12
   - openjdk13
-script: travis_retry mvn clean install -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+script: travis_retry mvn clean install -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -Pfast
 install: skip
 jobs:
   include:
