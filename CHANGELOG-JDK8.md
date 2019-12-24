@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.6.4-jdk8] TBD
+### [1.6.3.2-jdk8] 2019.12.24
 #### Added
 * Implemented Wildcards types support (see: [Issue 111](https://github.com/HotelsDotCom/bull/issues/111)).
 * Implemented transformation of a field declared with its interface.
