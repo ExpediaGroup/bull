@@ -35,8 +35,12 @@ import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
+import java.util.Currency;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -99,8 +103,10 @@ public class ClassUtilsTest {
     private static final long[] PRIMITIVE_LONG_ARRAY = {};
     private static final Integer[] PRIMITIVE_INTEGER_ARRAY = {};
     private static final FromFoo[] NOT_PRIMITIVE_ARRAY = {};
-    private static final int FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS = 6;
+    private static final int FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS = 11;
     private static final int FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS = 3;
+    private static final LinkedList<String> LINKED_LIST = new LinkedList<>();
+    private static final String LIST_FIELD_NAME = "list";
 
     /**
      * The class to be tested.
@@ -176,7 +182,10 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns true if the class is a special type object", Locale.class, true},
                 {"Tests that the method returns false if the class is not a special type object", BigDecimal.class, false},
-                {"Tests that the method returns true if the class is an instance of Temporal interface", Instant.class, true}
+                {"Tests that the method returns true if the class is an instance of Temporal interface", Instant.class, true},
+                {"Tests that the method returns true if the class is an instance of Properties class", Properties.class, true},
+                {"Tests that the method returns true if the class is an instance of Currency class", Currency.class, true},
+                {"Tests that the method returns true if the class is an instance of Date class", Date.class, true}
         };
     }
 
@@ -934,5 +943,63 @@ public class ClassUtilsTest {
                 {"Tests that the method returns true if the class is a byte[]", byte[].class, true},
                 {"Tests that the method returns false if the class is not a byte[]", byte.class, false}
         };
+    }
+
+    /**
+     * Tests that the method {@code getConcreteClass} works as expected.
+     * @throws Exception if the field is not retrieved
+     */
+    @Test
+    public void testGetFieldClassWorksAsExpected() throws Exception {
+        // GIVEN
+        FromFoo fromFoo = createFromFoo();
+        Field listField = getField(fromFoo, LIST_FIELD_NAME);
+
+        // WHEN
+        Class<?> actual = underTest.getFieldClass(listField, fromFoo);
+
+        // THEN
+        assertEquals(LinkedList.class, actual);
+    }
+
+    /**
+     * Tests that the method {@code getConcreteClass} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param field the class field for which the concrete class has to be retrieved
+     * @param fieldValue the field value
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataGetConcreteClassTesting")
+    public void testGetConcreteClassWorksAsExpected(final String testCaseDescription, final Field field, final Object fieldValue, final Class<?> expectedResult) {
+        // GIVEN
+
+        // WHEN
+        Class<?> actual = underTest.getConcreteClass(field, fieldValue);
+
+        // THEN
+        assertEquals(expectedResult, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getConcreteClass}.
+     * @return parameters to be used for testing the the method {@code getConcreteClass}.
+     */
+    @DataProvider
+    private Object[][] dataGetConcreteClassTesting() throws Exception {
+        Field listField = getField(createFromFoo(), LIST_FIELD_NAME);
+        return new Object[][] {
+                {"Tests that the method returns Object if the field value is null", listField, null, Object.class},
+                {"Tests that the method returns LinkedList if the concrete field class is a LinkedList", listField, LINKED_LIST, LINKED_LIST.getClass()}
+        };
+    }
+
+    private <T> Field getField(final T objectInstance, final String fieldName) throws NoSuchFieldException {
+        Field field = objectInstance.getClass().getDeclaredField(fieldName);
+        field.setAccessible(true);
+        return field;
+    }
+
+    private FromFoo createFromFoo() {
+        return new FromFoo(NAME, null, null, LINKED_LIST, null);
     }
 }

@@ -19,6 +19,8 @@ package com.hotels.beans.sample.immutable;
 import java.util.List;
 import java.util.Map;
 
+import com.hotels.beans.sample.ISubClass;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -29,7 +31,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class ImmutableToSubFoo {
+public class ImmutableToSubFoo implements ISubClass {
     private final String name;
     private final int[] phoneNumbers;
     private final Map<String, String> sampleMap;

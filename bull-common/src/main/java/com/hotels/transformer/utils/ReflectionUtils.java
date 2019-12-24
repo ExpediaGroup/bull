@@ -22,6 +22,7 @@ import static java.lang.invoke.MethodHandles.privateLookupIn;
 import static java.lang.invoke.MethodType.methodType;
 import static java.lang.reflect.Modifier.isPublic;
 
+import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.capitalize;
 
 import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
@@ -39,6 +40,7 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.UndeclaredThrowableException;
+import java.lang.reflect.WildcardType;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -451,14 +453,46 @@ public final class ReflectionUtils {
         return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
             Class<?> res = null;
             if (ParameterizedType.class.isAssignableFrom(field.getGenericType().getClass())) {
-                final Type[] fieldArgTypes = ((ParameterizedType) field.getGenericType()).getActualTypeArguments();
-                if (fieldArgTypes.length != 0) {
-                    res = (Class<?>) fieldArgTypes[0];
-                }
+                res = getGenericClassType((ParameterizedType) field.getGenericType());
             }
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
+    }
+
+    /**
+     * Retrieves the generic class of a {@link ParameterizedType}.
+     * @param genericType the generic type for which the class has to be retrieved
+     * @return the generic class type
+     */
+    private Class<?> getGenericClassType(final ParameterizedType genericType) {
+        return getGenericClassType(genericType.getActualTypeArguments());
+    }
+
+    /**
+     * Retrieves the generic class of a {@link WildcardType}.
+     * @param genericType the generic type for which the class has to be retrieved
+     * @return the generic class type
+     */
+    private Class<?> getGenericClassType(final WildcardType genericType) {
+        return getGenericClassType(isEmpty(genericType.getLowerBounds()) ? genericType.getUpperBounds() : genericType.getLowerBounds());
+    }
+
+    /**
+     * Retrieves the generic class from the field's argument types.
+     * @param actualTypeArguments the field type arguments
+     * @return the generic class type
+     */
+    private Class<?> getGenericClassType(final Type[] actualTypeArguments) {
+        Class<?> res = null;
+        if (actualTypeArguments.length != 0) {
+            if (WildcardType.class.isAssignableFrom(actualTypeArguments[0].getClass())) {
+                res = getGenericClassType((WildcardType) actualTypeArguments[0]);
+            } else {
+                res = (Class<?>) actualTypeArguments[0];
+            }
+        }
+        return res;
     }
 
     /**
@@ -476,9 +510,15 @@ public final class ReflectionUtils {
                 throw new IllegalArgumentException("Type for object: " + fieldName + " is invalid. "
                                 + "It cannot be assigned from: " + Map.class.getName() + ".");
             }
-            final ParameterizedType genericType = (ParameterizedType) fieldType;
-            final MapElemType keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);
-            final MapElemType elemType = getMapElemType(genericType.getActualTypeArguments()[1], declaringClass, fieldName);
+            MapElemType keyType, elemType;
+            if (ParameterizedType.class.isAssignableFrom(fieldType.getClass())) {
+                final ParameterizedType genericType = (ParameterizedType) fieldType;
+                keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);
+                elemType = getMapElemType(genericType.getActualTypeArguments()[1], declaringClass, fieldName);
+            } else {
+                keyType = buildItemType(fieldType, declaringClass, fieldName);
+                elemType = buildItemType(fieldType, declaringClass, fieldName);
+            }
             final MapType mapType = new MapType(keyType, elemType);
             CACHE_MANAGER.cacheObject(cacheKey, mapType);
             return mapType;
@@ -546,6 +586,8 @@ public final class ReflectionUtils {
                         res = getNestedGenericClass
                                 ? getArgumentTypeClass(((ParameterizedType) argument).getActualTypeArguments()[0], declaringClass, fieldName, false)
                                 : (Class<?>) ((ParameterizedType) argument).getRawType();
+                    } else if (WildcardType.class.isAssignableFrom(argument.getClass())) {
+                        res = getGenericClassType((WildcardType) argument);
                     }
                     CACHE_MANAGER.cacheObject(cacheKey, res, EmptyValue.class);
                     return res;
