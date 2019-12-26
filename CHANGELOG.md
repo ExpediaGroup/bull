@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.5] TBD
+#### Changed
+* Updated `testng` version to `7.1.0` (was `7.0.0`).
+
 ### [1.6.4] 2019.12.24
 #### Added
 * Implemented Wildcards types support (see: [Issue 111](https://github.com/HotelsDotCom/bull/issues/111)).
