@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ### [1.6.5] TBD
 #### Changed
 * Updated `testng` version to `7.1.0` (was `7.0.0`).
+* Updated spring-boot-starter-test version to 2.2.3.RELEASE (was 2.2.2.RELEASE).
+).
+* Updated `hibernate-validator` version to `6.1.1.Final` (was `6.1.0.Final`).
 
 ### [1.6.4] 2019.12.24
 #### Added
