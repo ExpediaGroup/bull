@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.6.5] TBD
+### [1.6.5] 2020.01.21
 #### Changed
 * Updated `testng` version to `7.1.0` (was `7.0.0`).
 * Updated `spring-boot-starter-test` version to `2.2.4.RELEASE` (was `2.2.3.RELEASE`).
