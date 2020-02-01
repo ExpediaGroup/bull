@@ -9,19 +9,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * Tests for generator core model.
+ * Tests for generator core model.
+ * Tests for generator core model.
  */
-package com.hotels.beans.generator.core.sample.javabean;
-
-import lombok.Getter;
-import lombok.Setter;
-
 /**
- * Sample class that represents a mutable destination type.
- * @author mmirk
+ * Tests for generator core model.
  */
-@Getter
-@Setter
-public class Destination {
-    boolean aBoolean;
-    String aString;
-}
+
+package com.hotels.beans.generator.core;

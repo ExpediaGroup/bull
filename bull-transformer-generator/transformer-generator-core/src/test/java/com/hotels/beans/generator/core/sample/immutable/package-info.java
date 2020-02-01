@@ -9,19 +9,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * Sample immutable classes for testing purposes.
+ * Sample immutable classes for testing purposes.
+ * Sample immutable classes for testing purposes.
  */
-package com.hotels.beans.generator.core.sample.javabean;
-
-import lombok.Getter;
-import lombok.Setter;
-
 /**
- * Sample class that represents a mutable destination type.
- * @author mmirk
+ * Sample immutable classes for testing purposes.
  */
-@Getter
-@Setter
-public class Destination {
-    boolean aBoolean;
-    String aString;
-}
+
+package com.hotels.beans.generator.core.sample.immutable;

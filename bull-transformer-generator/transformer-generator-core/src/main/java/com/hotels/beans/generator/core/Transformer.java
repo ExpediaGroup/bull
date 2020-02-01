@@ -10,21 +10,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hotels.beans.generator.core.sample.javabean;
-
-import com.hotels.beans.generator.core.Transformer;
+package com.hotels.beans.generator.core;
 
 /**
- * Example used as reference for the generated code.
+ * A {@code Transformer} can convert an object of a source type to a destination type.
+ * @param <A> the source type
+ * @param <B> the destination type
  * @author mmirk
  */
-@SuppressWarnings("unused")
-public class TransformerExample implements Transformer<Source, Destination> {
-    @Override
-    public Destination transform(final Source source) { // 'final' required by Checkstyle, not part of the generated code
-        Destination destination = new Destination();
-        destination.setABoolean(source.isABoolean());
-        destination.setAString(source.getAString());
-        return destination;
-    }
+public interface Transformer<A, B> {
+    /**
+     * Transform an instance of {@code A} into a new instance of {@code B}.
+     * The destination instance is initialized with values copied from the source.
+     * Values can be optionally transformed depending on the implementation.
+     * @param source the source object to convert
+     * @return a new instance of {@code B} initialized
+     */
+    B transform(A source);
 }

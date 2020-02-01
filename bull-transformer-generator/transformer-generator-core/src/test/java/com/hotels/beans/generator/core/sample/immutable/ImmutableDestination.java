@@ -10,21 +10,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hotels.beans.generator.core.sample.javabean;
+package com.hotels.beans.generator.core.sample.immutable;
 
-import com.hotels.beans.generator.core.Transformer;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
- * Example used as reference for the generated code.
+ * Sample class that represents an immutable destination type.
  * @author mmirk
  */
-@SuppressWarnings("unused")
-public class TransformerExample implements Transformer<Source, Destination> {
-    @Override
-    public Destination transform(final Source source) { // 'final' required by Checkstyle, not part of the generated code
-        Destination destination = new Destination();
-        destination.setABoolean(source.isABoolean());
-        destination.setAString(source.getAString());
-        return destination;
-    }
+@RequiredArgsConstructor
+@Getter
+public class ImmutableDestination {
+    final boolean aBoolean;
+    final String aString;
 }

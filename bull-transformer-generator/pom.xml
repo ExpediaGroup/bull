@@ -27,6 +27,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.hotels.beans</groupId>
+                <artifactId>bull-common</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.squareup</groupId>
                 <artifactId>javapoet</artifactId>
                 <version>${javapoet.version}</version>

@@ -10,21 +10,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hotels.beans.generator.core.sample.javabean;
+package com.hotels.beans.generator.core.sample.mixed;
 
-import com.hotels.beans.generator.core.Transformer;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 /**
- * Example used as reference for the generated code.
+ * Sample class that represents a mixed destination type.
  * @author mmirk
  */
-@SuppressWarnings("unused")
-public class TransformerExample implements Transformer<Source, Destination> {
-    @Override
-    public Destination transform(final Source source) { // 'final' required by Checkstyle, not part of the generated code
-        Destination destination = new Destination();
-        destination.setABoolean(source.isABoolean());
-        destination.setAString(source.getAString());
-        return destination;
-    }
+@RequiredArgsConstructor
+@Getter
+@Setter
+public class MixedDestination {
+    final String aString;
+    final Long aLong;
+    boolean aBoolean;
 }
