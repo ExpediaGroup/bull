@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -168,10 +168,9 @@ public class TransformerImpl extends AbstractBeanTransformer {
     /**
      * Checks if the source class field names can be retrieved from the constructor parameters.
      * @param constructor the all args constructor
-     * @param <K> the target object type
      * @return true if the parameter names are defined or the parameters are annotated with: {@link ConstructorArg}
      */
-    private <K> boolean canBeInjectedByConstructorParams(final Constructor constructor) {
+    private boolean canBeInjectedByConstructorParams(final Constructor constructor) {
         final String cacheKey = "CanBeInjectedByConstructorParams-" + constructor.getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final boolean res = classUtils.areParameterNamesAvailable(constructor) || classUtils.allParameterAnnotatedWith(constructor, ConstructorArg.class);
