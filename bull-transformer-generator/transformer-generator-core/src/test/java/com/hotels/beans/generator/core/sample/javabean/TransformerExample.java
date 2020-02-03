@@ -23,12 +23,21 @@ import com.hotels.beans.generator.core.TransformerSpec;
  * Example used as reference for the generated code.
  */
 @SuppressWarnings("unused")
-public class TransformerExample implements Transformer<Source, Destination> {
+public final class TransformerExample implements Transformer<Source, Destination> {
     @Override
     public Destination transform(final Source source) { // 'final' required by Checkstyle, not part of the generated code
         Destination destination = new Destination();
         destination.setABoolean(source.isABoolean());
         destination.setAString(source.getAString());
         return destination;
+    }
+
+    /**
+     * Entry point for manual testing.
+     * Run this to compare transformer serialization with the above reference code.
+     * @param args the args
+     */
+    public static void main(final String[] args) {
+        System.out.println(new TransformerSpec().build(Source.class, Destination.class));
     }
 }
