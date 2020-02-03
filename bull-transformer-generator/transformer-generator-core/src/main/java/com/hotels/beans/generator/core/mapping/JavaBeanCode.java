@@ -56,8 +56,8 @@ class JavaBeanCode extends MappingCode {
     @Override
     protected CodeBlock initialization() {
         final CodeBlock.Builder builder = CodeBlock.builder();
-        final List<Method> setters = CUTILS.getSetterMethods(destination);
-        for (Method getter : CUTILS.getGetterMethods(source)) {
+        final List<Method> setters = CLASS_UTILS.getSetterMethods(destination);
+        for (Method getter : CLASS_UTILS.getGetterMethods(source)) {
             findCorrespondingSetter(getter, setters)
                     .ifPresent(setter ->
                             builder.addStatement("destination.$N(source.$N())", setter.getName(), getter.getName()));

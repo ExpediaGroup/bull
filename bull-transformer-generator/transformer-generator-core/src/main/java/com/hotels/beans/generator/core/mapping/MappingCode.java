@@ -31,7 +31,7 @@ public abstract class MappingCode {
     /**
      * A reusable instance of ClassUtils.
      */
-    protected static final ClassUtils CUTILS = new ClassUtils();
+    protected static final ClassUtils CLASS_UTILS = new ClassUtils();
 
     /**
      * Obtains an instance of {@code MappingCode} from a source and destination.
@@ -46,7 +46,7 @@ public abstract class MappingCode {
         Objects.requireNonNull(source, "source type can't be null");
         Objects.requireNonNull(destination, "destination type can't be null");
 
-        final ClassType classType = CUTILS.getClassType(destination);
+        final ClassType classType = CLASS_UTILS.getClassType(destination);
         switch (classType) {
             case MUTABLE:
                 return new JavaBeanCode(source, destination);
