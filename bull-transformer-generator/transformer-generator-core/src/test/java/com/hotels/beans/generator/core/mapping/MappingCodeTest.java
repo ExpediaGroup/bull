@@ -27,6 +27,9 @@ import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
 import com.hotels.beans.generator.core.sample.mixed.MixedDestination;
 
+/**
+ * Tests for {@link MappingCode}.
+ */
 public class MappingCodeTest {
 
     @Test

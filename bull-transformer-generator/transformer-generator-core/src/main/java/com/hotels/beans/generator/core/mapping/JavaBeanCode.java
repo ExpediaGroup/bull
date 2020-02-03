@@ -48,11 +48,17 @@ class JavaBeanCode extends MappingCode {
         this.destination = destinationBean;
     }
 
+    /**
+     * Models the instantiation of destination type with no-arg constructor.
+     */
     @Override
     protected CodeBlock creation() {
         return CodeBlock.of("$T destination = new $T()", destination, destination);
     }
 
+    /**
+     * Models the mapping from a source type to a mutable destination type.
+     */
     @Override
     protected CodeBlock initialization() {
         final CodeBlock.Builder builder = CodeBlock.builder();

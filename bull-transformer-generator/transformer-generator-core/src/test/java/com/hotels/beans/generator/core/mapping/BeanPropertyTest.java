@@ -27,6 +27,9 @@ import org.testng.annotations.Test;
 
 import com.hotels.beans.generator.core.sample.javabean.Source;
 
+/**
+ * Tests for {@link BeanProperty}.
+ */
 public class BeanPropertyTest {
     private BeanProperty anInt;
 
