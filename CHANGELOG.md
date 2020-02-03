@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.0.0] 2020.02.03
+#### Changed
+* Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
+
 ### [1.6.3.2] 2019.12.19
 #### Changed
 * Added method for retrieving the class getter methods.
