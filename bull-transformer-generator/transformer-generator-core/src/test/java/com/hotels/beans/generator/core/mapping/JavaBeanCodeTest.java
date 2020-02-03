@@ -35,11 +35,13 @@ public class JavaBeanCodeTest {
 
     @Test
     public void shouldInstantiateAndReturnDestination() {
-        // given
+        // GIVEN
         JavaBeanCode code = new JavaBeanCode(Source.class, Destination.class);
-        // when
+
+        // WHEN
         CodeBlock block = code.build();
-        // then
+
+        // THEN
         assertThat(block.toString(), allOf(
                 containsString(format("%1$s destination = new %1$s();", Destination.class.getName())),
                 containsString("return destination;")
@@ -48,11 +50,13 @@ public class JavaBeanCodeTest {
 
     @Test
     public void shouldMapMatchingProperties() {
-        // given
+        // GIVEN
         JavaBeanCode code = new JavaBeanCode(Source.class, Destination.class);
-        // when
+
+        // WHEN
         CodeBlock block = code.build();
-        // then
+
+        // THEN
         assertThat(block.toString(), allOf(
                 containsString("destination.setABoolean(source.isABoolean());"),
                 containsString("destination.setAString(source.getAString());")

@@ -31,10 +31,10 @@ public class MappingCodeTest {
 
     @Test
     public void shouldReturnAnInstanceForMutableDestination() {
-        // when
+        // WHEN
         var mappingCode = MappingCode.of(Source.class, Destination.class);
 
-        // then
+        // THEN
         assertNotNull(mappingCode);
     }
 

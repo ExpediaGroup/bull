@@ -38,47 +38,47 @@ public class BeanPropertyTest {
 
     @Test
     public void shouldBeEqualToPropertyWithSameName() throws NoSuchMethodException {
-        // given
+        // GIVEN
         var setAnInt = Source.class.getDeclaredMethod("setAnInt", int.class);
 
-        // when
+        // WHEN
         boolean result = anInt.equals(new BeanProperty(setAnInt));
 
-        // then
+        // THEN
         assertTrue(result);
     }
 
     @Test
     public void shouldBeEqualToPropertyWithSameNameFromShortPrefixMethod() throws NoSuchMethodException {
-        // given
+        // GIVEN
         var isABoolean = Source.class.getDeclaredMethod("isABoolean");
         var setABoolean = Source.class.getDeclaredMethod("setABoolean", boolean.class);
 
-        // when
+        // WHEN
         boolean result = new BeanProperty(isABoolean).equals(new BeanProperty(setABoolean));
 
-        // then
+        // THEN
         assertTrue(result);
     }
 
     @Test
     public void shouldBeEqualToSelf() {
-        // when
+        // WHEN
         boolean result = anInt.equals(anInt);
 
-        // then
+        // THEN
         assertTrue(result);
     }
 
     @Test
     public void shouldNotBeEqualToPropertyWithDifferentName() throws NoSuchMethodException {
-        // given
+        // GIVEN
         var getAString = Source.class.getDeclaredMethod("getAString");
 
-        // when
+        // WHEN
         boolean result = anInt.equals(new BeanProperty(getAString));
 
-        // then
+        // THEN
         assertFalse(result);
     }
 

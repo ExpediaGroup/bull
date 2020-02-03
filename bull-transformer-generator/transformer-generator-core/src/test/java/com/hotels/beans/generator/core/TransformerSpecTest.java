@@ -43,11 +43,13 @@ public class TransformerSpecTest {
      */
     @Test
     public void shouldBeNamedAfterSourceAndDestinationTypes() {
-        // given
+        // GIVEN
         TransformerSpec spec = new TransformerSpec();
-        // when
+
+        // WHEN
         TypeSpec generated = spec.build(Source.class, Destination.class);
-        // then
+
+        // THEN
         assertEquals(generated.name, "SourceToDestinationTransformer",
                 "transformer name does not include source or destination types");
     }
@@ -57,11 +59,13 @@ public class TransformerSpecTest {
      */
     @Test
     public void shouldImplementTransformerInterface() {
-        // given
+        // GIVEN
         TransformerSpec spec = new TransformerSpec();
-        // when
+
+        // WHEN
         TypeSpec generated = spec.build(Source.class, Destination.class);
-        // then
+
+        // THEN
         assertTrue(isATransformer(generated),
                 "transformer does not implement interface " + iTransformer);
         assertNotNull(findTransformMethod(generated, Source.class, Destination.class),
