@@ -1,15 +1,19 @@
 /**
  * Copyright (C) 2019-2020 Expedia, Inc.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.hotels.beans.generator.core;
 
 import java.lang.reflect.Method;
@@ -25,7 +29,6 @@ import com.squareup.javapoet.TypeSpec;
 /**
  * This class is used to build a {@link Transformer} implementation model to map between a source and destination types.
  * The model is a {@link TypeSpec} object that can be further modified if needed, and serialized to source code.
- * @author mmirk
  */
 public class TransformerSpec {
     /**
