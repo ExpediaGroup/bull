@@ -83,24 +83,6 @@ public class BeanPropertyTest {
     }
 
     @Test
-    public void shouldNotBeEqualToNull() {
-        // when
-        boolean result = anInt.equals(null);
-
-        // then
-        assertFalse(result);
-    }
-
-    @Test
-    public void shouldNotBeEqualToDifferentType() {
-        // when
-        boolean result = anInt.equals(new Object());
-
-        // then
-        assertFalse(result);
-    }
-
-    @Test
     public void shouldReturnPropertyNameAsString() {
         assertEquals("anInt", anInt.toString());
     }
