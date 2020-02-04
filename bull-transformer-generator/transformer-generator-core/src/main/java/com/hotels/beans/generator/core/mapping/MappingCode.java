@@ -16,47 +16,26 @@
 
 package com.hotels.beans.generator.core.mapping;
 
-import java.util.Objects;
-
-import org.apache.commons.lang3.NotImplementedException;
-
-import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.utils.ClassUtils;
 import com.squareup.javapoet.CodeBlock;
 
 /**
  * This is the base class for modeling the code block that maps a source object to a destination object.
+ * Subclasses must provide an implementation of {@code creation()} and {@code initialization()} methods,
+ * to create mapping code specialized for different kinds of source and destination.
  */
 public abstract class MappingCode {
     /**
-     * A reusable instance of ClassUtils.
+     * A reusable instance of ClassUtils for introspecting types.
      */
-    protected static final ClassUtils CLASS_UTILS = new ClassUtils();
+    private final ClassUtils classUtils;
 
     /**
-     * Obtains an instance of {@code MappingCode} from a source and destination.
-     * <p>
-     * The returned instance is specialized to create a {@link CodeBlock} for mapping
-     * an object of a source type to a destination type.
-     * @param source the source type
-     * @param destination the destination type
-     * @return the mapping code from source to destination
+     * Instantiates a new Mapping code with the given ClassUtils.
+     * @param clsUtils an utility for introspecting types
      */
-    public static MappingCode of(final Class<?> source, final Class<?> destination) {
-        Objects.requireNonNull(source, "source type can't be null");
-        Objects.requireNonNull(destination, "destination type can't be null");
-
-        final ClassType classType = CLASS_UTILS.getClassType(destination);
-        switch (classType) {
-            case MUTABLE:
-                return new JavaBeanCode(source, destination);
-            case IMMUTABLE:
-                throw new NotImplementedException("Transformation code for type IMMUTABLE is not supported");
-            case MIXED:
-                throw new NotImplementedException("Transformation code for type MIXED is not supported");
-            default:
-                throw new IllegalStateException("Unsupported destination type: " + classType);
-        }
+    MappingCode(final ClassUtils clsUtils) {
+        this.classUtils = clsUtils;
     }
 
     /**
@@ -96,5 +75,13 @@ public abstract class MappingCode {
      */
     protected CodeBlock returning() {
         return CodeBlock.of("return destination");
+    }
+
+    /**
+     * Gets class utils instance.
+     * @return the class utils
+     */
+    protected final ClassUtils getClassUtils() {
+        return classUtils;
     }
 }

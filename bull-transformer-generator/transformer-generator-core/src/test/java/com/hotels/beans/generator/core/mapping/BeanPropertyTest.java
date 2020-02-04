@@ -18,6 +18,7 @@ package com.hotels.beans.generator.core.mapping;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.lang.reflect.Method;
@@ -83,6 +84,51 @@ public class BeanPropertyTest {
 
         // THEN
         assertFalse(result);
+    }
+
+    @Test
+    public void shouldNotBeEqualToNull() {
+        // WHEN
+        boolean result = anInt.equals(null);
+
+        // THEN
+        assertFalse(result);
+    }
+
+    @Test
+    public void shouldNotBeEqualToOtherType() {
+        // GIVEN
+        Object other = new Object();
+
+        // WHEN
+        boolean result = anInt.equals(other);
+
+        // THEN
+        assertFalse(result);
+    }
+
+    @Test
+    public void shouldHaveSameHashCodeAsPropertyWithSameName() throws NoSuchMethodException {
+        // GIVEN
+        var setAnInt = new BeanProperty(Source.class.getDeclaredMethod("setAnInt", int.class));
+
+        // WHEN
+        int hashCode = anInt.hashCode();
+
+        // THEN
+        assertEquals(hashCode, setAnInt.hashCode());
+    }
+
+    @Test
+    public void shouldHaveDifferentHashCodeFromPropertyWithDifferentName() throws NoSuchMethodException {
+        // GIVEN
+        var getAString = new BeanProperty(Source.class.getDeclaredMethod("getAString"));
+
+        // WHEN
+        int hashCode = anInt.hashCode();
+
+        // THEN
+        assertNotEquals(hashCode, getAString.hashCode());
     }
 
     @Test

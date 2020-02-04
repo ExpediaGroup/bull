@@ -28,14 +28,15 @@ import com.hotels.beans.generator.core.sample.javabean.Source;
 import com.hotels.beans.generator.core.sample.mixed.MixedDestination;
 
 /**
- * Tests for {@link MappingCode}.
+ * Tests for {@link MappingCodeFactory}.
  */
-public class MappingCodeTest {
+public class MappingCodeFactoryTest {
+    private final MappingCodeFactory codeFactory = MappingCodeFactory.getInstance();
 
     @Test
     public void shouldReturnAnInstanceForMutableDestination() {
         // WHEN
-        var mappingCode = MappingCode.of(Source.class, Destination.class);
+        var mappingCode = codeFactory.of(Source.class, Destination.class);
 
         // THEN
         assertNotNull(mappingCode);
@@ -46,7 +47,7 @@ public class MappingCodeTest {
      */
     @Test(expectedExceptions = NotImplementedException.class)
     public void shouldFailForImmutableDestination() {
-        MappingCode.of(Source.class, ImmutableDestination.class);
+        codeFactory.of(Source.class, ImmutableDestination.class);
     }
 
     /**
@@ -54,12 +55,12 @@ public class MappingCodeTest {
      */
     @Test(expectedExceptions = NotImplementedException.class)
     public void shouldFailForMixedDestination() {
-        MappingCode.of(Source.class, MixedDestination.class);
+        codeFactory.of(Source.class, MixedDestination.class);
     }
 
     @Test(dataProvider = "typePairs", expectedExceptions = NullPointerException.class)
     public void shouldFailIfAnyTypeIsNull(final Class<?> source, final Class<?> destination) {
-        MappingCode.of(source, destination);
+        codeFactory.of(source, destination);
     }
 
     @DataProvider

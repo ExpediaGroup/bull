@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import com.hotels.transformer.utils.ClassUtils;
 import com.squareup.javapoet.CodeBlock;
 
 /**
@@ -42,8 +43,10 @@ class JavaBeanCode extends MappingCode {
      * Instantiates a new JavaBean code model, source and destination types must be JavaBeans.
      * @param sourceBean the source
      * @param destinationBean the destination
+     * @param classUtils an utility for introspecting types
      */
-    JavaBeanCode(final Class<?> sourceBean, final Class<?> destinationBean) {
+    JavaBeanCode(final Class<?> sourceBean, final Class<?> destinationBean, final ClassUtils classUtils) {
+        super(classUtils);
         this.source = sourceBean;
         this.destination = destinationBean;
     }
@@ -62,8 +65,9 @@ class JavaBeanCode extends MappingCode {
     @Override
     protected CodeBlock initialization() {
         final CodeBlock.Builder builder = CodeBlock.builder();
-        final List<Method> setters = CLASS_UTILS.getSetterMethods(destination);
-        for (Method getter : CLASS_UTILS.getGetterMethods(source)) {
+        final ClassUtils classUtils = getClassUtils();
+        final List<Method> setters = classUtils.getSetterMethods(destination);
+        for (Method getter : classUtils.getGetterMethods(source)) {
             findCorrespondingSetter(getter, setters)
                     .ifPresent(setter ->
                             builder.addStatement("destination.$N(source.$N())", setter.getName(), getter.getName()));

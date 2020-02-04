@@ -21,20 +21,27 @@ import java.text.MessageFormat;
 
 import javax.lang.model.element.Modifier;
 
-import com.hotels.beans.generator.core.mapping.MappingCode;
+import com.hotels.beans.generator.core.mapping.MappingCodeFactory;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * This class is used to build a {@link Transformer} implementation model to map between a source and destination types.
  * The model is a {@link TypeSpec} object that can be further modified if needed, and serialized to source code.
  */
+@RequiredArgsConstructor
 public class TransformerSpec {
     /**
      * A reusable reference to {@link Transformer#transform(Object)} method.
      */
     private static final Method TRANSFORM = Transformer.class.getMethods()[0];
+    /**
+     * A {@link MappingCodeFactory} to create code blocks.
+     */
+    private final MappingCodeFactory codeFactory;
 
     /**
      * Build a transformer model to map from a {@code source} to {@code destination} type.
@@ -51,7 +58,7 @@ public class TransformerSpec {
                 .addModifiers(Modifier.PUBLIC)
                 .addSuperinterface(ParameterizedTypeName.get(Transformer.class, source, destination))
                 .addMethod(overrideTransform(source, destination)
-                        .addCode(MappingCode.of(source, destination).build())
+                        .addCode(codeFactory.of(source, destination).build())
                         .build())
                 .build();
     }

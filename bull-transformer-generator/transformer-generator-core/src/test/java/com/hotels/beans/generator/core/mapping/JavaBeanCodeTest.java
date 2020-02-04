@@ -26,6 +26,7 @@ import org.testng.annotations.Test;
 
 import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
+import com.hotels.transformer.utils.ClassUtils;
 import com.squareup.javapoet.CodeBlock;
 
 /**
@@ -33,11 +34,10 @@ import com.squareup.javapoet.CodeBlock;
  */
 public class JavaBeanCodeTest {
 
+    private final JavaBeanCode code = new JavaBeanCode(Source.class, Destination.class, new ClassUtils());
+
     @Test
     public void shouldInstantiateAndReturnDestination() {
-        // GIVEN
-        JavaBeanCode code = new JavaBeanCode(Source.class, Destination.class);
-
         // WHEN
         CodeBlock block = code.build();
 
@@ -50,9 +50,6 @@ public class JavaBeanCodeTest {
 
     @Test
     public void shouldMapMatchingProperties() {
-        // GIVEN
-        JavaBeanCode code = new JavaBeanCode(Source.class, Destination.class);
-
         // WHEN
         CodeBlock block = code.build();
 

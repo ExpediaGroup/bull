@@ -18,6 +18,7 @@ package com.hotels.beans.generator.core.sample.javabean;
 
 import com.hotels.beans.generator.core.Transformer;
 import com.hotels.beans.generator.core.TransformerSpec;
+import com.hotels.beans.generator.core.mapping.MappingCodeFactory;
 
 /**
  * Example used as reference for the generated code.
@@ -38,6 +39,7 @@ public final class TransformerExample implements Transformer<Source, Destination
      * @param args the args
      */
     public static void main(final String[] args) {
-        System.out.println(new TransformerSpec().build(Source.class, Destination.class));
+        System.out.println(new TransformerSpec(MappingCodeFactory.getInstance())
+                .build(Source.class, Destination.class));
     }
 }

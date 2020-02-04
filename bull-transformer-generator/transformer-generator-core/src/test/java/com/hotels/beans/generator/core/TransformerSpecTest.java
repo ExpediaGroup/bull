@@ -24,6 +24,7 @@ import java.lang.reflect.Type;
 
 import org.testng.annotations.Test;
 
+import com.hotels.beans.generator.core.mapping.MappingCodeFactory;
 import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
 import com.squareup.javapoet.MethodSpec;
@@ -35,17 +36,14 @@ import com.squareup.javapoet.TypeSpec;
  * Test for {@link TransformerSpec}.
  */
 public class TransformerSpecTest {
-
     private final TypeName iTransformer = TypeName.get(Transformer.class);
+    private final TransformerSpec spec = new TransformerSpec(MappingCodeFactory.getInstance());
 
     /**
      * Should be named after source and destination types.
      */
     @Test
     public void shouldBeNamedAfterSourceAndDestinationTypes() {
-        // GIVEN
-        TransformerSpec spec = new TransformerSpec();
-
         // WHEN
         TypeSpec generated = spec.build(Source.class, Destination.class);
 
@@ -59,9 +57,6 @@ public class TransformerSpecTest {
      */
     @Test
     public void shouldImplementTransformerInterface() {
-        // GIVEN
-        TransformerSpec spec = new TransformerSpec();
-
         // WHEN
         TypeSpec generated = spec.build(Source.class, Destination.class);
 
