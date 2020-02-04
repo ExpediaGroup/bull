@@ -18,12 +18,11 @@ package com.hotels.beans.generator.core.mapping;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import java.util.Objects;
-
 import org.apache.commons.lang3.NotImplementedException;
 
 import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.utils.ClassUtils;
+import com.hotels.transformer.validator.Validator;
 import com.squareup.javapoet.CodeBlock;
 
 import lombok.RequiredArgsConstructor;
@@ -65,8 +64,8 @@ public final class MappingCodeFactory {
      * @return the mapping code from source to destination
      */
     public MappingCode of(final Class<?> source, final Class<?> destination) {
-        Objects.requireNonNull(source, "source type can't be null");
-        Objects.requireNonNull(destination, "destination type can't be null");
+        Validator.notNull(source, "source type can't be null");
+        Validator.notNull(destination, "destination type can't be null");
 
         final ClassType classType = classUtils.getClassType(destination);
         switch (classType) {
