@@ -58,7 +58,7 @@ public class MappingCodeFactoryTest {
         codeFactory.of(Source.class, MixedDestination.class);
     }
 
-    @Test(dataProvider = "typePairs", expectedExceptions = NullPointerException.class)
+    @Test(dataProvider = "typePairs", expectedExceptions = IllegalArgumentException.class)
     public void shouldFailIfAnyTypeIsNull(final Class<?> source, final Class<?> destination) {
         codeFactory.of(source, destination);
     }
