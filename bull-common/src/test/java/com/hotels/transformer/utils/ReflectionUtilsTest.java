@@ -53,6 +53,7 @@ import com.hotels.beans.sample.FromFooSimpleNoGetters;
 import com.hotels.beans.sample.FromFooSubClass;
 import com.hotels.beans.sample.FromSubFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
+import com.hotels.beans.sample.immutable.ImmutableToFooAdvFields;
 import com.hotels.beans.sample.immutable.ImmutableToSubFoo;
 import com.hotels.beans.sample.mutable.MutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooAdvFields;
@@ -499,19 +500,36 @@ public class ReflectionUtilsTest {
         assertNotNull(actual);
     }
 
+
     /**
      * Tests that the method {@code getGenericFieldType} works properly.
+     * @param testCaseDescription the test case description
+     * @param fieldName the field name for which the generic type has to be retrieved
+     * @param fieldClass the class owning the field
+     * @param expectedType the expected generic class type
      */
-    @Test
-    public void testGetGenericFieldTypeWorksProperly() {
+    @Test(dataProvider = "dataGetGenericFieldTypeTesting")
+    public void testGetGenericFieldTypeWorksProperly(final String testCaseDescription, final String fieldName, final Class<?> fieldClass, final Class<?> expectedType) {
         // GIVEN
-        Field field = underTest.getDeclaredField(LIST_FIELD_NAME, ImmutableToFoo.class);
+        Field field = underTest.getDeclaredField(fieldName, fieldClass);
 
         // WHEN
         Class<?> actual = underTest.getGenericFieldType(field);
 
         // THEN
-        assertEquals(String.class, actual);
+        assertEquals(expectedType, actual);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getGenericFieldType}.
+     * @return parameters to be used for testing the the method {@code getGenericFieldType}.
+     */
+    @DataProvider
+    private Object[][] dataGetGenericFieldTypeTesting() {
+        return new Object[][] {
+                {"Tests that the method returns a type String.", LIST_FIELD_NAME, ImmutableToFoo.class, String.class},
+                {"Tests that the method returns a type Object in case of wildcard types.", LIST_FIELD_NAME, ImmutableToFooAdvFields.class, Object.class}
+        };
     }
 
     /**

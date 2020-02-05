@@ -25,6 +25,7 @@ import static java.util.Arrays.stream;
 import static java.util.Collections.max;
 import static java.util.Collections.min;
 import static java.util.Comparator.comparing;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
@@ -50,10 +51,12 @@ import java.math.BigInteger;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -100,6 +103,9 @@ public final class ClassUtils {
      * @return true if is primitive or special type, false otherwise
      */
     public boolean isPrimitiveOrSpecialType(final Class<?> clazz) {
+        if (isNull(clazz)) {
+            return false;
+        }
         final String cacheKey = "isPrimitiveOrSpecial-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final Boolean res = isPrimitiveType(clazz) || isSpecialType(clazz);
@@ -146,7 +152,7 @@ public final class ClassUtils {
         final String cacheKey = "isSpecial-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || Temporal.class.isAssignableFrom(clazz)
-                    || clazz.isSynthetic();
+                    || clazz.equals(Date.class) || clazz.equals(Properties.class) || clazz.isSynthetic();
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -363,9 +369,9 @@ public final class ClassUtils {
             stream(getDeclaredFields(clazz))
                     .filter(field -> !skipStatic || !isStatic(field.getModifiers()))
                     .forEach(field -> {
-                field.setAccessible(true);
-                res.add(field);
-            });
+                        field.setAccessible(true);
+                        res.add(field);
+                    });
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -382,6 +388,38 @@ public final class ClassUtils {
             Field[] res = clazz.getDeclaredFields();
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
+        });
+    }
+
+    /**
+     * Returns the concrete class of a field.
+     * @param field the field for which the concrete class has to be retrieved.
+     * @param objectInstance the object instance.
+     * @param <T> the object instance class.
+     * @return the concrete class of a field
+     */
+    public <T> Class<?> getFieldClass(final Field field, final T objectInstance) {
+        return getConcreteClass(field, reflectionUtils.getFieldValue(objectInstance, field));
+    }
+
+    /**
+     * Returns the concrete class of a field.
+     * @param field the field for which the concrete class has to be retrieved.
+     * @param fieldValue the field value.
+     * @return the concrete class of a field
+     */
+    public Class<?> getConcreteClass(final Field field, final Object fieldValue) {
+        final String cacheKey = "ConcreteFieldClass-" + field.getName() + "-" + field.getDeclaringClass();
+        return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
+            Class<?> concreteType = field.getType();
+            boolean isFieldValueNull = isNull(fieldValue);
+            if (field.getType().isInterface()) {
+                concreteType = isFieldValueNull ? Object.class : fieldValue.getClass();
+            }
+            if (!isFieldValueNull) {
+                CACHE_MANAGER.cacheObject(cacheKey, concreteType);
+            }
+            return concreteType;
         });
     }
 

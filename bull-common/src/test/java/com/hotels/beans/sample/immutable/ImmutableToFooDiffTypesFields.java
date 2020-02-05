@@ -17,24 +17,21 @@
 package com.hotels.beans.sample.immutable;
 
 import java.util.List;
-import java.util.Map;
-
-import com.hotels.beans.sample.ISubClass;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Sample immutable object.
+ * Sample immutable object with different fields type than source object.
  */
 @AllArgsConstructor
 @Getter
 @ToString
-public class ImmutableToSubFoo implements ISubClass {
+public class ImmutableToFooDiffTypesFields {
     private final String name;
-    private final int[] phoneNumbers;
-    private final Map<String, String> sampleMap;
-    private final Map<String, List<String>> complexMap;
-    private final Map<String, Map<String, String>> veryComplexMap;
+    private final String id;
+    private final List<String> list;
+    private final List<ImmutableToSubFoo> nestedObjectList;
+    private final ImmutableToSubFoo nestedObject;
 }

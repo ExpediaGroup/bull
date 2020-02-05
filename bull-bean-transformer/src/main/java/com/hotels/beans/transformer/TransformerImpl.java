@@ -104,7 +104,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     private <T, K> K injectValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb, final boolean forceConstructorInjection) {
         final Object[] constructorArgs;
-        if (forceConstructorInjection || canBeInjectedByConstructorParams(constructor, targetClass)) {
+        if (forceConstructorInjection || canBeInjectedByConstructorParams(constructor)) {
             constructorArgs = getConstructorArgsValues(sourceObj, targetClass, constructor, breadcrumb);
         } else {
             constructorArgs = getConstructorValuesFromFields(sourceObj, targetClass, breadcrumb);
@@ -168,15 +168,12 @@ public class TransformerImpl extends AbstractBeanTransformer {
     /**
      * Checks if the source class field names can be retrieved from the constructor parameters.
      * @param constructor the all args constructor
-     * @param targetClass the destination object class
-     * @param <K> the target object type
      * @return true if the parameter names are defined or the parameters are annotated with: {@link ConstructorArg}
      */
-    private <K> boolean canBeInjectedByConstructorParams(final Constructor constructor, final Class<K> targetClass) {
+    private boolean canBeInjectedByConstructorParams(final Constructor constructor) {
         final String cacheKey = "CanBeInjectedByConstructorParams-" + constructor.getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final boolean res = classUtils.getPrivateFinalFields(targetClass).size() == constructor.getParameterCount()
-                    && (classUtils.areParameterNamesAvailable(constructor) || classUtils.allParameterAnnotatedWith(constructor, ConstructorArg.class));
+            final boolean res = classUtils.areParameterNamesAvailable(constructor) || classUtils.allParameterAnnotatedWith(constructor, ConstructorArg.class);
             cacheManager.cacheObject(cacheKey, res);
             return res;
         });
@@ -555,7 +552,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
                 .map(populator -> populator.getPopulatedObject(targetClass, field.getName(), fieldValue))
                 .orElseGet(() ->
                         // recursively inject object
-                        transform(fieldValue, field.getType(), breadcrumb)
+                        transform(fieldValue, classUtils.getConcreteClass(field, fieldValue), breadcrumb)
                 );
     }
 }

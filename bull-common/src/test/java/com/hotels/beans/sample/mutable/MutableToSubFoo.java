@@ -19,6 +19,8 @@ package com.hotels.beans.sample.mutable;
 import java.util.List;
 import java.util.Map;
 
+import com.hotels.beans.sample.ISubClass;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,7 +31,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MutableToSubFoo {
+public class MutableToSubFoo implements ISubClass {
     private String name;
     private int[] phoneNumbers;
     private Map<String, String> sampleMap;

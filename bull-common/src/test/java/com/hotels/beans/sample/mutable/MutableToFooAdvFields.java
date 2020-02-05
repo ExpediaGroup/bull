@@ -16,9 +16,13 @@
 
 package com.hotels.beans.sample.mutable;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
+import com.hotels.beans.sample.ISubClass;
 import com.hotels.transformer.constant.ClassType;
 
 import lombok.Getter;
@@ -37,6 +41,11 @@ public class MutableToFooAdvFields {
     private String indexNumber;
     private ClassType classType;
     private Locale locale;
+    private List<?> list;
+    private Collection<? super Object> collection;
+    private Map<?, ?> map;
+    private Map<? super Object, ? super Object> supertypeMap;
+    private ISubClass nestedObject;
 
     private void setIndex(final String indexNumber) {
         this.indexNumber = indexNumber;
