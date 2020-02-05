@@ -231,12 +231,20 @@
             </activation>
             <modules>
                 <module>bull-map-transformer</module>
+                <module>bull-transformer-generator</module>
             </modules>
         </profile>
         <profile>
             <id>map-transformer</id>
             <modules>
                 <module>bull-map-transformer</module>
+            </modules>
+        </profile>
+        <!-- Transformer generation project profile -->
+        <profile>
+            <id>transformer-generator</id>
+            <modules>
+                <module>bull-transformer-generator</module>
             </modules>
         </profile>
         <profile>

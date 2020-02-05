@@ -461,7 +461,7 @@ public final class ReflectionUtils {
         return CACHE_MANAGER.getFromCache(cacheKey, MapType.class).orElseGet(() -> {
             if (!Map.class.isAssignableFrom(fieldClass)) {
                 throw new IllegalArgumentException("Type for object: " + fieldName + " is invalid. "
-                                + "It cannot be assigned from: " + Map.class.getName() + ".");
+                        + "It cannot be assigned from: " + Map.class.getName() + ".");
             }
             MapElemType keyType, elemType;
             if (ParameterizedType.class.isAssignableFrom(fieldType.getClass())) {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>BULL - Transformer Generator</name>
+    <artifactId>bull-transformer-generator-parent</artifactId>
+    <packaging>pom</packaging>
+    <inceptionYear>2019</inceptionYear>
+    <description>Generate Java Bean Transformers in the form of source code and/or bytecode.</description>
+
+    <parent>
+        <groupId>com.hotels.beans</groupId>
+        <artifactId>bean-utils-library-parent</artifactId>
+        <version>2.0.0-jdk8</version>
+    </parent>
+
+    <modules>
+        <module>transformer-bytecode-adapter</module>
+        <module>transformer-source-adapter</module>
+        <module>transformer-registry</module>
+        <module>transformer-generator-core</module>
+    </modules>
+</project>

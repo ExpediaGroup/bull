@@ -83,7 +83,7 @@ public final class ClassUtils {
      * Primitive types list.
      */
     private static final Set<Class<?>> PRIMITIVE_TYPES = new HashSet<>(asList(String.class, Boolean.class, Integer.class, Long.class,
-           Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class, Void.class));
+            Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class, Void.class));
 
     /**
      * Reflection utils instance {@link ReflectionUtils}.
@@ -466,7 +466,7 @@ public final class ClassUtils {
         try {
             return (T) constructor.newInstance(constructorArgs);
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-           throw new InstanceCreationException(e.getMessage(), e);
+            throw new InstanceCreationException(e.getMessage(), e);
         }
     }
 
