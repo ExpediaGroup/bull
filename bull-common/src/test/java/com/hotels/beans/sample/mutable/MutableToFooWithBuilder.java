@@ -37,6 +37,9 @@ public final class MutableToFooWithBuilder {
     private MutableToFooWithBuilder() {
     }
 
+    /**
+     * Builder class.
+     */
     public static class Builder {
         private String name;
         private BigInteger id;

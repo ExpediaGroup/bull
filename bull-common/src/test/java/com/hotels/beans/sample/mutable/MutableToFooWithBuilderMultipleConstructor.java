@@ -39,6 +39,9 @@ public final class MutableToFooWithBuilderMultipleConstructor {
     private MutableToFooWithBuilderMultipleConstructor() {
     }
 
+    /**
+     * Builder class.
+     */
     static class Builder {
         private String name;
         private BigInteger id;
