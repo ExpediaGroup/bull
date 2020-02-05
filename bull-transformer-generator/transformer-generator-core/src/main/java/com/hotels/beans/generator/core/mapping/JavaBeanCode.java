@@ -34,6 +34,7 @@ class JavaBeanCode extends MappingCode {
      * The source type.
      */
     private final Class<?> source;
+
     /**
      * The destination type.
      */

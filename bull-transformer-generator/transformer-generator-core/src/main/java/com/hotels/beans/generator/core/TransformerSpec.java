@@ -38,6 +38,7 @@ public class TransformerSpec {
      * A reusable reference to {@link Transformer#transform(Object)} method.
      */
     private static final Method TRANSFORM = Transformer.class.getMethods()[0];
+
     /**
      * A {@link MappingCodeFactory} to create code blocks.
      */

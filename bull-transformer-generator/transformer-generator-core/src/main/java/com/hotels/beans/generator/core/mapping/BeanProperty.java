@@ -32,10 +32,12 @@ final class BeanProperty {
      * The length of a short prefix, usually "is".
      */
     private static final int SHORT_PREFIX_LENGTH = 2;
+
     /**
      * The length of a regular prefix, such as "get" or "set".
      */
     private static final int REGULAR_PREFIX_LENGTH = 3;
+
     /**
      * The property name. Retains the same case as in the method name,
      * minus the prefix.
