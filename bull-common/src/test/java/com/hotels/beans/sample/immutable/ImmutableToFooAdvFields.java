@@ -49,6 +49,9 @@ public class ImmutableToFooAdvFields {
     private final ISubClass nestedObject;
 }
 
+/**
+ * Nested class.
+ */
 @AllArgsConstructor
 @Getter
 class Price {
