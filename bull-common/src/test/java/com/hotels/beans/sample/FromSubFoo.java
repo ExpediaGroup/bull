@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class FromSubFoo {
+public class FromSubFoo implements ISubClass {
     private final String name;
     private final int[] phoneNumbers;
     private final Map<String, String> sampleMap;

@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
+package com.hotels.beans.sample;
+
 /**
- * Type conversion Analyzer test package.
+ * Sample interface for sub class Java Bean.
  */
-package com.hotels.beans.conversion.analyzer;
+public interface ISubClass {
+}

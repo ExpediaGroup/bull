@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.4-jdk8] 2020.01.21
+#### Changed
+* Updated `testng` version to `7.1.0` (was `7.0.0`).
+* Updated `spring-boot-starter-test` version to `2.2.4.RELEASE` (was `2.2.3.RELEASE`).
+* Updated `hibernate-validator` version to `6.1.2.Final` (was `6.1.0.Final`).
+
+### [1.6.3.2-jdk8] 2019.12.24
+#### Added
+* Implemented Wildcards types support (see: [Issue 111](https://github.com/HotelsDotCom/bull/issues/111)).
+* Implemented transformation of a field declared with its interface.
+
 ### [1.6.3.1-jdk8] 2019.12.19
 #### Added
 * Added method for retrieving the class getter methods.

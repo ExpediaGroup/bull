@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@ package com.hotels.beans.sample.mutable;
 import java.util.List;
 import java.util.Map;
 
+import com.hotels.beans.sample.ISubClass;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,7 +31,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MutableToSubFoo {
+public class MutableToSubFoo implements ISubClass {
     private String name;
     private int[] phoneNumbers;
     private Map<String, String> sampleMap;
