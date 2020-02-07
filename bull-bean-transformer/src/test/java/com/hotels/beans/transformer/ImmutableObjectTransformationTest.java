@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,7 +53,6 @@ import com.hotels.beans.sample.immutable.ImmutableToFooAdvFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooDiffFields;
 import com.hotels.beans.sample.immutable.ImmutableToFooDiffTypesFields;
-import com.hotels.beans.sample.immutable.ImmutableToFooInvalid;
 import com.hotels.beans.sample.immutable.ImmutableToFooMap;
 import com.hotels.beans.sample.immutable.ImmutableToFooMissingCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooNotExistingFields;
@@ -74,7 +73,7 @@ import com.hotels.transformer.utils.ReflectionUtils;
  * Unit test for all {@link BeanTransformer} functions related to Immutable Java Beans.
  */
 public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTest {
-    private static final int TOTAL_ADV_CLASS_FIELDS = 6;
+    private static final int TOTAL_ADV_CLASS_FIELDS = 11;
     private static final String GET_DEST_FIELD_NAME_METHOD_NAME = "getDestFieldName";
     private static final String GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME = "getConstructorValuesFromFields";
     private static final String PRICE_FIELD_NAME = "price";
@@ -215,33 +214,16 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
 
     /**
      * Test that an {@link InvalidBeanException} is thrown if the bean is not valid.
-     * @param testCaseDescription the test case description
-     * @param sourceObject the object to transform
-     * @param targetObjectClass the target object class
+     * @throws CloneNotSupportedException if the clone of an object fails
      */
-    @Test(dataProvider = "dataInvalidBeanExceptionTesting", expectedExceptions = InvalidBeanException.class)
-    public void testTransformThrowsExceptionWhenImmutableIsInvalid(final String testCaseDescription, final FromFoo sourceObject,
-        final Class<?> targetObjectClass) {
+    @Test(expectedExceptions = InvalidBeanException.class)
+    public void testTransformThrowsExceptionWhenImmutableIsInvalid() throws CloneNotSupportedException {
         //GIVEN
-
-        //WHEN
-        underTest.setValidationEnabled(true).transform(sourceObject, targetObjectClass);
-    }
-
-    /**
-     * Creates the parameters to be used for testing the exception raised in case of error during the constructor invocation.
-     * @return parameters to be used for testing the exception raised in case of error during the constructor invocation.
-     * @throws CloneNotSupportedException if the clone fails
-     */
-    @DataProvider(parallel = true)
-    private Object[][] dataInvalidBeanExceptionTesting() throws CloneNotSupportedException {
         FromFoo fromFooNullId = AbstractTransformerTest.fromFoo.clone();
         fromFooNullId.setId(null);
-        return new Object[][] {
-                {"Test that an exception is thrown if there the constructor args parameters have a different order for the mutable bean object.",
-                        fromFoo, ImmutableToFooInvalid.class},
-                {"Test that an exception is thrown if the destination object don't met the constraints.", fromFooNullId, ImmutableToFoo.class},
-        };
+
+        //WHEN
+        underTest.setValidationEnabled(true).transform(fromFooNullId, ImmutableToFoo.class);
     }
 
     /**
