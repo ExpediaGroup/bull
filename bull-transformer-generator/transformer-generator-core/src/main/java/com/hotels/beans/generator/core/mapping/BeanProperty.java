@@ -49,7 +49,7 @@ final class BeanProperty {
      * @param accessor a JavaBean accessor method
      */
     BeanProperty(final Method accessor) {
-        var methodName = accessor.getName();
+        String methodName = accessor.getName();
         this.name = methodName.startsWith(IS.getPrefix())
                 ? methodName.substring(SHORT_PREFIX_LENGTH)
                 : methodName.substring(REGULAR_PREFIX_LENGTH);

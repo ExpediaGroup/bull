@@ -36,7 +36,7 @@ public class MappingCodeFactoryTest {
     @Test
     public void shouldReturnAnInstanceForMutableDestination() {
         // WHEN
-        var mappingCode = codeFactory.of(Source.class, Destination.class);
+        MappingCode mappingCode = codeFactory.of(Source.class, Destination.class);
 
         // THEN
         assertNotNull(mappingCode);
