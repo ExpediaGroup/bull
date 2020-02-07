@@ -2,9 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-### [2.0.0] 2020.02.03
+### [2.0.0] TBD
 #### Changed
 * Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
+
+### [1.6.6] TBD
+#### Changed
+* Updated `lombok` version to `1.18.12` (was `1.18.10`).
+* Updated `hotels-oss-parent` version to `4.3.0` (was `4.2.0`).
 
 ### [1.6.5] 2020.01.21
 #### Changed
