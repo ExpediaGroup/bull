@@ -2,16 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
-### [2.0.0] 2020.02.03
+### [2.0.0] TBD
 #### Changed
 * Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
+
+### [1.6.6] TBD
+#### Changed
+* Updated `lombok` version to `1.18.12` (was `1.18.10`).
+* Updated `hotels-oss-parent` version to `4.3.0` (was `4.2.0`).
 
 ### [1.6.5] 2020.01.21
 #### Changed
 * Updated `testng` version to `7.1.0` (was `7.0.0`).
 * Updated `spring-boot-starter-test` version to `2.2.4.RELEASE` (was `2.2.3.RELEASE`).
 * Updated `hibernate-validator` version to `6.1.2.Final` (was `6.1.0.Final`).
-* Updated `hotels-oss-parent` version to `4.3.0` (was `4.2.0`).
 
 ### [1.6.4] 2019.12.24
 #### Added
