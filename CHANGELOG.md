@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.0.0] 2020.02.03
+#### Changed
+* Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
+
 ### [1.6.5] 2020.01.21
 #### Changed
 * Updated `testng` version to `7.1.0` (was `7.0.0`).
