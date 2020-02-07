@@ -43,7 +43,7 @@ public class BeanPropertyTest {
     @Test
     public void shouldBeEqualToPropertyWithSameName() throws NoSuchMethodException {
         // GIVEN
-        var setAnInt = Source.class.getDeclaredMethod("setAnInt", int.class);
+        Method setAnInt = Source.class.getDeclaredMethod("setAnInt", int.class);
 
         // WHEN
         boolean result = anInt.equals(new BeanProperty(setAnInt));
@@ -55,8 +55,8 @@ public class BeanPropertyTest {
     @Test
     public void shouldBeEqualToPropertyWithSameNameFromShortPrefixMethod() throws NoSuchMethodException {
         // GIVEN
-        var isABoolean = Source.class.getDeclaredMethod("isABoolean");
-        var setABoolean = Source.class.getDeclaredMethod("setABoolean", boolean.class);
+        Method isABoolean = Source.class.getDeclaredMethod("isABoolean");
+        Method setABoolean = Source.class.getDeclaredMethod("setABoolean", boolean.class);
 
         // WHEN
         boolean result = new BeanProperty(isABoolean).equals(new BeanProperty(setABoolean));
@@ -77,7 +77,7 @@ public class BeanPropertyTest {
     @Test
     public void shouldNotBeEqualToPropertyWithDifferentName() throws NoSuchMethodException {
         // GIVEN
-        var getAString = Source.class.getDeclaredMethod("getAString");
+        Method getAString = Source.class.getDeclaredMethod("getAString");
 
         // WHEN
         boolean result = anInt.equals(new BeanProperty(getAString));
@@ -110,7 +110,7 @@ public class BeanPropertyTest {
     @Test
     public void shouldHaveSameHashCodeAsPropertyWithSameName() throws NoSuchMethodException {
         // GIVEN
-        var setAnInt = new BeanProperty(Source.class.getDeclaredMethod("setAnInt", int.class));
+        BeanProperty setAnInt = new BeanProperty(Source.class.getDeclaredMethod("setAnInt", int.class));
 
         // WHEN
         int hashCode = anInt.hashCode();
@@ -122,7 +122,7 @@ public class BeanPropertyTest {
     @Test
     public void shouldHaveDifferentHashCodeFromPropertyWithDifferentName() throws NoSuchMethodException {
         // GIVEN
-        var getAString = new BeanProperty(Source.class.getDeclaredMethod("getAString"));
+        BeanProperty getAString = new BeanProperty(Source.class.getDeclaredMethod("getAString"));
 
         // WHEN
         int hashCode = anInt.hashCode();
