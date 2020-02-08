@@ -82,7 +82,7 @@
         <jacoco.check.skip>false</jacoco.check.skip>
         <pmd.check.skip>true</pmd.check.skip>
         <javadoc.skip>false</javadoc.skip>
-        <import.order>\#java,\#javax,\#org,\#,\#com,\#com.expedia,\#com.expediagroup,\#com.hotels,,\#lombok,java,javax,org,,com,com.expedia,com.expediagroup,com.hotels,,lombok</import.order>
+        <import.order>\#java,\#javax,\#org,\#,\#com,,\#lombok,java,javax,org,,com,,lombok</import.order>
     </properties>
 
     <!-- distribution configuration -->
