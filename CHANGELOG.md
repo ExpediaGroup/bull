@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 * Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
 
 ### [1.6.6] TBD
+### Added
+* Added `maven-spotless-plugin` for the code automatic formatting during the maven build
 #### Changed
 * Updated `lombok` version to `1.18.12` (was `1.18.10`).
 * Updated `hotels-oss-parent` version to `4.3.0` (was `4.2.0`).
