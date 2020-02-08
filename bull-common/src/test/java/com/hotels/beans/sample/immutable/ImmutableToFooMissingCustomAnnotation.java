@@ -42,5 +42,3 @@ public class ImmutableToFooMissingCustomAnnotation {
         this.id = id;
     }
 }
-
-

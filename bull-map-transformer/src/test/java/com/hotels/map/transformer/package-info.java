@@ -18,4 +18,3 @@
  */
 
 package com.hotels.map.transformer;
-
