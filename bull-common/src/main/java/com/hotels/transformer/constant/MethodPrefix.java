@@ -46,4 +46,3 @@ public enum MethodPrefix {
         return name().toLowerCase();
     }
 }
-

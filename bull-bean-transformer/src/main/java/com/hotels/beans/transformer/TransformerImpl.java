@@ -26,6 +26,7 @@ import static java.util.stream.IntStream.range;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
+import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 import static com.hotels.transformer.base.Defaults.defaultValue;
 import static com.hotels.transformer.constant.ClassType.MIXED;
 import static com.hotels.transformer.constant.ClassType.MUTABLE;
@@ -33,7 +34,6 @@ import static com.hotels.transformer.constant.Punctuation.COMMA;
 import static com.hotels.transformer.constant.Punctuation.DOT;
 import static com.hotels.transformer.constant.Punctuation.LPAREN;
 import static com.hotels.transformer.constant.Punctuation.RPAREN;
-import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

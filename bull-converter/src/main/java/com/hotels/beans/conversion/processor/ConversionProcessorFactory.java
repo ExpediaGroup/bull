@@ -21,9 +21,9 @@ import static java.util.Optional.of;
 
 import static com.hotels.transformer.utils.ClassUtils.isBigDecimal;
 import static com.hotels.transformer.utils.ClassUtils.isBigInteger;
-import static com.hotels.transformer.utils.ClassUtils.isByteArray;
 import static com.hotels.transformer.utils.ClassUtils.isBoolean;
 import static com.hotels.transformer.utils.ClassUtils.isByte;
+import static com.hotels.transformer.utils.ClassUtils.isByteArray;
 import static com.hotels.transformer.utils.ClassUtils.isChar;
 import static com.hotels.transformer.utils.ClassUtils.isDouble;
 import static com.hotels.transformer.utils.ClassUtils.isFloat;
