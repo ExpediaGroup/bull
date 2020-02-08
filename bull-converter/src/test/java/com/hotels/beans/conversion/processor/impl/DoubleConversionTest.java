@@ -217,4 +217,3 @@ public class DoubleConversionTest extends AbstractConversionTest {
         assertEquals(expectedValue, actual, DELTA);
     }
 }
-

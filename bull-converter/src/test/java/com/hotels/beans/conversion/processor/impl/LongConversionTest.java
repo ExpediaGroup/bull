@@ -216,4 +216,3 @@ public class LongConversionTest extends AbstractConversionTest {
         assertEquals(expectedValue, actual);
     }
 }
-
