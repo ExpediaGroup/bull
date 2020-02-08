@@ -217,4 +217,3 @@ public class FloatConversionTest extends AbstractConversionTest {
         assertEquals(expectedValue, actual, DELTA);
     }
 }
-

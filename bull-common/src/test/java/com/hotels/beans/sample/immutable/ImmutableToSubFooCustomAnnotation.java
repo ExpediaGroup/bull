@@ -53,5 +53,3 @@ public class ImmutableToSubFooCustomAnnotation {
         this.veryComplexMap = veryComplexMap;
     }
 }
-
-
