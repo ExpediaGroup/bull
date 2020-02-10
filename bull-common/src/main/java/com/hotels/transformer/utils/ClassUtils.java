@@ -16,10 +16,6 @@
 
 package com.hotels.transformer.utils;
 
-import static java.lang.invoke.LambdaMetafactory.metafactory;
-import static java.lang.invoke.MethodHandles.lookup;
-import static java.lang.invoke.MethodHandles.privateLookupIn;
-import static java.lang.invoke.MethodType.methodType;
 import static java.lang.reflect.Modifier.isFinal;
 import static java.lang.reflect.Modifier.isPrivate;
 import static java.lang.reflect.Modifier.isPublic;
@@ -27,11 +23,11 @@ import static java.lang.reflect.Modifier.isStatic;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.Collections.max;
+import static java.util.Collections.min;
 import static java.util.Comparator.comparing;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
-import static java.util.Set.of;
 import static java.util.stream.Collectors.toList;
 
 import static com.hotels.transformer.base.Defaults.defaultValue;
@@ -45,8 +41,6 @@ import static com.hotels.transformer.constant.Filters.IS_NOT_FINAL_FIELD;
 import static com.hotels.transformer.validator.Validator.notNull;
 
 import java.lang.annotation.Annotation;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -58,13 +52,13 @@ import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.constant.ClassType;
@@ -88,13 +82,8 @@ public final class ClassUtils {
     /**
      * Primitive types list.
      */
-    private static final Set<Class<?>> PRIMITIVE_TYPES = of(String.class, Boolean.class, Integer.class, Long.class,
-           Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class, Void.class);
-
-    /**
-     * Method Handles lookup.
-     */
-    private static final MethodHandles.Lookup METHOD_HANDLES_LOOKUP = lookup();
+    private static final Set<Class<?>> PRIMITIVE_TYPES = new HashSet<>(asList(String.class, Boolean.class, Integer.class, Long.class,
+            Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class, Void.class));
 
     /**
      * Reflection utils instance {@link ReflectionUtils}.
@@ -477,7 +466,7 @@ public final class ClassUtils {
         try {
             return (T) constructor.newInstance(constructorArgs);
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-           throw new InstanceCreationException(e.getMessage(), e);
+            throw new InstanceCreationException(e.getMessage(), e);
         }
     }
 
@@ -488,21 +477,17 @@ public final class ClassUtils {
      * @return the no args constructor
      * @throws InvalidBeanException if no default constructor is available
      */
-    @SuppressWarnings("unchecked")
-    public <K> Supplier<K> getNoArgsConstructor(final Class<K> clazz) {
+    public <K> Constructor getNoArgsConstructor(final Class<K> clazz) {
         final String cacheKey = "NoArgsConstructor-" + clazz.getName();
-        return CACHE_MANAGER.getFromCache(cacheKey, Supplier.class).orElseGet(() -> {
-            try {
-                MethodHandles.Lookup privateLookupIn = privateLookupIn(clazz, METHOD_HANDLES_LOOKUP);
-                MethodHandle mh = privateLookupIn.findConstructor(clazz, methodType(void.class));
-                Supplier<K> constructor = (Supplier<K>) metafactory(
-                        privateLookupIn, "get", methodType(Supplier.class), mh.type().generic(), mh, mh.type()
-                ).getTarget().invokeExact();
-                CACHE_MANAGER.cacheObject(cacheKey, constructor);
-                return constructor;
-            } catch (Throwable e) {
-                throw new InvalidBeanException("No default constructors available for class: " + clazz.getName());
+        return CACHE_MANAGER.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
+            Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
+            final Constructor constructor = min(asList(declaredConstructors), comparing(Constructor::getParameterCount));
+            if (constructor.getParameterCount() != 0) {
+                throw new InvalidBeanException("No default constructors available");
             }
+            constructor.setAccessible(true);
+            CACHE_MANAGER.cacheObject(cacheKey, constructor);
+            return constructor;
         });
     }
 
