@@ -30,15 +30,15 @@ import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
-import static com.hotels.transformer.validator.Validator.notNull;
 import static com.hotels.transformer.base.Defaults.defaultValue;
 import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.transformer.constant.ClassType.IMMUTABLE;
 import static com.hotels.transformer.constant.ClassType.MIXED;
 import static com.hotels.transformer.constant.ClassType.MUTABLE;
-import static com.hotels.transformer.constant.Filters.IS_NOT_FINAL_FIELD;
 import static com.hotels.transformer.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
 import static com.hotels.transformer.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
+import static com.hotels.transformer.constant.Filters.IS_NOT_FINAL_FIELD;
+import static com.hotels.transformer.validator.Validator.notNull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;

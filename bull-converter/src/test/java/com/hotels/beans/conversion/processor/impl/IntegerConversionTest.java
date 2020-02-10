@@ -216,4 +216,3 @@ public class IntegerConversionTest extends AbstractConversionTest {
         assertEquals(expectedValue, actual);
     }
 }
-
