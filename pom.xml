@@ -82,7 +82,8 @@
         <jacoco.check.skip>false</jacoco.check.skip>
         <pmd.check.skip>true</pmd.check.skip>
         <javadoc.skip>false</javadoc.skip>
-        <import.order>\#java,\#javax,\#org,\#,\#com,\#lombok,java,javax,org,,com,,lombok</import.order>
+        <import.order>\#java,\#javax,\#org,\#,\#com,,\#lombok,java,javax,org,,com,,lombok</import.order>
+        <spotless.plugin.skip>false</spotless.plugin.skip>
     </properties>
 
     <!-- distribution configuration -->
@@ -271,6 +272,7 @@
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
                 <jacoco.check.skip>true</jacoco.check.skip>
                 <javadoc.skip>true</javadoc.skip>
+                <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
             </properties>
             <build>
                 <plugins>
@@ -296,6 +298,7 @@
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
+                <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
             </properties>
             <build>
                 <plugins>
@@ -330,6 +333,7 @@
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
                 <jacoco.check.skip>true</jacoco.check.skip>
                 <javadoc.skip>true</javadoc.skip>
+                <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
             </properties>
             <build>
                 <plugins>
@@ -721,6 +725,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <skip>${spotless.plugin.skip}</skip>
                     <java>
                         <removeUnusedImports />
                         <trimTrailingWhitespace/>
