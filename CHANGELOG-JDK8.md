@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 * Added `maven-spotless-plugin` for the code automatic formatting during the maven build
 #### Changed
 * Updated `lombok` version to `1.18.12` (was `1.18.10`).
-* Updated `hotels-oss-parent` version to `4.3.0` (was `4.2.0`).
+* Updated `hotels-oss-parent` version to `5.0.0` (was `4.2.0`).
 
 ### [1.6.4-jdk8] 2020.01.21
 #### Changed
