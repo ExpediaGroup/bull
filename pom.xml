@@ -71,6 +71,8 @@
         <jacoco.complexityRatio>0.88</jacoco.complexityRatio>
         <jacoco.lineRatio>0.90</jacoco.lineRatio>
         <sonar.coverage.exclusions>**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*</sonar.coverage.exclusions>
+        <!-- Required for coverall jdk >= 9 compatibility -->
+        <jaxb-api.version>2.3.1</jaxb-api.version>
         <!-- site properties -->
         <wagon-ssh.version>3.3.4</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
@@ -483,11 +485,11 @@
                                     <exclude>**/Test*.*</exclude>
                                     <exclude>**/*Test.*</exclude>
                                     <exclude>**/*Application.*</exclude>
-                                    <exclude>com/hotels/transformer/AbstractTransformer.*</exclude>
-                                    <exclude>**/model/**</exclude>
-                                    <exclude>**/constant/**</exclude>
-                                    <exclude>**/error/**</exclude>
-                                    <exclude>**/annotation/**</exclude>
+                                    <exclude>**/AbstractTransformer.*</exclude>
+                                    <exclude>**/model/*</exclude>
+                                    <exclude>**/constant/*</exclude>
+                                    <exclude>**/error/*</exclude>
+                                    <exclude>**/annotation/*</exclude>
                                 </excludes>
                                 <rules>
                                     <rule>
@@ -529,6 +531,21 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.eluder.coveralls</groupId>
+                    <artifactId>coveralls-maven-plugin</artifactId>
+                    <version>${coveralls.maven.plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>javax.xml.bind</groupId>
+                            <artifactId>jaxb-api</artifactId>
+                            <version>${jaxb-api.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <repoToken>Jdc0LQKSgQFSoBA4RiHyuFu6x0QdSxPeQ</repoToken>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
