@@ -543,9 +543,6 @@
                             <version>${jaxb-api.version}</version>
                         </dependency>
                     </dependencies>
-                    <configuration>
-                        <repoToken>Jdc0LQKSgQFSoBA4RiHyuFu6x0QdSxPeQ</repoToken>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
