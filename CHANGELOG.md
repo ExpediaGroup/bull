@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 #### Changed
 * Updated `lombok` version to `1.18.12` (was `1.18.10`).
 * Updated `hotels-oss-parent` version to `5.0.0` (was `4.2.0`).
+* Updated `mockito-core` version to `3.3.0` (was `3.2.4`).
 
 ### [1.6.5] 2020.01.21
 #### Changed
