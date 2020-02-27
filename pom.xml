@@ -81,7 +81,7 @@
         <!-- build settings -->
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
-        <jacoco.check.skip>false</jacoco.check.skip>
+        <test.coverage..check.skip>false</test.coverage..check.skip>
         <pmd.check.skip>true</pmd.check.skip>
         <javadoc.skip>false</javadoc.skip>
         <import.order>\#java,\#javax,\#org,\#,\#com,,\#lombok,java,javax,org,,com,,lombok</import.order>
@@ -248,7 +248,7 @@
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
-                <jacoco.check.skip>true</jacoco.check.skip>
+                <test.coverage..check.skip>true</test.coverage..check.skip>
             </properties>
         </profile>
         <profile>
@@ -256,7 +256,7 @@
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
-                <jacoco.check.skip>true</jacoco.check.skip>
+                <test.coverage..check.skip>true</test.coverage..check.skip>
                 <javadoc.skip>true</javadoc.skip>
                 <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
             </properties>
@@ -312,7 +312,7 @@
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
-                <jacoco.check.skip>true</jacoco.check.skip>
+                <test.coverage..check.skip>true</test.coverage..check.skip>
                 <javadoc.skip>true</javadoc.skip>
                 <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
             </properties>
@@ -475,7 +475,7 @@
                                 <goal>check</goal>
                             </goals>
                             <configuration>
-                                <skip>${jacoco.check.skip}</skip>
+                                <skip>${test.coverage..check.skip}</skip>
                                 <includes>
                                     <include>com/hotels/transformer/**</include>
                                     <include>com/hotels/beans/**</include>
@@ -536,6 +536,9 @@
                     <groupId>org.eluder.coveralls</groupId>
                     <artifactId>coveralls-maven-plugin</artifactId>
                     <version>${coveralls.maven.plugin.version}</version>
+                    <configuration>
+                        <skip>${test.coverage..check.skip}</skip>
+                    </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>javax.xml.bind</groupId>
