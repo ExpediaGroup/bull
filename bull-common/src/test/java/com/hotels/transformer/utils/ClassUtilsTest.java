@@ -319,7 +319,7 @@ public class ClassUtilsTest {
      * Tests that the method {@code getTotalFields} works as expected.
      * @param testCaseDescription the test case description
      * @param testClass the class to test
-     * @param fieldPredicate the  predicate to apply
+     * @param fieldPredicate the predicate to apply
      * @param expectedResult the expected result
      */
     @Test(dataProvider = "dataGetTotalFieldsTesting")

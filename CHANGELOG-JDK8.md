@@ -9,16 +9,18 @@ All notable changes to this project will be documented in this file.
 ### [1.6.5-jdk8] TBD
 ### Added
 * Added `maven-spotless-plugin` for the code automatic formatting during the maven build
+* Added `coveralls-maven-plugin` for the test coverage analysis and report during the maven build: [Coverall report](https://coveralls.io/github/HotelsDotCom/bull)
 #### Changed
 * Updated `lombok` version to `1.18.12` (was `1.18.10`).
-* Updated `hotels-oss-parent` version to `4.3.0` (was `4.2.0`).
+* Updated `hotels-oss-parent` version to `5.0.0` (was `4.2.0`).
+* Updated `mockito-core` version to `3.3.0` (was `3.2.4`).
+* Updated `spring-boot-starter-test` version to `2.2.5.RELEASE` (was `2.2.4.RELEASE`).
 
 ### [1.6.4-jdk8] 2020.01.21
 #### Changed
 * Updated `testng` version to `7.1.0` (was `7.0.0`).
 * Updated `spring-boot-starter-test` version to `2.2.4.RELEASE` (was `2.2.3.RELEASE`).
 * Updated `hibernate-validator` version to `6.1.2.Final` (was `6.1.0.Final`).
-* Updated `hotels-oss-parent` version to `4.3.0` (was `4.2.0`).
 
 ### [1.6.3.2-jdk8] 2019.12.24
 #### Added

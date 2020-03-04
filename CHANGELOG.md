@@ -9,9 +9,12 @@ All notable changes to this project will be documented in this file.
 ### [1.6.6] TBD
 ### Added
 * Added `maven-spotless-plugin` for the code automatic formatting during the maven build
+* Added `coveralls-maven-plugin` for the test coverage analysis and report during the maven build: [Coverall report](https://coveralls.io/github/HotelsDotCom/bull)
 #### Changed
 * Updated `lombok` version to `1.18.12` (was `1.18.10`).
-* Updated `hotels-oss-parent` version to `4.3.0` (was `4.2.0`).
+* Updated `hotels-oss-parent` version to `5.0.0` (was `4.2.0`).
+* Updated `mockito-core` version to `3.3.0` (was `3.2.4`).
+* Updated `spring-boot-starter-test` version to `2.2.5.RELEASE` (was `2.2.4.RELEASE`).
 
 ### [1.6.5] 2020.01.21
 #### Changed
