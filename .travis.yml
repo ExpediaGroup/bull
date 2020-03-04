@@ -16,7 +16,7 @@ jdk:
   - openjdk11
   - openjdk12
   - openjdk13
-script: travis_retry mvn clean install -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -Pfast
+script: travis_retry mvn clean install -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 install: skip
 jobs:
   include:
@@ -34,7 +34,7 @@ jobs:
       script: skip
       before_deploy:
         - mvn versions:set -D newVersion=${TRAVIS_TAG} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-        - travis_retry mvn install sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} jacoco:report coveralls:report site:site javadoc:aggregate -P default,site-release jacoco:report coveralls:report -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+        - travis_retry mvn install sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} coveralls:report site:site javadoc:aggregate -P default,site-release jacoco:report coveralls:report -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
       deploy:
         provider: pages
         local-dir: target/site
