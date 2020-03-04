@@ -253,6 +253,9 @@
         </profile>
         <profile>
             <id>fast</id>
+            <modules>
+                <module>bull-map-transformer</module>
+            </modules>
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
