@@ -55,7 +55,8 @@
             <item name="Samples" href="/converter/samples.html" />
         </menu>
         <menu name="Quality check">
-            <item name="SonarCloud" href="https://sonarcloud.io/dashboard?id=BULL" />
+            <item name="Sonar Cloud" href="https://sonarcloud.io/dashboard?id=BULL" />
+            <item name="Coveralls" href="https://coveralls.io/github/HotelsDotCom/bull" />
         </menu>
         <menu name="Related Articles">
             <item name="DZone" href="https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li" />
