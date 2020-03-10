@@ -53,11 +53,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.hotels.beans.sample.AbstractClass;
-import com.hotels.beans.sample.ExtendedFromFooSimple;
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooAdvFields;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
+import com.hotels.beans.sample.FromFooSubClass;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
@@ -106,7 +106,7 @@ public class ClassUtilsTest {
     private static final FromFoo[] NOT_PRIMITIVE_ARRAY = {};
     private static final int FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS = 11;
     private static final int FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS = 3;
-    private static final int EXTENDED_FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS = 4;
+    private static final int FROM_FOO_SUB_CLASS_EXPECTED_GETTER_METHODS = 9;
     private static final LinkedList<String> LINKED_LIST = new LinkedList<>();
     private static final String LIST_FIELD_NAME = "list";
 
@@ -774,7 +774,7 @@ public class ClassUtilsTest {
                 {"Tests that the method returns an empty list if the class has no getter methods", FromFooSimpleNoGetters.class, ZERO},
                 {"Tests that the method returns only the getter methods discarding the not valid one", FromFooAdvFields.class, FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS},
                 {"Tests that the method returns the boolean getter method too", FromFooSimple.class, FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS},
-                {"Tests that the method returns the getter methods from parent class too", ExtendedFromFooSimple.class, EXTENDED_FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS}
+                {"Tests that the method returns the getter methods from parent class too", FromFooSubClass.class, FROM_FOO_SUB_CLASS_EXPECTED_GETTER_METHODS}
         };
     }
 
