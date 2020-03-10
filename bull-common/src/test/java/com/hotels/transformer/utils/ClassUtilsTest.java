@@ -215,7 +215,8 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns true if the class is a primitive or special type object", Locale.class, true},
                 {"Tests that the method returns false if the class is a primitive nor a special type object", BigDecimal.class, true},
-                {"Tests that the method returns false if the class is not a primitive nor a special type object", FromFoo.class, false}
+                {"Tests that the method returns false if the class is not a primitive nor a special type object", FromFoo.class, false},
+                {"Tests that the method returns false if the class is null", null, false}
         };
     }
 
