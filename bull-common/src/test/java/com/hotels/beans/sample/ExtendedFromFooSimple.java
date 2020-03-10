@@ -16,8 +16,6 @@
 
 package com.hotels.beans.sample;
 
-import java.math.BigInteger;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
