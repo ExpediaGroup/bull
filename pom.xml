@@ -77,7 +77,7 @@
         <wagon-ssh.version>3.3.4</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
         <github.global.server>github</github.global.server>
-        <maven.site.plugin.version>3.8.2</maven.site.plugin.version>
+        <maven.site.plugin.version>3.9.0</maven.site.plugin.version>
         <!-- build settings -->
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
