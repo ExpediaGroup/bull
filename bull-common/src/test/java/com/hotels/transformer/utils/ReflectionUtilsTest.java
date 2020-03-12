@@ -44,6 +44,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -151,6 +152,21 @@ public class ReflectionUtilsTest {
                 {"Tests that the method returns the field value even if there is no getter method defined", createFromFooSimpleNoGetters(),
                     ID_FIELD_NAME, BigInteger.class, ZERO}
         };
+    }
+
+    /**
+     * Tests that the method {@code getFieldValue} catches InvalidBeanException.
+     */
+    @Test
+    public void testGetterMethodFunctionCatchesRuntimeExceptionAsInvalidBeanException() {
+        // GIVEN
+        MutableToFoo mutableToFoo = createMutableToFoo(null);
+        ReflectionUtils underTestMock = Mockito.spy(ReflectionUtils.class);
+        when(underTestMock.getDeclaredFieldType("id", MutableToFoo.class)).thenThrow(new RuntimeException());
+
+        // WHEN
+        Object actual = underTestMock.getFieldValue(mutableToFoo, ID_FIELD_NAME, FromFooSubClass.class);
+        assertNull(actual);
     }
 
     /**
