@@ -40,6 +40,7 @@
         <module>bull-common</module>
         <module>bull-bean-transformer</module>
         <module>bull-converter</module>
+        <module>bull-report</module>
     </modules>
 
     <properties>
@@ -543,6 +544,9 @@
                     <version>${coveralls.maven.plugin.version}</version>
                     <configuration>
                         <skip>${test.coverage.check.skip}</skip>
+                        <jacocoReports>
+                            <jacocoReport>${project.basedir}/bull-report/target/site/jacoco-aggregate/jacoco.xml</jacocoReport>
+                        </jacocoReports>
                     </configuration>
                     <dependencies>
                         <dependency>
