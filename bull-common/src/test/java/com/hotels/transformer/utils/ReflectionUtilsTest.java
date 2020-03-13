@@ -24,6 +24,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -155,10 +157,10 @@ public class ReflectionUtilsTest {
     }
 
     /**
-     * Tests that the method {@link ReflectionUtils#getFieldValue(Object, String, Class) getFieldValue} catches a runtime exception as InvalidBeanException.
+     * Tests that the method {@link ReflectionUtils#getFieldValue(Object, String, Class) getFieldValue} catches a runtime exception.
      */
     @Test
-    public void testGetFieldValueCatchesRuntimeExceptionAsInvalidBeanException() {
+    public void testGetFieldValueCatchesRuntimeException() {
         // GIVEN
         MutableToFoo mutableToFoo = createMutableToFoo(null);
         ReflectionUtils underTestMock = Mockito.spy(ReflectionUtils.class);
@@ -169,6 +171,7 @@ public class ReflectionUtilsTest {
 
         //THEN
         assertNull(actual);
+        verify(underTestMock, times(1)).getDeclaredField(LIST_FIELD_NAME, MutableToFoo.class);
     }
 
     /**
