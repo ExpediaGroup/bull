@@ -56,6 +56,7 @@ import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooAdvFields;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
+import com.hotels.beans.sample.FromFooSubClass;
 import com.hotels.beans.sample.immutable.ImmutableToFoo;
 import com.hotels.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
@@ -104,6 +105,7 @@ public class ClassUtilsTest {
     private static final FromFoo[] NOT_PRIMITIVE_ARRAY = {};
     private static final int FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS = 11;
     private static final int FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS = 3;
+    private static final int FROM_FOO_SUB_CLASS_EXPECTED_GETTER_METHODS = 9;
     private static final LinkedList<String> LINKED_LIST = new LinkedList<>();
     private static final String LIST_FIELD_NAME = "list";
 
@@ -214,7 +216,8 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns true if the class is a primitive or special type object", Locale.class, true},
                 {"Tests that the method returns false if the class is a primitive nor a special type object", BigDecimal.class, true},
-                {"Tests that the method returns false if the class is not a primitive nor a special type object", FromFoo.class, false}
+                {"Tests that the method returns false if the class is not a primitive nor a special type object", FromFoo.class, false},
+                {"Tests that the method returns false if the class is null", null, false}
         };
     }
 
@@ -769,7 +772,8 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns an empty list if the class has no getter methods", FromFooSimpleNoGetters.class, ZERO},
                 {"Tests that the method returns only the getter methods discarding the not valid one", FromFooAdvFields.class, FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS},
-                {"Tests that the method returns the boolean getter method too", FromFooSimple.class, FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS}
+                {"Tests that the method returns the boolean getter method too", FromFooSimple.class, FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS},
+                {"Tests that the method returns the getter methods from parent class too", FromFooSubClass.class, FROM_FOO_SUB_CLASS_EXPECTED_GETTER_METHODS}
         };
     }
 
