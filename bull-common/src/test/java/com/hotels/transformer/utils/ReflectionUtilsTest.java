@@ -155,17 +155,17 @@ public class ReflectionUtilsTest {
     }
 
     /**
-     * Tests that the method {@code getFieldValue} catches InvalidBeanException.
+     * Tests that the method {@code getFieldValue} catches a runtime ezception as InvalidBeanException.
      */
     @Test
     public void testGetterMethodFunctionCatchesRuntimeExceptionAsInvalidBeanException() {
         // GIVEN
         MutableToFoo mutableToFoo = createMutableToFoo(null);
         ReflectionUtils underTestMock = Mockito.spy(ReflectionUtils.class);
-        when(underTestMock.getDeclaredFieldType("id", MutableToFoo.class)).thenThrow(new RuntimeException());
+        when(underTestMock.getDeclaredFieldType("list", MutableToFoo.class)).thenThrow(new RuntimeException());
 
         // WHEN
-        Object actual = underTestMock.getFieldValue(mutableToFoo, ID_FIELD_NAME, FromFooSubClass.class);
+        Object actual = underTestMock.getFieldValue(mutableToFoo, LIST_FIELD_NAME, FromFooSubClass.class);
         assertNull(actual);
     }
 
