@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 * Updated `hotels-oss-parent` version to `5.0.0` (was `4.2.0`).
 * Updated `mockito-core` version to `3.3.0` (was `3.2.4`).
 * Updated `spring-boot-starter-test` version to `2.2.5.RELEASE` (was `2.2.4.RELEASE`).
+* Updated `maven-site-plugin` version to `3.9.0` (was `3.8.2`).
 
 ### [1.6.4-jdk8] 2020.01.21
 #### Changed
