@@ -40,6 +40,7 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.constraints.NotBlank;
@@ -51,6 +52,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.sample.FromFooMap;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
 import com.hotels.beans.sample.FromFooSubClass;
@@ -83,6 +85,7 @@ public class ReflectionUtilsTest {
     private static final String DECLARING_CLASS_NAME = "declaringClassName";
     private static final String INVOKE_METHOD_NAME = "invokeMethod";
     private static final String VERY_COMPLEX_MAP_FIELD_NAME = "veryComplexMap";
+    private static final String UNPARAMETRIZED_MAP = "unparametrizedMap";
     private static final String GET_GETTER_METHOD_NAME = "getGetterMethod";
     private static final String SET_NAME_METHOD_NAME = "setName";
     private static final String SET_INDEX_METHOD_NAME = "setIndex";
@@ -597,6 +600,29 @@ public class ReflectionUtilsTest {
         assertEquals(expectedNestedMapKeyType.getGenericClass(), actualNestedMapKeyType.getGenericClass());
         assertEquals(expectedNestedMapElemType.getObjectClass(), actualNestedMapElemType.getObjectClass());
         assertEquals(expectedNestedMapElemType.getGenericClass(), actualNestedMapElemType.getGenericClass());
+    }
+
+    @Test
+    public void testMapGenericFieldTypeWorksProperlyForUnparametrizedMap() {
+        // GIVEN
+        MapElemType keyType = ItemType.builder()
+            .objectClass(Map.class)
+            .build();
+        final MapType expectedMapType = new MapType(keyType, keyType);
+        Field field = underTest.getDeclaredField(UNPARAMETRIZED_MAP, FromFooMap.class);
+
+        // WHEN
+        MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
+        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
+        ItemType actualMapKeyType = (ItemType) actual.getKeyType();
+        ItemType expectedMapElemType = (ItemType) expectedMapType.getElemType();
+        ItemType actualMapElemType = (ItemType) actual.getElemType();
+
+        // THEN
+        assertEquals(expectedMapKeyType.getObjectClass(), actualMapKeyType.getObjectClass());
+        assertEquals(expectedMapKeyType.getGenericClass(), actualMapKeyType.getGenericClass());
+        assertEquals(expectedMapElemType.getObjectClass(), actualMapElemType.getObjectClass());
+        assertEquals(expectedMapElemType.getGenericClass(), actualMapElemType.getGenericClass());
     }
 
     /**
