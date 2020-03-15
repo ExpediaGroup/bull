@@ -220,7 +220,7 @@ public final class ReflectionUtils {
             } catch (NoSuchMethodException e) {
                 throw new MissingMethodException();
             } catch (Throwable e) {
-                throw new InvalidBeanException(e);
+                throw new InvalidBeanException(e.getMessage(), e);
             }
             CACHE_MANAGER.cacheObject(cacheKey, function);
             return function;
