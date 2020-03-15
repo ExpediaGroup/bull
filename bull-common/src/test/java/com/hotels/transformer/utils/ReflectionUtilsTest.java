@@ -26,9 +26,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -597,15 +597,15 @@ public class ReflectionUtilsTest {
                 .build();
         final MapType expectedElemType = new MapType(keyType, keyType);
         final MapType expectedMapType = new MapType(keyType, expectedElemType);
+        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
+        ItemType expectedNestedMapKeyType = (ItemType) ((MapType) expectedMapType.getElemType()).getKeyType();
+        ItemType expectedNestedMapElemType = (ItemType) ((MapType) expectedMapType.getElemType()).getElemType();
         Field field = underTest.getDeclaredField(VERY_COMPLEX_MAP_FIELD_NAME, ImmutableToSubFoo.class);
 
         // WHEN
         MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
-        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
         ItemType actualMapKeyType = (ItemType) actual.getKeyType();
-        ItemType expectedNestedMapKeyType = (ItemType) ((MapType) expectedMapType.getElemType()).getKeyType();
         ItemType actualNestedMapKeyType = (ItemType) ((MapType) actual.getElemType()).getKeyType();
-        ItemType expectedNestedMapElemType = (ItemType) ((MapType) expectedMapType.getElemType()).getElemType();
         ItemType actualNestedMapElemType = (ItemType) ((MapType) actual.getElemType()).getElemType();
 
         // THEN
@@ -624,13 +624,13 @@ public class ReflectionUtilsTest {
             .objectClass(Map.class)
             .build();
         final MapType expectedMapType = new MapType(keyType, keyType);
+        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
+        ItemType expectedMapElemType = (ItemType) expectedMapType.getElemType();
         Field field = underTest.getDeclaredField(UNPARAMETRIZED_MAP, FromFooMap.class);
 
         // WHEN
         MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
-        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
         ItemType actualMapKeyType = (ItemType) actual.getKeyType();
-        ItemType expectedMapElemType = (ItemType) expectedMapType.getElemType();
         ItemType actualMapElemType = (ItemType) actual.getElemType();
 
         // THEN
