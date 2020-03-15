@@ -34,4 +34,5 @@ public class FromFooMap {
     private final Map<String, List<String>> complexMap;
     private final Map<String, Map<String, String>> veryComplexMap;
     private final Map<FromFooSimple, Map<String, String>> extremeComplexMap;
+    private final Map unparametrizedMap;
 }
