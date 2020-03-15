@@ -34,4 +34,5 @@ public class ImmutableToFooMap {
     private final Map<String, List<String>> complexMap;
     private final Map<String, Map<String, String>> veryComplexMap;
     private final Map<ImmutableToFooSimple, Map<String, String>> extremeComplexMap;
+    private final Map unparametrizedMap;
 }
