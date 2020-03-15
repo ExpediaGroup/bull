@@ -27,6 +27,8 @@ import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -41,16 +43,19 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.sample.FromFooMap;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
 import com.hotels.beans.sample.FromFooSubClass;
@@ -83,6 +88,7 @@ public class ReflectionUtilsTest {
     private static final String DECLARING_CLASS_NAME = "declaringClassName";
     private static final String INVOKE_METHOD_NAME = "invokeMethod";
     private static final String VERY_COMPLEX_MAP_FIELD_NAME = "veryComplexMap";
+    private static final String UNPARAMETRIZED_MAP = "unparametrizedMap";
     private static final String GET_GETTER_METHOD_NAME = "getGetterMethod";
     private static final String SET_NAME_METHOD_NAME = "setName";
     private static final String SET_INDEX_METHOD_NAME = "setIndex";
@@ -154,6 +160,24 @@ public class ReflectionUtilsTest {
                 {"Tests that the method returns the field value even if there is no getter method defined", createFromFooSimpleNoGetters(),
                     ID_FIELD_NAME, BigInteger.class, ZERO}
         };
+    }
+
+    /**
+     * Tests that the method {@link ReflectionUtils#getFieldValue(Object, String, Class) getFieldValue} catches a runtime exception.
+     */
+    @Test
+    public void testGetFieldValueCatchesRuntimeException() {
+        // GIVEN
+        MutableToFoo mutableToFoo = createMutableToFoo(null);
+        ReflectionUtils underTestMock = Mockito.spy(ReflectionUtils.class);
+        when(underTestMock.getDeclaredFieldType(LIST_FIELD_NAME, MutableToFoo.class)).thenThrow(new RuntimeException());
+
+        // WHEN
+        Object actual = underTestMock.getFieldValue(mutableToFoo, LIST_FIELD_NAME, FromFooSubClass.class);
+
+        //THEN
+        assertNull(actual);
+        verify(underTestMock, times(1)).getDeclaredField(LIST_FIELD_NAME, MutableToFoo.class);
     }
 
     /**
@@ -573,15 +597,15 @@ public class ReflectionUtilsTest {
                 .build();
         final MapType expectedElemType = new MapType(keyType, keyType);
         final MapType expectedMapType = new MapType(keyType, expectedElemType);
+        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
+        ItemType expectedNestedMapKeyType = (ItemType) ((MapType) expectedMapType.getElemType()).getKeyType();
+        ItemType expectedNestedMapElemType = (ItemType) ((MapType) expectedMapType.getElemType()).getElemType();
         Field field = underTest.getDeclaredField(VERY_COMPLEX_MAP_FIELD_NAME, ImmutableToSubFoo.class);
 
         // WHEN
         MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
-        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
         ItemType actualMapKeyType = (ItemType) actual.getKeyType();
-        ItemType expectedNestedMapKeyType = (ItemType) ((MapType) expectedMapType.getElemType()).getKeyType();
         ItemType actualNestedMapKeyType = (ItemType) ((MapType) actual.getElemType()).getKeyType();
-        ItemType expectedNestedMapElemType = (ItemType) ((MapType) expectedMapType.getElemType()).getElemType();
         ItemType actualNestedMapElemType = (ItemType) ((MapType) actual.getElemType()).getElemType();
 
         // THEN
@@ -591,6 +615,29 @@ public class ReflectionUtilsTest {
         assertEquals(expectedNestedMapKeyType.getGenericClass(), actualNestedMapKeyType.getGenericClass());
         assertEquals(expectedNestedMapElemType.getObjectClass(), actualNestedMapElemType.getObjectClass());
         assertEquals(expectedNestedMapElemType.getGenericClass(), actualNestedMapElemType.getGenericClass());
+    }
+
+    @Test
+    public void testMapGenericFieldTypeWorksProperlyForUnparametrizedMap() {
+        // GIVEN
+        MapElemType keyType = ItemType.builder()
+            .objectClass(Map.class)
+            .build();
+        final MapType expectedMapType = new MapType(keyType, keyType);
+        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
+        ItemType expectedMapElemType = (ItemType) expectedMapType.getElemType();
+        Field field = underTest.getDeclaredField(UNPARAMETRIZED_MAP, FromFooMap.class);
+
+        // WHEN
+        MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
+        ItemType actualMapKeyType = (ItemType) actual.getKeyType();
+        ItemType actualMapElemType = (ItemType) actual.getElemType();
+
+        // THEN
+        assertEquals(expectedMapKeyType.getObjectClass(), actualMapKeyType.getObjectClass());
+        assertEquals(expectedMapKeyType.getGenericClass(), actualMapKeyType.getGenericClass());
+        assertEquals(expectedMapElemType.getObjectClass(), actualMapElemType.getObjectClass());
+        assertEquals(expectedMapElemType.getGenericClass(), actualMapElemType.getGenericClass());
     }
 
     /**
