@@ -23,7 +23,10 @@ import static java.util.Objects.isNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -217,49 +220,61 @@ public class ReflectionUtilsTest {
     /**
      * Tests that the method {@code handleReflectionException} raises the expected exception.
      */
-    @Test(expectedExceptions = MissingMethodException.class)
-    public void testHandleReflectionExceptionThrowsIllegalStateExceptionWhenGivenExceptionIsNoSuchMethodException() {
+    @Test
+    public void testHandleReflectionExceptionThrowsMissingMethodExceptionWhenGivenExceptionIsNoSuchMethodException() {
         // GIVEN
         NoSuchMethodException noSuchMethodException = new NoSuchMethodException();
 
         // WHEN
-        underTest.handleReflectionException(noSuchMethodException);
+        RuntimeException actual = underTest.handleReflectionException(noSuchMethodException);
+
+        // THEN
+        assertSame(MissingMethodException.class, actual.getClass());
     }
 
     /**
-     * Tests that the method {@code handleReflectionException} raises the expected exception.
+     * Tests that the method {@code handleReflectionException} returns the expected exception.
      */
-    @Test(expectedExceptions = IllegalStateException.class)
+    @Test
     public void testHandleReflectionExceptionThrowsIllegalStateExceptionWhenGivenExceptionIsIllegalAccessException() {
         // GIVEN
         IllegalAccessException illegalAccessException = new IllegalAccessException();
 
         // WHEN
-        underTest.handleReflectionException(illegalAccessException);
+        RuntimeException exception = underTest.handleReflectionException(illegalAccessException);
+
+        // THEN
+        assertSame(IllegalStateException.class, exception.getClass());
     }
 
     /**
-     * Tests that the method {@code handleReflectionException} raises the expected exception.
+     * Tests that the method {@code handleReflectionException} returns the expected exception.
      */
-    @Test(expectedExceptions = RuntimeException.class)
+    @Test
     public void testHandleReflectionExceptionThrowsRuntimeExceptionWhenGivenExceptionIsRuntimeException() {
         // GIVEN
         RuntimeException runtimeException = new RuntimeException();
 
         // WHEN
-        underTest.handleReflectionException(runtimeException);
+        RuntimeException exception = underTest.handleReflectionException(runtimeException);
+
+        // THEN
+        assertSame(RuntimeException.class, exception.getClass());
     }
 
     /**
-     * Tests that the method {@code handleReflectionException} raises the expected exception.
+     * Tests that the method {@code handleReflectionException} returns the expected exception.
      */
-    @Test(expectedExceptions = UndeclaredThrowableException.class)
+    @Test
     public void testHandleReflectionExceptionThrowsUndeclaredThrowableExceptionWhenGivenExceptionIsInvalidBeanException() {
         // GIVEN
-        Exception exception = new Exception();
+        Exception genericException = new Exception();
 
         // WHEN
-        underTest.handleReflectionException(exception);
+        RuntimeException actual = underTest.handleReflectionException(genericException);
+
+        // THEN
+        assertSame(UndeclaredThrowableException.class, actual.getClass());
     }
 
     /**
@@ -673,12 +688,30 @@ public class ReflectionUtilsTest {
         assertEquals(ONE, mutableToFoo.getId());
     }
 
+    @Test
+    public void testSetFieldValueInvokesTheSetterMethodInCaseAnExceptionIsRaised() {
+        // GIVEN
+        ReflectionUtils underTestMock = spy(ReflectionUtils.class);
+        MutableToFooSimple mutableToFoo = new MutableToFooSimple();
+        Field idField = underTest.getDeclaredField(ID_FIELD_NAME, mutableToFoo.getClass());
+        doThrow(RuntimeException.class).when(underTestMock).setFieldValueWithoutSetterMethod(mutableToFoo, idField, ONE);
+
+        // WHEN
+        underTestMock.setFieldValue(mutableToFoo, idField, ONE);
+
+        // THEN
+        assertEquals(ONE, mutableToFoo.getId());
+    }
+
     /**
      * Tests that the method {@code invokeMethod} manages the exception properly.
      * @param testCaseDescription the test case description
+     * @param targetObject the object on which the method has to be invoked
+     * @param methodNameToInvoke the name of the method to invoke
      * @param methodArg the argument to pass to the invoke method
      * @param isAccessible the accessibility that the {@code invokeMethod} must have
      * @param expectedException the expected exception class
+     * @throws Exception if something goes wrong
      */
     @Test(dataProvider = "dataInvokeMethodTesting")
     public void testInvokeMethodCorrectlyHandlesExceptions(final String testCaseDescription, final Object targetObject, final String methodNameToInvoke,
@@ -715,6 +748,7 @@ public class ReflectionUtilsTest {
 
     /**
      * Test that the method: {@code getRealTarget} returns the object contained in the Optional.
+     * @throws Exception if something goes wrong
      */
     @Test
     public void testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull() throws Exception {
