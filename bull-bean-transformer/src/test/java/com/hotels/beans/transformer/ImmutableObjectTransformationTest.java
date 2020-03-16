@@ -25,6 +25,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -524,6 +528,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         when(classUtils.getInstance(constructor)).thenThrow(InvalidBeanException.class);
         when(classUtils.getConstructorParameters(constructor)).thenReturn(new Parameter[] {});
         when(classUtils.areParameterNamesAvailable(constructor)).thenReturn(true);
+        doThrow(new InvalidBeanException("dummy exception")).when(underTestMock).handleInjectionException(any(), any(), any(), any(), any(), anyBoolean(), any());
         setField(underTestMock, CLASS_UTILS_FIELD_NAME, classUtils);
         Method injectValuesMethod =
                 TransformerImpl.class.getDeclaredMethod(INJECT_VALUES_METHOD_NAME, Object.class, Class.class, Constructor.class, String.class, boolean.class);
