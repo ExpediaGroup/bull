@@ -512,7 +512,7 @@ public final class ClassUtils {
      * @param <K> the object type
      * @return the all args constructor
      */
-    public <K> Constructor getAllArgsConstructor(final Class<K> clazz) {
+    public <K> Constructor<K> getAllArgsConstructor(final Class<K> clazz) {
         final String cacheKey = "AllArgsConstructor-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
             Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
