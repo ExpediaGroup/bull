@@ -33,6 +33,7 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.math.BigInteger;
@@ -511,19 +512,34 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
 
     /**
      * Test that an {@link InvalidBeanException} is raised if the class instantiation fails when the method {@code injectValues()} is called.
+     * @throws Exception if something goes wrong
      */
-    @Test(expectedExceptions = InvalidBeanException.class)
-    public void testInjectValuesThrowsException() {
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testInjectValuesThrowsException() throws Exception {
         //GIVEN
         TransformerImpl underTestMock = spy(TransformerImpl.class);
         ClassUtils classUtils = mock(ClassUtils.class);
         Constructor<MutableToFooSimple> constructor = classUtils.getAllArgsConstructor(MutableToFooSimple.class);
         when(classUtils.getInstance(constructor)).thenThrow(InvalidBeanException.class);
         when(classUtils.getConstructorParameters(constructor)).thenReturn(new Parameter[] {});
+        when(classUtils.areParameterNamesAvailable(constructor)).thenReturn(true);
         setField(underTestMock, CLASS_UTILS_FIELD_NAME, classUtils);
+        Method injectValuesMethod =
+                TransformerImpl.class.getDeclaredMethod(INJECT_VALUES_METHOD_NAME, Object.class, Class.class, Constructor.class, String.class, boolean.class);
+        injectValuesMethod.setAccessible(true);
 
         //WHEN
-        underTestMock.injectValues(fromFooSimple, MutableToFooSimple.class, constructor, null, true);
+        InvocationTargetException actualException = null;
+        try {
+            injectValuesMethod.invoke(underTestMock, fromFooSimple, MutableToFooSimple.class, constructor, null, true);
+        } catch (final InvocationTargetException e) {
+            actualException = e;
+        }
+
+        // THEN
+        assertNotNull(actualException);
+        assertEquals(InvalidBeanException.class, actualException.getTargetException().getClass());
     }
 
     /**
