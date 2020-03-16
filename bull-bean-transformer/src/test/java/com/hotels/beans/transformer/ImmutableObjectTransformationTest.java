@@ -533,10 +533,13 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         injectValuesMethod.setAccessible(true);
 
         //WHEN
-        Object e = injectValuesMethod.invoke(underTestMock, fromFooSimple, MutableToFooSimple.class, constructor, null, true);
+        Object actual = injectValuesMethod.invoke(underTestMock, fromFooSimple, MutableToFooSimple.class, constructor, null, true);
 
         // THEN
-        assertNotNull(e);
+        assertNotNull(actual);
+        assertTrue(actual instanceof InvalidBeanException);
+        InvalidBeanException actualException = (InvalidBeanException) actual;
+        assertEquals(actualException.getMessage(), "dummy exception");
     }
 
     /**
