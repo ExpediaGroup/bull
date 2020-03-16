@@ -131,7 +131,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @return a copy of the source object into the destination object
      * @throws InvalidBeanException {@link InvalidBeanException} if the target object is not compliant with the requirements
      */
-    private <T, K> K handleInjectionException(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb,
+    protected <T, K> K handleInjectionException(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb,
         final Object[] constructorArgs, final boolean forceConstructorInjection, final Exception e) {
         String errorMsg;
         if (!classUtils.areParameterNamesAvailable(constructor)) {
