@@ -519,11 +519,12 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     public void testInjectValuesThrowsException() throws Exception {
         //GIVEN
         TransformerImpl underTestMock = spy(TransformerImpl.class);
-        ClassUtils classUtils = mock(ClassUtils.class);
-        Constructor<MutableToFooSimple> constructor = classUtils.getAllArgsConstructor(MutableToFooSimple.class);
-        when(classUtils.getInstance(constructor)).thenThrow(InvalidBeanException.class);
-        when(classUtils.getConstructorParameters(constructor)).thenReturn(new Parameter[] {});
-        setField(underTestMock, CLASS_UTILS_FIELD_NAME, classUtils);
+        ClassUtils classUtilsSpy = spy(ClassUtils.class);
+        ClassUtils classUtilsMock = mock(ClassUtils.class);
+        Constructor<MutableToFooSimple> constructor = classUtilsSpy.getAllArgsConstructor(MutableToFooSimple.class);
+        when(classUtilsMock.getInstance(constructor)).thenThrow(InvalidBeanException.class);
+        when(classUtilsMock.getConstructorParameters(constructor)).thenReturn(new Parameter[] {});
+        setField(underTestMock, CLASS_UTILS_FIELD_NAME, classUtilsMock);
         Method injectValuesMethod =
                 TransformerImpl.class.getDeclaredMethod(INJECT_VALUES_METHOD_NAME, Object.class, Class.class, Constructor.class, String.class, boolean.class);
         injectValuesMethod.setAccessible(true);
