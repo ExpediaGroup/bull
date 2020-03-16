@@ -170,7 +170,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param constructor the all args constructor
      * @return true if the parameter names are defined or the parameters are annotated with: {@link ConstructorArg}
      */
-    private boolean canBeInjectedByConstructorParams(final Constructor constructor) {
+    protected boolean canBeInjectedByConstructorParams(final Constructor constructor) {
         final String cacheKey = "CanBeInjectedByConstructorParams-" + constructor.getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final boolean res = classUtils.areParameterNamesAvailable(constructor) || classUtils.allParameterAnnotatedWith(constructor, ConstructorArg.class);
