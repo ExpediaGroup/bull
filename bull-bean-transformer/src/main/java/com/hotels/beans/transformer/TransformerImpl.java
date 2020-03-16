@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import static java.util.stream.IntStream.range;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
+import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 import static com.hotels.transformer.base.Defaults.defaultValue;
 import static com.hotels.transformer.constant.ClassType.MIXED;
 import static com.hotels.transformer.constant.ClassType.MUTABLE;
@@ -33,7 +34,6 @@ import static com.hotels.transformer.constant.Punctuation.COMMA;
 import static com.hotels.transformer.constant.Punctuation.DOT;
 import static com.hotels.transformer.constant.Punctuation.LPAREN;
 import static com.hotels.transformer.constant.Punctuation.RPAREN;
-import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -131,7 +131,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @return a copy of the source object into the destination object
      * @throws InvalidBeanException {@link InvalidBeanException} if the target object is not compliant with the requirements
      */
-    private <T, K> K handleInjectionException(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb,
+    protected <T, K> K handleInjectionException(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb,
         final Object[] constructorArgs, final boolean forceConstructorInjection, final Exception e) {
         String errorMsg;
         if (!classUtils.areParameterNamesAvailable(constructor)) {
@@ -168,10 +168,9 @@ public class TransformerImpl extends AbstractBeanTransformer {
     /**
      * Checks if the source class field names can be retrieved from the constructor parameters.
      * @param constructor the all args constructor
-     * @param <K> the target object type
      * @return true if the parameter names are defined or the parameters are annotated with: {@link ConstructorArg}
      */
-    private <K> boolean canBeInjectedByConstructorParams(final Constructor constructor) {
+    protected boolean canBeInjectedByConstructorParams(final Constructor constructor) {
         final String cacheKey = "CanBeInjectedByConstructorParams-" + constructor.getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final boolean res = classUtils.areParameterNamesAvailable(constructor) || classUtils.allParameterAnnotatedWith(constructor, ConstructorArg.class);
@@ -192,7 +191,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @return a list containing the values for the destination constructor.
      * @throws InvalidBeanException {@link InvalidBeanException} if there is an error while retrieving the constructor args parameter
      */
-    private <T, K> Object[] getConstructorArgsValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
+    protected <T, K> Object[] getConstructorArgsValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
         final Parameter[] constructorParameters = classUtils.getConstructorParameters(constructor);
         final Object[] constructorArgsValues = new Object[constructorParameters.length];
         range(0, constructorParameters.length)

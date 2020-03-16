@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,6 +70,7 @@ public abstract class AbstractTransformerTest {
     protected static final Map<String, List<String>> COMPLEX_MAP = new HashMap<>();
     protected static final Map<String, Map<String, String>> VERY_COMPLEX_MAP = new HashMap<>();
     protected static final Map<FromFooSimple, Map<String, String>> EXTREME_COMPLEX_MAP = new HashMap<>();
+    protected static final Map UNPARAMETRIZED_MAP = new HashMap<>();
     protected static final String TRANSFORMER_SETTINGS_FIELD_NAME = "settings";
     protected static final ReflectionUtils REFLECTION_UTILS = new ReflectionUtils();
     protected static final String ITEM_1 = "donald";
@@ -104,7 +105,7 @@ public abstract class AbstractTransformerTest {
         fromFooAdvFields = createFromFooAdvFields();
         fromFooPrimitiveTypes = createFromFooPrimitiveTypes();
         EXTREME_COMPLEX_MAP.put(fromFooSimple, SAMPLE_MAP);
-        fromFooMap = new FromFooMap(SAMPLE_MAP, COMPLEX_MAP, VERY_COMPLEX_MAP, EXTREME_COMPLEX_MAP);
+        fromFooMap = new FromFooMap(SAMPLE_MAP, COMPLEX_MAP, VERY_COMPLEX_MAP, EXTREME_COMPLEX_MAP, UNPARAMETRIZED_MAP);
     }
 
     /**

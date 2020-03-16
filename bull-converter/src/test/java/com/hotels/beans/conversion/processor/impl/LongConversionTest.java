@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -216,4 +216,3 @@ public class LongConversionTest extends AbstractConversionTest {
         assertEquals(expectedValue, actual);
     }
 }
-

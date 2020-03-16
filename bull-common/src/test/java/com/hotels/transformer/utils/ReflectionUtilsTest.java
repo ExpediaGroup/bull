@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,12 @@ import static java.util.Objects.isNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -38,16 +43,20 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.sample.FromFoo;
+import com.hotels.beans.sample.FromFooMap;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
 import com.hotels.beans.sample.FromFooSubClass;
@@ -80,11 +89,13 @@ public class ReflectionUtilsTest {
     private static final String DECLARING_CLASS_NAME = "declaringClassName";
     private static final String INVOKE_METHOD_NAME = "invokeMethod";
     private static final String VERY_COMPLEX_MAP_FIELD_NAME = "veryComplexMap";
+    private static final String UNPARAMETRIZED_MAP_FIELD_NAME = "unparametrizedMap";
     private static final String GET_GETTER_METHOD_NAME = "getGetterMethod";
     private static final String SET_NAME_METHOD_NAME = "setName";
     private static final String SET_INDEX_METHOD_NAME = "setIndex";
     private static final String INDEX_NUMBER = "123";
     private static final String GET_REAL_TARGET_METHOD_NAME = "getRealTarget";
+    private static final String GET_CLASS_DECLARED_FIELD_METHOD_NAME = "getClassDeclaredField";
 
     /**
      * The class to be tested.
@@ -154,6 +165,24 @@ public class ReflectionUtilsTest {
     }
 
     /**
+     * Tests that the method {@link ReflectionUtils#getFieldValue(Object, String, Class) getFieldValue} catches a runtime exception.
+     */
+    @Test
+    public void testGetFieldValueCatchesRuntimeException() {
+        // GIVEN
+        MutableToFoo mutableToFoo = createMutableToFoo(null);
+        ReflectionUtils underTestMock = Mockito.spy(ReflectionUtils.class);
+        when(underTestMock.getDeclaredFieldType(LIST_FIELD_NAME, MutableToFoo.class)).thenThrow(new RuntimeException());
+
+        // WHEN
+        Object actual = underTestMock.getFieldValue(mutableToFoo, LIST_FIELD_NAME, FromFooSubClass.class);
+
+        //THEN
+        assertNull(actual);
+        verify(underTestMock, times(1)).getDeclaredField(LIST_FIELD_NAME, MutableToFoo.class);
+    }
+
+    /**
      * Tests that the method {@code getFieldValue} throws Exception if the field does not exists.
      */
     @Test(expectedExceptions = MissingFieldException.class)
@@ -217,49 +246,61 @@ public class ReflectionUtilsTest {
     /**
      * Tests that the method {@code handleReflectionException} raises the expected exception.
      */
-    @Test(expectedExceptions = MissingMethodException.class)
-    public void testHandleReflectionExceptionThrowsIllegalStateExceptionWhenGivenExceptionIsNoSuchMethodException() {
+    @Test
+    public void testHandleReflectionExceptionThrowsMissingMethodExceptionWhenGivenExceptionIsNoSuchMethodException() {
         // GIVEN
         NoSuchMethodException noSuchMethodException = new NoSuchMethodException();
 
         // WHEN
-        underTest.handleReflectionException(noSuchMethodException);
+        RuntimeException actual = underTest.handleReflectionException(noSuchMethodException);
+
+        // THEN
+        assertSame(MissingMethodException.class, actual.getClass());
     }
 
     /**
-     * Tests that the method {@code handleReflectionException} raises the expected exception.
+     * Tests that the method {@code handleReflectionException} returns the expected exception.
      */
-    @Test(expectedExceptions = IllegalStateException.class)
+    @Test
     public void testHandleReflectionExceptionThrowsIllegalStateExceptionWhenGivenExceptionIsIllegalAccessException() {
         // GIVEN
         IllegalAccessException illegalAccessException = new IllegalAccessException();
 
         // WHEN
-        underTest.handleReflectionException(illegalAccessException);
+        RuntimeException exception = underTest.handleReflectionException(illegalAccessException);
+
+        // THEN
+        assertSame(IllegalStateException.class, exception.getClass());
     }
 
     /**
-     * Tests that the method {@code handleReflectionException} raises the expected exception.
+     * Tests that the method {@code handleReflectionException} returns the expected exception.
      */
-    @Test(expectedExceptions = RuntimeException.class)
+    @Test
     public void testHandleReflectionExceptionThrowsRuntimeExceptionWhenGivenExceptionIsRuntimeException() {
         // GIVEN
         RuntimeException runtimeException = new RuntimeException();
 
         // WHEN
-        underTest.handleReflectionException(runtimeException);
+        RuntimeException exception = underTest.handleReflectionException(runtimeException);
+
+        // THEN
+        assertSame(RuntimeException.class, exception.getClass());
     }
 
     /**
-     * Tests that the method {@code handleReflectionException} raises the expected exception.
+     * Tests that the method {@code handleReflectionException} returns the expected exception.
      */
-    @Test(expectedExceptions = UndeclaredThrowableException.class)
+    @Test
     public void testHandleReflectionExceptionThrowsUndeclaredThrowableExceptionWhenGivenExceptionIsInvalidBeanException() {
         // GIVEN
-        Exception exception = new Exception();
+        Exception genericException = new Exception();
 
         // WHEN
-        underTest.handleReflectionException(exception);
+        RuntimeException actual = underTest.handleReflectionException(genericException);
+
+        // THEN
+        assertSame(UndeclaredThrowableException.class, actual.getClass());
     }
 
     /**
@@ -461,6 +502,29 @@ public class ReflectionUtilsTest {
     }
 
     /**
+     * Test that the method: {@code getClassDeclaredField} throws the right exception.
+     * @throws Exception if the invoke method fails
+     */
+    @Test
+    public void testGetClassDeclaredFieldThrowsTheRightException() throws Exception {
+        //GIVEN
+
+        //WHEN
+        InvocationTargetException actualException = null;
+        try {
+            Method getClassDeclaredFieldMethod = underTest.getClass().getDeclaredMethod(GET_CLASS_DECLARED_FIELD_METHOD_NAME, String.class, Class.class);
+            getClassDeclaredFieldMethod.setAccessible(true);
+            getClassDeclaredFieldMethod.invoke(underTest, null, FromFoo.class);
+        } catch (final InvocationTargetException e) {
+            actualException = e;
+        }
+
+        // THEN
+        assertNotNull(actualException);
+        assertEquals(NullPointerException.class, actualException.getTargetException().getClass());
+    }
+
+    /**
      * Creates the parameters to be used for testing the method {@code getDeclaredField}.
      * @return parameters to be used for testing the the method {@code getDeclaredField}.
      */
@@ -558,15 +622,15 @@ public class ReflectionUtilsTest {
                 .build();
         final MapType expectedElemType = new MapType(keyType, keyType);
         final MapType expectedMapType = new MapType(keyType, expectedElemType);
+        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
+        ItemType expectedNestedMapKeyType = (ItemType) ((MapType) expectedMapType.getElemType()).getKeyType();
+        ItemType expectedNestedMapElemType = (ItemType) ((MapType) expectedMapType.getElemType()).getElemType();
         Field field = underTest.getDeclaredField(VERY_COMPLEX_MAP_FIELD_NAME, ImmutableToSubFoo.class);
 
         // WHEN
         MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
-        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
         ItemType actualMapKeyType = (ItemType) actual.getKeyType();
-        ItemType expectedNestedMapKeyType = (ItemType) ((MapType) expectedMapType.getElemType()).getKeyType();
         ItemType actualNestedMapKeyType = (ItemType) ((MapType) actual.getElemType()).getKeyType();
-        ItemType expectedNestedMapElemType = (ItemType) ((MapType) expectedMapType.getElemType()).getElemType();
         ItemType actualNestedMapElemType = (ItemType) ((MapType) actual.getElemType()).getElemType();
 
         // THEN
@@ -576,6 +640,29 @@ public class ReflectionUtilsTest {
         assertEquals(expectedNestedMapKeyType.getGenericClass(), actualNestedMapKeyType.getGenericClass());
         assertEquals(expectedNestedMapElemType.getObjectClass(), actualNestedMapElemType.getObjectClass());
         assertEquals(expectedNestedMapElemType.getGenericClass(), actualNestedMapElemType.getGenericClass());
+    }
+
+    @Test
+    public void testMapGenericFieldTypeWorksProperlyForUnparametrizedMap() {
+        // GIVEN
+        MapElemType keyType = ItemType.builder()
+            .objectClass(Map.class)
+            .build();
+        final MapType expectedMapType = new MapType(keyType, keyType);
+        ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
+        ItemType expectedMapElemType = (ItemType) expectedMapType.getElemType();
+        Field field = underTest.getDeclaredField(UNPARAMETRIZED_MAP_FIELD_NAME, FromFooMap.class);
+
+        // WHEN
+        MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
+        ItemType actualMapKeyType = (ItemType) actual.getKeyType();
+        ItemType actualMapElemType = (ItemType) actual.getElemType();
+
+        // THEN
+        assertEquals(expectedMapKeyType.getObjectClass(), actualMapKeyType.getObjectClass());
+        assertEquals(expectedMapKeyType.getGenericClass(), actualMapKeyType.getGenericClass());
+        assertEquals(expectedMapElemType.getObjectClass(), actualMapElemType.getObjectClass());
+        assertEquals(expectedMapElemType.getGenericClass(), actualMapElemType.getGenericClass());
     }
 
     /**
@@ -673,12 +760,30 @@ public class ReflectionUtilsTest {
         assertEquals(ONE, mutableToFoo.getId());
     }
 
+    @Test
+    public void testSetFieldValueInvokesTheSetterMethodInCaseAnExceptionIsRaised() {
+        // GIVEN
+        ReflectionUtils underTestMock = spy(ReflectionUtils.class);
+        MutableToFooSimple mutableToFoo = new MutableToFooSimple();
+        Field idField = underTest.getDeclaredField(ID_FIELD_NAME, mutableToFoo.getClass());
+        doThrow(RuntimeException.class).when(underTestMock).setFieldValueWithoutSetterMethod(mutableToFoo, idField, ONE);
+
+        // WHEN
+        underTestMock.setFieldValue(mutableToFoo, idField, ONE);
+
+        // THEN
+        assertEquals(ONE, mutableToFoo.getId());
+    }
+
     /**
      * Tests that the method {@code invokeMethod} manages the exception properly.
      * @param testCaseDescription the test case description
+     * @param targetObject the object on which the method has to be invoked
+     * @param methodNameToInvoke the name of the method to invoke
      * @param methodArg the argument to pass to the invoke method
      * @param isAccessible the accessibility that the {@code invokeMethod} must have
      * @param expectedException the expected exception class
+     * @throws Exception if something goes wrong
      */
     @Test(dataProvider = "dataInvokeMethodTesting")
     public void testInvokeMethodCorrectlyHandlesExceptions(final String testCaseDescription, final Object targetObject, final String methodNameToInvoke,
@@ -715,6 +820,7 @@ public class ReflectionUtilsTest {
 
     /**
      * Test that the method: {@code getRealTarget} returns the object contained in the Optional.
+     * @throws Exception if something goes wrong
      */
     @Test
     public void testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull() throws Exception {

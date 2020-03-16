@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,15 +30,15 @@ import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
-import static com.hotels.transformer.validator.Validator.notNull;
 import static com.hotels.transformer.base.Defaults.defaultValue;
 import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.transformer.constant.ClassType.IMMUTABLE;
 import static com.hotels.transformer.constant.ClassType.MIXED;
 import static com.hotels.transformer.constant.ClassType.MUTABLE;
-import static com.hotels.transformer.constant.Filters.IS_NOT_FINAL_FIELD;
 import static com.hotels.transformer.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
 import static com.hotels.transformer.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
+import static com.hotels.transformer.constant.Filters.IS_NOT_FINAL_FIELD;
+import static com.hotels.transformer.validator.Validator.notNull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -497,7 +497,7 @@ public final class ClassUtils {
      * @param <K> the object type
      * @return the all args constructor
      */
-    public <K> Constructor getAllArgsConstructor(final Class<K> clazz) {
+    public <K> Constructor<K> getAllArgsConstructor(final Class<K> clazz) {
         final String cacheKey = "AllArgsConstructor-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
             Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();

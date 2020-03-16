@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,13 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.math.BigInteger;
@@ -66,6 +68,7 @@ import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.error.InvalidBeanException;
 import com.hotels.transformer.model.FieldMapping;
 import com.hotels.transformer.model.FieldTransformer;
+import com.hotels.transformer.utils.ClassUtils;
 import com.hotels.transformer.utils.ReflectionUtils;
 
 /**
@@ -99,7 +102,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test(dataProvider = "dataDefaultTransformationTesting")
     public void testImmutableBeanIsCorrectlyCopied(final String testCaseDescription, final BeanTransformer transformer, final Object sourceObject,
-                                                   final Class<?> targetObjectClass) {
+        final Class<?> targetObjectClass) {
         //GIVEN
 
         //WHEN
@@ -153,20 +156,23 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      * @param expectedId the expected id
      * @param expectedPhoneNumbers the expected phone number
      */
+    @SuppressWarnings("unchecked")
     @Test(dataProvider = "dataCompositeFieldNameTesting")
     public void testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected(final String testCaseDescription, final Object sourceObject, final String expectedName,
         final BigInteger expectedId, final int[] expectedPhoneNumbers) {
         //GIVEN
-        FieldMapping phoneNumbersMapping = new FieldMapping<>(PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME, PHONE_NUMBER_DEST_FIELD_NAME);
+        TransformerImpl underTestMock = spy(TransformerImpl.class);
+        Constructor<ImmutableFlatToFoo> beanAllArgsConstructor = new ClassUtils().getAllArgsConstructor(ImmutableFlatToFoo.class);
+        when(underTestMock.canBeInjectedByConstructorParams(beanAllArgsConstructor)).thenReturn(false);
+        FieldMapping<String, String> phoneNumbersMapping = new FieldMapping<>(PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME, PHONE_NUMBER_DEST_FIELD_NAME);
 
         //WHEN
-        ImmutableFlatToFoo actual = underTest.withFieldMapping(phoneNumbersMapping).transform(sourceObject, ImmutableFlatToFoo.class);
+        ImmutableFlatToFoo actual = underTestMock.withFieldMapping(phoneNumbersMapping).transform(sourceObject, ImmutableFlatToFoo.class);
 
         //THEN
         assertEquals(expectedName, actual.getName());
         assertEquals(expectedId, actual.getId());
         assertEquals(expectedPhoneNumbers, actual.getPhoneNumbers());
-        underTest.resetFieldsMapping();
     }
 
     /**
@@ -503,6 +509,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
 
     /**
      * Restores the initial object status before testing method: {@code getDestFieldName}.
+     * @param getDestFieldNameMethod the destination field name method
      */
     private void restoreObjects(final Method getDestFieldNameMethod) {
         getDestFieldNameMethod.setAccessible(false);

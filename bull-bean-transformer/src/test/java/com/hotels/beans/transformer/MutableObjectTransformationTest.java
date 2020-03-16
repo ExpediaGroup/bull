@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -43,6 +55,7 @@ import com.hotels.beans.sample.mutable.MutableToFooSubClass;
 import com.hotels.transformer.error.InvalidBeanException;
 import com.hotels.transformer.error.MissingFieldException;
 import com.hotels.transformer.model.FieldTransformer;
+import com.hotels.transformer.utils.ClassUtils;
 
 /**
  * Unit test for all {@link BeanTransformer} functions related to Mutable type Java Beans.
@@ -50,6 +63,8 @@ import com.hotels.transformer.model.FieldTransformer;
 public class MutableObjectTransformationTest extends AbstractBeanTransformerTest {
     private static final boolean ACTIVE = true;
     private static final String PRICE_FIELD_NAME = "price";
+    private static final String CLASS_UTILS_FIELD_NAME = "classUtils";
+    private static final String INJECT_VALUES_METHOD_NAME = "injectValues";
 
     /**
      * Test that an exception is thrown if there is no default constructor defined for the mutable bean object.
@@ -354,5 +369,33 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         assertEquals(ACTIVE, actual.isActive());
         underTest.setPrimitiveTypeConversionEnabled(false);
         underTest.removeFieldTransformer(PRICE_FIELD_NAME);
+    }
+
+    /**
+     * Test that an {@link InvalidBeanException} is raised if the class instantiation fails when the method {@code injectValues()} is called.
+     * @throws Exception if something goes wrong
+     */
+    @Test
+    public void testInjectValuesThrowsException() throws Exception {
+        //GIVEN
+        InvalidBeanException expectedException = new InvalidBeanException("Dummy exception");
+        TransformerImpl underTestMock = spy(TransformerImpl.class);
+        ClassUtils classUtils = mock(ClassUtils.class);
+        Constructor<MutableToFooSimple> constructor = classUtils.getAllArgsConstructor(MutableToFooSimple.class);
+        when(classUtils.getInstance(constructor)).thenThrow(InvalidBeanException.class);
+        when(classUtils.getConstructorParameters(constructor)).thenReturn(new Parameter[] {});
+        when(classUtils.areParameterNamesAvailable(constructor)).thenReturn(true);
+        doReturn(expectedException).when(underTestMock).handleInjectionException(any(), any(), any(), any(), any(), anyBoolean(), any());
+        setField(underTestMock, CLASS_UTILS_FIELD_NAME, classUtils);
+        Method injectValuesMethod =
+            TransformerImpl.class.getDeclaredMethod(INJECT_VALUES_METHOD_NAME, Object.class, Class.class, Constructor.class, String.class, boolean.class);
+        injectValuesMethod.setAccessible(true);
+
+        //WHEN
+        Object actual = injectValuesMethod.invoke(underTestMock, fromFooSimple, MutableToFooSimple.class, constructor, null, true);
+
+        // THEN
+        assertNotNull(actual);
+        assertSame(expectedException, actual);
     }
 }

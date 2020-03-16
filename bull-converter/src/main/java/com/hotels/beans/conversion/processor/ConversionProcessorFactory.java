@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import static java.util.Optional.of;
 
 import static com.hotels.transformer.utils.ClassUtils.isBigDecimal;
 import static com.hotels.transformer.utils.ClassUtils.isBigInteger;
-import static com.hotels.transformer.utils.ClassUtils.isByteArray;
 import static com.hotels.transformer.utils.ClassUtils.isBoolean;
 import static com.hotels.transformer.utils.ClassUtils.isByte;
+import static com.hotels.transformer.utils.ClassUtils.isByteArray;
 import static com.hotels.transformer.utils.ClassUtils.isChar;
 import static com.hotels.transformer.utils.ClassUtils.isDouble;
 import static com.hotels.transformer.utils.ClassUtils.isFloat;

@@ -21,7 +21,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>1.6.4-jdk8</version>
+    <version>1.6.5-jdk8-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -33,13 +33,14 @@
     <parent>
         <groupId>com.hotels</groupId>
         <artifactId>hotels-oss-parent</artifactId>
-        <version>4.2.0</version>
+        <version>5.0.0</version>
     </parent>
 
     <modules>
         <module>bull-common</module>
         <module>bull-bean-transformer</module>
         <module>bull-converter</module>
+        <module>bull-report</module>
     </modules>
 
     <properties>
@@ -48,17 +49,17 @@
         <jdk.version>1.8</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
-        <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
-        <lombok.version>1.18.10</lombok.version>
+        <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
+        <lombok.version>1.18.12</lombok.version>
         <apache.commons-lang3.version>3.9</apache.commons-lang3.version>
         <shazamcrest.version>0.11</shazamcrest.version>
         <gson.version>2.8.6</gson.version>
         <testng.version>7.1.0</testng.version>
-        <mockito-core.version>3.2.4</mockito-core.version>
+        <mockito-core.version>3.3.3</mockito-core.version>
         <hotels.oss.plugin.config.version>1.3.0</hotels.oss.plugin.config.version>
         <!-- validation dependencies -->
         <validation-api.version>2.0.1.Final</validation-api.version>
-        <hibernate-validator.version>6.1.1.Final</hibernate-validator.version>
+        <hibernate-validator.version>6.1.2.Final</hibernate-validator.version>
         <slf4j-api.version>1.7.30</slf4j-api.version>
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <glassfish.javax.el.version>2.2.6</glassfish.javax.el.version>
@@ -71,17 +72,21 @@
         <jacoco.complexityRatio>0.88</jacoco.complexityRatio>
         <jacoco.lineRatio>0.90</jacoco.lineRatio>
         <sonar.coverage.exclusions>**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*</sonar.coverage.exclusions>
+        <!-- Required for coverall jdk >= 9 compatibility -->
+        <jaxb-api.version>2.3.1</jaxb-api.version>
         <!-- site properties -->
         <wagon-ssh.version>3.3.4</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
         <github.global.server>github</github.global.server>
-        <maven.site.plugin.version>3.8.2</maven.site.plugin.version>
+        <maven.site.plugin.version>3.9.0</maven.site.plugin.version>
         <!-- build settings -->
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
-        <jacoco.check.skip>false</jacoco.check.skip>
+        <test.coverage.check.skip>false</test.coverage.check.skip>
         <pmd.check.skip>true</pmd.check.skip>
         <javadoc.skip>false</javadoc.skip>
+        <import.order>\#java,\#javax,\#org,\#,\#com,,\#lombok,java,javax,org,,com,,lombok</import.order>
+        <spotless.plugin.skip>false</spotless.plugin.skip>
     </properties>
 
     <!-- distribution configuration -->
@@ -89,7 +94,7 @@
         <connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
         <developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
         <url>https://github.com/HotelsDotCom/bull</url>
-        <tag>1.6.4-jdk8</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencyManagement>
@@ -244,16 +249,20 @@
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
-                <jacoco.check.skip>true</jacoco.check.skip>
+                <test.coverage.check.skip>true</test.coverage.check.skip>
             </properties>
         </profile>
         <profile>
             <id>fast</id>
+            <modules>
+                <module>bull-map-transformer</module>
+            </modules>
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
-                <jacoco.check.skip>true</jacoco.check.skip>
+                <test.coverage.check.skip>true</test.coverage.check.skip>
                 <javadoc.skip>true</javadoc.skip>
+                <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
             </properties>
             <build>
                 <plugins>
@@ -275,6 +284,7 @@
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
+                <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
             </properties>
             <build>
                 <plugins>
@@ -306,8 +316,9 @@
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
-                <jacoco.check.skip>true</jacoco.check.skip>
+                <test.coverage.check.skip>true</test.coverage.check.skip>
                 <javadoc.skip>true</javadoc.skip>
+                <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
             </properties>
             <build>
                 <plugins>
@@ -445,6 +456,7 @@
                         <parallelMavenExecution>false</parallelMavenExecution>
                     </configuration>
                 </plugin>
+                <!-- jacoco plugin configuration -->
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
@@ -468,7 +480,7 @@
                                 <goal>check</goal>
                             </goals>
                             <configuration>
-                                <skip>${jacoco.check.skip}</skip>
+                                <skip>${test.coverage.check.skip}</skip>
                                 <includes>
                                     <include>com/hotels/transformer/**</include>
                                     <include>com/hotels/beans/**</include>
@@ -478,11 +490,11 @@
                                     <exclude>**/Test*.*</exclude>
                                     <exclude>**/*Test.*</exclude>
                                     <exclude>**/*Application.*</exclude>
-                                    <exclude>com/hotels/transformer/AbstractTransformer.*</exclude>
-                                    <exclude>**/model/**</exclude>
-                                    <exclude>**/constant/**</exclude>
-                                    <exclude>**/error/**</exclude>
-                                    <exclude>**/annotation/**</exclude>
+                                    <exclude>**/AbstractTransformer.*</exclude>
+                                    <exclude>**/model/*</exclude>
+                                    <exclude>**/constant/*</exclude>
+                                    <exclude>**/error/*</exclude>
+                                    <exclude>**/annotation/*</exclude>
                                 </excludes>
                                 <rules>
                                     <rule>
@@ -524,6 +536,25 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+                <!-- coveralls plugin -->
+                <plugin>
+                    <groupId>org.eluder.coveralls</groupId>
+                    <artifactId>coveralls-maven-plugin</artifactId>
+                    <version>${coveralls.maven.plugin.version}</version>
+                    <configuration>
+                        <skip>${test.coverage.check.skip}</skip>
+                        <jacocoReports>
+                            <jacocoReport>${project.basedir}/bull-report/target/site/jacoco-aggregate/jacoco.xml</jacocoReport>
+                        </jacocoReports>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>javax.xml.bind</groupId>
+                            <artifactId>jaxb-api</artifactId>
+                            <version>${jaxb-api.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -684,6 +715,30 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+            <!-- code formatter -->
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>${spotless.maven.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>apply</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>${spotless.plugin.skip}</skip>
+                    <java>
+                        <removeUnusedImports />
+                        <trimTrailingWhitespace />
+                        <importOrder>
+                            <order>${import.order}</order>
+                        </importOrder>
+                    </java>
+                </configuration>
             </plugin>
         </plugins>
     </build>

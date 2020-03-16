@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Expedia, Inc.
+ * Copyright (C) 2019-2020 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,22 +20,6 @@ package com.hotels.transformer.error;
  * Invalid Bean exception class.
  */
 public class InvalidBeanException extends RuntimeException {
-    /**
-     * Constructs a new invalid bean exception with the specified cause and a
-     * detail message of {@code (cause==null ? null : cause.toString())}
-     * (which typically contains the class and detail message of
-     * {@code cause}).  This constructor is useful for invalid bean exceptions
-     * that are little more than wrappers for other throwable.
-     *
-     * @param  cause the cause (which is saved for later retrieval by the
-     *         {@link #getCause()} method).  (A {@code null} value is
-     *         permitted, and indicates that the cause is nonexistent or
-     *         unknown.)
-     */
-    public InvalidBeanException(final Throwable cause) {
-        super(cause);
-    }
-
     /**
      * Constructs a new invalid bean exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a

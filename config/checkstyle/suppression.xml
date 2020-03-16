@@ -6,7 +6,7 @@
 
 <suppressions>
     <!-- Checks for Javadoc comments. -->
-    <suppress checks="JavadocMethod|JavadocType|JavadocVariable|JavadocStyle|TodoComment"
+    <suppress checks="JavadocMethod|JavadocVariable|TodoComment"
               files=".*[\\/]src[\\/](test|it)[\\/]|.*Test.java"/>
 
     <!-- Checks for Visibility Modifier. -->
