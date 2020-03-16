@@ -55,6 +55,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooMap;
 import com.hotels.beans.sample.FromFooSimple;
 import com.hotels.beans.sample.FromFooSimpleNoGetters;
@@ -88,12 +89,13 @@ public class ReflectionUtilsTest {
     private static final String DECLARING_CLASS_NAME = "declaringClassName";
     private static final String INVOKE_METHOD_NAME = "invokeMethod";
     private static final String VERY_COMPLEX_MAP_FIELD_NAME = "veryComplexMap";
-    private static final String UNPARAMETRIZED_MAP = "unparametrizedMap";
+    private static final String UNPARAMETRIZED_MAP_FIELD_NAME = "unparametrizedMap";
     private static final String GET_GETTER_METHOD_NAME = "getGetterMethod";
     private static final String SET_NAME_METHOD_NAME = "setName";
     private static final String SET_INDEX_METHOD_NAME = "setIndex";
     private static final String INDEX_NUMBER = "123";
     private static final String GET_REAL_TARGET_METHOD_NAME = "getRealTarget";
+    private static final String GET_CLASS_DECLARED_FIELD_METHOD_NAME = "getClassDeclaredField";
 
     /**
      * The class to be tested.
@@ -500,6 +502,29 @@ public class ReflectionUtilsTest {
     }
 
     /**
+     * Test that the method: {@code getClassDeclaredField} throws the right exception.
+     * @throws Exception if the invoke method fails
+     */
+    @Test
+    public void testGetClassDeclaredFieldThrowsTheRightException() throws Exception {
+        //GIVEN
+
+        //WHEN
+        InvocationTargetException actualException = null;
+        try {
+            Method getClassDeclaredFieldMethod = underTest.getClass().getDeclaredMethod(GET_CLASS_DECLARED_FIELD_METHOD_NAME, String.class, Class.class);
+            getClassDeclaredFieldMethod.setAccessible(true);
+            getClassDeclaredFieldMethod.invoke(underTest, null, FromFoo.class);
+        } catch (final InvocationTargetException e) {
+            actualException = e;
+        }
+
+        // THEN
+        assertNotNull(actualException);
+        assertEquals(NullPointerException.class, actualException.getTargetException().getClass());
+    }
+
+    /**
      * Creates the parameters to be used for testing the method {@code getDeclaredField}.
      * @return parameters to be used for testing the the method {@code getDeclaredField}.
      */
@@ -626,7 +651,7 @@ public class ReflectionUtilsTest {
         final MapType expectedMapType = new MapType(keyType, keyType);
         ItemType expectedMapKeyType = (ItemType) expectedMapType.getKeyType();
         ItemType expectedMapElemType = (ItemType) expectedMapType.getElemType();
-        Field field = underTest.getDeclaredField(UNPARAMETRIZED_MAP, FromFooMap.class);
+        Field field = underTest.getDeclaredField(UNPARAMETRIZED_MAP_FIELD_NAME, FromFooMap.class);
 
         // WHEN
         MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
