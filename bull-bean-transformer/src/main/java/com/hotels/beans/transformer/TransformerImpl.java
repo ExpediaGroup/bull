@@ -191,7 +191,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @return a list containing the values for the destination constructor.
      * @throws InvalidBeanException {@link InvalidBeanException} if there is an error while retrieving the constructor args parameter
      */
-    private <T, K> Object[] getConstructorArgsValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
+    protected <T, K> Object[] getConstructorArgsValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
         final Parameter[] constructorParameters = classUtils.getConstructorParameters(constructor);
         final Object[] constructorArgsValues = new Object[constructorParameters.length];
         range(0, constructorParameters.length)
