@@ -25,10 +25,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -66,7 +62,6 @@ import com.hotels.beans.sample.immutable.ImmutableToFooSimple;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleBoolean;
 import com.hotels.beans.sample.immutable.ImmutableToFooSimpleWrongTypes;
 import com.hotels.beans.sample.immutable.ImmutableToFooSubClass;
-import com.hotels.beans.sample.mutable.MutableToFooSimple;
 import com.hotels.transformer.AbstractTransformerTest;
 import com.hotels.transformer.annotation.ConstructorArg;
 import com.hotels.transformer.cache.CacheManager;
@@ -89,8 +84,6 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     private static final String GROSS_PRICE_FIELD_NAME = "price.grossPrice";
     private static final String WORK_FIELD_NAME = "work";
     private static final boolean ACTIVE = true;
-    private static final String CLASS_UTILS_FIELD_NAME = "classUtils";
-    private static final String INJECT_VALUES_METHOD_NAME = "injectValues";
 
     /**
      * After method actions.
@@ -511,33 +504,6 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         underTest.withFieldTransformer(upperCase)
                 .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
 
-    }
-
-    /**
-     * Test that an {@link InvalidBeanException} is raised if the class instantiation fails when the method {@code injectValues()} is called.
-     * @throws Exception if something goes wrong
-     */
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testInjectValuesThrowsException() throws Exception {
-        //GIVEN
-        InvalidBeanException expectedException = new InvalidBeanException("Dummy exception");
-        TransformerImpl underTestMock = spy(TransformerImpl.class);
-        ClassUtils classUtils = mock(ClassUtils.class);
-        Constructor<MutableToFooSimple> constructor = classUtils.getAllArgsConstructor(MutableToFooSimple.class);
-        when(classUtils.getInstance(constructor)).thenThrow(InvalidBeanException.class);
-        when(classUtils.getConstructorParameters(constructor)).thenReturn(new Parameter[] {});
-        when(classUtils.areParameterNamesAvailable(constructor)).thenReturn(true);
-        doReturn(expectedException).when(underTestMock).handleInjectionException(any(), any(), any(), any(), any(), anyBoolean(), any());
-        setField(underTestMock, CLASS_UTILS_FIELD_NAME, classUtils);
-        Method injectValuesMethod =
-            TransformerImpl.class.getDeclaredMethod(INJECT_VALUES_METHOD_NAME, Object.class, Class.class, Constructor.class, String.class, boolean.class);
-        injectValuesMethod.setAccessible(true);
-        //WHEN
-        Object actual = injectValuesMethod.invoke(underTestMock, fromFooSimple, MutableToFooSimple.class, constructor, null, true);
-        // THEN
-        assertNotNull(actual);
-        assertSame(expectedException, actual);
     }
 
     /**
