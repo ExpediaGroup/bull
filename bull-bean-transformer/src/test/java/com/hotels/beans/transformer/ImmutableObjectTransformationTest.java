@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.doReturn;
@@ -520,26 +521,23 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     @SuppressWarnings("unchecked")
     public void testInjectValuesThrowsException() throws Exception {
         //GIVEN
+        InvalidBeanException expectedException = new InvalidBeanException("Dummy exception");
         TransformerImpl underTestMock = spy(TransformerImpl.class);
         ClassUtils classUtils = mock(ClassUtils.class);
         Constructor<MutableToFooSimple> constructor = classUtils.getAllArgsConstructor(MutableToFooSimple.class);
         when(classUtils.getInstance(constructor)).thenThrow(InvalidBeanException.class);
         when(classUtils.getConstructorParameters(constructor)).thenReturn(new Parameter[] {});
         when(classUtils.areParameterNamesAvailable(constructor)).thenReturn(true);
-        doReturn(new InvalidBeanException("dummy exception")).when(underTestMock).handleInjectionException(any(), any(), any(), any(), any(), anyBoolean(), any());
+        doReturn(expectedException).when(underTestMock).handleInjectionException(any(), any(), any(), any(), any(), anyBoolean(), any());
         setField(underTestMock, CLASS_UTILS_FIELD_NAME, classUtils);
         Method injectValuesMethod =
-                TransformerImpl.class.getDeclaredMethod(INJECT_VALUES_METHOD_NAME, Object.class, Class.class, Constructor.class, String.class, boolean.class);
+            TransformerImpl.class.getDeclaredMethod(INJECT_VALUES_METHOD_NAME, Object.class, Class.class, Constructor.class, String.class, boolean.class);
         injectValuesMethod.setAccessible(true);
-
         //WHEN
         Object actual = injectValuesMethod.invoke(underTestMock, fromFooSimple, MutableToFooSimple.class, constructor, null, true);
-
         // THEN
         assertNotNull(actual);
-        assertTrue(actual instanceof InvalidBeanException);
-        InvalidBeanException actualException = (InvalidBeanException) actual;
-        assertEquals(actualException.getMessage(), "dummy exception");
+        assertSame(expectedException, actual);
     }
 
     /**
