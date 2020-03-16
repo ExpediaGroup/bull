@@ -102,7 +102,8 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @return a copy of the source object into the destination object
      * @throws InvalidBeanException {@link InvalidBeanException} if the target object is not compliant with the requirements
      */
-    private <T, K> K injectValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb, final boolean forceConstructorInjection) {
+    protected <T, K> K injectValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor,
+                                    final String breadcrumb, final boolean forceConstructorInjection) {
         final Object[] constructorArgs;
         if (forceConstructorInjection || canBeInjectedByConstructorParams(constructor)) {
             constructorArgs = getConstructorArgsValues(sourceObj, targetClass, constructor, breadcrumb);
