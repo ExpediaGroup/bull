@@ -819,9 +819,11 @@ The application's logo has been designed by: Rob Light.
 
 All the instructions for releasing a new version are available at: [RELEASES.md](RELEASE.md)
 
-## Badge your project [![Bull enabled](https://img.shields.io/badge/bull-enabled-red)](https://github.com/HotelsDotCom/bull)
+## Badge your project
 
-Add the following snippet in your Markdown file.
+[![Bull enabled](https://img.shields.io/badge/bull-enabled-red)](https://github.com/HotelsDotCom/bull)
+
+Add the following snippet in your Markdown file:
 
 ```
 [![Bull enabled](https://img.shields.io/badge/bull-enabled-red)](https://github.com/HotelsDotCom/bull)
