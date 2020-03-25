@@ -822,12 +822,12 @@ All the instructions for releasing a new version are available at: [RELEASES.md]
 
 ## Badge your project
 
-![Bull enabled](https://img.shields.io/badge/bull-enabled-critical)
+![Bull enabled](https://img.shields.io/badge/bull-enabled-red)
 
 Add the following row in your Markdown file.
 
 ```
-![Bull enabled](https://img.shields.io/badge/bull-enabled-critical)
+![Bull enabled](https://img.shields.io/badge/bull-enabled-red)
 ```
 
 
