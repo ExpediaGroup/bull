@@ -13,6 +13,7 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 [![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bull-bean-transformer.svg)](http://www.javadoc.io/doc/com.hotels.beans/bull-bean-transformer)
 [![Build Status](https://travis-ci.org/HotelsDotCom/bull.svg?branch=master)](https://travis-ci.org/HotelsDotCom/bull)
 [![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk)
+[![Documentation](https://img.shields.io/badge/Documentation-blue.svg)](https://go/paved-road)
 
 [![GitHub site](https://img.shields.io/badge/GitHub-site-blue.svg)](https://hotelsdotcom.github.io/bull/)
 [![Coverage Status](https://coveralls.io/repos/github/HotelsDotCom/bull/badge.svg?branch=master)](https://coveralls.io/github/HotelsDotCom/bull?branch=master)
@@ -818,6 +819,17 @@ The application's logo has been designed by: Rob Light.
 ## Release
 
 All the instructions for releasing a new version are available at: [RELEASES.md](RELEASE.md)
+
+## Badge your project
+
+![Bull enabled](https://img.shields.io/badge/bull-enabled-critical)
+
+Add the following row in your Markdown file.
+
+```
+![Bull enabled](https://img.shields.io/badge/bull-enabled-critical)
+```
+
 
 ## Legal
 
