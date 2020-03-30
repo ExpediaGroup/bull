@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 * Updated `mockito-core` version to `3.3.3` (was `3.2.4`).
 * Updated `spring-boot-starter-test` version to `2.2.6.RELEASE` (was `2.2.4.RELEASE`).
 * Updated `maven-site-plugin` version to `3.9.0` (was `3.8.2`).
+* Updated `commons-lang3` version to `3.10` (was `3.9`).
 
 ### [1.6.5] 2020.01.21
 #### Changed
