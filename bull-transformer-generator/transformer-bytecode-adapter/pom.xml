@@ -14,6 +14,22 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.hotels.beans</groupId>
+            <artifactId>transformer-generator-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hotels.beans</groupId>
+            <artifactId>transformer-generator-core</artifactId>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>net.openhft</groupId>
+            <artifactId>compiler</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

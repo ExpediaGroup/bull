@@ -15,6 +15,7 @@
 
     <properties>
         <javapoet.version>1.11.1</javapoet.version>
+        <compiler.version>2.3.5</compiler.version>
     </properties>
 
     <modules>
@@ -32,9 +33,27 @@
                 <version>${project.parent.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.hotels.beans</groupId>
+                <artifactId>transformer-generator-core</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.squareup</groupId>
                 <artifactId>javapoet</artifactId>
                 <version>${javapoet.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.openhft</groupId>
+                <artifactId>compiler</artifactId>
+                <version>${compiler.version}</version>
+            </dependency>
+            <!--test dependencies-->
+            <dependency>
+                <groupId>com.hotels.beans</groupId>
+                <artifactId>transformer-generator-core</artifactId>
+                <version>${project.parent.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
