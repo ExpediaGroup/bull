@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
 * Updated `maven-site-plugin` version to `3.9.0` (was `3.8.2`).
 * Updated `commons-lang3` version to `3.10` (was `3.9`).
 
+Integrated snyk
+
 ### [1.6.5] 2020.01.21
 #### Changed
 * Updated `testng` version to `7.1.0` (was `7.0.0`).
