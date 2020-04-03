@@ -9,8 +9,8 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 
 ## Start using
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer/badge.svg?subject=maven-central)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer)
-[![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bull-bean-transformer.svg)](http://www.javadoc.io/doc/com.hotels.beans/bull-bean-transformer)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer/badge.svg?subject=maven-central&color=blue)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer)
+[![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bull-bean-transformer.svg?color=blue)](http://www.javadoc.io/doc/com.hotels.beans/bull-bean-transformer)
 [![Build Status](https://travis-ci.org/HotelsDotCom/bull.svg?branch=master)](https://travis-ci.org/HotelsDotCom/bull)
 [![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk)
 
