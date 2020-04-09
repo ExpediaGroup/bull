@@ -16,6 +16,7 @@
 
 package com.hotels.transformer.utils;
 
+import static java.lang.String.format;
 import static java.lang.invoke.LambdaMetafactory.metafactory;
 import static java.lang.invoke.MethodHandles.lookup;
 import static java.lang.invoke.MethodHandles.privateLookupIn;
@@ -61,6 +62,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -70,6 +72,7 @@ import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.error.InstanceCreationException;
 import com.hotels.transformer.error.InvalidBeanException;
+import com.hotels.transformer.error.MissingMethodException;
 
 /**
  * Reflection utils for Class objects.
@@ -95,6 +98,11 @@ public final class ClassUtils {
      * Method Handles lookup.
      */
     private static final MethodHandles.Lookup METHOD_HANDLES_LOOKUP = lookup();
+
+    /**
+     * Default method name used by a Builder for creating an object.
+     */
+    private static final String BUILD_METHOD_NAME = "build";
 
     /**
      * Reflection utils instance {@link ReflectionUtils}.
@@ -461,6 +469,44 @@ public final class ClassUtils {
             Class[] declaredClasses = clazz.getDeclaredClasses();
             CACHE_MANAGER.cacheObject(cacheKey, declaredClasses);
             return declaredClasses;
+        });
+    }
+
+    /**
+     * Returns the builder class.
+     * @param targetClass the class where the builder should be searched
+     * @return the Builder class if available.
+     */
+    @SuppressWarnings("unchecked")
+    public Optional<Class<?>> getBuilderClass(final Class targetClass) {
+        String cacheKey = "BuilderClass-" + targetClass.getName();
+        return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
+            Optional<Class> res = stream(getDeclaredClasses(targetClass))
+                    .filter(nestedClass ->
+                            stream(getDeclaredMethods(nestedClass))
+                                    .anyMatch(method -> method.getName().equals(BUILD_METHOD_NAME) && method.getReturnType().equals(targetClass)))
+                    .findAny();
+            CACHE_MANAGER.cacheObject(cacheKey, res);
+            return res;
+        });
+    }
+
+    /**
+     *  Get build method inside the class.
+     * @param builderClass Class  whit a build method (see Builder Pattern)
+     * @return Build method if present
+     */
+    public Method getBuildMethod(final Class<?> builderClass) {
+        final String cacheKey = "BuildMethod-" + builderClass.getName();
+        return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -> {
+            try {
+                Method method = builderClass.getMethod(BUILD_METHOD_NAME);
+                method.setAccessible(true);
+                CACHE_MANAGER.cacheObject(cacheKey, method);
+                return method;
+            } catch (NoSuchMethodException e) {
+                throw new MissingMethodException(format("Error while getting method %s in class %s.", BUILD_METHOD_NAME, builderClass.getName()) + e.getMessage());
+            }
         });
     }
 
