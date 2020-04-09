@@ -57,22 +57,27 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
-        final ClassType classType = classUtils.getClassType(targetClass);
+        final Object transformedClass;
+        final Optional<Class<?>> builderClass = classUtils.getBuilderClass(targetClass);
+        final Class<?> realTargetClass = builderClass.orElse(targetClass);
+        final ClassType classType = classUtils.getClassType(realTargetClass);
         if (classType.is(MUTABLE)) {
             try {
-                k = classUtils.getNoArgsConstructor(targetClass).get();
-                injectAllFields(sourceObj, k, breadcrumb);
+                transformedClass = classUtils.getNoArgsConstructor(realTargetClass).get();
+                injectAllFields(sourceObj, transformedClass, breadcrumb);
             } catch (Exception e) {
                 throw new InvalidBeanException(e.getMessage(), e);
             }
         } else {
-            k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass), breadcrumb, false);
+            transformedClass = injectValues(sourceObj, realTargetClass, classUtils.getAllArgsConstructor(realTargetClass), breadcrumb, false);
             if (classType.is(MIXED)) {
-                injectNotFinalFields(sourceObj, k, breadcrumb);
+                injectNotFinalFields(sourceObj, transformedClass, breadcrumb);
             }
         }
+        k = builderClass.map(bc -> (K) reflectionUtils.invokeMethod(classUtils.getBuildMethod(bc), transformedClass)).orElseGet(() -> (K) transformedClass);
         if (settings.isValidationEnabled()) {
             validator.validate(k);
         }
