@@ -19,17 +19,15 @@ package com.hotels.transformer.constant;
 import static java.lang.reflect.Modifier.isFinal;
 import static java.lang.reflect.Modifier.isStatic;
 
-import static lombok.AccessLevel.PRIVATE;
-
 import java.lang.reflect.Field;
 import java.util.function.Predicate;
 
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 /**
  * Filters conditions.
  */
-@NoArgsConstructor(access = PRIVATE)
+@UtilityClass
 public final class Filters {
     /**
      * Returns only the final not static field.
