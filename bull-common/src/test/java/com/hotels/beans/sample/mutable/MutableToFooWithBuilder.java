@@ -34,7 +34,16 @@ public final class MutableToFooWithBuilder {
     private List<MutableToSubFoo> nestedObjectList;
     private MutableToSubFoo nestedObject;
 
-    private MutableToFooWithBuilder() {
+    /**
+     * Private constructor.
+     * @param builder the builder class
+     */
+    private MutableToFooWithBuilder(final Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.list = builder.list;
+        this.nestedObjectList = builder.nestedObjectList;
+        this.nestedObject = builder.nestedObject;
     }
 
     /**
@@ -58,13 +67,7 @@ public final class MutableToFooWithBuilder {
         }
 
         public MutableToFooWithBuilder build() {
-            MutableToFooWithBuilder mutableToFooWithBuilder = new MutableToFooWithBuilder();
-            mutableToFooWithBuilder.id = this.id;
-            mutableToFooWithBuilder.name = this.name;
-            mutableToFooWithBuilder.list = this.list;
-            mutableToFooWithBuilder.nestedObjectList = this.nestedObjectList;
-            mutableToFooWithBuilder.nestedObject = this.nestedObject;
-            return mutableToFooWithBuilder;
+           return new MutableToFooWithBuilder(this);
         }
     }
 }

@@ -19,9 +19,13 @@ package com.hotels.transformer.constant;
 import static java.lang.reflect.Modifier.isFinal;
 import static java.lang.reflect.Modifier.isStatic;
 
+import static com.hotels.transformer.utils.ClassUtils.BUILD_METHOD_NAME;
+
 import static lombok.AccessLevel.PRIVATE;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import lombok.NoArgsConstructor;
@@ -46,6 +50,12 @@ public final class Filters {
         int modifiers = field.getModifiers();
         return !isFinal(modifiers) && !isStatic(modifiers);
     };
+
+    /**
+     * Returns true if the method is the Builder "build" one and it returns the given class.
+     */
+    public static final BiPredicate<Method, Class> IS_BUILDER_CLASS =
+            (method, targetClass) -> method.getName().equals(BUILD_METHOD_NAME) && method.getReturnType().equals(targetClass);
 
     /**
      * Returns only the final field.
