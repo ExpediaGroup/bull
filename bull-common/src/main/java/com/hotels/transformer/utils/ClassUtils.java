@@ -16,7 +16,6 @@
 
 package com.hotels.transformer.utils;
 
-import static java.lang.String.format;
 import static java.lang.invoke.LambdaMetafactory.metafactory;
 import static java.lang.invoke.MethodHandles.lookup;
 import static java.lang.invoke.MethodHandles.privateLookupIn;
@@ -40,6 +39,7 @@ import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.transformer.constant.ClassType.IMMUTABLE;
 import static com.hotels.transformer.constant.ClassType.MIXED;
 import static com.hotels.transformer.constant.ClassType.MUTABLE;
+import static com.hotels.transformer.constant.Filters.IS_BUILDER_CLASS;
 import static com.hotels.transformer.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
 import static com.hotels.transformer.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
 import static com.hotels.transformer.constant.Filters.IS_NOT_FINAL_FIELD;
@@ -79,6 +79,11 @@ import com.hotels.transformer.error.MissingMethodException;
  */
 public final class ClassUtils {
     /**
+     * Default method name used by a Builder for creating an object.
+     */
+    public static final String BUILD_METHOD_NAME = "build";
+
+    /**
      * Class nullability error message constant.
      */
     private static final String CLAZZ_CANNOT_BE_NULL = "clazz cannot be null!";
@@ -98,11 +103,6 @@ public final class ClassUtils {
      * Method Handles lookup.
      */
     private static final MethodHandles.Lookup METHOD_HANDLES_LOOKUP = lookup();
-
-    /**
-     * Default method name used by a Builder for creating an object.
-     */
-    private static final String BUILD_METHOD_NAME = "build";
 
     /**
      * Reflection utils instance {@link ReflectionUtils}.
@@ -484,7 +484,7 @@ public final class ClassUtils {
             Optional<Class> res = stream(getDeclaredClasses(targetClass))
                     .filter(nestedClass ->
                             stream(getDeclaredMethods(nestedClass))
-                                    .anyMatch(method -> method.getName().equals(BUILD_METHOD_NAME) && method.getReturnType().equals(targetClass)))
+                                    .anyMatch(method -> IS_BUILDER_CLASS.test(method, targetClass)))
                     .findAny();
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
@@ -492,20 +492,20 @@ public final class ClassUtils {
     }
 
     /**
-     *  Get build method inside the class.
-     * @param builderClass Class  whit a build method (see Builder Pattern)
-     * @return Build method if present
+     * Get build method inside the Builder class.
+     * @param builderClass the builder class (see Builder Pattern)
+     * @return Builder build method if present
      */
     public Method getBuildMethod(final Class<?> builderClass) {
         final String cacheKey = "BuildMethod-" + builderClass.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
-                Method method = builderClass.getMethod(BUILD_METHOD_NAME);
+                Method method = builderClass.getDeclaredMethod(BUILD_METHOD_NAME);
                 method.setAccessible(true);
                 CACHE_MANAGER.cacheObject(cacheKey, method);
                 return method;
             } catch (NoSuchMethodException e) {
-                throw new MissingMethodException(format("Error while getting method %s in class %s.", BUILD_METHOD_NAME, builderClass.getName()) + e.getMessage());
+                throw new MissingMethodException("Error while getting Builder method: " + BUILD_METHOD_NAME + " for class: " + builderClass.getName() + ".");
             }
         });
     }
