@@ -71,6 +71,7 @@ import com.hotels.beans.sample.mixed.MixedToFooWithBuilder;
 import com.hotels.beans.sample.mutable.MutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooSubClass;
 import com.hotels.beans.sample.mutable.MutableToFooWithBuilder;
+import com.hotels.beans.sample.mutable.MutableToFooWithWrongBuilder;
 import com.hotels.transformer.annotation.ConstructorArg;
 import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.error.InstanceCreationException;
@@ -1004,13 +1005,29 @@ public class ClassUtilsTest {
 
     /**
      * Test that the a {@link MissingMethodException} is raised if the Builder class has no {@code build()} method.
+     * @param testCaseDescription the test case description
+     * @param containerTestClass the test class containing the Builder
+     * @param builderClass the Builder nested class
      */
-    @Test(expectedExceptions = MissingMethodException.class)
-    public void testGetBuildMethodThrowsExceptionIfMethodIsMissing() {
+    @Test(dataProvider = "dataGetBuilderMethodExceptionTesting", expectedExceptions = MissingMethodException.class)
+    public void testGetBuildMethodThrowsExceptionIfMethodIsMissing(final String testCaseDescription, final Class<?> containerTestClass, final Class<?> builderClass) {
         // GIVEN
 
         // WHEN
-        underTest.getBuildMethod(ImmutableToFoo.class, ImmutableToFoo.class);
+        underTest.getBuildMethod(containerTestClass, builderClass);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getBuildMethod}.
+     * @return parameters to be used for testing the the method {@code getBuildMethod}.
+     */
+    @DataProvider
+    private Object[][] dataGetBuilderMethodExceptionTesting() {
+        return new Object[][] {
+                {"Tests that the method raises a MissingMethodException if the class has no builder build method", ImmutableToFoo.class, ImmutableToFoo.class},
+                {"Tests that the method raises a MissingMethodException if the class has a builder build method that does not return the parent class",
+                    MutableToFooWithWrongBuilder.class, MutableToFooWithWrongBuilder.Builder.class}
+        };
     }
 
     /**
@@ -1054,7 +1071,8 @@ public class ClassUtilsTest {
     private Object[][] dataGetBuilderClassTesting() {
         return new Object[][] {
                 {"Tests that the method returns the builder class", MutableToFooWithBuilder.class, Optional.of(MutableToFooWithBuilder.Builder.class)},
-                {"Tests that the method returns an empty optional if the class has no builder", ImmutableToFoo.class, Optional.empty()}
+                {"Tests that the method returns an empty optional if the class has no builder", ImmutableToFoo.class, Optional.empty()},
+                {"Tests that the method returns an empty optional if the class has a wrong builder", MutableToFooWithWrongBuilder.class, Optional.empty()}
         };
     }
 
