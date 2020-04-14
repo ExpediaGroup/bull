@@ -27,7 +27,7 @@ under the License.
     <item>
       <title>File: 80,
              Errors: 0,
-             Warnings: 1989,
+             Warnings: 2027,
              Infos: 0
       </title>
             <link>https://github.com/HotelsDotCom/bull/checkstyle.html</link>
@@ -220,7 +220,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  248
+                  254
                 </td>
                 <td>
                   0
@@ -822,7 +822,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  330
+                  362
                 </td>
                 <td>
                   0
