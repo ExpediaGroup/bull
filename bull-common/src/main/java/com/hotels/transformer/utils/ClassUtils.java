@@ -39,7 +39,6 @@ import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
 import static com.hotels.transformer.constant.ClassType.IMMUTABLE;
 import static com.hotels.transformer.constant.ClassType.MIXED;
 import static com.hotels.transformer.constant.ClassType.MUTABLE;
-import static com.hotels.transformer.constant.Filters.IS_BUILDER_CLASS;
 import static com.hotels.transformer.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
 import static com.hotels.transformer.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
 import static com.hotels.transformer.constant.Filters.IS_NOT_FINAL_FIELD;
@@ -482,9 +481,15 @@ public final class ClassUtils {
         String cacheKey = "BuilderClass-" + targetClass.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
             Optional<Class> res = stream(getDeclaredClasses(targetClass))
-                    .filter(nestedClass ->
-                            stream(getDeclaredMethods(nestedClass))
-                                    .anyMatch(method -> IS_BUILDER_CLASS.test(method, targetClass)))
+                    .filter(nestedClass -> {
+                        boolean hasBuildMethod = true;
+                        try {
+                            getBuildMethod(targetClass, nestedClass);
+                        } catch (MissingMethodException e) {
+                            hasBuildMethod = false;
+                        }
+                        return hasBuildMethod;
+                    })
                     .findAny();
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
@@ -493,19 +498,23 @@ public final class ClassUtils {
 
     /**
      * Get build method inside the Builder class.
+     * @param parentClass the class containing the builder
      * @param builderClass the builder class (see Builder Pattern)
      * @return Builder build method if present
      */
-    public Method getBuildMethod(final Class<?> builderClass) {
+    public Method getBuildMethod(final Class<?> parentClass, final Class<?> builderClass) {
         final String cacheKey = "BuildMethod-" + builderClass.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
                 Method method = builderClass.getDeclaredMethod(BUILD_METHOD_NAME);
+                if (!method.getReturnType().equals(parentClass)) {
+                    throw new MissingMethodException("Invalid " + BUILD_METHOD_NAME + " method definition. It must returns a: " + parentClass.getCanonicalName());
+                }
                 method.setAccessible(true);
                 CACHE_MANAGER.cacheObject(cacheKey, method);
                 return method;
             } catch (NoSuchMethodException e) {
-                throw new MissingMethodException("Error while getting Builder method: " + BUILD_METHOD_NAME + " for class: " + builderClass.getName() + ".");
+                throw new MissingMethodException("No Builder " + BUILD_METHOD_NAME + " method defined for class: " + builderClass.getName() + ".");
             }
         });
     }

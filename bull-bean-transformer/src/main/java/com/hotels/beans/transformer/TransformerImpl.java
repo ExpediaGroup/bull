@@ -61,8 +61,8 @@ public class TransformerImpl extends AbstractBeanTransformer {
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
         final Object transformedClass;
-        final Optional<Class<?>> builderClass = classUtils.getBuilderClass(targetClass);
-        final Class<?> realTargetClass = builderClass.orElse(targetClass);
+        final Optional<Class<?>> builderClassOpt = classUtils.getBuilderClass(targetClass);
+        final Class<?> realTargetClass = builderClassOpt.orElse(targetClass);
         final ClassType classType = classUtils.getClassType(realTargetClass);
         if (classType.is(MUTABLE)) {
             try {
@@ -77,7 +77,8 @@ public class TransformerImpl extends AbstractBeanTransformer {
                 injectNotFinalFields(sourceObj, transformedClass, breadcrumb);
             }
         }
-        k = builderClass.map(bc -> (K) reflectionUtils.invokeMethod(classUtils.getBuildMethod(bc), transformedClass)).orElseGet(() -> (K) transformedClass);
+        k = builderClassOpt.map(builderClass ->
+                (K) reflectionUtils.invokeMethod(classUtils.getBuildMethod(targetClass, builderClass), transformedClass)).orElseGet(() -> (K) transformedClass);
         if (settings.isValidationEnabled()) {
             validator.validate(k);
         }
