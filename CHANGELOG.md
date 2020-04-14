@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.7] TBD
+#### Changed
+* Updated `hibernate-validator` version to `6.1.3.Final` (was `6.1.2.Final`).
+
 ### [1.6.6] 2020.03.16
 ### Added
 * Added `maven-spotless-plugin` for the code automatic formatting during the maven build

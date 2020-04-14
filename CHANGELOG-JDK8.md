@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.6.5-jdk8] TBD
+### [1.6.6-jdk8] TBD
+#### Changed
+* Updated `hibernate-validator` version to `6.1.3.Final` (was `6.1.2.Final`).
+
+### [1.6.5-jdk8] 2020.03.16
 ### Added
 * Added `maven-spotless-plugin` for the code automatic formatting during the maven build
 * Added `coveralls-maven-plugin` for the test coverage analysis and report during the maven build: [Coverall report](https://coveralls.io/github/HotelsDotCom/bull)
