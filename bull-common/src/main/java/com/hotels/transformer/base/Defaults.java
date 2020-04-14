@@ -27,14 +27,12 @@ import static com.hotels.transformer.utils.ClassUtils.isInt;
 import static com.hotels.transformer.utils.ClassUtils.isLong;
 import static com.hotels.transformer.utils.ClassUtils.isShort;
 
-import static lombok.AccessLevel.PRIVATE;
-
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 /**
  * Default values for primitive types.
  */
-@NoArgsConstructor(access = PRIVATE)
+@UtilityClass
 public final class Defaults {
     /**
      * Gets the default value of a primitive type.
