@@ -1010,18 +1010,18 @@ public class ClassUtilsTest {
         // GIVEN
 
         // WHEN
-        underTest.getBuildMethod(ImmutableToFoo.class);
+        underTest.getBuildMethod(ImmutableToFoo.class, ImmutableToFoo.class);
     }
 
     /**
-     * Test that the {@link ClassUtils#getBuildMethod(Class) getBuildMethod} returns the Builder build method.
+     * Test that the {@link ClassUtils#getBuildMethod(Class, Class) getBuildMethod} returns the Builder build method.
      */
     @Test
     public void testGetBuildMethodReturnsTheBuildMethod() {
         // GIVEN
 
         // WHEN
-        Method actual = underTest.getBuildMethod(MutableToFooWithBuilder.Builder.class);
+        Method actual = underTest.getBuildMethod(MutableToFooWithBuilder.class, MutableToFooWithBuilder.Builder.class);
 
         // THEN
         assertNotNull(actual);
@@ -1058,12 +1058,24 @@ public class ClassUtilsTest {
         };
     }
 
+    /**
+     * Returns the class field with the given name.
+     * @param objectInstance the class containing the field
+     * @param fieldName the name of the field to retrieve
+     * @param <T> the object instance type
+     * @return the class field with the given name
+     * @throws NoSuchFieldException if the field is missing
+     */
     private <T> Field getField(final T objectInstance, final String fieldName) throws NoSuchFieldException {
         Field field = objectInstance.getClass().getDeclaredField(fieldName);
         field.setAccessible(true);
         return field;
     }
 
+    /**
+     * Creates a {@link FromFoo}.
+     * @return a {@link FromFoo} instance
+     */
     private FromFoo createFromFoo() {
         return new FromFoo(NAME, null, null, LINKED_LIST, null);
     }
