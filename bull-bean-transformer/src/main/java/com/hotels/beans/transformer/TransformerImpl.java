@@ -57,32 +57,33 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("unchecked")
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
-        final Object transformedBean;
-        final Optional<Class<?>> nestedBuilderClass = classUtils.getBuilderClass(targetClass);
-        final Class<?> realTargetClass = nestedBuilderClass.orElse(targetClass);
-        final ClassType classType = classUtils.getClassType(realTargetClass);
-        if (classType.is(MUTABLE)) {
-            try {
-                transformedBean = classUtils.getInstance(classUtils.getNoArgsConstructor(realTargetClass));
-                injectAllFields(sourceObj, transformedBean, breadcrumb);
-            } catch (Exception e) {
-                throw new InvalidBeanException(e.getMessage(), e);
-            }
+        final Class<?> builderClass = classUtils.getBuilderClass(targetClass);
+        if (nonNull(builderClass)) {
+            k = injectThroughBuilder(sourceObj, targetClass, builderClass, breadcrumb);
         } else {
-            transformedBean = injectValues(sourceObj, realTargetClass, classUtils.getAllArgsConstructor(realTargetClass), breadcrumb, false);
-            if (classType.is(MIXED)) {
-                injectNotFinalFields(sourceObj, transformedBean, breadcrumb);
-            }
+            k = injectValues(sourceObj, targetClass, breadcrumb);
         }
-        k = nestedBuilderClass.map(builderClass ->
-                (K) reflectionUtils.invokeMethod(classUtils.getBuildMethod(targetClass, builderClass), transformedBean)).orElseGet(() -> (K) transformedBean);
         if (settings.isValidationEnabled()) {
             validator.validate(k);
         }
         return k;
+    }
+
+    /**
+     * Inject all properties value from an object to a new one using the class builder.
+     * @param sourceObj the source object
+     * @param targetClass the destination object class
+     * @param builderClass the builder class inside the Bean
+     * @param breadcrumb the full path of the current field starting from his ancestor
+     * @param <T> the Source object type
+     * @param <K> the target object type
+     * @return a copy of the source object into the destination object
+     */
+    @SuppressWarnings("unchecked")
+    private <T, K> K injectThroughBuilder(final T sourceObj, final Class<? extends K> targetClass, final Class<?> builderClass, final String breadcrumb) {
+        return (K) reflectionUtils.invokeMethod(classUtils.getBuildMethod(targetClass, builderClass), injectValues(sourceObj, builderClass, breadcrumb));
     }
 
     /**
@@ -94,6 +95,34 @@ public class TransformerImpl extends AbstractBeanTransformer {
         if (settings.isValidationEnabled()) {
             validator.validate(targetObject);
         }
+    }
+
+    /**
+     * Inject all properties value from an object to a new one.
+     * @param sourceObj the source object
+     * @param targetClass the destination object class
+     * @param breadcrumb the full path of the current field starting from his ancestor
+     * @param <T> the Source object type
+     * @param <K> the target object type
+     * @return a copy of the source object into the destination object
+     */
+    private <T, K> K injectValues(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
+        final K k;
+        final ClassType classType = classUtils.getClassType(targetClass);
+        if (classType.is(MUTABLE)) {
+            try {
+                k = classUtils.getInstance(classUtils.getNoArgsConstructor(targetClass));
+                injectAllFields(sourceObj, k, breadcrumb);
+            } catch (Exception e) {
+                throw new InvalidBeanException(e.getMessage(), e);
+            }
+        } else {
+            k = injectValues(sourceObj, targetClass, classUtils.getAllArgsConstructor(targetClass), breadcrumb, false);
+            if (classType.is(MIXED)) {
+                injectNotFinalFields(sourceObj, k, breadcrumb);
+            }
+        }
+        return k;
     }
 
     /**
