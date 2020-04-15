@@ -60,25 +60,25 @@ public class TransformerImpl extends AbstractBeanTransformer {
     @SuppressWarnings("unchecked")
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
-        final Object transformedClass;
-        final Optional<Class<?>> builderClassOpt = classUtils.getBuilderClass(targetClass);
-        final Class<?> realTargetClass = builderClassOpt.orElse(targetClass);
+        final Object transformedBean;
+        final Optional<Class<?>> nestedBuilderClass = classUtils.getBuilderClass(targetClass);
+        final Class<?> realTargetClass = nestedBuilderClass.orElse(targetClass);
         final ClassType classType = classUtils.getClassType(realTargetClass);
         if (classType.is(MUTABLE)) {
             try {
-                transformedClass = classUtils.getInstance(classUtils.getNoArgsConstructor(realTargetClass));
-                injectAllFields(sourceObj, transformedClass, breadcrumb);
+                transformedBean = classUtils.getInstance(classUtils.getNoArgsConstructor(realTargetClass));
+                injectAllFields(sourceObj, transformedBean, breadcrumb);
             } catch (Exception e) {
                 throw new InvalidBeanException(e.getMessage(), e);
             }
         } else {
-            transformedClass = injectValues(sourceObj, realTargetClass, classUtils.getAllArgsConstructor(realTargetClass), breadcrumb, false);
+            transformedBean = injectValues(sourceObj, realTargetClass, classUtils.getAllArgsConstructor(realTargetClass), breadcrumb, false);
             if (classType.is(MIXED)) {
-                injectNotFinalFields(sourceObj, transformedClass, breadcrumb);
+                injectNotFinalFields(sourceObj, transformedBean, breadcrumb);
             }
         }
-        k = builderClassOpt.map(builderClass ->
-                (K) reflectionUtils.invokeMethod(classUtils.getBuildMethod(targetClass, builderClass), transformedClass)).orElseGet(() -> (K) transformedClass);
+        k = nestedBuilderClass.map(builderClass ->
+                (K) reflectionUtils.invokeMethod(classUtils.getBuildMethod(targetClass, builderClass), transformedBean)).orElseGet(() -> (K) transformedBean);
         if (settings.isValidationEnabled()) {
             validator.validate(k);
         }
