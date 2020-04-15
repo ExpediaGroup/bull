@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -64,11 +65,17 @@ import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.error.InstanceCreationException;
 import com.hotels.transformer.error.InvalidBeanException;
+import com.hotels.transformer.error.MissingMethodException;
 
 /**
  * Reflection utils for Class objects.
  */
 public final class ClassUtils {
+    /**
+     * Default method name used by a Builder for creating an object.
+     */
+    public static final String BUILD_METHOD_NAME = "build";
+
     /**
      * Class nullability error message constant.
      */
@@ -454,6 +461,54 @@ public final class ClassUtils {
     }
 
     /**
+     * Returns the builder class.
+     * @param targetClass the class where the builder should be searched
+     * @return the Builder class if available.
+     */
+    @SuppressWarnings("unchecked")
+    public Optional<Class<?>> getBuilderClass(final Class targetClass) {
+        String cacheKey = "BuilderClass-" + targetClass.getName();
+        return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
+            Optional<Class> res = stream(getDeclaredClasses(targetClass))
+                    .filter(nestedClass -> {
+                        boolean hasBuildMethod = true;
+                        try {
+                            getBuildMethod(targetClass, nestedClass);
+                        } catch (MissingMethodException e) {
+                            hasBuildMethod = false;
+                        }
+                        return hasBuildMethod;
+                    })
+                    .findAny();
+            CACHE_MANAGER.cacheObject(cacheKey, res);
+            return res;
+        });
+    }
+
+    /**
+     * Get build method inside the Builder class.
+     * @param parentClass the class containing the builder
+     * @param builderClass the builder class (see Builder Pattern)
+     * @return Builder build method if present
+     */
+    public Method getBuildMethod(final Class<?> parentClass, final Class<?> builderClass) {
+        final String cacheKey = "BuildMethod-" + builderClass.getName();
+        return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -> {
+            try {
+                Method method = builderClass.getDeclaredMethod(BUILD_METHOD_NAME);
+                if (!method.getReturnType().equals(parentClass)) {
+                    throw new MissingMethodException("Invalid " + BUILD_METHOD_NAME + " method definition. It must returns a: " + parentClass.getCanonicalName());
+                }
+                method.setAccessible(true);
+                CACHE_MANAGER.cacheObject(cacheKey, method);
+                return method;
+            } catch (NoSuchMethodException e) {
+                throw new MissingMethodException("No Builder " + BUILD_METHOD_NAME + " method defined for class: " + builderClass.getName() + ".");
+            }
+        });
+    }
+
+    /**
      * Creates an instance of the given class invoking the given constructor.
      * @param constructor the constructor to invoke.
      * @param constructorArgs the constructor args.
@@ -497,6 +552,7 @@ public final class ClassUtils {
      * @param <K> the object type
      * @return the all args constructor
      */
+    @SuppressWarnings("unchecked")
     public <K> Constructor<K> getAllArgsConstructor(final Class<K> clazz) {
         final String cacheKey = "AllArgsConstructor-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
