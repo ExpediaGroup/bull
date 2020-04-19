@@ -59,9 +59,9 @@ public class TransformerImpl extends AbstractBeanTransformer {
     @Override
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
-        final Class<?> builderClass = classUtils.getBuilderClass(targetClass);
-        if (nonNull(builderClass)) {
-            k = injectThroughBuilder(sourceObj, targetClass, builderClass, breadcrumb);
+        final Optional<Class<?>> builderClass = classUtils.getBuilderClass(targetClass);
+        if (builderClass.isPresent()) {
+            k = injectThroughBuilder(sourceObj, targetClass, builderClass.get(), breadcrumb);
         } else {
             k = injectValues(sourceObj, targetClass, breadcrumb);
         }
