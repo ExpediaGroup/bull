@@ -118,10 +118,11 @@ mvnw.cmd clean install -P relaxed
 
 # Feature samples
 
-* [Bean Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
+* [Bean Transformation](https://github.com/HotelsDotCom/bull#bean-transformation-samples)
 * [Bean Validation](https://github.com/HotelsDotCom/bull#validation-samples)
 * [Primitive Type conversion](https://github.com/HotelsDotCom/bull#primitive-type-object-converter)
 * [Map Transformation](https://hotelsdotcom.github.io/bull/transformer/map/samples.html)
+* [Supported Builder Pattern](https://hotelsdotcom.github.io/bull/transformer/bean/builder.html)
 
 ## Bean transformation samples
 
