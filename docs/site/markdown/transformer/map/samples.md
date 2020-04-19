@@ -2,9 +2,9 @@
     <title>Samples</title>
 </head>
 
-# `Map` Transformation samples
+# Map Transformation samples
 
-### `Map` clone:
+### Map clone:
 
 Given a simple `Map` defined as follow:
 
@@ -19,7 +19,7 @@ it can be cloned using the following command:
 Map<String, List<String>> newMap = new MapUtils().getTransformer().transform(map);
 ~~~
 
-### Map a `Key` value into a different `Key` in the destination `Map`:
+### Map a Key value into a different Key in the destination Map:
 
 Given a simple `Map` defined as follow:
 
@@ -51,7 +51,7 @@ the output will be:
 Hello
 ~~~
 
-### Apply a transformation function on a `Map` key:
+### Apply a transformation function on a Map key:
 
 Given a simple `Map` defined as follow:
 
@@ -73,7 +73,7 @@ Map<String, List<String>> newMap = new MapUtils().getTransformer()
 
 Then the key: "name" in the `newMap`will be: `NAME`
 
-### Apply a transformation function on a `Map` value:
+### Apply a transformation function on a Map value:
 
 Given a simple `Map` defined as follow:
 
@@ -105,7 +105,7 @@ the output will be:
 900
 ~~~
 
-### Transform `Map` `key` or `value` object into a different object
+### Transform Map key or value object into a different object
 
 Assuming that we have a map defined as follow:
 
@@ -155,7 +155,7 @@ Map<ToBean, ToSubBean> map = new MapUtils().getTransformer()
                                            .transform(sourceMap, ToBean.class, ToSubBean.class);
 ~~~
 
-### Configure a `BeanTransformer` and use it fo the `Map` transformation
+### Configure a BeanTransformer and use it fo the Map transformation
 
 Assuming that we have two classes with different field names defined as follow:
 
