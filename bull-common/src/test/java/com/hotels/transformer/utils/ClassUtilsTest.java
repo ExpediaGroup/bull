@@ -42,6 +42,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -1051,14 +1052,15 @@ public class ClassUtilsTest {
      * @param expectedResult the expected result
      */
     @Test(dataProvider = "dataGetBuilderClassTesting")
-    public void testGetConcreteClassWorksAsExpected(final String testCaseDescription, final Class testClass, final Class<?> expectedResult) {
+    public void testGetConcreteClassWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final Optional<Class<?>> expectedResult) {
         // GIVEN
 
         // WHEN
-        Class<?> actual = underTest.getBuilderClass(testClass);
+        Optional<Class<?>> actual = underTest.getBuilderClass(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertEquals(expectedResult.isPresent(), actual.isPresent());
+        expectedResult.ifPresent(clazz -> assertEquals(clazz, actual.get()));
     }
 
     /**
@@ -1068,9 +1070,9 @@ public class ClassUtilsTest {
     @DataProvider
     private Object[][] dataGetBuilderClassTesting() {
         return new Object[][] {
-                {"Tests that the method returns the builder class", MutableToFooWithBuilder.class, MutableToFooWithBuilder.Builder.class},
-                {"Tests that the method returns an empty optional if the class has no builder", ImmutableToFoo.class, null},
-                {"Tests that the method returns an empty optional if the class has a wrong builder", MutableToFooWithWrongBuilder.class, null}
+                {"Tests that the method returns the builder class", MutableToFooWithBuilder.class, Optional.of(MutableToFooWithBuilder.Builder.class)},
+                {"Tests that the method returns an empty optional if the class has no builder", ImmutableToFoo.class, Optional.empty()},
+                {"Tests that the method returns an empty optional if the class has a wrong builder", MutableToFooWithWrongBuilder.class, Optional.empty()}
         };
     }
 
