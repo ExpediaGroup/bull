@@ -61,6 +61,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -475,10 +476,10 @@ public final class ClassUtils {
      * @param targetClass the class where the builder should be searched
      * @return the Builder class if available.
      */
-    public Class<?> getBuilderClass(final Class<?> targetClass) {
+    public Optional<Class<?>> getBuilderClass(final Class<?> targetClass) {
         String cacheKey = "BuilderClass-" + targetClass.getName();
-        return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -> {
-            Class<?> res = stream(getDeclaredClasses(targetClass))
+        return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
+            Optional<Class> res = stream(getDeclaredClasses(targetClass))
                     .filter(nestedClass -> {
                         boolean hasBuildMethod = true;
                         try {
@@ -488,7 +489,7 @@ public final class ClassUtils {
                         }
                         return hasBuildMethod;
                     })
-                    .findAny().orElse(null);
+                    .findAny();
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
