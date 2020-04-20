@@ -2,12 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.7.0] TBD
+### [1.7.0.0] 2020.03.20
 #### Added
 * Implemented transformation of JavaBeans using custom Builder pattern (see: [Issue 144](https://github.com/HotelsDotCom/bull/issues/144)).
-
 #### Changed
-* Updated `hibernate-validator` version to `6.1.3.Final` (was `6.1.2.Final`).
+* Updated `hibernate-validator` version to `6.1.4.Final` (was `6.1.2.Final`).
 
 ### [1.6.6] 2020.03.16
 ### Added
