@@ -19,6 +19,7 @@ package com.hotels.beans.transformer;
 import static java.util.Arrays.stream;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.range;
@@ -59,9 +60,9 @@ public class TransformerImpl extends AbstractBeanTransformer {
     @Override
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
-        final Class<?> builderClass = classUtils.getBuilderClass(targetClass);
-        if (nonNull(builderClass)) {
-            k = injectThroughBuilder(sourceObj, targetClass, builderClass, breadcrumb);
+        final Optional<Class<?>> builderClass = getBuilderClass(targetClass);
+        if (builderClass.isPresent()) {
+            k = injectThroughBuilder(sourceObj, targetClass, builderClass.get(), breadcrumb);
         } else {
             k = injectValues(sourceObj, targetClass, breadcrumb);
         }
@@ -69,6 +70,16 @@ public class TransformerImpl extends AbstractBeanTransformer {
             validator.validate(k);
         }
         return k;
+    }
+
+    /**
+     * Gets the Java Bean Builder class (if any).
+     * @param targetClass the destination object class
+     * @param <K> the target object type
+     * @return the Builder class
+     */
+    private <K> Optional<Class<?>> getBuilderClass(final Class<? extends K> targetClass) {
+        return !settings.isCustomBuilderTransformationEnabled() ? empty() : classUtils.getBuilderClass(targetClass);
     }
 
     /**
