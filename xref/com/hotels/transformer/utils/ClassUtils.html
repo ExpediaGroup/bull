@@ -484,97 +484,97 @@
 <a class="jxr_linenumber" name="L476" href="#L476">476</a> <em class="jxr_javadoccomment">     * @param targetClass the class where the builder should be searched</em>
 <a class="jxr_linenumber" name="L477" href="#L477">477</a> <em class="jxr_javadoccomment">     * @return the Builder class if available.</em>
 <a class="jxr_linenumber" name="L478" href="#L478">478</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L479" href="#L479">479</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
-<a class="jxr_linenumber" name="L480" href="#L480">480</a>     <strong class="jxr_keyword">public</strong> Optional&lt;Class&lt;?&gt;&gt; getBuilderClass(<strong class="jxr_keyword">final</strong> Class targetClass) {
-<a class="jxr_linenumber" name="L481" href="#L481">481</a>         String cacheKey = <span class="jxr_string">"BuilderClass-"</span> + targetClass.getName();
-<a class="jxr_linenumber" name="L482" href="#L482">482</a>         <strong class="jxr_keyword">return</strong> CACHE_MANAGER.getFromCache(cacheKey, Optional.<strong class="jxr_keyword">class</strong>).orElseGet(() -&gt; {
-<a class="jxr_linenumber" name="L483" href="#L483">483</a>             Optional&lt;Class&gt; res = stream(getDeclaredClasses(targetClass))
-<a class="jxr_linenumber" name="L484" href="#L484">484</a>                     .filter(nestedClass -&gt; {
-<a class="jxr_linenumber" name="L485" href="#L485">485</a>                         <strong class="jxr_keyword">boolean</strong> hasBuildMethod = <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="L486" href="#L486">486</a>                         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L487" href="#L487">487</a>                             getBuildMethod(targetClass, nestedClass);
-<a class="jxr_linenumber" name="L488" href="#L488">488</a>                         } <strong class="jxr_keyword">catch</strong> (<a name="MissingMethodException" href="../../../../com/hotels/transformer/error/MissingMethodException.html#MissingMethodException">MissingMethodException</a> e) {
-<a class="jxr_linenumber" name="L489" href="#L489">489</a>                             hasBuildMethod = false;
-<a class="jxr_linenumber" name="L490" href="#L490">490</a>                         }
-<a class="jxr_linenumber" name="L491" href="#L491">491</a>                         <strong class="jxr_keyword">return</strong> hasBuildMethod;
-<a class="jxr_linenumber" name="L492" href="#L492">492</a>                     })
-<a class="jxr_linenumber" name="L493" href="#L493">493</a>                     .findAny();
-<a class="jxr_linenumber" name="L494" href="#L494">494</a>             CACHE_MANAGER.cacheObject(cacheKey, res);
-<a class="jxr_linenumber" name="L495" href="#L495">495</a>             <strong class="jxr_keyword">return</strong> res;
-<a class="jxr_linenumber" name="L496" href="#L496">496</a>         });
-<a class="jxr_linenumber" name="L497" href="#L497">497</a>     }
-<a class="jxr_linenumber" name="L498" href="#L498">498</a> 
-<a class="jxr_linenumber" name="L499" href="#L499">499</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L500" href="#L500">500</a> <em class="jxr_javadoccomment">     * Get build method inside the Builder class.</em>
-<a class="jxr_linenumber" name="L501" href="#L501">501</a> <em class="jxr_javadoccomment">     * @param parentClass the class containing the builder</em>
-<a class="jxr_linenumber" name="L502" href="#L502">502</a> <em class="jxr_javadoccomment">     * @param builderClass the builder class (see Builder Pattern)</em>
-<a class="jxr_linenumber" name="L503" href="#L503">503</a> <em class="jxr_javadoccomment">     * @return Builder build method if present</em>
-<a class="jxr_linenumber" name="L504" href="#L504">504</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L505" href="#L505">505</a>     <strong class="jxr_keyword">public</strong> Method getBuildMethod(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; parentClass, <strong class="jxr_keyword">final</strong> Class&lt;?&gt; builderClass) {
-<a class="jxr_linenumber" name="L506" href="#L506">506</a>         <strong class="jxr_keyword">final</strong> String cacheKey = <span class="jxr_string">"BuildMethod-"</span> + builderClass.getName();
-<a class="jxr_linenumber" name="L507" href="#L507">507</a>         <strong class="jxr_keyword">return</strong> CACHE_MANAGER.getFromCache(cacheKey, Method.<strong class="jxr_keyword">class</strong>).orElseGet(() -&gt; {
-<a class="jxr_linenumber" name="L508" href="#L508">508</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L509" href="#L509">509</a>                 Method method = builderClass.getDeclaredMethod(BUILD_METHOD_NAME);
-<a class="jxr_linenumber" name="L510" href="#L510">510</a>                 <strong class="jxr_keyword">if</strong> (!method.getReturnType().equals(parentClass)) {
-<a class="jxr_linenumber" name="L511" href="#L511">511</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="MissingMethodException" href="../../../../com/hotels/transformer/error/MissingMethodException.html#MissingMethodException">MissingMethodException</a>(<span class="jxr_string">"Invalid "</span> + BUILD_METHOD_NAME + <span class="jxr_string">" method definition. It must returns a: "</span> + parentClass.getCanonicalName());
-<a class="jxr_linenumber" name="L512" href="#L512">512</a>                 }
-<a class="jxr_linenumber" name="L513" href="#L513">513</a>                 method.setAccessible(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L514" href="#L514">514</a>                 CACHE_MANAGER.cacheObject(cacheKey, method);
-<a class="jxr_linenumber" name="L515" href="#L515">515</a>                 <strong class="jxr_keyword">return</strong> method;
-<a class="jxr_linenumber" name="L516" href="#L516">516</a>             } <strong class="jxr_keyword">catch</strong> (NoSuchMethodException e) {
-<a class="jxr_linenumber" name="L517" href="#L517">517</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="MissingMethodException" href="../../../../com/hotels/transformer/error/MissingMethodException.html#MissingMethodException">MissingMethodException</a>(<span class="jxr_string">"No Builder "</span> + BUILD_METHOD_NAME + <span class="jxr_string">" method defined for class: "</span> + builderClass.getName() + <span class="jxr_string">"."</span>);
-<a class="jxr_linenumber" name="L518" href="#L518">518</a>             }
-<a class="jxr_linenumber" name="L519" href="#L519">519</a>         });
-<a class="jxr_linenumber" name="L520" href="#L520">520</a>     }
-<a class="jxr_linenumber" name="L521" href="#L521">521</a> 
-<a class="jxr_linenumber" name="L522" href="#L522">522</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L523" href="#L523">523</a> <em class="jxr_javadoccomment">     * Creates an instance of the given class invoking the given constructor.</em>
-<a class="jxr_linenumber" name="L524" href="#L524">524</a> <em class="jxr_javadoccomment">     * @param constructor the constructor to invoke.</em>
-<a class="jxr_linenumber" name="L525" href="#L525">525</a> <em class="jxr_javadoccomment">     * @param constructorArgs the constructor args.</em>
-<a class="jxr_linenumber" name="L526" href="#L526">526</a> <em class="jxr_javadoccomment">     * @param &lt;T&gt; the class object type.</em>
-<a class="jxr_linenumber" name="L527" href="#L527">527</a> <em class="jxr_javadoccomment">     * @return the object instance.</em>
-<a class="jxr_linenumber" name="L528" href="#L528">528</a> <em class="jxr_javadoccomment">     * @throws InstanceCreationException in case the object creation fails.</em>
-<a class="jxr_linenumber" name="L529" href="#L529">529</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L530" href="#L530">530</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
-<a class="jxr_linenumber" name="L531" href="#L531">531</a>     <strong class="jxr_keyword">public</strong> &lt;T&gt; T getInstance(<strong class="jxr_keyword">final</strong> Constructor constructor, <strong class="jxr_keyword">final</strong> Object... constructorArgs) {
-<a class="jxr_linenumber" name="L532" href="#L532">532</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L533" href="#L533">533</a>             <strong class="jxr_keyword">return</strong> (T) constructor.newInstance(constructorArgs);
-<a class="jxr_linenumber" name="L534" href="#L534">534</a>         } <strong class="jxr_keyword">catch</strong> (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-<a class="jxr_linenumber" name="L535" href="#L535">535</a>            <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="InstanceCreationException" href="../../../../com/hotels/transformer/error/InstanceCreationException.html#InstanceCreationException">InstanceCreationException</a>(e.getMessage(), e);
-<a class="jxr_linenumber" name="L536" href="#L536">536</a>         }
-<a class="jxr_linenumber" name="L537" href="#L537">537</a>     }
-<a class="jxr_linenumber" name="L538" href="#L538">538</a> 
-<a class="jxr_linenumber" name="L539" href="#L539">539</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L540" href="#L540">540</a> <em class="jxr_javadoccomment">     * Retrieves the no args constructor.</em>
-<a class="jxr_linenumber" name="L541" href="#L541">541</a> <em class="jxr_javadoccomment">     * @param clazz the class from which gets the all arg constructor.</em>
-<a class="jxr_linenumber" name="L542" href="#L542">542</a> <em class="jxr_javadoccomment">     * @param &lt;K&gt; the object type</em>
-<a class="jxr_linenumber" name="L543" href="#L543">543</a> <em class="jxr_javadoccomment">     * @return the no args constructor</em>
-<a class="jxr_linenumber" name="L544" href="#L544">544</a> <em class="jxr_javadoccomment">     * @throws InvalidBeanException if no default constructor is available</em>
-<a class="jxr_linenumber" name="L545" href="#L545">545</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L546" href="#L546">546</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
-<a class="jxr_linenumber" name="L547" href="#L547">547</a>     <strong class="jxr_keyword">public</strong> &lt;K&gt; Supplier&lt;K&gt; getNoArgsConstructor(<strong class="jxr_keyword">final</strong> Class&lt;K&gt; clazz) {
-<a class="jxr_linenumber" name="L548" href="#L548">548</a>         <strong class="jxr_keyword">final</strong> String cacheKey = <span class="jxr_string">"NoArgsConstructor-"</span> + clazz.getName();
-<a class="jxr_linenumber" name="L549" href="#L549">549</a>         <strong class="jxr_keyword">return</strong> CACHE_MANAGER.getFromCache(cacheKey, Supplier.<strong class="jxr_keyword">class</strong>).orElseGet(() -&gt; {
-<a class="jxr_linenumber" name="L550" href="#L550">550</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L551" href="#L551">551</a>                 MethodHandles.Lookup privateLookupIn = privateLookupIn(clazz, METHOD_HANDLES_LOOKUP);
-<a class="jxr_linenumber" name="L552" href="#L552">552</a>                 MethodHandle mh = privateLookupIn.findConstructor(clazz, methodType(<strong class="jxr_keyword">void</strong>.<strong class="jxr_keyword">class</strong>));
-<a class="jxr_linenumber" name="L553" href="#L553">553</a>                 Supplier&lt;K&gt; constructor = (Supplier&lt;K&gt;) metafactory(
-<a class="jxr_linenumber" name="L554" href="#L554">554</a>                         privateLookupIn, <span class="jxr_string">"get"</span>, methodType(Supplier.<strong class="jxr_keyword">class</strong>), mh.type().<strong class="jxr_keyword">generic</strong>(), mh, mh.type()
-<a class="jxr_linenumber" name="L555" href="#L555">555</a>                 ).getTarget().invokeExact();
-<a class="jxr_linenumber" name="L556" href="#L556">556</a>                 CACHE_MANAGER.cacheObject(cacheKey, constructor);
-<a class="jxr_linenumber" name="L557" href="#L557">557</a>                 <strong class="jxr_keyword">return</strong> constructor;
-<a class="jxr_linenumber" name="L558" href="#L558">558</a>             } <strong class="jxr_keyword">catch</strong> (Throwable e) {
-<a class="jxr_linenumber" name="L559" href="#L559">559</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="InvalidBeanException" href="../../../../com/hotels/transformer/error/InvalidBeanException.html#InvalidBeanException">InvalidBeanException</a>(<span class="jxr_string">"No default constructors available for class: "</span> + clazz.getName());
-<a class="jxr_linenumber" name="L560" href="#L560">560</a>             }
-<a class="jxr_linenumber" name="L561" href="#L561">561</a>         });
-<a class="jxr_linenumber" name="L562" href="#L562">562</a>     }
-<a class="jxr_linenumber" name="L563" href="#L563">563</a> 
-<a class="jxr_linenumber" name="L564" href="#L564">564</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L565" href="#L565">565</a> <em class="jxr_javadoccomment">     * Retrieves the all args constructor.</em>
-<a class="jxr_linenumber" name="L566" href="#L566">566</a> <em class="jxr_javadoccomment">     * @param clazz the class from which gets the all arg constructor.</em>
-<a class="jxr_linenumber" name="L567" href="#L567">567</a> <em class="jxr_javadoccomment">     * @param &lt;K&gt; the object type</em>
-<a class="jxr_linenumber" name="L568" href="#L568">568</a> <em class="jxr_javadoccomment">     * @return the all args constructor</em>
-<a class="jxr_linenumber" name="L569" href="#L569">569</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L479" href="#L479">479</a>     <strong class="jxr_keyword">public</strong> Optional&lt;Class&lt;?&gt;&gt; getBuilderClass(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; targetClass) {
+<a class="jxr_linenumber" name="L480" href="#L480">480</a>         String cacheKey = <span class="jxr_string">"BuilderClass-"</span> + targetClass.getName();
+<a class="jxr_linenumber" name="L481" href="#L481">481</a>         <strong class="jxr_keyword">return</strong> CACHE_MANAGER.getFromCache(cacheKey, Optional.<strong class="jxr_keyword">class</strong>).orElseGet(() -&gt; {
+<a class="jxr_linenumber" name="L482" href="#L482">482</a>             Optional&lt;Class&gt; res = stream(getDeclaredClasses(targetClass))
+<a class="jxr_linenumber" name="L483" href="#L483">483</a>                     .filter(nestedClass -&gt; {
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>                         <strong class="jxr_keyword">boolean</strong> hasBuildMethod = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L485" href="#L485">485</a>                         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L486" href="#L486">486</a>                             getBuildMethod(targetClass, nestedClass);
+<a class="jxr_linenumber" name="L487" href="#L487">487</a>                         } <strong class="jxr_keyword">catch</strong> (<a name="MissingMethodException" href="../../../../com/hotels/transformer/error/MissingMethodException.html#MissingMethodException">MissingMethodException</a> e) {
+<a class="jxr_linenumber" name="L488" href="#L488">488</a>                             hasBuildMethod = false;
+<a class="jxr_linenumber" name="L489" href="#L489">489</a>                         }
+<a class="jxr_linenumber" name="L490" href="#L490">490</a>                         <strong class="jxr_keyword">return</strong> hasBuildMethod;
+<a class="jxr_linenumber" name="L491" href="#L491">491</a>                     })
+<a class="jxr_linenumber" name="L492" href="#L492">492</a>                     .findAny();
+<a class="jxr_linenumber" name="L493" href="#L493">493</a>             CACHE_MANAGER.cacheObject(cacheKey, res);
+<a class="jxr_linenumber" name="L494" href="#L494">494</a>             <strong class="jxr_keyword">return</strong> res;
+<a class="jxr_linenumber" name="L495" href="#L495">495</a>         });
+<a class="jxr_linenumber" name="L496" href="#L496">496</a>     }
+<a class="jxr_linenumber" name="L497" href="#L497">497</a> 
+<a class="jxr_linenumber" name="L498" href="#L498">498</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L499" href="#L499">499</a> <em class="jxr_javadoccomment">     * Get build method inside the Builder class.</em>
+<a class="jxr_linenumber" name="L500" href="#L500">500</a> <em class="jxr_javadoccomment">     * @param parentClass the class containing the builder</em>
+<a class="jxr_linenumber" name="L501" href="#L501">501</a> <em class="jxr_javadoccomment">     * @param builderClass the builder class (see Builder Pattern)</em>
+<a class="jxr_linenumber" name="L502" href="#L502">502</a> <em class="jxr_javadoccomment">     * @return Builder build method if present</em>
+<a class="jxr_linenumber" name="L503" href="#L503">503</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L504" href="#L504">504</a>     <strong class="jxr_keyword">public</strong> Method getBuildMethod(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; parentClass, <strong class="jxr_keyword">final</strong> Class&lt;?&gt; builderClass) {
+<a class="jxr_linenumber" name="L505" href="#L505">505</a>         <strong class="jxr_keyword">final</strong> String cacheKey = <span class="jxr_string">"BuildMethod-"</span> + builderClass.getName();
+<a class="jxr_linenumber" name="L506" href="#L506">506</a>         <strong class="jxr_keyword">return</strong> CACHE_MANAGER.getFromCache(cacheKey, Method.<strong class="jxr_keyword">class</strong>).orElseGet(() -&gt; {
+<a class="jxr_linenumber" name="L507" href="#L507">507</a>             <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L508" href="#L508">508</a>                 Method method = builderClass.getDeclaredMethod(BUILD_METHOD_NAME);
+<a class="jxr_linenumber" name="L509" href="#L509">509</a>                 <strong class="jxr_keyword">if</strong> (!method.getReturnType().equals(parentClass)) {
+<a class="jxr_linenumber" name="L510" href="#L510">510</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="MissingMethodException" href="../../../../com/hotels/transformer/error/MissingMethodException.html#MissingMethodException">MissingMethodException</a>(<span class="jxr_string">"Invalid "</span> + BUILD_METHOD_NAME + <span class="jxr_string">" method definition. It must returns a: "</span> + parentClass.getCanonicalName());
+<a class="jxr_linenumber" name="L511" href="#L511">511</a>                 }
+<a class="jxr_linenumber" name="L512" href="#L512">512</a>                 method.setAccessible(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L513" href="#L513">513</a>                 CACHE_MANAGER.cacheObject(cacheKey, method);
+<a class="jxr_linenumber" name="L514" href="#L514">514</a>                 <strong class="jxr_keyword">return</strong> method;
+<a class="jxr_linenumber" name="L515" href="#L515">515</a>             } <strong class="jxr_keyword">catch</strong> (NoSuchMethodException e) {
+<a class="jxr_linenumber" name="L516" href="#L516">516</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="MissingMethodException" href="../../../../com/hotels/transformer/error/MissingMethodException.html#MissingMethodException">MissingMethodException</a>(<span class="jxr_string">"No Builder "</span> + BUILD_METHOD_NAME + <span class="jxr_string">" method defined for class: "</span> + builderClass.getName() + <span class="jxr_string">"."</span>);
+<a class="jxr_linenumber" name="L517" href="#L517">517</a>             }
+<a class="jxr_linenumber" name="L518" href="#L518">518</a>         });
+<a class="jxr_linenumber" name="L519" href="#L519">519</a>     }
+<a class="jxr_linenumber" name="L520" href="#L520">520</a> 
+<a class="jxr_linenumber" name="L521" href="#L521">521</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L522" href="#L522">522</a> <em class="jxr_javadoccomment">     * Creates an instance of the given class invoking the given constructor.</em>
+<a class="jxr_linenumber" name="L523" href="#L523">523</a> <em class="jxr_javadoccomment">     * @param constructor the constructor to invoke.</em>
+<a class="jxr_linenumber" name="L524" href="#L524">524</a> <em class="jxr_javadoccomment">     * @param constructorArgs the constructor args.</em>
+<a class="jxr_linenumber" name="L525" href="#L525">525</a> <em class="jxr_javadoccomment">     * @param &lt;T&gt; the class object type.</em>
+<a class="jxr_linenumber" name="L526" href="#L526">526</a> <em class="jxr_javadoccomment">     * @return the object instance.</em>
+<a class="jxr_linenumber" name="L527" href="#L527">527</a> <em class="jxr_javadoccomment">     * @throws InstanceCreationException in case the object creation fails.</em>
+<a class="jxr_linenumber" name="L528" href="#L528">528</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L529" href="#L529">529</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a class="jxr_linenumber" name="L530" href="#L530">530</a>     <strong class="jxr_keyword">public</strong> &lt;T&gt; T getInstance(<strong class="jxr_keyword">final</strong> Constructor constructor, <strong class="jxr_keyword">final</strong> Object... constructorArgs) {
+<a class="jxr_linenumber" name="L531" href="#L531">531</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L532" href="#L532">532</a>             <strong class="jxr_keyword">return</strong> (T) constructor.newInstance(constructorArgs);
+<a class="jxr_linenumber" name="L533" href="#L533">533</a>         } <strong class="jxr_keyword">catch</strong> (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+<a class="jxr_linenumber" name="L534" href="#L534">534</a>            <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="InstanceCreationException" href="../../../../com/hotels/transformer/error/InstanceCreationException.html#InstanceCreationException">InstanceCreationException</a>(e.getMessage(), e);
+<a class="jxr_linenumber" name="L535" href="#L535">535</a>         }
+<a class="jxr_linenumber" name="L536" href="#L536">536</a>     }
+<a class="jxr_linenumber" name="L537" href="#L537">537</a> 
+<a class="jxr_linenumber" name="L538" href="#L538">538</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L539" href="#L539">539</a> <em class="jxr_javadoccomment">     * Retrieves the no args constructor.</em>
+<a class="jxr_linenumber" name="L540" href="#L540">540</a> <em class="jxr_javadoccomment">     * @param clazz the class from which gets the all arg constructor.</em>
+<a class="jxr_linenumber" name="L541" href="#L541">541</a> <em class="jxr_javadoccomment">     * @param &lt;K&gt; the object type</em>
+<a class="jxr_linenumber" name="L542" href="#L542">542</a> <em class="jxr_javadoccomment">     * @return the no args constructor</em>
+<a class="jxr_linenumber" name="L543" href="#L543">543</a> <em class="jxr_javadoccomment">     * @throws InvalidBeanException if no default constructor is available</em>
+<a class="jxr_linenumber" name="L544" href="#L544">544</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L545" href="#L545">545</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a class="jxr_linenumber" name="L546" href="#L546">546</a>     <strong class="jxr_keyword">public</strong> &lt;K&gt; Supplier&lt;K&gt; getNoArgsConstructor(<strong class="jxr_keyword">final</strong> Class&lt;K&gt; clazz) {
+<a class="jxr_linenumber" name="L547" href="#L547">547</a>         <strong class="jxr_keyword">final</strong> String cacheKey = <span class="jxr_string">"NoArgsConstructor-"</span> + clazz.getName();
+<a class="jxr_linenumber" name="L548" href="#L548">548</a>         <strong class="jxr_keyword">return</strong> CACHE_MANAGER.getFromCache(cacheKey, Supplier.<strong class="jxr_keyword">class</strong>).orElseGet(() -&gt; {
+<a class="jxr_linenumber" name="L549" href="#L549">549</a>             <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L550" href="#L550">550</a>                 MethodHandles.Lookup privateLookupIn = privateLookupIn(clazz, METHOD_HANDLES_LOOKUP);
+<a class="jxr_linenumber" name="L551" href="#L551">551</a>                 MethodHandle mh = privateLookupIn.findConstructor(clazz, methodType(<strong class="jxr_keyword">void</strong>.<strong class="jxr_keyword">class</strong>));
+<a class="jxr_linenumber" name="L552" href="#L552">552</a>                 Supplier&lt;K&gt; constructor = (Supplier&lt;K&gt;) metafactory(
+<a class="jxr_linenumber" name="L553" href="#L553">553</a>                         privateLookupIn, <span class="jxr_string">"get"</span>, methodType(Supplier.<strong class="jxr_keyword">class</strong>), mh.type().<strong class="jxr_keyword">generic</strong>(), mh, mh.type()
+<a class="jxr_linenumber" name="L554" href="#L554">554</a>                 ).getTarget().invokeExact();
+<a class="jxr_linenumber" name="L555" href="#L555">555</a>                 CACHE_MANAGER.cacheObject(cacheKey, constructor);
+<a class="jxr_linenumber" name="L556" href="#L556">556</a>                 <strong class="jxr_keyword">return</strong> constructor;
+<a class="jxr_linenumber" name="L557" href="#L557">557</a>             } <strong class="jxr_keyword">catch</strong> (Throwable e) {
+<a class="jxr_linenumber" name="L558" href="#L558">558</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="InvalidBeanException" href="../../../../com/hotels/transformer/error/InvalidBeanException.html#InvalidBeanException">InvalidBeanException</a>(<span class="jxr_string">"No default constructors available for class: "</span> + clazz.getName());
+<a class="jxr_linenumber" name="L559" href="#L559">559</a>             }
+<a class="jxr_linenumber" name="L560" href="#L560">560</a>         });
+<a class="jxr_linenumber" name="L561" href="#L561">561</a>     }
+<a class="jxr_linenumber" name="L562" href="#L562">562</a> 
+<a class="jxr_linenumber" name="L563" href="#L563">563</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L564" href="#L564">564</a> <em class="jxr_javadoccomment">     * Retrieves the all args constructor.</em>
+<a class="jxr_linenumber" name="L565" href="#L565">565</a> <em class="jxr_javadoccomment">     * @param clazz the class from which gets the all arg constructor.</em>
+<a class="jxr_linenumber" name="L566" href="#L566">566</a> <em class="jxr_javadoccomment">     * @param &lt;K&gt; the object type</em>
+<a class="jxr_linenumber" name="L567" href="#L567">567</a> <em class="jxr_javadoccomment">     * @return the all args constructor</em>
+<a class="jxr_linenumber" name="L568" href="#L568">568</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L569" href="#L569">569</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
 <a class="jxr_linenumber" name="L570" href="#L570">570</a>     <strong class="jxr_keyword">public</strong> &lt;K&gt; Constructor&lt;K&gt; getAllArgsConstructor(<strong class="jxr_keyword">final</strong> Class&lt;K&gt; clazz) {
 <a class="jxr_linenumber" name="L571" href="#L571">571</a>         <strong class="jxr_keyword">final</strong> String cacheKey = <span class="jxr_string">"AllArgsConstructor-"</span> + clazz.getName();
 <a class="jxr_linenumber" name="L572" href="#L572">572</a>         <strong class="jxr_keyword">return</strong> CACHE_MANAGER.getFromCache(cacheKey, Constructor.<strong class="jxr_keyword">class</strong>).orElseGet(() -&gt; {
