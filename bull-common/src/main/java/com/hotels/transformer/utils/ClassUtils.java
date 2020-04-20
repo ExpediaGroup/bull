@@ -476,6 +476,7 @@ public final class ClassUtils {
      * @param targetClass the class where the builder should be searched
      * @return the Builder class if available.
      */
+    @SuppressWarnings("unchecked")
     public Optional<Class<?>> getBuilderClass(final Class<?> targetClass) {
         String cacheKey = "BuilderClass-" + targetClass.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
