@@ -41,12 +41,14 @@ public class BuilderObjectTransformationTest extends AbstractBeanTransformerTest
     @Test(dataProvider = "transformationThroughBuilderTesting")
     public void testTransformationThroughBuilder(final String testDescription, final Object sourceObject, final Class<?> targetObjectClass) {
         //GIVEN
+        underTest.setCustomBuilderTransformationEnabled(true);
 
         //WHEN
         Object actual = underTest.transform(sourceObject, targetObjectClass);
 
         //THEN
         assertThat(actual, sameBeanAs(sourceObject));
+        underTest.setCustomBuilderTransformationEnabled(false);
     }
 
     /**
