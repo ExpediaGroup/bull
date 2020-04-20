@@ -50,6 +50,8 @@ public class ItemType {
 
 ### Custom Builder pattern:
 
+To enable the transformation of Java Beans using the following Builder pattern:
+
 ~~~Java
 public class ItemType {
     private final Class<?> objectClass;
@@ -88,4 +90,12 @@ public class ItemType {
         }
     }
 }
+~~~
+
+It's needed to enable the custom Builder Transformation as following:
+
+~~~Java
+ToBean toBean = new BeanTransformer()
+                         .setCustomBuilderTransformationEnabled(true)
+                         .transform(sourceObject, ToBean.class);
 ~~~
