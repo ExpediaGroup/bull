@@ -28,7 +28,7 @@ import lombok.experimental.UtilityClass;
  * Filters conditions.
  */
 @UtilityClass
-public final class Filters {
+public class Filters {
     /**
      * Returns only the final not static field.
      */
