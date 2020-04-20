@@ -97,7 +97,7 @@ public final class ReflectionUtils {
      * @param args the method parameters
      * @return the method result
      */
-    protected Object invokeMethod(final Method method, final Object target, final Object... args) {
+    public Object invokeMethod(final Method method, final Object target, final Object... args) {
         try {
             return method.invoke(target, args);
         } catch (final Exception e) {
