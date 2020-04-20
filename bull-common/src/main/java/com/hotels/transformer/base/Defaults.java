@@ -33,7 +33,7 @@ import lombok.experimental.UtilityClass;
  * Default values for primitive types.
  */
 @UtilityClass
-public final class Defaults {
+public class Defaults {
     /**
      * Gets the default value of a primitive type.
      * @param type the class type
