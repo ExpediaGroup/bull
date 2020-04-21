@@ -431,8 +431,10 @@
                     <version>${maven.checkstyle.plugin.version}</version>
                     <executions>
                         <execution>
-                            <id>validate</id>
-                            <phase>validate</phase>
+                            <phase>process-sources</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
                             <configuration>
                                 <configLocation>config/checkstyle/rules.xml</configLocation>
                                 <suppressionsLocation>config/checkstyle/suppression.xml</suppressionsLocation>
@@ -442,9 +444,6 @@
                                 <skip>${checkstyle.check.skip}</skip>
                                 <includeTestSourceDirectory>${checkstyle.includeTestSourceDirectory}</includeTestSourceDirectory>
                             </configuration>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
                         </execution>
                     </executions>
                 </plugin>
