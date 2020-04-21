@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.7.0.0] 2020.03.20
+### [1.7.1] 2020.03.21
 #### Added
 * Implemented transformation of JavaBeans using custom Builder pattern (see: [Issue 144](https://github.com/HotelsDotCom/bull/issues/144)).
 #### Changed
