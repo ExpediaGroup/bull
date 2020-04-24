@@ -14,11 +14,6 @@
     <dependencies>
         <dependency>
             <groupId>com.hotels.beans</groupId>
-            <artifactId>bull-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hotels.beans</groupId>
             <artifactId>bull-converter</artifactId>
             <version>${project.version}</version>
         </dependency>

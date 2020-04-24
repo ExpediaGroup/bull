@@ -19,6 +19,7 @@ package com.hotels.beans.transformer;
 import static java.util.Arrays.stream;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.range;
@@ -59,6 +60,65 @@ public class TransformerImpl extends AbstractBeanTransformer {
     @Override
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
+        final Optional<Class<?>> builderClass = getBuilderClass(targetClass);
+        if (builderClass.isPresent()) {
+            k = injectThroughBuilder(sourceObj, targetClass, builderClass.get(), breadcrumb);
+        } else {
+            k = injectValues(sourceObj, targetClass, breadcrumb);
+        }
+        if (settings.isValidationEnabled()) {
+            validator.validate(k);
+        }
+        return k;
+    }
+
+    /**
+     * Gets the Java Bean Builder class (if any).
+     * @param targetClass the destination object class
+     * @param <K> the target object type
+     * @return the Builder class
+     */
+    private <K> Optional<Class<?>> getBuilderClass(final Class<? extends K> targetClass) {
+        return !settings.isCustomBuilderTransformationEnabled() ? empty() : classUtils.getBuilderClass(targetClass);
+    }
+
+    /**
+     * Inject all properties value from an object to a new one using the class builder.
+     * @param sourceObj the source object
+     * @param targetClass the destination object class
+     * @param builderClass the builder class inside the Bean
+     * @param breadcrumb the full path of the current field starting from his ancestor
+     * @param <T> the Source object type
+     * @param <K> the target object type
+     * @return a copy of the source object into the destination object
+     */
+    @SuppressWarnings("unchecked")
+    private <T, K> K injectThroughBuilder(final T sourceObj, final Class<? extends K> targetClass, final Class<?> builderClass, final String breadcrumb) {
+        return (K) reflectionUtils.invokeMethod(classUtils.getBuildMethod(targetClass, builderClass), injectValues(sourceObj, builderClass, breadcrumb));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected final <T, K> void transform(final T sourceObj, final K targetObject, final String breadcrumb) {
+        injectAllFields(sourceObj, targetObject, breadcrumb);
+        if (settings.isValidationEnabled()) {
+            validator.validate(targetObject);
+        }
+    }
+
+    /**
+     * Inject all properties value from an object to a new one.
+     * @param sourceObj the source object
+     * @param targetClass the destination object class
+     * @param breadcrumb the full path of the current field starting from his ancestor
+     * @param <T> the Source object type
+     * @param <K> the target object type
+     * @return a copy of the source object into the destination object
+     */
+    private <T, K> K injectValues(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
+        final K k;
         final ClassType classType = classUtils.getClassType(targetClass);
         if (classType.is(MUTABLE)) {
             try {
@@ -73,21 +133,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
                 injectNotFinalFields(sourceObj, k, breadcrumb);
             }
         }
-        if (settings.isValidationEnabled()) {
-            validator.validate(k);
-        }
         return k;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected final <T, K> void transform(final T sourceObj, final K targetObject, final String breadcrumb) {
-        injectAllFields(sourceObj, targetObject, breadcrumb);
-        if (settings.isValidationEnabled()) {
-            validator.validate(targetObject);
-        }
     }
 
     /**
@@ -131,7 +177,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @return a copy of the source object into the destination object
      * @throws InvalidBeanException {@link InvalidBeanException} if the target object is not compliant with the requirements
      */
-    private <T, K> K handleInjectionException(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb,
+    protected <T, K> K handleInjectionException(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb,
         final Object[] constructorArgs, final boolean forceConstructorInjection, final Exception e) {
         String errorMsg;
         if (!classUtils.areParameterNamesAvailable(constructor)) {
@@ -170,7 +216,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param constructor the all args constructor
      * @return true if the parameter names are defined or the parameters are annotated with: {@link ConstructorArg}
      */
-    private boolean canBeInjectedByConstructorParams(final Constructor constructor) {
+    protected boolean canBeInjectedByConstructorParams(final Constructor constructor) {
         final String cacheKey = "CanBeInjectedByConstructorParams-" + constructor.getDeclaringClass().getName();
         return cacheManager.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
             final boolean res = classUtils.areParameterNamesAvailable(constructor) || classUtils.allParameterAnnotatedWith(constructor, ConstructorArg.class);
@@ -191,7 +237,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @return a list containing the values for the destination constructor.
      * @throws InvalidBeanException {@link InvalidBeanException} if there is an error while retrieving the constructor args parameter
      */
-    private <T, K> Object[] getConstructorArgsValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
+    protected <T, K> Object[] getConstructorArgsValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
         final Parameter[] constructorParameters = classUtils.getConstructorParameters(constructor);
         final Object[] constructorArgsValues = new Object[constructorParameters.length];
         range(0, constructorParameters.length)

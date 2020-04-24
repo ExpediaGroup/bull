@@ -94,4 +94,11 @@ public interface BeanTransformer extends Transformer<BeanTransformer> {
      * @return the {@link BeanTransformer} instance
      */
     BeanTransformer setPrimitiveTypeConversionEnabled(boolean primitiveTypeConversionEnabled);
+
+    /**
+     * It allows to enable/disable the transformation of Java Bean with a custom Builder pattern.
+     * @param customBuilderEnabled if true Java Beans with a custom Builder pattern are transformed automatically. By default it's false.
+     * @return the {@link BeanTransformer} instance
+     */
+    BeanTransformer setCustomBuilderTransformationEnabled(boolean customBuilderEnabled);
 }

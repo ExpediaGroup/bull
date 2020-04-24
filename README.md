@@ -9,8 +9,8 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 
 ## Start using
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer/badge.svg?subject=maven-central)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer)
-[![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bull-bean-transformer.svg)](http://www.javadoc.io/doc/com.hotels.beans/bull-bean-transformer)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer/badge.svg?subject=maven-central&color=blue)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer)
+[![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bull-bean-transformer.svg?color=blue)](http://www.javadoc.io/doc/com.hotels.beans/bull-bean-transformer)
 [![Build Status](https://travis-ci.org/HotelsDotCom/bull.svg?branch=master)](https://travis-ci.org/HotelsDotCom/bull)
 [![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk)
 
@@ -118,10 +118,11 @@ mvnw.cmd clean install -P relaxed
 
 # Feature samples
 
-* [Bean Transformation](https://github.com/HotelsDotCom/bull#transformation-samples)
+* [Bean Transformation](https://github.com/HotelsDotCom/bull#bean-transformation-samples)
 * [Bean Validation](https://github.com/HotelsDotCom/bull#validation-samples)
 * [Primitive Type conversion](https://github.com/HotelsDotCom/bull#primitive-type-object-converter)
 * [Map Transformation](https://hotelsdotcom.github.io/bull/transformer/map/samples.html)
+* [Supported Builder Pattern](https://hotelsdotcom.github.io/bull/transformer/bean/builder.html)
 
 ## Bean transformation samples
 
@@ -603,6 +604,104 @@ ToBean toBean = transformer.transform(fromBean, ToBean.class);
 **IMPORTANT:** The primitive type transformation (if enabled) is executed before any other `FieldTransformer` function defined on a specific field.
 This means that the once the `FieldTransformer` function will be executed the field value has already been transformed.
 
+## Builder supported patterns
+
+The library support the transformation of Java Bean using the following Builder patterns:
+
+### Standard pattern:
+
+~~~Java
+public class ItemType {
+    private final Class<?> objectClass;
+    private final Class<?> genericClass;
+
+    ItemType(final Class<?> objectClass, final Class<?> genericClass) {
+        this.objectClass = objectClass;
+        this.genericClass = genericClass;
+    }
+
+    public static ItemTypeBuilder builder() {
+        return new ItemType.ItemTypeBuilder();
+    }
+
+    // getter methods
+
+    public static class ItemTypeBuilder {
+        private Class<?> objectClass;
+        private Class<?> genericClass;
+
+        ItemTypeBuilder() {
+        }
+
+        public ItemTypeBuilder objectClass(final Class<?> objectClass) {
+            this.objectClass = objectClass;
+            return this;
+        }
+
+        public ItemTypeBuilder genericClass(final Class<?> genericClass) {
+            this.genericClass = genericClass;
+            return this;
+        }
+
+        public com.hotels.transformer.model.ItemType build() {
+            return new ItemType(this.objectClass, this.genericClass);
+        }
+    }
+}
+~~~
+
+### Custom Builder pattern:
+
+To enable the transformation of Java Beans using the following Builder pattern:
+
+~~~Java
+public class ItemType {
+    private final Class<?> objectClass;
+    private final Class<?> genericClass;
+
+    ItemType(final ItemTypeBuilder builder) {
+        this.objectClass = builder.objectClass;
+        this.genericClass = builder.genericClass;
+    }
+
+    public static ItemTypeBuilder builder() {
+        return new ItemType.ItemTypeBuilder();
+    }
+
+    // getter methods
+
+    public static class ItemTypeBuilder {
+        private Class<?> objectClass;
+        private Class<?> genericClass;
+
+        ItemTypeBuilder() {
+        }
+
+        public ItemTypeBuilder objectClass(final Class<?> objectClass) {
+            this.objectClass = objectClass;
+            return this;
+        }
+
+        public ItemTypeBuilder genericClass(final Class<?> genericClass) {
+            this.genericClass = genericClass;
+            return this;
+        }
+
+        public com.hotels.transformer.model.ItemType build() {
+            return new ItemType(this);
+        }
+    }
+}
+~~~
+
+It's needed to enable the custom Builder Transformation as following:
+
+~~~Java
+ToBean toBean = new BeanTransformer()
+                         .setCustomBuilderTransformationEnabled(true)
+                         .transform(sourceObject, ToBean.class);
+~~~
+
 ## Constraints:
 
 * the class's fields that have to be copied must not be static
@@ -818,6 +917,22 @@ The application's logo has been designed by: Rob Light.
 ## Release
 
 All the instructions for releasing a new version are available at: [RELEASES.md](RELEASE.md)
+
+## Badge your project
+
+[![Bull enabled](https://img.shields.io/badge/bull-enabled-red)](https://github.com/HotelsDotCom/bull)
+
+Add the following snippet in your Markdown file:
+
+```
+[![Bull enabled](https://img.shields.io/badge/bull-enabled-red)](https://github.com/HotelsDotCom/bull)
+```
+
+## Support
+
+[![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk)
+
+For any question, proposal or help, please refer to the slack channel: [#bull](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk).
 
 ## Legal
 

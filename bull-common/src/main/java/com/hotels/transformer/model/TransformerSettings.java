@@ -88,4 +88,11 @@ public class TransformerSettings<T> {
      */
     @Setter
     private boolean primitiveTypeConversionEnabled;
+
+    /**
+     * It allows to enable/disable the transformation of Java Bean with a custom Builder pattern.
+     * if true Java Beans with a custom Builder pattern are transformed automatically.
+     */
+    @Setter
+    private boolean customBuilderTransformationEnabled;
 }

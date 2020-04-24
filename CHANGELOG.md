@@ -6,16 +6,23 @@ All notable changes to this project will be documented in this file.
 #### Changed
 * Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
 
-### [1.6.6] TBD
+### [1.7.1] 2020.03.21
+#### Added
+* Implemented transformation of JavaBeans using custom Builder pattern (see: [Issue 144](https://github.com/HotelsDotCom/bull/issues/144)).
+#### Changed
+* Updated `hibernate-validator` version to `6.1.4.Final` (was `6.1.2.Final`).
+
+### [1.6.6] 2020.03.16
 ### Added
 * Added `maven-spotless-plugin` for the code automatic formatting during the maven build
 * Added `coveralls-maven-plugin` for the test coverage analysis and report during the maven build: [Coverall report](https://coveralls.io/github/HotelsDotCom/bull)
 #### Changed
 * Updated `lombok` version to `1.18.12` (was `1.18.10`).
 * Updated `hotels-oss-parent` version to `5.0.0` (was `4.2.0`).
-* Updated `mockito-core` version to `3.3.0` (was `3.2.4`).
-* Updated `spring-boot-starter-test` version to `2.2.5.RELEASE` (was `2.2.4.RELEASE`).
+* Updated `mockito-core` version to `3.3.3` (was `3.2.4`).
+* Updated `spring-boot-starter-test` version to `2.2.6.RELEASE` (was `2.2.4.RELEASE`).
 * Updated `maven-site-plugin` version to `3.9.0` (was `3.8.2`).
+* Updated `commons-lang3` version to `3.10` (was `3.9`).
 
 ### [1.6.5] 2020.01.21
 #### Changed

@@ -27,6 +27,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import static com.hotels.transformer.utils.ClassUtils.BUILD_METHOD_NAME;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -40,6 +42,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -68,10 +71,12 @@ import com.hotels.beans.sample.mixed.MixedToFooWithBuilder;
 import com.hotels.beans.sample.mutable.MutableToFoo;
 import com.hotels.beans.sample.mutable.MutableToFooSubClass;
 import com.hotels.beans.sample.mutable.MutableToFooWithBuilder;
+import com.hotels.beans.sample.mutable.MutableToFooWithWrongBuilder;
 import com.hotels.transformer.annotation.ConstructorArg;
 import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.error.InstanceCreationException;
 import com.hotels.transformer.error.InvalidBeanException;
+import com.hotels.transformer.error.MissingMethodException;
 
 /**
  * Unit test for {@link ClassUtils}.
@@ -987,6 +992,7 @@ public class ClassUtilsTest {
     /**
      * Creates the parameters to be used for testing the method {@code getConcreteClass}.
      * @return parameters to be used for testing the the method {@code getConcreteClass}.
+     * @throws Exception if something goes wrong
      */
     @DataProvider
     private Object[][] dataGetConcreteClassTesting() throws Exception {
@@ -997,12 +1003,97 @@ public class ClassUtilsTest {
         };
     }
 
+    /**
+     * Test that the a {@link MissingMethodException} is raised if the Builder class has no {@code build()} method.
+     * @param testCaseDescription the test case description
+     * @param containerTestClass the test class containing the Builder
+     * @param builderClass the Builder nested class
+     */
+    @Test(dataProvider = "dataGetBuilderMethodExceptionTesting", expectedExceptions = MissingMethodException.class)
+    public void testGetBuildMethodThrowsExceptionIfMethodIsMissing(final String testCaseDescription, final Class<?> containerTestClass, final Class<?> builderClass) {
+        // GIVEN
+
+        // WHEN
+        underTest.getBuildMethod(containerTestClass, builderClass);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getBuildMethod}.
+     * @return parameters to be used for testing the the method {@code getBuildMethod}.
+     */
+    @DataProvider
+    private Object[][] dataGetBuilderMethodExceptionTesting() {
+        return new Object[][] {
+                {"Tests that the method raises a MissingMethodException if the class has no builder build method", ImmutableToFoo.class, ImmutableToFoo.class},
+                {"Tests that the method raises a MissingMethodException if the class has a builder build method that does not return the parent class",
+                    MutableToFooWithWrongBuilder.class, MutableToFooWithWrongBuilder.Builder.class}
+        };
+    }
+
+    /**
+     * Test that the {@link ClassUtils#getBuildMethod(Class, Class) getBuildMethod} returns the Builder build method.
+     */
+    @Test
+    public void testGetBuildMethodReturnsTheBuildMethod() {
+        // GIVEN
+
+        // WHEN
+        Method actual = underTest.getBuildMethod(MutableToFooWithBuilder.class, MutableToFooWithBuilder.Builder.class);
+
+        // THEN
+        assertNotNull(actual);
+        assertEquals(BUILD_METHOD_NAME, actual.getName());
+    }
+
+    /**
+     * Tests that the method {@link ClassUtils#getBuilderClass(Class) getBuilderClass} returns the expected value.
+     * @param testCaseDescription the test case description
+     * @param testClass the class for which the builder class has to be retrieved
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataGetBuilderClassTesting")
+    public void testGetConcreteClassWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final Optional<Class<?>> expectedResult) {
+        // GIVEN
+
+        // WHEN
+        Optional<Class<?>> actual = underTest.getBuilderClass(testClass);
+
+        // THEN
+        assertEquals(expectedResult.isPresent(), actual.isPresent());
+        expectedResult.ifPresent(clazz -> assertEquals(clazz, actual.get()));
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code getBuilderClass}.
+     * @return parameters to be used for testing the the method {@code getBuilderClass}.
+     */
+    @DataProvider
+    private Object[][] dataGetBuilderClassTesting() {
+        return new Object[][] {
+                {"Tests that the method returns the builder class", MutableToFooWithBuilder.class, Optional.of(MutableToFooWithBuilder.Builder.class)},
+                {"Tests that the method returns an empty optional if the class has no builder", ImmutableToFoo.class, Optional.empty()},
+                {"Tests that the method returns an empty optional if the class has a wrong builder", MutableToFooWithWrongBuilder.class, Optional.empty()}
+        };
+    }
+
+    /**
+     * Returns the class field with the given name.
+     * @param objectInstance the class containing the field
+     * @param fieldName the name of the field to retrieve
+     * @param <T> the object instance type
+     * @return the class field with the given name
+     * @throws NoSuchFieldException if the field is missing
+     */
     private <T> Field getField(final T objectInstance, final String fieldName) throws NoSuchFieldException {
         Field field = objectInstance.getClass().getDeclaredField(fieldName);
         field.setAccessible(true);
         return field;
     }
 
+    /**
+     * Creates a {@link FromFoo}.
+     * @return a {@link FromFoo} instance
+     */
     private FromFoo createFromFoo() {
         return new FromFoo(NAME, null, null, LINKED_LIST, null);
     }
