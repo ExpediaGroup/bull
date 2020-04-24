@@ -23,11 +23,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Mutable object instantiable only through a Builder.
+ * Mutable object instantiable only through a wrong Builder.
  */
 @Getter
 @Setter
-public final class MutableToFooWithBuilder {
+public final class MutableToFooWithWrongBuilder {
     private String name;
     private BigInteger id;
     private List<String> list;
@@ -38,7 +38,7 @@ public final class MutableToFooWithBuilder {
      * Private constructor.
      * @param builder the builder class
      */
-    private MutableToFooWithBuilder(final Builder builder) {
+    private MutableToFooWithWrongBuilder(final Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.list = builder.list;
@@ -66,8 +66,8 @@ public final class MutableToFooWithBuilder {
             return this;
         }
 
-        public MutableToFooWithBuilder build() {
-           return new MutableToFooWithBuilder(this);
+        public Builder build() {
+           return this;
         }
     }
 }

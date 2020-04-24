@@ -84,12 +84,11 @@ public final class ReflectionUtils {
      * @param args the method parameters
      * @return the method result
      */
-    protected Object invokeMethod(final Method method, final Object target, final Object... args) {
+    public Object invokeMethod(final Method method, final Object target, final Object... args) {
         try {
             return method.invoke(target, args);
         } catch (final Exception e) {
-            handleReflectionException(e);
-            throw new IllegalStateException(e);
+            throw handleReflectionException(e);
         }
     }
 
@@ -238,8 +237,7 @@ public final class ReflectionUtils {
         } catch (MissingFieldException e) {
             throw e;
         } catch (final Exception e) {
-            handleReflectionException(e);
-            throw new IllegalStateException(e);
+            throw handleReflectionException(e);
         }
     }
 
@@ -264,8 +262,7 @@ public final class ReflectionUtils {
                     throw new MissingFieldException(targetClass.getName() + " does not contain field: " + fieldName);
                 }
             } catch (final Exception e) {
-                handleReflectionException(e);
-                throw new IllegalStateException(e);
+                throw handleReflectionException(e);
             }
             CACHE_MANAGER.cacheObject(cacheKey, field);
             return field;
@@ -329,12 +326,11 @@ public final class ReflectionUtils {
      * @param field the field to set
      * @param fieldValue the value to set
      */
-    private void setFieldValueWithoutSetterMethod(final Object target, final Field field, final Object fieldValue) {
+    protected void setFieldValueWithoutSetterMethod(final Object target, final Field field, final Object fieldValue) {
         try {
             field.set(target, fieldValue);
         } catch (final Exception e) {
-            handleReflectionException(e);
-            throw new IllegalStateException(e);
+            throw handleReflectionException(e);
         }
     }
 
@@ -564,18 +560,19 @@ public final class ReflectionUtils {
     /**
      * Throws the right exception.
      * @param ex the exception
+     * @return the exception to be thrown
      */
-    void handleReflectionException(final Exception ex) {
+    protected RuntimeException handleReflectionException(final Exception ex) {
+        RuntimeException e;
         if (ex instanceof NoSuchMethodException) {
-            throw new MissingMethodException("Method not found: " + ex.getMessage());
+            e = new MissingMethodException("Method not found: " + ex.getMessage());
         } else if (ex instanceof IllegalAccessException) {
-            throw new IllegalStateException("Could not access method: " + ex.getMessage(), ex);
+            e = new IllegalStateException("Could not access method: " + ex.getMessage(), ex);
+        } else if (ex instanceof RuntimeException) {
+            e = (RuntimeException) ex;
         } else {
-            if (ex instanceof RuntimeException) {
-                throw (RuntimeException) ex;
-            } else {
-                throw new UndeclaredThrowableException(ex);
-            }
+            e = new UndeclaredThrowableException(ex);
         }
+        return e;
     }
 }
