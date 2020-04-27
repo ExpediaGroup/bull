@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.7.1-jdk8] TBD
+#### Changed
+* Updated `wagon-ssh` version to `3.4.0` (was `3.3.4`).
+
 ### [1.7.0-jdk8] 2020.03.20
 #### Added
 * Implemented transformation of JavaBeans using custom Builder pattern (see: [Issue 144](https://github.com/HotelsDotCom/bull/issues/144)).
