@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### [1.7.2] TBD
 #### Changed
 * Updated `wagon-ssh` version to `3.4.0` (was `3.3.4`).
+* Updated `hibernate-validator` version to `6.1.5.Final` (was `6.1.4.Final`).
 
 ### [1.7.1] 2020.03.21
 #### Added
