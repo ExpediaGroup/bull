@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 #### Changed
 * Updated `wagon-ssh` version to `3.4.0` (was `3.3.4`).
 * Updated `hibernate-validator` version to `6.1.5.Final` (was `6.1.4.Final`).
-* Updated spring-boot-starter-test version to 2.2.7.RELEASE (was 2.2.6.RELEASE).
+* Updated `spring-boot-starter-test` version to `2.2.7.RELEASE` (was `2.2.6.RELEASE`).
 
 ### [1.7.1] 2020.03.21
 #### Added
