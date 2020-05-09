@@ -25,6 +25,7 @@ import com.hotels.beans.generator.core.TransformerSpec;
 import com.squareup.javapoet.JavaFile;
 
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 
 import net.openhft.compiler.CachedCompiler;
 import net.openhft.compiler.CompilerUtils;
@@ -33,6 +34,7 @@ import net.openhft.compiler.CompilerUtils;
  * TODO: Document me.
  */
 @Builder
+@Slf4j
 public final class TransformerBytecodeAdapter {
 
     /**
@@ -68,6 +70,8 @@ public final class TransformerBytecodeAdapter {
         String transformerCode = sourceCode(javaFile);
         String className = qualifiedName(javaFile);
         try {
+            log.info("Compiling and loading '{}'", className);
+            log.debug("\n{}", transformerCode);
             Class<Transformer<A, B>> transformerClass = compiler.loadFromJava(className, transformerCode);
             return transformerClass.getDeclaredConstructor().newInstance();
         } catch (ClassNotFoundException e) {
