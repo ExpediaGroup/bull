@@ -85,7 +85,7 @@
         <test.coverage.check.skip>false</test.coverage.check.skip>
         <pmd.check.skip>true</pmd.check.skip>
         <javadoc.skip>false</javadoc.skip>
-        <import.order>\#java,\#javax,\#org,\#,\#com,,\#lombok,java,javax,org,,com,,lombok</import.order>
+        <import.order>\#java,\#javax,\#org,\#,\#com,,\#lombok,,\#net,java,javax,org,,com,,lombok,,net</import.order>
         <spotless.plugin.skip>false</spotless.plugin.skip>
     </properties>
 
