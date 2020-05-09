@@ -105,11 +105,12 @@ public class TransformerBytecodeAdapterTest {
         transformerBytecodeAdapter.newTransformer(Source.class, Destination.class);
     }
 
-    @Test(expectedExceptions = RuntimeException.class, dataProvider = "nonCompliantTransformers")
-    public void shouldThrowRuntimeExceptionIfTransformerIsNonCompliant(Class<? extends Transformer> tr) throws Exception {
+    @Test(dataProvider = "nonCompliantTransformers", expectedExceptions = RuntimeException.class)
+    public void shouldThrowRuntimeExceptionIfTransformerIsNonCompliant(Class<? extends Transformer> trClass)
+            throws Exception {
         // GIVEN
         transformerBytecodeAdapter = TransformerBytecodeAdapter.builder()
-                .compiler(mockCompilerWith(tr))
+                .compiler(mockCompilerWith(trClass))
                 .spec(spec)
                 .build();
 
@@ -126,19 +127,18 @@ public class TransformerBytecodeAdapterTest {
         };
     }
 
-    private static CachedCompiler mockCompilerWith(final Class<? extends Transformer> tr)
+    private static CachedCompiler mockCompilerWith(final Class<? extends Transformer> trClass)
             throws ClassNotFoundException {
         return given(mock(CachedCompiler.class).loadFromJava(anyString(), anyString()))
-                .willReturn(tr)
+                .willReturn(trClass)
                 .getMock();
     }
 
     /*
-        Transformer stubs
+        Transformer stubs with non-compliant constructors.
      */
 
     private static class TransformerPrivateCtor implements Transformer<Source, Destination> {
-        // non-compliant constructor
         private TransformerPrivateCtor() {
         }
 
@@ -149,8 +149,6 @@ public class TransformerBytecodeAdapterTest {
     }
 
     private static class TransformerCtorWithArgs implements Transformer<Source, Destination> {
-        // non-compliant constructor
-
         TransformerCtorWithArgs(Object arg) {
         }
 
@@ -162,7 +160,6 @@ public class TransformerBytecodeAdapterTest {
     }
 
     private static class TransformerCtorThrows implements Transformer<Source, Destination> {
-        // non-compliant constructor
         TransformerCtorThrows() {
             throw new RuntimeException("simulated error");
         }
@@ -172,6 +169,5 @@ public class TransformerBytecodeAdapterTest {
             return null;
         }
     }
-
 
 }

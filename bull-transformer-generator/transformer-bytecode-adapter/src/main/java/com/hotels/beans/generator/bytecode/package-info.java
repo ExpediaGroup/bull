@@ -12,10 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * Contains the bytecode adapter, which can compile the source code
- * represented by a {@link com.hotels.beans.generator.core.TransformerSpec} at runtime,
- * and create a new instance of the generated {@link com.hotels.beans.generator.core.Transformer}.
  */
 /**
  * Contains the bytecode adapter, which can compile the source code
