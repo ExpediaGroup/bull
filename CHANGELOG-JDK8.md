@@ -3,8 +3,12 @@
 All notable changes to this project will be documented in this file.
 
 ### [2.0.0-jdk8] TBD
-#### Changed
+#### Added
 * Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
+#### Changed
+* Updated `wagon-ssh` version to `3.4.0` (was `3.3.4`).
+* Updated `hibernate-validator` version to `6.1.5.Final` (was `6.1.4.Final`).
+* Updated `spring-boot-starter-test` version to `2.2.7.RELEASE` (was `2.2.6.RELEASE`).
 
 ### [1.7.0-jdk8] 2020.03.20
 #### Added
