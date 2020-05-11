@@ -16,10 +16,6 @@
 
 package com.hotels.beans.generator.bytecode;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.UncheckedIOException;
-
 import com.hotels.beans.generator.core.Transformer;
 import com.hotels.beans.generator.core.TransformerSpec;
 import com.squareup.javapoet.JavaFile;
@@ -67,7 +63,7 @@ public final class TransformerBytecodeAdapter {
     @SuppressWarnings("Unchecked Assignment")
     public <A, B> Transformer<A, B> newTransformer(final Class<A> source, final Class<B> destination) {
         JavaFile javaFile = JavaFile.builder(packageName, spec.build(source, destination)).build();
-        String transformerCode = sourceCode(javaFile);
+        String transformerCode = javaFile.toString();
         String className = qualifiedName(javaFile);
         try {
             log.info("Compiling and loading '{}'", className);
@@ -84,22 +80,6 @@ public final class TransformerBytecodeAdapter {
                             + "generates a public no-args constructor "
                             + "and that it doesn't throw", e);
         }
-    }
-
-    /**
-     * Returns a {@code String} containing the full source code of {@code javaFile},
-     * including package and import declarations.
-     * @param javaFile a Java file containing a class
-     * @return the full source code of the Java file
-     */
-    private String sourceCode(final JavaFile javaFile) {
-        StringWriter codeBuffer = new StringWriter();
-        try {
-            javaFile.writeTo(codeBuffer);
-        } catch (IOException e) {
-            throw new UncheckedIOException("Unable to write code to in-memory buffer", e);
-        }
-        return codeBuffer.toString();
     }
 
     /**
