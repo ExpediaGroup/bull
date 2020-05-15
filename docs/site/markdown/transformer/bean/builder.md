@@ -8,7 +8,7 @@ The library support the transformation of Java Bean using the following Builder 
 
 ### Standard pattern:
 
-~~~Java
+```java
 public class ItemType {
     private final Class<?> objectClass;
     private final Class<?> genericClass;
@@ -46,13 +46,13 @@ public class ItemType {
         }
     }
 }
-~~~
+```
 
 ### Custom Builder pattern:
 
 To enable the transformation of Java Beans using the following Builder pattern:
 
-~~~Java
+```java
 public class ItemType {
     private final Class<?> objectClass;
     private final Class<?> genericClass;
@@ -90,12 +90,12 @@ public class ItemType {
         }
     }
 }
-~~~
+```
 
 It's needed to enable the custom Builder Transformation as following:
 
-~~~Java
+```java
 ToBean toBean = new BeanTransformer()
                          .setCustomBuilderTransformationEnabled(true)
                          .transform(sourceObject, ToBean.class);
-~~~
+```

@@ -10,7 +10,7 @@ Validate a java bean has never been so simple. The library offers different API 
 
 Given the following bean:
 
-~~~Java
+```java
 public class SampleBean {                           
    @NotNull                   
    private BigInteger id;                      
@@ -19,19 +19,19 @@ public class SampleBean {
    // constructor
    // getters and setters... 
 }                                                               
-~~~
+```
 
 an instance of the above object:
 
-~~~Java
+```java
 SampleBean sampleBean = new SampleBean();
-~~~
+```
 
 And one line code as:
 
-~~~Java
+```java
 beanUtils.getValidator().validate(sampleBean);
-~~~
+```
 
 this will throw an `InvalidBeanException` as the `id` field is null.
 
@@ -39,7 +39,7 @@ this will throw an `InvalidBeanException` as the `id` field is null.
 
 Given the following bean:
 
-~~~Java
+```java
 public class SampleBean {                           
    @NotNull                   
    private BigInteger id;                      
@@ -48,23 +48,23 @@ public class SampleBean {
    // constructor
    // getters and setters... 
 }                                                               
-~~~
+```
 
 an instance of the above object:
 
-~~~Java
+```java
 SampleBean sampleBean = new SampleBean();
-~~~
+```
 
 And one line code as:
 
-~~~Java
+```java
 List<String> violatedConstraints = beanUtils.getValidator().getConstraintViolationsMessages(sampleBean);
-~~~
+```
 
 this will returns a list containing a constraint validation message for the `id` field as it's null and the constraint: `@NotNull` is not met.
 
 in case it's needed to have the `ConstraintViolation` object:
-~~~Java
+```java
 Set<ConstraintViolation<Object>> violatedConstraints = beanUtils.getValidator().getConstraintViolations(sampleBean);
-~~~
+```

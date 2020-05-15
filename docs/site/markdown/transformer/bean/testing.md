@@ -31,7 +31,7 @@ to be added to the test resource folder. This file is available [here](https://g
 
 All the examples will be based on the following source object and destination object:
 
-~~~Java
+```java
 public class SampleRequest {                                public class DestObject {                           
    private final BigInteger x;                                 @NotNull                   
    private final BigInteger y;                                 private BigInteger x;                      
@@ -39,14 +39,14 @@ public class SampleRequest {                                public class DestObj
    // constructors                                             // constructors
    // getters and setters                                      // getters and setters
 }                                                           }
-~~~
+```
 
 ### First scenario
 
 #####The destination object does not require a special configuration to get transformed
 
 Given the following service class that contains the `BeanUtils` library:
-~~~Java
+```java
 import ...
 
 public class SampleClass {
@@ -67,9 +67,9 @@ public class SampleClass {
          return x.multiply(y);
     }
 }
-~~~
+```
 The test class will be:
-~~~Java
+```java
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.Mockito.when;
@@ -152,14 +152,14 @@ public class SampleClassTest {
        return new DestObject(x, y);
     }
 }
-~~~
+```
 
 ### Second scenario:
 
 #####The destination object requires a special configuration, but you are confident that the configuration is working fine as it doesn't includes any particular instruction.
 
 Given the following service class:
-~~~Java
+```java
 import ...
 
 public class SampleClass {
@@ -183,9 +183,9 @@ public class SampleClass {
          return x.multiply(y);
     }
 }
-~~~
+```
 The test class will be:
-~~~Java
+```java
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.Mockito.when;
@@ -272,14 +272,14 @@ public class SampleClassTest {
         return new DestObject(x, y);
     }
 }
-~~~
+```
 
 ### Third scenario:
 
 #####The destination object requires a special configuration that needs to be tested as you are not confident that it would work
 
 Given the following service class:
-~~~Java
+```java
 import ...
 
 public class SampleClass {
@@ -303,9 +303,9 @@ public class SampleClass {
          return x.multiply(y);
     }
 }
-~~~
+```
 The test class will be:
-~~~Java
+```java
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -395,4 +395,4 @@ public class SampleClassTest {
         }
     }
 }
-~~~
+```
