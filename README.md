@@ -24,7 +24,7 @@ All BULL modules are available on Maven Central:
 
 * ### Bean Transformer
 
-```
+```xml
 <dependency>
     <groupId>com.hotels.beans</groupId>
     <artifactId>bull-bean-transformer</artifactId>
@@ -34,7 +34,7 @@ All BULL modules are available on Maven Central:
 
 * ### `Map` Transformer
 
-```
+```xml
 <dependency>
     <groupId>com.hotels.beans</groupId>
     <artifactId>bull-map-transformer</artifactId>
