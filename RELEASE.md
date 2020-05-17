@@ -49,7 +49,7 @@ All the changes implemented needs to be reported to a `jdk8` compatible version.
 The BULL code for the `jdk8` is slightly different so all the changes needs to be reported on the other version starting
 from it's latest release tag.
 
-The first thing to do is to create a branch (that would have the same name as the `jdk11` one plus the suffix: `-jd8`)
+The first thing to do is to create a branch (that would have the same name as the `jdk11` one plus the suffix: `-jdk8`)
 starting from the latest `jdk8` release tag:
 
 ~~~
