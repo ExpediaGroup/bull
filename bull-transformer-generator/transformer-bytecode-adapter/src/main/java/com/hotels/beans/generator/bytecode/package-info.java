@@ -14,9 +14,15 @@
  * limitations under the License.
  */
 /**
- * Contains the bytecode adapter, which can compile the source code
+ * Contains the bytecode adapter classes, which can compile the source code
  * represented by a {@link com.hotels.beans.generator.core.TransformerSpec} at runtime,
  * and create a new instance of the generated {@link com.hotels.beans.generator.core.Transformer}.
+ * <p>
+ * This module is intended for internal usage in Bull as it's a low-level wrapper for
+ * runtime compilation of models. Use it directly only if you need to customize the runtime
+ * compilation and loading of models.
+ * Clients should prefer higher level interfaces such as {@code TransformerRegistry}
+ * to obtain generated transformer instances.
  */
 
 package com.hotels.beans.generator.bytecode;

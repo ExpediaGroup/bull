@@ -106,7 +106,7 @@ public class TransformerBytecodeAdapterTest {
     }
 
     @Test(dataProvider = "nonCompliantTransformers", expectedExceptions = RuntimeException.class)
-    public void shouldThrowRuntimeExceptionIfTransformerIsNonCompliant(Class<? extends Transformer> trClass)
+    public void shouldThrowRuntimeExceptionIfTransformerIsNonCompliant(final Class<? extends Transformer> trClass)
             throws Exception {
         // GIVEN
         transformerBytecodeAdapter = TransformerBytecodeAdapter.builder()
@@ -134,11 +134,14 @@ public class TransformerBytecodeAdapterTest {
                 .getMock();
     }
 
-    /*
-        Transformer stubs with non-compliant constructors.
-     */
+    //********************************************************
+    //  Transformer stubs with non-compliant constructors.
+    //********************************************************
 
-    private static class TransformerPrivateCtor implements Transformer<Source, Destination> {
+    /**
+     * Constructor is not instantiable.
+     */
+    private static final class TransformerPrivateCtor implements Transformer<Source, Destination> {
         private TransformerPrivateCtor() {
         }
 
@@ -148,8 +151,11 @@ public class TransformerBytecodeAdapterTest {
         }
     }
 
-    private static class TransformerCtorWithArgs implements Transformer<Source, Destination> {
-        TransformerCtorWithArgs(Object arg) {
+    /**
+     * Constructor has arguments.
+     */
+    private static final class TransformerCtorWithArgs implements Transformer<Source, Destination> {
+        TransformerCtorWithArgs(final Object arg) {
         }
 
         @Override
@@ -159,7 +165,10 @@ public class TransformerBytecodeAdapterTest {
 
     }
 
-    private static class TransformerCtorThrows implements Transformer<Source, Destination> {
+    /**
+     * Constructor throws exception.
+     */
+    private static final class TransformerCtorThrows implements Transformer<Source, Destination> {
         TransformerCtorThrows() {
             throw new RuntimeException("simulated error");
         }

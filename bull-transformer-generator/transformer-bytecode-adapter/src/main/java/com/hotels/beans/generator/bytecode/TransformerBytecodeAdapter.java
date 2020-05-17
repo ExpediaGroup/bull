@@ -27,33 +27,41 @@ import net.openhft.compiler.CachedCompiler;
 import net.openhft.compiler.CompilerUtils;
 
 /**
- * TODO: Document me.
+ * A bytecode adapter for {@link TransformerSpec} that compiles at runtime the source code
+ * represented by the model, and creates a new instance of {@link Transformer}.
+ * <p>
+ * This component is intended for internal usage in Bull as it's a low-level wrapper for
+ * runtime compilation of models. Clients should prefer higher level interfaces
+ * such as {@code TransformerRegistry}.
  */
 @Builder
 @Slf4j
 public final class TransformerBytecodeAdapter {
 
     /**
-     * TODO
+     * The default Transformer package if none is specified.
      */
     static final String DEFAULT_PACKAGE = "com.hotels.beans.transformer";
 
     /**
-     * TODO: Document me.
+     * The Transformer model for generating source code.
      */
     private final TransformerSpec spec;
 
     /**
-     * TODO: Document me.
+     * The Java package to use for every generated Transformer source code.
      */
     @Builder.Default
     private final String packageName = DEFAULT_PACKAGE;
 
+    /**
+     * The compiler instance to use at runtime.
+     */
     @Builder.Default
     private final CachedCompiler compiler = CompilerUtils.CACHED_COMPILER;
 
     /**
-     * TODO: Document me.
+     * Dynamically create a new {@link Transformer} instance.
      * @param <A> the type parameter
      * @param <B> the type parameter
      * @param source the source
