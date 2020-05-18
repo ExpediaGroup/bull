@@ -30,12 +30,15 @@ TypeSpec transformer = spec.build(Source.class, Destination.class);
 ### Source Adapter *(TODO)*
 
 This module is responsible for generating source files from transformer models and saving them to the filesystem.
-It can be used to generate transformer classes at compile time.
+It can be used to generate transformer classes at compile-time.
 
-### Bytecode Adapter *(TODO)*
+### Bytecode Adapter
 
 This module is responsible for generating class bytecode from transformer models and loading them in memory.
-It can be used to generate transformer classes at run time.
+It can be used to generate transformer classes at run-time.
+
+This module is intended for internal usage in Bull as it's a low-level wrapper for the compilation of models' source.
+Use it directly only if you need to customize the run-time compilation and loading of models.
 
 ### Transformer Registry *(TODO)*
 

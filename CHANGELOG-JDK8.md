@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.1.0-jdk8] TBD
+#### Added
+* Added transformer generation at run-time in module `transformer-bytecode-adapter`.
+
 ### [2.0.0-jdk8] TBD
 #### Added
 * Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
