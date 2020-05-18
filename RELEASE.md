@@ -52,16 +52,16 @@ from it's latest release tag.
 The first thing to do is to create a branch (that would have the same name as the `jdk11` one plus the suffix: `-jdk8`)
 starting from the latest `jdk8` release tag:
 
-~~~
+```shell script
 $ git checkout -b [branch name]-jdk8 [latest jdk8 release tag] 
-~~~
+```
 
 e.g. if the latest `jdk8` release tag is: `1.7.0-jdk8` and the new feature branch is: `feature/my-new-feature`
 the command to perform is: 
 
-~~~
+```shell script
 $ git checkout -b feature/my-new-feature-jdk8 1.7.0-jdk8 
-~~~
+```
 
 **IMPORTANT:** In the new branch, apply only the changes introduced comparing the code with the `jdk11` branch.
 When completed, commit your code and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green. 
@@ -85,12 +85,12 @@ The guide explains how to do a release both the `jdk11` and `jdk8` compatible:
 
 The following steps will do a release "`X.Y.Z-jdk8`"
 
-~~~
+```shell script
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 nothing to commit, working directory clean
-~~~
+```
 
 #### 1. Create a branch from the latest JDK8 release tag
 
@@ -102,10 +102,10 @@ Assuming that:
 
 the release branch would be: `release/my-new-feature-jdk8`
 
-~~~
+```shell script
 $ git checkout -b release/my-new-feature-jdk8 A.B.C-jdk8 
 $ git push --set-upstream origin release/my-new-feature-jdk8 
-~~~
+```
 
 #### 2. Apply the changes to the new branch
 
@@ -115,9 +115,9 @@ Apply all the changes you implemented to this branch.
 
 The maven version is now set with the latest released, but you need to change it with the new one you are going to release:
 
-~~~
+```shell script
 $ mvn versions:set -D newVersion=X.Y.Z-jdk8
-~~~
+```
 
 Commit all the changes and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green.
 
@@ -125,30 +125,30 @@ Commit all the changes and verify that the [Travis build](https://travis-ci.org/
 
 Once you will have created the tag, and pushed it to the remote repo, an automatic release will be performed by Travis.
 
-~~~
+```shell script
 $ git tag -a X.Y.Z-jdk8 -m "my version X.Y.Z-jdk8"
 $ git push origin --tags
-~~~
+```
 
 #### 5. Remove the no longer needed branch
 
 If the release went successfully, you can now delete the branch:
 
-~~~
+```shell script
 $ git branch -D release/my-new-feature-jdk8
 $ git push <remote_name> --delete release/my-new-feature-jdk8
-~~~
+```
 
 ### JDK11 Release
 
 The following steps will do a release "`X.Y.Z`"
 
-~~~
+```shell script
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 nothing to commit, working directory clean
-~~~
+```
 
 #### 1. Create a branch from the master branch
 
@@ -160,17 +160,17 @@ Assuming that:
 
 the release branch would be: `release/my-new-feature`
 
-~~~
+```shell script
 $ git checkout -b release/my-new-feature
-~~~
+```
 
 #### 2. Change the maven version
 
 The maven version is now set with the latest released, but you need to change it with the new one you are going to release:
 
-~~~
+```shell script
 $ mvn versions:set -D newVersion=X.Y.Z
-~~~
+```
 
 Commit all the changes and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green.
 
@@ -178,16 +178,16 @@ Commit all the changes and verify that the [Travis build](https://travis-ci.org/
 
 Once you will have created the tag, and pushed it to the remote repo, an automatic release will be performed by Travis.
 
-~~~
+```shell script
 $ git tag -a X.Y.Z -m "my version X.Y.Z"
 $ git push origin --tags
-~~~
+```
 
 #### 4. Remove the no longer needed branch
 
 If the release went successfully, you can now delete the branch:
 
-~~~
+```shell script
 $ git branch -D release/my-new-feature
 $ git push <remote_name> --delete release/my-new-feature-jdk8
-~~~
+```
