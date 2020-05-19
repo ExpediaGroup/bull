@@ -22,9 +22,11 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static org.testng.Assert.assertNotNull;
 
-import org.mockito.MockitoAnnotations;
+import static com.hotels.beans.generator.bytecode.TransformerBytecodeAdapter.DEFAULT_PACKAGE;
+
 import org.mockito.Spy;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -43,14 +45,14 @@ import net.openhft.compiler.CachedCompiler;
  */
 public class TransformerBytecodeAdapterTest {
     @Spy
-    TransformerSpec spec = new TransformerSpec(MappingCodeFactory.getInstance());
+    private final TransformerSpec spec = new TransformerSpec(MappingCodeFactory.getInstance());
 
-    TransformerBytecodeAdapter transformerBytecodeAdapter;
+    private TransformerBytecodeAdapter underTest;
 
     @BeforeMethod
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        transformerBytecodeAdapter = TransformerBytecodeAdapter.builder()
+        initMocks(this);
+        underTest = TransformerBytecodeAdapter.builder()
                 .spec(spec)
                 .build();
     }
@@ -58,36 +60,36 @@ public class TransformerBytecodeAdapterTest {
     @Test
     public void shouldCreateANewTransformerWithGivenSpec() {
         // WHEN
-        var transformer = transformerBytecodeAdapter.newTransformer(Source.class, Destination.class);
+        var actual = underTest.newTransformer(Source.class, Destination.class);
 
         // THEN
-        assertNotNull(transformer, "a new Transformer instance is never null");
+        assertNotNull(actual, "a new Transformer instance is never null");
         then(spec).should().build(Source.class, Destination.class);
     }
 
     @Test
     public void shouldCreateANewTransformerWithDefaultPackage() {
         // WHEN
-        var transformer = transformerBytecodeAdapter.newTransformer(Source.class, Destination.class);
+        var actual = underTest.newTransformer(Source.class, Destination.class);
 
         // THEN
-        assertThat(transformer.getClass().getName(), startsWith(TransformerBytecodeAdapter.DEFAULT_PACKAGE));
+        assertThat(actual.getClass().getName(), startsWith(DEFAULT_PACKAGE));
     }
 
     @Test
     public void shouldCreateANewTransformerWithGivenPackage() {
         // GIVEN
         var packageName = "foo.bar";
-        transformerBytecodeAdapter = TransformerBytecodeAdapter.builder()
+        underTest = TransformerBytecodeAdapter.builder()
                 .packageName(packageName)
                 .spec(spec)
                 .build();
 
         // WHEN
-        var transformer = transformerBytecodeAdapter.newTransformer(Source.class, Destination.class);
+        var actual = underTest.newTransformer(Source.class, Destination.class);
 
         // THEN
-        assertThat(transformer.getClass().getName(), startsWith(packageName));
+        assertThat(actual.getClass().getName(), startsWith(packageName));
     }
 
     @Test(expectedExceptions = RuntimeException.class)
@@ -96,26 +98,26 @@ public class TransformerBytecodeAdapterTest {
         CachedCompiler compiler = given(mock(CachedCompiler.class).loadFromJava(anyString(), anyString()))
                 .willThrow(ClassNotFoundException.class)
                 .getMock();
-        transformerBytecodeAdapter = TransformerBytecodeAdapter.builder()
+        underTest = TransformerBytecodeAdapter.builder()
                 .compiler(compiler)
                 .spec(spec)
                 .build();
 
         // WHEN
-        transformerBytecodeAdapter.newTransformer(Source.class, Destination.class);
+        underTest.newTransformer(Source.class, Destination.class);
     }
 
     @Test(dataProvider = "nonCompliantTransformers", expectedExceptions = RuntimeException.class)
     public void shouldThrowRuntimeExceptionIfTransformerIsNonCompliant(final Class<? extends Transformer> trClass)
             throws Exception {
         // GIVEN
-        transformerBytecodeAdapter = TransformerBytecodeAdapter.builder()
+        underTest = TransformerBytecodeAdapter.builder()
                 .compiler(mockCompilerWith(trClass))
                 .spec(spec)
                 .build();
 
         // WHEN
-        transformerBytecodeAdapter.newTransformer(Source.class, Destination.class);
+        underTest.newTransformer(Source.class, Destination.class);
     }
 
     @DataProvider
