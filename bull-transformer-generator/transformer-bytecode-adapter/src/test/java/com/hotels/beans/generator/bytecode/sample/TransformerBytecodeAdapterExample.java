@@ -16,6 +16,8 @@
 
 package com.hotels.beans.generator.bytecode.sample;
 
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -65,7 +67,7 @@ public final class TransformerBytecodeAdapterExample {
         Destination destination = transformer.transform(source);
 
         ToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
-        System.out.printf("Transformed: %s%n", ToStringBuilder.reflectionToString(destination));
-        System.out.printf("Expected: %s%n", ToStringBuilder.reflectionToString(getExpectedResult()));
+        System.out.printf("Transformed: %s%n", reflectionToString(destination));
+        System.out.printf("Expected: %s%n", reflectionToString(getExpectedResult()));
     }
 }
