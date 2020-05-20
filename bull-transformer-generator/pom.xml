@@ -7,6 +7,7 @@
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>Generate Java Bean Transformers in the form of source code and/or bytecode.</description>
+
     <parent>
         <groupId>com.hotels.beans</groupId>
         <artifactId>bean-utils-library-parent</artifactId>
@@ -14,8 +15,10 @@
     </parent>
 
     <properties>
-        <javapoet.version>1.11.1</javapoet.version>
+        <javapoet.version>1.12.1</javapoet.version>
         <compiler.version>2.3.5</compiler.version>
+        <maven.compiler.source>${jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk.version}</maven.compiler.target>
     </properties>
 
     <modules>
