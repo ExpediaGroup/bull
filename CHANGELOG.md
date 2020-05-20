@@ -2,13 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-### [2.1.0] TBD
-#### Added
-* Added transformer generation at run-time in module `transformer-bytecode-adapter`.
-
 ### [2.0.0] TBD
 #### Added
 * Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
+* Added transformer generation at run-time in module `transformer-bytecode-adapter`.
 #### Changed
 * Updated `wagon-ssh` version to `3.4.0` (was `3.3.4`).
 * Updated `hibernate-validator` version to `6.1.5.Final` (was `6.1.4.Final`).
