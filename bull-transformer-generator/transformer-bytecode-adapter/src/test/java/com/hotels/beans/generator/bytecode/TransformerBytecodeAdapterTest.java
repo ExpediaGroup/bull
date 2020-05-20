@@ -32,6 +32,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.generator.bytecode.sample.TransformerCtorThrows;
+import com.hotels.beans.generator.bytecode.sample.TransformerCtorWithArgs;
+import com.hotels.beans.generator.bytecode.sample.TransformerPrivateCtor;
 import com.hotels.beans.generator.core.Transformer;
 import com.hotels.beans.generator.core.TransformerSpec;
 import com.hotels.beans.generator.core.mapping.MappingCodeFactory;
@@ -135,50 +138,4 @@ public class TransformerBytecodeAdapterTest {
                 .willReturn(trClass)
                 .getMock();
     }
-
-    //********************************************************
-    //  Transformer stubs with non-compliant constructors.
-    //********************************************************
-
-    /**
-     * Constructor is not instantiable.
-     */
-    private static final class TransformerPrivateCtor implements Transformer<Source, Destination> {
-        private TransformerPrivateCtor() {
-        }
-
-        @Override
-        public Destination transform(final Source source) {
-            return null;
-        }
-    }
-
-    /**
-     * Constructor has arguments.
-     */
-    private static final class TransformerCtorWithArgs implements Transformer<Source, Destination> {
-        TransformerCtorWithArgs(final Object arg) {
-        }
-
-        @Override
-        public Destination transform(final Source source) {
-            return null;
-        }
-
-    }
-
-    /**
-     * Constructor throws exception.
-     */
-    private static final class TransformerCtorThrows implements Transformer<Source, Destination> {
-        TransformerCtorThrows() {
-            throw new RuntimeException("simulated error");
-        }
-
-        @Override
-        public Destination transform(final Source source) {
-            return null;
-        }
-    }
-
 }

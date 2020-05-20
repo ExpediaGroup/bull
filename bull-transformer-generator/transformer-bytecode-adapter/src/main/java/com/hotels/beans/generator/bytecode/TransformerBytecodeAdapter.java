@@ -16,6 +16,8 @@
 
 package com.hotels.beans.generator.bytecode;
 
+import static net.openhft.compiler.CompilerUtils.CACHED_COMPILER;
+
 import com.hotels.beans.generator.core.Transformer;
 import com.hotels.beans.generator.core.TransformerSpec;
 import com.squareup.javapoet.JavaFile;
@@ -24,7 +26,6 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
 import net.openhft.compiler.CachedCompiler;
-import net.openhft.compiler.CompilerUtils;
 
 /**
  * A bytecode adapter for {@link TransformerSpec} that compiles at runtime the source code
@@ -58,7 +59,7 @@ public final class TransformerBytecodeAdapter {
      * The compiler instance to use at runtime.
      */
     @Builder.Default
-    private final CachedCompiler compiler = CompilerUtils.CACHED_COMPILER;
+    private final CachedCompiler compiler = CACHED_COMPILER;
 
     /**
      * Dynamically create a new {@link Transformer} instance.
@@ -68,7 +69,7 @@ public final class TransformerBytecodeAdapter {
      * @param destination the destination
      * @return the transformer
      */
-    @SuppressWarnings("Unchecked Assignment")
+    @SuppressWarnings("unchecked")
     public <A, B> Transformer<A, B> newTransformer(final Class<A> source, final Class<B> destination) {
         JavaFile javaFile = JavaFile.builder(packageName, spec.build(source, destination)).build();
         String transformerCode = javaFile.toString();
