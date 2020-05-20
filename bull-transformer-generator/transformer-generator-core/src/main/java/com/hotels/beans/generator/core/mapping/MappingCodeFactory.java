@@ -16,13 +16,13 @@
 
 package com.hotels.beans.generator.core.mapping;
 
+import static com.hotels.transformer.validator.Validator.notNull;
+
 import static lombok.AccessLevel.PRIVATE;
 
 import org.apache.commons.lang3.NotImplementedException;
 
-import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.utils.ClassUtils;
-import com.hotels.transformer.validator.Validator;
 import com.squareup.javapoet.CodeBlock;
 
 import lombok.RequiredArgsConstructor;
@@ -56,7 +56,6 @@ public final class MappingCodeFactory {
 
     /**
      * Obtains an instance of {@code MappingCode} from a source and destination.
-     * <p>
      * The returned instance is specialized to create a {@link CodeBlock} for mapping
      * an object of a source type to a destination type.
      * @param source the source type
@@ -64,19 +63,15 @@ public final class MappingCodeFactory {
      * @return the mapping code from source to destination
      */
     public MappingCode of(final Class<?> source, final Class<?> destination) {
-        Validator.notNull(source, "source type can't be null");
-        Validator.notNull(destination, "destination type can't be null");
-
-        final ClassType classType = classUtils.getClassType(destination);
-        switch (classType) {
-            case MUTABLE:
-                return new JavaBeanCode(source, destination, classUtils);
+        notNull(source, "source type can't be null");
+        notNull(destination, "destination type can't be null");
+        switch (classUtils.getClassType(destination)) {
             case IMMUTABLE:
                 throw new NotImplementedException("Transformation code for type IMMUTABLE is not supported");
             case MIXED:
                 throw new NotImplementedException("Transformation code for type MIXED is not supported");
             default:
-                throw new IllegalStateException("Should never happen - Unsupported destination type: " + classType);
+                return new JavaBeanCode(source, destination, classUtils);
         }
     }
 }

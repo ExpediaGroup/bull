@@ -16,6 +16,10 @@
 
 package com.hotels.beans.generator.bytecode.sample;
 
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+
+import static lombok.AccessLevel.PRIVATE;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -26,14 +30,13 @@ import com.hotels.beans.generator.core.mapping.MappingCodeFactory;
 import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
 
+import lombok.NoArgsConstructor;
+
 /**
  * Example of generating and using a Transformer at runtime.
  */
+@NoArgsConstructor(access = PRIVATE)
 public final class TransformerBytecodeAdapterExample {
-
-    private TransformerBytecodeAdapterExample() {
-    }
-
     private static Destination getExpectedResult() {
         Destination destination = new Destination();
         destination.setABoolean(true);
@@ -65,7 +68,7 @@ public final class TransformerBytecodeAdapterExample {
         Destination destination = transformer.transform(source);
 
         ToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
-        System.out.printf("Transformed: %s%n", ToStringBuilder.reflectionToString(destination));
-        System.out.printf("Expected: %s%n", ToStringBuilder.reflectionToString(getExpectedResult()));
+        System.out.printf("Transformed: %s%n", reflectionToString(destination));
+        System.out.printf("Expected: %s%n", reflectionToString(getExpectedResult()));
     }
 }
