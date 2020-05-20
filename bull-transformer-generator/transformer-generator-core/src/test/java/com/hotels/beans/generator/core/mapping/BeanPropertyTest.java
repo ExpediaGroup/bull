@@ -32,12 +32,12 @@ import com.hotels.beans.generator.core.sample.javabean.Source;
  * Tests for {@link BeanProperty}.
  */
 public class BeanPropertyTest {
-    private BeanProperty anInt;
+    private BeanProperty underTest;
 
     @BeforeClass
     public void beforeClass() throws NoSuchMethodException {
         final Method getAnInt = Source.class.getDeclaredMethod("getAnInt");
-        anInt = new BeanProperty(getAnInt);
+        underTest = new BeanProperty(getAnInt);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class BeanPropertyTest {
         var setAnInt = Source.class.getDeclaredMethod("setAnInt", int.class);
 
         // WHEN
-        boolean result = anInt.equals(new BeanProperty(setAnInt));
+        boolean result = underTest.equals(new BeanProperty(setAnInt));
 
         // THEN
         assertTrue(result);
@@ -68,7 +68,7 @@ public class BeanPropertyTest {
     @Test
     public void shouldBeEqualToSelf() {
         // WHEN
-        boolean result = anInt.equals(anInt);
+        boolean result = underTest.equals(underTest);
 
         // THEN
         assertTrue(result);
@@ -80,7 +80,7 @@ public class BeanPropertyTest {
         var getAString = Source.class.getDeclaredMethod("getAString");
 
         // WHEN
-        boolean result = anInt.equals(new BeanProperty(getAString));
+        boolean result = underTest.equals(new BeanProperty(getAString));
 
         // THEN
         assertFalse(result);
@@ -89,7 +89,7 @@ public class BeanPropertyTest {
     @Test
     public void shouldNotBeEqualToNull() {
         // WHEN
-        boolean result = anInt.equals(null);
+        boolean result = underTest.equals(null);
 
         // THEN
         assertFalse(result);
@@ -101,7 +101,7 @@ public class BeanPropertyTest {
         Object other = new Object();
 
         // WHEN
-        boolean result = anInt.equals(other);
+        boolean result = underTest.equals(other);
 
         // THEN
         assertFalse(result);
@@ -113,7 +113,7 @@ public class BeanPropertyTest {
         var setAnInt = new BeanProperty(Source.class.getDeclaredMethod("setAnInt", int.class));
 
         // WHEN
-        int hashCode = anInt.hashCode();
+        int hashCode = underTest.hashCode();
 
         // THEN
         assertEquals(hashCode, setAnInt.hashCode());
@@ -125,7 +125,7 @@ public class BeanPropertyTest {
         var getAString = new BeanProperty(Source.class.getDeclaredMethod("getAString"));
 
         // WHEN
-        int hashCode = anInt.hashCode();
+        int hashCode = underTest.hashCode();
 
         // THEN
         assertNotEquals(hashCode, getAString.hashCode());
@@ -133,6 +133,6 @@ public class BeanPropertyTest {
 
     @Test
     public void shouldReturnPropertyNameAsString() {
-        assertEquals("anInt", anInt.toString());
+        assertEquals("anInt", underTest.toString());
     }
 }

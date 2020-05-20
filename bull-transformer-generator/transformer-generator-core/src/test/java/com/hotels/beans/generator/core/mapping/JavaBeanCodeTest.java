@@ -34,12 +34,12 @@ import com.squareup.javapoet.CodeBlock;
  */
 public class JavaBeanCodeTest {
 
-    private final JavaBeanCode code = new JavaBeanCode(Source.class, Destination.class, new ClassUtils());
+    private final JavaBeanCode underTest = new JavaBeanCode(Source.class, Destination.class, new ClassUtils());
 
     @Test
     public void shouldInstantiateAndReturnDestination() {
         // WHEN
-        CodeBlock block = code.build();
+        CodeBlock block = underTest.build();
 
         // THEN
         assertThat(block.toString(), allOf(
@@ -51,7 +51,7 @@ public class JavaBeanCodeTest {
     @Test
     public void shouldMapMatchingProperties() {
         // WHEN
-        CodeBlock block = code.build();
+        CodeBlock block = underTest.build();
 
         // THEN
         assertThat(block.toString(), allOf(
