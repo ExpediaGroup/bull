@@ -16,7 +16,12 @@
 
 package com.hotels.beans.generator.core.mapping;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.testng.Assert.assertNotNull;
+
+import static com.hotels.transformer.constant.ClassType.UNSUPPORTED;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.testng.annotations.DataProvider;
@@ -26,6 +31,7 @@ import com.hotels.beans.generator.core.sample.immutable.ImmutableDestination;
 import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
 import com.hotels.beans.generator.core.sample.mixed.MixedDestination;
+import com.hotels.transformer.utils.ClassUtils;
 
 /**
  * Tests for {@link MappingCodeFactory}.
@@ -43,7 +49,7 @@ public class MappingCodeFactoryTest {
     }
 
     /**
-     * TODO remove this test after implementation of immutable mapping code.
+     * TODO: remove this test after implementation of immutable mapping code.
      */
     @Test(expectedExceptions = NotImplementedException.class)
     public void shouldFailForImmutableDestination() {
@@ -51,11 +57,22 @@ public class MappingCodeFactoryTest {
     }
 
     /**
-     * TODO remove this test after implementation of mixed mapping code.
+     * TODO: remove this test after implementation of mixed mapping code.
      */
     @Test(expectedExceptions = NotImplementedException.class)
     public void shouldFailForMixedDestination() {
         underTest.of(Source.class, MixedDestination.class);
+    }
+
+    @Test(expectedExceptions = AssertionError.class, expectedExceptionsMessageRegExp = ".*UNSUPPORTED.*")
+    public void shouldFailForUnsupportedDestinationType() {
+        // GIVEN
+        ClassUtils classUtils = given(mock(ClassUtils.class).getClassType(any()))
+                .willReturn(UNSUPPORTED)
+                .getMock();
+
+        // WHEN
+        MappingCodeFactory.getInstance(classUtils).of(Source.class, Destination.class);
     }
 
     @Test(dataProvider = "typePairs", expectedExceptions = IllegalArgumentException.class)

@@ -22,6 +22,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 import org.apache.commons.lang3.NotImplementedException;
 
+import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.utils.ClassUtils;
 import com.squareup.javapoet.CodeBlock;
 
@@ -65,13 +66,19 @@ public final class MappingCodeFactory {
     public MappingCode of(final Class<?> source, final Class<?> destination) {
         notNull(source, "source type can't be null");
         notNull(destination, "destination type can't be null");
-        switch (classUtils.getClassType(destination)) {
+        ClassType classType = classUtils.getClassType(destination);
+        switch (classType) {
+            case MUTABLE:
+                return new JavaBeanCode(source, destination, classUtils);
             case IMMUTABLE:
                 throw new NotImplementedException("Transformation code for type IMMUTABLE is not supported");
             case MIXED:
                 throw new NotImplementedException("Transformation code for type MIXED is not supported");
             default:
-                return new JavaBeanCode(source, destination, classUtils);
+                throw new AssertionError("Unable to determine MappingCode implementation: "
+                        + "destination class type '" + classType + "' is unsupported. "
+                        + "Please modify this method to handle the case or check the implementation of "
+                        + "com.hotels.transformer.utils.ClassUtils.getClassType");
         }
     }
 }

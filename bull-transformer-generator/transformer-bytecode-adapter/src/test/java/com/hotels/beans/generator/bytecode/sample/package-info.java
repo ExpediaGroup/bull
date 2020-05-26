@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Example usage of the bytecode adapter.
+ * Example usage of the bytecode adapter plus other sample types used in tests.
  */
 
 package com.hotels.beans.generator.bytecode.sample;

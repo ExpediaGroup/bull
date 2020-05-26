@@ -21,7 +21,7 @@ import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
 
 /**
- * Constructor throws exception.
+ * Non-compliant transformer implementation: constructor throws exception.
  */
 public final class TransformerCtorThrows implements Transformer<Source, Destination> {
     TransformerCtorThrows() {

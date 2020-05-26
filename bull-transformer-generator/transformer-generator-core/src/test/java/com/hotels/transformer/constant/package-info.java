@@ -13,23 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.hotels.beans.generator.bytecode.sample;
-
-import com.hotels.beans.generator.core.Transformer;
-import com.hotels.beans.generator.core.sample.javabean.Destination;
-import com.hotels.beans.generator.core.sample.javabean.Source;
-
 /**
- * Non-compliant transformer implementation: constructor has arguments.
+ * Copy of {@code ClassType} in module bull-common, modified for testing purposes.
  */
-public final class TransformerCtorWithArgs implements Transformer<Source, Destination> {
-    TransformerCtorWithArgs(final Object arg) {
-    }
 
-    @Override
-    public Destination transform(final Source source) {
-        return null;
-    }
-
-}
+package com.hotels.transformer.constant;
