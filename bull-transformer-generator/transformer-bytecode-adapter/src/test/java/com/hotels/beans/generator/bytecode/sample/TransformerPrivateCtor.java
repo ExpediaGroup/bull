@@ -25,7 +25,7 @@ import com.hotels.beans.generator.core.sample.javabean.Source;
 import lombok.NoArgsConstructor;
 
 /**
- * Constructor is not instantiable.
+ * Non-compliant transformer implementation: constructor is not accessible.
  */
 @NoArgsConstructor(access = PRIVATE)
 public final class TransformerPrivateCtor implements Transformer<Source, Destination> {

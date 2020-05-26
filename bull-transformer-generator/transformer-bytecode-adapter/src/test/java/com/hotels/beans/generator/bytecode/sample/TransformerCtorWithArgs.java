@@ -21,7 +21,7 @@ import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
 
 /**
- * Constructor has arguments.
+ * Non-compliant transformer implementation: constructor has arguments.
  */
 public final class TransformerCtorWithArgs implements Transformer<Source, Destination> {
     TransformerCtorWithArgs(final Object arg) {
