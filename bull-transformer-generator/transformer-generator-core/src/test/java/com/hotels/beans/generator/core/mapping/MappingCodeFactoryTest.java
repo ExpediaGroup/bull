@@ -16,6 +16,9 @@
 
 package com.hotels.beans.generator.core.mapping;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.testng.Assert.assertNotNull;
 
 import org.apache.commons.lang3.NotImplementedException;
@@ -26,6 +29,8 @@ import com.hotels.beans.generator.core.sample.immutable.ImmutableDestination;
 import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
 import com.hotels.beans.generator.core.sample.mixed.MixedDestination;
+import com.hotels.transformer.constant.ClassType;
+import com.hotels.transformer.utils.ClassUtils;
 
 /**
  * Tests for {@link MappingCodeFactory}.
@@ -56,6 +61,19 @@ public class MappingCodeFactoryTest {
     @Test(expectedExceptions = NotImplementedException.class)
     public void shouldFailForMixedDestination() {
         underTest.of(Source.class, MixedDestination.class);
+    }
+
+    @Test(expectedExceptions = AssertionError.class,
+            expectedExceptionsMessageRegExp = ".*UNSUPPORTED.*")
+    public void shouldFailForUnsupportedDestinationType() {
+        // GIVEN
+        ClassUtils classUtils = given(mock(ClassUtils.class).getClassType(any()))
+                .willReturn(ClassType.UNSUPPORTED)
+                .getMock();
+        MappingCodeFactory underTest = MappingCodeFactory.getInstance(classUtils);
+
+        // WHEN
+        underTest.of(Source.class, Destination.class);
     }
 
     @Test(dataProvider = "typePairs", expectedExceptions = IllegalArgumentException.class)
