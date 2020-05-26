@@ -41,7 +41,6 @@
         <module>bull-bean-transformer</module>
         <module>bull-converter</module>
         <module>bull-report</module>
-        <module>bull-transformer-generator</module>
     </modules>
 
     <properties>
