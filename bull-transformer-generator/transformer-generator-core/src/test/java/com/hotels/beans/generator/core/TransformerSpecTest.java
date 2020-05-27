@@ -37,7 +37,7 @@ import com.squareup.javapoet.TypeSpec;
  */
 public class TransformerSpecTest {
     private final TypeName iTransformer = TypeName.get(Transformer.class);
-    private final TransformerSpec spec = new TransformerSpec(MappingCodeFactory.getInstance());
+    private final TransformerSpec underTest = new TransformerSpec(MappingCodeFactory.getInstance());
 
     /**
      * Should be named after source and destination types.
@@ -45,7 +45,7 @@ public class TransformerSpecTest {
     @Test
     public void shouldBeNamedAfterSourceAndDestinationTypes() {
         // WHEN
-        TypeSpec generated = spec.build(Source.class, Destination.class);
+        TypeSpec generated = underTest.build(Source.class, Destination.class);
 
         // THEN
         assertEquals(generated.name, "SourceToDestinationTransformer",
@@ -58,7 +58,7 @@ public class TransformerSpecTest {
     @Test
     public void shouldImplementTransformerInterface() {
         // WHEN
-        TypeSpec generated = spec.build(Source.class, Destination.class);
+        TypeSpec generated = underTest.build(Source.class, Destination.class);
 
         // THEN
         assertTrue(isATransformer(generated),
