@@ -70,9 +70,10 @@ public class MappingCodeFactoryTest {
         ClassUtils classUtils = given(mock(ClassUtils.class).getClassType(any()))
                 .willReturn(UNSUPPORTED)
                 .getMock();
+        MappingCodeFactory underTest = MappingCodeFactory.getInstance(classUtils);
 
         // WHEN
-        MappingCodeFactory.getInstance(classUtils).of(Source.class, Destination.class);
+        underTest.of(Source.class, Destination.class);
     }
 
     @Test(dataProvider = "typePairs", expectedExceptions = IllegalArgumentException.class)
