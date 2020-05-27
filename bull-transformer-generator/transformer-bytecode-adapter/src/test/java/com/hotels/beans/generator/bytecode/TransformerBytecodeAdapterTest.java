@@ -18,15 +18,18 @@ package com.hotels.beans.generator.bytecode;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
+import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.mock;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.testng.Assert.assertNotNull;
 
 import static com.hotels.beans.generator.bytecode.TransformerBytecodeAdapter.DEFAULT_PACKAGE;
 
+import java.io.IOException;
+
+import org.mockito.Mock;
 import org.mockito.Spy;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -40,8 +43,7 @@ import com.hotels.beans.generator.core.TransformerSpec;
 import com.hotels.beans.generator.core.mapping.MappingCodeFactory;
 import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
-
-import net.openhft.compiler.CachedCompiler;
+import com.itranswarp.compiler.JavaStringCompiler;
 
 /**
  * Tests for {@link TransformerBytecodeAdapter}.
@@ -49,6 +51,9 @@ import net.openhft.compiler.CachedCompiler;
 public class TransformerBytecodeAdapterTest {
     @Spy
     private final TransformerSpec spec = new TransformerSpec(MappingCodeFactory.getInstance());
+
+    @Mock
+    private JavaStringCompiler compiler;
 
     private TransformerBytecodeAdapter underTest;
 
@@ -99,13 +104,22 @@ public class TransformerBytecodeAdapterTest {
     }
 
     @Test(expectedExceptions = RuntimeException.class)
-    public void shouldThrowRuntimeExceptionIfCompilerFails() throws Exception {
+    public void shouldThrowRuntimeExceptionIfCompilationFails() throws Exception {
         // GIVEN
-        CachedCompiler compiler = given(mock(CachedCompiler.class).loadFromJava(anyString(), anyString()))
-                .willThrow(ClassNotFoundException.class)
-                .getMock();
         underTest = TransformerBytecodeAdapter.builder()
-                .compiler(compiler)
+                .compiler(mockCompilationFail())
+                .spec(spec)
+                .build();
+
+        // WHEN
+        underTest.newTransformer(Source.class, Destination.class);
+    }
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void shouldThrowRuntimeExceptionIfLoadingFails() throws Exception {
+        // GIVEN
+        underTest = TransformerBytecodeAdapter.builder()
+                .compiler(mockLoadingFail())
                 .spec(spec)
                 .build();
 
@@ -118,7 +132,7 @@ public class TransformerBytecodeAdapterTest {
             throws Exception {
         // GIVEN
         underTest = TransformerBytecodeAdapter.builder()
-                .compiler(mockCompilerWith(trClass))
+                .compiler(mockCompilerReturning(trClass))
                 .spec(spec)
                 .build();
 
@@ -135,9 +149,20 @@ public class TransformerBytecodeAdapterTest {
         };
     }
 
-    private static CachedCompiler mockCompilerWith(final Class<? extends Transformer> trClass)
-            throws ClassNotFoundException {
-        return given(mock(CachedCompiler.class).loadFromJava(anyString(), anyString()))
+    private JavaStringCompiler mockCompilationFail() throws IOException {
+        return given(compiler.compile(anyString(), anyString()))
+                .willThrow(IOException.class)
+                .getMock();
+    }
+
+    private JavaStringCompiler mockLoadingFail() throws ClassNotFoundException, IOException {
+        return given(compiler.loadClass(anyString(), anyMap()))
+                .willThrow(ClassNotFoundException.class)
+                .getMock();
+    }
+
+    private JavaStringCompiler mockCompilerReturning(final Class trClass) throws Exception {
+        return (JavaStringCompiler) given(compiler.loadClass(anyString(), anyMap()))
                 .willReturn(trClass)
                 .getMock();
     }

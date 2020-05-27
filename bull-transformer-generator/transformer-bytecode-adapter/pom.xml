@@ -25,7 +25,7 @@
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>net.openhft</groupId>
+            <groupId>com.itranswarp</groupId>
             <artifactId>compiler</artifactId>
         </dependency>
         <dependency>
