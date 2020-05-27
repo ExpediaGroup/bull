@@ -16,7 +16,7 @@
 
     <properties>
         <javapoet.version>1.12.1</javapoet.version>
-        <compiler.version>2.3.5</compiler.version>
+        <compiler.version>1.0</compiler.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
     </properties>
@@ -46,7 +46,7 @@
                 <version>${javapoet.version}</version>
             </dependency>
             <dependency>
-                <groupId>net.openhft</groupId>
+                <groupId>com.itranswarp</groupId>
                 <artifactId>compiler</artifactId>
                 <version>${compiler.version}</version>
             </dependency>

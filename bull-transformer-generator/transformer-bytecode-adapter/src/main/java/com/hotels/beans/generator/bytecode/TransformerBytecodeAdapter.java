@@ -16,16 +16,16 @@
 
 package com.hotels.beans.generator.bytecode;
 
-import static net.openhft.compiler.CompilerUtils.CACHED_COMPILER;
+import java.io.IOException;
+import java.util.Map;
 
 import com.hotels.beans.generator.core.Transformer;
 import com.hotels.beans.generator.core.TransformerSpec;
+import com.itranswarp.compiler.JavaStringCompiler;
 import com.squareup.javapoet.JavaFile;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-
-import net.openhft.compiler.CachedCompiler;
 
 /**
  * A bytecode adapter for {@link TransformerSpec} that compiles at runtime the source code
@@ -59,7 +59,7 @@ public final class TransformerBytecodeAdapter {
      * The compiler instance to use at runtime.
      */
     @Builder.Default
-    private final CachedCompiler compiler = CACHED_COMPILER;
+    private final JavaStringCompiler compiler = new JavaStringCompiler();
 
     /**
      * Dynamically create a new {@link Transformer} instance.
@@ -77,8 +77,12 @@ public final class TransformerBytecodeAdapter {
         try {
             log.info("Compiling and loading '{}'", className);
             log.debug("\n{}", transformerCode);
-            Class<Transformer<A, B>> transformerClass = compiler.loadFromJava(className, transformerCode);
+            Map<String, byte[]> results = compiler.compile(javaFile.typeSpec.name + ".java", transformerCode);
+            Class<Transformer<A, B>> transformerClass = (Class<Transformer<A, B>>) compiler.loadClass(className, results);
             return transformerClass.getDeclaredConstructor().newInstance();
+        } catch (IOException e) {
+            throw new RuntimeException(
+                    "There was an error compiling '" + className + "'", e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(
                     "There was an error loading the compiled transformer '" + className + "'", e);
