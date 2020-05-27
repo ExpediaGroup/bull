@@ -53,7 +53,7 @@ public class TransformerBytecodeAdapterTest {
     private final TransformerSpec spec = new TransformerSpec(MappingCodeFactory.getInstance());
 
     @Mock
-    JavaStringCompiler compiler;
+    private JavaStringCompiler compiler;
 
     private TransformerBytecodeAdapter underTest;
 
