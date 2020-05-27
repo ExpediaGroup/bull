@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * A bytecode adapter for {@link TransformerSpec} that compiles at runtime the source code
  * represented by the model, and creates a new instance of {@link Transformer}.
- * <p>
+ *
  * This component is intended for internal usage in Bull as it's a low-level wrapper for
  * runtime compilation of models. Clients should prefer higher level interfaces
  * such as {@code TransformerRegistry}.
