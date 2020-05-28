@@ -51,7 +51,7 @@ public final class TransformerBytecodeAdapterExample {
      */
     public static void main(final String[] args) {
         // create a transformer model
-        TransformerSpec spec = new TransformerSpec(MappingCodeFactory.getInstance());
+        TransformerSpec spec = new TransformerSpec(MappingCodeFactory.newInstance());
         // create a bytecode adapter for the model
         TransformerBytecodeAdapter bytecode = TransformerBytecodeAdapter.builder()
                 .spec(spec)

@@ -50,7 +50,7 @@ import com.itranswarp.compiler.JavaStringCompiler;
  */
 public class TransformerBytecodeAdapterTest {
     @Spy
-    private final TransformerSpec spec = new TransformerSpec(MappingCodeFactory.getInstance());
+    private final TransformerSpec spec = new TransformerSpec(MappingCodeFactory.newInstance());
 
     @Mock
     private JavaStringCompiler compiler;
