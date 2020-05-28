@@ -42,8 +42,8 @@ public final class MappingCodeFactory {
      * Gets an instance of {@code MappingCodeFactory}.
      * @return a MappingCode instance
      */
-    public static MappingCodeFactory getInstance() {
-        return getInstance(new ClassUtils());
+    public static MappingCodeFactory newInstance() {
+        return newInstance(new ClassUtils());
     }
 
     /**
@@ -51,7 +51,7 @@ public final class MappingCodeFactory {
      * @param classUtils the class utils
      * @return a MappingCode instance
      */
-    public static MappingCodeFactory getInstance(final ClassUtils classUtils) {
+    public static MappingCodeFactory newInstance(final ClassUtils classUtils) {
         return new MappingCodeFactory(classUtils);
     }
 

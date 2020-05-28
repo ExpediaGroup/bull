@@ -37,7 +37,7 @@ import com.squareup.javapoet.TypeSpec;
  */
 public class TransformerSpecTest {
     private final TypeName iTransformer = TypeName.get(Transformer.class);
-    private final TransformerSpec underTest = new TransformerSpec(MappingCodeFactory.getInstance());
+    private final TransformerSpec underTest = new TransformerSpec(MappingCodeFactory.newInstance());
 
     /**
      * Should be named after source and destination types.

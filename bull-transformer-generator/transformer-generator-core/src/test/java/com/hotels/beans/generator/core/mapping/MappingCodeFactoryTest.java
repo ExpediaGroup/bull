@@ -37,7 +37,7 @@ import com.hotels.transformer.utils.ClassUtils;
  * Tests for {@link MappingCodeFactory}.
  */
 public class MappingCodeFactoryTest {
-    private final MappingCodeFactory underTest = MappingCodeFactory.getInstance();
+    private final MappingCodeFactory underTest = MappingCodeFactory.newInstance();
 
     @Test
     public void shouldReturnAnInstanceForMutableDestination() {
@@ -70,7 +70,7 @@ public class MappingCodeFactoryTest {
         ClassUtils classUtils = given(mock(ClassUtils.class).getClassType(any()))
                 .willReturn(UNSUPPORTED)
                 .getMock();
-        MappingCodeFactory underTest = MappingCodeFactory.getInstance(classUtils);
+        MappingCodeFactory underTest = MappingCodeFactory.newInstance(classUtils);
 
         // WHEN
         underTest.of(Source.class, Destination.class);
