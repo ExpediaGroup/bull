@@ -16,10 +16,10 @@
 
 package com.hotels.beans.generator.core;
 
+import static javax.lang.model.element.Modifier.PUBLIC;
+
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
-
-import javax.lang.model.element.Modifier;
 
 import com.hotels.beans.generator.core.mapping.MappingCodeFactory;
 import com.squareup.javapoet.MethodSpec;
@@ -56,7 +56,7 @@ public class TransformerSpec {
      */
     public <A, B> TypeSpec build(final Class<A> source, final Class<B> destination) {
         return TypeSpec.classBuilder(nameWith(source, destination))
-                .addModifiers(Modifier.PUBLIC)
+                .addModifiers(PUBLIC)
                 .addSuperinterface(ParameterizedTypeName.get(Transformer.class, source, destination))
                 .addMethod(overrideTransform(source, destination)
                         .addCode(codeFactory.of(source, destination).build())
@@ -84,7 +84,7 @@ public class TransformerSpec {
     private MethodSpec.Builder overrideTransform(final Class<?> source, final Class<?> destination) {
         return MethodSpec.methodBuilder(TRANSFORM.getName())
                 .addAnnotation(Override.class)
-                .addModifiers(Modifier.PUBLIC)
+                .addModifiers(PUBLIC)
                 .addParameter(source, "source")
                 .returns(destination);
     }

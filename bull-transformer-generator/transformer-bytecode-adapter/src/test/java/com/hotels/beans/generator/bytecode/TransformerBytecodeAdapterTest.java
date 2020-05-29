@@ -40,6 +40,7 @@ import com.hotels.beans.generator.bytecode.sample.TransformerCtorWithArgs;
 import com.hotels.beans.generator.bytecode.sample.TransformerPrivateCtor;
 import com.hotels.beans.generator.core.Transformer;
 import com.hotels.beans.generator.core.TransformerSpec;
+import com.hotels.beans.generator.core.error.TransformerGeneratorException;
 import com.hotels.beans.generator.core.mapping.MappingCodeFactory;
 import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
@@ -103,7 +104,7 @@ public class TransformerBytecodeAdapterTest {
         assertThat(actual.getClass().getName(), startsWith(packageName));
     }
 
-    @Test(expectedExceptions = RuntimeException.class)
+    @Test(expectedExceptions = TransformerGeneratorException.class)
     public void shouldThrowRuntimeExceptionIfCompilationFails() throws Exception {
         // GIVEN
         underTest = TransformerBytecodeAdapter.builder()
@@ -115,7 +116,7 @@ public class TransformerBytecodeAdapterTest {
         underTest.newTransformer(Source.class, Destination.class);
     }
 
-    @Test(expectedExceptions = RuntimeException.class)
+    @Test(expectedExceptions = TransformerGeneratorException.class)
     public void shouldThrowRuntimeExceptionIfLoadingFails() throws Exception {
         // GIVEN
         underTest = TransformerBytecodeAdapter.builder()
@@ -127,7 +128,7 @@ public class TransformerBytecodeAdapterTest {
         underTest.newTransformer(Source.class, Destination.class);
     }
 
-    @Test(dataProvider = "nonCompliantTransformers", expectedExceptions = RuntimeException.class)
+    @Test(dataProvider = "nonCompliantTransformers", expectedExceptions = TransformerGeneratorException.class)
     public void shouldThrowRuntimeExceptionIfTransformerIsNonCompliant(final Class<? extends Transformer> trClass)
             throws Exception {
         // GIVEN
