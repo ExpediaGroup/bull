@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.hotels.beans.generator.core.Transformer;
 import com.hotels.beans.generator.core.TransformerSpec;
+import com.hotels.beans.generator.core.error.TransformerGeneratorException;
 import com.itranswarp.compiler.JavaStringCompiler;
 import com.squareup.javapoet.JavaFile;
 
@@ -81,13 +82,13 @@ public final class TransformerBytecodeAdapter {
             Class<Transformer<A, B>> transformerClass = (Class<Transformer<A, B>>) compiler.loadClass(className, results);
             return transformerClass.getDeclaredConstructor().newInstance();
         } catch (IOException e) {
-            throw new RuntimeException(
+            throw new TransformerGeneratorException(
                     "There was an error compiling '" + className + "'", e);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(
+            throw new TransformerGeneratorException(
                     "There was an error loading the compiled transformer '" + className + "'", e);
         } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(
+            throw new TransformerGeneratorException(
                     "There was an error instantiating the transformer '" + className + "': "
                             + "check that the TransformerSpec used by this adapter "
                             + "generates a public no-args constructor "
