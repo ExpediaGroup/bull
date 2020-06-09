@@ -2,8 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.7.2] TBD
+### [1.7.2] 2020.06.09
 #### Changed
+* Deprecates the method: `setDefaultValueSetEnabled` and replaces it with: `setDefaultValueForMissingPrimitiveField`
 * Updated `wagon-ssh` version to `3.4.0` (was `3.3.4`).
 * Updated `hibernate-validator` version to `6.1.5.Final` (was `6.1.4.Final`).
 * Updated `spring-boot-starter-test` version to `2.3.0.RELEASE` (was `2.2.6.RELEASE`).
