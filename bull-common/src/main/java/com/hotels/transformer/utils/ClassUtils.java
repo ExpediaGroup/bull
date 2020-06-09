@@ -465,6 +465,7 @@ public final class ClassUtils {
      * @param targetClass the class where the builder should be searched
      * @return the Builder class if available.
      */
+    @SuppressWarnings("unchecked")
     public Optional<Class<?>> getBuilderClass(final Class<?> targetClass) {
         String cacheKey = "BuilderClass-" + targetClass.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
@@ -586,11 +587,11 @@ public final class ClassUtils {
     public boolean hasField(final Object target, final String fieldName) {
         final String cacheKey = "ClassHasField-" + target.getClass().getName() + '-' + fieldName;
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            boolean hasField;
+            boolean hasField = false;
             try {
-                hasField = nonNull(target.getClass().getDeclaredField(fieldName));
+                target.getClass().getDeclaredField(fieldName);
+                hasField = true;
             } catch (final NoSuchFieldException e) {
-                hasField = false;
                 final Class<?> superclass = target.getClass().getSuperclass();
                 if (hasSuperclass(superclass)) {
                     hasField = hasField(superclass, fieldName);
