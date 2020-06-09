@@ -18,12 +18,12 @@ package com.hotels.beans.transformer;
 
 import static java.lang.Integer.parseInt;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
@@ -185,6 +185,24 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
      */
     @Test
     public void testTransformerDoesNotSetsTheDefaultValueForPrimitiveTypeField() {
+        //GIVEN
+        FromFooSimpleNoGetters fromFooSimpleNoGetters = new FromFooSimpleNoGetters(NAME, null, ACTIVE);
+        underTest.setDefaultValueForMissingPrimitiveField(false);
+
+        //WHEN
+        MutableToFooSimpleNoSetters actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.class);
+
+        //THEN
+        assertThat(actual, sameBeanAs(fromFooSimpleNoGetters));
+        underTest.setDefaultValueForMissingPrimitiveField(true);
+    }
+
+    /**
+     * Test that the transformer does not sets the default value for primitive type field
+     * in case it's disabled using the deprecated method.
+     */
+    @Test
+    public void testTransformerDoesNotSetsTheDefaultValueForPrimitiveTypeFieldUsingDeprecatedMethod() {
         //GIVEN
         FromFooSimpleNoGetters fromFooSimpleNoGetters = new FromFooSimpleNoGetters(NAME, null, ACTIVE);
         underTest.setDefaultValueSetEnabled(false);
