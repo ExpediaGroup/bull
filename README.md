@@ -322,7 +322,7 @@ To disable this you can simply do:
 
 ```java
 ToBean toBean = beanUtils.getTransformer()
-                    .setDefaultValueSetEnabled(false).transform(fromBean, ToBean.class);
+                    .setDefaultValueForMissingPrimitiveField(false).transform(fromBean, ToBean.class);
 ```
 
 in this case the field `id` after the transformation will be `null`
