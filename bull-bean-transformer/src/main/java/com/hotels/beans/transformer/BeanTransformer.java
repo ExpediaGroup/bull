@@ -89,15 +89,6 @@ public interface BeanTransformer extends Transformer<BeanTransformer> {
     void resetFieldsTransformationSkip();
 
     /**
-     * It allows to enable/disable the set of the default value for primitive types in case they are null.
-     * @param defaultValueSetEnabled if true the default value for the primitive type is set. By default it's true.
-     * @return the {@link BeanTransformer} instance
-     * @deprecated use {@link #setDefaultValueForMissingPrimitiveField(boolean) setDefaultValueForMissingPrimitiveField} instead.
-     */
-    @Deprecated
-    BeanTransformer setDefaultValueSetEnabled(boolean defaultValueSetEnabled);
-
-    /**
      * It allows to enable/disable the automatic conversion of primitive types.
      * @param primitiveTypeConversionEnabled if true primitive types are transformed automatically. By default it's false.
      * @return the {@link BeanTransformer} instance
