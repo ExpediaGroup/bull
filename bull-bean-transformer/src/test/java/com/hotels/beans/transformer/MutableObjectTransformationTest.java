@@ -198,24 +198,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
     }
 
     /**
-     * Test that the transformer does not sets the default value for primitive type field
-     * in case it's disabled using the deprecated method.
-     */
-    @Test
-    public void testTransformerDoesNotSetsTheDefaultValueForPrimitiveTypeFieldUsingDeprecatedMethod() {
-        //GIVEN
-        FromFooSimpleNoGetters fromFooSimpleNoGetters = new FromFooSimpleNoGetters(NAME, null, ACTIVE);
-        underTest.setDefaultValueSetEnabled(false);
-
-        //WHEN
-        MutableToFooSimpleNoSetters actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.class);
-
-        //THEN
-        assertThat(actual, sameBeanAs(fromFooSimpleNoGetters));
-        underTest.setDefaultValueSetEnabled(true);
-    }
-
-    /**
      * Test that the transformer is able to copy object even if the source object has no fields but has getter methods.
      */
     @Test
