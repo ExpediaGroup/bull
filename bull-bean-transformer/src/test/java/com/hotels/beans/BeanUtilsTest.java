@@ -16,8 +16,8 @@
 
 package com.hotels.beans;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
