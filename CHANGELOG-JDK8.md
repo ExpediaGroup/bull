@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.7.2-jdk8] 2020.06.09
+#### Changed
+* Removes the deprecated method: `setDefaultValueSetEnabled`
+
 ### [1.7.1-jdk8] 2020.06.09
 #### Changed
 * Deprecates the method: `setDefaultValueSetEnabled` and replaces it with: `setDefaultValueForMissingPrimitiveField`
