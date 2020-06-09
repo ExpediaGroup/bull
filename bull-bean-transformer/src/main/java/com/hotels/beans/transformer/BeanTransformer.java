@@ -54,6 +54,13 @@ public interface BeanTransformer extends Transformer<BeanTransformer> {
     BeanTransformer setDefaultValueForMissingField(boolean useDefaultValue);
 
     /**
+     * It allows to enable/disable the set of the default value for primitive types in case they are null.
+     * @param useDefaultValue if true the default value for the primitive type is set. By default it's true.
+     * @return the {@link BeanTransformer} instance
+     */
+    BeanTransformer setDefaultValueForMissingPrimitiveField(boolean useDefaultValue);
+
+    /**
      * It allows to configure the transformer in order to apply a transformation function on all fields matching the given name without keeping in consideration their full path.
      * If set to true the default value is set, if false if it raises a: {@link com.hotels.transformer.error.MissingFieldException} in case of missing fields.
      * @param useFlatTransformation indicates if the transformer function has to be performed on all fields matching the given name without keeping in consideration their full
@@ -80,13 +87,6 @@ public interface BeanTransformer extends Transformer<BeanTransformer> {
      * Removes all the configured fields to skip.
      */
     void resetFieldsTransformationSkip();
-
-    /**
-     * It allows to enable/disable the set of the default value for primitive types in case they are null.
-     * @param defaultValueSetEnabled if true the default value for the primitive type is set. By default it's true.
-     * @return the {@link BeanTransformer} instance
-     */
-    BeanTransformer setDefaultValueSetEnabled(boolean defaultValueSetEnabled);
 
     /**
      * It allows to enable/disable the automatic conversion of primitive types.

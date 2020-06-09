@@ -6,7 +6,14 @@ All notable changes to this project will be documented in this file.
 #### Added
 * Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
 * Added transformer generation at run-time in module `transformer-bytecode-adapter`.
+
+### [1.7.2-jdk8] 2020.06.09
 #### Changed
+* Removes the deprecated method: `setDefaultValueSetEnabled`
+
+### [1.7.1-jdk8] 2020.06.09
+#### Changed
+* Deprecates the method: `setDefaultValueSetEnabled` and replaces it with: `setDefaultValueForMissingPrimitiveField`
 * Updated `wagon-ssh` version to `3.4.0` (was `3.3.4`).
 * Updated `hibernate-validator` version to `6.1.5.Final` (was `6.1.4.Final`).
 * Updated `spring-boot-starter-test` version to `2.3.0.RELEASE` (was `2.2.6.RELEASE`).
