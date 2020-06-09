@@ -16,11 +16,11 @@
 
 package com.hotels.beans.transformer;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
