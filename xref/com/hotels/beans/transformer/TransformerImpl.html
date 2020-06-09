@@ -436,7 +436,7 @@
 <a class="jxr_linenumber" name="L428" href="#L428">428</a>                     &amp;&amp; (notPrimitiveAndNotSpecialType || Optional.<strong class="jxr_keyword">class</strong>.isAssignableFrom(fieldValue.getClass()))) {
 <a class="jxr_linenumber" name="L429" href="#L429">429</a>                 fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
 <a class="jxr_linenumber" name="L430" href="#L430">430</a>             }
-<a class="jxr_linenumber" name="L431" href="#L431">431</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (primitiveType &amp;&amp; settings.isDefaultValueSetEnabled() &amp;&amp; !isTransformerFunctionDefined) {
+<a class="jxr_linenumber" name="L431" href="#L431">431</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (primitiveType &amp;&amp; settings.isDefaultValueForMissingPrimitiveField() &amp;&amp; !isTransformerFunctionDefined) {
 <a class="jxr_linenumber" name="L432" href="#L432">432</a>             fieldValue = defaultValue(fieldType); <em class="jxr_comment">// assign the default value</em>
 <a class="jxr_linenumber" name="L433" href="#L433">433</a>         }
 <a class="jxr_linenumber" name="L434" href="#L434">434</a>         fieldValue = getTransformedValue(transformerFunction, fieldValue, sourceObj.getClass(), sourceFieldName, field, primitiveType, fieldBreadcrumb);

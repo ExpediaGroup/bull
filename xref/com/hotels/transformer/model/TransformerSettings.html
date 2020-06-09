@@ -70,25 +70,25 @@
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> setDefaultValueForMissingField;
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     * It allows to apply a transformation to all fields matching with the provided name without using their whole path.</em>
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * If set to true the transformation function is applied to all fields that have a name matching with the given one without evaluating their full path.</em>
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     * It allows to enable/disable the set of the default value for primitive types in case they are null.</em>
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * If set to true the default value is set.</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>      @Setter
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> flatFieldNameTransformation;
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> defaultValueForMissingPrimitiveField = <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>  
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * It allows to enable the object validation.</em>
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     * If set to true the validation is performed.</em>
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * It allows to apply a transformation to all fields matching with the provided name without using their whole path.</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     * If set to true the transformation function is applied to all fields that have a name matching with the given one without evaluating their full path.</em>
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      @Setter
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> validationEnabled;
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> flatFieldNameTransformation;
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>  
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     * It allows to enable/disable the set of the default value for primitive types in case they are null.</em>
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     * If set to true the default value is set.</em>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     * It allows to enable the object validation.</em>
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     * If set to true the validation is performed.</em>
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>      @Setter
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> defaultValueSetEnabled = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> validationEnabled;
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">     * It allows to enable/disable the automatic conversion of primitive types.</em>

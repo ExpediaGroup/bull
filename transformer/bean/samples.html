@@ -43,7 +43,7 @@
       <li class=""><a href="../.././" title="Bean Utils Light Library">Bean Utils Light Library</a><span class="divider">/</span></li>
     <li class="active ">Samples</li>
         <li id="publishDate" class="pull-right"><span class="divider">|</span> Last Published: 2020-06-09</li>
-          <li id="projectVersion" class="pull-right">Version: 1.7.2</li>
+          <li id="projectVersion" class="pull-right">Version: 1.7.3</li>
           </ul>
         </div>
       </header>
@@ -294,7 +294,7 @@ beanUtils.getTransformer()
 
 <div class="source">
 <div class="source"><pre class="prettyprint">ToBean toBean = beanUtils.getTransformer()
-                    .setDefaultValueSetEnabled(false).transform(fromBean, ToBean.class);
+                    .setDefaultValueForMissingPrimitiveField(false).transform(fromBean, ToBean.class);
 </pre></div></div>
 
 <p>in this case the field <code>id</code> after the transformation will be <code>null</code></p></section><section>
