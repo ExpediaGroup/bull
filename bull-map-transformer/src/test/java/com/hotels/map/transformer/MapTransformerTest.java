@@ -20,14 +20,7 @@ import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
 import static java.util.Collections.singletonList;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.both;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.everyItem;
-import static org.hamcrest.Matchers.isIn;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigInteger;
@@ -128,9 +121,11 @@ public class MapTransformerTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(actual).isNotNull();
-        assertEquals(actual.size(), sourceMap.size());
-        assertThat(actual.entrySet(),
-                both(everyItem(isIn(sourceMap.entrySet()))).and(containsInAnyOrder(sourceMap.entrySet().toArray())));
+        assertThat(actual.size()).isEqualTo(sourceMap.size());
+        assertThat(actual.entrySet())
+                .containsExactlyInAnyOrderElementsOf(sourceMap.entrySet());
+//        assertThat(actual.entrySet(),
+//                both(everyItem(isIn(sourceMap.entrySet()))).and(containsInAnyOrder(sourceMap.entrySet().toArray())));
     }
 
     /**
@@ -163,9 +158,9 @@ public class MapTransformerTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(actual).isNotNull();
-        assertEquals(actual.size(), sourceMap.size());
-        assertEquals(actual.get(MAP_KEY_1), sourceMap.get(MAP_KEY_1));
-        assertEquals(actual.get(MAP_KEY_2), sourceMap.get(MAP_KEY_1));
+        assertThat(actual.size()).isEqualTo(sourceMap.size());
+        assertThat(actual.get(MAP_KEY_1)).isEqualTo(sourceMap.get(MAP_KEY_1));
+        assertThat(actual.get(MAP_KEY_2)).isEqualTo(sourceMap.get(MAP_KEY_1));
         underTest.resetFieldsMapping();
     }
 
@@ -185,8 +180,8 @@ public class MapTransformerTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(actual).isNotNull();
-        assertEquals(actual.size(), sourceMap.size());
-        assertTrue(actual.containsKey(MAP_KEY_1.toUpperCase()));
+        assertThat(actual.size()).isEqualTo(sourceMap.size());
+        assertThat(actual).containsKey(MAP_KEY_1.toUpperCase());
     }
 
     /**
@@ -215,10 +210,10 @@ public class MapTransformerTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(actual).isNotNull();
-        assertEquals(actual.size(), EXTREME_COMPLEX_MAP.size());
+        assertThat(actual.size()).isEqualTo(EXTREME_COMPLEX_MAP.size());
         // check that the element has been converted
         for (Map.Entry<MutableToFooSimple, Map> entry : actual.entrySet()) {
-            assertEquals(MutableToFooSimple.class, entry.getKey().getClass());
+            assertThat(entry.getKey().getClass()).isEqualTo(MutableToFooSimple.class);
         }
     }
 
@@ -237,10 +232,10 @@ public class MapTransformerTest extends AbstractTransformerTest {
 
         //THEN
         assertThat(actual).isNotNull();
-        assertEquals(actual.size(), sourceMap.size());
+        assertThat(actual.size()).isEqualTo(sourceMap.size());
         for (Map.Entry<MutableToFooSimple, List> entry : actual.entrySet()) {
-            assertEquals(MutableToFooSimple.class, entry.getKey().getClass());
-            assertEquals(sampleList, entry.getValue());
+            assertThat(entry.getKey().getClass()).isEqualTo(MutableToFooSimple.class);
+            assertThat(entry.getValue()).isEqualTo(sampleList);
         }
     }
 
@@ -258,7 +253,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
                 (MapTransformerSettings) REFLECTION_UTILS.getFieldValue(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
 
         //THEN
-        assertTrue(transformerSettings.getKeyFieldsTransformers().isEmpty());
+        assertThat(transformerSettings.getKeyFieldsTransformers()).isEmpty();
         underTest.resetKeyTransformer();
     }
 }
