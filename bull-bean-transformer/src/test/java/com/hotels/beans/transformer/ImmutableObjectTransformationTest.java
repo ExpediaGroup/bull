@@ -102,7 +102,9 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         Object actual = transformer.transform(sourceObject, targetObjectClass);
 
         //THEN
-        assertThat(actual).usingRecursiveComparison().isEqualTo(sourceObject);
+        assertThat(actual).usingRecursiveComparison()
+                .ignoringAllOverriddenEquals()
+                .isEqualTo(sourceObject);
     }
 
     /**
