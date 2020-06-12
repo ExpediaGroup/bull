@@ -16,11 +16,8 @@
 
 package com.hotels.beans;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
-
-import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -75,7 +72,7 @@ public class BeanUtilsTest {
         final BeanTransformer transformer = underTest.getTransformer();
 
         //THEN
-        assertNotNull(transformer);
+        assertThat(transformer).isNotNull();
     }
 
     /**
@@ -106,9 +103,9 @@ public class BeanUtilsTest {
                 .collect(Collectors.toList());
 
         //THEN
-        assertNotNull(transformerFunction);
+        assertThat(transformerFunction).isNotNull();
         IntStream.range(0, actual.size())
-                .forEach(i -> assertThat(actual.get(i), sameBeanAs(fromFooSimpleList.get(i))));
+                .forEach(i -> assertThat(actual.get(i)).isEqualToComparingFieldByField(fromFooSimpleList.get(i)).usingRecursiveComparison());
     }
 
     /**
@@ -163,7 +160,7 @@ public class BeanUtilsTest {
         Converter actual = underTest.getPrimitiveTypeConverter();
 
         //THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
     }
 
     /**

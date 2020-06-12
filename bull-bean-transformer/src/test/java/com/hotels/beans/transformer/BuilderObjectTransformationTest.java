@@ -16,10 +16,6 @@
 
 package com.hotels.beans.transformer;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
-
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -47,7 +43,7 @@ public class BuilderObjectTransformationTest extends AbstractBeanTransformerTest
         Object actual = underTest.transform(sourceObject, targetObjectClass);
 
         //THEN
-        assertThat(actual, sameBeanAs(sourceObject));
+        assertBeanEquals(actual, sourceObject);
         underTest.setCustomBuilderTransformationEnabled(false);
     }
 

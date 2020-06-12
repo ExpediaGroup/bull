@@ -18,9 +18,7 @@ package com.hotels.beans.transformer;
 
 import static java.lang.String.format;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -29,8 +27,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
-
-import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -110,7 +106,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         Object actual = transformer.transform(sourceObject, targetObjectClass);
 
         //THEN
-        assertThat(actual, sameBeanAs(sourceObject));
+        assertBeanEquals(actual, sourceObject);
     }
 
     /**
@@ -145,7 +141,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         underTest.setValidationEnabled(true).transform(fromFooSimple, immutableToFoo);
 
         //THEN
-        assertThat(immutableToFoo, sameBeanAs(fromFooSimple));
+        assertBeanEquals(immutableToFoo, fromFooSimple);
         underTest.setValidationEnabled(false);
     }
 
@@ -171,9 +167,9 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         ImmutableFlatToFoo actual = underTestMock.withFieldMapping(phoneNumbersMapping).transform(sourceObject, ImmutableFlatToFoo.class);
 
         //THEN
-        assertEquals(expectedName, actual.getName());
-        assertEquals(expectedId, actual.getId());
-        assertEquals(expectedPhoneNumbers, actual.getPhoneNumbers());
+        assertThat(actual.getName()).isEqualTo(expectedName);
+        assertThat(actual.getId()).isEqualTo(expectedId);
+        assertThat(actual.getPhoneNumbers()).isEqualTo(expectedPhoneNumbers);
     }
 
     /**
@@ -244,7 +240,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         ImmutableToFoo actual = underTest.transform(fromFoo, ImmutableToFoo.class);
 
         // THEN
-        assertThat(actual, sameBeanAs(fromFoo));
+        assertBeanEquals(actual, fromFoo);
         fromFoo.setId(ID);
     }
 
@@ -260,12 +256,12 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         ImmutableToFooDiffFields actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.class);
 
         //THEN
-        assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
-        assertThat(actual, hasProperty(IDENTIFIER_FIELD_NAME, equalTo(fromFoo.getId())));
+        assertThat(actual).hasFieldOrPropertyWithValue(NAME_FIELD_NAME, actual.getName());
+        assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId());
         assertEquals(actual.getList(), fromFoo.getList());
         IntStream.range(0, actual.getNestedObjectList().size())
-                .forEach(i -> assertThat(actual.getNestedObjectList().get(i), sameBeanAs(fromFoo.getNestedObjectList().get(i))));
-        assertThat(actual.getNestedObject(), sameBeanAs(fromFoo.getNestedObject()));
+                .forEach(i -> assertBeanEquals(actual.getNestedObjectList().get(i), fromFoo.getNestedObjectList().get(i)));
+        assertBeanEquals(actual.getNestedObject(), fromFoo.getNestedObject());
     }
 
     /**
@@ -449,7 +445,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         ImmutableToFooNotExistingFields immutableObjectBean = underTest.transform(fromFooSimple, ImmutableToFooNotExistingFields.class);
 
         //THEN
-        assertThat(immutableObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
+        assertThat(immutableObjectBean).hasFieldOrPropertyWithValue(AGE_FIELD_NAME, AGE);
     }
 
     /**

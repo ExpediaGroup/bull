@@ -16,13 +16,9 @@
 
 package com.hotels.beans.transformer;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-
-import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import java.math.BigInteger;
 import java.util.stream.IntStream;
@@ -56,7 +52,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFooMissingAllArgsConstructor actual = underTest.transform(fromFoo, MixedToFooMissingAllArgsConstructor.class);
 
         //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
+        assertBeanEquals(actual, fromFoo);
     }
 
     /**
@@ -70,7 +66,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.class);
 
         //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
+        assertBeanEquals(actual, fromFoo);
     }
 
     /**
@@ -85,12 +81,12 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFooDiffFields actual = beanTransformer.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN
-        assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
-        assertThat(actual, hasProperty(IDENTIFIER_FIELD_NAME, equalTo(fromFoo.getId())));
+        assertThat(actual).hasFieldOrPropertyWithValue(NAME_FIELD_NAME, fromFoo.getName());
+        assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId());
         assertEquals(actual.getList(), fromFoo.getList());
         IntStream.range(0, actual.getNestedObjectList().size())
-                .forEach(i -> assertThat(actual.getNestedObjectList().get(i), sameBeanAs(fromFoo.getNestedObjectList().get(i))));
-        assertThat(actual.getNestedObject(), sameBeanAs(fromFoo.getNestedObject()));
+                .forEach(i -> assertBeanEquals(actual.getNestedObjectList().get(i), fromFoo.getNestedObjectList().get(i)));
+        assertBeanEquals(actual.getNestedObject(), fromFoo.getNestedObject());
     }
 
     /**
@@ -110,12 +106,12 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFooDiffFields actual = underTest.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN
-        assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
-        assertThat(actual, hasProperty(IDENTIFIER_FIELD_NAME, equalTo(fromFoo.getId().negate())));
+        assertThat(actual).hasFieldOrPropertyWithValue(NAME_FIELD_NAME, fromFoo.getName());
+        assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId().negate());
         assertEquals(actual.getList(), fromFoo.getList());
         IntStream.range(0, actual.getNestedObjectList().size())
-                .forEach(i -> assertThat(actual.getNestedObjectList().get(i), sameBeanAs(fromFoo.getNestedObjectList().get(i))));
-        assertThat(actual.getNestedObject(), sameBeanAs(fromFoo.getNestedObject()));
+                .forEach(i -> assertBeanEquals(actual.getNestedObjectList().get(i), fromFoo.getNestedObjectList().get(i)));
+        assertBeanEquals(actual.getNestedObject(), fromFoo.getNestedObject());
     }
 
     /**
@@ -159,7 +155,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFooNotExistingFields mixedObjectBean = underTest.transform(fromFooSimple, MixedToFooNotExistingFields.class);
 
         //THEN
-        assertThat(mixedObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
+        assertThat(mixedObjectBean).hasFieldOrPropertyWithValue(AGE_FIELD_NAME, AGE);
     }
 
     /**
@@ -192,6 +188,6 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         underTest.skipTransformationForField().transform(fromFoo, mixedToFoo);
 
         //THEN
-        assertThat(mixedToFoo, sameBeanAs(fromFoo));
+        assertBeanEquals(mixedToFoo, fromFoo);
     }
 }
