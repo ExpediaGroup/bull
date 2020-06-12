@@ -16,7 +16,7 @@
 
 package com.hotels.map;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.mockito.InjectMocks;
@@ -54,6 +54,6 @@ public class MapUtilsTest {
         final MapTransformer transformer = underTest.getTransformer();
 
         //THEN
-        assertNotNull(transformer);
+        assertThat(transformer).isNotNull();
     }
 }
