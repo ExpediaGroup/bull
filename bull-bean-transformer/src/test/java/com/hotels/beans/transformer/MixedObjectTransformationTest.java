@@ -17,8 +17,6 @@
 package com.hotels.beans.transformer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import java.math.BigInteger;
 import java.util.stream.IntStream;
@@ -52,7 +50,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFooMissingAllArgsConstructor actual = underTest.transform(fromFoo, MixedToFooMissingAllArgsConstructor.class);
 
         //THEN
-        assertBeanEquals(actual, fromFoo);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(fromFoo);
     }
 
     /**
@@ -66,7 +64,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.class);
 
         //THEN
-        assertBeanEquals(actual, fromFoo);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(fromFoo);
     }
 
     /**
@@ -83,10 +81,10 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         //THEN
         assertThat(actual).hasFieldOrPropertyWithValue(NAME_FIELD_NAME, fromFoo.getName());
         assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId());
-        assertEquals(actual.getList(), fromFoo.getList());
+        assertThat(actual.getList()).usingRecursiveComparison().isEqualTo(fromFoo.getList());
         IntStream.range(0, actual.getNestedObjectList().size())
-                .forEach(i -> assertBeanEquals(actual.getNestedObjectList().get(i), fromFoo.getNestedObjectList().get(i)));
-        assertBeanEquals(actual.getNestedObject(), fromFoo.getNestedObject());
+                .forEach(i -> assertThat(actual.getNestedObjectList().get(i)).usingRecursiveComparison().isEqualTo(fromFoo.getNestedObjectList().get(i)));
+        assertThat(actual.getNestedObject()).usingRecursiveComparison().isEqualTo(fromFoo.getNestedObject());
     }
 
     /**
@@ -108,10 +106,10 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         //THEN
         assertThat(actual).hasFieldOrPropertyWithValue(NAME_FIELD_NAME, fromFoo.getName());
         assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId().negate());
-        assertEquals(actual.getList(), fromFoo.getList());
+        assertThat(actual.getList()).usingRecursiveComparison().isEqualTo(fromFoo.getList());
         IntStream.range(0, actual.getNestedObjectList().size())
-                .forEach(i -> assertBeanEquals(actual.getNestedObjectList().get(i), fromFoo.getNestedObjectList().get(i)));
-        assertBeanEquals(actual.getNestedObject(), fromFoo.getNestedObject());
+                .forEach(i -> assertThat(actual.getNestedObjectList().get(i)).usingRecursiveComparison().isEqualTo(fromFoo.getNestedObjectList().get(i)));
+        assertThat(actual.getNestedObject()).usingRecursiveComparison().isEqualTo(fromFoo.getNestedObject());
     }
 
     /**
@@ -125,7 +123,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         //WHEN
         MixedToFooMissingField actual = underTest.transform(fromFoo, MixedToFooMissingField.class);
 
-        assertNull(actual.getFooField());
+        assertThat(actual.getFooField()).isNull();
         underTest.setDefaultValueForMissingField(false);
     }
 
@@ -170,9 +168,9 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.class);
 
         //THEN
-        assertEquals(fromFoo.getId(), actual.getId());
-        assertNull(actual.getName());
-        assertNull(actual.getNestedObject().getPhoneNumbers());
+        assertThat(actual.getId()).isEqualTo(fromFoo.getId());
+        assertThat(actual.getName()).isNull();
+        assertThat(actual.getNestedObject().getPhoneNumbers()).isNull();
         underTest.resetFieldsTransformationSkip();
     }
 
@@ -188,6 +186,6 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         underTest.skipTransformationForField().transform(fromFoo, mixedToFoo);
 
         //THEN
-        assertBeanEquals(mixedToFoo, fromFoo);
+        assertThat(mixedToFoo).usingRecursiveComparison().isEqualTo(fromFoo);
     }
 }

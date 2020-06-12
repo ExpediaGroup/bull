@@ -19,8 +19,7 @@ package com.hotels.beans.populator;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -83,18 +82,18 @@ public class ArrayPopulatorTest {
 
         // THEN
         if (genericFieldType == Character.class) {
-            assertArrayEquals((char[]) array, (char[]) actual);
+            assertThat((char[]) actual).isEqualTo((char[]) array);
         } else if (genericFieldType == Integer.class) {
-            assertArrayEquals((int[]) array, (int[]) actual);
+            assertThat((int[]) actual).isEqualTo((int[]) array);
         } else if (genericFieldType == Object.class) {
-            assertArrayEquals((Object[]) array, (Object[]) actual);
+            assertThat((Object[]) actual).isEqualTo(array);
         } else if (genericFieldType == MixedToFooStaticField.class) {
             final MixedToFooStaticField[] expectedArray = (MixedToFooStaticField[]) array;
             final Object[] actualArray = (Object[]) actual;
             IntStream.range(0, expectedArray.length)
-                    .forEach(i -> assertEquals(expectedArray[i].getNormalField(), ((MixedToFooStaticField) actualArray[i]).getNormalField()));
+                    .forEach(i -> assertThat(((MixedToFooStaticField) actualArray[i]).getNormalField()).isEqualTo(expectedArray[i].getNormalField()));
         } else {
-            assertArrayEquals((Object[]) array, (Object[]) actual);
+            assertThat((Object[]) actual).isEqualTo(array);
         }
     }
 

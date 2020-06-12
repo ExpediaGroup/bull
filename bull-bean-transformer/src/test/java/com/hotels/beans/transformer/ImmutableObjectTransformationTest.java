@@ -19,10 +19,6 @@ package com.hotels.beans.transformer;
 import static java.lang.String.format;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -106,7 +102,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         Object actual = transformer.transform(sourceObject, targetObjectClass);
 
         //THEN
-        assertBeanEquals(actual, sourceObject);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(sourceObject);
     }
 
     /**
@@ -141,7 +137,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         underTest.setValidationEnabled(true).transform(fromFooSimple, immutableToFoo);
 
         //THEN
-        assertBeanEquals(immutableToFoo, fromFooSimple);
+        assertThat(immutableToFoo).usingRecursiveComparison().isEqualTo(fromFooSimple);
         underTest.setValidationEnabled(false);
     }
 
@@ -240,7 +236,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         ImmutableToFoo actual = underTest.transform(fromFoo, ImmutableToFoo.class);
 
         // THEN
-        assertBeanEquals(actual, fromFoo);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(fromFoo);
         fromFoo.setId(ID);
     }
 
@@ -258,10 +254,10 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //THEN
         assertThat(actual).hasFieldOrPropertyWithValue(NAME_FIELD_NAME, actual.getName());
         assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId());
-        assertEquals(actual.getList(), fromFoo.getList());
+        assertThat(actual.getList()).usingRecursiveComparison().isEqualTo(fromFoo.getList());
         IntStream.range(0, actual.getNestedObjectList().size())
-                .forEach(i -> assertBeanEquals(actual.getNestedObjectList().get(i), fromFoo.getNestedObjectList().get(i)));
-        assertBeanEquals(actual.getNestedObject(), fromFoo.getNestedObject());
+                .forEach(i -> assertThat(actual.getNestedObjectList().get(i)).usingRecursiveComparison().isEqualTo(fromFoo.getNestedObjectList().get(i)));
+        assertThat(actual.getNestedObject()).usingRecursiveComparison().isEqualTo(fromFoo.getNestedObject());
     }
 
     /**
@@ -285,13 +281,13 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         ImmutableToFooAdvFields actual = (ImmutableToFooAdvFields) beanTransformer.transform(sourceObject, targetObjectClass);
 
         //THEN
-        assertNotNull(actual.getName());
-        assertEquals(isNameFieldEmpty, actual.getName().isPresent());
-        sourceObject.getName().ifPresent(name -> assertEquals(name, actual.getName().get()));
-        assertTrue(sourceObject.getAge().isPresent());
-        assertEquals(sourceObject.getAge().get(), actual.getAge());
-        assertEquals(sourceObject.getClassType(), actual.getClassType());
-        assertEquals(sourceObject.getLocale(), actual.getLocale().getLanguage());
+        assertThat(actual).isNotNull();
+        assertThat(actual.getName().isPresent()).isEqualTo(isNameFieldEmpty);
+        sourceObject.getName().ifPresent(name -> assertThat(actual.getName().get()).isEqualTo(name));
+        assertThat(sourceObject.getAge().isPresent()).isTrue();
+        assertThat(actual.getAge()).isEqualTo(sourceObject.getAge().get());
+        assertThat(actual.getClassType()).isEqualTo(sourceObject.getClassType());
+        assertThat(actual.getLocale().getLanguage()).isEqualTo(sourceObject.getLocale());
     }
 
     /**
@@ -321,8 +317,8 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         ImmutableToFooMissingCustomAnnotation actual = underTest.withFieldTransformer().transform(fromFooWithPrimitiveFields, ImmutableToFooMissingCustomAnnotation.class);
 
         //THEN
-        assertNotNull(actual);
-        assertEquals(fromFooWithPrimitiveFields.getName(), actual.getName());
+        assertThat(actual).isNotNull();
+        assertThat(actual.getName()).isEqualTo(fromFooWithPrimitiveFields.getName());
     }
 
     /**
@@ -346,7 +342,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         String actual = (String) getDestFieldNameMethod.invoke(underTest, constructorParameter, declaringClassName);
 
         //THEN
-        assertEquals(DEST_FIELD_NAME, actual);
+        assertThat(actual).isEqualTo(DEST_FIELD_NAME);
 
         // restore modified objects
         restoreObjects(getDestFieldNameMethod);
@@ -368,8 +364,8 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         Object[] actual = (Object[]) getConstructorValuesFromFieldsMethod.invoke(underTest, fromFooAdvFields, ImmutableToFooAdvFields.class, "");
 
         //THEN
-        assertNotNull(actual);
-        assertEquals(TOTAL_ADV_CLASS_FIELDS, actual.length);
+        assertThat(actual).isNotNull();
+        assertThat(actual.length).isEqualTo(TOTAL_ADV_CLASS_FIELDS);
 
         // restore modified objects
         restoreObjects(getConstructorValuesFromFieldsMethod);
@@ -396,7 +392,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         String actual = (String) getDestFieldNameMethod.invoke(underTest, constructorParameter, declaringClassName);
 
         //THEN
-        assertEquals(DEST_FIELD_NAME, actual);
+        assertThat(actual).isEqualTo(DEST_FIELD_NAME);
 
         // restore modified objects
         restoreObjects(getDestFieldNameMethod);
@@ -426,9 +422,9 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         }
 
         //THEN
-        assertNotNull(raisedException);
-        assertEquals(InvalidBeanException.class, raisedException.getClass());
-        assertEquals(expectedExceptionMessage, raisedException.getMessage());
+        assertThat(raisedException).isNotNull();
+        assertThat(raisedException.getClass()).isEqualTo(InvalidBeanException.class);
+        assertThat(raisedException.getMessage()).isEqualTo(expectedExceptionMessage);
     }
 
     /**
@@ -460,9 +456,9 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         ImmutableToFoo actual = underTest.transform(fromFoo, ImmutableToFoo.class);
 
         //THEN
-        assertEquals(fromFoo.getId(), actual.getId());
-        assertNull(actual.getName());
-        assertNull(actual.getNestedObject().getPhoneNumbers());
+        assertThat(actual.getId()).isEqualTo(fromFoo.getId());
+        assertThat(actual.getName()).isNull();
+        assertThat(actual.getNestedObject().getPhoneNumbers()).isNull();
         underTest.resetFieldsTransformationSkip();
     }
 
@@ -482,7 +478,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
             .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
 
         //THEN
-        assertTrue(actual.getWork());
+        assertThat(actual.getWork()).isTrue();
         underTest.resetFieldsTransformer();
     }
 

@@ -20,10 +20,7 @@ import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
 import static java.util.Objects.isNull;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -128,7 +125,7 @@ public class ReflectionUtilsTest {
         Object actual = underTest.getFieldValue(beanObject, fieldName, fieldType);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -145,7 +142,7 @@ public class ReflectionUtilsTest {
         Object actual = underTest.getFieldValue(fromFooSimpleNoGetters, field);
 
         // THEN
-        assertEquals(ZERO, actual);
+        assertThat(actual).isEqualTo(ZERO);
     }
 
     /**
@@ -178,7 +175,7 @@ public class ReflectionUtilsTest {
         Object actual = underTestMock.getFieldValue(mutableToFoo, LIST_FIELD_NAME, FromFooSubClass.class);
 
         //THEN
-        assertNull(actual);
+        assertThat(actual).isNull();
         verify(underTestMock, times(1)).getDeclaredField(LIST_FIELD_NAME, MutableToFoo.class);
     }
 
@@ -209,7 +206,7 @@ public class ReflectionUtilsTest {
         Object actual = getFieldValueDirectAccessMethod.invoke(underTest, mutableToFoo, ID_FIELD_NAME);
 
         // THEN
-        assertEquals(ZERO, actual);
+        assertThat(actual).isEqualTo(ZERO);
     }
 
     /**
@@ -255,7 +252,7 @@ public class ReflectionUtilsTest {
         RuntimeException actual = underTest.handleReflectionException(noSuchMethodException);
 
         // THEN
-        assertSame(MissingMethodException.class, actual.getClass());
+        assertThat(actual.getClass()).isEqualTo(MissingMethodException.class);
     }
 
     /**
@@ -267,10 +264,10 @@ public class ReflectionUtilsTest {
         IllegalAccessException illegalAccessException = new IllegalAccessException();
 
         // WHEN
-        RuntimeException exception = underTest.handleReflectionException(illegalAccessException);
+        RuntimeException actual = underTest.handleReflectionException(illegalAccessException);
 
         // THEN
-        assertSame(IllegalStateException.class, exception.getClass());
+        assertThat(actual.getClass()).isEqualTo(IllegalStateException.class);
     }
 
     /**
@@ -282,10 +279,10 @@ public class ReflectionUtilsTest {
         RuntimeException runtimeException = new RuntimeException();
 
         // WHEN
-        RuntimeException exception = underTest.handleReflectionException(runtimeException);
+        RuntimeException actual = underTest.handleReflectionException(runtimeException);
 
         // THEN
-        assertSame(RuntimeException.class, exception.getClass());
+        assertThat(actual.getClass()).isEqualTo(RuntimeException.class);
     }
 
     /**
@@ -300,7 +297,7 @@ public class ReflectionUtilsTest {
         RuntimeException actual = underTest.handleReflectionException(genericException);
 
         // THEN
-        assertSame(UndeclaredThrowableException.class, actual.getClass());
+        assertThat(actual.getClass()).isEqualTo(UndeclaredThrowableException.class);
     }
 
     /**
@@ -331,7 +328,7 @@ public class ReflectionUtilsTest {
         String actual = (String) method.invoke(underTest, testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -365,7 +362,7 @@ public class ReflectionUtilsTest {
         final Annotation actual = underTest.getFieldAnnotation(nameField, annotationToGet);
 
         // THEN
-        assertEquals(expectNull, isNull(actual));
+        assertThat(isNull(actual)).isEqualTo(expectNull);
     }
 
     /**
@@ -391,8 +388,8 @@ public class ReflectionUtilsTest {
         final Method actual = underTest.getSetterMethodForField(MutableToFoo.class, ID_FIELD_NAME, BigInteger.class);
 
         // THEN
-        assertNotNull(actual);
-        assertEquals(EXPECTED_SETTER_METHOD_NAME, actual.getName());
+        assertThat(actual).isNotNull();
+        assertThat(actual.getName()).isEqualTo(EXPECTED_SETTER_METHOD_NAME);
     }
 
     /**
@@ -421,8 +418,8 @@ public class ReflectionUtilsTest {
         final Annotation actual = underTest.getParameterAnnotation(parameter, NotNull.class, DECLARING_CLASS_NAME);
 
         // THEN
-        assertNotNull(actual);
-        assertEquals(notNullAnnotation, actual);
+        assertThat(actual).isNotNull();
+        assertThat(actual).isEqualTo(notNullAnnotation);
     }
 
     /**
@@ -438,7 +435,7 @@ public class ReflectionUtilsTest {
         final Annotation actual = underTest.getParameterAnnotation(parameter, NotNull.class, DECLARING_CLASS_NAME);
 
         // THEN
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     /**
@@ -456,7 +453,7 @@ public class ReflectionUtilsTest {
                 .invoke(underTest, idSetterMethod, mutableToFoo, new Object[] {ONE});
 
         // THEN
-        assertEquals(ONE, mutableToFoo.getId());
+        assertThat(mutableToFoo.getId()).isEqualTo(ONE);
     }
 
     /**
@@ -480,8 +477,8 @@ public class ReflectionUtilsTest {
         }
 
         // THEN
-        assertNotNull(actualException);
-        assertEquals(IllegalArgumentException.class, actualException.getTargetException().getClass());
+        assertThat(actualException).isNotNull();
+        assertThat(actualException.getTargetException().getClass()).isEqualTo(IllegalArgumentException.class);
     }
 
     /**
@@ -498,7 +495,7 @@ public class ReflectionUtilsTest {
         Field actual = underTest.getDeclaredField(fieldName, targetClass);
 
         // THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
     }
 
     /**
@@ -520,8 +517,8 @@ public class ReflectionUtilsTest {
         }
 
         // THEN
-        assertNotNull(actualException);
-        assertEquals(NullPointerException.class, actualException.getTargetException().getClass());
+        assertThat(actualException).isNotNull();
+        assertThat(actualException.getTargetException().getClass()).isEqualTo(NullPointerException.class);
     }
 
     /**
@@ -547,7 +544,7 @@ public class ReflectionUtilsTest {
         Field actual = underTest.getDeclaredField(NOT_EXISTING_FIELD_NAME, FromFooSubClass.class);
 
         // THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
     }
 
     /**
@@ -561,7 +558,7 @@ public class ReflectionUtilsTest {
         Class<?> actual = underTest.getDeclaredFieldType(ID_FIELD_NAME, FromFooSubClass.class);
 
         // THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
     }
 
 
@@ -581,7 +578,7 @@ public class ReflectionUtilsTest {
         Class<?> actual = underTest.getGenericFieldType(field);
 
         // THEN
-        assertEquals(expectedType, actual);
+        assertThat(actual).isEqualTo(expectedType);
     }
 
     /**
@@ -608,7 +605,7 @@ public class ReflectionUtilsTest {
         Class<?> actual = underTest.getArrayType(phoneNumbersField);
 
         // THEN
-        assertEquals(int.class, actual);
+        assertThat(actual).isEqualTo(int.class);
     }
 
     /**
@@ -634,12 +631,12 @@ public class ReflectionUtilsTest {
         ItemType actualNestedMapElemType = (ItemType) ((MapType) actual.getElemType()).getElemType();
 
         // THEN
-        assertEquals(expectedMapKeyType.getObjectClass(), actualMapKeyType.getObjectClass());
-        assertEquals(expectedMapKeyType.getGenericClass(), actualMapKeyType.getGenericClass());
-        assertEquals(expectedNestedMapKeyType.getObjectClass(), actualNestedMapKeyType.getObjectClass());
-        assertEquals(expectedNestedMapKeyType.getGenericClass(), actualNestedMapKeyType.getGenericClass());
-        assertEquals(expectedNestedMapElemType.getObjectClass(), actualNestedMapElemType.getObjectClass());
-        assertEquals(expectedNestedMapElemType.getGenericClass(), actualNestedMapElemType.getGenericClass());
+        assertThat(actualMapKeyType.getObjectClass()).isEqualTo(expectedMapKeyType.getObjectClass());
+        assertThat(actualMapKeyType.getGenericClass()).isEqualTo(expectedMapKeyType.getGenericClass());
+        assertThat(actualNestedMapKeyType.getObjectClass()).isEqualTo(expectedNestedMapKeyType.getObjectClass());
+        assertThat(actualNestedMapKeyType.getGenericClass()).isEqualTo(expectedNestedMapKeyType.getGenericClass());
+        assertThat(actualNestedMapElemType.getObjectClass()).isEqualTo(expectedNestedMapElemType.getObjectClass());
+        assertThat(actualNestedMapElemType.getGenericClass()).isEqualTo(expectedNestedMapElemType.getGenericClass());
     }
 
     @Test
@@ -659,10 +656,10 @@ public class ReflectionUtilsTest {
         ItemType actualMapElemType = (ItemType) actual.getElemType();
 
         // THEN
-        assertEquals(expectedMapKeyType.getObjectClass(), actualMapKeyType.getObjectClass());
-        assertEquals(expectedMapKeyType.getGenericClass(), actualMapKeyType.getGenericClass());
-        assertEquals(expectedMapElemType.getObjectClass(), actualMapElemType.getObjectClass());
-        assertEquals(expectedMapElemType.getGenericClass(), actualMapElemType.getGenericClass());
+        assertThat(actualMapKeyType.getObjectClass()).isEqualTo(expectedMapKeyType.getObjectClass());
+        assertThat(actualMapKeyType.getGenericClass()).isEqualTo(expectedMapKeyType.getGenericClass());
+        assertThat(actualMapElemType.getObjectClass()).isEqualTo(expectedMapElemType.getObjectClass());
+        assertThat(actualMapElemType.getGenericClass()).isEqualTo(expectedMapElemType.getGenericClass());
     }
 
     /**
@@ -678,7 +675,7 @@ public class ReflectionUtilsTest {
         Object actual = methodUnderTest.invoke(underTest, FromFooSimple.class, ID_FIELD_NAME, BigInteger.class);
 
         // THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
     }
 
     /**
@@ -696,7 +693,7 @@ public class ReflectionUtilsTest {
         BigInteger actual = (BigInteger) methodUnderTest.invoke(mutableToFoo);
 
         // THEN
-        assertEquals(ONE, actual);
+        assertThat(actual).isEqualTo(ONE);
     }
 
     /**
@@ -717,8 +714,8 @@ public class ReflectionUtilsTest {
         }
 
         // THEN
-        assertNotNull(actualException);
-        assertEquals(MissingFieldException.class, actualException.getTargetException().getClass());
+        assertThat(actualException).isNotNull();
+        assertThat(actualException.getTargetException().getClass()).isEqualTo(MissingFieldException.class);
     }
 
     /**
@@ -757,7 +754,7 @@ public class ReflectionUtilsTest {
         underTest.setFieldValue(mutableToFoo, idField, ONE);
 
         // THEN
-        assertEquals(ONE, mutableToFoo.getId());
+        assertThat(mutableToFoo.getId()).isEqualTo(ONE);
     }
 
     @Test
@@ -772,7 +769,7 @@ public class ReflectionUtilsTest {
         underTestMock.setFieldValue(mutableToFoo, idField, ONE);
 
         // THEN
-        assertEquals(ONE, mutableToFoo.getId());
+        assertThat(mutableToFoo.getId()).isEqualTo(ONE);
     }
 
     /**
@@ -800,8 +797,8 @@ public class ReflectionUtilsTest {
         }
 
         // THEN
-        assertNotNull(actualException);
-        assertEquals(expectedException, actualException.getClass());
+        assertThat(actualException).isNotNull();
+        assertThat(actualException.getClass()).isEqualTo(expectedException);
     }
 
     /**
@@ -832,7 +829,7 @@ public class ReflectionUtilsTest {
         Object actual = getRealTargetMethod.invoke(underTest, optionalBigInteger);
 
         //THEN
-        assertEquals(ZERO, actual);
+        assertThat(actual).isEqualTo(ZERO);
     }
 
     /**

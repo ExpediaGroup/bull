@@ -16,7 +16,6 @@
 
 package com.hotels.beans.transformer;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.mockito.InjectMocks;
@@ -49,17 +48,5 @@ public abstract class AbstractBeanTransformerTest extends AbstractTransformerTes
     @BeforeMethod
     public void beforeMethod() {
         initMocks(this);
-    }
-
-    /**
-     * Asserts that two Java Bean are equals.
-     * @param actualBean the result bean
-     * @param expectedBean the expected bean
-     * @param <T> the bean type
-     */
-    protected <T> void assertBeanEquals(final T actualBean, final T expectedBean) {
-        assertThat(actualBean)
-                .isEqualToComparingFieldByField(expectedBean)
-                .usingRecursiveComparison();
     }
 }

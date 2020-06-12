@@ -19,10 +19,6 @@ package com.hotels.beans.transformer;
 import static java.lang.Integer.parseInt;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.doReturn;
@@ -84,7 +80,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFoo actual = underTest.transform(fromFoo, MutableToFoo.class);
 
         //THEN
-        assertBeanEquals(actual, fromFoo);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(fromFoo);
     }
 
     /**
@@ -99,7 +95,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         underTest.transform(fromFooSubClass, mutableToFoo);
 
         //THEN
-        assertBeanEquals(mutableToFoo, fromFooSubClass);
+        assertThat(mutableToFoo).usingRecursiveComparison().isEqualTo(fromFooSubClass);
     }
 
     /**
@@ -115,7 +111,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         underTest.transform(fromFooSubClass, mutableToFoo);
 
         //THEN
-        assertBeanEquals(mutableToFoo, fromFooSubClass);
+        assertThat(mutableToFoo).usingRecursiveComparison().isEqualTo(fromFooSubClass);
         fromFooSubClass.setId(ID);
     }
 
@@ -134,8 +130,8 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
                 .transform(fromFoo, MutableToFoo.class);
 
         //THEN
-        assertEquals(fromFoo.getName(), actual.getName());
-        assertEquals(namePrefix + fromFoo.getNestedObject().getName(), actual.getNestedObject().getName());
+        assertThat(actual.getName()).isEqualTo(fromFoo.getName());
+        assertThat(actual.getNestedObject().getName()).isEqualTo(namePrefix + fromFoo.getNestedObject().getName());
         underTest.resetFieldsTransformer();
     }
 
@@ -155,8 +151,8 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
                 .transform(fromFoo, MutableToFoo.class);
 
         //THEN
-        assertEquals(namePrefix + fromFoo.getName(), actual.getName());
-        assertEquals(namePrefix + fromFoo.getNestedObject().getName(), actual.getNestedObject().getName());
+        assertThat(actual.getName()).isEqualTo(namePrefix + fromFoo.getName());
+        assertThat(actual.getNestedObject().getName()).isEqualTo(namePrefix + fromFoo.getNestedObject().getName());
         underTest.resetFieldsTransformer();
     }
 
@@ -173,7 +169,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFooSimpleNoSetters actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.class);
 
         //THEN
-        assertBeanEquals(actual, fromFooSimpleNoGetters);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(fromFooSimpleNoGetters);
     }
 
     /**
@@ -189,7 +185,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFooSimpleNoSetters actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.class);
 
         //THEN
-        assertBeanEquals(actual, fromFooSimpleNoGetters);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(fromFooSimpleNoGetters);
         underTest.setDefaultValueForMissingPrimitiveField(true);
     }
 
@@ -205,9 +201,9 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFooSimpleNoSetters actual = underTest.transform(fromFooNoField, MutableToFooSimpleNoSetters.class);
 
         //THEN
-        assertEquals(actual.getId(), fromFooNoField.getId());
-        assertEquals(actual.getName(), fromFooNoField.getName());
-        assertEquals(actual.isActive(), fromFooNoField.isActive());
+        assertThat(actual.getId()).isEqualTo(fromFooNoField.getId());
+        assertThat(actual.getName()).isEqualTo(fromFooNoField.getName());
+        assertThat(actual.isActive()).isEqualTo(fromFooNoField.isActive());
     }
 
     /**
@@ -247,8 +243,8 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         }
 
         //THEN
-        assertNotNull(raisedException);
-        assertEquals(MissingFieldException.class, raisedException.getCause().getClass());
+        assertThat(raisedException).isNotNull();
+        assertThat(raisedException.getCause().getClass()).isEqualTo(MissingFieldException.class);
         underTest.setPrimitiveTypeConversionEnabled(false);
     }
 
@@ -266,8 +262,8 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFooNotExistingFields actual = underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
 
         //THEN
-        assertEquals(actual.getId(), fromFooSimple.getId());
-        assertEquals(actual.getName(), fromFooSimple.getName());
+        assertThat(actual.getId()).isEqualTo(fromFooSimple.getId());
+        assertThat(actual.getName()).isEqualTo(fromFooSimple.getName());
         underTest.setPrimitiveTypeConversionEnabled(false).setDefaultValueForMissingField(false);
     }
 
@@ -318,9 +314,9 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFoo actual = underTest.transform(fromFoo, MutableToFoo.class);
 
         //THEN
-        assertEquals(fromFoo.getId(), actual.getId());
-        assertNull(actual.getName());
-        assertNull(actual.getNestedObject().getPhoneNumbers());
+        assertThat(actual.getId()).isEqualTo(fromFoo.getId());
+        assertThat(actual.getName()).isNull();
+        assertThat(actual.getNestedObject().getPhoneNumbers()).isNull();
         underTest.resetFieldsTransformationSkip();
     }
 
@@ -330,17 +326,16 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
     @Test
     public void testAutomaticPrimitiveTypeTransformationWorksProperly() {
         //GIVEN
-        double delta = 0d;
         underTest.setPrimitiveTypeConversionEnabled(true);
 
         //WHEN
         MutableToFooOnlyPrimitiveTypes actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
 
         //THEN
-        assertEquals(parseInt(fromFooPrimitiveTypes.getCode()), actual.getCode());
-        assertEquals(String.valueOf(fromFooPrimitiveTypes.getId()), actual.getId());
-        assertEquals(Float.valueOf(fromFooPrimitiveTypes.getPrice()).doubleValue(), actual.getPrice(), delta);
-        assertEquals(ACTIVE, actual.isActive());
+        assertThat(actual.getCode()).isEqualTo(parseInt(fromFooPrimitiveTypes.getCode()));
+        assertThat(actual.getId()).isEqualTo(String.valueOf(fromFooPrimitiveTypes.getId()));
+        assertThat(actual.getPrice()).isEqualTo(Double.valueOf(fromFooPrimitiveTypes.getPrice()));
+        assertThat(actual.isActive()).isEqualTo(ACTIVE);
         underTest.setPrimitiveTypeConversionEnabled(false);
     }
 
@@ -350,7 +345,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
     @Test
     public void testThatBothPrimitiveTypeTransformationAndCustomTransformationAreExecuted() {
         //GIVEN
-        double delta = 0d;
         double newPrice = PRICE * PRICE;
         FieldTransformer<Void, Double> priceTransformer = new FieldTransformer<>(PRICE_FIELD_NAME, () -> newPrice);
         underTest.setPrimitiveTypeConversionEnabled(true).withFieldTransformer(priceTransformer);
@@ -359,10 +353,10 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFooOnlyPrimitiveTypes actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
 
         //THEN
-        assertEquals(parseInt(fromFooPrimitiveTypes.getCode()), actual.getCode());
-        assertEquals(String.valueOf(fromFooPrimitiveTypes.getId()), actual.getId());
-        assertEquals(newPrice, actual.getPrice(), delta);
-        assertEquals(ACTIVE, actual.isActive());
+        assertThat(actual.getCode()).isEqualTo(parseInt(fromFooPrimitiveTypes.getCode()));
+        assertThat(actual.getId()).isEqualTo(String.valueOf(fromFooPrimitiveTypes.getId()));
+        assertThat(actual.isActive()).isEqualTo(ACTIVE);
+        assertThat(actual.getPrice()).isEqualTo(newPrice);
         underTest.setPrimitiveTypeConversionEnabled(false);
         underTest.removeFieldTransformer(PRICE_FIELD_NAME);
     }
@@ -391,7 +385,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         Object actual = injectValuesMethod.invoke(underTestMock, fromFooSimple, MutableToFooSimple.class, constructor, null, true);
 
         // THEN
-        assertNotNull(actual);
-        assertSame(expectedException, actual);
+        assertThat(actual).isNotNull();
+        assertThat(actual).isSameAs(expectedException);
     }
 }
