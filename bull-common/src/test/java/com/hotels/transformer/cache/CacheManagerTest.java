@@ -16,10 +16,7 @@
 
 package com.hotels.transformer.cache;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -62,9 +59,9 @@ public class CacheManagerTest {
         Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        assertTrue(actual.isPresent());
-        assertEquals(CACHED_OBJECT_CLASS, actual.get().getClass());
-        assertSame(VALUE, actual.get());
+        assertThat(actual).isPresent();
+        assertThat(actual.get().getClass()).isEqualTo(CACHED_OBJECT_CLASS);
+        assertThat(actual.get()).isSameAs(VALUE);
     }
 
     /**
@@ -79,9 +76,9 @@ public class CacheManagerTest {
         Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        assertTrue(actual.isPresent());
-        assertEquals(CACHED_OBJECT_CLASS, actual.get().getClass());
-        assertSame(DEFAULT_VALUE, actual.get());
+        assertThat(actual).isPresent();
+        assertThat(actual.get().getClass()).isEqualTo(CACHED_OBJECT_CLASS);
+        assertThat(actual.get()).isSameAs(DEFAULT_VALUE);
     }
 
     /**
@@ -97,7 +94,7 @@ public class CacheManagerTest {
         Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        assertFalse(actual.isPresent());
+        assertThat(actual).isNotPresent();
     }
 
     /**
@@ -113,6 +110,6 @@ public class CacheManagerTest {
         Optional<String> actual = underTest.getFromCache(CACHE_KEY, CACHED_OBJECT_CLASS);
 
         // THEN
-        assertFalse(actual.isPresent());
+        assertThat(actual).isNotPresent();
     }
 }

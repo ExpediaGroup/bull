@@ -21,9 +21,7 @@ import static java.math.BigInteger.ZERO;
 import static java.nio.ByteBuffer.wrap;
 import static java.util.Optional.empty;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigDecimal;
@@ -91,7 +89,7 @@ public class ConverterTest extends AbstractConversionTest {
         Optional<Function<Object, Object>> actual = underTest.getConversionFunction(sourceFieldType, destinationFieldType);
 
         // THEN
-        assertEquals(empty(), actual);
+        assertThat(actual).isEqualTo(empty());
     }
 
     /**
@@ -124,8 +122,8 @@ public class ConverterTest extends AbstractConversionTest {
         Optional<Function<Object, Object>> actual = underTest.getConversionFunction(sourceFieldType, destinationFieldType);
 
         // THEN
-        assertTrue(actual.isPresent());
-        assertEquals(expectedConversionFunction, actual.get());
+        assertThat(actual.isPresent()).isTrue();
+        assertThat(actual.get()).isEqualTo(expectedConversionFunction);
     }
 
     /**
@@ -192,7 +190,7 @@ public class ConverterTest extends AbstractConversionTest {
         Object actual = underTest.convertValue(valueToConvert, targetClass);
 
         // THEN
-        assertEquals(expectedValue, actual);
+        assertThat(actual).isEqualTo(expectedValue);
     }
 
     /**
@@ -455,7 +453,7 @@ public class ConverterTest extends AbstractConversionTest {
         byte[] actual = underTest.convertValue(valueToConvert, byte[].class);
 
         // THEN
-        assertArrayEquals(expectedValue, actual);
+        assertThat(actual).isEqualTo(expectedValue);
     }
 
     /**

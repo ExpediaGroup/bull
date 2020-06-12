@@ -70,7 +70,7 @@ public class SampleClass {
 ```
 The test class will be:
 ```java
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
@@ -186,7 +186,7 @@ public class SampleClass {
 ```
 The test class will be:
 ```java
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
@@ -306,7 +306,7 @@ public class SampleClass {
 ```
 The test class will be:
 ```java
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.lang.reflect.Field;

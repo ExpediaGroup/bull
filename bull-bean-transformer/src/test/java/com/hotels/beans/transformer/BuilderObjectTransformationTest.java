@@ -16,6 +16,8 @@
 
 package com.hotels.beans.transformer;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -43,7 +45,7 @@ public class BuilderObjectTransformationTest extends AbstractBeanTransformerTest
         Object actual = underTest.transform(sourceObject, targetObjectClass);
 
         //THEN
-        assertBeanEquals(actual, sourceObject);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(sourceObject);
         underTest.setCustomBuilderTransformationEnabled(false);
     }
 

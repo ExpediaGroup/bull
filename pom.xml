@@ -151,10 +151,10 @@
                         <groupId>org.hamcrest</groupId>
                         <artifactId>hamcrest</artifactId>
                     </exclusion>
-<!--                    <exclusion>-->
-<!--                        <groupId>junit</groupId>-->
-<!--                        <artifactId>junit</artifactId>-->
-<!--                    </exclusion>-->
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>

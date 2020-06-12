@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.isIn;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -127,7 +127,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<T, K> actual = underTest.transform(sourceMap);
 
         //THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
         assertEquals(actual.size(), sourceMap.size());
         assertThat(actual.entrySet(),
                 both(everyItem(isIn(sourceMap.entrySet()))).and(containsInAnyOrder(sourceMap.entrySet().toArray())));
@@ -162,7 +162,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<String, BigInteger> actual = underTest.transform(sourceMap);
 
         //THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
         assertEquals(actual.size(), sourceMap.size());
         assertEquals(actual.get(MAP_KEY_1), sourceMap.get(MAP_KEY_1));
         assertEquals(actual.get(MAP_KEY_2), sourceMap.get(MAP_KEY_1));
@@ -184,7 +184,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<String, BigInteger> actual = underTest.transform(sourceMap);
 
         //THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
         assertEquals(actual.size(), sourceMap.size());
         assertTrue(actual.containsKey(MAP_KEY_1.toUpperCase()));
     }
@@ -214,7 +214,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<MutableToFooSimple, Map> actual = underTest.transform(EXTREME_COMPLEX_MAP, MutableToFooSimple.class, Map.class);
 
         //THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
         assertEquals(actual.size(), EXTREME_COMPLEX_MAP.size());
         // check that the element has been converted
         for (Map.Entry<MutableToFooSimple, Map> entry : actual.entrySet()) {
@@ -236,7 +236,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<MutableToFooSimple, List> actual = underTest.transform(sourceMap, MutableToFooSimple.class, List.class);
 
         //THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
         assertEquals(actual.size(), sourceMap.size());
         for (Map.Entry<MutableToFooSimple, List> entry : actual.entrySet()) {
             assertEquals(MutableToFooSimple.class, entry.getKey().getClass());
