@@ -18,9 +18,7 @@ package com.hotels.beans.transformer;
 
 import static java.lang.Integer.parseInt;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -32,8 +30,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
-
-import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -88,7 +84,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFoo actual = underTest.transform(fromFoo, MutableToFoo.class);
 
         //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
+        assertBeanEquals(actual, fromFoo);
     }
 
     /**
@@ -103,7 +99,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         underTest.transform(fromFooSubClass, mutableToFoo);
 
         //THEN
-        assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
+        assertBeanEquals(mutableToFoo, fromFooSubClass);
     }
 
     /**
@@ -119,7 +115,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         underTest.transform(fromFooSubClass, mutableToFoo);
 
         //THEN
-        assertThat(mutableToFoo, sameBeanAs(fromFooSubClass));
+        assertBeanEquals(mutableToFoo, fromFooSubClass);
         fromFooSubClass.setId(ID);
     }
 
@@ -177,7 +173,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFooSimpleNoSetters actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.class);
 
         //THEN
-        assertThat(actual, sameBeanAs(fromFooSimpleNoGetters));
+        assertBeanEquals(actual, fromFooSimpleNoGetters);
     }
 
     /**
@@ -193,7 +189,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFooSimpleNoSetters actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.class);
 
         //THEN
-        assertThat(actual, sameBeanAs(fromFooSimpleNoGetters));
+        assertBeanEquals(actual, fromFooSimpleNoGetters);
         underTest.setDefaultValueForMissingPrimitiveField(true);
     }
 
@@ -228,7 +224,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFooNotExistingFields mutableObjectBean = underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
 
         //THEN
-        assertThat(mutableObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
+        assertThat(mutableObjectBean).hasFieldOrPropertyWithValue(AGE_FIELD_NAME, AGE);
         underTest.resetFieldsTransformer();
     }
 
@@ -292,7 +288,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFooSimple actual = underTest.transform(fromFooSimple, MutableToFooSimple.class);
 
         //THEN
-        assertThat(actual, hasProperty(fieldToTransform, equalTo(transformationResult)));
+        assertThat(actual).hasFieldOrPropertyWithValue(fieldToTransform, transformationResult);
         underTest.removeFieldTransformer(fieldToTransform);
     }
 
