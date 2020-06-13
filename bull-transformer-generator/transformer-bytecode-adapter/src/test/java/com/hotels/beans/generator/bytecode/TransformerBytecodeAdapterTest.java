@@ -16,8 +16,7 @@
 
 package com.hotels.beans.generator.bytecode;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.startsWith;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -56,6 +55,9 @@ public class TransformerBytecodeAdapterTest {
     @Mock
     private JavaStringCompiler compiler;
 
+    /**
+     * The class to be tested.
+     */
     private TransformerBytecodeAdapter underTest;
 
     @BeforeMethod
@@ -82,7 +84,7 @@ public class TransformerBytecodeAdapterTest {
         var actual = underTest.newTransformer(Source.class, Destination.class);
 
         // THEN
-        assertThat(actual.getClass().getName(), startsWith(DEFAULT_PACKAGE));
+        assertThat(actual.getClass().getName()).startsWith(DEFAULT_PACKAGE);
     }
 
     @Test
@@ -98,7 +100,7 @@ public class TransformerBytecodeAdapterTest {
         var actual = underTest.newTransformer(Source.class, Destination.class);
 
         // THEN
-        assertThat(actual.getClass().getName(), startsWith(packageName));
+        assertThat(actual.getClass().getName()).startsWith(packageName);
     }
 
     @Test(expectedExceptions = TransformerGeneratorException.class)
