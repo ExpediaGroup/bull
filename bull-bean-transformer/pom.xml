@@ -25,10 +25,5 @@
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.shazam</groupId>
-            <artifactId>shazamcrest</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 </project>

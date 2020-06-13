@@ -19,6 +19,7 @@ package com.hotels.beans.sample.immutable;
 import java.math.BigInteger;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
@@ -26,6 +27,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class ImmutableToFooSimple {
     private final String name;
     private final BigInteger id;
