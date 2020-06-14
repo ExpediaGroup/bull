@@ -23,6 +23,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 import com.hotels.transformer.AbstractTransformerTest;
+import com.hotels.transformer.utils.ReflectionUtils;
 
 /**
  * Unit test for {@link BeanTransformer}.
@@ -33,6 +34,11 @@ public abstract class AbstractBeanTransformerTest extends AbstractTransformerTes
      */
     @InjectMocks
     TransformerImpl underTest;
+
+    /**
+     * The reflection utils class.
+     */
+    final ReflectionUtils reflectionUtils = new ReflectionUtils();
 
     /**
      * Initializes the arguments and objects.

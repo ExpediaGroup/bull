@@ -47,7 +47,6 @@ import java.util.function.Supplier;
 import javax.validation.constraints.NotNull;
 
 import org.mockito.InjectMocks;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -523,7 +522,7 @@ public class ClassUtilsTest {
      */
     private Constructor createMockedConstructor() {
         Parameter parameter = mock(Parameter.class);
-        ReflectionTestUtils.setField(parameter, "name", "paramName");
+        new ReflectionUtils().setFieldValue(parameter, "name", "paramName");
         when(parameter.isNamePresent()).thenReturn(false);
         Constructor constructor = mock(Constructor.class);
         when(constructor.getDeclaringClass()).thenReturn(ImmutableToFoo.class);
