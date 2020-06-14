@@ -25,7 +25,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -376,7 +375,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         when(classUtils.getConstructorParameters(constructor)).thenReturn(new Parameter[] {});
         when(classUtils.areParameterNamesAvailable(constructor)).thenReturn(true);
         doReturn(expectedException).when(underTestMock).handleInjectionException(any(), any(), any(), any(), any(), anyBoolean(), any());
-        setField(underTestMock, CLASS_UTILS_FIELD_NAME, classUtils);
+        reflectionUtils.setFieldValue(underTestMock, CLASS_UTILS_FIELD_NAME, classUtils);
         Method injectValuesMethod =
             TransformerImpl.class.getDeclaredMethod(INJECT_VALUES_METHOD_NAME, Object.class, Class.class, Constructor.class, String.class, boolean.class);
         injectValuesMethod.setAccessible(true);

@@ -22,7 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -513,9 +512,9 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         ConstructorArg constructorArg = mock(ConstructorArg.class);
         when(constructorArg.value()).thenReturn(DEST_FIELD_NAME);
         // ReflectionUtils mock setup
-        ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
-        when(reflectionUtils.getParameterAnnotation(constructorParameter, ConstructorArg.class, declaringClassName)).thenReturn(constructorArg);
-        setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
+        ReflectionUtils reflectionUtilsMock = mock(ReflectionUtils.class);
+        when(reflectionUtilsMock.getParameterAnnotation(constructorParameter, ConstructorArg.class, declaringClassName)).thenReturn(constructorArg);
+        reflectionUtils.setFieldValue(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtilsMock);
     }
 
     /**
@@ -524,7 +523,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     private void restoreObjects(final Method getDestFieldNameMethod) {
         getDestFieldNameMethod.setAccessible(false);
-        setField(underTest, REFLECTION_UTILS_FIELD_NAME, new ReflectionUtils());
+        reflectionUtils.setFieldValue(underTest, REFLECTION_UTILS_FIELD_NAME, new ReflectionUtils());
     }
 
 }
