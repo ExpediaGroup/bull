@@ -67,6 +67,7 @@ All notable changes to this project will be documented in this file.
 * Implemented a new functionality that allows to transform also Map object applying transformation function and mappings
 #### Changed
 * `Transformer` class previously in charge of the Java Bean transformation has been moved to `BeanTransformer`
+* Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
 * Updated `hibernate-validator` version to `6.1.0.Final` (was `6.0.17.Final`).
 
 ### [1.1.24] 2019.09.02
@@ -118,7 +119,7 @@ All notable changes to this project will be documented in this file.
 ### [1.1.18] 2019.05.18
 #### Changed
 * Removed deprecated method: `setValidationDisabled`
-* * Testing dependencies update
+* Testing dependencies update
 
 ### [1.1.17] 2019.05.13
 #### Changed
