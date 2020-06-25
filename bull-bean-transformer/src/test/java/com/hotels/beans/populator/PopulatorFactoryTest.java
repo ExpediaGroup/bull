@@ -90,7 +90,7 @@ public class PopulatorFactoryTest {
         final boolean isNonNullObjectExpected = nonNull(expectedResult);
         assertThat(populator.isPresent()).isEqualTo(isNonNullObjectExpected);
         if (isNonNullObjectExpected) {
-            assertThat(populator.get().getClass()).isEqualTo(expectedResult);
+            assertThat(populator).containsInstanceOf(expectedResult);
         }
     }
 }
