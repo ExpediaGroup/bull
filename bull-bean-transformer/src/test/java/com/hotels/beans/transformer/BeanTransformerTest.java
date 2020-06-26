@@ -527,8 +527,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         }
 
         //THEN
-        assertThat(actual).isNotNull();
-        assertThat(actual.getClass()).isEqualTo(expectedReturnType);
+        assertThat(actual).isInstanceOf(expectedReturnType);
         restoreUnderTestObject();
     }
 
