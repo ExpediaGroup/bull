@@ -426,8 +426,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         verify(constructorParameter, times(2)).getName();
         verify(constructorParameter).getType();
         verify(classUtils).getDefaultTypeValue(Integer.class);
-        assertThat(actual.length).isEqualTo(ONE.intValue());
-        assertThat(actual[ZERO.intValue()]).isEqualTo(ZERO.intValue());
+        assertThat(actual).containsOnly(0);
         restoreUnderTestObject();
     }
 
