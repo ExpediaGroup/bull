@@ -120,12 +120,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<T, K> actual = underTest.transform(sourceMap);
 
         //THEN
-        assertThat(actual).isNotNull();
-        assertThat(actual.size()).isEqualTo(sourceMap.size());
-        assertThat(actual.entrySet())
-                .containsExactlyInAnyOrderElementsOf(sourceMap.entrySet());
-//        assertThat(actual.entrySet(),
-//                both(everyItem(isIn(sourceMap.entrySet()))).and(containsInAnyOrder(sourceMap.entrySet().toArray())));
+        assertThat(actual).isEqualTo(sourceMap);
     }
 
     /**
