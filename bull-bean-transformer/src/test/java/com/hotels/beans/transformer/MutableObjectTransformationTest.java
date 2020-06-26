@@ -129,8 +129,8 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
                 .transform(fromFoo, MutableToFoo.class);
 
         //THEN
-        assertThat(actual.getName()).isEqualTo(fromFoo.getName());
-        assertThat(actual.getNestedObject().getName()).isEqualTo(namePrefix + fromFoo.getNestedObject().getName());
+        assertThat(actual).extracting("name", "nestedObject.name")
+                .containsExactly(fromFoo.getName(), namePrefix + fromFoo.getNestedObject().getName());
         underTest.resetFieldsTransformer();
     }
 
