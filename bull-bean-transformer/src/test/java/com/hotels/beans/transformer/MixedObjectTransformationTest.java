@@ -168,9 +168,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.class);
 
         //THEN
-        assertThat(actual.getId()).isEqualTo(fromFoo.getId());
-        assertThat(actual.getName()).isNull();
-        assertThat(actual.getNestedObject().getPhoneNumbers()).isNull();
+        assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
         underTest.resetFieldsTransformationSkip();
     }
 
