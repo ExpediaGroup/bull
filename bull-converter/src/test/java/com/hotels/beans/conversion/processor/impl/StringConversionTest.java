@@ -56,7 +56,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(BYTE_VALUE.toString());
+        assertThat(actual).isEqualTo(STRING_VALUE);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(SHORT_VALUE.toString());
+        assertThat(actual).isEqualTo(STRING_VALUE);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(INTEGER_VALUE.toString());
+        assertThat(actual).isEqualTo(STRING_VALUE);
     }
 
     @Test
@@ -101,7 +101,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(LONG_VALUE.toString());
+        assertThat(actual).isEqualTo(STRING_VALUE);
     }
 
     @Test
@@ -145,7 +145,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(BOOLEAN_VALUE.toString());
+        assertThat(actual).isEqualTo(TRUE_AS_STRING);
     }
 
     @Test
