@@ -116,7 +116,7 @@ public class FloatConversionTest extends AbstractConversionTest {
         Float actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Float) LONG_VALUE.floatValue());
+        assertThat(actual).isEqualTo(FLOAT_VALUE);
     }
 
     @Test
