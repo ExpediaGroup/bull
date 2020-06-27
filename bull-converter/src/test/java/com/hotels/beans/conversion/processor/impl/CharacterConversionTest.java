@@ -199,7 +199,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 
     @Test
