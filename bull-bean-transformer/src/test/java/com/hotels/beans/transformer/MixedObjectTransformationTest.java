@@ -50,7 +50,8 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFooMissingAllArgsConstructor actual = underTest.transform(fromFoo, MixedToFooMissingAllArgsConstructor.class);
 
         //THEN
-        assertThat(actual).usingRecursiveComparison().isEqualTo(fromFoo);
+        assertThat(actual).usingRecursiveComparison()
+                .isEqualTo(fromFoo);
     }
 
     /**
