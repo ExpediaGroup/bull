@@ -123,7 +123,7 @@ public class SampleClassTest {
         //THEN
         verify(beanUtils).getTransformer();
         verify(beanTransformer).transform(sampleRequest, DestObject.class);
-        assertEquals(EXPECTED_RESULT, actual);
+        assertThat(actual).isEqualTo(EXPECTED_RESULT);
     }
     
     /**
@@ -242,7 +242,7 @@ public class SampleClassTest {
         verify(beanUtils).getTransformer();
         verify(beanTransformer).withFieldTransformer(any(FieldTransformer.class));
         verify(beanTransformer).transform(sampleRequest, DestObject.class);
-        assertEquals(EXPECTED_RESULT, actual);
+        assertThat(actual).isEqualTo(EXPECTED_RESULT);
     }
     
     /**
@@ -350,7 +350,7 @@ public class SampleClassTest {
         final BigInteger actual = underTest.doSomething(sampleRequest);
 
         //THEN
-        assertEquals(EXPECTED_RESULT, actual);
+        assertThat(actual).isEqualTo(EXPECTED_RESULT);
     }
     
     /**
