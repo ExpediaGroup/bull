@@ -105,7 +105,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         Double actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Double) INTEGER_VALUE.doubleValue());
+        assertThat(actual).isEqualTo(DOUBLE_VALUE);
     }
 
     @Test
