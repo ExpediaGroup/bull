@@ -94,7 +94,7 @@ public class IntegerConversionTest extends AbstractConversionTest {
         Integer actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Integer) SHORT_VALUE.intValue());
+        assertThat(actual).isEqualTo(INTEGER_VALUE);
     }
 
     @Test
