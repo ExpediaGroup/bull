@@ -297,7 +297,7 @@ public class ReflectionUtilsTest {
         RuntimeException actual = underTest.handleReflectionException(genericException);
 
         // THEN
-        assertThat(actual.getClass()).isEqualTo(UndeclaredThrowableException.class);
+        assertThat(actual).isInstanceOf(UndeclaredThrowableException.class);
     }
 
     /**
