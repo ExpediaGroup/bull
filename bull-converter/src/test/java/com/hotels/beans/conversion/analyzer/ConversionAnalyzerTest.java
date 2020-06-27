@@ -77,7 +77,7 @@ public class ConversionAnalyzerTest {
         Optional<Function<Object, Object>> actual = underTest.getConversionFunction(sourceFieldType, destinationFieldType);
 
         // THEN
-        assertThat(actual).isEqualTo(empty());
+        assertThat(actual).isEmpty();
     }
 
     /**
