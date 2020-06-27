@@ -18,9 +18,11 @@ package com.hotels.map.transformer;
 
 import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
-import static java.util.Collections.singletonList;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
+import static org.assertj.core.util.Lists.list;
+import static org.assertj.core.util.Maps.newHashMap;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigInteger;
@@ -152,10 +154,10 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<String, BigInteger> actual = underTest.transform(sourceMap);
 
         //THEN
-        assertThat(actual).isNotNull();
-        assertThat(actual.size()).isEqualTo(sourceMap.size());
-        assertThat(actual.get(MAP_KEY_1)).isEqualTo(sourceMap.get(MAP_KEY_1));
-        assertThat(actual.get(MAP_KEY_2)).isEqualTo(sourceMap.get(MAP_KEY_1));
+        assertThat(actual).containsOnly(
+                entry(MAP_KEY_1, ZERO),
+                entry(MAP_KEY_2, ZERO)
+        );
         underTest.resetFieldsMapping();
     }
 
@@ -217,22 +219,19 @@ public class MapTransformerTest extends AbstractTransformerTest {
      * Test that the given map is correctly transformed and the elements are correctly transformed if the Map contains a List.
      */
     @Test
+    @SuppressWarnings("unchecked")
     public void testTransformWorksProperlyWithMapContainingList() {
         //GIVEN
-        List<String> sampleList = singletonList(ITEM_1);
-        Map<FromFooSimple, List<String>> sourceMap = new HashMap<>();
-        sourceMap.put(fromFooSimple, sampleList);
+        Map<FromFooSimple, List<String>> sourceMap = newHashMap(fromFooSimple, list(ITEM_1));
 
         //WHEN
         Map<MutableToFooSimple, List> actual = underTest.transform(sourceMap, MutableToFooSimple.class, List.class);
 
         //THEN
-        assertThat(actual).isNotNull();
-        assertThat(actual.size()).isEqualTo(sourceMap.size());
-        for (Map.Entry<MutableToFooSimple, List> entry : actual.entrySet()) {
-            assertThat(entry.getKey().getClass()).isEqualTo(MutableToFooSimple.class);
-            assertThat(entry.getValue()).isEqualTo(sampleList);
-        }
+        assertThat(actual).allSatisfy((key, value) -> {
+            assertThat(key).isInstanceOf(MutableToFooSimple.class);
+            assertThat(value).containsOnly(ITEM_1);
+        });
     }
 
     /**
