@@ -16,7 +16,6 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Character.getNumericValue;
 import static java.lang.Double.valueOf;
 import static java.nio.ByteBuffer.wrap;
 
@@ -196,7 +195,6 @@ public class DoubleConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        double expectedValue = BigInteger.ZERO.doubleValue();
 
         // WHEN
         double actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
@@ -208,12 +206,11 @@ public class DoubleConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        double expectedValue = BigDecimal.ZERO.doubleValue();
 
         // WHEN
         double actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 }
