@@ -16,8 +16,6 @@
 
 package com.hotels.beans.conversion.analyzer;
 
-import static java.util.Optional.empty;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
