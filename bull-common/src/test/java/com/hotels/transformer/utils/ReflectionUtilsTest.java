@@ -282,7 +282,7 @@ public class ReflectionUtilsTest {
         RuntimeException actual = underTest.handleReflectionException(runtimeException);
 
         // THEN
-        assertThat(actual.getClass()).isEqualTo(RuntimeException.class);
+        assertThat(actual).isInstanceOf(RuntimeException.class);
     }
 
     /**
