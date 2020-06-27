@@ -453,7 +453,7 @@ public class ReflectionUtilsTest {
                 .invoke(underTest, idSetterMethod, mutableToFoo, new Object[] {ONE});
 
         // THEN
-        assertThat(mutableToFoo.getId()).isEqualTo(ONE);
+        assertThat(mutableToFoo).hasFieldOrPropertyWithValue(ID_FIELD_NAME, ONE);
     }
 
     /**
