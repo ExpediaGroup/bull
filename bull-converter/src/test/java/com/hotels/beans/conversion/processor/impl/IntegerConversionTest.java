@@ -116,7 +116,7 @@ public class IntegerConversionTest extends AbstractConversionTest {
         Integer actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Integer) LONG_VALUE.intValue());
+        assertThat(actual).isEqualTo(INTEGER_VALUE);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class IntegerConversionTest extends AbstractConversionTest {
         Integer actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Integer) FLOAT_VALUE.intValue());
+        assertThat(actual).isEqualTo(INTEGER_VALUE);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class IntegerConversionTest extends AbstractConversionTest {
         Integer actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Integer) DOUBLE_VALUE.intValue());
+        assertThat(actual).isEqualTo(INTEGER_VALUE);
     }
 
     @Test
@@ -149,7 +149,7 @@ public class IntegerConversionTest extends AbstractConversionTest {
         Integer actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Integer) getNumericValue(CHAR_VALUE));
+        assertThat(actual).isOne();
     }
 
     /**
@@ -189,7 +189,7 @@ public class IntegerConversionTest extends AbstractConversionTest {
         Integer actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(valueOf(STRING_VALUE));
+        assertThat(actual).isEqualTo(INTEGER_VALUE);
     }
 
     @Test
@@ -201,7 +201,7 @@ public class IntegerConversionTest extends AbstractConversionTest {
         int actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 
     @Test
@@ -213,6 +213,6 @@ public class IntegerConversionTest extends AbstractConversionTest {
         int actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 }
