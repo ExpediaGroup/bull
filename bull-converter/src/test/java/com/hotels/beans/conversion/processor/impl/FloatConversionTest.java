@@ -144,12 +144,13 @@ public class FloatConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertCharacterShouldReturnProperResult() {
         // GIVEN
+        float expected = 1.0f;
 
         // WHEN
         Float actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(Float.valueOf(getNumericValue(CHAR_VALUE)));
+        assertThat(actual).isEqualTo(expected);
     }
 
     /**
