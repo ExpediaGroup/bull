@@ -76,7 +76,7 @@ import com.hotels.transformer.model.MapType;
 public class ReflectionUtilsTest {
     private static final String ID_FIELD_NAME = "id";
     private static final String NOT_EXISTING_FIELD_NAME = "notExistingField";
-    private static final String NESTED_OBJECT_FIELD_NAME = "nestedObject.name";
+    private static final String NESTED_OBJECT_NAME_FIELD_NAME = "nestedObject.name";
     private static final String LIST_FIELD_NAME = "list";
     private static final String PHONE_NUMBERS_FIELD_NAME = "phoneNumbers";
     private static final String GETTER_METHOD_PREFIX_METHOD_NAME = "getGetterMethodPrefix";
@@ -154,7 +154,7 @@ public class ReflectionUtilsTest {
         MutableToFoo mutableToFoo = createMutableToFoo(ZERO);
         return new Object[][] {
                 {"Tests that the method returns the field value", mutableToFoo, ID_FIELD_NAME, BigInteger.class, ZERO},
-                {"Tests that the method returns null if the required field is inside a null object", mutableToFoo, NESTED_OBJECT_FIELD_NAME,
+                {"Tests that the method returns null if the required field is inside a null object", mutableToFoo, NESTED_OBJECT_NAME_FIELD_NAME,
                     String.class, null},
                 {"Tests that the method returns the field value even if there is no getter method defined", createFromFooSimpleNoGetters(),
                     ID_FIELD_NAME, BigInteger.class, ZERO}
@@ -236,7 +236,7 @@ public class ReflectionUtilsTest {
         MutableToFoo mutableToFoo = createMutableToFoo(null);
         return new Object[][] {
                 {"Tests that the method throws Exception if the field does not exists", mutableToFoo, NOT_EXISTING_FIELD_NAME},
-                {"Tests that the method throws Exception if the bean is null", null, NESTED_OBJECT_FIELD_NAME}
+                {"Tests that the method throws Exception if the bean is null", null, NESTED_OBJECT_NAME_FIELD_NAME}
         };
     }
 
@@ -252,7 +252,7 @@ public class ReflectionUtilsTest {
         RuntimeException actual = underTest.handleReflectionException(noSuchMethodException);
 
         // THEN
-        assertThat(actual.getClass()).isEqualTo(MissingMethodException.class);
+        assertThat(actual).isInstanceOf(MissingMethodException.class);
     }
 
     /**
@@ -529,7 +529,7 @@ public class ReflectionUtilsTest {
     private Object[][] dataGetDeclaredFieldTesting() {
         return new Object[][] {
                 {"Tests that the method returns the class field from first object", ID_FIELD_NAME, FromFooSubClass.class},
-                {"Tests that the method returns the class field from a nested object", NESTED_OBJECT_FIELD_NAME, MutableToFoo.class}
+                {"Tests that the method returns the class field from a nested object", NESTED_OBJECT_NAME_FIELD_NAME, MutableToFoo.class}
         };
     }
 
