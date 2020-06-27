@@ -16,8 +16,6 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Byte.valueOf;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -177,30 +175,28 @@ public class ByteConversionTest extends AbstractConversionTest {
         Byte actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(valueOf(STRING_VALUE));
+        assertThat(actual).isEqualTo(BYTE_VALUE);
     }
 
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        byte expectedValue = BigInteger.ZERO.byteValue();
 
         // WHEN
         byte actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        byte expectedValue = BigDecimal.ZERO.byteValue();
 
         // WHEN
         byte actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 }
