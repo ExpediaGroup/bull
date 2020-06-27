@@ -63,7 +63,7 @@ public class FloatConversionTest extends AbstractConversionTest {
         Float actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Float) BYTE_VALUE.floatValue());
+        assertThat(actual).isEqualTo(FLOAT_VALUE);
     }
 
     @Test
