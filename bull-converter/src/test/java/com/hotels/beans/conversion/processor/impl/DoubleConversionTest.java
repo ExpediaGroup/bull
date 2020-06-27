@@ -63,7 +63,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         Double actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Double) BYTE_VALUE.doubleValue());
+        assertThat(actual).isEqualTo(DOUBLE_VALUE);
     }
 
     @Test
