@@ -195,7 +195,6 @@ public class ShortConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        short expectedValue = BigInteger.ZERO.shortValue();
 
         // WHEN
         short actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
@@ -207,7 +206,6 @@ public class ShortConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        short expectedValue = BigDecimal.ZERO.shortValue();
 
         // WHEN
         short actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);

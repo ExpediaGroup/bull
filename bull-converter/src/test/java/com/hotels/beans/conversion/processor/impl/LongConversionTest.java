@@ -195,7 +195,6 @@ public class LongConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        long expectedValue = BigInteger.ZERO.longValue();
 
         // WHEN
         long actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
@@ -207,7 +206,6 @@ public class LongConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        long expectedValue = BigDecimal.ZERO.longValue();
 
         // WHEN
         long actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);

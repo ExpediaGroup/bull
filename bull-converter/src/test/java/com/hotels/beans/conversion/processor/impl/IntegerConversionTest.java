@@ -195,7 +195,6 @@ public class IntegerConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        int expectedValue = BigInteger.ZERO.intValue();
 
         // WHEN
         int actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
@@ -207,7 +206,6 @@ public class IntegerConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        int expectedValue = BigDecimal.ZERO.intValue();
 
         // WHEN
         int actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
