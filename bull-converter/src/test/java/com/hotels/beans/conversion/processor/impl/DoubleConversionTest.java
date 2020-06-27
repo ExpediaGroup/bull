@@ -144,12 +144,13 @@ public class DoubleConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertCharacterShouldReturnProperResult() {
         // GIVEN
+        double expected = 1.0;
 
         // WHEN
         Double actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(valueOf((short) getNumericValue(CHAR_VALUE)));
+        assertThat(actual).isEqualTo(expected);
     }
 
     /**
