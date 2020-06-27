@@ -63,7 +63,7 @@ public class IntegerConversionTest extends AbstractConversionTest {
         Integer actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Integer) BYTE_VALUE.intValue());
+        assertThat(actual).isEqualTo(INTEGER_VALUE);
     }
 
     @Test
