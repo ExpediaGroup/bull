@@ -267,7 +267,7 @@ public class ReflectionUtilsTest {
         RuntimeException actual = underTest.handleReflectionException(illegalAccessException);
 
         // THEN
-        assertThat(actual.getClass()).isEqualTo(IllegalStateException.class);
+        assertThat(actual).isInstanceOf(IllegalStateException.class);
     }
 
     /**
