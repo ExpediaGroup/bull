@@ -114,8 +114,7 @@ public class ConversionAnalyzerTest {
         Optional<Function<Object, Object>> actual = underTest.getConversionFunction(sourceFieldType, destinationFieldType);
 
         // THEN
-        assertThat(actual.isPresent()).isTrue();
-        assertThat(actual.get()).isEqualTo(expectedConversionFunction);
+        assertThat(actual).contains((Function<Object, Object>) expectedConversionFunction);
     }
 
     /**
