@@ -16,7 +16,6 @@
 
 package com.hotels.beans.transformer;
 
-import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
 import static java.util.Optional.empty;
 

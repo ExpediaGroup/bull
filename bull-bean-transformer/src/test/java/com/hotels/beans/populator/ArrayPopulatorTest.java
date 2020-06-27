@@ -25,8 +25,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.stream.IntStream;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.testng.annotations.BeforeClass;
@@ -48,6 +46,7 @@ public class ArrayPopulatorTest {
     private static final int ZERO = 0;
     private static final int[] INT_ARRAY = new int[] {ZERO};
     private static final MixedToFooStaticField MIXED_TO_FOO_STATIC_FIELDS_OBJECTS = new MixedToFooStaticField();
+    private static final String NORMAL_FIELD = "normalField";
 
     @Mock
     private BeanTransformer transformer;
@@ -88,10 +87,9 @@ public class ArrayPopulatorTest {
         } else if (genericFieldType == Object.class) {
             assertThat((Object[]) actual).isEqualTo(array);
         } else if (genericFieldType == MixedToFooStaticField.class) {
-            final MixedToFooStaticField[] expectedArray = (MixedToFooStaticField[]) array;
-            final Object[] actualArray = (Object[]) actual;
-            IntStream.range(0, expectedArray.length)
-                    .forEach(i -> assertThat(((MixedToFooStaticField) actualArray[i]).getNormalField()).isEqualTo(expectedArray[i].getNormalField()));
+            assertThat((Object[]) actual)
+                    .usingElementComparatorOnFields(NORMAL_FIELD)
+                    .isEqualTo(array);
         } else {
             assertThat((Object[]) actual).isEqualTo(array);
         }
@@ -125,7 +123,7 @@ public class ArrayPopulatorTest {
      * Creates an array containing an instance of {@link Boolean}.
      * @return an array containing an instance of {@link Boolean}.
      */
-    private static Object[] createBooleanArray() {
-        return new Object[] {TRUE, FALSE};
+    private static Boolean[] createBooleanArray() {
+        return new Boolean[] {TRUE, FALSE};
     }
 }

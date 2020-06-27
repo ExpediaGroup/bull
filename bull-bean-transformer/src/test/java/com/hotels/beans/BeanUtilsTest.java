@@ -105,7 +105,9 @@ public class BeanUtilsTest {
         //THEN
         assertThat(transformerFunction).isNotNull();
         IntStream.range(0, actual.size())
-                .forEach(i -> assertThat(actual.get(i)).isEqualToComparingFieldByField(fromFooSimpleList.get(i)).usingRecursiveComparison());
+                .forEach(i -> assertThat(actual.get(i))
+                        .isEqualToComparingFieldByField(fromFooSimpleList.get(i))
+                        .usingRecursiveComparison());
     }
 
     /**
