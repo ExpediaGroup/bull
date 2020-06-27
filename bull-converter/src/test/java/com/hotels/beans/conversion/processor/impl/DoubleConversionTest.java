@@ -201,7 +201,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         double actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 
     @Test
