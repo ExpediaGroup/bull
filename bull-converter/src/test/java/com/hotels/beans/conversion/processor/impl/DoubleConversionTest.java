@@ -63,7 +63,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         Double actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Double) BYTE_VALUE.doubleValue());
+        assertThat(actual).isEqualTo(DOUBLE_VALUE);
     }
 
     @Test
@@ -105,7 +105,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         Double actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Double) INTEGER_VALUE.doubleValue());
+        assertThat(actual).isEqualTo(DOUBLE_VALUE);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         Double actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Double) LONG_VALUE.doubleValue());
+        assertThat(actual).isEqualTo(DOUBLE_VALUE);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         Double actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Double) FLOAT_VALUE.doubleValue());
+        assertThat(actual).isEqualTo(DOUBLE_VALUE);
     }
 
     @Test
@@ -202,7 +202,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         double actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 
     @Test
