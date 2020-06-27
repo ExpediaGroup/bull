@@ -94,7 +94,7 @@ public class FloatConversionTest extends AbstractConversionTest {
         Float actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Float) SHORT_VALUE.floatValue());
+        assertThat(actual).isEqualTo(FLOAT_VALUE);
     }
 
     @Test
