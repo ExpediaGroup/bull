@@ -154,7 +154,6 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      * @param expectedId the expected id
      * @param expectedPhoneNumbers the expected phone number
      */
-    @SuppressWarnings("unchecked")
     @Test(dataProvider = "dataCompositeFieldNameTesting")
     public void testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected(final String testCaseDescription, final Object sourceObject, final String expectedName,
         final BigInteger expectedId, final int[] expectedPhoneNumbers) {
