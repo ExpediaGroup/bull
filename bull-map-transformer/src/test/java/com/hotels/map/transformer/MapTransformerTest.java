@@ -209,10 +209,8 @@ public class MapTransformerTest extends AbstractTransformerTest {
         assertThat(actual).isNotNull();
         assertThat(actual.size()).isEqualTo(EXTREME_COMPLEX_MAP.size());
         // check that the element has been converted
-        for (Map.Entry<MutableToFooSimple, Map> entry : actual.entrySet()) {
-            assertThat(entry.getKey().getClass())
-                    .isEqualTo(MutableToFooSimple.class);
-        }
+        assertThat(actual).allSatisfy((key, value) ->
+                assertThat(key).isInstanceOf(MutableToFooSimple.class));
     }
 
     /**

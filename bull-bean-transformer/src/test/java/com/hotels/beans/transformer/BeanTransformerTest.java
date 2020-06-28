@@ -35,7 +35,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-import org.assertj.core.api.ThrowableAssert;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -197,7 +197,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         getSourceFieldValueMethod.setAccessible(true);
 
         //WHEN
-        ThrowableAssert.ThrowingCallable actual = () -> getSourceFieldValueMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME, field, true);
+        ThrowingCallable actual = () -> getSourceFieldValueMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME, field, true);
 
         //THEN
         assertThatCode(actual).doesNotThrowAnyException();
@@ -322,7 +322,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         getSourceFieldTypeMethod.setAccessible(true);
 
         //WHEN
-        ThrowableAssert.ThrowingCallable actual = () -> getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME);
+        ThrowingCallable actual = () -> getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME);
 
         //THEN
         assertThatThrownBy(actual).hasCauseInstanceOf(MissingFieldException.class);

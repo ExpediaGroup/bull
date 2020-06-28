@@ -69,15 +69,14 @@ public class ArrayPopulatorTest {
      * Tests that the method {@code getPopulatedObject} works as expected.
      * @param genericFieldType the field to be populated class
      * @param array the source object from which extract the values
-     * @param nestedGenericClass the nested generic object class.
      */
     @Test(dataProvider = "dataProvider")
-    public void testGetPopulatedObjectWorksProperly(final Class<?> genericFieldType, final Object array, final Class<?> nestedGenericClass) {
+    public void testGetPopulatedObjectWorksProperly(final Class<?> genericFieldType, final Object array) {
         // GIVEN
         when(transformer.transform(any(), eq(MixedToFooStaticField.class))).thenReturn(MIXED_TO_FOO_STATIC_FIELDS_OBJECTS);
 
         // WHEN
-        Object actual = underTest.getPopulatedObject(null, genericFieldType, array, nestedGenericClass);
+        Object actual = underTest.getPopulatedObject(null, genericFieldType, array, null);
 
         // THEN
         if (genericFieldType == Character.class) {
@@ -91,7 +90,7 @@ public class ArrayPopulatorTest {
                     .usingElementComparatorOnFields(NORMAL_FIELD)
                     .isEqualTo(array);
         } else {
-            assertThat((Object[]) actual).isEqualTo(array);
+            assertThat(actual).isEqualTo(array);
         }
     }
 
@@ -102,11 +101,11 @@ public class ArrayPopulatorTest {
     @DataProvider
     public Object[][] dataProvider() {
         return new Object[][]{
-                {String.class, STRING_ARRAY, null},
-                {Character.class, CHAR_ARRAY, null},
-                {Integer.class, INT_ARRAY, null},
-                {MixedToFooStaticField.class, createMixedToFooArray(), null},
-                {Object.class, createBooleanArray(), null}
+                {String.class, STRING_ARRAY},
+                {Character.class, CHAR_ARRAY},
+                {Integer.class, INT_ARRAY},
+                {MixedToFooStaticField.class, createMixedToFooArray()},
+                {Object.class, createBooleanArray()}
         };
     }
 

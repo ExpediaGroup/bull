@@ -31,7 +31,7 @@ import java.math.BigInteger;
 import java.util.Locale;
 import java.util.Optional;
 
-import org.assertj.core.api.ThrowableAssert;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -413,7 +413,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
                 format(expectedExceptionMessageFormat, targetClassName, targetClassName, targetClass.getSimpleName(), fromFooSimple.getClass().getName());
 
         //WHEN
-        ThrowableAssert.ThrowingCallable actual = () -> underTest.transform(fromFooSimple, targetClass);
+        ThrowingCallable actual = () -> underTest.transform(fromFooSimple, targetClass);
 
         //THEN
         assertThatThrownBy(actual).isInstanceOf(InvalidBeanException.class)
