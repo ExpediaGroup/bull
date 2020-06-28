@@ -14,7 +14,7 @@ extent to which the component or system under test:
 * can be installed and run in its intended environments
 * achieves the general result its stakeholders desire.
 
-This page will show how to test BULL into a simple project. All the examples utilize [JUnit](https://github.com/junit-team), [Mockito](https://site.mockito.org/) and [AssertJ](http://joel-costigliola.github.io/assertj/)
+This page will show how to test BULL into a simple project. All the examples utilize [JUnit](https://github.com/junit-team), [Mockito](https://site.mockito.org/) and [AssertJ](https://assertj.github.io/doc/)
 
 The Java Bean transformation function can be tested in two different ways that depends on the following scenarios:
 
