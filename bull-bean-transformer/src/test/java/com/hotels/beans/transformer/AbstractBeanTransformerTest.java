@@ -44,7 +44,7 @@ public abstract class AbstractBeanTransformerTest extends AbstractTransformerTes
      * Initializes the arguments and objects.
      */
     @BeforeClass
-    public void beforeClass() {
+    void beforeClass() {
         initObjects();
     }
 
@@ -52,7 +52,7 @@ public abstract class AbstractBeanTransformerTest extends AbstractTransformerTes
      * Initialized mocks.
      */
     @BeforeMethod
-    private void beforeMethod() {
+    void beforeMethod() {
         initMocks(this);
     }
 }
