@@ -31,7 +31,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-import org.assertj.core.api.ThrowableAssert;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -245,7 +245,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         underTest.setPrimitiveTypeConversionEnabled(true);
 
         //WHEN
-        ThrowableAssert.ThrowingCallable actual = () -> underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
+        ThrowingCallable actual = () -> underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
 
         //THEN
         assertThatThrownBy(actual).hasCauseInstanceOf(MissingFieldException.class);
