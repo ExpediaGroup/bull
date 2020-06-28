@@ -16,7 +16,6 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Character.getNumericValue;
 import static java.lang.Double.valueOf;
 import static java.nio.ByteBuffer.wrap;
 
@@ -63,7 +62,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         Double actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Double) BYTE_VALUE.doubleValue());
+        assertThat(actual).isEqualTo(DOUBLE_VALUE);
     }
 
     @Test
@@ -105,7 +104,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         Double actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Double) INTEGER_VALUE.doubleValue());
+        assertThat(actual).isEqualTo(DOUBLE_VALUE);
     }
 
     @Test
@@ -116,7 +115,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         Double actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Double) LONG_VALUE.doubleValue());
+        assertThat(actual).isEqualTo(DOUBLE_VALUE);
     }
 
     @Test
@@ -127,7 +126,7 @@ public class DoubleConversionTest extends AbstractConversionTest {
         Double actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Double) FLOAT_VALUE.doubleValue());
+        assertThat(actual).isEqualTo(DOUBLE_VALUE);
     }
 
     @Test
@@ -144,12 +143,13 @@ public class DoubleConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertCharacterShouldReturnProperResult() {
         // GIVEN
+        double expected = 1.0;
 
         // WHEN
         Double actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(valueOf((short) getNumericValue(CHAR_VALUE)));
+        assertThat(actual).isEqualTo(expected);
     }
 
     /**
@@ -195,24 +195,22 @@ public class DoubleConversionTest extends AbstractConversionTest {
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        double expectedValue = BigInteger.ZERO.doubleValue();
 
         // WHEN
         double actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        double expectedValue = BigDecimal.ZERO.doubleValue();
 
         // WHEN
         double actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 }

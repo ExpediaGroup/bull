@@ -71,7 +71,7 @@ public class ConversionProcessorFactoryTest {
         Optional<ConversionProcessor> actual = underTest.getConversionProcessor(Pair.class);
 
         // THEN
-        assertThat(actual.isEmpty()).isTrue();
+        assertThat(actual).isEmpty();
     }
 
     /**
@@ -89,8 +89,7 @@ public class ConversionProcessorFactoryTest {
         Optional<ConversionProcessor> actual = underTest.getConversionProcessor(targetClass);
 
         // THEN
-        assertThat(actual.isPresent()).isTrue();
-        assertThat(actual.get().getClass()).isEqualTo(expectedResult);
+        assertThat(actual).containsInstanceOf(expectedResult);
     }
 
     /**

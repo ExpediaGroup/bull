@@ -205,18 +205,17 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(BigInteger.ZERO);
+        assertThat(actual).isZero();
     }
 
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        BigInteger expectedValue = BigDecimal.ZERO.toBigInteger();
 
         // WHEN
         BigInteger actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 }

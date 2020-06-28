@@ -45,7 +45,8 @@ public class BuilderObjectTransformationTest extends AbstractBeanTransformerTest
         Object actual = underTest.transform(sourceObject, targetObjectClass);
 
         //THEN
-        assertThat(actual).usingRecursiveComparison().isEqualTo(sourceObject);
+        assertThat(actual).usingRecursiveComparison()
+                .isEqualTo(sourceObject);
         underTest.setCustomBuilderTransformationEnabled(false);
     }
 

@@ -16,11 +16,12 @@
 
 package com.hotels.beans.transformer;
 
-import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
 import static java.util.Optional.empty;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -34,6 +35,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
+import org.assertj.core.api.ThrowableAssert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -195,19 +197,12 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         getSourceFieldValueMethod.setAccessible(true);
 
         //WHEN
-        Exception raisedException = null;
-        Object actual = null;
-        try {
-            actual = getSourceFieldValueMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME, field, true);
-        } catch (final Exception e) {
-            raisedException = e;
-        }
+        ThrowableAssert.ThrowingCallable actual = () -> getSourceFieldValueMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME, field, true);
 
         //THEN
+        assertThatCode(actual).doesNotThrowAnyException();
         verify(reflectionUtilsMock).getFieldValue(FromFooSimple.class, AGE_FIELD_NAME, fieldType);
         verify(field).getType();
-        assertThat(raisedException).isNull();
-        assertThat(actual).isNull();
         restoreUnderTestObject();
     }
 
@@ -327,20 +322,14 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         getSourceFieldTypeMethod.setAccessible(true);
 
         //WHEN
-        Exception raisedException = null;
-        try {
-            getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME);
-        } catch (final Exception e) {
-            raisedException = e;
-        }
+        ThrowableAssert.ThrowingCallable actual = () -> getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME);
 
         //THEN
+        assertThatThrownBy(actual).hasCauseInstanceOf(MissingFieldException.class);
         verify(cacheManager).getFromCache(anyString(), any(Class.class));
         verify(reflectionUtilsMock).getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class);
         verify(classUtils).isPrimitiveType(FromFooSimple.class);
         verify(settings).isSetDefaultValueForMissingField();
-        assertThat(raisedException).isNotNull();
-        assertThat(raisedException.getCause().getClass()).isEqualTo(MissingFieldException.class);
         restoreUnderTestObject();
     }
 
@@ -426,8 +415,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         verify(constructorParameter, times(2)).getName();
         verify(constructorParameter).getType();
         verify(classUtils).getDefaultTypeValue(Integer.class);
-        assertThat(actual.length).isEqualTo(ONE.intValue());
-        assertThat(actual[ZERO.intValue()]).isEqualTo(ZERO.intValue());
+        assertThat(actual).containsOnly(0);
         restoreUnderTestObject();
     }
 
@@ -528,8 +516,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         }
 
         //THEN
-        assertThat(actual).isNotNull();
-        assertThat(actual.getClass()).isEqualTo(expectedReturnType);
+        assertThat(actual).isInstanceOf(expectedReturnType);
         restoreUnderTestObject();
     }
 

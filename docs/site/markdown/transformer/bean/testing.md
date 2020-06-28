@@ -14,7 +14,7 @@ extent to which the component or system under test:
 * can be installed and run in its intended environments
 * achieves the general result its stakeholders desire.
 
-This page will show how to test BULL into a simple project. All the examples utilizes [JUnit](https://github.com/junit-team) and [Mockito](https://site.mockito.org/).
+This page will show how to test BULL into a simple project. All the examples utilize [JUnit](https://github.com/junit-team), [Mockito](https://site.mockito.org/) and [AssertJ](http://joel-costigliola.github.io/assertj/)
 
 The Java Bean transformation function can be tested in two different ways that depends on the following scenarios:
 
@@ -123,7 +123,7 @@ public class SampleClassTest {
         //THEN
         verify(beanUtils).getTransformer();
         verify(beanTransformer).transform(sampleRequest, DestObject.class);
-        assertEquals(EXPECTED_RESULT, actual);
+        assertThat(actual).isEqualTo(EXPECTED_RESULT);
     }
     
     /**
@@ -242,7 +242,7 @@ public class SampleClassTest {
         verify(beanUtils).getTransformer();
         verify(beanTransformer).withFieldTransformer(any(FieldTransformer.class));
         verify(beanTransformer).transform(sampleRequest, DestObject.class);
-        assertEquals(EXPECTED_RESULT, actual);
+        assertThat(actual).isEqualTo(EXPECTED_RESULT);
     }
     
     /**
@@ -350,7 +350,7 @@ public class SampleClassTest {
         final BigInteger actual = underTest.doSomething(sampleRequest);
 
         //THEN
-        assertEquals(EXPECTED_RESULT, actual);
+        assertThat(actual).isEqualTo(EXPECTED_RESULT);
     }
     
     /**

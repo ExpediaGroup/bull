@@ -16,8 +16,6 @@
 
 package com.hotels.beans.conversion.analyzer;
 
-import static java.util.Optional.empty;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -77,7 +75,7 @@ public class ConversionAnalyzerTest {
         Optional<Function<Object, Object>> actual = underTest.getConversionFunction(sourceFieldType, destinationFieldType);
 
         // THEN
-        assertThat(actual).isEqualTo(empty());
+        assertThat(actual).isEmpty();
     }
 
     /**
@@ -114,8 +112,7 @@ public class ConversionAnalyzerTest {
         Optional<Function<Object, Object>> actual = underTest.getConversionFunction(sourceFieldType, destinationFieldType);
 
         // THEN
-        assertThat(actual.isPresent()).isTrue();
-        assertThat(actual.get()).isEqualTo(expectedConversionFunction);
+        assertThat(actual).contains((Function<Object, Object>) expectedConversionFunction);
     }
 
     /**
