@@ -251,14 +251,16 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         //GIVEN
 
         //WHEN
-        final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
-        ImmutableToFooDiffFields actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.class);
+        ImmutableToFooDiffFields actual = underTest
+                .withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
+                .transform(fromFoo, ImmutableToFooDiffFields.class);
 
         //THEN
         assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId())
                 .usingRecursiveComparison()
                 .ignoringFields(IDENTIFIER_FIELD_NAME)
                 .isEqualTo(fromFoo);
+        underTest.resetFieldsMapping();
     }
 
     /**
