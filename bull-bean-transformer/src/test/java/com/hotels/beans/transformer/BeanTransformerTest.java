@@ -322,10 +322,10 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         getSourceFieldTypeMethod.setAccessible(true);
 
         //WHEN
-        ThrowableAssert.ThrowingCallable code = () -> getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME);
+        ThrowableAssert.ThrowingCallable actual = () -> getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME);
 
         //THEN
-        assertThatThrownBy(code).hasCauseInstanceOf(MissingFieldException.class);
+        assertThatThrownBy(actual).hasCauseInstanceOf(MissingFieldException.class);
         verify(cacheManager).getFromCache(anyString(), any(Class.class));
         verify(reflectionUtilsMock).getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class);
         verify(classUtils).isPrimitiveType(FromFooSimple.class);

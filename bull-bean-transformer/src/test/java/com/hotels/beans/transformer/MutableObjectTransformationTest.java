@@ -245,10 +245,10 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         underTest.setPrimitiveTypeConversionEnabled(true);
 
         //WHEN
-        ThrowableAssert.ThrowingCallable code = () -> underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
+        ThrowableAssert.ThrowingCallable actual = () -> underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
 
         //THEN
-        assertThatThrownBy(code).hasCauseInstanceOf(MissingFieldException.class);
+        assertThatThrownBy(actual).hasCauseInstanceOf(MissingFieldException.class);
         underTest.setPrimitiveTypeConversionEnabled(false);
     }
 
