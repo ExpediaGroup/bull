@@ -66,11 +66,11 @@
         <!-- JaCoCo & Sonar properties -->
         <jacoco.version>0.8.5</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
-        <jacoco.instructionRatio>0.90</jacoco.instructionRatio>
+        <jacoco.instructionRatio>0.98</jacoco.instructionRatio>
         <jacoco.methodRatio>1.0</jacoco.methodRatio>
-        <jacoco.branchRatio>0.87</jacoco.branchRatio>
-        <jacoco.complexityRatio>0.90</jacoco.complexityRatio>
-        <jacoco.lineRatio>0.90</jacoco.lineRatio>
+        <jacoco.branchRatio>0.89</jacoco.branchRatio>
+        <jacoco.complexityRatio>0.91</jacoco.complexityRatio>
+        <jacoco.lineRatio>0.98</jacoco.lineRatio>
         <sonar.coverage.exclusions>**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*</sonar.coverage.exclusions>
         <!-- Required for coverall jdk >= 9 compatibility -->
         <jaxb-api.version>2.3.1</jaxb-api.version>
