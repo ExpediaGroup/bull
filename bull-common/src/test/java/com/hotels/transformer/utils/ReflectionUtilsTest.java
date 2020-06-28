@@ -48,7 +48,7 @@ import java.util.Optional;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.assertj.core.api.ThrowableAssert;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.testng.annotations.BeforeClass;
@@ -469,7 +469,7 @@ public class ReflectionUtilsTest {
 
 
         // WHEN
-        ThrowableAssert.ThrowingCallable actual = () ->
+        ThrowingCallable actual = () ->
                 getMethod(underTest.getClass(), INVOKE_METHOD_NAME, true, Method.class, Object.class, Object[].class)
                         .invoke(underTest, idSetterMethod, mutableToFoo, new Object[]{ONE});
 
@@ -681,7 +681,7 @@ public class ReflectionUtilsTest {
         Method methodUnderTest = getMethod(underTest.getClass(), GET_GETTER_METHOD_NAME, true, Class.class, String.class, Class.class);
 
         // WHEN
-        ThrowableAssert.ThrowingCallable actual = () ->
+        ThrowingCallable actual = () ->
                 methodUnderTest.invoke(underTest, FromFooSimpleNoGetters.class, ID_FIELD_NAME, BigInteger.class);
 
         // THEN
@@ -759,7 +759,7 @@ public class ReflectionUtilsTest {
         Method setMethodToInvoke = getMethod(targetObject.getClass(), methodNameToInvoke, isAccessible, String.class);
 
         // WHEN
-        ThrowableAssert.ThrowingCallable actual = () ->
+        ThrowingCallable actual = () ->
                 underTest.invokeMethod(setMethodToInvoke, targetObject, methodArg);
 
         // THEN
