@@ -414,10 +414,10 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
                 format(expectedExceptionMessageFormat, targetClassName, targetClassName, targetClass.getSimpleName(), fromFooSimple.getClass().getName());
 
         //WHEN
-        ThrowableAssert.ThrowingCallable code = () -> underTest.transform(fromFooSimple, targetClass);
+        ThrowableAssert.ThrowingCallable actual = () -> underTest.transform(fromFooSimple, targetClass);
 
         //THEN
-        assertThatThrownBy(code).isInstanceOf(InvalidBeanException.class)
+        assertThatThrownBy(actual).isInstanceOf(InvalidBeanException.class)
                 .hasMessage(expectedExceptionMessage);
     }
 

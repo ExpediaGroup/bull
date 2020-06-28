@@ -460,7 +460,6 @@ public class ReflectionUtilsTest {
 
     /**
      * Tests that the method {@code getSetterMethodForField} raises an {@link InvocationTargetException} if the argument is wrong.
-     * @throws Exception if something goes wrong.
      */
     @Test
     public void testInvokeMethodRaisesAnIllegalArgumentExceptionIfTheArgumentIsWrong() {
@@ -470,12 +469,12 @@ public class ReflectionUtilsTest {
 
 
         // WHEN
-        ThrowableAssert.ThrowingCallable code = () ->
+        ThrowableAssert.ThrowingCallable actual = () ->
                 getMethod(underTest.getClass(), INVOKE_METHOD_NAME, true, Method.class, Object.class, Object[].class)
                         .invoke(underTest, idSetterMethod, mutableToFoo, new Object[]{ONE});
 
         // THEN
-        assertThatThrownBy(code).hasCauseInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(actual).hasCauseInstanceOf(IllegalArgumentException.class);
     }
 
     /**
@@ -683,11 +682,11 @@ public class ReflectionUtilsTest {
         Method methodUnderTest = getMethod(underTest.getClass(), GET_GETTER_METHOD_NAME, true, Class.class, String.class, Class.class);
 
         // WHEN
-        ThrowableAssert.ThrowingCallable code = () ->
+        ThrowableAssert.ThrowingCallable actual = () ->
                 methodUnderTest.invoke(underTest, FromFooSimpleNoGetters.class, ID_FIELD_NAME, BigInteger.class);
 
         // THEN
-        assertThatThrownBy(code).hasCauseInstanceOf(MissingFieldException.class);
+        assertThatThrownBy(actual).hasCauseInstanceOf(MissingFieldException.class);
     }
 
     /**
@@ -761,11 +760,11 @@ public class ReflectionUtilsTest {
         Method setMethodToInvoke = getMethod(targetObject.getClass(), methodNameToInvoke, isAccessible, String.class);
 
         // WHEN
-        ThrowableAssert.ThrowingCallable code = () ->
+        ThrowableAssert.ThrowingCallable actual = () ->
                 underTest.invokeMethod(setMethodToInvoke, targetObject, methodArg);
 
         // THEN
-        assertThatThrownBy(code).isInstanceOf(expectedException);
+        assertThatThrownBy(actual).isInstanceOf(expectedException);
     }
 
     /**
