@@ -496,7 +496,6 @@ public class ReflectionUtilsTest {
 
     /**
      * Test that the method: {@code getClassDeclaredField} throws the right exception.
-     * @throws Exception if the invoke method fails
      */
     @Test
     public void testGetClassDeclaredFieldThrowsTheRightException() {
