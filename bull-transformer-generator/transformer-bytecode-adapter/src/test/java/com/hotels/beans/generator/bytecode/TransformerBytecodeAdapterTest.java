@@ -61,7 +61,7 @@ public class TransformerBytecodeAdapterTest {
     private TransformerBytecodeAdapter underTest;
 
     @BeforeMethod
-    public void setUp() {
+    private void beforeMethod() {
         initMocks(this);
         underTest = TransformerBytecodeAdapter.builder()
                 .spec(spec)

@@ -52,7 +52,7 @@ public abstract class AbstractBeanTransformerTest extends AbstractTransformerTes
      * Initialized mocks.
      */
     @BeforeMethod
-    public void beforeMethod() {
+    private void beforeMethod() {
         initMocks(this);
     }
 }
