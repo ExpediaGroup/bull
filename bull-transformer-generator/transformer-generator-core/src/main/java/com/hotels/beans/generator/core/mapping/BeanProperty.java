@@ -19,14 +19,16 @@ package com.hotels.beans.generator.core.mapping;
 import static com.hotels.transformer.constant.MethodPrefix.IS;
 
 import java.lang.reflect.Method;
-import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
+
+import lombok.EqualsAndHashCode;
 
 /**
  * Represents a property underlying a method according to JavaBean conventions.
  * The {@code toString()} implementation returns the property name.
  */
+@EqualsAndHashCode
 final class BeanProperty {
     /**
      * The length of a short prefix, usually "is".
@@ -58,22 +60,5 @@ final class BeanProperty {
     @Override
     public String toString() {
         return StringUtils.uncapitalize(name);
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final BeanProperty property = (BeanProperty) o;
-        return name.equals(property.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }

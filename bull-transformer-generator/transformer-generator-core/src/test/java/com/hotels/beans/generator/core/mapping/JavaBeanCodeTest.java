@@ -18,9 +18,7 @@ package com.hotels.beans.generator.core.mapping;
 
 import static java.lang.String.format;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.containsString;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.testng.annotations.Test;
 
@@ -33,31 +31,30 @@ import com.squareup.javapoet.CodeBlock;
  * Tests for {@link JavaBeanCode}.
  */
 public class JavaBeanCodeTest {
-
-    private final JavaBeanCode code = new JavaBeanCode(Source.class, Destination.class, new ClassUtils());
+    /**
+     * The class to be tested.
+     */
+    private final JavaBeanCode underTest = new JavaBeanCode(Source.class, Destination.class, new ClassUtils());
 
     @Test
     public void shouldInstantiateAndReturnDestination() {
         // WHEN
-        CodeBlock block = code.build();
+        CodeBlock block = underTest.build();
 
         // THEN
-        assertThat(block.toString(), allOf(
-                containsString(format("%1$s destination = new %1$s();", Destination.class.getName())),
-                containsString("return destination;")
-        ));
+        assertThat(block.toString())
+                .contains(format("%1$s destination = new %1$s();", Destination.class.getName()))
+                .contains("return destination;");
     }
 
     @Test
     public void shouldMapMatchingProperties() {
         // WHEN
-        CodeBlock block = code.build();
+        CodeBlock block = underTest.build();
 
         // THEN
-        assertThat(block.toString(), allOf(
-                containsString("destination.setABoolean(source.isABoolean());"),
-                containsString("destination.setAString(source.getAString());")
-        ));
+        assertThat(block.toString())
+                .contains("destination.setABoolean(source.isABoolean());")
+                .contains("destination.setAString(source.getAString());");
     }
-
 }

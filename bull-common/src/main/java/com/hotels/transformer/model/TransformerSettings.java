@@ -62,6 +62,13 @@ public class TransformerSettings<T> {
     private boolean setDefaultValueForMissingField;
 
     /**
+     * It allows to enable/disable the set of the default value for primitive types in case they are null.
+     * If set to true the default value is set.
+     */
+    @Setter
+    private boolean defaultValueForMissingPrimitiveField = true;
+
+    /**
      * It allows to apply a transformation to all fields matching with the provided name without using their whole path.
      * If set to true the transformation function is applied to all fields that have a name matching with the given one without evaluating their full path.
      */
@@ -74,13 +81,6 @@ public class TransformerSettings<T> {
      */
     @Setter
     private boolean validationEnabled;
-
-    /**
-     * It allows to enable/disable the set of the default value for primitive types in case they are null.
-     * If set to true the default value is set.
-     */
-    @Setter
-    private boolean defaultValueSetEnabled = true;
 
     /**
      * It allows to enable/disable the automatic conversion of primitive types.

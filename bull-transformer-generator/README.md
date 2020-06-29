@@ -6,14 +6,14 @@ It is composed by several modules each providing a focused functionality, here i
 
 ### Generator Core
 
-This module contains all the common functionality used by the other modules.
+This module contains all the common functionality used by the other modules. It is intended for internal usage and should not be referenced directly by clients.
 
 The module is able, given two Java Types, to analyze the source class and generate a transformer that maps it into the destination class.
 The resulting Transformer model will be available in memory as a
 `TypeSpec` object built with [JavaPoet](https://github.com/square/javapoet), a code generation library.
 
 The module entry point is the `TransformerSpec` class which, given two source and destination types `(A, B)`, builds a Transformer model that represents a class that maps values from an instance of `A` to a new instance of `B`:
-```
+```java
 import com.hotels.beans.generator.core.TransformerSpec;
 import com.hotels.beans.generator.core.mapping.MappingCodeFactory;
 
@@ -30,12 +30,30 @@ TypeSpec transformer = spec.build(Source.class, Destination.class);
 ### Source Adapter *(TODO)*
 
 This module is responsible for generating source files from transformer models and saving them to the filesystem.
-It can be used to generate transformer classes at compile time.
+It can be used to generate transformer classes at compile-time.
 
-### Bytecode Adapter *(TODO)*
+### Bytecode Adapter
 
 This module is responsible for generating class bytecode from transformer models and loading them in memory.
-It can be used to generate transformer classes at run time.
+It can be used to generate transformer classes at run-time.
+The module main class is `TransformerBytecodeAdapter` which compiles a transformer model and creates an instance that maps values from a source to a destination type.
+```java
+import com.hotels.beans.generator.bytecode.TransformerBytecodeAdapter;
+/* ... */
+
+
+// create a transformer model
+TransformerSpec spec = ...;
+// create a bytecode adapter for the model
+TransformerBytecodeAdapter adapter = TransformerBytecodeAdapter.builder()
+        .spec(spec)
+        .build();
+// generate and compile a new Transformer between two types
+Transformer<Source, Destination> transformer = adapter.newTransformer(Source.class, Destination.class);
+```
+
+This module is intended for internal usage in Bull as it's a low-level wrapper for the compilation of models' source.
+Use it directly only if you need to customize the run-time compilation and loading of models.
 
 ### Transformer Registry *(TODO)*
 

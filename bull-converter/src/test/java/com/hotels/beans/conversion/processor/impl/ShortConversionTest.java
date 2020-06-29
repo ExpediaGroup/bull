@@ -20,7 +20,7 @@ import static java.lang.Character.getNumericValue;
 import static java.lang.Short.valueOf;
 import static java.nio.ByteBuffer.wrap;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigDecimal;
@@ -63,7 +63,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals((Short) BYTE_VALUE.shortValue(), actual);
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals(SHORT_VALUE, actual);
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test(expectedExceptions = TypeConversionException.class)
@@ -105,7 +105,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals((Short) INTEGER_VALUE.shortValue(), actual);
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals((Short) LONG_VALUE.shortValue(), actual);
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals((Short) FLOAT_VALUE.shortValue(), actual);
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals((Short) DOUBLE_VALUE.shortValue(), actual);
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
@@ -149,7 +149,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals(valueOf((short) getNumericValue(CHAR_VALUE)), actual);
+        assertThat(actual).isEqualTo(valueOf((short) getNumericValue(CHAR_VALUE)));
     }
 
     /**
@@ -166,7 +166,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         short actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -189,30 +189,28 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(valueOf(STRING_VALUE), actual);
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        short expectedValue = BigInteger.ZERO.shortValue();
 
         // WHEN
         short actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual);
+        assertThat(actual).isZero();
     }
 
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        short expectedValue = BigDecimal.ZERO.shortValue();
 
         // WHEN
         short actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual);
+        assertThat(actual).isZero();
     }
 }

@@ -39,7 +39,7 @@ public final class TransformerExample implements Transformer<Source, Destination
      * @param args the args
      */
     public static void main(final String[] args) {
-        System.out.println(new TransformerSpec(MappingCodeFactory.getInstance())
+        System.out.println(new TransformerSpec(MappingCodeFactory.newInstance())
                 .build(Source.class, Destination.class));
     }
 }

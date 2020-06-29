@@ -16,7 +16,12 @@
 
 package com.hotels.beans.generator.core.mapping;
 
-import static org.testng.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+
+import static com.hotels.transformer.constant.ClassType.UNSUPPORTED;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.testng.annotations.DataProvider;
@@ -26,41 +31,57 @@ import com.hotels.beans.generator.core.sample.immutable.ImmutableDestination;
 import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
 import com.hotels.beans.generator.core.sample.mixed.MixedDestination;
+import com.hotels.transformer.utils.ClassUtils;
 
 /**
  * Tests for {@link MappingCodeFactory}.
  */
 public class MappingCodeFactoryTest {
-    private final MappingCodeFactory codeFactory = MappingCodeFactory.getInstance();
+    /**
+     * The class to be tested.
+     */
+    private final MappingCodeFactory underTest = MappingCodeFactory.newInstance();
 
     @Test
     public void shouldReturnAnInstanceForMutableDestination() {
         // WHEN
-        MappingCode mappingCode = codeFactory.of(Source.class, Destination.class);
+        MappingCode mappingCode = underTest.of(Source.class, Destination.class);
 
         // THEN
-        assertNotNull(mappingCode);
+        assertThat(mappingCode).isNotNull();
     }
 
     /**
-     * TODO remove this test after implementation of immutable mapping code.
+     * TODO: remove this test after implementation of immutable mapping code.
      */
     @Test(expectedExceptions = NotImplementedException.class)
     public void shouldFailForImmutableDestination() {
-        codeFactory.of(Source.class, ImmutableDestination.class);
+        underTest.of(Source.class, ImmutableDestination.class);
     }
 
     /**
-     * TODO remove this test after implementation of mixed mapping code.
+     * TODO: remove this test after implementation of mixed mapping code.
      */
     @Test(expectedExceptions = NotImplementedException.class)
     public void shouldFailForMixedDestination() {
-        codeFactory.of(Source.class, MixedDestination.class);
+        underTest.of(Source.class, MixedDestination.class);
+    }
+
+    @Test(expectedExceptions = AssertionError.class, expectedExceptionsMessageRegExp = ".*UNSUPPORTED.*")
+    public void shouldFailForUnsupportedDestinationType() {
+        // GIVEN
+        ClassUtils classUtils = given(mock(ClassUtils.class).getClassType(any()))
+                .willReturn(UNSUPPORTED)
+                .getMock();
+        MappingCodeFactory underTest = MappingCodeFactory.newInstance(classUtils);
+
+        // WHEN
+        underTest.of(Source.class, Destination.class);
     }
 
     @Test(dataProvider = "typePairs", expectedExceptions = IllegalArgumentException.class)
     public void shouldFailIfAnyTypeIsNull(final Class<?> source, final Class<?> destination) {
-        codeFactory.of(source, destination);
+        underTest.of(source, destination);
     }
 
     @DataProvider
@@ -71,5 +92,4 @@ public class MappingCodeFactoryTest {
                 {null, null}
         };
     }
-
 }

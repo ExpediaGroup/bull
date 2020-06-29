@@ -16,16 +16,9 @@
 
 package com.hotels.beans.transformer;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-
-import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigInteger;
-import java.util.stream.IntStream;
 
 import org.testng.annotations.Test;
 
@@ -56,7 +49,8 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFooMissingAllArgsConstructor actual = underTest.transform(fromFoo, MixedToFooMissingAllArgsConstructor.class);
 
         //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
+        assertThat(actual).usingRecursiveComparison()
+                .isEqualTo(fromFoo);
     }
 
     /**
@@ -70,7 +64,8 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.class);
 
         //THEN
-        assertThat(actual, sameBeanAs(fromFoo));
+        assertThat(actual).usingRecursiveComparison()
+                .isEqualTo(fromFoo);
     }
 
     /**
@@ -85,12 +80,10 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFooDiffFields actual = beanTransformer.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN
-        assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
-        assertThat(actual, hasProperty(IDENTIFIER_FIELD_NAME, equalTo(fromFoo.getId())));
-        assertEquals(actual.getList(), fromFoo.getList());
-        IntStream.range(0, actual.getNestedObjectList().size())
-                .forEach(i -> assertThat(actual.getNestedObjectList().get(i), sameBeanAs(fromFoo.getNestedObjectList().get(i))));
-        assertThat(actual.getNestedObject(), sameBeanAs(fromFoo.getNestedObject()));
+        assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId())
+                .usingRecursiveComparison()
+                .ignoringFields(IDENTIFIER_FIELD_NAME)
+                .isEqualTo(fromFoo);
     }
 
     /**
@@ -110,12 +103,10 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFooDiffFields actual = underTest.transform(fromFoo, MixedToFooDiffFields.class);
 
         //THEN
-        assertThat(actual, hasProperty(NAME_FIELD_NAME, equalTo(actual.getName())));
-        assertThat(actual, hasProperty(IDENTIFIER_FIELD_NAME, equalTo(fromFoo.getId().negate())));
-        assertEquals(actual.getList(), fromFoo.getList());
-        IntStream.range(0, actual.getNestedObjectList().size())
-                .forEach(i -> assertThat(actual.getNestedObjectList().get(i), sameBeanAs(fromFoo.getNestedObjectList().get(i))));
-        assertThat(actual.getNestedObject(), sameBeanAs(fromFoo.getNestedObject()));
+        assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId().negate())
+                .usingRecursiveComparison()
+                .ignoringFields(IDENTIFIER_FIELD_NAME)
+                .isEqualTo(fromFoo);
     }
 
     /**
@@ -129,7 +120,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         //WHEN
         MixedToFooMissingField actual = underTest.transform(fromFoo, MixedToFooMissingField.class);
 
-        assertNull(actual.getFooField());
+        assertThat(actual.getFooField()).isNull();
         underTest.setDefaultValueForMissingField(false);
     }
 
@@ -159,7 +150,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFooNotExistingFields mixedObjectBean = underTest.transform(fromFooSimple, MixedToFooNotExistingFields.class);
 
         //THEN
-        assertThat(mixedObjectBean, hasProperty(AGE_FIELD_NAME, equalTo(AGE)));
+        assertThat(mixedObjectBean).hasFieldOrPropertyWithValue(AGE_FIELD_NAME, AGE);
     }
 
     /**
@@ -174,9 +165,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.class);
 
         //THEN
-        assertEquals(fromFoo.getId(), actual.getId());
-        assertNull(actual.getName());
-        assertNull(actual.getNestedObject().getPhoneNumbers());
+        assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
         underTest.resetFieldsTransformationSkip();
     }
 
@@ -192,6 +181,7 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         underTest.skipTransformationForField().transform(fromFoo, mixedToFoo);
 
         //THEN
-        assertThat(mixedToFoo, sameBeanAs(fromFoo));
+        assertThat(mixedToFoo).usingRecursiveComparison()
+                .isEqualTo(fromFoo);
     }
 }

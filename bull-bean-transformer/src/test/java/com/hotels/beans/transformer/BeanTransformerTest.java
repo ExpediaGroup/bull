@@ -16,22 +16,18 @@
 
 package com.hotels.beans.transformer;
 
-import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
 import static java.util.Optional.empty;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -39,6 +35,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -74,6 +71,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
      * Test that is possible to remove a field mapping for a given field.
      */
     @Test
+    @SuppressWarnings("unchecked")
     public void testRemoveFieldMappingWorksProperly() {
         //GIVEN
         BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping<>(SOURCE_FIELD_NAME, DEST_FIELD_NAME));
@@ -83,7 +81,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
 
         //THEN
-        assertFalse(transformerSettings.getFieldsNameMapping().containsKey(DEST_FIELD_NAME));
+        assertThat(transformerSettings.getFieldsNameMapping()).doesNotContainKey(DEST_FIELD_NAME);
     }
 
     /**
@@ -102,6 +100,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
      * Test that is possible to remove all the fields mappings defined.
      */
     @Test
+    @SuppressWarnings("unchecked")
     public void testResetFieldsMappingWorksProperly() {
         //GIVEN
         BeanTransformer beanTransformer = underTest
@@ -112,13 +111,14 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
 
         //THEN
-        assertTrue(transformerSettings.getFieldsNameMapping().isEmpty());
+        assertThat(transformerSettings.getFieldsNameMapping()).isEmpty();
     }
 
     /**
      * Test that is possible to remove all the fields transformer defined.
      */
     @Test
+    @SuppressWarnings("unchecked")
     public void testResetFieldsTransformerWorksProperly() {
         //GIVEN
         BeanTransformer beanTransformer = underTest
@@ -129,13 +129,14 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
 
         //THEN
-        assertTrue(transformerSettings.getFieldsTransformers().isEmpty());
+        assertThat(transformerSettings.getFieldsTransformers()).isEmpty();
     }
 
     /**
      * Test that is possible to remove a field transformer for a given field.
      */
     @Test
+    @SuppressWarnings("unchecked")
     public void testRemoveFieldTransformerWorksProperly() {
         //GIVEN
         BeanTransformer beanTransformer = underTest.withFieldTransformer(new FieldTransformer<>(DEST_FIELD_NAME, val -> val));
@@ -145,7 +146,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         TransformerSettings transformerSettings = (TransformerSettings) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
 
         //THEN
-        assertFalse(transformerSettings.getFieldsTransformers().containsKey(DEST_FIELD_NAME));
+        assertThat(transformerSettings.getFieldsTransformers()).doesNotContainKey(DEST_FIELD_NAME);
     }
 
     /**
@@ -183,32 +184,25 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     @SuppressWarnings("unchecked")
     public void testGetSourceFieldValueThrowsNoExceptionIfAFieldTransformerIsDefined() throws Exception {
         //GIVEN
-        ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
+        ReflectionUtils reflectionUtilsMock = mock(ReflectionUtils.class);
         Field field = mock(Field.class);
         Class fieldType = Integer.class;
 
-        when(reflectionUtils.getFieldValue(FromFooSimple.class, AGE_FIELD_NAME, fieldType)).thenThrow(InvalidBeanException.class);
+        when(reflectionUtilsMock.getFieldValue(FromFooSimple.class, AGE_FIELD_NAME, fieldType)).thenThrow(InvalidBeanException.class);
         when(field.getType()).thenReturn(fieldType);
 
-        setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
+        reflectionUtils.setFieldValue(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtilsMock);
 
         Method getSourceFieldValueMethod = underTest.getClass().getDeclaredMethod(GET_SOURCE_FIELD_VALUE_METHOD_NAME, Object.class, String.class, Field.class, boolean.class);
         getSourceFieldValueMethod.setAccessible(true);
 
         //WHEN
-        Exception raisedException = null;
-        Object actual = null;
-        try {
-            actual = getSourceFieldValueMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME, field, true);
-        } catch (final Exception e) {
-            raisedException = e;
-        }
+        ThrowingCallable actual = () -> getSourceFieldValueMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME, field, true);
 
         //THEN
-        verify(reflectionUtils).getFieldValue(FromFooSimple.class, AGE_FIELD_NAME, fieldType);
+        assertThatCode(actual).doesNotThrowAnyException();
+        verify(reflectionUtilsMock).getFieldValue(FromFooSimple.class, AGE_FIELD_NAME, fieldType);
         verify(field).getType();
-        assertNull(raisedException);
-        assertNull(actual);
         restoreUnderTestObject();
     }
 
@@ -224,7 +218,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         boolean actual = underTest.getSettings().isPrimitiveTypeConversionEnabled();
 
         //THEN
-        assertTrue(actual);
+        assertThat(actual).isTrue();
         underTest.setPrimitiveTypeConversionEnabled(false);
     }
 
@@ -237,16 +231,16 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     public void testGetSourceFieldTypeReturnsTheSourceObjectClass() throws Exception {
         //GIVEN
         CacheManager cacheManager = mock(CacheManager.class);
-        ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
+        ReflectionUtils reflectionUtilsMock = mock(ReflectionUtils.class);
         ClassUtils classUtils = mock(ClassUtils.class);
 
         when(cacheManager.getFromCache(anyString(), any(Class.class))).thenReturn(empty());
-        when(reflectionUtils.getDeclaredFieldType(AGE_FIELD_NAME, Integer.class)).thenThrow(MissingFieldException.class);
+        when(reflectionUtilsMock.getDeclaredFieldType(AGE_FIELD_NAME, Integer.class)).thenThrow(MissingFieldException.class);
         when(classUtils.isPrimitiveType(Integer.class)).thenReturn(true);
 
-        setField(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
-        setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
-        setField(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
+        reflectionUtils.setFieldValue(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
+        reflectionUtils.setFieldValue(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtilsMock);
+        reflectionUtils.setFieldValue(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
 
         Method getSourceFieldTypeMethod = underTest.getClass().getDeclaredMethod(GET_SOURCE_FIELD_TYPE_METHOD_NAME, Class.class, String.class);
         getSourceFieldTypeMethod.setAccessible(true);
@@ -256,9 +250,9 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
 
         //THEN
         verify(cacheManager).getFromCache(anyString(), any(Class.class));
-        verify(reflectionUtils).getDeclaredFieldType(AGE_FIELD_NAME, Integer.class);
+        verify(reflectionUtilsMock).getDeclaredFieldType(AGE_FIELD_NAME, Integer.class);
         verify(classUtils).isPrimitiveType(Integer.class);
-        assertEquals(Integer.class, actual);
+        assertThat(actual).isEqualTo(Integer.class);
         restoreUnderTestObject();
     }
 
@@ -272,19 +266,19 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     public void testGetSourceFieldTypeReturnsNull() throws Exception {
         //GIVEN
         CacheManager cacheManager = mock(CacheManager.class);
-        ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
+        ReflectionUtils reflectionUtilsMock = mock(ReflectionUtils.class);
         ClassUtils classUtils = mock(ClassUtils.class);
         TransformerSettings settings = mock(TransformerSettings.class);
 
         when(cacheManager.getFromCache(anyString(), any(Class.class))).thenReturn(empty());
-        when(reflectionUtils.getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class)).thenThrow(MissingFieldException.class);
+        when(reflectionUtilsMock.getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class)).thenThrow(MissingFieldException.class);
         when(classUtils.isPrimitiveType(Integer.class)).thenReturn(true);
         when(settings.isSetDefaultValueForMissingField()).thenReturn(true);
 
-        setField(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
-        setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
-        setField(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
-        setField(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, settings);
+        reflectionUtils.setFieldValue(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
+        reflectionUtils.setFieldValue(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtilsMock);
+        reflectionUtils.setFieldValue(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
+        reflectionUtils.setFieldValue(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, settings);
 
         Method getSourceFieldTypeMethod = underTest.getClass().getDeclaredMethod(GET_SOURCE_FIELD_TYPE_METHOD_NAME, Class.class, String.class);
         getSourceFieldTypeMethod.setAccessible(true);
@@ -294,10 +288,10 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
 
         //THEN
         verify(cacheManager).getFromCache(anyString(), any(Class.class));
-        verify(reflectionUtils).getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class);
+        verify(reflectionUtilsMock).getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class);
         verify(classUtils).isPrimitiveType(FromFooSimple.class);
         verify(settings).isSetDefaultValueForMissingField();
-        assertNull(actual);
+        assertThat(actual).isNull();
         restoreUnderTestObject();
     }
 
@@ -310,38 +304,32 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     public void testGetSourceFieldTypeThrowsMissingFieldException() throws Exception {
         //GIVEN
         CacheManager cacheManager = mock(CacheManager.class);
-        ReflectionUtils reflectionUtils = mock(ReflectionUtils.class);
+        ReflectionUtils reflectionUtilsMock = mock(ReflectionUtils.class);
         ClassUtils classUtils = mock(ClassUtils.class);
         TransformerSettings settings = mock(TransformerSettings.class);
 
         when(cacheManager.getFromCache(anyString(), any(Class.class))).thenReturn(empty());
-        when(reflectionUtils.getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class)).thenThrow(MissingFieldException.class);
+        when(reflectionUtilsMock.getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class)).thenThrow(MissingFieldException.class);
         when(classUtils.isPrimitiveType(Integer.class)).thenReturn(false);
         when(settings.isSetDefaultValueForMissingField()).thenReturn(false);
 
-        setField(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
-        setField(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtils);
-        setField(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
-        setField(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, settings);
+        reflectionUtils.setFieldValue(underTest, CACHE_MANAGER_FIELD_NAME, cacheManager);
+        reflectionUtils.setFieldValue(underTest, REFLECTION_UTILS_FIELD_NAME, reflectionUtilsMock);
+        reflectionUtils.setFieldValue(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
+        reflectionUtils.setFieldValue(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, settings);
 
         Method getSourceFieldTypeMethod = underTest.getClass().getDeclaredMethod(GET_SOURCE_FIELD_TYPE_METHOD_NAME, Class.class, String.class);
         getSourceFieldTypeMethod.setAccessible(true);
 
         //WHEN
-        Exception raisedException = null;
-        try {
-            getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME);
-        } catch (final Exception e) {
-            raisedException = e;
-        }
+        ThrowingCallable actual = () -> getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, AGE_FIELD_NAME);
 
         //THEN
+        assertThatThrownBy(actual).hasCauseInstanceOf(MissingFieldException.class);
         verify(cacheManager).getFromCache(anyString(), any(Class.class));
-        verify(reflectionUtils).getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class);
+        verify(reflectionUtilsMock).getDeclaredFieldType(AGE_FIELD_NAME, FromFooSimple.class);
         verify(classUtils).isPrimitiveType(FromFooSimple.class);
         verify(settings).isSetDefaultValueForMissingField();
-        assertNotNull(raisedException);
-        assertEquals(MissingFieldException.class, raisedException.getCause().getClass());
         restoreUnderTestObject();
     }
 
@@ -364,7 +352,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         Field field = mock(Field.class);
         TransformerSettings settings = mock(TransformerSettings.class);
         when(settings.isPrimitiveTypeConversionEnabled()).thenReturn(isPrimitiveTypeConversionEnabled);
-        setField(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, settings);
+        reflectionUtils.setFieldValue(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, settings);
 
         Class[] transformedValueMethodParams = {FieldTransformer.class, Object.class, Class.class, String.class, Field.class, boolean.class, String.class};
         Method getTransformerFunctionMethod = underTest.getClass().getDeclaredMethod(GET_TRANSFORMER_VALUE_METHOD_NAME, transformedValueMethodParams);
@@ -375,7 +363,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
                 .invoke(underTest, fieldTransformer, fieldValue, FromFooSimple.class, fieldName, field, isDestinationFieldPrimitiveType, fieldName);
 
         //THEN
-        assertEquals(expectedValue, actual);
+        assertThat(actual).isEqualTo(expectedValue);
         restoreUnderTestObject();
     }
 
@@ -412,7 +400,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         when(constructorParameter.getType()).thenReturn((Class) Integer.class);
         when(classUtils.getDefaultTypeValue(Integer.class)).thenReturn(ZERO.intValue());
 
-        setField(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
+        reflectionUtils.setFieldValue(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
 
         Method getConstructorArgsValuesMethod = underTest.getClass()
                 .getDeclaredMethod(GET_CONSTRUCTOR_ARGS_VALUES_METHOD_NAME, Object.class, Class.class, Constructor.class, String.class);
@@ -427,8 +415,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         verify(constructorParameter, times(2)).getName();
         verify(constructorParameter).getType();
         verify(classUtils).getDefaultTypeValue(Integer.class);
-        assertEquals(ONE.intValue(), actual.length);
-        assertEquals(ZERO.intValue(), actual[ZERO.intValue()]);
+        assertThat(actual).containsOnly(0);
         restoreUnderTestObject();
     }
 
@@ -453,7 +440,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         underTest.setValidationEnabled(validationEnabled);
 
         // THEN
-        assertEquals(expectedNull, underTest.validator == null);
+        assertThat(underTest.validator == null).isEqualTo(expectedNull);
         underTest.setValidationEnabled(false);
     }
 
@@ -483,7 +470,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         underTest.setPrimitiveTypeConversionEnabled(autoConversionEnabled);
 
         // THEN
-        assertEquals(expectedNull, underTest.conversionAnalyzer == null);
+        assertThat(underTest.conversionAnalyzer == null).isEqualTo(expectedNull);
         underTest.setPrimitiveTypeConversionEnabled(false);
     }
 
@@ -514,7 +501,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         when(classUtils.areParameterNamesAvailable(any(Constructor.class))).thenReturn(false);
         when(classUtils.getConstructorParameters(any())).thenReturn(new Parameter[] {});
         when(classUtils.getInstance(any(), any())).thenReturn(new MutableToFoo());
-        setField(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
+        reflectionUtils.setFieldValue(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
 
         Method handleInjectionExceptionMethod = underTest.getClass().getDeclaredMethod(HANDLE_INJECTION_EXCEPTION_METHOD_NAME, Object.class,
                 Class.class, Constructor.class, String.class, Object[].class, boolean.class, Exception.class);
@@ -529,8 +516,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         }
 
         //THEN
-        assertNotNull(actual);
-        assertEquals(expectedReturnType, actual.getClass());
+        assertThat(actual).isInstanceOf(expectedReturnType);
         restoreUnderTestObject();
     }
 

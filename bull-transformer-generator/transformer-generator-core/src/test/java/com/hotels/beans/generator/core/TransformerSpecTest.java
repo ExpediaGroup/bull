@@ -16,9 +16,7 @@
 
 package com.hotels.beans.generator.core;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Type;
 
@@ -36,8 +34,12 @@ import com.squareup.javapoet.TypeSpec;
  * Test for {@link TransformerSpec}.
  */
 public class TransformerSpecTest {
-    private final TypeName iTransformer = TypeName.get(Transformer.class);
-    private final TransformerSpec spec = new TransformerSpec(MappingCodeFactory.getInstance());
+    private static final TypeName I_TRANSFORMER = TypeName.get(Transformer.class);
+
+    /**
+     * The class to be tested.
+     */
+    private final TransformerSpec underTest = new TransformerSpec(MappingCodeFactory.newInstance());
 
     /**
      * Should be named after source and destination types.
@@ -45,11 +47,11 @@ public class TransformerSpecTest {
     @Test
     public void shouldBeNamedAfterSourceAndDestinationTypes() {
         // WHEN
-        TypeSpec generated = spec.build(Source.class, Destination.class);
+        TypeSpec generated = underTest.build(Source.class, Destination.class);
 
         // THEN
-        assertEquals(generated.name, "SourceToDestinationTransformer",
-                "transformer name does not include source or destination types");
+        assertThat(generated.name).as("Transformer name does not include source or destination types")
+                .isEqualTo("SourceToDestinationTransformer");
     }
 
     /**
@@ -58,13 +60,15 @@ public class TransformerSpecTest {
     @Test
     public void shouldImplementTransformerInterface() {
         // WHEN
-        TypeSpec generated = spec.build(Source.class, Destination.class);
+        TypeSpec generated = underTest.build(Source.class, Destination.class);
 
         // THEN
-        assertTrue(isATransformer(generated),
-                "transformer does not implement interface " + iTransformer);
-        assertNotNull(findTransformMethod(generated, Source.class, Destination.class),
-                "transformer does not implement method: Destination transform(Source)");
+        assertThat(isATransformer(generated))
+                .as("Transformer does not implement interface %s", I_TRANSFORMER)
+                .isTrue();
+        assertThat(findTransformMethod(generated, Source.class, Destination.class))
+                .as("Transformer does not implement method: Destination transform(Source)")
+                .isNotNull();
     }
 
     /**
@@ -77,7 +81,7 @@ public class TransformerSpecTest {
                 .stream()
                 .anyMatch(typeName ->
                         typeName instanceof ParameterizedTypeName
-                                && ((ParameterizedTypeName) typeName).rawType.equals(iTransformer));
+                                && ((ParameterizedTypeName) typeName).rawType.equals(I_TRANSFORMER));
     }
 
     private MethodSpec findTransformMethod(final TypeSpec transformer, final Type sourceClass, final Type destinationClass) {

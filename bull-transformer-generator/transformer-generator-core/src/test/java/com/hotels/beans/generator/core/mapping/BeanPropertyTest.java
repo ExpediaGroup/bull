@@ -16,10 +16,7 @@
 
 package com.hotels.beans.generator.core.mapping;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotEquals;
-import static org.testng.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Method;
 
@@ -32,12 +29,15 @@ import com.hotels.beans.generator.core.sample.javabean.Source;
  * Tests for {@link BeanProperty}.
  */
 public class BeanPropertyTest {
-    private BeanProperty anInt;
+    /**
+     * The class to be tested.
+     */
+    private BeanProperty underTest;
 
     @BeforeClass
     public void beforeClass() throws NoSuchMethodException {
         final Method getAnInt = Source.class.getDeclaredMethod("getAnInt");
-        anInt = new BeanProperty(getAnInt);
+        underTest = new BeanProperty(getAnInt);
     }
 
     @Test
@@ -46,10 +46,10 @@ public class BeanPropertyTest {
         Method setAnInt = Source.class.getDeclaredMethod("setAnInt", int.class);
 
         // WHEN
-        boolean result = anInt.equals(new BeanProperty(setAnInt));
+        boolean actual = underTest.equals(new BeanProperty(setAnInt));
 
         // THEN
-        assertTrue(result);
+        assertThat(actual).isTrue();
     }
 
     @Test
@@ -59,19 +59,19 @@ public class BeanPropertyTest {
         Method setABoolean = Source.class.getDeclaredMethod("setABoolean", boolean.class);
 
         // WHEN
-        boolean result = new BeanProperty(isABoolean).equals(new BeanProperty(setABoolean));
+        boolean actual = new BeanProperty(isABoolean).equals(new BeanProperty(setABoolean));
 
         // THEN
-        assertTrue(result);
+        assertThat(actual).isTrue();
     }
 
     @Test
     public void shouldBeEqualToSelf() {
         // WHEN
-        boolean result = anInt.equals(anInt);
+        boolean actual = underTest.equals(underTest);
 
         // THEN
-        assertTrue(result);
+        assertThat(actual).isTrue();
     }
 
     @Test
@@ -80,19 +80,19 @@ public class BeanPropertyTest {
         Method getAString = Source.class.getDeclaredMethod("getAString");
 
         // WHEN
-        boolean result = anInt.equals(new BeanProperty(getAString));
+        boolean actual = underTest.equals(new BeanProperty(getAString));
 
         // THEN
-        assertFalse(result);
+        assertThat(actual).isFalse();
     }
 
     @Test
     public void shouldNotBeEqualToNull() {
         // WHEN
-        boolean result = anInt.equals(null);
+        boolean actual = underTest.equals(null);
 
         // THEN
-        assertFalse(result);
+        assertThat(actual).isFalse();
     }
 
     @Test
@@ -101,10 +101,10 @@ public class BeanPropertyTest {
         Object other = new Object();
 
         // WHEN
-        boolean result = anInt.equals(other);
+        boolean actual = underTest.equals(other);
 
         // THEN
-        assertFalse(result);
+        assertThat(actual).isFalse();
     }
 
     @Test
@@ -113,10 +113,10 @@ public class BeanPropertyTest {
         BeanProperty setAnInt = new BeanProperty(Source.class.getDeclaredMethod("setAnInt", int.class));
 
         // WHEN
-        int hashCode = anInt.hashCode();
+        int actual = underTest.hashCode();
 
         // THEN
-        assertEquals(hashCode, setAnInt.hashCode());
+        assertThat(actual).isEqualTo(setAnInt.hashCode());
     }
 
     @Test
@@ -125,14 +125,14 @@ public class BeanPropertyTest {
         BeanProperty getAString = new BeanProperty(Source.class.getDeclaredMethod("getAString"));
 
         // WHEN
-        int hashCode = anInt.hashCode();
+        int actual = underTest.hashCode();
 
         // THEN
-        assertNotEquals(hashCode, getAString.hashCode());
+        assertThat(actual).isNotEqualTo(getAString.hashCode());
     }
 
     @Test
     public void shouldReturnPropertyNameAsString() {
-        assertEquals("anInt", anInt.toString());
+        assertThat(underTest.toString()).isEqualTo("anInt");
     }
 }

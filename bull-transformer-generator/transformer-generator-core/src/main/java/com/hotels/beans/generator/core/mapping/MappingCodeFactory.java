@@ -16,13 +16,14 @@
 
 package com.hotels.beans.generator.core.mapping;
 
+import static com.hotels.transformer.validator.Validator.notNull;
+
 import static lombok.AccessLevel.PRIVATE;
 
 import org.apache.commons.lang3.NotImplementedException;
 
 import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.utils.ClassUtils;
-import com.hotels.transformer.validator.Validator;
 import com.squareup.javapoet.CodeBlock;
 
 import lombok.RequiredArgsConstructor;
@@ -41,8 +42,8 @@ public final class MappingCodeFactory {
      * Gets an instance of {@code MappingCodeFactory}.
      * @return a MappingCode instance
      */
-    public static MappingCodeFactory getInstance() {
-        return getInstance(new ClassUtils());
+    public static MappingCodeFactory newInstance() {
+        return newInstance(new ClassUtils());
     }
 
     /**
@@ -50,13 +51,12 @@ public final class MappingCodeFactory {
      * @param classUtils the class utils
      * @return a MappingCode instance
      */
-    public static MappingCodeFactory getInstance(final ClassUtils classUtils) {
+    public static MappingCodeFactory newInstance(final ClassUtils classUtils) {
         return new MappingCodeFactory(classUtils);
     }
 
     /**
      * Obtains an instance of {@code MappingCode} from a source and destination.
-     * <p>
      * The returned instance is specialized to create a {@link CodeBlock} for mapping
      * an object of a source type to a destination type.
      * @param source the source type
@@ -64,10 +64,9 @@ public final class MappingCodeFactory {
      * @return the mapping code from source to destination
      */
     public MappingCode of(final Class<?> source, final Class<?> destination) {
-        Validator.notNull(source, "source type can't be null");
-        Validator.notNull(destination, "destination type can't be null");
-
-        final ClassType classType = classUtils.getClassType(destination);
+        notNull(source, "source type can't be null");
+        notNull(destination, "destination type can't be null");
+        ClassType classType = classUtils.getClassType(destination);
         switch (classType) {
             case MUTABLE:
                 return new JavaBeanCode(source, destination, classUtils);
@@ -76,7 +75,10 @@ public final class MappingCodeFactory {
             case MIXED:
                 throw new NotImplementedException("Transformation code for type MIXED is not supported");
             default:
-                throw new IllegalStateException("Should never happen - Unsupported destination type: " + classType);
+                throw new AssertionError("Unable to determine MappingCode implementation: "
+                        + "destination class type '" + classType + "' is unsupported. "
+                        + "Please modify this method to handle the case or check the implementation of "
+                        + "com.hotels.transformer.utils.ClassUtils.getClassType");
         }
     }
 }

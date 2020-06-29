@@ -428,7 +428,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
                     && (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))) {
                 fieldValue = getFieldValue(targetClass, field, fieldValue, fieldBreadcrumb);
             }
-        } else if (primitiveType && settings.isDefaultValueSetEnabled() && !isTransformerFunctionDefined) {
+        } else if (primitiveType && settings.isDefaultValueForMissingPrimitiveField() && !isTransformerFunctionDefined) {
             fieldValue = defaultValue(fieldType); // assign the default value
         }
         fieldValue = getTransformedValue(transformerFunction, fieldValue, sourceObj.getClass(), sourceFieldName, field, primitiveType, fieldBreadcrumb);
