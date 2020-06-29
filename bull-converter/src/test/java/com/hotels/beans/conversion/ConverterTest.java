@@ -19,7 +19,6 @@ package com.hotels.beans.conversion;
 import static java.lang.Character.getNumericValue;
 import static java.math.BigInteger.ZERO;
 import static java.nio.ByteBuffer.wrap;
-import static java.util.Optional.empty;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -89,7 +88,7 @@ public class ConverterTest extends AbstractConversionTest {
         Optional<Function<Object, Object>> actual = underTest.getConversionFunction(sourceFieldType, destinationFieldType);
 
         // THEN
-        assertThat(actual).isEqualTo(empty());
+        assertThat(actual).isEmpty();
     }
 
     /**
@@ -113,6 +112,7 @@ public class ConverterTest extends AbstractConversionTest {
      * @param destinationFieldType the destination field class
      * @param expectedConversionFunction the expected {@link com.hotels.beans.conversion.processor.ConversionProcessor} instance
      */
+    @SuppressWarnings("unchecked")
     @Test(dataProvider = "dataGetConversionFunctionTesting")
     public void testGetConversionFunctionReturnsTheExpectedConversionFunction(final String testCaseDescription, final Class<?> sourceFieldType,
         final Class<?> destinationFieldType, final Function<?, ?> expectedConversionFunction) {
@@ -122,8 +122,7 @@ public class ConverterTest extends AbstractConversionTest {
         Optional<Function<Object, Object>> actual = underTest.getConversionFunction(sourceFieldType, destinationFieldType);
 
         // THEN
-        assertThat(actual.isPresent()).isTrue();
-        assertThat(actual.get()).isEqualTo(expectedConversionFunction);
+        assertThat(actual).contains((Function<Object, Object>) expectedConversionFunction);
     }
 
     /**
