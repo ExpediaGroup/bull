@@ -16,7 +16,7 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigDecimal;
@@ -59,7 +59,7 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertArrayEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertByteArray().apply(ONE_BYTE_BYTE_ARRAY);
 
         // THEN
-        assertArrayEquals(ONE_BYTE_BYTE_ARRAY, actual);
+        assertThat(actual).isEqualTo(ONE_BYTE_BYTE_ARRAY);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertArrayEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -94,7 +94,7 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertArrayEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -106,7 +106,7 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertArrayEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -118,7 +118,7 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertArrayEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -130,7 +130,7 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertArrayEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertArrayEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     /**
@@ -159,7 +159,7 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertArrayEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -183,7 +183,7 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertArrayEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -195,7 +195,7 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertArrayEquals(expectedValue, actual);
+        assertThat(actual).isEqualTo(expectedValue);
     }
 
     @Test
@@ -207,6 +207,6 @@ public class ByteArrayConversionTest extends AbstractConversionTest {
         byte[] actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertArrayEquals(expectedValue, actual);
+        assertThat(actual).isEqualTo(expectedValue);
     }
 }

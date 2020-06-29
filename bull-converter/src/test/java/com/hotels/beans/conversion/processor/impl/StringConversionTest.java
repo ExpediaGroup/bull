@@ -18,7 +18,7 @@ package com.hotels.beans.conversion.processor.impl;
 
 import static java.lang.String.valueOf;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigDecimal;
@@ -56,7 +56,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals(BYTE_VALUE.toString(), actual);
+        assertThat(actual).isEqualTo(STRING_VALUE);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals(SHORT_VALUE.toString(), actual);
+        assertThat(actual).isEqualTo(STRING_VALUE);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals(INTEGER_VALUE.toString(), actual);
+        assertThat(actual).isEqualTo(STRING_VALUE);
     }
 
     @Test
@@ -101,7 +101,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals(LONG_VALUE.toString(), actual);
+        assertThat(actual).isEqualTo(STRING_VALUE);
     }
 
     @Test
@@ -112,7 +112,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals(FLOAT_VALUE.toString(), actual);
+        assertThat(actual).isEqualTo(FLOAT_VALUE.toString());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals(DOUBLE_VALUE.toString(), actual);
+        assertThat(actual).isEqualTo(DOUBLE_VALUE.toString());
     }
 
     @Test
@@ -134,7 +134,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals(valueOf(CHAR_VALUE), actual);
+        assertThat(actual).isEqualTo(valueOf(CHAR_VALUE));
     }
 
     @Test
@@ -145,7 +145,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
 
         // THEN
-        assertEquals(BOOLEAN_VALUE.toString(), actual);
+        assertThat(actual).isEqualTo(TRUE_AS_STRING);
     }
 
     @Test
@@ -156,7 +156,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(STRING_VALUE, actual);
+        assertThat(actual).isEqualTo(STRING_VALUE);
     }
 
     @Test
@@ -168,7 +168,7 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual);
+        assertThat(actual).isEqualTo(expectedValue);
     }
 
     @Test
@@ -180,6 +180,6 @@ public class StringConversionTest extends AbstractConversionTest {
         String actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual);
+        assertThat(actual).isEqualTo(expectedValue);
     }
 }
