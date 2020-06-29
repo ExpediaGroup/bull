@@ -74,7 +74,8 @@ public class TransformerBytecodeAdapterTest {
         var actual = underTest.newTransformer(Source.class, Destination.class);
 
         // THEN
-        assertNotNull(actual, "a new Transformer instance is never null");
+        assertThat(actual).as("a new Transformer instance is never null")
+                .isNotNull();
         then(spec).should().build(Source.class, Destination.class);
     }
 
@@ -161,6 +162,7 @@ public class TransformerBytecodeAdapterTest {
                 .getMock();
     }
 
+    @SuppressWarnings("unchecked")
     private JavaStringCompiler mockCompilerReturning(final Class trClass) throws Exception {
         return (JavaStringCompiler) given(compiler.loadClass(anyString(), anyMap()))
                 .willReturn(trClass)
