@@ -16,10 +16,10 @@
 
 package com.hotels.beans.generator.core.mapping;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.testng.Assert.assertNotNull;
 
 import static com.hotels.transformer.constant.ClassType.UNSUPPORTED;
 
@@ -37,6 +37,9 @@ import com.hotels.transformer.utils.ClassUtils;
  * Tests for {@link MappingCodeFactory}.
  */
 public class MappingCodeFactoryTest {
+    /**
+     * The class to be tested.
+     */
     private final MappingCodeFactory underTest = MappingCodeFactory.newInstance();
 
     @Test
@@ -45,7 +48,7 @@ public class MappingCodeFactoryTest {
         var mappingCode = underTest.of(Source.class, Destination.class);
 
         // THEN
-        assertNotNull(mappingCode);
+        assertThat(mappingCode).isNotNull();
     }
 
     /**
