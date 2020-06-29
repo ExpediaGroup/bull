@@ -14,7 +14,7 @@ extent to which the component or system under test:
 * can be installed and run in its intended environments
 * achieves the general result its stakeholders desire.
 
-This page will show how to test BULL into a simple project. All the examples utilizes [JUnit](https://github.com/junit-team) and [Mockito](https://site.mockito.org/).
+This page will show how to test BULL into a simple project. All the examples utilize [JUnit](https://github.com/junit-team), [Mockito](https://site.mockito.org/) and [AssertJ](https://assertj.github.io/doc/)
 
 The Java Bean transformation function can be tested in two different ways that depends on the following scenarios:
 
@@ -70,7 +70,7 @@ public class SampleClass {
 ```
 The test class will be:
 ```java
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
@@ -123,7 +123,7 @@ public class SampleClassTest {
         //THEN
         verify(beanUtils).getTransformer();
         verify(beanTransformer).transform(sampleRequest, DestObject.class);
-        assertEquals(EXPECTED_RESULT, actual);
+        assertThat(actual).isEqualTo(EXPECTED_RESULT);
     }
     
     /**
@@ -186,7 +186,7 @@ public class SampleClass {
 ```
 The test class will be:
 ```java
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
@@ -242,7 +242,7 @@ public class SampleClassTest {
         verify(beanUtils).getTransformer();
         verify(beanTransformer).withFieldTransformer(any(FieldTransformer.class));
         verify(beanTransformer).transform(sampleRequest, DestObject.class);
-        assertEquals(EXPECTED_RESULT, actual);
+        assertThat(actual).isEqualTo(EXPECTED_RESULT);
     }
     
     /**
@@ -306,7 +306,7 @@ public class SampleClass {
 ```
 The test class will be:
 ```java
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.lang.reflect.Field;
@@ -350,7 +350,7 @@ public class SampleClassTest {
         final BigInteger actual = underTest.doSomething(sampleRequest);
 
         //THEN
-        assertEquals(EXPECTED_RESULT, actual);
+        assertThat(actual).isEqualTo(EXPECTED_RESULT);
     }
     
     /**

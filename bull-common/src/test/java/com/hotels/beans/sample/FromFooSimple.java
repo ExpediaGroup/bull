@@ -19,6 +19,7 @@ package com.hotels.beans.sample;
 import java.math.BigInteger;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 public class FromFooSimple {
     public String name;
     public BigInteger id;

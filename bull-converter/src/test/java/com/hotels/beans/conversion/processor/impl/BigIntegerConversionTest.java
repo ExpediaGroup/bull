@@ -20,7 +20,7 @@ import static java.lang.Character.getNumericValue;
 import static java.math.BigInteger.valueOf;
 import static java.nio.ByteBuffer.wrap;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigDecimal;
@@ -61,7 +61,7 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -73,7 +73,7 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test(expectedExceptions = TypeConversionException.class)
@@ -93,7 +93,7 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -105,7 +105,7 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -117,7 +117,7 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -141,7 +141,7 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -153,7 +153,7 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     /**
@@ -170,7 +170,7 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -194,7 +194,7 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -205,18 +205,17 @@ public class BigIntegerConversionTest extends AbstractConversionTest {
         BigInteger actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertEquals(BigInteger.ZERO, actual);
+        assertThat(actual).isZero();
     }
 
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        BigInteger expectedValue = BigDecimal.ZERO.toBigInteger();
 
         // WHEN
         BigInteger actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual);
+        assertThat(actual).isZero();
     }
 }
