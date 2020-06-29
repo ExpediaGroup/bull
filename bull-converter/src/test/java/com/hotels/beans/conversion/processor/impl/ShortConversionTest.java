@@ -63,7 +63,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Short) BYTE_VALUE.shortValue());
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
@@ -105,7 +105,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Short) INTEGER_VALUE.shortValue());
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Short) LONG_VALUE.shortValue());
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Short) FLOAT_VALUE.shortValue());
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Short) DOUBLE_VALUE.shortValue());
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
@@ -189,30 +189,28 @@ public class ShortConversionTest extends AbstractConversionTest {
         Short actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(valueOf(STRING_VALUE));
+        assertThat(actual).isEqualTo(SHORT_VALUE);
     }
 
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        short expectedValue = BigInteger.ZERO.shortValue();
 
         // WHEN
         short actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        short expectedValue = BigDecimal.ZERO.shortValue();
 
         // WHEN
         short actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 }

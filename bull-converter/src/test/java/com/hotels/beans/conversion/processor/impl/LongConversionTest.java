@@ -16,8 +16,6 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
-import static java.lang.Character.getNumericValue;
-import static java.lang.Long.valueOf;
 import static java.nio.ByteBuffer.wrap;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,7 +61,7 @@ public class LongConversionTest extends AbstractConversionTest {
         Long actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Long) BYTE_VALUE.longValue());
+        assertThat(actual).isEqualTo(LONG_VALUE);
     }
 
     @Test
@@ -94,7 +92,7 @@ public class LongConversionTest extends AbstractConversionTest {
         Long actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Long) SHORT_VALUE.longValue());
+        assertThat(actual).isEqualTo(LONG_VALUE);
     }
 
     @Test
@@ -105,7 +103,7 @@ public class LongConversionTest extends AbstractConversionTest {
         Long actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Long) INTEGER_VALUE.longValue());
+        assertThat(actual).isEqualTo(LONG_VALUE);
     }
 
     @Test
@@ -127,7 +125,7 @@ public class LongConversionTest extends AbstractConversionTest {
         Long actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Long) FLOAT_VALUE.longValue());
+        assertThat(actual).isEqualTo(LONG_VALUE);
     }
 
     @Test
@@ -138,7 +136,7 @@ public class LongConversionTest extends AbstractConversionTest {
         Long actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo((Long) DOUBLE_VALUE.longValue());
+        assertThat(actual).isEqualTo(LONG_VALUE);
     }
 
     @Test
@@ -149,7 +147,7 @@ public class LongConversionTest extends AbstractConversionTest {
         Long actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(valueOf(getNumericValue(CHAR_VALUE)));
+        assertThat(actual).isOne();
     }
 
     /**
@@ -189,30 +187,28 @@ public class LongConversionTest extends AbstractConversionTest {
         Long actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertThat(actual).isEqualTo(valueOf(STRING_VALUE));
+        assertThat(actual).isEqualTo(LONG_VALUE);
     }
 
     @Test
     public void testConvertBigIntegerShouldReturnProperResult() {
         // GIVEN
-        long expectedValue = BigInteger.ZERO.longValue();
 
         // WHEN
         long actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 
     @Test
     public void testConvertBigDecimalShouldReturnProperResult() {
         // GIVEN
-        long expectedValue = BigDecimal.ZERO.longValue();
 
         // WHEN
         long actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual).isZero();
     }
 }

@@ -79,7 +79,7 @@ public class PopulatorFactoryTest {
      * @param expectedResult the expected populator
      */
     @Test(dataProvider = "dataProvider")
-    @SuppressWarnings({"unchecked", "OptionalGetWithoutIsPresent"})
+    @SuppressWarnings({"unchecked"})
     public void testGetPopulatorReturnsTheExpectedResult(final Class type, final Class<? extends Populator> expectedResult) {
         // GIVEN
 
@@ -90,7 +90,7 @@ public class PopulatorFactoryTest {
         final boolean isNonNullObjectExpected = nonNull(expectedResult);
         assertThat(populator.isPresent()).isEqualTo(isNonNullObjectExpected);
         if (isNonNullObjectExpected) {
-            assertThat(populator.get().getClass()).isEqualTo(expectedResult);
+            assertThat(populator).containsInstanceOf(expectedResult);
         }
     }
 }
