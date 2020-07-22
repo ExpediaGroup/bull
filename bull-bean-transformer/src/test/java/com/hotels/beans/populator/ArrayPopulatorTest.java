@@ -19,14 +19,11 @@ package com.hotels.beans.populator;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
-
-import java.util.stream.IntStream;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -49,6 +46,7 @@ public class ArrayPopulatorTest {
     private static final int ZERO = 0;
     private static final int[] INT_ARRAY = new int[] {ZERO};
     private static final MixedToFooStaticField MIXED_TO_FOO_STATIC_FIELDS_OBJECTS = new MixedToFooStaticField();
+    private static final String NORMAL_FIELD = "normalField";
 
     @Mock
     private BeanTransformer transformer;
@@ -71,30 +69,28 @@ public class ArrayPopulatorTest {
      * Tests that the method {@code getPopulatedObject} works as expected.
      * @param genericFieldType the field to be populated class
      * @param array the source object from which extract the values
-     * @param nestedGenericClass the nested generic object class.
      */
     @Test(dataProvider = "dataProvider")
-    public void testGetPopulatedObjectWorksProperly(final Class<?> genericFieldType, final Object array, final Class<?> nestedGenericClass) {
+    public void testGetPopulatedObjectWorksProperly(final Class<?> genericFieldType, final Object array) {
         // GIVEN
         when(transformer.transform(any(), eq(MixedToFooStaticField.class))).thenReturn(MIXED_TO_FOO_STATIC_FIELDS_OBJECTS);
 
         // WHEN
-        Object actual = underTest.getPopulatedObject(null, genericFieldType, array, nestedGenericClass);
+        Object actual = underTest.getPopulatedObject(null, genericFieldType, array, null);
 
         // THEN
         if (genericFieldType == Character.class) {
-            assertArrayEquals((char[]) array, (char[]) actual);
+            assertThat((char[]) actual).isEqualTo((char[]) array);
         } else if (genericFieldType == Integer.class) {
-            assertArrayEquals((int[]) array, (int[]) actual);
+            assertThat((int[]) actual).isEqualTo((int[]) array);
         } else if (genericFieldType == Object.class) {
-            assertArrayEquals((Object[]) array, (Object[]) actual);
+            assertThat((Object[]) actual).isEqualTo(array);
         } else if (genericFieldType == MixedToFooStaticField.class) {
-            final MixedToFooStaticField[] expectedArray = (MixedToFooStaticField[]) array;
-            final Object[] actualArray = (Object[]) actual;
-            IntStream.range(0, expectedArray.length)
-                    .forEach(i -> assertEquals(expectedArray[i].getNormalField(), ((MixedToFooStaticField) actualArray[i]).getNormalField()));
+            assertThat((Object[]) actual)
+                    .usingElementComparatorOnFields(NORMAL_FIELD)
+                    .isEqualTo(array);
         } else {
-            assertArrayEquals((Object[]) array, (Object[]) actual);
+            assertThat(actual).isEqualTo(array);
         }
     }
 
@@ -105,11 +101,11 @@ public class ArrayPopulatorTest {
     @DataProvider
     public Object[][] dataProvider() {
         return new Object[][]{
-                {String.class, STRING_ARRAY, null},
-                {Character.class, CHAR_ARRAY, null},
-                {Integer.class, INT_ARRAY, null},
-                {MixedToFooStaticField.class, createMixedToFooArray(), null},
-                {Object.class, createBooleanArray(), null}
+                {String.class, STRING_ARRAY},
+                {Character.class, CHAR_ARRAY},
+                {Integer.class, INT_ARRAY},
+                {MixedToFooStaticField.class, createMixedToFooArray()},
+                {Object.class, createBooleanArray()}
         };
     }
 
@@ -126,7 +122,7 @@ public class ArrayPopulatorTest {
      * Creates an array containing an instance of {@link Boolean}.
      * @return an array containing an instance of {@link Boolean}.
      */
-    private static Object[] createBooleanArray() {
-        return new Object[] {TRUE, FALSE};
+    private static Boolean[] createBooleanArray() {
+        return new Boolean[] {TRUE, FALSE};
     }
 }

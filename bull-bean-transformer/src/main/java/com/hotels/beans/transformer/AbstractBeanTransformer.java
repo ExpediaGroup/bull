@@ -66,6 +66,15 @@ abstract class AbstractBeanTransformer extends AbstractTransformer<BeanTransform
      * {@inheritDoc}
      */
     @Override
+    public BeanTransformer setDefaultValueForMissingPrimitiveField(final boolean useDefaultValue) {
+        settings.setDefaultValueForMissingPrimitiveField(useDefaultValue);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final BeanTransformer setFlatFieldNameTransformation(final boolean useFlatTransformation) {
         settings.setFlatFieldNameTransformation(useFlatTransformation);
         return this;
@@ -80,15 +89,6 @@ abstract class AbstractBeanTransformer extends AbstractTransformer<BeanTransform
         if (validationEnabled) {
             validator = new ValidatorImpl();
         }
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BeanTransformer setDefaultValueSetEnabled(final boolean defaultValueSetEnabled) {
-        settings.setDefaultValueSetEnabled(defaultValueSetEnabled);
         return this;
     }
 

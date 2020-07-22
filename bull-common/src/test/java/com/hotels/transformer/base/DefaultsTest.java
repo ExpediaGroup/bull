@@ -18,7 +18,7 @@ package com.hotels.transformer.base;
 
 import static java.lang.Boolean.FALSE;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.DataProvider;
@@ -49,7 +49,7 @@ public class DefaultsTest {
         final Object actual = underTest.defaultValue(type);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
