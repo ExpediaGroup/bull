@@ -1,3 +1,19 @@
+/**
+ * Copyright (C) 2019-2020 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.hotels.beans.generator.source;
 
 import java.time.Clock;
@@ -10,14 +26,16 @@ import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeSpec;
 
+import lombok.AllArgsConstructor;
 
 /**
  * A decorator of {@link TransformerSpec} which adds useful metadata to the transformer model.
  * It's used to generate readable source files.
  */
+@AllArgsConstructor
 public class SourceTransformerSpec {
     /**
-     * The transfomer model to decorate for producing a source file.
+     * The transformer model to decorate for producing a source file.
      */
     private final TransformerSpec spec;
 
@@ -28,11 +46,6 @@ public class SourceTransformerSpec {
 
     public SourceTransformerSpec(final TransformerSpec transformerSpec) {
         this(transformerSpec, Clock.systemUTC());
-    }
-
-    public SourceTransformerSpec(final TransformerSpec transformerSpec, final Clock clock) {
-        this.spec = transformerSpec;
-        this.clock = clock;
     }
 
     public <A, B> TypeSpec build(final Class<A> source, final Class<B> destination) {
@@ -56,5 +69,4 @@ public class SourceTransformerSpec {
         return CodeBlock.of("A {@link $T} that can map an instance of $T to a new instance of $T.",
                 Transformer.class, source, destination);
     }
-
 }
