@@ -27,19 +27,33 @@ import com.squareup.javapoet.TypeSpec;
 import lombok.AllArgsConstructor;
 
 /**
- * Class in charge of writing the byte code to a file.
+ * A {@link com.hotels.beans.generator.core.Transformer} implementation source file.
+ * This file can be written on disk using {@link #write()}
+ * and contains all the data needed to perform this operation.
  */
 @AllArgsConstructor(access = PROTECTED)
 final class TransformerFile {
     /**
-     * The typeSpec instance: {@link TypeSpec}.
+     * The transformer source model.
      */
     private final TypeSpec typeSpec;
 
+    /**
+     * The path where to write the file and package directories.
+     */
     private final Path basePath;
 
+    /**
+     * The Java package of this source file.
+     */
     private final String packageName;
 
+    /**
+     * Write this source file and package directories to disk.
+     * Returns the path where the source is actually written.
+     * @return the path where this source is written
+     * @throws IOException if a write error occurs
+     */
     Path write() throws IOException {
         return JavaFile.builder(packageName, typeSpec)
                 .skipJavaLangImports(true)

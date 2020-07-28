@@ -20,11 +20,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.hotels.beans.generator.core.Transformer;
+import com.hotels.beans.generator.core.TransformerSpec;
 
 import lombok.Builder;
 
 /**
- * TransformerSourceAdapter. TODO: update this documentation.
+ * A source adapter for {@link TransformerSpec} that creates a readable source file
+ * representation from the model.
+ * <br>
+ * This component is for internal usage in Bull, as it's intended as a low-level wrapper
+ * for compile-time conversion of models. Clients should prefer higher level interfaces
+ * such as {@code TransformerRegistry}.
  */
 @Builder
 public class TransformerSourceAdapter {
@@ -38,14 +44,29 @@ public class TransformerSourceAdapter {
      */
     private static final String DEFAULT_PACKAGE = Transformer.class.getPackageName();
 
+    /**
+     * The path where to write the generated transformer sources.
+     * The tree of package directories will start from this location.
+     */
     @Builder.Default
     private final Path basePath = DEFAULT_PATH;
 
+    /**
+     * The Java package to use for the generated transformer sources.
+     */
     @Builder.Default
     private final String packageName = DEFAULT_PACKAGE;
 
     private final SourceTransformerSpec spec;
 
+    /**
+     * Create a new file containing the source of a {@link Transformer} from {@code source} to {@code destination}.
+     * @param <A> the source type
+     * @param <B> the destination type
+     * @param source the source class
+     * @param destination the destination class
+     * @return a new Transformer source file
+     */
     public <A, B> TransformerFile newTransformerFile(final Class<A> source, final Class<B> destination) {
         return new TransformerFile(spec.build(source, destination), basePath, packageName);
     }

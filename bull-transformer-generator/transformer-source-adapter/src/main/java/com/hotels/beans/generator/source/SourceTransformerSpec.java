@@ -29,7 +29,7 @@ import com.squareup.javapoet.TypeSpec;
 import lombok.AllArgsConstructor;
 
 /**
- * A decorator of {@link TransformerSpec} which adds useful metadata to the transformer model.
+ * A decorator of {@link TransformerSpec} which adds useful Javadoc and metadata to the transformer model.
  * It's used to generate readable source files.
  */
 @AllArgsConstructor
@@ -40,14 +40,28 @@ public class SourceTransformerSpec {
     private final TransformerSpec spec;
 
     /**
-     * The clock to use for generating source timestamps.
+     * The clock to use for marking generation timestamps.
      */
     private final Clock clock;
 
+    /**
+     * Decorate a transformer model with additional metadata.
+     * @param transformerSpec a transformer model
+     */
     public SourceTransformerSpec(final TransformerSpec transformerSpec) {
         this(transformerSpec, Clock.systemUTC());
     }
 
+    /**
+     * Build a transformer model to map from a {@code source} to {@code destination} type.
+     * The model also contains Javadoc and additional metadata.
+     * @param <A> the source type
+     * @param <B> the destination type
+     * @param source the source to read values from
+     * @param destination the destination where to map values
+     * @return a transformer model
+     * @see TransformerSpec#build(Class, Class)
+     */
     public <A, B> TypeSpec build(final Class<A> source, final Class<B> destination) {
         return spec.build(source, destination)
                 .toBuilder()
@@ -60,7 +74,8 @@ public class SourceTransformerSpec {
     }
 
     /**
-     * Creates a javadoc for the transformer implementation that includes {@code source} and {@code destination}.
+     * Creates a Javadoc for the transformer implementation
+     * that includes {@code source} and {@code destination} references.
      * @param source the source type
      * @param destination the destination type
      * @return a JavaDoc comment

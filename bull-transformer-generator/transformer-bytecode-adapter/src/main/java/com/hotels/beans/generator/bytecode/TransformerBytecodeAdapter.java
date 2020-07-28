@@ -51,7 +51,7 @@ public final class TransformerBytecodeAdapter {
     private final TransformerSpec spec;
 
     /**
-     * The Java package to use for every generated Transformer source code.
+     * The Java package to use for the generated transformer classes.
      */
     @Builder.Default
     private final String packageName = DEFAULT_PACKAGE;
@@ -63,12 +63,12 @@ public final class TransformerBytecodeAdapter {
     private final JavaStringCompiler compiler = new JavaStringCompiler();
 
     /**
-     * Dynamically create a new {@link Transformer} instance.
-     * @param <A> the type parameter
-     * @param <B> the type parameter
-     * @param source the source
-     * @param destination the destination
-     * @return the transformer
+     * Dynamically create a new {@link Transformer} instance from {@code source} to {@code destination}.
+     * @param <A> the source type
+     * @param <B> the destination type
+     * @param source the source class
+     * @param destination the destination class
+     * @return a new Transformer instance
      */
     @SuppressWarnings("unchecked")
     public <A, B> Transformer<A, B> newTransformer(final Class<A> source, final Class<B> destination) {
