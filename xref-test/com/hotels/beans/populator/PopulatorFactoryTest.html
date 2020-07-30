@@ -26,7 +26,7 @@
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.util.Objects.nonNull;
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.Assert.assertEquals;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Assertions.assertThat;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mockito.MockitoAnnotations.initMocks;
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.util.List;
@@ -87,7 +87,7 @@
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     * @param expectedResult the expected populator</em>
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>      @Test(dataProvider = <span class="jxr_string">"dataProvider"</span>)
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>      @SuppressWarnings({<span class="jxr_string">"unchecked"</span>, <span class="jxr_string">"OptionalGetWithoutIsPresent"</span>})
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>      @SuppressWarnings({<span class="jxr_string">"unchecked"</span>})
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetPopulatorReturnsTheExpectedResult(<strong class="jxr_keyword">final</strong> Class type, <strong class="jxr_keyword">final</strong> Class&lt;? <strong class="jxr_keyword">extends</strong> Populator&gt; expectedResult) {
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>          <em class="jxr_comment">// GIVEN</em>
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>  
@@ -96,9 +96,9 @@
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>  
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          <em class="jxr_comment">// THEN</em>
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>          <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> isNonNullObjectExpected = nonNull(expectedResult);
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>          assertEquals(populator.isPresent(), isNonNullObjectExpected);
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          assertThat(populator.isPresent()).isEqualTo(isNonNullObjectExpected);
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>          <strong class="jxr_keyword">if</strong> (isNonNullObjectExpected) {
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>              assertEquals(expectedResult, populator.get().getClass());
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>              assertThat(populator).containsInstanceOf(expectedResult);
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          }
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>      }
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>  }
