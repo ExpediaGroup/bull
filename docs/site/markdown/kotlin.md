@@ -5,6 +5,7 @@
 # Kotlin project integration
 
 This page shows how to use BULL inside a Kotlin project.
+It takes as example the Bean transformation, but the same approach can be used for all the other features.
 
 ## Step 1
 
