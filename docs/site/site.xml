@@ -36,6 +36,7 @@
         </breadcrumbs>
         <menu name="Project info">
             <item name="Glossary" href="/glossary.html" />
+            <item name="Use it in Kotlin" href="/kotlin.html" />
         </menu>
         <menu name="Transformer">
             <item name="Bean Transformer" collapse="true" href="/transformer/beanTransformer.html">
@@ -43,7 +44,6 @@
                 <item name="Performances" href="/transformer/bean/performance.html" />
                 <item name="Third Party Lib Comparison" href="/transformer/bean/thirdPartyLibComparison.html" />
                 <item name="How to test" href="/transformer/bean/testing.html" />
-                <item name="Use it in Kotlin" href="/transformer/bean/kotlin.html" />
             </item>
             <item name="Map Transformer" collapse="true" href="/transformer/mapTransformer.html">
                 <item name="Samples" href="/transformer/map/samples.html" />
