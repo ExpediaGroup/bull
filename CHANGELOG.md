@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.7.4] 2020.07.30
+### [1.7.3.1] 2020.07.30
 * Provides a guide on how to use it within Kotlin project
 
 ### [1.7.3] 2020.06.09
