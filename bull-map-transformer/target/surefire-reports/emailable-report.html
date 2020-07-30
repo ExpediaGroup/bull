@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>TestNG Report</title>
+<style type="text/css">table {margin-bottom:10px;border-collapse:collapse;empty-cells:show}th,td {border:1px solid #009;padding:.25em .5em}th {vertical-align:bottom}td {vertical-align:top}table a {font-weight:bold}.stripe td {background-color: #E6EBF9}.num {text-align:right}.passedodd td {background-color: #3F3}.passedeven td {background-color: #0A0}.skippedodd td {background-color: #DDD}.skippedeven td {background-color: #CCC}.failedodd td,.attn {background-color: #F33}.failedeven td,.stripe .attn {background-color: #D00}.stacktrace {white-space:pre;font-family:monospace}.totop {font-size:85%;text-align:center;border-bottom:2px solid #000}.invisible {display:none}</style>
+</head>
+<body>
+<table>
+<tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
+<tr><th colspan="8">Surefire suite</th></tr>
+<tr><td><a href="#t0">Surefire test</a></td><td class="num">13</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">1,723</td><td></td><td></td></tr>
+</table>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Surefire suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Surefire test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">com.hotels.map.MapUtilsTest</td><td><a href="#m0">testGetTransformerWorksProperly</a></td><td rowspan="1">1596115156916</td><td rowspan="1">1</td></tr><tr class="passedodd"><td rowspan="12">com.hotels.map.transformer.MapTransformerTest</td><td><a href="#m1">testResetKeyTransformerWorksProperly</a></td><td rowspan="1">1596115156610</td><td rowspan="1">213</td></tr><tr class="passedodd"><td><a href="#m2">testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid</a></td><td rowspan="1">1596115156828</td><td rowspan="1">3</td></tr><tr class="passedodd"><td><a href="#m3">testTransformRaisesExceptionIfItsCalledWithNullParameter</a></td><td rowspan="2">1596115156835</td><td rowspan="2">0</td></tr><tr class="passedodd"><td><a href="#m4">testTransformRaisesExceptionIfItsCalledWithNullParameter</a></td></tr><tr class="passedodd"><td><a href="#m5">testTransformWorksProperly</a></td><td rowspan="4">1596115156839</td><td rowspan="4">0</td></tr><tr class="passedodd"><td><a href="#m6">testTransformWorksProperly</a></td></tr><tr class="passedodd"><td><a href="#m7">testTransformWorksProperly</a></td></tr><tr class="passedodd"><td><a href="#m8">testTransformWorksProperly</a></td></tr><tr class="passedodd"><td><a href="#m9">testTransformWorksProperlyWithKeyMapping</a></td><td rowspan="1">1596115156858</td><td rowspan="1">5</td></tr><tr class="passedodd"><td><a href="#m10">testTransformWorksProperlyWithMapContainingList</a></td><td rowspan="1">1596115156864</td><td rowspan="1">39</td></tr><tr class="passedodd"><td><a href="#m11">testTransformWorksProperlyWithTargetKeyAndElemType</a></td><td rowspan="1">1596115156905</td><td rowspan="1">6</td></tr><tr class="passedodd"><td><a href="#m12">testTransformWorksProperlyWithTransformer</a></td><td rowspan="1">1596115156912</td><td rowspan="1">0</td></tr></tbody>
+</table>
+<h2>Surefire test</h2><h3 id="m0">com.hotels.map.MapUtilsTest#testGetTransformerWorksProperly</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">com.hotels.map.transformer.MapTransformerTest#testResetKeyTransformerWorksProperly</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m2">com.hotels.map.transformer.MapTransformerTest#testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid</h3><table class="result"><tr><th>Expected Exception</th></tr><tr><td><div class="stacktrace">com.hotels.transformer.error.InvalidFunctionException: The transformer function defined for the map key is not valid.
+	at com.hotels.map.transformer.MapTransformerImpl.getTransformedObject(MapTransformerImpl.java:132)
+	at com.hotels.map.transformer.MapTransformerImpl.lambda$transform$0(MapTransformerImpl.java:50)
+	at java.base/java.util.stream.Collectors.lambda$uniqKeysMapAccumulator$1(Collectors.java:177)
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169)
+	at java.base/java.util.HashMap$EntrySpliterator.forEachRemaining(HashMap.java:1746)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
+	at com.hotels.map.transformer.MapTransformerImpl.transform(MapTransformerImpl.java:49)
+	at com.hotels.map.transformer.AbstractMapTransformer.transform(AbstractMapTransformer.java:48)
+	at com.hotels.map.transformer.MapTransformerImpl.transform(MapTransformerImpl.java:35)
+	at com.hotels.map.transformer.MapTransformerTest.testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid(MapTransformerTest.java:195)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+Caused by: com.hotels.transformer.error.InvalidFunctionException: The transformer function defined for the field is not valid.
+	at com.hotels.transformer.model.FieldTransformer.getTransformedObject(FieldTransformer.java:85)
+	at com.hotels.map.transformer.MapTransformerImpl.getTransformedObject(MapTransformerImpl.java:130)
+	... 46 more
+Caused by: java.lang.ClassCastException: class java.lang.String cannot be cast to class java.math.BigInteger (java.lang.String and java.math.BigInteger are in module java.base of loader &apos;bootstrap&apos;)
+	at com.hotels.transformer.model.FieldTransformer.getTransformedObject(FieldTransformer.java:83)
+	... 47 more
+... Removed 32 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m3">com.hotels.map.transformer.MapTransformerTest#testTransformRaisesExceptionIfItsCalledWithNullParameter</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th></tr><tr class="param stripe"><td>Test that an IllegalArgumentException is thrown if the sourceMap is null</td><td>null</td><td>com.hotels.beans.transformer.TransformerImpl@4ec37a42</td></tr><tr><th colspan="3">Expected Exception</th></tr><tr><td colspan="3"><div class="stacktrace">java.lang.IllegalArgumentException: The map to copy cannot be null!
+	at com.hotels.transformer.validator.Validator.notNull(Validator.java:78)
+	at com.hotels.map.transformer.MapTransformerImpl.validateParameters(MapTransformerImpl.java:80)
+	at com.hotels.map.transformer.MapTransformerImpl.transform(MapTransformerImpl.java:42)
+	at com.hotels.map.transformer.MapTransformerTest.testTransformRaisesExceptionIfItsCalledWithNullParameter(MapTransformerTest.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+... Removed 32 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m4">com.hotels.map.transformer.MapTransformerTest#testTransformRaisesExceptionIfItsCalledWithNullParameter</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th></tr><tr class="param stripe"><td>Test that an IllegalArgumentException is thrown if the transformer is null</td><td>{donald=duck}</td><td>null</td></tr><tr><th colspan="3">Expected Exception</th></tr><tr><td colspan="3"><div class="stacktrace">java.lang.IllegalArgumentException: The bean transformer to use cannot be null!
+	at com.hotels.transformer.validator.Validator.notNull(Validator.java:78)
+	at com.hotels.map.transformer.MapTransformerImpl.validateParameters(MapTransformerImpl.java:81)
+	at com.hotels.map.transformer.MapTransformerImpl.transform(MapTransformerImpl.java:42)
+	at com.hotels.map.transformer.MapTransformerTest.testTransformRaisesExceptionIfItsCalledWithNullParameter(MapTransformerTest.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+... Removed 32 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m5">com.hotels.map.transformer.MapTransformerTest#testTransformWorksProperly</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>Test that a simple Map is correctly transformed</td><td>{donald=duck}</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m6">com.hotels.map.transformer.MapTransformerTest#testTransformWorksProperly</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>Test that a Map containing a Map is correctly transformed</td><td>{donald={donald=duck}}</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m7">com.hotels.map.transformer.MapTransformerTest#testTransformWorksProperly</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>Test that a Map containing a Map that has an object as key, is correctly transformed</td><td>{FromFooSimple(name=Goofy, id=1234, active=true)={donald=duck}}</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m8">com.hotels.map.transformer.MapTransformerTest#testTransformWorksProperly</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>Test that a Map containing a list is correctly transformed</td><td>{donald=[duck]}</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m9">com.hotels.map.transformer.MapTransformerTest#testTransformWorksProperlyWithKeyMapping</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m10">com.hotels.map.transformer.MapTransformerTest#testTransformWorksProperlyWithMapContainingList</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m11">com.hotels.map.transformer.MapTransformerTest#testTransformWorksProperlyWithTargetKeyAndElemType</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m12">com.hotels.map.transformer.MapTransformerTest#testTransformWorksProperlyWithTransformer</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+</body>
+</html>

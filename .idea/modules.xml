@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/bean-utils-library.iml" filepath="$PROJECT_DIR$/bean-utils-library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bean-utils-library-parent.iml" filepath="$PROJECT_DIR$/bean-utils-library-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bull-bean-transformer/bull-bean-transformer.iml" filepath="$PROJECT_DIR$/bull-bean-transformer/bull-bean-transformer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bull-common/bull-common.iml" filepath="$PROJECT_DIR$/bull-common/bull-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bull-converter/bull-converter.iml" filepath="$PROJECT_DIR$/bull-converter/bull-converter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bull-map-transformer/bull-map-transformer.iml" filepath="$PROJECT_DIR$/bull-map-transformer/bull-map-transformer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bull-report/bull-report.iml" filepath="$PROJECT_DIR$/bull-report/bull-report.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bull-transformer-generator/bull-transformer-generator-parent.iml" filepath="$PROJECT_DIR$/bull-transformer-generator/bull-transformer-generator-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bull-transformer-generator/transformer-bytecode-adapter/transformer-bytecode-adapter.iml" filepath="$PROJECT_DIR$/bull-transformer-generator/transformer-bytecode-adapter/transformer-bytecode-adapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bull-transformer-generator/transformer-generator-core/transformer-generator-core.iml" filepath="$PROJECT_DIR$/bull-transformer-generator/transformer-generator-core/transformer-generator-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bull-transformer-generator/transformer-registry/transformer-registry.iml" filepath="$PROJECT_DIR$/bull-transformer-generator/transformer-registry/transformer-registry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bull-transformer-generator/transformer-source-adapter/transformer-source-adapter.iml" filepath="$PROJECT_DIR$/bull-transformer-generator/transformer-source-adapter/transformer-source-adapter.iml" />
+    </modules>
+  </component>
+</project>

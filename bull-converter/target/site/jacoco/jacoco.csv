@@ -1,0 +1,17 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+BULL - Converter,com.hotels.beans.conversion,ConverterImpl,0,54,0,4,0,12,0,7,0,5
+BULL - Converter,com.hotels.beans.conversion.analyzer,ConversionAnalyzer,0,165,0,30,0,39,0,21,0,6
+BULL - Converter,com.hotels.beans.conversion.processor.impl,BooleanConversionProcessor,0,117,0,20,0,13,0,34,0,24
+BULL - Converter,com.hotels.beans.conversion.processor.impl,StringConversionProcessor,0,29,0,0,0,13,0,14,0,14
+BULL - Converter,com.hotels.beans.conversion.processor.impl,BigIntegerConversionProcessor,0,69,0,2,0,16,0,21,0,20
+BULL - Converter,com.hotels.beans.conversion.processor.impl,ByteArrayConversionProcessor,0,115,0,2,0,13,0,25,0,24
+BULL - Converter,com.hotels.beans.conversion.processor.impl,BigDecimalConversionProcessor,0,64,0,2,0,16,0,20,0,19
+BULL - Converter,com.hotels.beans.conversion.processor.impl,ByteConversionProcessor,0,48,0,2,0,13,0,18,0,17
+BULL - Converter,com.hotels.beans.conversion.processor.impl,ShortConversionProcessor,0,55,0,2,0,16,0,18,0,17
+BULL - Converter,com.hotels.beans.conversion.processor.impl,CharacterConversionProcessor,0,98,0,2,0,16,0,26,0,25
+BULL - Converter,com.hotels.beans.conversion.processor.impl,IntegerConversionProcessor,0,49,0,2,0,16,0,17,0,16
+BULL - Converter,com.hotels.beans.conversion.processor.impl,LongConversionProcessor,0,53,0,2,0,16,0,17,0,16
+BULL - Converter,com.hotels.beans.conversion.processor.impl,FloatConversionProcessor,0,55,0,2,0,16,0,18,0,17
+BULL - Converter,com.hotels.beans.conversion.processor.impl,DoubleConversionProcessor,0,55,0,2,0,16,0,18,0,17
+BULL - Converter,com.hotels.beans.conversion.processor,ConversionProcessorFactory,0,111,0,24,0,26,0,13,0,1
+BULL - Converter,com.hotels.beans.conversion.error,TypeConversionException,0,4,0,0,0,2,0,1,0,1

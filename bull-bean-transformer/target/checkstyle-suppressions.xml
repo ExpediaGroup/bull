@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <!-- Checks for Javadoc comments. -->
+    <suppress checks="JavadocMethod|JavadocVariable|TodoComment"
+              files=".*[\\/]src[\\/](test|it)[\\/]|.*Test.java"/>
+
+    <!-- Checks for Visibility Modifier. -->
+    <suppress checks="VisibilityModifier" files=".*.java"/>
+
+    <!-- Checks for class design  -->
+    <suppress checks="DesignForExtension" files=".*[\\/]src[\\/](test|it)[\\/]|.*Test.java"/>
+
+    <!-- Checks for hidden fields  -->
+    <suppress checks="HiddenField" files=".*[\\/]src[\\/](test|it)[\\/]|.*Test.java"/>
+
+   <!-- Checks for parameter number  -->
+   <suppress checks="ParameterNumber" files=".*[\\/]src[\\/](test|it)[\\/]|.*Test.java"/>
+</suppressions>

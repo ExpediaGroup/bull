@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.hotels.map"},{"l":"com.hotels.map.transformer"},{"l":"com.hotels.map.transformer.model"}]

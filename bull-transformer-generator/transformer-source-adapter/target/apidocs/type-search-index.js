@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"com.hotels.beans.generator.source","l":"SourceTransformerSpec"},{"p":"com.hotels.beans.generator.source","l":"TransformerSourceAdapter"}]

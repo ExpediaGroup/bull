@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractMapTransformer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Map Transformer</a> &gt; <a href="index.source.html" class="el_package">com.hotels.map.transformer</a> &gt; <span class="el_source">AbstractMapTransformer.java</span></div><h1>AbstractMapTransformer.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019-2020 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.map.transformer;
+
+import java.util.Map;
+
+import com.hotels.beans.BeanUtils;
+import com.hotels.map.transformer.model.MapTransformerSettings;
+import com.hotels.transformer.AbstractTransformer;
+import com.hotels.transformer.model.FieldTransformer;
+
+/**
+ * Utility methods for populating {@link java.util.Map} elements via reflection..
+ * Contains all method implementation that will be common to any {@link MapTransformer} implementation.
+ */
+abstract class AbstractMapTransformer extends AbstractTransformer&lt;MapTransformer, Object, MapTransformerSettings&gt; implements MapTransformer {
+    /**
+     * The cache key prefix for the Transformer Functions.
+     */
+    private static final String TRANSFORMER_FUNCTION_CACHE_PREFIX = &quot;MapTransformerFunction&quot;;
+
+    /**
+     * Default constructor.
+     */
+    AbstractMapTransformer() {
+<span class="fc" id="L40">        super(TRANSFORMER_FUNCTION_CACHE_PREFIX, &quot;mapTransformer&quot;, new MapTransformerSettings());</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public &lt;T, K&gt; Map&lt;T, K&gt; transform(final Map&lt;T, K&gt; sourceMap) {
+<span class="fc" id="L48">        return transform(sourceMap, new BeanUtils().getTransformer());</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public &lt;T, K, R, V&gt; Map&lt;R, V&gt; transform(final Map&lt;T, K&gt; sourceMap, final Class&lt;R&gt; targetKeyType, final Class&lt;V&gt; targetElemType) {
+<span class="fc" id="L56">        return transform(sourceMap, new BeanUtils().getTransformer(), targetKeyType, targetElemType);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public MapTransformer withKeyTransformer(final FieldTransformer... keyFieldTransformer) {
+<span class="fc" id="L64">        final Map&lt;Object, FieldTransformer&gt; keyFieldsTransformers = settings.getKeyFieldsTransformers();</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (FieldTransformer transformer : keyFieldTransformer) {</span>
+<span class="fc" id="L66">            keyFieldsTransformers.put(transformer.getDestFieldName(), transformer);</span>
+        }
+<span class="fc" id="L68">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void resetKeyTransformer() {
+<span class="fc" id="L76">        settings.getKeyFieldsTransformers().clear();</span>
+<span class="fc" id="L77">        cacheManager.removeMatchingKeys(transformerFunctionRegex);</span>
+<span class="fc" id="L78">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

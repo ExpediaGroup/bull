@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapTransformerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Map Transformer</a> &gt; <a href="index.source.html" class="el_package">com.hotels.map.transformer</a> &gt; <span class="el_source">MapTransformerImpl.java</span></div><h1>MapTransformerImpl.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019-2020 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.map.transformer;
+
+import static java.util.Objects.nonNull;
+import static java.util.stream.Collectors.toMap;
+
+import static com.hotels.beans.populator.PopulatorFactory.getPopulator;
+import static com.hotels.transformer.validator.Validator.notNull;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.hotels.beans.transformer.BeanTransformer;
+import com.hotels.transformer.error.InvalidFunctionException;
+import com.hotels.transformer.model.FieldTransformer;
+
+/**
+ * Utility methods for populating {@link java.util.Map} elements via reflection.
+ */
+<span class="fc" id="L35">public class MapTransformerImpl extends AbstractMapTransformer {</span>
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public &lt;T, K&gt; Map&lt;T, K&gt; transform(final Map&lt;T, K&gt; sourceMap, final BeanTransformer beanTransformer) {
+<span class="fc" id="L42">        validateParameters(sourceMap, beanTransformer);</span>
+<span class="fc" id="L43">        Map&lt;?, FieldTransformer&gt; keyFieldsTransformers = settings.getKeyFieldsTransformers();</span>
+        Map&lt;T, K&gt; res;
+<span class="fc bfc" id="L45" title="All 4 branches covered.">        if (settings.getFieldsNameMapping().isEmpty() &amp;&amp; keyFieldsTransformers.isEmpty()) {</span>
+<span class="fc" id="L46">            res = new HashMap&lt;&gt;(sourceMap);</span>
+        } else {
+<span class="fc" id="L48">            res = (Map&lt;T, K&gt;) sourceMap.entrySet().stream()</span>
+<span class="fc" id="L49">                    .collect(toMap(</span>
+<span class="fc" id="L50">                            e -&gt; getTransformedObject(keyFieldsTransformers.get(e.getKey()), e.getKey()),</span>
+<span class="fc" id="L51">                            e -&gt; getTransformedObject(settings.getFieldsTransformers().get(e.getKey()), getMapValue(e, sourceMap))</span>
+                    ));
+        }
+<span class="fc" id="L54">        return res;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public &lt;T, K, R, V&gt; Map&lt;R, V&gt; transform(final Map&lt;T, K&gt; sourceMap, final BeanTransformer beanTransformer, final Class&lt;R&gt; targetKeyType, final Class&lt;V&gt; targetElemType) {
+<span class="fc" id="L63">        validateParameters(sourceMap, beanTransformer);</span>
+<span class="fc" id="L64">        Map&lt;?, FieldTransformer&gt; keyFieldsTransformers = settings.getKeyFieldsTransformers();</span>
+<span class="fc" id="L65">        return (Map&lt;R, V&gt;) sourceMap.entrySet().stream()</span>
+<span class="fc" id="L66">                    .collect(toMap(</span>
+<span class="fc" id="L67">                            e -&gt; getTransformedObject(keyFieldsTransformers.get(e.getKey()), e.getKey(), beanTransformer, targetKeyType),</span>
+<span class="fc" id="L68">                            e -&gt; getTransformedObject(settings.getFieldsTransformers().get(e.getKey()), getMapValue(e, sourceMap), beanTransformer, targetElemType)</span>
+                    ));
+    }
+
+    /**
+     * Checks that the input parameter are valid.
+     * @param sourceMap the Map to transform
+     * @param beanTransformer the {@link BeanTransformer} instance
+     * @param &lt;T&gt; the key object type in the source map
+     * @param &lt;K&gt; the elem object type in the source map
+     */
+    private &lt;T, K&gt; void validateParameters(final Map&lt;T, K&gt; sourceMap, final BeanTransformer beanTransformer) {
+<span class="fc" id="L80">        notNull(sourceMap, &quot;The map to copy cannot be null!&quot;);</span>
+<span class="fc" id="L81">        notNull(beanTransformer, &quot;The bean transformer to use cannot be null!&quot;);</span>
+<span class="fc" id="L82">    }</span>
+
+    /**
+     * Checks if a mapping has been defined between one key and the other.
+     * In case a mapping exists, it returns the Map value for the new key.
+     * @param entry the Map entry from which extract the key and the value.
+     * @param sourceMap the Map from which the data has to be retrieved.
+     * @param &lt;T&gt; the key type
+     * @param &lt;K&gt; the class type
+     * @return the value for the new key
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private &lt;T, K&gt; K getMapValue(final Map.Entry&lt;T, K&gt; entry, final Map&lt;T, K&gt; sourceMap) {
+<span class="fc" id="L95">        return sourceMap.getOrDefault((T) settings.getFieldsNameMapping().get(entry.getKey()), entry.getValue());</span>
+    }
+
+    /**
+     * Applies the {@link FieldTransformer} function (if any) to the given Map element value.
+     * @param fieldTransformer the {@link FieldTransformer} function to apply
+     * @param value the object on which the function has to be applied
+     * @param beanTransformer the bean transformer to use for the map elements transformation
+     * @param targetClass the destination object class
+     * @param &lt;K&gt; the return class type
+     * @return the transformed value
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private &lt;K&gt; K getTransformedObject(final FieldTransformer&lt;Object, Object&gt; fieldTransformer, final Object value,
+        final BeanTransformer beanTransformer, final Class&lt;K&gt; targetClass) {
+        K newValue;
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        if (Map.class.isAssignableFrom(value.getClass())) {</span>
+<span class="fc" id="L112">            newValue = (K) transform((Map) value, beanTransformer);</span>
+        } else {
+<span class="fc" id="L114">            newValue = (K) getPopulator(targetClass, value.getClass(), beanTransformer)</span>
+<span class="fc" id="L115">                .map(populator -&gt; populator.transform(value, targetClass))</span>
+<span class="fc" id="L116">                .orElseGet(() -&gt; beanTransformer.transform(value, targetClass));</span>
+        }
+<span class="fc" id="L118">        return (K) getTransformedObject(fieldTransformer, newValue);</span>
+    }
+
+    /**
+     * Applies the {@link FieldTransformer} function (if any) to the given Map element value.
+     * @param fieldTransformer the {@link FieldTransformer} function to apply
+     * @param value the object on which the function has to be applied
+     * @return the transformed value
+     * @throws InvalidFunctionException if the defined function is not valid
+     */
+    private Object getTransformedObject(final FieldTransformer&lt;Object, Object&gt; fieldTransformer, final Object value) {
+        try {
+<span class="fc bfc" id="L130" title="All 2 branches covered.">            return nonNull(fieldTransformer) ? fieldTransformer.getTransformedObject(value) : value;</span>
+<span class="fc" id="L131">        } catch (final Exception e) {</span>
+<span class="fc" id="L132">            throw new InvalidFunctionException(&quot;The transformer function defined for the map key is not valid.&quot;, e);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

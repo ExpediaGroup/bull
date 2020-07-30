@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: BeanUtilLightLibrary (BULL)
+  profiles:
+    active: default
+  main:
+    banner-mode: CONSOLE
+  output:
+    ansi:
+      enabled: ALWAYS

@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_TEST_SOURCES" value="false" />
+    <option name="SCOPE_TYPE" value="3" />
+    <option name="CUSTOM_SCOPE_NAME" value="Project Production Files" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6fafd5d7-92b2-43a4-9be3-ef34949eaf91" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Fabio Borriello &lt;borriello.fabio@gmail.com&gt;" />
+        <option value="Fabio Borriello &lt;fborriello@expedia.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/kotlin-usage-documentation" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="2" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1596010237" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="develop" />
+                    <option name="lastUsedInstant" value="1596010130" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="feature/issue-158-transformer-source-generation" />
+                    <option name="lastUsedInstant" value="1595403753" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="feature/transformer-generator" />
+                    <option name="lastUsedInstant" value="1595403716" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="feature/transformer-generator-jdk8" />
+                    <option name="lastUsedInstant" value="1593438415" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$USER_HOME$/.m2/wrapper/dists/apache-maven-3.6.3-bin/1iopthnavndlasol9gbrbg6bf2/apache-maven-3.6.3" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="vmOptionsForImporter" value="-Xmx4096m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
+  <component name="ProjectId" id="1Yvm90txBd7xNELOYWB48XmRHj3" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="XML" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/bull-transformer-generator/transformer-source-adapter/src/main/java/com/hotels/beans/generator/source" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.21948212" />
+    <property name="project.structure.side.proportion" value="0.2920354" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/../../externalContributors/bull/bull-transformer-generator/transformer-source-adapter/pom.xml" />
+    <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/../../externalContributors/bull/bull-transformer-generator/transformer-source-adapter" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs/site/markdown" />
+      <recent name="$PROJECT_DIR$/docs/site/markdown/transformer/bean" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.hotels.beans.generator.core.error" />
+      <recent name="com.hotels.beans.sample.mutable" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bull-transformer-generator/transformer-source-adapter/src/main/java/com/hotels/beans/generator/source" />
+      <recent name="$PROJECT_DIR$/bull-transformer-generator/transformer-source-adapter/src" />
+      <recent name="$PROJECT_DIR$/bull-transformer-generator/transformer-source-adapter" />
+      <recent name="$PROJECT_DIR$/bull-transformer-generator/transformer-generator-core/src/main/java/com/hotels/beans/generator/core/error" />
+      <recent name="$PROJECT_DIR$/bull-common/src/test/java/com/hotels/beans/sample/mixed" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.BeanUtils">
+    <configuration name="BeanProperty" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hotels.beans.generator.core.mapping.BeanProperty" />
+      <module name="transformer-generator-core" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hotels.beans.generator.core.mapping.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BeanUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hotels.beans.BeanUtils" />
+      <module name="bull-bean-transformer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hotels.beans.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClassUtilsTest" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="bull-common" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hotels.transformer.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.hotels.transformer.utils" />
+      <option name="MAIN_CLASS_NAME" value="com.hotels.transformer.utils.ClassUtilsTest" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ImmutableObjectTransformationTest.testInjectValuesThrowsException" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="bull-bean-transformer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hotels.beans.transformer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.hotels.beans.transformer" />
+      <option name="MAIN_CLASS_NAME" value="com.hotels.beans.transformer.ImmutableObjectTransformationTest" />
+      <option name="METHOD_NAME" value="testInjectValuesThrowsException" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ImmutableObjectTransformationTest.testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="bull-bean-transformer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hotels.beans.transformer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.hotels.beans.transformer" />
+      <option name="MAIN_CLASS_NAME" value="com.hotels.beans.transformer.ImmutableObjectTransformationTest" />
+      <option name="METHOD_NAME" value="testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="TestNG.ImmutableObjectTransformationTest.testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected" />
+        <item itemvalue="TestNG.ImmutableObjectTransformationTest.testInjectValuesThrowsException" />
+        <item itemvalue="TestNG.ClassUtilsTest" />
+        <item itemvalue="Application.BeanUtils" />
+        <item itemvalue="Application.BeanProperty" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6fafd5d7-92b2-43a4-9be3-ef34949eaf91" name="Default Changelist" comment="" />
+      <created>1583831286780</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583831286780</updated>
+      <workItem from="1583831290107" duration="1215000" />
+      <workItem from="1583846018988" duration="487000" />
+      <workItem from="1584000263004" duration="8165000" />
+      <workItem from="1584028915975" duration="195000" />
+      <workItem from="1584080308926" duration="403000" />
+      <workItem from="1584086977750" duration="2652000" />
+      <workItem from="1584099491044" duration="2717000" />
+      <workItem from="1584105233490" duration="944000" />
+      <workItem from="1584109798175" duration="77000" />
+      <workItem from="1584116958921" duration="874000" />
+      <workItem from="1584342596846" duration="5809000" />
+      <workItem from="1584354089520" duration="8334000" />
+      <workItem from="1584375718112" duration="2717000" />
+      <workItem from="1584436025979" duration="1088000" />
+      <workItem from="1584459559883" duration="781000" />
+      <workItem from="1584461583097" duration="4000" />
+      <workItem from="1584949360363" duration="1537000" />
+      <workItem from="1585056787524" duration="181000" />
+      <workItem from="1585117306291" duration="291000" />
+      <workItem from="1585142617951" duration="2842000" />
+      <workItem from="1585153218211" duration="668000" />
+      <workItem from="1585213265234" duration="3000" />
+      <workItem from="1585300357401" duration="220000" />
+      <workItem from="1585300659320" duration="512000" />
+      <workItem from="1585302602825" duration="385000" />
+      <workItem from="1585551920840" duration="36000" />
+      <workItem from="1585573691218" duration="482000" />
+      <workItem from="1585664667443" duration="89000" />
+      <workItem from="1585664764353" duration="507000" />
+      <workItem from="1586421831071" duration="232000" />
+      <workItem from="1586422084345" duration="3158000" />
+      <workItem from="1586850499728" duration="1875000" />
+      <workItem from="1586881091728" duration="241000" />
+      <workItem from="1586935243321" duration="221000" />
+      <workItem from="1586935502922" duration="2251000" />
+      <workItem from="1586963067313" duration="4931000" />
+      <workItem from="1587094781850" duration="407000" />
+      <workItem from="1587137738917" duration="729000" />
+      <workItem from="1587367470876" duration="99000" />
+      <workItem from="1587367628505" duration="15000" />
+      <workItem from="1587367661047" duration="89000" />
+      <workItem from="1587372779599" duration="1390000" />
+      <workItem from="1587375788036" duration="14000" />
+      <workItem from="1587387013877" duration="1659000" />
+      <workItem from="1587388931460" duration="726000" />
+      <workItem from="1587395917503" duration="38000" />
+      <workItem from="1587397052352" duration="609000" />
+      <workItem from="1587452502274" duration="1856000" />
+      <workItem from="1587557626775" duration="24000" />
+      <workItem from="1587564437165" duration="160000" />
+      <workItem from="1587737641153" duration="2841000" />
+      <workItem from="1587744892980" duration="1951000" />
+      <workItem from="1587964435268" duration="4000" />
+      <workItem from="1587965441509" duration="190000" />
+      <workItem from="1587979572096" duration="7000" />
+      <workItem from="1588062425711" duration="121000" />
+      <workItem from="1588082449214" duration="10000" />
+      <workItem from="1588087574999" duration="621000" />
+      <workItem from="1588149946339" duration="63000" />
+      <workItem from="1588151313678" duration="1254000" />
+      <workItem from="1588154602294" duration="594000" />
+      <workItem from="1588231580975" duration="1631000" />
+      <workItem from="1588233294029" duration="316000" />
+      <workItem from="1588689131499" duration="20000" />
+      <workItem from="1588829112664" duration="314000" />
+      <workItem from="1588830417187" duration="882000" />
+      <workItem from="1588840808814" duration="599000" />
+      <workItem from="1588856001563" duration="1048000" />
+      <workItem from="1588859504689" duration="779000" />
+      <workItem from="1589193675914" duration="15000" />
+      <workItem from="1589201179121" duration="822000" />
+      <workItem from="1589209777653" duration="1073000" />
+      <workItem from="1589275992555" duration="3000" />
+      <workItem from="1589366053419" duration="1247000" />
+      <workItem from="1589379387408" duration="379000" />
+      <workItem from="1589557331078" duration="1221000" />
+      <workItem from="1589779673436" duration="616000" />
+      <workItem from="1589897418382" duration="49000" />
+      <workItem from="1589958541152" duration="12000" />
+      <workItem from="1590139185560" duration="158000" />
+      <workItem from="1590139671561" duration="220000" />
+      <workItem from="1590410542370" duration="244000" />
+      <workItem from="1590644188344" duration="479000" />
+      <workItem from="1590754522873" duration="2706000" />
+      <workItem from="1591285411269" duration="138000" />
+      <workItem from="1591680455282" duration="1326000" />
+      <workItem from="1591682544799" duration="4844000" />
+      <workItem from="1591700162788" duration="359000" />
+      <workItem from="1591797563599" duration="1566000" />
+      <workItem from="1591852824205" duration="31000" />
+      <workItem from="1591938993391" duration="104000" />
+      <workItem from="1591939211676" duration="1662000" />
+      <workItem from="1591948714412" duration="18778000" />
+      <workItem from="1591974442981" duration="2284000" />
+      <workItem from="1592203752342" duration="1259000" />
+      <workItem from="1592205751076" duration="40000" />
+      <workItem from="1592224170054" duration="4075000" />
+      <workItem from="1592285782345" duration="11000" />
+      <workItem from="1592473869777" duration="380000" />
+      <workItem from="1592816345269" duration="549000" />
+      <workItem from="1592918546712" duration="31000" />
+      <workItem from="1593087376051" duration="1088000" />
+      <workItem from="1593436758495" duration="2253000" />
+      <workItem from="1593762803581" duration="128000" />
+      <workItem from="1593784141030" duration="56000" />
+      <workItem from="1594038904658" duration="130000" />
+      <workItem from="1594116727988" duration="121000" />
+      <workItem from="1594299355559" duration="846000" />
+      <workItem from="1594393631519" duration="728000" />
+      <workItem from="1595402998933" duration="3763000" />
+      <workItem from="1595421003498" duration="898000" />
+      <workItem from="1595422396700" duration="12000" />
+      <workItem from="1595770338399" duration="1734000" />
+      <workItem from="1595827301609" duration="40000" />
+      <workItem from="1595923985826" duration="626000" />
+      <workItem from="1595928204314" duration="552000" />
+      <workItem from="1595929122805" duration="1110000" />
+      <workItem from="1595932085420" duration="1468000" />
+      <workItem from="1595939715217" duration="7000" />
+      <workItem from="1595946072418" duration="27000" />
+      <workItem from="1595948185057" duration="756000" />
+      <workItem from="1595997574438" duration="164000" />
+      <workItem from="1596008725651" duration="311000" />
+      <workItem from="1596010114062" duration="360000" />
+      <workItem from="1596010663125" duration="1077000" />
+      <workItem from="1596019701595" duration="4000" />
+      <workItem from="1596095196923" duration="631000" />
+      <workItem from="1596111912130" duration="3629000" />
+    </task>
+    <task id="LOCAL-00001" summary="Minor: variable name refactoring">
+      <created>1586936805346</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586936805346</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Removes useless plugin">
+      <created>1586936877838</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1586936877838</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Refactors the transformer method to improve the readibility">
+      <created>1586967678416</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1586967678416</updated>
+    </task>
+    <task id="LOCAL-00004" summary="[travis skip] Updates changelog files with the new dependency version">
+      <created>1588829243307</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1588829243307</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Updates changelog files with the new dependency version">
+      <created>1589779806732</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1589779806732</updated>
+    </task>
+    <task id="LOCAL-00006" summary="- Adds a specific exception in case something goes wront during the Transformer generation&#10;- Minor improvements">
+      <created>1590762600260</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1590762600260</updated>
+    </task>
+    <task id="LOCAL-00007" summary="- Deprecated the method: setDefaultValueSetEnabled and replaces it with: setDefaultValueForMissingPrimitiveField&#10;- Replaces usage of Assert.assertThat (that is deprecated) with the MatcherAssert.assertThat">
+      <created>1591681236305</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1591681236305</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Skips checkstyle during site generation">
+      <created>1591684848046</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1591684848046</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Removes the method: setDefaultValueSetEnabled">
+      <created>1591686695993</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1591686695993</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Replaces libraries asserts with AssertJ">
+      <created>1591974764721</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1591974764721</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Fixes failing test">
+      <created>1591976543027</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1591976543027</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Makes the dependencies in the same order as master">
+      <created>1592204045954</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1592204045954</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Minor: restores a removed line">
+      <created>1592204820106</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1592204820106</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Removes duplicated slf4j-api dependency">
+      <created>1593438183328</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1593438183328</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Moves out the TransformerFile">
+      <created>1595771816595</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1595771816595</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Provides a documentation on how to use the library within Kotlin projects">
+      <created>1596113803512</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1596113803512</updated>
+    </task>
+    <task id="LOCAL-00017" summary="minor change">
+      <created>1596113934861</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1596113934861</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Moves the kotlin page outside the &quot;transformer&quot; subpage as it refers to all features">
+      <created>1596114826146</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1596114826146</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Changes the release version">
+      <created>1596114964752</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1596114964752</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Minor: variable name refactoring" />
+    <MESSAGE value="Removes useless plugin" />
+    <MESSAGE value="Refactors the transformer method to improve the readibility" />
+    <MESSAGE value="[travis skip] Updates changelog files with the new dependency version" />
+    <MESSAGE value="Updates changelog files with the new dependency version" />
+    <MESSAGE value="- Adds a specific exception in case something goes wront during the Transformer generation&#10;- Minor improvements" />
+    <MESSAGE value="- Deprecated the method: setDefaultValueSetEnabled and replaces it with: setDefaultValueForMissingPrimitiveField&#10;- Replaces usage of Assert.assertThat (that is deprecated) with the MatcherAssert.assertThat" />
+    <MESSAGE value="Skips checkstyle during site generation" />
+    <MESSAGE value="Removes the method: setDefaultValueSetEnabled" />
+    <MESSAGE value="Replaces libraries asserts with AssertJ" />
+    <MESSAGE value="Fixes failing test" />
+    <MESSAGE value="Makes the dependencies in the same order as master" />
+    <MESSAGE value="Minor: restores a removed line" />
+    <MESSAGE value="Removes duplicated slf4j-api dependency" />
+    <MESSAGE value="Moves out the TransformerFile" />
+    <MESSAGE value="Provides a documentation on how to use the library within Kotlin projects" />
+    <MESSAGE value="minor change" />
+    <MESSAGE value="Moves the kotlin page outside the &quot;transformer&quot; subpage as it refers to all features" />
+    <MESSAGE value="Changes the release version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes the release version" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1093" y="403" key="#com.intellij.ide.util.MemberChooser" timestamp="1595405898917">
+      <screen x="0" y="23" width="2560" height="1312" />
+    </state>
+    <state x="1093" y="403" key="#com.intellij.ide.util.MemberChooser/0.23.2560.1312@0.23.2560.1312" timestamp="1595405898917" />
+    <state x="1093" y="405" key="#com.intellij.ide.util.MemberChooser/0.23.2560.1318@0.23.2560.1318" timestamp="1590755256696" />
+    <state x="1093" y="406" key="#com.intellij.ide.util.MemberChooser/0.23.2560.1321@0.23.2560.1321" timestamp="1591680649384" />
+    <state x="813" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1590644375389">
+      <screen x="0" y="23" width="2560" height="1317" />
+    </state>
+    <state x="813" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.23.2560.1317@0.23.2560.1317" timestamp="1590644375389" />
+    <state x="1018" y="435" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1588856840131">
+      <screen x="0" y="23" width="2560" height="1317" />
+    </state>
+    <state x="1018" y="435" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.2560.1317@0.23.2560.1317" timestamp="1588856840131" />
+    <state x="1043" y="396" key="#xdebugger.evaluate" timestamp="1594393861841">
+      <screen x="0" y="23" width="2560" height="1318" />
+    </state>
+    <state x="1043" y="396" key="#xdebugger.evaluate/0.23.2560.1318@0.23.2560.1318" timestamp="1594393861841" />
+    <state x="1043" y="397" key="#xdebugger.evaluate/0.23.2560.1321@0.23.2560.1321" timestamp="1592224482041" />
+    <state x="1031" y="521" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1596113729221">
+      <screen x="0" y="23" width="2560" height="1312" />
+    </state>
+    <state x="1031" y="520" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.2560.1310@0.23.2560.1310" timestamp="1595997696687" />
+    <state x="1031" y="521" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.2560.1312@0.23.2560.1312" timestamp="1596113729221" />
+    <state x="1031" y="522" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.2560.1314@0.23.2560.1314" timestamp="1593436831989" />
+    <state x="1031" y="523" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.2560.1317@0.23.2560.1317" timestamp="1587737675701" />
+    <state x="794" y="240" key="CommitChangelistDialog2" timestamp="1596114964489">
+      <screen x="0" y="23" width="2560" height="1318" />
+    </state>
+    <state x="794" y="237" key="CommitChangelistDialog2/0.0.2560.1440@0.0.2560.1440" timestamp="1595771816314" />
+    <state x="794" y="239" key="CommitChangelistDialog2/0.23.2560.1310@0.23.2560.1310" timestamp="1595403624672" />
+    <state x="794" y="239" key="CommitChangelistDialog2/0.23.2560.1312@0.23.2560.1312" timestamp="1596113934603" />
+    <state x="794" y="240" key="CommitChangelistDialog2/0.23.2560.1314@0.23.2560.1314" timestamp="1593438183062" />
+    <state x="794" y="240" key="CommitChangelistDialog2/0.23.2560.1317@0.23.2560.1317" timestamp="1589779806530" />
+    <state x="794" y="240" key="CommitChangelistDialog2/0.23.2560.1318@0.23.2560.1318" timestamp="1596114964489" />
+    <state x="794" y="241" key="CommitChangelistDialog2/0.23.2560.1321@0.23.2560.1321" timestamp="1592204819805" />
+    <state x="100" y="108" width="2360" height="1223" key="DiffContextDialog" timestamp="1595929551241">
+      <screen x="0" y="23" width="2560" height="1310" />
+    </state>
+    <state x="100" y="108" width="2360" height="1223" key="DiffContextDialog/0.23.2560.1310@0.23.2560.1310" timestamp="1595929551241" />
+    <state x="100" y="108" width="2360" height="1224" key="DiffContextDialog/0.23.2560.1312@0.23.2560.1312" timestamp="1595404490293" />
+    <state x="99" y="122" width="2360" height="1121" key="DiffContextDialog/0.23.2560.1317@0.23.2560.1317" timestamp="1589381926467" />
+    <state x="100" y="122" width="2360" height="1124" key="DiffContextDialog/0.23.2560.1321@0.23.2560.1321" timestamp="1592205144078" />
+    <state width="2518" height="366" key="GridCell.Tab.0.bottom" timestamp="1594394378561">
+      <screen x="0" y="23" width="2560" height="1318" />
+    </state>
+    <state width="1236" height="411" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1589210129395" />
+    <state width="2518" height="366" key="GridCell.Tab.0.bottom/0.23.2560.1310@0.23.2560.1310" timestamp="1594116848693" />
+    <state width="1236" height="411" key="GridCell.Tab.0.bottom/0.23.2560.1317@0.23.2560.1317" timestamp="1589213252409" />
+    <state width="2518" height="366" key="GridCell.Tab.0.bottom/0.23.2560.1318@0.23.2560.1318" timestamp="1594394378561" />
+    <state width="2518" height="364" key="GridCell.Tab.0.bottom/0.23.2560.1321@0.23.2560.1321" timestamp="1592237058497" />
+    <state width="2518" height="366" key="GridCell.Tab.0.center" timestamp="1594394378560">
+      <screen x="0" y="23" width="2560" height="1318" />
+    </state>
+    <state width="1236" height="411" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1589210129393" />
+    <state width="2518" height="366" key="GridCell.Tab.0.center/0.23.2560.1310@0.23.2560.1310" timestamp="1594116848692" />
+    <state width="1236" height="411" key="GridCell.Tab.0.center/0.23.2560.1317@0.23.2560.1317" timestamp="1589213252408" />
+    <state width="2518" height="366" key="GridCell.Tab.0.center/0.23.2560.1318@0.23.2560.1318" timestamp="1594394378560" />
+    <state width="2518" height="364" key="GridCell.Tab.0.center/0.23.2560.1321@0.23.2560.1321" timestamp="1592237058497" />
+    <state width="2518" height="366" key="GridCell.Tab.0.left" timestamp="1594394378560">
+      <screen x="0" y="23" width="2560" height="1318" />
+    </state>
+    <state width="1236" height="411" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1589210129391" />
+    <state width="2518" height="366" key="GridCell.Tab.0.left/0.23.2560.1310@0.23.2560.1310" timestamp="1594116848691" />
+    <state width="1236" height="411" key="GridCell.Tab.0.left/0.23.2560.1317@0.23.2560.1317" timestamp="1589213252407" />
+    <state width="2518" height="366" key="GridCell.Tab.0.left/0.23.2560.1318@0.23.2560.1318" timestamp="1594394378560" />
+    <state width="2518" height="364" key="GridCell.Tab.0.left/0.23.2560.1321@0.23.2560.1321" timestamp="1592237058496" />
+    <state width="2518" height="366" key="GridCell.Tab.0.right" timestamp="1594394378561">
+      <screen x="0" y="23" width="2560" height="1318" />
+    </state>
+    <state width="1236" height="411" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1589210129394" />
+    <state width="2518" height="366" key="GridCell.Tab.0.right/0.23.2560.1310@0.23.2560.1310" timestamp="1594116848692" />
+    <state width="1236" height="411" key="GridCell.Tab.0.right/0.23.2560.1317@0.23.2560.1317" timestamp="1589213252408" />
+    <state width="2518" height="366" key="GridCell.Tab.0.right/0.23.2560.1318@0.23.2560.1318" timestamp="1594394378561" />
+    <state width="2518" height="364" key="GridCell.Tab.0.right/0.23.2560.1321@0.23.2560.1321" timestamp="1592237058497" />
+    <state width="2518" height="366" key="GridCell.Tab.1.bottom" timestamp="1594394378562">
+      <screen x="0" y="23" width="2560" height="1318" />
+    </state>
+    <state width="2518" height="366" key="GridCell.Tab.1.bottom/0.23.2560.1310@0.23.2560.1310" timestamp="1594116848695" />
+    <state width="2518" height="366" key="GridCell.Tab.1.bottom/0.23.2560.1318@0.23.2560.1318" timestamp="1594394378562" />
+    <state width="2518" height="403" key="GridCell.Tab.1.bottom/0.23.2560.1321@0.23.2560.1321" timestamp="1592237058490" />
+    <state width="2518" height="366" key="GridCell.Tab.1.center" timestamp="1594394378562">
+      <screen x="0" y="23" width="2560" height="1318" />
+    </state>
+    <state width="2518" height="366" key="GridCell.Tab.1.center/0.23.2560.1310@0.23.2560.1310" timestamp="1594116848694" />
+    <state width="2518" height="366" key="GridCell.Tab.1.center/0.23.2560.1318@0.23.2560.1318" timestamp="1594394378562" />
+    <state width="2518" height="403" key="GridCell.Tab.1.center/0.23.2560.1321@0.23.2560.1321" timestamp="1592237058489" />
+    <state width="2518" height="366" key="GridCell.Tab.1.left" timestamp="1594394378561">
+      <screen x="0" y="23" width="2560" height="1318" />
+    </state>
+    <state width="2518" height="366" key="GridCell.Tab.1.left/0.23.2560.1310@0.23.2560.1310" timestamp="1594116848693" />
+    <state width="2518" height="366" key="GridCell.Tab.1.left/0.23.2560.1318@0.23.2560.1318" timestamp="1594394378561" />
+    <state width="2518" height="403" key="GridCell.Tab.1.left/0.23.2560.1321@0.23.2560.1321" timestamp="1592237058489" />
+    <state width="2518" height="366" key="GridCell.Tab.1.right" timestamp="1594394378562">
+      <screen x="0" y="23" width="2560" height="1318" />
+    </state>
+    <state width="2518" height="366" key="GridCell.Tab.1.right/0.23.2560.1310@0.23.2560.1310" timestamp="1594116848694" />
+    <state width="2518" height="366" key="GridCell.Tab.1.right/0.23.2560.1318@0.23.2560.1318" timestamp="1594394378562" />
+    <state width="2518" height="403" key="GridCell.Tab.1.right/0.23.2560.1321@0.23.2560.1321" timestamp="1592237058489" />
+    <state x="84" y="91" key="MergeDialog" timestamp="1592203850022">
+      <screen x="0" y="23" width="2560" height="1321" />
+    </state>
+    <state x="84" y="91" key="MergeDialog/0.23.2560.1317@0.23.2560.1317" timestamp="1589201293750" />
+    <state x="84" y="91" key="MergeDialog/0.23.2560.1321@0.23.2560.1321" timestamp="1592203850022" />
+    <state x="1164" y="557" width="661" height="343" key="MultipleFileMergeDialog" timestamp="1592203850040">
+      <screen x="0" y="23" width="2560" height="1321" />
+    </state>
+    <state x="1164" y="555" width="661" height="343" key="MultipleFileMergeDialog/0.23.2560.1317@0.23.2560.1317" timestamp="1589201293767" />
+    <state x="1164" y="557" width="623" height="418" key="MultipleFileMergeDialog/0.23.2560.1321@0.23.2560.1321" timestamp="1592203850040" />
+    <state x="955" y="402" key="RollbackChangesDialog" timestamp="1591972691255">
+      <screen x="0" y="23" width="2560" height="1321" />
+    </state>
+    <state x="955" y="402" key="RollbackChangesDialog/0.23.2560.1321@0.23.2560.1321" timestamp="1591972691255" />
+    <state x="789" y="323" width="1158" height="827" key="SettingsEditor" timestamp="1596011082333">
+      <screen x="0" y="23" width="2560" height="1310" />
+    </state>
+    <state x="789" y="323" key="SettingsEditor/0.23.2560.1310@0.23.2560.1310" timestamp="1596011082333" />
+    <state x="789" y="325" width="1158" height="827" key="SettingsEditor/0.23.2560.1317@0.23.2560.1317" timestamp="1589209913503" />
+    <state x="789" y="326" key="SettingsEditor/0.23.2560.1321@0.23.2560.1321" timestamp="1592227355931" />
+    <state x="880" y="408" key="Vcs.Push.Dialog.v2" timestamp="1596114966338">
+      <screen x="0" y="23" width="2560" height="1318" />
+    </state>
+    <state x="880" y="421" key="Vcs.Push.Dialog.v2/0.0.2560.1440@0.0.2560.1440" timestamp="1595771821885" />
+    <state x="880" y="407" key="Vcs.Push.Dialog.v2/0.23.2560.1312@0.23.2560.1312" timestamp="1596113936271" />
+    <state x="880" y="407" key="Vcs.Push.Dialog.v2/0.23.2560.1314@0.23.2560.1314" timestamp="1593438185341" />
+    <state x="880" y="408" key="Vcs.Push.Dialog.v2/0.23.2560.1317@0.23.2560.1317" timestamp="1589779809870" />
+    <state x="880" y="408" key="Vcs.Push.Dialog.v2/0.23.2560.1318@0.23.2560.1318" timestamp="1596114966338" />
+    <state x="880" y="409" key="Vcs.Push.Dialog.v2/0.23.2560.1321@0.23.2560.1321" timestamp="1592204821731" />
+    <state x="561" y="461" width="362" height="518" key="VcsDiffUtil.ChangesDialog" timestamp="1595403948390">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="561" y="461" width="362" height="518" key="VcsDiffUtil.ChangesDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1595403948390" />
+    <state x="100" y="123" width="2360" height="1110" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1595403840705">
+      <screen x="0" y="23" width="2560" height="1312" />
+    </state>
+    <state x="100" y="123" width="2360" height="1110" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.23.2560.1310@0.23.2560.1310" timestamp="1595403490573" />
+    <state x="100" y="123" width="2360" height="1110" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.23.2560.1312@0.23.2560.1312" timestamp="1595403840705" />
+    <state x="100" y="120" width="2360" height="1117" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595770727184">
+      <screen x="0" y="23" width="2560" height="1310" />
+    </state>
+    <state x="100" y="120" width="2360" height="1117" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.2560.1310@0.23.2560.1310" timestamp="1595770727184" />
+    <state x="100" y="121" width="2360" height="1121" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.2560.1317@0.23.2560.1317" timestamp="1590139891426" />
+    <state x="100" y="121" width="2360" height="1123" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.2560.1318@0.23.2560.1318" timestamp="1595421423948" />
+    <state x="100" y="121" width="2360" height="1125" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.2560.1321@0.23.2560.1321" timestamp="1592225505248" />
+    <state x="1083" y="604" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1591681137551">
+      <screen x="0" y="23" width="2560" height="1321" />
+    </state>
+    <state x="1083" y="602" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.2560.1317@0.23.2560.1317" timestamp="1588829142804" />
+    <state x="1083" y="604" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.2560.1321@0.23.2560.1321" timestamp="1591681137551" />
+    <state x="806" y="427" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1591974896762">
+      <screen x="0" y="23" width="2560" height="1321" />
+    </state>
+    <state x="806" y="427" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.2560.1321@0.23.2560.1321" timestamp="1591974896762" />
+    <state x="960" y="437" width="900" height="601" key="find.popup" timestamp="1596111916092">
+      <screen x="0" y="23" width="2560" height="1312" />
+    </state>
+    <state x="960" y="456" width="818" height="589" key="find.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1591964733755" />
+    <state x="960" y="437" width="900" height="601" key="find.popup/0.23.2560.1312@0.23.2560.1312" timestamp="1596111916092" />
+    <state x="960" y="438" width="900" height="601" key="find.popup/0.23.2560.1314@0.23.2560.1314" timestamp="1593437950374" />
+    <state x="960" y="440" width="972" height="538" key="find.popup/0.23.2560.1317@0.23.2560.1317" timestamp="1590644365775" />
+    <state x="960" y="440" width="972" height="539" key="find.popup/0.23.2560.1318@0.23.2560.1318" timestamp="1590754770318" />
+    <state x="960" y="440" width="900" height="604" key="find.popup/0.23.2560.1321@0.23.2560.1321" timestamp="1591972162643" />
+    <state x="858" y="398" key="git4idea.branch.GitSmartOperationDialog" timestamp="1595403221440">
+      <screen x="0" y="23" width="2560" height="1310" />
+    </state>
+    <state x="858" y="398" key="git4idea.branch.GitSmartOperationDialog/0.23.2560.1310@0.23.2560.1310" timestamp="1595403221440" />
+    <state width="600" height="428" key="javadoc.popup" timestamp="1592227371759">
+      <screen x="0" y="23" width="2560" height="1321" />
+    </state>
+    <state width="600" height="428" key="javadoc.popup/0.23.2560.1321@0.23.2560.1321" timestamp="1592227371759" />
+    <state x="945" y="322" key="run.anything.popup" timestamp="1591954222414">
+      <screen x="0" y="23" width="2560" height="1321" />
+    </state>
+    <state x="945" y="322" key="run.anything.popup/0.23.2560.1321@0.23.2560.1321" timestamp="1591954222414" />
+    <state x="945" y="321" width="670" height="666" key="search.everywhere.popup" timestamp="1595997666096">
+      <screen x="0" y="23" width="2560" height="1310" />
+    </state>
+    <state x="945" y="328" width="670" height="731" key="search.everywhere.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1593088155826" />
+    <state x="945" y="321" width="670" height="666" key="search.everywhere.popup/0.23.2560.1310@0.23.2560.1310" timestamp="1595997666096" />
+    <state x="945" y="321" width="670" height="668" key="search.everywhere.popup/0.23.2560.1312@0.23.2560.1312" timestamp="1595948328816" />
+    <state x="945" y="322" width="670" height="668" key="search.everywhere.popup/0.23.2560.1314@0.23.2560.1314" timestamp="1593784172811" />
+    <state x="945" y="323" width="670" height="669" key="search.everywhere.popup/0.23.2560.1317@0.23.2560.1317" timestamp="1590644319386" />
+    <state x="945" y="323" width="670" height="670" key="search.everywhere.popup/0.23.2560.1318@0.23.2560.1318" timestamp="1594393657628" />
+    <state x="945" y="324" width="670" height="671" key="search.everywhere.popup/0.23.2560.1321@0.23.2560.1321" timestamp="1592224178777" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bull-transformer-generator/transformer-generator-core/src/main/java/com/hotels/beans/generator/core/mapping/BeanProperty.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bull-bean-transformer/src/main/java/com/hotels/beans/BeanUtils.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/bean_utils_library_parent$ClassUtilsTest.ic" NAME="ClassUtilsTest Coverage Results" MODIFIED="1589209809957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.hotels.transformer.utils.*</FILTER>
+    </SUITE>
+  </component>
+</project>

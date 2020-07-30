@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReflectionUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Common</a> &gt; <a href="index.source.html" class="el_package">com.hotels.transformer.utils</a> &gt; <span class="el_source">ReflectionUtils.java</span></div><h1>ReflectionUtils.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019-2020 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.transformer.utils;
+
+import static java.lang.invoke.LambdaMetafactory.metafactory;
+import static java.lang.invoke.MethodHandles.lookup;
+import static java.lang.invoke.MethodHandles.privateLookupIn;
+import static java.lang.invoke.MethodType.methodType;
+import static java.lang.reflect.Modifier.isPublic;
+
+import static org.apache.commons.lang3.ArrayUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.capitalize;
+
+import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.transformer.constant.MethodPrefix.GET;
+import static com.hotels.transformer.constant.MethodPrefix.IS;
+import static com.hotels.transformer.constant.MethodPrefix.SET;
+
+import java.lang.annotation.Annotation;
+import java.lang.invoke.CallSite;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.UndeclaredThrowableException;
+import java.lang.reflect.WildcardType;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
+
+import com.hotels.transformer.cache.CacheManager;
+import com.hotels.transformer.error.InvalidBeanException;
+import com.hotels.transformer.error.MissingFieldException;
+import com.hotels.transformer.error.MissingMethodException;
+import com.hotels.transformer.model.EmptyValue;
+import com.hotels.transformer.model.ItemType;
+import com.hotels.transformer.model.MapElemType;
+import com.hotels.transformer.model.MapType;
+
+/**
+ * Reflection class utils.
+ */
+<span class="fc" id="L62">public final class ReflectionUtils {</span>
+    /**
+     * boolean type name.
+     */
+    private static final String BOOLEAN = &quot;boolean&quot;;
+
+    /**
+     * Regex for identify setter methods.
+     */
+    private static final String SETTER_METHOD_NAME_REGEX = &quot;^set[A-Z].*&quot;;
+
+    /**
+     * Regex for identify getter methods.
+     */
+    private static final String GETTER_METHOD_NAME_REGEX = &quot;^(get|is)[A-Z].*&quot;;
+
+    /**
+     * Regex for identify dots into a string.
+     */
+    private static final String DOT_SPLIT_REGEX = &quot;\\.&quot;;
+
+    /**
+     * Method Handles lookup.
+     */
+<span class="fc" id="L86">    private static final MethodHandles.Lookup METHOD_HANDLES_LOOKUP = lookup();</span>
+
+    /**
+     * CacheManager instance {@link CacheManager}.
+     */
+<span class="fc" id="L91">    private static final CacheManager CACHE_MANAGER = getCacheManager(&quot;reflectionUtils&quot;);</span>
+
+    /**
+     * Invokes the method.
+     * @param method the method to be invoked.
+     * @param target the class on which invoke the method
+     * @param args the method parameters
+     * @return the method result
+     */
+    public Object invokeMethod(final Method method, final Object target, final Object... args) {
+        try {
+<span class="fc" id="L102">            return method.invoke(target, args);</span>
+<span class="fc" id="L103">        } catch (final Exception e) {</span>
+<span class="fc" id="L104">            throw handleReflectionException(e);</span>
+        }
+    }
+
+    /**
+     * Checks if the given method is a setter.
+     * @param method the method to be checked
+     * @return true if the method is a setter method, false otherwise
+     */
+    public boolean isSetter(final Method method) {
+<span class="fc" id="L114">        final String cacheKey = &quot;IsSetter-&quot; + method.getDeclaringClass().getName() + '-' + method.getName();</span>
+<span class="fc" id="L115">        return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">            boolean res = isPublic(method.getModifiers())</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">                    &amp;&amp; method.getName().matches(SETTER_METHOD_NAME_REGEX)</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">                    &amp;&amp; method.getParameterTypes().length == 1</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">                    &amp;&amp; method.getReturnType().equals(void.class);</span>
+<span class="fc" id="L120">            CACHE_MANAGER.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L121">            return res;</span>
+        });
+    }
+
+    /**
+     * Checks if the given method is a getter.
+     * @param method the method to be checked
+     * @return true if the method is a getter method, false otherwise
+     */
+    public boolean isGetter(final Method method) {
+<span class="fc" id="L131">        final String cacheKey = &quot;IsGetter-&quot; + method.getDeclaringClass().getName() + '-' + method.getName();</span>
+<span class="fc" id="L132">        return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -&gt; {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            boolean res = isPublic(method.getModifiers())</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">                    &amp;&amp; method.getName().matches(GETTER_METHOD_NAME_REGEX)</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">                    &amp;&amp; method.getParameterTypes().length == 0</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">                    &amp;&amp; !method.getReturnType().equals(void.class);</span>
+<span class="fc" id="L137">            CACHE_MANAGER.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L138">            return res;</span>
+        });
+    }
+
+    /**
+     * Gets the value of a field.
+     * @param target the field's class
+     * @param field the field {@link Field}
+     * @return the field value
+     */
+    public Object getFieldValue(final Object target, final Field field) {
+<span class="fc" id="L149">        return getFieldValue(target, field.getName(), field.getType());</span>
+    }
+
+    /**
+     * Gets the value of a field through getter method.
+     * @param target the field's class
+     * @param fieldName the field name
+     * @param fieldType the field type
+     * @return the field value
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public Object getFieldValue(final Object target, final String fieldName, final Class&lt;?&gt; fieldType) {
+<span class="fc" id="L161">        Object fieldValue = getRealTarget(target);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        for (String currFieldName : fieldName.split(DOT_SPLIT_REGEX)) {</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">            if (fieldValue == null) {</span>
+<span class="fc" id="L164">                break;</span>
+            }
+            try {
+<span class="fc" id="L167">                fieldValue = getGetterMethodFunction(fieldValue.getClass(), currFieldName).apply(fieldValue);</span>
+<span class="fc" id="L168">            } catch (final ClassCastException | MissingMethodException | InvalidBeanException e) {</span>
+<span class="fc" id="L169">                fieldValue = getFieldValueDirectAccess(fieldValue, currFieldName);</span>
+<span class="fc" id="L170">            } catch (final MissingFieldException e) {</span>
+<span class="nc" id="L171">                fieldValue = invokeMethod(getGetterMethod(fieldValue.getClass(), currFieldName, fieldType), fieldValue);</span>
+<span class="fc" id="L172">            }</span>
+        }
+<span class="fc" id="L174">        return fieldValue;</span>
+    }
+
+    /**
+     * Returns the getter method for the given field.
+     * @param fieldClass the field's class
+     * @param fieldName the field name
+     * @param fieldType the field type
+     * @return the getter method
+     */
+    private Method getGetterMethod(final Class&lt;?&gt; fieldClass, final String fieldName, final Class&lt;?&gt; fieldType) {
+<span class="fc" id="L185">        final String cacheKey = &quot;GetterMethod-&quot; + fieldClass.getName() + '-' + fieldName;</span>
+<span class="fc" id="L186">        return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -&gt; {</span>
+            try {
+<span class="fc" id="L188">                Method method = fieldClass.getMethod(getGetterMethodPrefix(fieldType) + capitalize(fieldName));</span>
+<span class="fc" id="L189">                method.setAccessible(true);</span>
+<span class="fc" id="L190">                CACHE_MANAGER.cacheObject(cacheKey, method);</span>
+<span class="fc" id="L191">                return method;</span>
+<span class="fc" id="L192">            } catch (NoSuchMethodException e) {</span>
+<span class="fc" id="L193">                throw new MissingFieldException(fieldClass.getName() + &quot; hasn't a field called: &quot; + fieldName + &quot;.&quot;);</span>
+            }
+        });
+    }
+
+    /**
+     * Returns the getter method for the given field.
+     * @param fieldClass the field's class
+     * @param fieldName the field name
+     * @return the getter method
+     */
+    private Function getGetterMethodFunction(final Class&lt;?&gt; fieldClass, final String fieldName) {
+<span class="fc" id="L205">        final String cacheKey = &quot;getGetterMethodFunction-&quot; + fieldClass.getName() + '-' + fieldName;</span>
+<span class="fc" id="L206">        return CACHE_MANAGER.getFromCache(cacheKey, Function.class).orElseGet(() -&gt; {</span>
+            Function function;
+            try {
+<span class="fc" id="L209">                Class&lt;?&gt; fieldType = getDeclaredFieldType(fieldName, fieldClass);</span>
+<span class="fc" id="L210">                MethodHandles.Lookup privateLookupIn = privateLookupIn(fieldClass, METHOD_HANDLES_LOOKUP);</span>
+<span class="fc" id="L211">                CallSite site = metafactory(privateLookupIn,</span>
+                        &quot;apply&quot;,
+<span class="fc" id="L213">                        methodType(Function.class),</span>
+<span class="fc" id="L214">                        methodType(Object.class, Object.class),</span>
+<span class="fc" id="L215">                        privateLookupIn.findVirtual(fieldClass, getGetterMethodPrefix(fieldType) + capitalize(fieldName), methodType(fieldType)),</span>
+<span class="fc" id="L216">                        methodType(fieldType, fieldClass));</span>
+<span class="fc" id="L217">                function = (Function) site.getTarget().invokeExact();</span>
+<span class="fc" id="L218">            } catch (NoSuchFieldException | MissingFieldException e) {</span>
+<span class="fc" id="L219">                throw new MissingFieldException(e.getMessage());</span>
+<span class="fc" id="L220">            } catch (NoSuchMethodException e) {</span>
+<span class="fc" id="L221">                throw new MissingMethodException();</span>
+<span class="fc" id="L222">            } catch (Throwable e) {</span>
+<span class="fc" id="L223">                throw new InvalidBeanException(e.getMessage(), e);</span>
+<span class="fc" id="L224">            }</span>
+<span class="fc" id="L225">            CACHE_MANAGER.cacheObject(cacheKey, function);</span>
+<span class="fc" id="L226">            return function;</span>
+        });
+    }
+
+    /**
+     * Returns (if existing) the field's given type annotation.
+     * @param field the field that should have the annotation
+     * @param annotationClazz the annotation type
+     * @param &lt;A&gt; the annotation type object
+     * @return the annotation
+     */
+    public &lt;A extends Annotation&gt; A getFieldAnnotation(final Field field, final Class&lt;A&gt; annotationClazz) {
+<span class="fc" id="L238">        final String cacheKey = &quot;FieldAnnotation-&quot; + field.getDeclaringClass().getName() + &quot;-&quot; + field.getName() + &quot;-&quot; + annotationClazz.getName();</span>
+<span class="fc" id="L239">        return getAnnotation(field, annotationClazz, cacheKey);</span>
+    }
+
+    /**
+     * Returns (if existing) the constructor parameter's given type annotation.
+     * @param parameter the field that should have the annotation
+     * @param annotationClazz the annotation type
+     * @param declaringClassName the class name that contains the parameter
+     * @param &lt;A&gt; the annotation type object
+     * @return the annotation
+     */
+    public &lt;A extends Annotation&gt; A getParameterAnnotation(final Parameter parameter, final Class&lt;A&gt; annotationClazz, final String declaringClassName) {
+<span class="fc" id="L251">        final String cacheKey = &quot;ParameterAnnotation-&quot; + declaringClassName + &quot;-&quot; + parameter.getName() + &quot;-&quot; + annotationClazz.getName();</span>
+<span class="fc" id="L252">        return getAnnotation(parameter, annotationClazz, cacheKey);</span>
+    }
+
+    /**
+     * Returns (if existing) the element's given type annotation.
+     * @param element the element that should have the annotation
+     * @param annotationClazz the annotation type
+     * @param cacheKey the cache key to use
+     * @param &lt;A&gt; the annotation type object
+     * @return the annotation
+     */
+    private &lt;A extends Annotation&gt; A getAnnotation(final AnnotatedElement element, final Class&lt;A&gt; annotationClazz, final String cacheKey) {
+<span class="fc" id="L264">        return CACHE_MANAGER.getFromCache(cacheKey, annotationClazz).orElseGet(() -&gt; {</span>
+<span class="fc" id="L265">            A annotation = null;</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">            if (element.isAnnotationPresent(annotationClazz)) {</span>
+<span class="fc" id="L267">                annotation = element.getAnnotation(annotationClazz);</span>
+            }
+<span class="fc" id="L269">            CACHE_MANAGER.cacheObject(cacheKey, annotation);</span>
+<span class="fc" id="L270">            return annotation;</span>
+        });
+    }
+
+    /**
+     * Gets the value of a field.
+     * @param target the field's class
+     * @param fieldName the field name
+     * @return the field value
+     */
+    private Object getFieldValueDirectAccess(final Object target, final String fieldName) {
+        try {
+<span class="fc" id="L282">            Field field = getDeclaredField(fieldName, target.getClass());</span>
+<span class="fc" id="L283">            return field.get(target);</span>
+<span class="fc" id="L284">        } catch (MissingFieldException e) {</span>
+<span class="fc" id="L285">            throw e;</span>
+<span class="fc" id="L286">        } catch (final Exception e) {</span>
+<span class="fc" id="L287">            throw handleReflectionException(e);</span>
+        }
+    }
+
+    /**
+     * Return the field of the given class.
+     * @param fieldName the name of the field to retrieve.
+     * @param targetClass the field's class
+     * @return the field corresponding to the given name.
+     */
+    private Field getClassDeclaredField(final String fieldName, final Class&lt;?&gt; targetClass) {
+<span class="fc" id="L298">        final String cacheKey = &quot;ClassDeclaredField-&quot; + targetClass.getName() + &quot;-&quot; + fieldName;</span>
+<span class="fc" id="L299">        return CACHE_MANAGER.getFromCache(cacheKey, Field.class).orElseGet(() -&gt; {</span>
+            Field field;
+            try {
+<span class="fc" id="L302">                field = targetClass.getDeclaredField(fieldName);</span>
+<span class="fc" id="L303">                field.setAccessible(true);</span>
+<span class="fc" id="L304">            } catch (NoSuchFieldException e) {</span>
+<span class="fc" id="L305">                Class&lt;?&gt; superclass = targetClass.getSuperclass();</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">                if (!superclass.equals(Object.class)) {</span>
+<span class="fc" id="L307">                    field = getClassDeclaredField(fieldName, superclass);</span>
+                } else {
+<span class="fc" id="L309">                    throw new MissingFieldException(targetClass.getName() + &quot; does not contain field: &quot; + fieldName);</span>
+                }
+<span class="fc" id="L311">            } catch (final Exception e) {</span>
+<span class="fc" id="L312">                throw handleReflectionException(e);</span>
+<span class="fc" id="L313">            }</span>
+<span class="fc" id="L314">            CACHE_MANAGER.cacheObject(cacheKey, field);</span>
+<span class="fc" id="L315">            return field;</span>
+        });
+    }
+
+    /**
+     * Return the field of the given class.
+     * @param fieldName the name of the field to retrieve.
+     * @param targetClass the field's class
+     * @return the field corresponding to the given name.
+     */
+    public Field getDeclaredField(final String fieldName, final Class&lt;?&gt; targetClass) {
+<span class="fc" id="L326">        final String cacheKey = &quot;ClassDeclaredFieldDotNotation-&quot; + targetClass.getName() + &quot;-&quot; + fieldName;</span>
+<span class="fc" id="L327">        return CACHE_MANAGER.getFromCache(cacheKey, Field.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L328">            Field field = null;</span>
+<span class="fc" id="L329">            Class&lt;?&gt; currentClass = targetClass;</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">            for (String currFieldName : fieldName.split(DOT_SPLIT_REGEX)) {</span>
+<span class="fc" id="L331">                field = getClassDeclaredField(currFieldName, currentClass);</span>
+<span class="fc" id="L332">                currentClass = field.getType();</span>
+            }
+<span class="fc" id="L334">            CACHE_MANAGER.cacheObject(cacheKey, field);</span>
+<span class="fc" id="L335">            return field;</span>
+        });
+    }
+
+    /**
+     * Return the class of the given field.
+     * @param fieldName the name of the filed to retrieve.
+     * @param clazz the field's class
+     * @return the class field of the given field.
+     */
+    public Class&lt;?&gt; getDeclaredFieldType(final String fieldName, final Class&lt;?&gt; clazz) {
+<span class="fc" id="L346">        final String cacheKey = &quot;FieldType-&quot; + clazz.getName() + &quot;-&quot; + fieldName;</span>
+<span class="fc" id="L347">        return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L348">            Class&lt;?&gt; fieldType = getDeclaredField(fieldName, clazz).getType();</span>
+<span class="fc" id="L349">            CACHE_MANAGER.cacheObject(cacheKey, fieldType);</span>
+<span class="fc" id="L350">            return fieldType;</span>
+        });
+    }
+
+    /**
+     * Set the value of a field.
+     * @param target the field's class
+     * @param fieldName the field name to set
+     * @param fieldValue the value to set
+     */
+    public void setFieldValue(final Object target, final String fieldName, final Object fieldValue) {
+<span class="fc" id="L361">        setFieldValue(target, getDeclaredField(fieldName, target.getClass()), fieldValue);</span>
+<span class="fc" id="L362">    }</span>
+
+    /**
+     * Set the value of a field.
+     * @param target the field's class
+     * @param field the field to set
+     * @param fieldValue the value to set
+     */
+    public void setFieldValue(final Object target, final Field field, final Object fieldValue) {
+        try {
+<span class="fc" id="L372">            setFieldValueWithoutSetterMethod(target, field, fieldValue);</span>
+<span class="fc" id="L373">        } catch (final IllegalArgumentException e) {</span>
+<span class="fc" id="L374">            throw e;</span>
+<span class="fc" id="L375">        } catch (final Exception e) {</span>
+<span class="fc" id="L376">            invokeMethod(getSetterMethodForField(target.getClass(), field.getName(), field.getType()), target, fieldValue);</span>
+<span class="fc" id="L377">        }</span>
+<span class="fc" id="L378">    }</span>
+
+    /**
+     * Set the value of a field through {@link Field#set} method.
+     * @param target the field's class
+     * @param field the field to set
+     * @param fieldValue the value to set
+     */
+    protected void setFieldValueWithoutSetterMethod(final Object target, final Field field, final Object fieldValue) {
+        try {
+<span class="fc" id="L388">            field.set(target, fieldValue);</span>
+<span class="fc" id="L389">        } catch (final Exception e) {</span>
+<span class="fc" id="L390">            throw handleReflectionException(e);</span>
+<span class="fc" id="L391">        }</span>
+<span class="fc" id="L392">    }</span>
+
+    /**
+     * If an object is encapsulated into a type: {@link Optional} the contained object is returned.
+     * @param target the object to check
+     * @return the encapsulated object (if any)
+     */
+    private Object getRealTarget(final Object target) {
+<span class="fc" id="L400">        AtomicReference&lt;Object&gt; realTarget = new AtomicReference&lt;&gt;(target);</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">        if (isOptionalType(target)) {</span>
+<span class="fc" id="L402">            ((Optional&lt;?&gt;) target).ifPresent(realTarget::set);</span>
+        }
+<span class="fc" id="L404">        return realTarget.get();</span>
+    }
+
+    /**
+     * Checks if an object is encapsulated into a type {@link Optional}.
+     * @param object the object to check
+     * @return true if the given object is an Optional, false otherwise.
+     */
+    private boolean isOptionalType(final Object object) {
+<span class="fc" id="L413">        return object instanceof Optional;</span>
+    }
+
+    /**
+     * The getter method prefix based on the field type.
+     * @param fieldType the field class
+     * @return the method prefix (get or is)
+     */
+    private String getGetterMethodPrefix(final Class&lt;?&gt; fieldType) {
+<span class="fc" id="L422">        final String cacheKey = &quot;GetterMethodPrefix-&quot; + fieldType.getName();</span>
+<span class="fc" id="L423">        return CACHE_MANAGER.getFromCache(cacheKey, String.class).orElseGet(() -&gt; {</span>
+<span class="fc bfc" id="L424" title="All 4 branches covered.">            String res = Boolean.class.equals(fieldType) || fieldType.getName().equals(BOOLEAN) ? IS.getPrefix() : GET.getPrefix();</span>
+<span class="fc" id="L425">            CACHE_MANAGER.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L426">            return res;</span>
+        });
+    }
+
+    /**
+     * Gets the setter method for a specific field.
+     * @param fieldClass class containing the field
+     * @param fieldName the name of the field to be retrieved
+     * @param fieldType the field class
+     * @return the setter method
+     * @throws MissingMethodException if the method does not exists
+     */
+    public Method getSetterMethodForField(final Class&lt;?&gt; fieldClass, final String fieldName, final Class&lt;?&gt; fieldType) {
+<span class="fc" id="L439">        final String cacheKey = &quot;SetterMethod-&quot; + fieldClass.getName() + '-' + fieldName;</span>
+<span class="fc" id="L440">        return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -&gt; {</span>
+            try {
+<span class="fc" id="L442">                Method method = fieldClass.getMethod(SET.getPrefix() + capitalize(fieldName), fieldType);</span>
+<span class="fc" id="L443">                method.setAccessible(true);</span>
+<span class="fc" id="L444">                CACHE_MANAGER.cacheObject(cacheKey, method);</span>
+<span class="fc" id="L445">                return method;</span>
+<span class="fc" id="L446">            } catch (NoSuchMethodException e) {</span>
+<span class="fc" id="L447">                throw new MissingMethodException(e.getMessage());</span>
+            }
+        });
+    }
+
+    /**
+     * Gets the generic infer type of an object.
+     * @param field the field containing the generic
+     * @return the generic type class
+     */
+    public Class&lt;?&gt; getGenericFieldType(final Field field) {
+<span class="fc" id="L458">        final String cacheKey = &quot;GenericFieldType-&quot; + field.getDeclaringClass().getName() + '-' + field.getName();</span>
+<span class="fc" id="L459">        return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L460">            Class&lt;?&gt; res = null;</span>
+<span class="pc bpc" id="L461" title="1 of 2 branches missed.">            if (ParameterizedType.class.isAssignableFrom(field.getGenericType().getClass())) {</span>
+<span class="fc" id="L462">                res = getGenericClassType((ParameterizedType) field.getGenericType());</span>
+            }
+<span class="fc" id="L464">            CACHE_MANAGER.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L465">            return res;</span>
+        });
+    }
+
+    /**
+     * Retrieves the generic class of a {@link ParameterizedType}.
+     * @param genericType the generic type for which the class has to be retrieved
+     * @return the generic class type
+     */
+    private Class&lt;?&gt; getGenericClassType(final ParameterizedType genericType) {
+<span class="fc" id="L475">        return getGenericClassType(genericType.getActualTypeArguments());</span>
+    }
+
+    /**
+     * Retrieves the generic class of a {@link WildcardType}.
+     * @param genericType the generic type for which the class has to be retrieved
+     * @return the generic class type
+     */
+    private Class&lt;?&gt; getGenericClassType(final WildcardType genericType) {
+<span class="pc bpc" id="L484" title="1 of 2 branches missed.">        return getGenericClassType(isEmpty(genericType.getLowerBounds()) ? genericType.getUpperBounds() : genericType.getLowerBounds());</span>
+    }
+
+    /**
+     * Retrieves the generic class from the field's argument types.
+     * @param actualTypeArguments the field type arguments
+     * @return the generic class type
+     */
+    private Class&lt;?&gt; getGenericClassType(final Type[] actualTypeArguments) {
+<span class="fc" id="L493">        Class&lt;?&gt; res = null;</span>
+<span class="pc bpc" id="L494" title="1 of 2 branches missed.">        if (actualTypeArguments.length != 0) {</span>
+<span class="fc bfc" id="L495" title="All 2 branches covered.">            if (WildcardType.class.isAssignableFrom(actualTypeArguments[0].getClass())) {</span>
+<span class="fc" id="L496">                res = getGenericClassType((WildcardType) actualTypeArguments[0]);</span>
+            } else {
+<span class="fc" id="L498">                res = (Class&lt;?&gt;) actualTypeArguments[0];</span>
+            }
+        }
+<span class="fc" id="L501">        return res;</span>
+    }
+
+    /**
+     * Gets the generic infer type of a map object.
+     * @param fieldType the field containing the generic
+     * @param declaringClass the class containing the field
+     * @param fieldName the field name
+     * @return the generic type class
+     */
+    public MapType getMapGenericType(final Type fieldType, final String declaringClass, final String fieldName) {
+<span class="fc" id="L512">        final Class&lt;?&gt; fieldClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);</span>
+<span class="fc" id="L513">        final String cacheKey = &quot;MapGenericFieldType-&quot; + fieldClass.getName() + '-' + fieldName;</span>
+<span class="fc" id="L514">        return CACHE_MANAGER.getFromCache(cacheKey, MapType.class).orElseGet(() -&gt; {</span>
+<span class="fc bfc" id="L515" title="All 2 branches covered.">            if (!Map.class.isAssignableFrom(fieldClass)) {</span>
+<span class="fc" id="L516">                throw new IllegalArgumentException(&quot;Type for object: &quot; + fieldName + &quot; is invalid. &quot;</span>
+<span class="fc" id="L517">                                + &quot;It cannot be assigned from: &quot; + Map.class.getName() + &quot;.&quot;);</span>
+            }
+            MapElemType keyType, elemType;
+<span class="fc bfc" id="L520" title="All 2 branches covered.">            if (ParameterizedType.class.isAssignableFrom(fieldType.getClass())) {</span>
+<span class="fc" id="L521">                final ParameterizedType genericType = (ParameterizedType) fieldType;</span>
+<span class="fc" id="L522">                keyType = getMapElemType(genericType.getActualTypeArguments()[0], declaringClass, fieldName);</span>
+<span class="fc" id="L523">                elemType = getMapElemType(genericType.getActualTypeArguments()[1], declaringClass, fieldName);</span>
+<span class="fc" id="L524">            } else {</span>
+<span class="fc" id="L525">                keyType = buildItemType(fieldType, declaringClass, fieldName);</span>
+<span class="fc" id="L526">                elemType = buildItemType(fieldType, declaringClass, fieldName);</span>
+            }
+<span class="fc" id="L528">            final MapType mapType = new MapType(keyType, elemType);</span>
+<span class="fc" id="L529">            CACHE_MANAGER.cacheObject(cacheKey, mapType);</span>
+<span class="fc" id="L530">            return mapType;</span>
+        });
+    }
+
+    /**
+     * Retrieves the generic class of the objects contained in the map.
+     * It could be {@link ItemType} in case the object is primitive or is a collection
+     * It could be {@link MapType} in case the object is a {@link Map}
+     * @param fieldType the field containing the generic
+     * @param declaringClass the class containing the field
+     * @param fieldName the field name
+     * @return the generic class of the objects contained in the map.
+     */
+    private MapElemType getMapElemType(final Type fieldType, final String declaringClass, final String fieldName) {
+<span class="fc" id="L544">        final String cacheKey = &quot;MapElemType-&quot; + declaringClass + &quot;-&quot; + fieldType.getTypeName() + '-' + fieldName;</span>
+<span class="fc" id="L545">        return CACHE_MANAGER.getFromCache(cacheKey, MapElemType.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L546">            final Class&lt;?&gt; argumentTypeClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);</span>
+            final MapElemType res;
+<span class="fc bfc" id="L548" title="All 2 branches covered.">            if (Map.class.isAssignableFrom(argumentTypeClass)) {</span>
+<span class="fc" id="L549">                res = getMapGenericType(fieldType, declaringClass, fieldName);</span>
+            } else {
+<span class="fc" id="L551">                res = buildItemType(fieldType, declaringClass, fieldName);</span>
+            }
+<span class="fc" id="L553">            CACHE_MANAGER.cacheObject(cacheKey, res);</span>
+<span class="fc" id="L554">            return res;</span>
+        });
+    }
+
+    /**
+     * Builds the {@link ItemType} object from a given object.
+     * @param argument the object from which the class has to be retrieved
+     * @param declaringClass the class containing the field of which the argument belongs to
+     * @param fieldName the field name of which the argument belongs to
+     * @return the {@link ItemType} object
+     */
+    private ItemType buildItemType(final Object argument, final String declaringClass, final String fieldName) {
+<span class="fc" id="L566">        return ItemType.builder()</span>
+<span class="fc" id="L567">                .objectClass(getArgumentTypeClass(argument, declaringClass, fieldName, false))</span>
+<span class="fc" id="L568">                .genericClass(getArgumentTypeClass(argument, declaringClass, fieldName, true))</span>
+<span class="fc" id="L569">                .build();</span>
+    }
+
+    /**
+     * Gets the class of a given object.
+     * @param argument the object from which the class has to be retrieved
+     * @param declaringClass the class containing the field of which the argument belongs to
+     * @param fieldName the field name of which the argument belongs to
+     * @param getNestedGenericClass if true it retrieves the class of the object generic (if any). i.e. {@code argument = List&lt;String&gt;;}
+     *                              returns {@code String}, if false returns {@code List}
+     * @return the given argument class type
+     */
+    public Class&lt;?&gt; getArgumentTypeClass(final Object argument, final String declaringClass, final String fieldName, final boolean getNestedGenericClass) {
+<span class="fc" id="L582">        final boolean argumentIsTypeClass = argument instanceof Class;</span>
+<span class="fc" id="L583">        final String cacheKey = &quot;ArgumentTypeClass-&quot; + declaringClass + &quot;-&quot; + fieldName + &quot;-&quot; + getNestedGenericClass + &quot;-&quot;</span>
+<span class="pc bpc" id="L584" title="1 of 4 branches missed.">                + &quot;-&quot; + (argumentIsTypeClass || !List.class.isAssignableFrom(argument.getClass()) ? argument : argument.getClass());</span>
+<span class="fc" id="L585">        return CACHE_MANAGER.getFromCache(cacheKey, Class.class)</span>
+<span class="fc bfc" id="L586" title="All 2 branches covered.">                .map(atc -&gt; atc == EmptyValue.class ? null : atc)</span>
+<span class="fc" id="L587">                .orElseGet(() -&gt; {</span>
+<span class="fc" id="L588">                    Class&lt;?&gt; res = null;</span>
+<span class="fc bfc" id="L589" title="All 2 branches covered.">                    if (argumentIsTypeClass) {</span>
+<span class="fc bfc" id="L590" title="All 2 branches covered.">                        res = getNestedGenericClass ? null : (Class&lt;?&gt;) argument;</span>
+<span class="pc bpc" id="L591" title="1 of 2 branches missed.">                    } else if (ParameterizedType.class.isAssignableFrom(argument.getClass())) {</span>
+<span class="pc bpc" id="L592" title="1 of 2 branches missed.">                        res = getNestedGenericClass</span>
+<span class="nc" id="L593">                                ? getArgumentTypeClass(((ParameterizedType) argument).getActualTypeArguments()[0], declaringClass, fieldName, false)</span>
+<span class="fc" id="L594">                                : (Class&lt;?&gt;) ((ParameterizedType) argument).getRawType();</span>
+<span class="nc bnc" id="L595" title="All 2 branches missed.">                    } else if (WildcardType.class.isAssignableFrom(argument.getClass())) {</span>
+<span class="nc" id="L596">                        res = getGenericClassType((WildcardType) argument);</span>
+                    }
+<span class="fc" id="L598">                    CACHE_MANAGER.cacheObject(cacheKey, res, EmptyValue.class);</span>
+<span class="fc" id="L599">                    return res;</span>
+                });
+    }
+
+    /**
+     * Gets the type of an array.
+     * @param arrayField the array
+     * @return the array class
+     */
+    public Class&lt;?&gt; getArrayType(final Field arrayField) {
+<span class="fc" id="L609">        final String cacheKey = &quot;ArrayType-&quot; + arrayField.getDeclaringClass().getName();</span>
+<span class="fc" id="L610">        return CACHE_MANAGER.getFromCache(cacheKey, Class.class).orElseGet(() -&gt; {</span>
+<span class="fc" id="L611">            final Class&lt;?&gt; arrayType = arrayField.getType().getComponentType();</span>
+<span class="fc" id="L612">            CACHE_MANAGER.cacheObject(cacheKey, arrayType);</span>
+<span class="fc" id="L613">            return arrayType;</span>
+        });
+    }
+
+    /**
+     * Throws the right exception.
+     * @param ex the exception
+     * @return the exception to be thrown
+     */
+    protected RuntimeException handleReflectionException(final Exception ex) {
+        RuntimeException e;
+<span class="fc bfc" id="L624" title="All 2 branches covered.">        if (ex instanceof NoSuchMethodException) {</span>
+<span class="fc" id="L625">            e = new MissingMethodException(&quot;Method not found: &quot; + ex.getMessage());</span>
+<span class="fc bfc" id="L626" title="All 2 branches covered.">        } else if (ex instanceof IllegalAccessException) {</span>
+<span class="fc" id="L627">            e = new IllegalStateException(&quot;Could not access method: &quot; + ex.getMessage(), ex);</span>
+<span class="fc bfc" id="L628" title="All 2 branches covered.">        } else if (ex instanceof RuntimeException) {</span>
+<span class="fc" id="L629">            e = (RuntimeException) ex;</span>
+        } else {
+<span class="fc" id="L631">            e = new UndeclaredThrowableException(ex);</span>
+        }
+<span class="fc" id="L633">        return e;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

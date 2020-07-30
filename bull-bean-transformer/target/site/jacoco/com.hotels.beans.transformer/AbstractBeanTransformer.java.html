@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractBeanTransformer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Bean Transformer</a> &gt; <a href="index.source.html" class="el_package">com.hotels.beans.transformer</a> &gt; <span class="el_source">AbstractBeanTransformer.java</span></div><h1>AbstractBeanTransformer.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019-2020 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.beans.transformer;
+
+import static java.util.Arrays.asList;
+
+import static com.hotels.transformer.validator.Validator.notNull;
+
+import com.hotels.beans.conversion.analyzer.ConversionAnalyzer;
+import com.hotels.transformer.AbstractTransformer;
+import com.hotels.transformer.model.TransformerSettings;
+import com.hotels.transformer.validator.Validator;
+import com.hotels.transformer.validator.ValidatorImpl;
+
+/**
+ * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
+ * Contains all method implementation that will be common to any {@link BeanTransformer} implementation.
+ */
+abstract class AbstractBeanTransformer extends AbstractTransformer&lt;BeanTransformer, String, TransformerSettings&lt;String&gt;&gt; implements BeanTransformer {
+    /**
+     * The cache key prefix for the Transformer Functions.
+     */
+    static final String TRANSFORMER_FUNCTION_CACHE_PREFIX = &quot;BeanTransformerFunction&quot;;
+
+    /**
+     * Bean Validator. It offers the possibility to validate a given Java Bean against a set of defined constraints.
+     */
+    Validator validator;
+
+    /**
+     * Conversion analyzer. It allows to automatically convert common field types.
+     */
+    ConversionAnalyzer conversionAnalyzer;
+
+    /**
+     * Default constructor.
+     */
+    AbstractBeanTransformer() {
+<span class="fc" id="L53">        super(TRANSFORMER_FUNCTION_CACHE_PREFIX, &quot;beanTransformer&quot;, new TransformerSettings&lt;&gt;());</span>
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final BeanTransformer setDefaultValueForMissingField(final boolean useDefaultValue) {
+<span class="fc" id="L61">        settings.setSetDefaultValueForMissingField(useDefaultValue);</span>
+<span class="fc" id="L62">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BeanTransformer setDefaultValueForMissingPrimitiveField(final boolean useDefaultValue) {
+<span class="fc" id="L70">        settings.setDefaultValueForMissingPrimitiveField(useDefaultValue);</span>
+<span class="fc" id="L71">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final BeanTransformer setFlatFieldNameTransformation(final boolean useFlatTransformation) {
+<span class="fc" id="L79">        settings.setFlatFieldNameTransformation(useFlatTransformation);</span>
+<span class="fc" id="L80">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BeanTransformer setValidationEnabled(final boolean validationEnabled) {
+<span class="fc" id="L88">        settings.setValidationEnabled(validationEnabled);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (validationEnabled) {</span>
+<span class="fc" id="L90">            validator = new ValidatorImpl();</span>
+        }
+<span class="fc" id="L92">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BeanTransformer setPrimitiveTypeConversionEnabled(final boolean primitiveTypeConversionEnabled) {
+<span class="fc" id="L100">        settings.setPrimitiveTypeConversionEnabled(primitiveTypeConversionEnabled);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (primitiveTypeConversionEnabled) {</span>
+<span class="fc" id="L102">            conversionAnalyzer = new ConversionAnalyzer();</span>
+        } else {
+<span class="fc" id="L104">            cacheManager.removeMatchingKeys(transformerFunctionRegex);</span>
+        }
+<span class="fc" id="L106">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BeanTransformer setCustomBuilderTransformationEnabled(final boolean customBuilderTransformationEnabled) {
+<span class="fc" id="L114">        settings.setCustomBuilderTransformationEnabled(customBuilderTransformationEnabled);</span>
+<span class="fc" id="L115">        return this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final &lt;T, K&gt; K transform(final T sourceObj, final Class&lt;? extends K&gt; targetClass) {
+<span class="fc" id="L123">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
+<span class="fc" id="L124">        notNull(targetClass, &quot;The destination class cannot be null!&quot;);</span>
+<span class="fc" id="L125">        return transform(sourceObj, targetClass, null);</span>
+    }
+
+    /**
+     * Copies all properties from an object to a new one.
+     * @param sourceObj the source object
+     * @param targetClass the destination object class
+     * @param breadcrumb the full path of the current field starting from his ancestor
+     * @param &lt;T&gt; the Source object type
+     * @param &lt;K&gt; the target object type
+     * @return a copy of the source object into the destination object
+     */
+    protected abstract &lt;T, K&gt; K transform(T sourceObj, Class&lt;? extends K&gt; targetClass, String breadcrumb);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final &lt;T, K&gt; void transform(final T sourceObj, final K targetObject) {
+<span class="fc" id="L144">        notNull(sourceObj, &quot;The object to copy cannot be null!&quot;);</span>
+<span class="fc" id="L145">        notNull(targetObject, &quot;The destination object cannot be null!&quot;);</span>
+<span class="fc" id="L146">        transform(sourceObj, targetObject, null);</span>
+<span class="fc" id="L147">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BeanTransformer skipTransformationForField(final String... fieldName) {
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        if (fieldName.length != 0) {</span>
+<span class="fc" id="L155">            settings.getFieldsToSkip().addAll(asList(fieldName));</span>
+        }
+<span class="fc" id="L157">        return this;</span>
+    }
+
+    @Override
+    public void resetFieldsTransformationSkip() {
+<span class="fc" id="L162">        settings.getFieldsToSkip().clear();</span>
+<span class="fc" id="L163">    }</span>
+
+    /**
+     * Copies all properties from an object to a new one.
+     * @param sourceObj the source object
+     * @param targetObject the destination object
+     * @param breadcrumb the full path of the current field starting from his ancestor
+     * @param &lt;T&gt; the Source object type
+     * @param &lt;K&gt; the target object type
+     */
+    protected abstract &lt;T, K&gt; void transform(T sourceObj, K targetObject, String breadcrumb);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BooleanConversionProcessor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Converter</a> &gt; <a href="index.source.html" class="el_package">com.hotels.beans.conversion.processor.impl</a> &gt; <span class="el_source">BooleanConversionProcessor.java</span></div><h1>BooleanConversionProcessor.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019-2020 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.beans.conversion.processor.impl;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.function.Function;
+
+import com.hotels.beans.conversion.processor.ConversionProcessor;
+
+/**
+ * Provides all method for converting any primitive type to a {@link Boolean}.
+ */
+<span class="fc" id="L28">public final class BooleanConversionProcessor implements ConversionProcessor&lt;Boolean&gt; {</span>
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Byte, Boolean&gt; convertByte() {
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        return val -&gt; val != 0;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;byte[], Boolean&gt; convertByteArray() {
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        return val -&gt; val[0] != 0;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Short, Boolean&gt; convertShort() {
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        return val -&gt; val != 0;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Integer, Boolean&gt; convertInteger() {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        return val -&gt; val != 0;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Long, Boolean&gt; convertLong() {
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        return val -&gt; val != 0;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Float, Boolean&gt; convertFloat() {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        return val -&gt; val != 0;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Double, Boolean&gt; convertDouble() {
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        return val -&gt; val != 0;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Character, Boolean&gt; convertCharacter() {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        return val -&gt; val == 'T';</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;Boolean, Boolean&gt; convertBoolean() {
+<span class="fc" id="L98">        return val -&gt; val;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;String, Boolean&gt; convertString() {
+<span class="fc" id="L106">        return Boolean::valueOf;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;BigInteger, Boolean&gt; convertBigInteger() {
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        return val -&gt; val.intValue() != 0;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function&lt;BigDecimal, Boolean&gt; convertBigDecimal() {
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        return val -&gt; val.intValue() != 0;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

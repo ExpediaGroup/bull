@@ -1,0 +1,11 @@
+com/hotels/beans/BeanUtils.class
+com/hotels/beans/populator/ICollectionPopulator.class
+com/hotels/beans/populator/Populator.class
+com/hotels/beans/populator/OptionalPopulator.class
+com/hotels/beans/transformer/TransformerImpl.class
+com/hotels/beans/populator/MapPopulator.class
+com/hotels/beans/populator/PopulatorFactory.class
+com/hotels/beans/transformer/AbstractBeanTransformer.class
+com/hotels/beans/transformer/BeanTransformer.class
+com/hotels/beans/populator/CollectionPopulator.class
+com/hotels/beans/populator/ArrayPopulator.class

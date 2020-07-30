@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.29">
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/main/java/com/hotels/map/MapUtils.java">
+</file>
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/main/java/com/hotels/map/transformer/MapTransformerImpl.java">
+</file>
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/main/java/com/hotels/map/transformer/MapTransformer.java">
+</file>
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/main/java/com/hotels/map/transformer/model/MapTransformerSettings.java">
+</file>
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/main/java/com/hotels/map/transformer/model/package-info.java">
+</file>
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/main/java/com/hotels/map/transformer/AbstractMapTransformer.java">
+</file>
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/main/java/com/hotels/map/transformer/package-info.java">
+</file>
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/main/java/com/hotels/map/package-info.java">
+</file>
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/test/java/com/hotels/map/transformer/MapTransformerTest.java">
+</file>
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/test/java/com/hotels/map/transformer/package-info.java">
+</file>
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/test/java/com/hotels/map/MapUtilsTest.java">
+</file>
+<file name="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-map-transformer/src/test/java/com/hotels/map/package-info.java">
+</file>
+</checkstyle>

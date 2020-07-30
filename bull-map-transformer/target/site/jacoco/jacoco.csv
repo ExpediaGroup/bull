@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+BULL - Map Transformer,com.hotels.map,MapUtils,0,7,0,0,0,2,0,2,0,2
+BULL - Map Transformer,com.hotels.map.transformer.model,MapTransformerSettings,0,8,0,0,0,2,0,1,0,1
+BULL - Map Transformer,com.hotels.map.transformer,AbstractMapTransformer,0,66,0,2,0,11,0,6,0,5
+BULL - Map Transformer,com.hotels.map.transformer,MapTransformerImpl,0,199,0,8,0,29,0,17,0,13

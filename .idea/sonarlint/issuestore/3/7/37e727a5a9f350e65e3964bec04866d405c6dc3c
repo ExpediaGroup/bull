@@ -1,0 +1,38 @@
+
+cWeb:DoctypePresenceCheck":Insert a <!DOCTYPE> declaration to before this <html> tag.(œ÷Ãûÿÿÿÿ
+Z	Web:S5254"@Add "lang" and/or "xml:lang" attributes to this "<html>" element(œ÷Ãûÿÿÿÿ
+C	Web:S18278")Remove this deprecated "align" attribute.(ÎÅÉÿÿÿÿÿ
+MWeb:TableWithoutCaptionCheck8" Add a description to this table.(ÎÅÉÿÿÿÿÿ
+?	Web:S52568"%Add "<th>" headers to this "<table>".(ÎÅÉÿÿÿÿÿ
+C	Web:S18278")Remove this deprecated "align" attribute.(ÎÅÉÿÿÿÿÿ
+HWeb:BoldAndItalicTagsCheckE"Replace this <i> tag by <em>.(Á«½áıÿÿÿÿ
+HWeb:TableWithoutCaptionCheckF" Add a description to this table.(ß¤€
+:	Web:S5256F"%Add "<th>" headers to this "<table>".(ß¤€
+>	Web:S1827F")Remove this deprecated "width" attribute.(ß¤€
+C	Web:S1827G")Remove this deprecated "align" attribute.(„òÓ‚ıÿÿÿÿ
+LWeb:BoldAndItalicTagsCheckG"!Replace this <b> tag by <strong>.(„òÓ‚ıÿÿÿÿ
+GWeb:BoldAndItalicTagsCheckH"!Replace this <b> tag by <strong>.(§Àé¦
+C	Web:S1827I")Remove this deprecated "width" attribute.(­Òƒÿÿÿÿÿ
+LWeb:BoldAndItalicTagsCheckI"!Replace this <b> tag by <strong>.(­Òƒÿÿÿÿÿ
+C	Web:S1827J")Remove this deprecated "width" attribute.(‰¨€åøÿÿÿÿ
+LWeb:BoldAndItalicTagsCheckJ"!Replace this <b> tag by <strong>.(‰¨€åøÿÿÿÿ
+GWeb:BoldAndItalicTagsCheckK"!Replace this <b> tag by <strong>.(Úšöè
+LWeb:BoldAndItalicTagsCheckN"!Replace this <b> tag by <strong>.(­¤ê’ûÿÿÿÿ
+LWeb:BoldAndItalicTagsCheckS"!Replace this <b> tag by <strong>.(©Ó£şÿÿÿÿ
+LWeb:BoldAndItalicTagsCheckX"!Replace this <b> tag by <strong>.(ªÒŠÕıÿÿÿÿ
+GWeb:BoldAndItalicTagsCheck]"!Replace this <b> tag by <strong>.(Ôâø—
+GWeb:BoldAndItalicTagsCheckb"!Replace this <b> tag by <strong>.(¿½ì‘
+MWeb:BoldAndItalicTagsCheck"!Replace this <b> tag by <strong>.(’šÁÔûÿÿÿÿ
+HWeb:BoldAndItalicTagsCheck¾"!Replace this <b> tag by <strong>.(µúÌ÷
+MWeb:BoldAndItalicTagsCheckî"!Replace this <b> tag by <strong>.(Øš“°ùÿÿÿÿ
+MWeb:BoldAndItalicTagsCheck"!Replace this <b> tag by <strong>.(áñËçøÿÿÿÿ
+GWeb:BoldAndItalicTagsCheckÎ"!Replace this <b> tag by <strong>.(­Ç‘k
+MWeb:BoldAndItalicTagsCheckÓ"!Replace this <b> tag by <strong>.(“ÑõØşÿÿÿÿ
+MWeb:BoldAndItalicTagsCheckØ"!Replace this <b> tag by <strong>.(ÒìÛ–üÿÿÿÿ
+HWeb:BoldAndItalicTagsCheckİ"!Replace this <b> tag by <strong>.(û¡¤
+MWeb:BoldAndItalicTagsCheckâ"!Replace this <b> tag by <strong>.(’ Ì¤ıÿÿÿÿ
+HWeb:BoldAndItalicTagsCheckç"!Replace this <b> tag by <strong>.(âÍòÀ
+HWeb:BoldAndItalicTagsCheckì"!Replace this <b> tag by <strong>.( ‚ãÁ
+HWeb:BoldAndItalicTagsCheckñ"!Replace this <b> tag by <strong>.(Ì†àÙ
+MWeb:BoldAndItalicTagsCheckö"!Replace this <b> tag by <strong>.(š«ƒıÿÿÿÿ
+HWeb:BoldAndItalicTagsCheckû"!Replace this <b> tag by <strong>.(Ü×ùâ

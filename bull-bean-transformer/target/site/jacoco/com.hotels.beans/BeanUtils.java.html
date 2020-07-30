@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Bean Transformer</a> &gt; <a href="index.source.html" class="el_package">com.hotels.beans</a> &gt; <span class="el_source">BeanUtils.java</span></div><h1>BeanUtils.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019-2020 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.beans;
+
+import static com.hotels.transformer.validator.Validator.notNull;
+
+import java.util.function.Function;
+
+import com.hotels.beans.conversion.Converter;
+import com.hotels.beans.conversion.ConverterImpl;
+import com.hotels.beans.transformer.BeanTransformer;
+import com.hotels.beans.transformer.TransformerImpl;
+import com.hotels.transformer.validator.Validator;
+import com.hotels.transformer.validator.ValidatorImpl;
+
+/**
+ * Set of Bean utilities.
+ */
+<span class="fc" id="L33">public class BeanUtils {</span>
+
+    /**
+     * Returns a function that transforms an object T in an object K.
+     * @param targetClass the destination object class
+     * @param &lt;T&gt; the Source object type
+     * @param &lt;K&gt; the target object type
+     * @return a function that copies of the source object into the destination object
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    public static &lt;T, K&gt; Function&lt;T, K&gt; getTransformer(final Class&lt;K&gt; targetClass) {
+<span class="fc" id="L44">        return fromBean -&gt; new TransformerImpl().transform(fromBean, targetClass);</span>
+    }
+
+    /**
+     * Returns a function that transforms an object T in an object K.
+     * @param beanTransformer the transformer to be used.
+     * @param targetClass the destination object
+     * @param &lt;T&gt; the Source object type
+     * @param &lt;K&gt; the target object type
+     * @return a function that copies of the source object into the destination object
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    public static &lt;T, K&gt; Function&lt;T, K&gt; getTransformer(final BeanTransformer beanTransformer, final Class&lt;K&gt; targetClass) {
+<span class="fc" id="L57">        notNull(beanTransformer, &quot;beanTransformer cannot be null!&quot;);</span>
+<span class="fc" id="L58">        return fromBean -&gt; beanTransformer.transform(fromBean, targetClass);</span>
+    }
+
+    /**
+     * Returns a Bean Transformer.
+     * @return a {@link BeanTransformer} instance.
+     */
+    public final BeanTransformer getTransformer() {
+<span class="fc" id="L66">        return new TransformerImpl();</span>
+    }
+
+    /**
+     * Returns a Bean Validator.
+     * @return a Bean Validator instance.
+     */
+    public final Validator getValidator() {
+<span class="fc" id="L74">        return new ValidatorImpl();</span>
+    }
+
+    /**
+     * Returns a primitive type converter.
+     * @return a {@link Converter} instance.
+     */
+    public final Converter getPrimitiveTypeConverter() {
+<span class="fc" id="L82">        return new ConverterImpl();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

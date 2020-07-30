@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="13" passed="13" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2020-07-30T15:19:15 CEST" name="Surefire suite" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1723">
+    <groups>
+    </groups>
+    <test started-at="2020-07-30T15:19:15 CEST" name="Surefire test" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1723">
+      <class name="com.hotels.map.transformer.MapTransformerTest">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:15 CEST" name="beforeClass" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1342" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method signature="testResetKeyTransformerWorksProperly()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testResetKeyTransformerWorksProperly" finished-at="2020-07-30T15:19:16 CEST" duration-ms="213" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testResetKeyTransformerWorksProperly -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method signature="testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid" finished-at="2020-07-30T15:19:16 CEST" duration-ms="3" status="PASS">
+          <exception class="com.hotels.transformer.error.InvalidFunctionException">
+            <message>
+              <![CDATA[The transformer function defined for the map key is not valid.]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.hotels.transformer.error.InvalidFunctionException: The transformer function defined for the map key is not valid.
+at com.hotels.map.transformer.MapTransformerImpl.getTransformedObject(MapTransformerImpl.java:132)
+at com.hotels.map.transformer.MapTransformerImpl.lambda$transform$0(MapTransformerImpl.java:50)
+at java.base/java.util.stream.Collectors.lambda$uniqKeysMapAccumulator$1(Collectors.java:177)
+at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169)
+at java.base/java.util.HashMap$EntrySpliterator.forEachRemaining(HashMap.java:1746)
+at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
+at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
+at com.hotels.map.transformer.MapTransformerImpl.transform(MapTransformerImpl.java:49)
+at com.hotels.map.transformer.AbstractMapTransformer.transform(AbstractMapTransformer.java:48)
+at com.hotels.map.transformer.MapTransformerImpl.transform(MapTransformerImpl.java:35)
+at com.hotels.map.transformer.MapTransformerTest.testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid(MapTransformerTest.java:195)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:134)
+at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:597)
+at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:173)
+at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:816)
+at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:146)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+at org.testng.TestRunner.privateRun(TestRunner.java:766)
+at org.testng.TestRunner.run(TestRunner.java:587)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
+at org.testng.SuiteRunner.run(SuiteRunner.java:286)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1187)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1109)
+at org.testng.TestNG.runSuites(TestNG.java:1039)
+at org.testng.TestNG.run(TestNG.java:1007)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:135)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeMulti(TestNGDirectoryTestSuite.java:193)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:94)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:146)
+at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:384)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:345)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:126)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:418)
+Caused by: com.hotels.transformer.error.InvalidFunctionException: The transformer function defined for the field is not valid.
+at com.hotels.transformer.model.FieldTransformer.getTransformedObject(FieldTransformer.java:85)
+at com.hotels.map.transformer.MapTransformerImpl.getTransformedObject(MapTransformerImpl.java:130)
+... 46 more
+Caused by: java.lang.ClassCastException: class java.lang.String cannot be cast to class java.math.BigInteger (java.lang.String and java.math.BigInteger are in module java.base of loader 'bootstrap')
+at com.hotels.transformer.model.FieldTransformer.getTransformedObject(FieldTransformer.java:83)
+... 47 more
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.hotels.transformer.error.InvalidFunctionException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method signature="testTransformRaisesExceptionIfItsCalledWithNullParameter(java.lang.String, java.util.Map, com.hotels.beans.transformer.BeanTransformer)[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testTransformRaisesExceptionIfItsCalledWithNullParameter" data-provider="dataTransformMethodWithTwoArgument" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that an IllegalArgumentException is thrown if the sourceMap is null]]>
+              </value>
+            </param>
+            <param index="1">
+              <value is-null="true"/>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[com.hotels.beans.transformer.TransformerImpl@4ec37a42]]>
+              </value>
+            </param>
+          </params>
+          <exception class="java.lang.IllegalArgumentException">
+            <message>
+              <![CDATA[The map to copy cannot be null!]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.IllegalArgumentException: The map to copy cannot be null!
+at com.hotels.transformer.validator.Validator.notNull(Validator.java:78)
+at com.hotels.map.transformer.MapTransformerImpl.validateParameters(MapTransformerImpl.java:80)
+at com.hotels.map.transformer.MapTransformerImpl.transform(MapTransformerImpl.java:42)
+at com.hotels.map.transformer.MapTransformerTest.testTransformRaisesExceptionIfItsCalledWithNullParameter(MapTransformerTest.java:95)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:134)
+at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:597)
+at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:173)
+at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:816)
+at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:146)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+at org.testng.TestRunner.privateRun(TestRunner.java:766)
+at org.testng.TestRunner.run(TestRunner.java:587)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
+at org.testng.SuiteRunner.run(SuiteRunner.java:286)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1187)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1109)
+at org.testng.TestNG.runSuites(TestNG.java:1039)
+at org.testng.TestNG.run(TestNG.java:1007)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:135)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeMulti(TestNGDirectoryTestSuite.java:193)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:94)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:146)
+at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:384)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:345)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:126)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:418)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.IllegalArgumentException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformRaisesExceptionIfItsCalledWithNullParameter -->
+        <test-method signature="testTransformRaisesExceptionIfItsCalledWithNullParameter(java.lang.String, java.util.Map, com.hotels.beans.transformer.BeanTransformer)[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testTransformRaisesExceptionIfItsCalledWithNullParameter" data-provider="dataTransformMethodWithTwoArgument" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that an IllegalArgumentException is thrown if the transformer is null]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{donald=duck}]]>
+              </value>
+            </param>
+            <param index="2">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <exception class="java.lang.IllegalArgumentException">
+            <message>
+              <![CDATA[The bean transformer to use cannot be null!]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.IllegalArgumentException: The bean transformer to use cannot be null!
+at com.hotels.transformer.validator.Validator.notNull(Validator.java:78)
+at com.hotels.map.transformer.MapTransformerImpl.validateParameters(MapTransformerImpl.java:81)
+at com.hotels.map.transformer.MapTransformerImpl.transform(MapTransformerImpl.java:42)
+at com.hotels.map.transformer.MapTransformerTest.testTransformRaisesExceptionIfItsCalledWithNullParameter(MapTransformerTest.java:95)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:134)
+at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:597)
+at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:173)
+at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:816)
+at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:146)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+at org.testng.TestRunner.privateRun(TestRunner.java:766)
+at org.testng.TestRunner.run(TestRunner.java:587)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
+at org.testng.SuiteRunner.run(SuiteRunner.java:286)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1187)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1109)
+at org.testng.TestNG.runSuites(TestNG.java:1039)
+at org.testng.TestNG.run(TestNG.java:1007)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:135)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeMulti(TestNGDirectoryTestSuite.java:193)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:94)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:146)
+at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:384)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:345)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:126)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:418)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.IllegalArgumentException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformRaisesExceptionIfItsCalledWithNullParameter -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method signature="testTransformWorksProperly(java.lang.String, java.util.Map)[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testTransformWorksProperly" data-provider="dataMapTransformerObject" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that a simple Map is correctly transformed]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{donald=duck}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformWorksProperly -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method signature="testTransformWorksProperly(java.lang.String, java.util.Map)[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testTransformWorksProperly" data-provider="dataMapTransformerObject" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that a Map containing a list is correctly transformed]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{donald=[duck]}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformWorksProperly -->
+        <test-method signature="testTransformWorksProperly(java.lang.String, java.util.Map)[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testTransformWorksProperly" data-provider="dataMapTransformerObject" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that a Map containing a Map is correctly transformed]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{donald={donald=duck}}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformWorksProperly -->
+        <test-method signature="testTransformWorksProperly(java.lang.String, java.util.Map)[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testTransformWorksProperly" data-provider="dataMapTransformerObject" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Test that a Map containing a Map that has an object as key, is correctly transformed]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FromFooSimple(name=Goofy, id=1234, active=true)={donald=duck}}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformWorksProperly -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method signature="testTransformWorksProperlyWithKeyMapping()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testTransformWorksProperlyWithKeyMapping" finished-at="2020-07-30T15:19:16 CEST" duration-ms="5" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformWorksProperlyWithKeyMapping -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method signature="testTransformWorksProperlyWithMapContainingList()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testTransformWorksProperlyWithMapContainingList" finished-at="2020-07-30T15:19:16 CEST" duration-ms="39" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformWorksProperlyWithMapContainingList -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method signature="testTransformWorksProperlyWithTargetKeyAndElemType()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testTransformWorksProperlyWithTargetKeyAndElemType" finished-at="2020-07-30T15:19:16 CEST" duration-ms="6" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformWorksProperlyWithTargetKeyAndElemType -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method signature="testTransformWorksProperlyWithTransformer()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="testTransformWorksProperlyWithTransformer" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTransformWorksProperlyWithTransformer -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:com.hotels.map.transformer.MapTransformerTest@39bbd9e0]" started-at="2020-07-30T15:19:16 CEST" name="afterMethod" finished-at="2020-07-30T15:19:16 CEST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+      </class> <!-- com.hotels.map.transformer.MapTransformerTest -->
+      <class name="com.hotels.map.MapUtilsTest">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.hotels.map.MapUtilsTest@27fe9713]" started-at="2020-07-30T15:19:16 CEST" name="beforeClass" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method signature="testGetTransformerWorksProperly()[pri:0, instance:com.hotels.map.MapUtilsTest@27fe9713]" started-at="2020-07-30T15:19:16 CEST" name="testGetTransformerWorksProperly" finished-at="2020-07-30T15:19:16 CEST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetTransformerWorksProperly -->
+      </class> <!-- com.hotels.map.MapUtilsTest -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>

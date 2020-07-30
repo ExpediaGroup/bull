@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractTransformer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Common</a> &gt; <a href="index.source.html" class="el_package">com.hotels.transformer</a> &gt; <span class="el_source">AbstractTransformer.java</span></div><h1>AbstractTransformer.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019-2020 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.transformer;
+
+import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.transformer.validator.Validator.notNull;
+
+import java.util.Map;
+
+import com.hotels.transformer.cache.CacheManager;
+import com.hotels.transformer.model.FieldMapping;
+import com.hotels.transformer.model.FieldTransformer;
+import com.hotels.transformer.model.TransformerSettings;
+import com.hotels.transformer.utils.ClassUtils;
+import com.hotels.transformer.utils.ReflectionUtils;
+
+import lombok.Getter;
+
+/**
+ * Abstract class containing all method implementation that will be common to any {@link Transformer}.
+ * @param &lt;T&gt; the {@link Transformer} implementation.
+ * @param &lt;S&gt; the {@link TransformerSettings} implementation.
+ * @param &lt;P&gt; the {@link FieldMapping} and {@link FieldTransformer} key class type.
+ */
+public abstract class AbstractTransformer&lt;T extends Transformer, P, S extends TransformerSettings&lt;P&gt;&gt; implements Transformer&lt;T&gt; {
+    /**
+     * Reflection utils instance {@link ReflectionUtils}.
+     */
+    protected final ReflectionUtils reflectionUtils;
+
+    /**
+     * Class utils instance {@link ClassUtils}.
+     */
+    protected final ClassUtils classUtils;
+
+    /**
+     * CacheManager instance {@link CacheManager}.
+     */
+    protected final CacheManager cacheManager;
+
+    /**
+     * A regex that returns all the transformer function cached items.
+     */
+    protected final String transformerFunctionRegex;
+
+    /**
+     * Contains both the field name mapping and the lambda function to be applied on fields.
+     */
+    @Getter
+    protected final S settings;
+
+    /**
+     * Default constructor.
+     * @param transformerFunctionCachePrefix the cache key prefix for the Transformer Functions.
+     * @param cacheName the cache key prefix for the transformer.
+     * @param transformerSettings contains the transformer configuration.
+     */
+<span class="nc" id="L72">    protected AbstractTransformer(final String transformerFunctionCachePrefix, final String cacheName, final S transformerSettings) {</span>
+<span class="nc" id="L73">        this.reflectionUtils = new ReflectionUtils();</span>
+<span class="nc" id="L74">        this.classUtils = new ClassUtils();</span>
+<span class="nc" id="L75">        this.settings = transformerSettings;</span>
+<span class="nc" id="L76">        this.transformerFunctionRegex = &quot;^&quot; + transformerFunctionCachePrefix + &quot;.*&quot;;</span>
+<span class="nc" id="L77">        this.cacheManager = getCacheManager(cacheName);</span>
+<span class="nc" id="L78">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public final T withFieldMapping(final FieldMapping... fieldMapping) {
+<span class="nc" id="L86">        final Map&lt;P, P&gt; fieldsNameMapping = settings.getFieldsNameMapping();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        for (FieldMapping mapping : fieldMapping) {</span>
+<span class="nc" id="L88">            fieldsNameMapping.put((P) mapping.getDestFieldName(), (P) mapping.getSourceFieldName());</span>
+        }
+<span class="nc" id="L90">        return (T) this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public final T withFieldTransformer(final FieldTransformer... fieldTransformer) {
+<span class="nc" id="L99">        Map&lt;P, FieldTransformer&gt; fieldsTransformers = settings.getFieldsTransformers();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        for (FieldTransformer transformer : fieldTransformer) {</span>
+<span class="nc" id="L101">            fieldsTransformers.put((P) transformer.getDestFieldName(), transformer);</span>
+        }
+<span class="nc" id="L103">        return (T) this;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings(&quot;SuspiciousMethodCalls&quot;)
+    public final void removeFieldMapping(final String destFieldName) {
+<span class="nc" id="L112">        notNull(destFieldName, &quot;The field name for which the mapping has to be removed cannot be null!&quot;);</span>
+<span class="nc" id="L113">        settings.getFieldsNameMapping().remove(destFieldName);</span>
+<span class="nc" id="L114">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void resetFieldsMapping() {
+<span class="nc" id="L121">        settings.getFieldsNameMapping().clear();</span>
+<span class="nc" id="L122">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings(&quot;SuspiciousMethodCalls&quot;)
+    public final void removeFieldTransformer(final String destFieldName) {
+<span class="nc" id="L130">        notNull(destFieldName, &quot;The field name for which the transformer function has to be removed cannot be null!&quot;);</span>
+<span class="nc" id="L131">        settings.getFieldsTransformers().remove(destFieldName);</span>
+<span class="nc" id="L132">        cacheManager.removeMatchingKeys(transformerFunctionRegex + destFieldName);</span>
+<span class="nc" id="L133">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void resetFieldsTransformer() {
+<span class="nc" id="L140">        settings.getFieldsTransformers().clear();</span>
+<span class="nc" id="L141">        cacheManager.removeMatchingKeys(transformerFunctionRegex);</span>
+<span class="nc" id="L142">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

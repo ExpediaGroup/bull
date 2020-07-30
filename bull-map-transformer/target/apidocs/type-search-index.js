@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"com.hotels.map.transformer","l":"MapTransformer"},{"p":"com.hotels.map.transformer","l":"MapTransformerImpl"},{"p":"com.hotels.map.transformer.model","l":"MapTransformerSettings"},{"p":"com.hotels.map","l":"MapUtils"}]

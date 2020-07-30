@@ -1,0 +1,14 @@
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/transformer/AbstractBeanTransformer.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/populator/package-info.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/populator/ArrayPopulator.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/transformer/BeanTransformer.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/populator/ICollectionPopulator.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/populator/OptionalPopulator.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/populator/PopulatorFactory.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/BeanUtils.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/populator/MapPopulator.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/populator/CollectionPopulator.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/populator/Populator.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/transformer/package-info.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/package-info.java
+/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-bean-transformer/src/main/java/com/hotels/beans/transformer/TransformerImpl.java

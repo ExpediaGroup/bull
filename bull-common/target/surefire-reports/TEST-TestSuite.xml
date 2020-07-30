@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="TestSuite" time="5.076" tests="165" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="gopherProxySet" value="false"/>
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
+    <property name="java.specification.version" value="11"/>
+    <property name="sun.cpu.isalist" value=""/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-common/target/test-classes:/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-common/target/classes:/Users/fborriello/.m2/repository/org/apache/commons/commons-lang3/3.11/commons-lang3-3.11.jar:/Users/fborriello/.m2/repository/javax/validation/validation-api/2.0.1.Final/validation-api-2.0.1.Final.jar:/Users/fborriello/.m2/repository/javax/el/javax.el-api/3.0.0/javax.el-api-3.0.0.jar:/Users/fborriello/.m2/repository/org/glassfish/web/javax.el/2.2.6/javax.el-2.2.6.jar:/Users/fborriello/.m2/repository/org/hibernate/validator/hibernate-validator/6.1.5.Final/hibernate-validator-6.1.5.Final.jar:/Users/fborriello/.m2/repository/jakarta/validation/jakarta.validation-api/2.0.2/jakarta.validation-api-2.0.2.jar:/Users/fborriello/.m2/repository/org/jboss/logging/jboss-logging/3.3.2.Final/jboss-logging-3.3.2.Final.jar:/Users/fborriello/.m2/repository/com/fasterxml/classmate/1.3.4/classmate-1.3.4.jar:/Users/fborriello/.m2/repository/org/projectlombok/lombok/1.18.12/lombok-1.18.12.jar:/Users/fborriello/.m2/repository/org/assertj/assertj-core/3.16.1/assertj-core-3.16.1.jar:/Users/fborriello/.m2/repository/org/testng/testng/7.1.0/testng-7.1.0.jar:/Users/fborriello/.m2/repository/com/beust/jcommander/1.72/jcommander-1.72.jar:/Users/fborriello/.m2/repository/com/google/inject/guice/4.1.0/guice-4.1.0-no_aop.jar:/Users/fborriello/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar:/Users/fborriello/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar:/Users/fborriello/.m2/repository/org/mockito/mockito-core/3.4.6/mockito-core-3.4.6.jar:/Users/fborriello/.m2/repository/net/bytebuddy/byte-buddy/1.10.13/byte-buddy-1.10.13.jar:/Users/fborriello/.m2/repository/net/bytebuddy/byte-buddy-agent/1.10.13/byte-buddy-agent-1.10.13.jar:/Users/fborriello/.m2/repository/org/objenesis/objenesis/2.6/objenesis-2.6.jar:"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value=""/>
+    <property name="java.vm.specification.version" value="11"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="GB"/>
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-11.0.5.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-common/target/surefire/surefirebooter17677927645733903941.jar /Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-common/target/surefire 2020-07-30T15-18-17_855-jvmRun1 surefire4837189794872614801tmp surefire_013031993657724974142tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-common/target/test-classes:/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-common/target/classes:/Users/fborriello/.m2/repository/org/apache/commons/commons-lang3/3.11/commons-lang3-3.11.jar:/Users/fborriello/.m2/repository/javax/validation/validation-api/2.0.1.Final/validation-api-2.0.1.Final.jar:/Users/fborriello/.m2/repository/javax/el/javax.el-api/3.0.0/javax.el-api-3.0.0.jar:/Users/fborriello/.m2/repository/org/glassfish/web/javax.el/2.2.6/javax.el-2.2.6.jar:/Users/fborriello/.m2/repository/org/hibernate/validator/hibernate-validator/6.1.5.Final/hibernate-validator-6.1.5.Final.jar:/Users/fborriello/.m2/repository/jakarta/validation/jakarta.validation-api/2.0.2/jakarta.validation-api-2.0.2.jar:/Users/fborriello/.m2/repository/org/jboss/logging/jboss-logging/3.3.2.Final/jboss-logging-3.3.2.Final.jar:/Users/fborriello/.m2/repository/com/fasterxml/classmate/1.3.4/classmate-1.3.4.jar:/Users/fborriello/.m2/repository/org/projectlombok/lombok/1.18.12/lombok-1.18.12.jar:/Users/fborriello/.m2/repository/org/assertj/assertj-core/3.16.1/assertj-core-3.16.1.jar:/Users/fborriello/.m2/repository/org/testng/testng/7.1.0/testng-7.1.0.jar:/Users/fborriello/.m2/repository/com/beust/jcommander/1.72/jcommander-1.72.jar:/Users/fborriello/.m2/repository/com/google/inject/guice/4.1.0/guice-4.1.0-no_aop.jar:/Users/fborriello/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar:/Users/fborriello/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar:/Users/fborriello/.m2/repository/org/mockito/mockito-core/3.4.6/mockito-core-3.4.6.jar:/Users/fborriello/.m2/repository/net/bytebuddy/byte-buddy/1.10.13/byte-buddy-1.10.13.jar:/Users/fborriello/.m2/repository/net/bytebuddy/byte-buddy-agent/1.10.13/byte-buddy-agent-1.10.13.jar:/Users/fborriello/.m2/repository/org/objenesis/objenesis/2.6/objenesis-2.6.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/fborriello"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2019-10-15"/>
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk-11.0.5.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-common"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-common/target/surefire/surefirebooter17677927645733903941.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="11.0.5+10-LTS"/>
+    <property name="user.name" value="fborriello"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="10.15.6"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="18.9"/>
+    <property name="localRepository" value="/Users/fborriello/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="/var/folders/kh/j0lt5zg935qb0vt1fxckx7nh0000gn/T/"/>
+    <property name="java.version" value="11.0.5"/>
+    <property name="user.dir" value="/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-common"/>
+    <property name="os.arch" value="x86_64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.library.path" value="/Users/fborriello/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vm.version" value="11.0.5+10-LTS"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="maven.repo.local" value="/Users/fborriello/.m2/repository"/>
+    <property name="java.class.version" value="55.0"/>
+  </properties>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0.175"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0.001"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0.001"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0.001"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0.001"/>
+  <testcase name="testDefaultValueShouldReturnTheExpectedResult" classname="com.hotels.transformer.base.DefaultsTest" time="0"/>
+  <testcase name="testGetConstraintViolationsWorksAsExpected" classname="com.hotels.transformer.validator.ValidatorTest" time="0.566"/>
+  <testcase name="testGetConstraintViolationsWorksAsExpected" classname="com.hotels.transformer.validator.ValidatorTest" time="0.042"/>
+  <testcase name="testNotNullRaisesAnExceptionWhenTheGivenObjectIsNull" classname="com.hotels.transformer.validator.ValidatorTest" time="0"/>
+  <testcase name="testNotNullRaisesAnExceptionWhenTheGivenObjectIsNull" classname="com.hotels.transformer.validator.ValidatorTest" time="0"/>
+  <testcase name="testThatNoExceptionAreThrownWhenTheGivenObjectIsNotNullEvenWithoutACustomMessage" classname="com.hotels.transformer.validator.ValidatorTest" time="0"/>
+  <testcase name="testThatNoExceptionAreThrownWhenTheGivenObjectIsNotNullEvenWithoutACustomMessage" classname="com.hotels.transformer.validator.ValidatorTest" time="0"/>
+  <testcase name="testValidateDoesNotThrowsExceptionWhenTheBeanIsValid" classname="com.hotels.transformer.validator.ValidatorTest" time="0.001"/>
+  <testcase name="testValidateThrowsExceptionWhenTheBeanIsInvalid" classname="com.hotels.transformer.validator.ValidatorTest" time="0.001"/>
+  <testcase name="testGetCacheReturnsACacheManagerInstance" classname="com.hotels.transformer.cache.CacheManagerFactoryTest" time="0"/>
+  <testcase name="testGetCacheThrowsExceptionIfTheCacheNameIsNull" classname="com.hotels.transformer.cache.CacheManagerFactoryTest" time="0"/>
+  <testcase name="testCacheObjectStoresTheDefaultValueIfTheGivenObjectIsNull" classname="com.hotels.transformer.cache.CacheManagerTest" time="0.004"/>
+  <testcase name="testCacheObjectStoresTheGivenObjectWithTheGivenKey" classname="com.hotels.transformer.cache.CacheManagerTest" time="0"/>
+  <testcase name="testRemoveFromCacheRemovesTheObject" classname="com.hotels.transformer.cache.CacheManagerTest" time="0.001"/>
+  <testcase name="testRemoveMatchingKeysFromCacheRemovesTheObject" classname="com.hotels.transformer.cache.CacheManagerTest" time="0"/>
+  <testcase name="testAllParameterAnnotatedWithWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.01"/>
+  <testcase name="testAllParameterAnnotatedWithWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testAreParameterNamesAvailableWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.041"/>
+  <testcase name="testAreParameterNamesAvailableWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetAllArgsConstructorWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetBuildMethodReturnsTheBuildMethod" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.037"/>
+  <testcase name="testGetBuildMethodThrowsExceptionIfMethodIsMissing" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.009"/>
+  <testcase name="testGetBuildMethodThrowsExceptionIfMethodIsMissing" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetClassTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.038"/>
+  <testcase name="testGetClassTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.004"/>
+  <testcase name="testGetClassTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetConcreteClassWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.002"/>
+  <testcase name="testGetConcreteClassWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetConcreteClassWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetConcreteClassWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.015"/>
+  <testcase name="testGetConcreteClassWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetConstructorParameters" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.071"/>
+  <testcase name="testGetDeclaredClassesWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetDeclaredClassesWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetDeclaredFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.022"/>
+  <testcase name="testGetDeclaredFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetDeclaredFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetDefaultTypeValueWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.002"/>
+  <testcase name="testGetFieldClassWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.097"/>
+  <testcase name="testGetGetterMethodsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.003"/>
+  <testcase name="testGetGetterMethodsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetGetterMethodsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetGetterMethodsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetInstanceRaisesAnInstanceCreationExceptionIfAnErrorOccurs" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.003"/>
+  <testcase name="testGetNoArgsConstructorThrowsExceptionIfTheConstructorIsMissing" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.002"/>
+  <testcase name="testGetNoArgsConstructorWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetNotFinalFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.002"/>
+  <testcase name="testGetNotFinalFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetPrivateFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetPrivateFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetPrivateFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetPrivateFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetPrivateFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetPrivateFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetPrivateFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetPrivateFinalFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.002"/>
+  <testcase name="testGetPrivateFinalFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetPrivateFinalFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testGetSetterMethodsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.003"/>
+  <testcase name="testGetSetterMethodsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetTotalFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.01"/>
+  <testcase name="testGetTotalFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testHasAccessibleConstructorsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testHasAccessibleConstructorsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testHasFieldWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testHasFieldWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testHasPrivateFinalFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testHasPrivateFinalFieldsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testHasSetterMethodsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.002"/>
+  <testcase name="testHasSetterMethodsWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsBigDecimalWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsBigDecimalWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsBigIntegerWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsBigIntegerWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsBiteArrayWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsBiteArrayWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsPrimitiveArrayTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsPrimitiveArrayTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsPrimitiveArrayTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsPrimitiveArrayTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsPrimitiveArrayTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsPrimitiveArrayTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsPrimitiveArrayTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsPrimitiveArrayTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsPrimitiveArrayTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsPrimitiveOrSpecialTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.002"/>
+  <testcase name="testIsPrimitiveOrSpecialTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsPrimitiveOrSpecialTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsPrimitiveOrSpecialTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsPrimitiveTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsPrimitiveTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsPrimitiveTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsPrimitiveTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsPrimitiveTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsPrimitiveTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsPrimitiveTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsSpecialTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsSpecialTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsSpecialTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsSpecialTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsSpecialTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsSpecialTypeWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testIsStringWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0.001"/>
+  <testcase name="testIsStringWorksAsExpected" classname="com.hotels.transformer.utils.ClassUtilsTest" time="0"/>
+  <testcase name="testGetArrayTypeWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testGetClassDeclaredFieldThrowsTheRightException" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.013"/>
+  <testcase name="testGetDeclaredFieldRaisesAnExceptionIfTheFieldDoesNotExists" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testGetDeclaredFieldTypeWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testGetDeclaredFieldWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testGetDeclaredFieldWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testGetFieldAnnotationWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.015"/>
+  <testcase name="testGetFieldAnnotationWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testGetFieldValueCatchesRuntimeException" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.139"/>
+  <testcase name="testGetFieldValueDirectAccessThrowsExceptionIfTheFieldDoesNotExists" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testGetFieldValueDirectAccessThrowsExceptionIfTheFieldDoesNotExists" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testGetFieldValueDirectAccessWorksAsExpected" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testGetFieldValueThrowsExceptionIfTheFieldDoesNotExists" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.006"/>
+  <testcase name="testGetFieldValueWithAGivenFieldWorksAsExpected" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testGetFieldValueWorksAsExpected" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testGetFieldValueWorksAsExpected" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testGetFieldValueWorksAsExpected" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testGetGenericFieldTypeWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testGetGenericFieldTypeWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.056"/>
+  <testcase name="testGetGetterMethodPrefixWorksAsExpected" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testGetGetterMethodPrefixWorksAsExpected" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testGetGetterMethodPrefixWorksAsExpected" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testGetGetterMethodThrowsExceptionIfTheMethodDoesNotExists" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testGetGetterMethodWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testGetMapGenericTypeThrowsIllegalArgumentExceptionWhenTheGivenTypeIsNotAMap" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.018"/>
+  <testcase name="testGetParameterAnnotationReturnsNullIfTheAnnotationDoesNotExists" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.003"/>
+  <testcase name="testGetParameterAnnotationReturnsTheAnnotationIfExists" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.209"/>
+  <testcase name="testGetSetterMethodForFieldThrowsExceptionIfTheMethodDoesNotExists" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testGetSetterMethodForFieldWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testHandleReflectionExceptionThrowsIllegalStateExceptionWhenGivenExceptionIsIllegalAccessException" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testHandleReflectionExceptionThrowsMissingMethodExceptionWhenGivenExceptionIsNoSuchMethodException" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testHandleReflectionExceptionThrowsRuntimeExceptionWhenGivenExceptionIsRuntimeException" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testHandleReflectionExceptionThrowsUndeclaredThrowableExceptionWhenGivenExceptionIsInvalidBeanException" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testInvokeMethodCorrectlyHandlesExceptions" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.002"/>
+  <testcase name="testInvokeMethodCorrectlyHandlesExceptions" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.023"/>
+  <testcase name="testInvokeMethodRaisesAnIllegalArgumentExceptionIfTheArgumentIsWrong" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testInvokeMethodWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testMapGenericFieldTypeWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.054"/>
+  <testcase name="testMapGenericFieldTypeWorksProperlyForUnparametrizedMap" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.004"/>
+  <testcase name="testSetFieldValueInvokesTheSetterMethodInCaseAnExceptionIsRaised" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.006"/>
+  <testcase name="testSetFieldValueRaiseAnExceptionIfTheValueToSetIsNotValid" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testSetFieldValueTriesToInjectThroughSetterMethodInCaseOfErrors" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0"/>
+  <testcase name="testSetFieldValueWorksProperly" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.001"/>
+  <testcase name="testThatTheReturnedMethodFromGetGetterMethodReturnsTheExpectedValue" classname="com.hotels.transformer.utils.ReflectionUtilsTest" time="0.002"/>
+</testsuite>

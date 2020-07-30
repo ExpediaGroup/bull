@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidatorImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BULL - Common</a> &gt; <a href="index.source.html" class="el_package">com.hotels.transformer.validator</a> &gt; <span class="el_source">ValidatorImpl.java</span></div><h1>ValidatorImpl.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (C) 2019-2020 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.hotels.transformer.validator;
+
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+import static javax.validation.Validation.buildDefaultValidatorFactory;
+
+import static org.apache.commons.lang3.StringUtils.SPACE;
+
+import static com.hotels.transformer.cache.CacheManagerFactory.getCacheManager;
+import static com.hotels.transformer.constant.Punctuation.DOT;
+import static com.hotels.transformer.constant.Punctuation.SEMICOLON;
+
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+
+import javax.validation.ConstraintViolation;
+
+import com.hotels.transformer.cache.CacheManager;
+import com.hotels.transformer.error.InvalidBeanException;
+
+/**
+ * Java Bean validation class.
+ * It offers the possibility to validate a given Java Bean against a set of defined constraints.
+ */
+public class ValidatorImpl implements Validator {
+    /**
+     * CacheManager class {@link CacheManager}.
+     */
+    private final CacheManager cacheManager;
+
+    /**
+     * Default constructor.
+     */
+<span class="fc" id="L52">    public ValidatorImpl() {</span>
+<span class="fc" id="L53">        this.cacheManager = getCacheManager(&quot;validatorImpl&quot;);</span>
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final &lt;K&gt; Set&lt;ConstraintViolation&lt;Object&gt;&gt; getConstraintViolations(final K k) {
+<span class="fc" id="L61">        return getValidator().validate(k);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final &lt;K&gt; List&lt;String&gt; getConstraintViolationsMessages(final K k) {
+<span class="fc" id="L69">        return getConstraintViolations(k).stream()</span>
+<span class="fc" id="L70">                .map(getConstraintViolationMessage())</span>
+<span class="fc" id="L71">                .collect(toList());</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final &lt;K&gt; void validate(final K k) {
+<span class="fc" id="L79">        final Set&lt;ConstraintViolation&lt;Object&gt;&gt; constraintViolations = getConstraintViolations(k);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (!constraintViolations.isEmpty()) {</span>
+<span class="fc" id="L81">            final String errors = constraintViolations.stream()</span>
+<span class="fc" id="L82">                    .map(getConstraintViolationMessage())</span>
+<span class="fc" id="L83">                    .collect(joining(SEMICOLON.getSymbol()));</span>
+<span class="fc" id="L84">            throw new InvalidBeanException(errors);</span>
+        }
+<span class="fc" id="L86">    }</span>
+
+    /**
+     * Creates a function that, given a constraint error, builds a violation message.
+     * @return the constant violation message
+     */
+    private Function&lt;ConstraintViolation&lt;Object&gt;, String&gt; getConstraintViolationMessage() {
+<span class="fc" id="L93">        return cv -&gt; cv.getRootBeanClass().getName()</span>
+<span class="fc" id="L94">                + DOT.getSymbol()</span>
+<span class="fc" id="L95">                + cv.getPropertyPath()</span>
+                + SPACE
+<span class="fc" id="L97">                + cv.getMessage();</span>
+    }
+
+    /**
+     * Creates the validator.
+     * @return a {@link javax.validation.Validator} instance.
+     */
+    private javax.validation.Validator getValidator() {
+<span class="fc" id="L105">        String cacheKey = &quot;BeanValidator&quot;;</span>
+<span class="fc" id="L106">        return cacheManager.getFromCache(cacheKey, javax.validation.Validator.class)</span>
+<span class="fc" id="L107">                .orElseGet(() -&gt; {</span>
+<span class="fc" id="L108">                    javax.validation.Validator validator = buildDefaultValidatorFactory().getValidator();</span>
+<span class="fc" id="L109">                    cacheManager.cacheObject(cacheKey, validator);</span>
+<span class="fc" id="L110">                    return validator;</span>
+                });
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

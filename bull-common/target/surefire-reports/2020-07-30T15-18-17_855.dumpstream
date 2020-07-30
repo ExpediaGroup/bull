@@ -1,0 +1,15 @@
+# Created at 2020-07-30T15:18:23.049
+WARNING: An illegal reflective access operation has occurred
+
+# Created at 2020-07-30T15:18:23.049
+WARNING: Illegal reflective access by com.hotels.transformer.utils.ReflectionUtils (file:/Users/fborriello/Development/GitHub/hotelsDotCom/bull/bull-common/target/classes/) to field java.lang.reflect.Parameter.name
+
+# Created at 2020-07-30T15:18:23.049
+WARNING: Please consider reporting this to the maintainers of com.hotels.transformer.utils.ReflectionUtils
+
+# Created at 2020-07-30T15:18:23.050
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created at 2020-07-30T15:18:23.050
+WARNING: All illegal access operations will be denied in a future release
+
