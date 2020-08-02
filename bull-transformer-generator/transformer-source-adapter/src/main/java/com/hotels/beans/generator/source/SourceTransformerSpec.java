@@ -84,7 +84,8 @@ public class SourceTransformerSpec {
      * @return a JavaDoc comment
      */
     private CodeBlock docFor(final Class<?> source, final Class<?> destination) {
-        return CodeBlock.of("A {@link $T} that can map an instance of $T to a new instance of $T.",
+        return CodeBlock.of(
+                "A {@link $T} that can map an instance of {@code $T} to a new instance of {@code $T}.",
                 Transformer.class, source, destination);
     }
 }
