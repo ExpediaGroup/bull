@@ -32,7 +32,7 @@ import lombok.AllArgsConstructor;
  * and contains all the data needed to perform this operation.
  */
 @AllArgsConstructor(access = PROTECTED)
-final class TransformerFile {
+public final class TransformerFile {
     /**
      * The transformer source model.
      */
@@ -54,7 +54,7 @@ final class TransformerFile {
      * @return the path where this source is written
      * @throws IOException if a write error occurs
      */
-    Path write() throws IOException {
+    public Path write() throws IOException {
         return JavaFile.builder(packageName, typeSpec)
                 .skipJavaLangImports(true)
                 .build()

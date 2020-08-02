@@ -27,6 +27,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeSpec;
 
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 
 /**
  * A decorator of {@link TransformerSpec} which adds useful Javadoc and metadata to the transformer model.
@@ -37,11 +38,13 @@ public class SourceTransformerSpec {
     /**
      * The transformer model to decorate for producing a source file.
      */
+    @NonNull
     private final TransformerSpec spec;
 
     /**
      * The clock to use for marking generation timestamps.
      */
+    @NonNull
     private final Clock clock;
 
     /**
