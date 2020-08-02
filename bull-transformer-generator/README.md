@@ -27,7 +27,7 @@ TypeSpec transformer = spec.build(Source.class, Destination.class);
 2. **Immutable *(TODO)*** - destination is instantiated using the longest constructor and arguments are mapped from available source getters.
 3. **Mixed *(TODO)*** - destination is initialized as in the *Immutable* case and additional properties are mapped from available source getters to destination setters.
 
-### Source Adapter *(TODO)*
+### Source Adapter
 
 This module is responsible for generating source files from transformer models and saving them to the filesystem.
 It can be used to generate transformer classes at compile-time.
