@@ -37,12 +37,12 @@ public class TransformerSourceAdapter {
     /**
      * The default source path if none is specified.
      */
-    private static final Path DEFAULT_PATH = Paths.get("generated-sources/bull");
+    static final Path DEFAULT_PATH = Paths.get("generated-sources/bull");
 
     /**
      * The default transformer package if none is specified.
      */
-    private static final String DEFAULT_PACKAGE = Transformer.class.getPackageName();
+    static final String DEFAULT_PACKAGE = Transformer.class.getPackageName();
 
     /**
      * The path where to write the generated transformer sources.
@@ -57,7 +57,10 @@ public class TransformerSourceAdapter {
     @Builder.Default
     private final String packageName = DEFAULT_PACKAGE;
 
-    private final SourceTransformerSpec spec;
+    /**
+     * The Transformer model for generating source code.
+     */
+    private final TransformerSpec spec;
 
     /**
      * Create a new file containing the source of a {@link Transformer} from {@code source} to {@code destination}.
@@ -68,6 +71,8 @@ public class TransformerSourceAdapter {
      * @return a new Transformer source file
      */
     public <A, B> TransformerFile newTransformerFile(final Class<A> source, final Class<B> destination) {
-        return new TransformerFile(spec.build(source, destination), basePath, packageName);
+        return new TransformerFile(
+                new SourceTransformerSpec(spec).build(source, destination), basePath, packageName
+        );
     }
 }
