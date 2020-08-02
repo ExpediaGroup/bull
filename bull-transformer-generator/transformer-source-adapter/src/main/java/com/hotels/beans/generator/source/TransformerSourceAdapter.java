@@ -28,7 +28,7 @@ import lombok.Builder;
  * A source adapter for {@link TransformerSpec} that creates a readable source file
  * representation from the model.
  * <br>
- * This component is for internal usage in Bull, as it's intended as a low-level wrapper
+ * This component is for internal usage in Bull, it's intended as a low-level wrapper
  * for compile-time conversion of models. Clients should prefer higher level interfaces
  * such as {@code TransformerRegistry}.
  */
