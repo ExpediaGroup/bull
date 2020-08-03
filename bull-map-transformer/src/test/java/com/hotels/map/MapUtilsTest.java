@@ -17,7 +17,7 @@
 package com.hotels.map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
@@ -40,7 +40,7 @@ public class MapUtilsTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**

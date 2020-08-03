@@ -17,7 +17,7 @@
 package com.hotels.beans;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -57,7 +57,7 @@ public class BeanUtilsTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
