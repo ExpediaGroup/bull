@@ -123,6 +123,7 @@ mvnw.cmd clean install -P relaxed
 * [Primitive Type conversion](https://github.com/HotelsDotCom/bull#primitive-type-object-converter)
 * [Map Transformation](https://hotelsdotcom.github.io/bull/transformer/map/samples.html)
 * [Supported Builder Pattern](https://hotelsdotcom.github.io/bull/transformer/bean/builder.html)
+* [How to use it in Kotlin](https://hotelsdotcom.github.io/bull/kotlin.html)
 
 ## Bean transformation samples
 
