@@ -21,7 +21,7 @@ import static java.math.BigInteger.ZERO;
 import static java.nio.ByteBuffer.wrap;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -67,7 +67,7 @@ public class ConverterTest extends AbstractConversionTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**

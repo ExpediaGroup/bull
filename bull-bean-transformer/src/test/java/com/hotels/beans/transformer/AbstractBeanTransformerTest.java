@@ -16,7 +16,7 @@
 
 package com.hotels.beans.transformer;
 
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
@@ -53,6 +53,6 @@ public abstract class AbstractBeanTransformerTest extends AbstractTransformerTes
      */
     @BeforeMethod
     void beforeMethod() {
-        initMocks(this);
+        openMocks(this);
     }
 }

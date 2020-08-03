@@ -22,7 +22,7 @@ import static java.util.Objects.nonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import static com.hotels.transformer.utils.ClassUtils.BUILD_METHOD_NAME;
 
@@ -121,7 +121,7 @@ public class ClassUtilsTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**

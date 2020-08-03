@@ -17,7 +17,7 @@
 package com.hotels.beans.conversion.processor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -57,7 +57,7 @@ public class ConversionProcessorFactoryTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
