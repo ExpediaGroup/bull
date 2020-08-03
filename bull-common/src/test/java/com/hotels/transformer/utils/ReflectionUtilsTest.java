@@ -29,7 +29,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import static com.hotels.transformer.constant.MethodPrefix.GET;
 import static com.hotels.transformer.constant.MethodPrefix.IS;
@@ -109,7 +109,7 @@ public class ReflectionUtilsTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**

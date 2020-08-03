@@ -19,7 +19,7 @@ package com.hotels.beans.conversion.processor.impl;
 import static java.lang.String.valueOf;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -45,7 +45,7 @@ public class StringConversionTest extends AbstractConversionTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     @Test

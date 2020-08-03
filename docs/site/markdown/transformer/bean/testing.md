@@ -71,7 +71,7 @@ public class SampleClass {
 The test class will be:
 ```java
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
 
@@ -102,7 +102,7 @@ public class SampleClassTest {
      */
     @Before
     public void beforeMethod() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
@@ -187,7 +187,7 @@ public class SampleClass {
 The test class will be:
 ```java
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
 import static org.mockito.ArgumentMatchers.any;
@@ -219,7 +219,7 @@ public class SampleClassTest {
      */
     @Before
     public void beforeMethod() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
@@ -307,7 +307,7 @@ public class SampleClass {
 The test class will be:
 ```java
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.lang.reflect.Field;
 
@@ -333,7 +333,7 @@ public class SampleClassTest {
      */
     @Before
     public void beforeMethod() {
-        initMocks(this);
+        openMocks(this);
         // injects a real BeanUtils instance into the test class
         setFieldValue(underTest, "beanUtils", new BeanUtils());
     }

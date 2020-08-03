@@ -19,7 +19,7 @@ package com.hotels.beans.populator;
 import static java.util.Objects.nonNull;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.util.List;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class PopulatorFactoryTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
