@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import static com.hotels.beans.generator.bytecode.TransformerBytecodeAdapter.DEFAULT_PACKAGE;
 
@@ -61,7 +61,7 @@ public class TransformerBytecodeAdapterTest {
 
     @BeforeMethod
     private void beforeMethod() {
-        initMocks(this);
+        openMocks(this);
         underTest = TransformerBytecodeAdapter.builder()
                 .spec(spec)
                 .build();
