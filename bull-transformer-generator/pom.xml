@@ -15,10 +15,11 @@
     </parent>
 
     <properties>
-        <javapoet.version>1.12.1</javapoet.version>
-        <compiler.version>1.0</compiler.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
+        <javapoet.version>1.12.1</javapoet.version>
+        <compiler.version>1.0</compiler.version>
+        <jimfs.version>1.1</jimfs.version>
     </properties>
 
     <modules>
@@ -49,6 +50,11 @@
                 <groupId>com.itranswarp</groupId>
                 <artifactId>compiler</artifactId>
                 <version>${compiler.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.jimfs</groupId>
+                <artifactId>jimfs</artifactId>
+                <version>${jimfs.version}</version>
             </dependency>
             <!--test dependencies-->
             <dependency>

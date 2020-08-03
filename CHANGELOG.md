@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 #### Added
 * Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
 * Added transformer generation at run-time in module `transformer-bytecode-adapter`.
+* Added transformer source adapter which take the transformers generated from the Core module and decorate them to produce readable source file representations in module `transformer-source-adapter`.
 
 ### [1.7.3] 2020.06.09
 #### Changed
