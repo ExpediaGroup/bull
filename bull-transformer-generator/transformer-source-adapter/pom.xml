@@ -12,6 +12,28 @@
         <version>2.0.0-jdk8-SNAPSHOT</version>
     </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.hotels.beans</groupId>
+            <artifactId>transformer-generator-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hotels.beans</groupId>
+            <artifactId>transformer-generator-core</artifactId>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.jimfs</groupId>
+            <artifactId>jimfs</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
