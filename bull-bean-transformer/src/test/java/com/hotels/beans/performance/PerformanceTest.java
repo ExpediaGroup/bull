@@ -22,7 +22,7 @@ import static java.util.Collections.singletonList;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -95,7 +95,7 @@ public class PerformanceTest {
     @BeforeClass
     public void beforeClass() {
         initObjects();
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
