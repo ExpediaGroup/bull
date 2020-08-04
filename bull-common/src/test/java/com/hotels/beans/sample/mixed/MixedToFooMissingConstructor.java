@@ -21,6 +21,7 @@ import java.math.BigInteger;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -28,12 +29,9 @@ import lombok.ToString;
  */
 @Getter
 @ToString
+@RequiredArgsConstructor
 public class MixedToFooMissingConstructor {
     @NotNull
     public BigInteger id;
     private final String name;
-
-    public MixedToFooMissingConstructor(final String name) {
-        this.name = name;
-    }
 }

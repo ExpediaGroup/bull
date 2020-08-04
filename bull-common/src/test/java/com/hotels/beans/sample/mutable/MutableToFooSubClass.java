@@ -20,20 +20,17 @@ import java.math.BigDecimal;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Sample mutable object extending a class.
  */
 @Getter
 @Setter
+@ToString
 public class MutableToFooSubClass extends MutableToFoo {
     private String surname;
     private int phone;
     private boolean check;
     private BigDecimal amount;
-
-    @Override
-    public String toString() {
-        return "MutableToFooSubClass";
-    }
 }
