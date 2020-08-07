@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.mockito.Mock;
@@ -50,9 +51,9 @@ public class TransformerSourceAdapterTest {
     @Test
     public void shouldCreateNewTransformerFile() {
         // GIVEN
-        var basePath = Paths.get("./target");
-        var packageName = "foo.bar";
-        var transformerSourceAdapter = TransformerSourceAdapter.builder()
+        Path basePath = Paths.get("./target");
+        String packageName = "foo.bar";
+        TransformerSourceAdapter transformerSourceAdapter = TransformerSourceAdapter.builder()
                 .basePath(basePath)
                 .packageName(packageName)
                 .spec(spec)
@@ -69,7 +70,7 @@ public class TransformerSourceAdapterTest {
     @Test
     public void shouldCreateNewTransformerFileWithDefaultValues() {
         // GIVEN
-        var transformerSourceAdapter = TransformerSourceAdapter.builder()
+        TransformerSourceAdapter transformerSourceAdapter = TransformerSourceAdapter.builder()
                 .spec(spec)
                 .build();
 

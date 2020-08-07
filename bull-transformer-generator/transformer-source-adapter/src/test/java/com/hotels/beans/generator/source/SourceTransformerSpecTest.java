@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.util.List;
 
 import javax.annotation.processing.Generated;
 
@@ -91,7 +92,7 @@ public class SourceTransformerSpecTest {
         TypeSpec sourceModel = sourceTransformerSpec.build(Source.class, Destination.class);
 
         // THEN
-        var expectedTimeStamp = list(CodeBlock.of(clock.instant().toString()));
+        List<CodeBlock> expectedTimeStamp = list(CodeBlock.of(clock.instant().toString()));
         assertThat(sourceModel.annotations)
                 .anyMatch(annotationSpec -> annotationSpec.members.containsValue(expectedTimeStamp));
     }

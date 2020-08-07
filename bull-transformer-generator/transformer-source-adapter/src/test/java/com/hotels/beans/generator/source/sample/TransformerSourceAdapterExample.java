@@ -19,18 +19,22 @@ package com.hotels.beans.generator.source.sample;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import com.hotels.beans.generator.core.TransformerSpec;
 import com.hotels.beans.generator.core.mapping.MappingCodeFactory;
 import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;
+import com.hotels.beans.generator.source.TransformerFile;
 import com.hotels.beans.generator.source.TransformerSourceAdapter;
 
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Example of generating and using a Transformer at runtime.
  */
+@Slf4j
 @NoArgsConstructor(access = PRIVATE)
 public final class TransformerSourceAdapterExample {
     /**
@@ -40,20 +44,20 @@ public final class TransformerSourceAdapterExample {
      */
     public static void main(final String[] args) {
         // create a transformer model
-        var spec = new TransformerSpec(MappingCodeFactory.newInstance());
+        TransformerSpec spec = new TransformerSpec(MappingCodeFactory.newInstance());
         // create a bytecode adapter for the model
         // with default destination path and Java package
-        var source = TransformerSourceAdapter.builder()
+        TransformerSourceAdapter source = TransformerSourceAdapter.builder()
                 .spec(spec)
                 .build();
         // generate a new Transformer source file
-        var transformerFile = source.newTransformerFile(Source.class, Destination.class);
+        TransformerFile transformerFile = source.newTransformerFile(Source.class, Destination.class);
         // write file to disk
         try {
-            var sourcePath = transformerFile.write();
-            System.out.println("find generated source at: " + sourcePath.toAbsolutePath());
+            Path sourcePath = transformerFile.write();
+            log.info("find generated source at: {}", sourcePath.toAbsolutePath());
         } catch (IOException e) {
-            System.err.println("could not write source: " + e);
+            log.error("could not write source: {}", e.getMessage(), e);
         }
     }
 }
