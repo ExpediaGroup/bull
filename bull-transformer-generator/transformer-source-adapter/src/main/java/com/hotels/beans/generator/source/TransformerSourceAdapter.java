@@ -42,7 +42,7 @@ public class TransformerSourceAdapter {
     /**
      * The default transformer package if none is specified.
      */
-    static final String DEFAULT_PACKAGE = Transformer.class.getPackageName();
+    static final String DEFAULT_PACKAGE = Transformer.class.getPackage().getName();
 
     /**
      * The path where to write the generated transformer sources.

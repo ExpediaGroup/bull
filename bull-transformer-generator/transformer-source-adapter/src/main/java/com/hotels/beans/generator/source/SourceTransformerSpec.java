@@ -18,8 +18,7 @@ package com.hotels.beans.generator.source;
 
 import java.time.Clock;
 
-import javax.annotation.processing.Generated;
-
+import com.hotels.beans.generator.annotation.processing.Generated;
 import com.hotels.beans.generator.core.Transformer;
 import com.hotels.beans.generator.core.TransformerSpec;
 import com.squareup.javapoet.AnnotationSpec;

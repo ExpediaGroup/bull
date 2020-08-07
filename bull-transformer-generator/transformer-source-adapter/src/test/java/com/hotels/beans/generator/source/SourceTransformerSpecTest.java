@@ -28,8 +28,6 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.util.List;
 
-import javax.annotation.processing.Generated;
-
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -39,6 +37,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.hotels.beans.generator.annotation.processing.Generated;
 import com.hotels.beans.generator.core.TransformerSpec;
 import com.hotels.beans.generator.core.sample.javabean.Destination;
 import com.hotels.beans.generator.core.sample.javabean.Source;

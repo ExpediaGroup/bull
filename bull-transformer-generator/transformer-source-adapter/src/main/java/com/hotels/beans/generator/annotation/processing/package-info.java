@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Example usage of the source adapter.
+ * Contains the source adapter required annotation.
  */
 
-package com.hotels.beans.generator.source.sample;
+package com.hotels.beans.generator.annotation.processing;
