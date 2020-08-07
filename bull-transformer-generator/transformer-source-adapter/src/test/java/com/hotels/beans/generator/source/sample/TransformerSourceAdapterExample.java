@@ -27,10 +27,12 @@ import com.hotels.beans.generator.core.sample.javabean.Source;
 import com.hotels.beans.generator.source.TransformerSourceAdapter;
 
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Example of generating and using a Transformer at runtime.
  */
+@Slf4j
 @NoArgsConstructor(access = PRIVATE)
 public final class TransformerSourceAdapterExample {
     /**
@@ -51,9 +53,9 @@ public final class TransformerSourceAdapterExample {
         // write file to disk
         try {
             var sourcePath = transformerFile.write();
-            System.out.println("find generated source at: " + sourcePath.toAbsolutePath());
+            log.info("find generated source at: {}", sourcePath.toAbsolutePath());
         } catch (IOException e) {
-            System.err.println("could not write source: " + e);
+            log.error("could not write source: {}", e.getMessage(), e);
         }
     }
 }
