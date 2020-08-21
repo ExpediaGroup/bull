@@ -26,6 +26,7 @@ import com.hotels.beans.sample.immutable.ImmutableToSubFoo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Sample mixed object.
@@ -33,6 +34,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class MixedToFoo {
     @NotNull
     public BigInteger id;
@@ -40,9 +42,4 @@ public class MixedToFoo {
     private final List<String> list;
     private final List<ImmutableToSubFoo> nestedObjectList;
     private ImmutableToSubFoo nestedObject;
-
-    @Override
-    public String toString() {
-        return "MixedToFoo";
-    }
 }

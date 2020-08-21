@@ -21,21 +21,18 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Sample mutable object.
  */
 @Getter
 @Setter
+@ToString
 public class MutableToFoo {
     private String name;
     private BigInteger id;
     private List<String> list;
     private List<MutableToSubFoo> nestedObjectList;
     private MutableToSubFoo nestedObject;
-
-    @Override
-    public String toString() {
-        return "MutableToFoo";
-    }
 }
