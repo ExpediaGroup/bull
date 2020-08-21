@@ -23,12 +23,14 @@ import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Sample immutable object.
  */
 @AllArgsConstructor
 @Getter
+@ToString
 public class ImmutableToFoo {
     private final String name;
     @NotNull
@@ -39,9 +41,4 @@ public class ImmutableToFoo {
     private final List<ImmutableToSubFoo> nestedObjectList;
     @NotNull
     private final ImmutableToSubFoo nestedObject;
-
-    @Override
-    public String toString() {
-        return "ImmutableToFoo";
-    }
 }
