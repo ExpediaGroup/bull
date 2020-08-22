@@ -748,45 +748,43 @@ public final class ClassUtils {
 
     /**
      * Retrieves all the setters method for the given class.
-     * @param clazz the clazz containing the methods.
+     * @param clazz the class containing the methods.
      * @return all the class setter methods
      */
-    @SuppressWarnings("unchecked")
     public List<Method> getSetterMethods(final Class<?> clazz) {
-        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
-        final String cacheKey = "SetterMethods-" + clazz.getName();
-        return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
-            final List<Method> setterMethods = new LinkedList<>();
-            if (hasSuperclass(clazz.getSuperclass())) {
-                setterMethods.addAll(getSetterMethods(clazz.getSuperclass()));
-            }
-            setterMethods.addAll(stream(getDeclaredMethods(clazz))
-                    .filter(reflectionUtils::isSetter)
-                    .collect(toList()));
-            CACHE_MANAGER.cacheObject(cacheKey, setterMethods);
-            return setterMethods;
-        });
+        return getMethods(clazz, "SetterMethods", reflectionUtils::isSetter);
     }
 
     /**
-     * Retrieves all the setters method for the given class.
-     * @param clazz the clazz containing the methods.
-     * @return all the class setter methods
+     * Retrieves all the getters method for the given class.
+     * @param clazz the class containing the methods.
+     * @return all the class getter methods
+     */
+    public List<Method> getGetterMethods(final Class<?> clazz) {
+        return getMethods(clazz, "GetterMethods", reflectionUtils::isGetter);
+    }
+
+    /**
+     * Retrieves all the class methods matching to the the given filter.
+     * @param clazz the class containing the methods.
+     * @param cacheKeyPrefix the prefix to adopt for the cache key
+     * @param methodFilter the filter to apply to the retrieved methods
+     * @return the class methods matching the filter
      */
     @SuppressWarnings("unchecked")
-    public List<Method> getGetterMethods(final Class<?> clazz) {
+    private List<Method> getMethods(final Class<?> clazz, final String cacheKeyPrefix, final Predicate<Method> methodFilter) {
         notNull(clazz, CLAZZ_CANNOT_BE_NULL);
-        final String cacheKey = "GetterMethods-" + clazz.getName();
+        final String cacheKey = cacheKeyPrefix + "-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
-            final List<Method> setterMethods = new LinkedList<>();
+            final List<Method> methods = new LinkedList<>();
             if (hasSuperclass(clazz.getSuperclass())) {
-                setterMethods.addAll(getGetterMethods(clazz.getSuperclass()));
+                methods.addAll(getMethods(clazz.getSuperclass(), cacheKeyPrefix, methodFilter));
             }
-            setterMethods.addAll(stream(getDeclaredMethods(clazz))
-                    .filter(reflectionUtils::isGetter)
+            methods.addAll(stream(getDeclaredMethods(clazz))
+                    .filter(methodFilter)
                     .collect(toList()));
-            CACHE_MANAGER.cacheObject(cacheKey, setterMethods);
-            return setterMethods;
+            CACHE_MANAGER.cacheObject(cacheKey, methods);
+            return methods;
         });
     }
 
