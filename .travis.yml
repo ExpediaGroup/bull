@@ -12,8 +12,7 @@ env:
     # GPG_PASSPHRASE
     - secure: bFylqtr43v1wetXH/b1RJDmsDzwn6ILfFnw0rVFVKdpYndoyL3J05A3qYdZ+K1cePP7cYnetfOlMnv/e1LDGSzQ/C2RmPgEZIPRozxg0t9S+QU/G+Ro5m1VhrEDOpJv2A7IxY7WBgWEhChIKTZlDK4c2rzXDJ/Z799QQRmiOu04zGVBUjPcbU01QlFF71e3Vf5sovBPSWPifmqyKHZPquqXbY5Jo36MDAO5b3aD/rk/6nkzB+b10fAEJ/9sXX14S0ItTc7CWkjGdqjMsu9lMYUZ8Au2YgBtGAU3XBG30+uhKk7Z2XZj8Ne9QJhPbzzt53bB0loa8pQ+k6NGcCPRoTZOI3tAKKPxXf1sRolE3gYmje1GcREvsXRnZbwfZuayCOBdEXFFZzmijz/H5UgNS5rUwrY+FH6Dl4AZsQvDJdC4nJ4IVo6knRM4yx4ooI47tJBLLQS5cFOTmpYnQdZZLr5s4EPRhFpqSa61a2ZoBzTDl4Jj3M/zZ9xtIajYEdYSZ/wGpErsA/KJbHnP32lukTVG86Ndh4E2xLVVo1U5iwTZA6EsvarHKvEqLGtOYMyC2TqxuTlgzsfuGkonAlj9jx8I51Hjc5NMuamqWl4uLY2nC2BpTY1Gaufb0AJkTfp0W1/yPxaS2SGYo18UDobOGQfDniEe4CiVUkpACj0Jq7kY=
 # Testing compatibility with newer jdk(s)
-jdk:
-  - openjdk11
+jdk: openjdk11
 script: travis_retry mvn clean install jacoco:report-aggregate coveralls:report -DrepoToken=${COVERALLS_TOKEN} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
 install: skip
 jobs:
@@ -27,7 +26,6 @@ jobs:
         - travis_retry mvn clean install -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
     - stage: "Site Build and Quality check"
       name: "Publishing site and performing a code quality check"
-      jdk: openjdk11
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^((?!-jdk8).)*$
       script: skip
       before_deploy:
@@ -44,7 +42,6 @@ jobs:
     ### JDK11 release
     - stage: "JDK11 Release"
       name: "Releasing artifacts for JDK11"
-      jdk: openjdk11
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^((?!-jdk8).)*$
       script: skip
       before_deploy:
