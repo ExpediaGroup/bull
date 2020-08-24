@@ -14,8 +14,6 @@ env:
 # Testing compatibility with newer jdk(s)
 jdk:
   - openjdk11
-  - openjdk12
-  - openjdk13
 script: travis_retry mvn clean install jacoco:report-aggregate coveralls:report -DrepoToken=${COVERALLS_TOKEN} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
 install: skip
 jobs:
