@@ -2,7 +2,8 @@ language: java
 cache:
   directories:
     - $HOME/.m2
-jdk: openjdk11
+jdk:
+  - openjdk11
 env:
   global:
     # HCOM OSS Sonatype jira info
