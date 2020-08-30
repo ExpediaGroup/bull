@@ -33,5 +33,5 @@ import lombok.ToString;
 public class ImmutableToFooSimple {
     private final String name;
     private final BigInteger id;
-    private boolean active;
+    private final boolean active;
 }

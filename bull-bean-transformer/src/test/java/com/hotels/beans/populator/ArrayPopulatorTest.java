@@ -80,9 +80,9 @@ public class ArrayPopulatorTest {
 
         // THEN
         if (genericFieldType == Character.class) {
-            assertThat((char[]) actual).isEqualTo((char[]) array);
+            assertThat((char[]) actual).isEqualTo(array);
         } else if (genericFieldType == Integer.class) {
-            assertThat((int[]) actual).isEqualTo((int[]) array);
+            assertThat((int[]) actual).isEqualTo(array);
         } else if (genericFieldType == Object.class) {
             assertThat((Object[]) actual).isEqualTo(array);
         } else if (genericFieldType == MixedToFooStaticField.class) {
