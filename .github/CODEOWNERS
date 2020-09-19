@@ -5,4 +5,4 @@
 * @HotelsDotCom/bull-committers
 
 # Only some members of Customer Insights can alter the CODEOWNERS file
-.github/CODEOWNERS @HotelsDotCom/bull-admin
+.github/CODEOWNERS @fborriello @HotelsDotCom/bull-admin
