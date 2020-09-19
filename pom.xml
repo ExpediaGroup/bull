@@ -53,9 +53,9 @@
         <apache.commons-lang3.version>3.11</apache.commons-lang3.version>
         <hotels.oss.plugin.config.version>1.3.0</hotels.oss.plugin.config.version>
         <!-- testing dependencies -->
-        <mockito-core.version>3.5.2</mockito-core.version>
+        <mockito-core.version>3.5.11</mockito-core.version>
         <testng.version>7.3.0</testng.version>
-        <assertj-core.version>3.16.1</assertj-core.version>
+        <assertj-core.version>3.17.2</assertj-core.version>
         <!-- validation dependencies -->
         <validation-api.version>2.0.1.Final</validation-api.version>
         <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
@@ -63,7 +63,7 @@
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <glassfish.javax.el.version>2.2.6</glassfish.javax.el.version>
         <!-- JaCoCo & Sonar properties -->
-        <jacoco.version>0.8.5</jacoco.version>
+        <jacoco.version>0.8.6</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
         <jacoco.instructionRatio>0.98</jacoco.instructionRatio>
         <jacoco.methodRatio>1.0</jacoco.methodRatio>
@@ -79,6 +79,7 @@
         <github.global.server>github</github.global.server>
         <maven.site.plugin.version>3.9.1</maven.site.plugin.version>
         <!-- build settings -->
+        <maven.gpg.plugin.version>1.6</maven.gpg.plugin.version>
         <maven.checkstyle.plugin.version>3.1.1</maven.checkstyle.plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
