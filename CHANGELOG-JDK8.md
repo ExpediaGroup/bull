@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 * Added transformer model generation for mutable JavaBeans in module `transformer-generator-core`.
 * Added transformer generation at run-time in module `transformer-bytecode-adapter`.
 
+### [1.7.3-jdk8] 2020.10.07
+#### Changed
+* Provides new utilities methods
+
 ### [1.7.2-jdk8] 2020.06.09
 #### Changed
 * Removes the deprecated method: `setDefaultValueSetEnabled`

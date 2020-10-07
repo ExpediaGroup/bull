@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 * Added transformer generation at run-time in module `transformer-bytecode-adapter`.
 * Added transformer source adapter which take the transformers generated from the Core module and decorate them to produce readable source file representations in module `transformer-source-adapter`.
 
+### [1.7.4] 2020.10.07
+#### Changed
+* Provides new utilities methods
+
 ### [1.7.3] 2020.06.09
 #### Changed
 * Removes the deprecated method: `setDefaultValueSetEnabled`
