@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 * Added transformer generation at run-time in module `transformer-bytecode-adapter`.
 * Added transformer source adapter which take the transformers generated from the Core module and decorate them to produce readable source file representations in module `transformer-source-adapter`.
 
+### [1.7.3-jdk8] 2020.10.07
+#### Changed
+* Provides new utilities methods
+
 ### [1.7.2-jdk8] 2020.06.09
 #### Changed
 * Removes the deprecated method: `setDefaultValueSetEnabled`
@@ -28,11 +32,11 @@ All notable changes to this project will be documented in this file.
 * Updated `hotels-oss-parent` version to `5.0.0` (was `4.2.0`).
 * Updated `commons-lang3` version to `3.10` (was `3.9`).
 
-### [1.6.5] 2020.01.21
+### [1.6.4-jdk8] 2020.01.21
 #### Changed
 * Testing dependencies update
 
-### [1.6.4] 2019.12.24
+### [1.6.3.2-jdk8] 2019.12.24
 #### Added
 * Implemented Wildcards types support (see: [Issue 111](https://github.com/HotelsDotCom/bull/issues/111)).
 * Implemented transformation of a field declared with its interface.
@@ -252,3 +256,8 @@ All notable changes to this project will be documented in this file.
 ### [1.0.0] 2019.01.16
 #### Added
 * First `BULL` release.
+
+* Testing dependencies update
+* Added specific exception message in case the constructor invoke fails due to missing parameter name in the compiled code.
+* Testing dependencies update
+* Testing dependencies update

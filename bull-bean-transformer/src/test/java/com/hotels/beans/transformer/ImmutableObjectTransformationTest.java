@@ -259,6 +259,10 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
                 .usingRecursiveComparison()
                 .ignoringFields(IDENTIFIER_FIELD_NAME)
                 .isEqualTo(fromFoo);
+        assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId())
+                .usingRecursiveComparison()
+                .ignoringFields(IDENTIFIER_FIELD_NAME)
+                .isEqualTo(fromFoo);
         underTest.resetFieldsMapping();
     }
 

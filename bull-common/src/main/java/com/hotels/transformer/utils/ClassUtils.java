@@ -90,7 +90,7 @@ public final class ClassUtils {
      * Primitive types list.
      */
     private static final Set<Class<?>> PRIMITIVE_TYPES = new HashSet<>(asList(String.class, Boolean.class, Integer.class, Long.class,
-            Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class, Void.class));
+           Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class, Void.class));
 
     /**
      * Reflection utils instance {@link ReflectionUtils}.
