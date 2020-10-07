@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.7.3-jdk8] 2020.10.07
+#### Changed
+* Provides new utilities methods
+
 ### [1.7.2-jdk8] 2020.06.09
 #### Changed
 * Removes the deprecated method: `setDefaultValueSetEnabled`
@@ -9,9 +13,7 @@ All notable changes to this project will be documented in this file.
 ### [1.7.1-jdk8] 2020.06.09
 #### Changed
 * Deprecates the method: `setDefaultValueSetEnabled` and replaces it with: `setDefaultValueForMissingPrimitiveField`
-* Updated `wagon-ssh` version to `3.4.0` (was `3.3.4`).
 * Updated `hibernate-validator` version to `6.1.5.Final` (was `6.1.4.Final`).
-* Updated `spring-boot-starter-test` version to `2.3.0.RELEASE` (was `2.2.6.RELEASE`).
 
 ### [1.7.0-jdk8] 2020.03.20
 #### Added
@@ -20,22 +22,13 @@ All notable changes to this project will be documented in this file.
 * Updated `hibernate-validator` version to `6.1.3.Final` (was `6.1.2.Final`).
 
 ### [1.6.5-jdk8] 2020.03.16
-### Added
-* Added `maven-spotless-plugin` for the code automatic formatting during the maven build
-* Added `coveralls-maven-plugin` for the test coverage analysis and report during the maven build: [Coverall report](https://coveralls.io/github/HotelsDotCom/bull)
 #### Changed
-* Updated `lombok` version to `1.18.12` (was `1.18.10`).
 * Updated `hotels-oss-parent` version to `5.0.0` (was `4.2.0`).
-* Updated `mockito-core` version to `3.3.3` (was `3.2.4`).
-* Updated `spring-boot-starter-test` version to `2.2.6.RELEASE` (was `2.2.4.RELEASE`).
-* Updated `maven-site-plugin` version to `3.9.0` (was `3.8.2`).
 * Updated `commons-lang3` version to `3.10` (was `3.9`).
 
 ### [1.6.4-jdk8] 2020.01.21
 #### Changed
-* Updated `testng` version to `7.1.0` (was `7.0.0`).
-* Updated `spring-boot-starter-test` version to `2.2.4.RELEASE` (was `2.2.3.RELEASE`).
-* Updated `hibernate-validator` version to `6.1.2.Final` (was `6.1.0.Final`).
+* Testing dependencies update
 
 ### [1.6.3.2-jdk8] 2019.12.24
 #### Added
@@ -45,17 +38,11 @@ All notable changes to this project will be documented in this file.
 ### [1.6.3.1-jdk8] 2019.12.19
 #### Added
 * Added method for retrieving the class getter methods.
-#### Changed
-* Updated `spring-boot-starter-test` version to `2.2.2.RELEASE` (was `2.2.1.RELEASE`).
-* Updated `mockito-core` version to `3.2.4` (was `3.2.0`).
-* Updated `slf4j-api` version to `1.7.30` (was `1.7.29`).
 
 ### [1.6.3-jdk8] 2019.12.02
 ### Added
 * Added retry mechanism on the Bean injection in case the parameter names are not available in the compiled code.
 * Modified Travis configuration in order to test the compatibility with other JDKs versions
-#### Changed
-* Updated maven wrapper version to `3.6.3` (was `3.6.2`).
 
 ### [1.6.2-jdk8] 2019.11.27
 #### Changed
@@ -68,13 +55,9 @@ All notable changes to this project will be documented in this file.
 
 ### [1.1.26] 2019.11.18
 ### Added
-* Added specific exception message in case the constructor invoke fails due to missing parameter name in the compiled code. 
+* Added specific exception message in case the constructor invoke fails due to missing parameter name in the compiled code.
 #### Changed
 * Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
-* Updated `jacoco-maven-plugin` version to `0.8.5` (was `0.8.3`).
-* Updated `slf4j-api` version to `1.7.29` (was `1.7.28`).
-* Updated `spring-boot-starter-test` version to `2.2.1.RELEASE` (was `2.2.0.RELEASE`).
-* Updated `wagon-ssh` version to `3.3.4` (was `3.3.3`).
 
 ### [1.1.25] 2019.10.30
 ### Removed
@@ -88,12 +71,7 @@ All notable changes to this project will be documented in this file.
 * Implemented a new functionality that allows to transform also Map object applying transformation function and mappings
 #### Changed
 * `Transformer` class previously in charge of the Java Bean transformation has been moved to `BeanTransformer`
-* Updated `spring-boot-starter-test` version to `2.2.0.RELEASE` (was `2.1.7.RELEASE`).
 * Updated `hotels-oss-parent` version to `4.2.0` (was `4.1.0`).
-* Updated `testng` version to `7.0.0` (was `6.14.3`).
-* Updated `slf4j-api` version to `1.7.28` (was `1.7.27`).
-* Updated `jacoco-maven-plugin` version to `0.8.4` (was `0.8.2`).
-* Updated `lombok` version to `1.18.10` (was `1.18.8`).
 * Updated `hibernate-validator` version to `6.1.0.Final` (was `6.0.17.Final`).
 
 ### [1.1.24] 2019.09.02
@@ -145,7 +123,7 @@ All notable changes to this project will be documented in this file.
 ### [1.1.18] 2019.05.18
 #### Changed
 * Removed deprecated method: `setValidationDisabled`
-* Updated dependencies
+* Testing dependencies update
 
 ### [1.1.17] 2019.05.13
 #### Changed
@@ -176,12 +154,9 @@ All notable changes to this project will be documented in this file.
 ### [1.1.10] 2019.03.31
 #### Added
 * Improved field value retrieval function.
-* Added link to Gitter channel for BULL.
-* Integrated Gitter notification in order to keep up to date BULL community
 
 ### [1.1.9] 2019.03.23
 #### Changed
-* Updated `spring-boot-starter-test` version to `2.1.3.RELEASE` (was `2.1.2.RELEASE`).
 * Added caching for method: `getDeclaredField`
 
 ### [1.1.8] 2019.03.22
@@ -191,7 +166,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.1.7] 2019.03.20
 #### Changed
-* Replaced `junit` test with `testng`
+* Testing dependencies update
 
 ### [1.1.6] 2019.03.05
 #### Added
@@ -228,8 +203,6 @@ All notable changes to this project will be documented in this file.
 * Improved readme file
 
 ### [1.1.0] 2019.02.04
-#### Changed
-* Improved travis configuration
 #### Added
 * Added dependency to: `slf4j-api` as no longer available from Spring.
 - Added ValidationUtils class for raising an `IllegalArgumentException` in case any parameter is null.

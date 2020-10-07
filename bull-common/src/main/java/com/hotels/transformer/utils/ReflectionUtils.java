@@ -307,6 +307,16 @@ public final class ReflectionUtils {
     /**
      * Set the value of a field.
      * @param target the field's class
+     * @param fieldName the field name to set
+     * @param fieldValue the value to set
+     */
+    public void setFieldValue(final Object target, final String fieldName, final Object fieldValue) {
+        setFieldValue(target, getDeclaredField(fieldName, target.getClass()), fieldValue);
+    }
+
+    /**
+     * Set the value of a field.
+     * @param target the field's class
      * @param field the field to set
      * @param fieldValue the value to set
      */
