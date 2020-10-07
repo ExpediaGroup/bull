@@ -1,8 +1,0 @@
-
-cWeb:DoctypePresenceCheck":Insert a <!DOCTYPE> declaration to before this <html> tag.(’é¬•üÿÿÿÿ
-Z	Web:S5254"@Add "lang" and/or "xml:lang" attributes to this "<html>" element(’é¬•üÿÿÿÿ
-ZWeb:UnsupportedTagsInHtml5Check"*Remove this deprecated "frameset" element.(¤ÉÛ˜úÿÿÿÿ
-RWeb:UnsupportedTagsInHtml5Check"'Remove this deprecated "frame" element.(‡¾›¾
-RWeb:FrameWithoutTitleCheck",Add a "title" attribute to this <frame> tag.(‡¾›¾
-WWeb:UnsupportedTagsInHtml5Check"'Remove this deprecated "frame" element.(·ííøÿÿÿÿ
-WWeb:FrameWithoutTitleCheck",Add a "title" attribute to this <frame> tag.(·ííøÿÿÿÿ

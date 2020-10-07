@@ -1,8 +1,0 @@
-com/hotels/beans/generator/core/Transformer.class
-com/hotels/beans/generator/core/TransformerSpec.class
-com/hotels/beans/generator/core/mapping/MappingCodeFactory.class
-com/hotels/beans/generator/core/mapping/MappingCodeFactory$1.class
-com/hotels/beans/generator/core/mapping/MappingCode.class
-com/hotels/beans/generator/core/error/TransformerGeneratorException.class
-com/hotels/beans/generator/core/mapping/BeanProperty.class
-com/hotels/beans/generator/core/mapping/JavaBeanCode.class

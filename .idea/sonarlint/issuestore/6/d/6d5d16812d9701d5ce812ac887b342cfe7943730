@@ -1,34 +1,0 @@
-
-BWeb:BoldAndItalicTagsCheck"Replace this <i> tag by <em>.(²ü©u
-HWeb:TableWithoutCaptionCheck" Add a description to this table.(Ã˜€Ê
-l Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(õ™ù÷ùÿÿÿÿ
-l Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(õ™ù÷ùÿÿÿÿ
-l Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(õ™ù÷ùÿÿÿÿ
-l Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(õ™ù÷ùÿÿÿÿ
-l Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(õ™ù÷ùÿÿÿÿ
-l Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(õ™ù÷ùÿÿÿÿ
-l Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(õ™ù÷ùÿÿÿÿ
-l Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(õ™ù÷ùÿÿÿÿ
-l Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(õ™ù÷ùÿÿÿÿ
-l Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(õ™ù÷ùÿÿÿÿ
-E	Web:S1827"+Remove this deprecated "bgcolor" attribute.(›Ä ÿÿÿÿÿ
-E	Web:S1827"+Remove this deprecated "bgcolor" attribute.(¼ãªÜùÿÿÿÿ
-@	Web:S1827"+Remove this deprecated "bgcolor" attribute.(‘×·Ä
-@	Web:S1827
-"+Remove this deprecated "bgcolor" attribute.(Ğğø„
-E	Web:S1827"+Remove this deprecated "bgcolor" attribute.(Ê‰¸íûÿÿÿÿ
-E	Web:S1827"+Remove this deprecated "bgcolor" attribute.(ÿç„Šúÿÿÿÿ
-E	Web:S1827"+Remove this deprecated "bgcolor" attribute.(õçôÑûÿÿÿÿ
-E	Web:S1827"+Remove this deprecated "bgcolor" attribute.(¨»‹½ıÿÿÿÿ
-@	Web:S1827"+Remove this deprecated "bgcolor" attribute.(ÃŸæÇ
-E	Web:S1827"+Remove this deprecated "bgcolor" attribute.(ó¼ÂØøÿÿÿÿ
-E	Web:S1827"+Remove this deprecated "bgcolor" attribute.(˜—¼ıÿÿÿÿ
-E	Web:S1827"+Remove this deprecated "bgcolor" attribute.( ğğÆúÿÿÿÿ
-E	Web:S1827"+Remove this deprecated "bgcolor" attribute.(„ÛÍ˜üÿÿÿÿ
-@	Web:S1827"+Remove this deprecated "bgcolor" attribute.(ñ€‹Ğ
-E	Web:S1827 "+Remove this deprecated "bgcolor" attribute.(œ’‹Öşÿÿÿÿ
-E	Web:S1827""+Remove this deprecated "bgcolor" attribute.(ßÃúâøÿÿÿÿ
-E	Web:S1827$"+Remove this deprecated "bgcolor" attribute.(›õÚ¯ÿÿÿÿÿ
-?	Web:S1827&"+Remove this deprecated "bgcolor" attribute.(œÂÉu
-@	Web:S1827("+Remove this deprecated "bgcolor" attribute.(ÍÕ
-@	Web:S1827*"+Remove this deprecated "bgcolor" attribute.(—Ìó§

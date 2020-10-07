@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.hotels.beans.generator.core"},{"l":"com.hotels.beans.generator.core.error"},{"l":"com.hotels.beans.generator.core.mapping"}]

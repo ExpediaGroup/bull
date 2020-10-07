@@ -30,7 +30,7 @@
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Assertions.assertThat;
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mockito.Mockito.mock;
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mockito.Mockito.when;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mockito.MockitoAnnotations.initMocks;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mockito.MockitoAnnotations.openMocks;
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> com.hotels.transformer.utils.ClassUtils.BUILD_METHOD_NAME;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  
@@ -130,7 +130,7 @@
 <a class="jxr_linenumber" name="L122" href="#L122">122</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L123" href="#L123">123</a>     @BeforeClass
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> beforeClass() {
-<a class="jxr_linenumber" name="L125" href="#L125">125</a>         initMocks(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>         openMocks(<strong class="jxr_keyword">this</strong>);
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>     }
 <a class="jxr_linenumber" name="L127" href="#L127">127</a> 
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>     <em class="jxr_javadoccomment">/**</em>

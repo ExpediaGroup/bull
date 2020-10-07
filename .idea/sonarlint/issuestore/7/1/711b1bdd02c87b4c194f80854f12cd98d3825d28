@@ -1,19 +1,0 @@
-
-W
-java:S2209d"5Change this instance-reference to a static reference.(ÿ—‚ûÿÿÿÿ8Å£Á«.
-e
-java:S1128"HRemove this unused import 'java.util.concurrent.atomic.AtomicReference'.(×‡µó8Ë™×À«.
-T
-java:S1128"2Remove this unused import 'java.util.Collections'.(¢³ïÓşÿÿÿÿ8Ğ¹çÀ«.
-Z	java:S106e"9Replace this use of System.out or System.err by a logger.(îû°ÿüÿÿÿÿ8œ«¤Á«.
-Y
-java:S1128"7Remove this unused import 'java.util.stream.IntStream'.(ÙÉ½Ÿùÿÿÿÿ8Ğ¹çÀ«.
-c
-java:S1128"ARemove this unused import 'org.apache.commons.lang3.StringUtils'.(Øœ¼ºúÿÿÿÿ8Ãù‡Á«.
-c
-java:S1128"FRemove this unused import 'org.apache.commons.lang3.math.NumberUtils'.(ÚÈŸ8òÃÜÀ«.
-Z
-java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8Å¦ÓÀ«.
-R
-java:S2209i"5Change this instance-reference to a static reference.(Éé¥—8³µ¥Á«.
-U	java:S106j"9Replace this use of System.out or System.err by a logger.(ØŒ™‚8¹—§Á«.
