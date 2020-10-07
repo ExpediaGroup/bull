@@ -15,11 +15,6 @@
     <dependencies>
         <dependency>
             <groupId>com.hotels.beans</groupId>
-            <artifactId>bull-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hotels.beans</groupId>
             <artifactId>bull-bean-transformer</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -29,11 +24,6 @@
             <artifactId>bull-common</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.shazam</groupId>
-            <artifactId>shazamcrest</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

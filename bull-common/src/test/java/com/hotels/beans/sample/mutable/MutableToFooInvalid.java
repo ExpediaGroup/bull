@@ -22,6 +22,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Sample mutable object.
@@ -29,15 +30,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@ToString
 public class MutableToFooInvalid {
     private String name;
     private BigInteger id;
     private List<String> list;
     private List<MutableToSubFoo> nestedObjectList;
     private MutableToSubFoo nestedObject;
-
-    @Override
-    public String toString() {
-        return "MutableToFooInvalid";
-    }
 }

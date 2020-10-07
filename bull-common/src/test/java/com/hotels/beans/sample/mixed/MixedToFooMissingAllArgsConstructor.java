@@ -24,13 +24,17 @@ import javax.validation.constraints.NotNull;
 import com.hotels.beans.sample.immutable.ImmutableToSubFoo;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Sample mixed object with a constructor containing the final fields only.
  */
 @Getter
 @Setter
+@RequiredArgsConstructor
+@ToString
 public class MixedToFooMissingAllArgsConstructor {
     @NotNull
     public BigInteger id;
@@ -38,18 +42,4 @@ public class MixedToFooMissingAllArgsConstructor {
     private final List<String> list;
     private final List<ImmutableToSubFoo> nestedObjectList;
     private ImmutableToSubFoo nestedObject;
-
-    /**
-     * Constructor for final fields only.
-     */
-    public MixedToFooMissingAllArgsConstructor(final String name, final List<String> list, final List<ImmutableToSubFoo> nestedObjectList) {
-        this.name = name;
-        this.list = list;
-        this.nestedObjectList = nestedObjectList;
-    }
-
-    @Override
-    public String toString() {
-        return "MixedToFooMissingAllArgsConstructor";
-    }
 }

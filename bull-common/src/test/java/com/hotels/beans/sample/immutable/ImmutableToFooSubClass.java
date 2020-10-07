@@ -23,11 +23,13 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Sample immutable object extending a class.
  */
 @Getter
+@ToString
 public class ImmutableToFooSubClass extends ImmutableToFoo {
     @NotNull
     private final String surname;
@@ -49,10 +51,5 @@ public class ImmutableToFooSubClass extends ImmutableToFoo {
         this.phone = phone;
         this.check = check;
         this.amount = amount;
-    }
-
-    @Override
-    public String toString() {
-        return "ImmutableToFooSubClass";
     }
 }

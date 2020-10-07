@@ -44,9 +44,9 @@ import com.hotels.transformer.utils.ReflectionUtils;
  * Unit test for {@link com.hotels.transformer.Transformer}.
  */
 public abstract class AbstractTransformerTest {
-    public static FromFoo fromFoo;
     protected static final BigInteger ID = new BigInteger("1234");
     protected static final String NAME = "Goofy";
+    protected static FromFoo fromFoo;
     protected static FromFoo fromFooWithNullProperties;
     protected static FromFooSimple fromFooSimple;
     protected static FromFooWithPrimitiveFields fromFooWithPrimitiveFields;

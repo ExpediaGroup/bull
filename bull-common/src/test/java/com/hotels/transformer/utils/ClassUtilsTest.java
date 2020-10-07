@@ -19,13 +19,10 @@ package com.hotels.transformer.utils;
 import static java.lang.reflect.Modifier.isFinal;
 import static java.util.Objects.nonNull;
 
-import static org.apache.commons.lang3.ArrayUtils.contains;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import static com.hotels.transformer.utils.ClassUtils.BUILD_METHOD_NAME;
 
@@ -49,7 +46,6 @@ import java.util.function.Predicate;
 import javax.validation.constraints.NotNull;
 
 import org.mockito.InjectMocks;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -91,7 +87,7 @@ public class ClassUtilsTest {
     private static final Class<MixedToFooStaticField> CLASS_WITH_STATIC_FIELDS = MixedToFooStaticField.class;
     private static final Class<MixedToFooMissingConstructor> CLASS_WITHOUT_CONSTRUCTOR = MixedToFooMissingConstructor.class;
     private static final int EXPECTED_NOT_STATIC_FIELDS = 1;
-    private static final String NAME = "name";
+    private static final String NAME_FIELD_NAME = "name";
     private static final int EXPECTED_CLASS_PARAMETERS = 5;
     private static final String NOT_EXISTING_FIELD_NAME = "notExistingFieldName";
     private static final Class<ImmutableToFooSubClass> CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS = ImmutableToFooSubClass.class;
@@ -125,7 +121,7 @@ public class ClassUtilsTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
@@ -142,7 +138,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.isPrimitiveType(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -176,7 +172,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.isSpecialType(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -209,7 +205,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.isPrimitiveOrSpecialType(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -240,7 +236,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.isPrimitiveTypeArray(testArray.getClass());
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -276,7 +272,7 @@ public class ClassUtilsTest {
         List<Field> actual = underTest.getPrivateFinalFields(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual.size());
+        assertThat(actual).hasSize(expectedResult);
     }
 
     /**
@@ -289,7 +285,7 @@ public class ClassUtilsTest {
                 {"Tests that the method returns 0 if the given class has no private final fields", CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, ZERO},
                 {"Tests that the method returns the expected value if the class has private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, EXPECTED_PRIVATE_FINAL_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields and extends another class",
-                    CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, EXPECTED_SUB_CLASS_PRIVATE_FIELDS}
+                        CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, EXPECTED_SUB_CLASS_PRIVATE_FIELDS}
         };
     }
 
@@ -307,7 +303,7 @@ public class ClassUtilsTest {
         List<Field> actual = underTest.getNotFinalFields(testClass, true);
 
         // THEN
-        assertEquals(expectedResult, actual.size());
+        assertThat(actual).hasSize(expectedResult);
     }
 
     /**
@@ -319,7 +315,7 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns 0 if the given class has only private fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, ZERO},
                 {"Tests that the method returns the expected value if the class has private final fields",
-                    CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, EXPECTED_MIXED_CLASS_TOTAL_NOT_FINAL_FIELDS}
+                        CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, EXPECTED_MIXED_CLASS_TOTAL_NOT_FINAL_FIELDS}
         };
     }
 
@@ -338,7 +334,7 @@ public class ClassUtilsTest {
         long actual = underTest.getTotalFields(testClass, fieldPredicate);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -350,7 +346,7 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns 0 if the given class has no private final fields", CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, IS_FINAL_FIELD_PREDICATE, ZERO},
                 {"Tests that the method returns the expected value if the class has private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, IS_FINAL_FIELD_PREDICATE,
-                    EXPECTED_PRIVATE_FINAL_FIELDS}
+                        EXPECTED_PRIVATE_FINAL_FIELDS}
         };
     }
 
@@ -369,7 +365,7 @@ public class ClassUtilsTest {
         List<Field> actual = nonNull(skipFinal) ? underTest.getPrivateFields(testClass, skipFinal) : underTest.getPrivateFields(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual.size());
+        assertThat(actual).hasSize(expectedResult);
     }
 
     /**
@@ -380,19 +376,19 @@ public class ClassUtilsTest {
     private Object[][] dataGetPrivateFieldsTesting() {
         return new Object[][] {
                 {"Tests that the method returns the expected value if the class has private and public fields", CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, false,
-                    EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS},
+                        EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS},
                 {"Tests that the method returns the expected value if the class has private and public fields and skipFinal is not passed as param",
-                    CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, null, EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS},
+                        CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, null, EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields only", CLASS_WITH_PRIVATE_FINAL_FIELDS, false,
-                    EXPECTED_PRIVATE_FINAL_FIELDS},
+                        EXPECTED_PRIVATE_FINAL_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields only and skipFinal is not passed as param",
-                    CLASS_WITH_PRIVATE_FINAL_FIELDS, null, EXPECTED_PRIVATE_FINAL_FIELDS},
+                        CLASS_WITH_PRIVATE_FINAL_FIELDS, null, EXPECTED_PRIVATE_FINAL_FIELDS},
                 {"Tests that the method returns the expected value if the class extends another class", ImmutableToFooSubClass.class, false,
-                    EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
+                        EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
                 {"Tests that the method returns the expected value if the class extends another class and skipFinal is not passed as param",
-                    ImmutableToFooSubClass.class, null, EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
+                        ImmutableToFooSubClass.class, null, EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
                 {"Tests that the method returns the expected value if the skipFinal is enabled", CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, true,
-                    EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_NOT_FINAL_FIELDS}
+                        EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_NOT_FINAL_FIELDS}
         };
     }
 
@@ -411,7 +407,7 @@ public class ClassUtilsTest {
         List<Field> actual = underTest.getDeclaredFields(testClass, skipStatic);
 
         // THEN
-        assertEquals(expectedResult, actual.size());
+        assertThat(actual).hasSize(expectedResult);
     }
 
     /**
@@ -422,11 +418,11 @@ public class ClassUtilsTest {
     private Object[][] dataGetDeclaredFieldsTesting() {
         return new Object[][] {
                 {"Tests that the method returns the expected total number of fields when the skipStatic param is true", CLASS_WITH_STATIC_FIELDS, true,
-                    EXPECTED_NOT_STATIC_FIELDS},
+                        EXPECTED_NOT_STATIC_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields only", CLASS_WITH_STATIC_FIELDS, false,
-                    CLASS_WITH_STATIC_FIELDS.getDeclaredFields().length},
+                        CLASS_WITH_STATIC_FIELDS.getDeclaredFields().length},
                 {"Tests that the method returns the expected total number of fields when the skipStatic param is true and the class extends another class",
-                    CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, true, EXPECTED_SUB_CLASS_PRIVATE_FIELDS}
+                        CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, true, EXPECTED_SUB_CLASS_PRIVATE_FIELDS}
         };
     }
 
@@ -444,7 +440,7 @@ public class ClassUtilsTest {
         Class[] actual = underTest.getDeclaredClasses(testClass);
 
         // THEN
-        assertTrue(contains(actual, expectedClass));
+        assertThat(actual).contains(expectedClass);
     }
 
     /**
@@ -455,9 +451,9 @@ public class ClassUtilsTest {
     private Object[][] dataGetDeclaredClassesTesting() {
         return new Object[][] {
                 {"Test that the a manual declared Builder is returned by method: {@code getDeclaredClasses}", MutableToFooWithBuilder.class,
-                    MutableToFooWithBuilder.Builder.class},
+                        MutableToFooWithBuilder.Builder.class},
                 {"Test that the a Builder created by lombok is returned by method: {@code getDeclaredClasses}", MixedToFooWithBuilder.class,
-                    MixedToFooWithBuilder.builder().getClass()}
+                        MixedToFooWithBuilder.builder().getClass()}
         };
     }
 
@@ -472,7 +468,7 @@ public class ClassUtilsTest {
         Constructor actual = underTest.getAllArgsConstructor(CLASS_WITH_PRIVATE_FINAL_FIELDS);
 
         // THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
     }
 
     /**
@@ -486,7 +482,7 @@ public class ClassUtilsTest {
         Constructor actual = underTest.getNoArgsConstructor(CLASS_WITHOUT_PRIVATE_FINAL_FIELDS);
 
         // THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
     }
 
     /**
@@ -503,7 +499,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.areParameterNamesAvailable(constructor);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
 
     }
 
@@ -525,7 +521,7 @@ public class ClassUtilsTest {
      */
     private Constructor createMockedConstructor() {
         Parameter parameter = mock(Parameter.class);
-        ReflectionTestUtils.setField(parameter, "name", "paramName");
+        new ReflectionUtils().setFieldValue(parameter, "name", "paramName");
         when(parameter.isNamePresent()).thenReturn(false);
         Constructor constructor = mock(Constructor.class);
         when(constructor.getDeclaringClass()).thenReturn(ImmutableToFoo.class);
@@ -556,8 +552,7 @@ public class ClassUtilsTest {
         Parameter[] constructorParameters = underTest.getConstructorParameters(classConstructor);
 
         // THEN
-        assertNotNull(constructorParameters);
-        assertEquals(EXPECTED_CLASS_PARAMETERS, constructorParameters.length);
+        assertThat(constructorParameters).hasSize(EXPECTED_CLASS_PARAMETERS);
     }
 
     /**
@@ -569,7 +564,7 @@ public class ClassUtilsTest {
         Constructor classConstructor = underTest.getAllArgsConstructor(AbstractClass.class);
 
         // WHEN
-        underTest.getInstance(classConstructor, NAME, ZERO);
+        underTest.getInstance(classConstructor, NAME_FIELD_NAME, ZERO);
     }
 
     /**
@@ -588,7 +583,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.hasField(immutableToFooSubClass, fieldName);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -599,7 +594,7 @@ public class ClassUtilsTest {
     private Object[][] dataHasFieldTesting() {
         return new Object[][] {
                 {"Tests that the method returns false if the given field does not exists", NOT_EXISTING_FIELD_NAME, false},
-                {"Tests that the method returns true if the given field exists", NAME, true}
+                {"Tests that the method returns true if the given field exists", NAME_FIELD_NAME, true}
         };
     }
 
@@ -617,7 +612,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.hasFinalFields(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -646,7 +641,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.hasSetterMethods(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -677,7 +672,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.allParameterAnnotatedWith(constructor, annotationClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -706,7 +701,7 @@ public class ClassUtilsTest {
         final ClassType actual = underTest.getClassType(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -736,7 +731,7 @@ public class ClassUtilsTest {
         final List<Method> actual = underTest.getSetterMethods(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual.isEmpty());
+        assertThat(actual.isEmpty()).isEqualTo(expectedResult);
     }
 
     /**
@@ -765,7 +760,7 @@ public class ClassUtilsTest {
         final List<Method> actual = underTest.getGetterMethods(testClass);
 
         // THEN
-        assertEquals(expectedGetterMethods, actual.size());
+        assertThat(actual).hasSize(expectedGetterMethods);
     }
 
     /**
@@ -793,7 +788,7 @@ public class ClassUtilsTest {
         Object actual = underTest.getDefaultTypeValue(Integer.class);
 
         // THEN
-        assertEquals(EXPECTED_DEFAULT_VALUE, actual);
+        assertThat(actual).isEqualTo(EXPECTED_DEFAULT_VALUE);
     }
 
     /**
@@ -822,7 +817,7 @@ public class ClassUtilsTest {
         final boolean actual = underTest.hasAccessibleConstructors(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -851,7 +846,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.isString(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -880,7 +875,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.isBigInteger(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -909,7 +904,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.isBigDecimal(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -938,7 +933,7 @@ public class ClassUtilsTest {
         boolean actual = underTest.isByteArray(testClass);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -967,7 +962,7 @@ public class ClassUtilsTest {
         Class<?> actual = underTest.getFieldClass(listField, fromFoo);
 
         // THEN
-        assertEquals(LinkedList.class, actual);
+        assertThat(actual).isEqualTo(LinkedList.class);
     }
 
     /**
@@ -985,7 +980,7 @@ public class ClassUtilsTest {
         Class<?> actual = underTest.getConcreteClass(field, fieldValue);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -1025,7 +1020,7 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method raises a MissingMethodException if the class has no builder build method", ImmutableToFoo.class, ImmutableToFoo.class},
                 {"Tests that the method raises a MissingMethodException if the class has a builder build method that does not return the parent class",
-                    MutableToFooWithWrongBuilder.class, MutableToFooWithWrongBuilder.Builder.class}
+                        MutableToFooWithWrongBuilder.class, MutableToFooWithWrongBuilder.Builder.class}
         };
     }
 
@@ -1040,8 +1035,9 @@ public class ClassUtilsTest {
         Method actual = underTest.getBuildMethod(MutableToFooWithBuilder.class, MutableToFooWithBuilder.Builder.class);
 
         // THEN
-        assertNotNull(actual);
-        assertEquals(BUILD_METHOD_NAME, actual.getName());
+        assertThat(actual).isNotNull();
+        assertThat(actual.getName()).isEqualTo(BUILD_METHOD_NAME);
+        assertThat(actual).hasFieldOrPropertyWithValue(NAME_FIELD_NAME, BUILD_METHOD_NAME);
     }
 
     /**
@@ -1058,8 +1054,7 @@ public class ClassUtilsTest {
         Optional<Class<?>> actual = underTest.getBuilderClass(testClass);
 
         // THEN
-        assertEquals(expectedResult.isPresent(), actual.isPresent());
-        expectedResult.ifPresent(clazz -> assertEquals(clazz, actual.get()));
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -1094,6 +1089,6 @@ public class ClassUtilsTest {
      * @return a {@link FromFoo} instance
      */
     private FromFoo createFromFoo() {
-        return new FromFoo(NAME, null, null, LINKED_LIST, null);
+        return new FromFoo(NAME_FIELD_NAME, null, null, LINKED_LIST, null);
     }
 }

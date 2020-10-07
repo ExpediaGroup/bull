@@ -18,8 +18,8 @@ package com.hotels.beans.populator;
 
 import static java.util.Objects.nonNull;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.util.List;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class PopulatorFactoryTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
@@ -79,7 +79,7 @@ public class PopulatorFactoryTest {
      * @param expectedResult the expected populator
      */
     @Test(dataProvider = "dataProvider")
-    @SuppressWarnings({"unchecked", "OptionalGetWithoutIsPresent"})
+    @SuppressWarnings({"unchecked"})
     public void testGetPopulatorReturnsTheExpectedResult(final Class type, final Class<? extends Populator> expectedResult) {
         // GIVEN
 
@@ -88,9 +88,9 @@ public class PopulatorFactoryTest {
 
         // THEN
         final boolean isNonNullObjectExpected = nonNull(expectedResult);
-        assertEquals(populator.isPresent(), isNonNullObjectExpected);
+        assertThat(populator.isPresent()).isEqualTo(isNonNullObjectExpected);
         if (isNonNullObjectExpected) {
-            assertEquals(expectedResult, populator.get().getClass());
+            assertThat(populator).containsInstanceOf(expectedResult);
         }
     }
 }

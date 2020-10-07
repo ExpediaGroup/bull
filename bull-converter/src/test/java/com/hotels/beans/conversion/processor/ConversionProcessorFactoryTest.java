@@ -16,10 +16,8 @@
 
 package com.hotels.beans.conversion.processor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -59,7 +57,7 @@ public class ConversionProcessorFactoryTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
@@ -73,7 +71,7 @@ public class ConversionProcessorFactoryTest {
         Optional<ConversionProcessor> actual = underTest.getConversionProcessor(Pair.class);
 
         // THEN
-        assertFalse(actual.isPresent());
+        assertThat(actual).isEmpty();
     }
 
     /**
@@ -91,8 +89,7 @@ public class ConversionProcessorFactoryTest {
         Optional<ConversionProcessor> actual = underTest.getConversionProcessor(targetClass);
 
         // THEN
-        assertTrue(actual.isPresent());
-        assertEquals(expectedResult, actual.get().getClass());
+        assertThat(actual).containsInstanceOf(expectedResult);
     }
 
     /**

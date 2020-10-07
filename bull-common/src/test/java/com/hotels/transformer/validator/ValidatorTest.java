@@ -20,7 +20,7 @@ import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
 import static java.util.Objects.nonNull;
 
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 import static org.testng.Assert.assertEquals;
 
 import java.math.BigInteger;
@@ -70,7 +70,7 @@ public class ValidatorTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**

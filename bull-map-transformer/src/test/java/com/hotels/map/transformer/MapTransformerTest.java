@@ -18,17 +18,12 @@ package com.hotels.map.transformer;
 
 import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
-import static java.util.Collections.singletonList;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.both;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.everyItem;
-import static org.hamcrest.Matchers.isIn;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
+import static org.assertj.core.util.Lists.list;
+import static org.assertj.core.util.Maps.newHashMap;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -71,7 +66,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
         initObjects();
     }
 
@@ -127,10 +122,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<T, K> actual = underTest.transform(sourceMap);
 
         //THEN
-        assertNotNull(actual);
-        assertEquals(actual.size(), sourceMap.size());
-        assertThat(actual.entrySet(),
-                both(everyItem(isIn(sourceMap.entrySet()))).and(containsInAnyOrder(sourceMap.entrySet().toArray())));
+        assertThat(actual).isEqualTo(sourceMap);
     }
 
     /**
@@ -162,10 +154,10 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<String, BigInteger> actual = underTest.transform(sourceMap);
 
         //THEN
-        assertNotNull(actual);
-        assertEquals(actual.size(), sourceMap.size());
-        assertEquals(actual.get(MAP_KEY_1), sourceMap.get(MAP_KEY_1));
-        assertEquals(actual.get(MAP_KEY_2), sourceMap.get(MAP_KEY_1));
+        assertThat(actual).containsOnly(
+                entry(MAP_KEY_1, ZERO),
+                entry(MAP_KEY_2, ZERO)
+        );
         underTest.resetFieldsMapping();
     }
 
@@ -184,9 +176,9 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<String, BigInteger> actual = underTest.transform(sourceMap);
 
         //THEN
-        assertNotNull(actual);
-        assertEquals(actual.size(), sourceMap.size());
-        assertTrue(actual.containsKey(MAP_KEY_1.toUpperCase()));
+        assertThat(actual).isNotNull();
+        assertThat(actual.size()).isEqualTo(sourceMap.size());
+        assertThat(actual).containsKey(MAP_KEY_1.toUpperCase());
     }
 
     /**
@@ -214,34 +206,30 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<MutableToFooSimple, Map> actual = underTest.transform(EXTREME_COMPLEX_MAP, MutableToFooSimple.class, Map.class);
 
         //THEN
-        assertNotNull(actual);
-        assertEquals(actual.size(), EXTREME_COMPLEX_MAP.size());
+        assertThat(actual).isNotNull();
+        assertThat(actual.size()).isEqualTo(EXTREME_COMPLEX_MAP.size());
         // check that the element has been converted
-        for (Map.Entry<MutableToFooSimple, Map> entry : actual.entrySet()) {
-            assertEquals(MutableToFooSimple.class, entry.getKey().getClass());
-        }
+        assertThat(actual).allSatisfy((key, value) ->
+                assertThat(key).isInstanceOf(MutableToFooSimple.class));
     }
 
     /**
      * Test that the given map is correctly transformed and the elements are correctly transformed if the Map contains a List.
      */
     @Test
+    @SuppressWarnings("unchecked")
     public void testTransformWorksProperlyWithMapContainingList() {
         //GIVEN
-        List<String> sampleList = singletonList(ITEM_1);
-        Map<FromFooSimple, List<String>> sourceMap = new HashMap<>();
-        sourceMap.put(fromFooSimple, sampleList);
+        Map<FromFooSimple, List<String>> sourceMap = newHashMap(fromFooSimple, list(ITEM_1));
 
         //WHEN
         Map<MutableToFooSimple, List> actual = underTest.transform(sourceMap, MutableToFooSimple.class, List.class);
 
         //THEN
-        assertNotNull(actual);
-        assertEquals(actual.size(), sourceMap.size());
-        for (Map.Entry<MutableToFooSimple, List> entry : actual.entrySet()) {
-            assertEquals(MutableToFooSimple.class, entry.getKey().getClass());
-            assertEquals(sampleList, entry.getValue());
-        }
+        assertThat(actual).allSatisfy((key, value) -> {
+            assertThat(key).isInstanceOf(MutableToFooSimple.class);
+            assertThat(value).containsOnly(ITEM_1);
+        });
     }
 
     /**
@@ -258,7 +246,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
                 (MapTransformerSettings) REFLECTION_UTILS.getFieldValue(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
 
         //THEN
-        assertTrue(transformerSettings.getKeyFieldsTransformers().isEmpty());
+        assertThat(transformerSettings.getKeyFieldsTransformers()).isEmpty();
         underTest.resetKeyTransformer();
     }
 }

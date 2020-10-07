@@ -18,8 +18,8 @@ package com.hotels.beans.conversion.processor.impl;
 
 import static java.nio.ByteBuffer.wrap;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -50,7 +50,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertByte().apply(BYTE_VALUE);
 
         // THEN
-        assertEquals((char) BYTE_VALUE.byteValue(), actual);
+        assertThat(actual).isEqualTo((char) BYTE_VALUE.byteValue());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertByteArray().apply(EIGHT_BYTE_BYTE_ARRAY);
 
         // THEN
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test(expectedExceptions = TypeConversionException.class)
@@ -92,7 +92,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertShort().apply(SHORT_VALUE);
 
         // THEN
-        assertEquals((char) SHORT_VALUE.byteValue(), actual);
+        assertThat(actual).isEqualTo((char) SHORT_VALUE.byteValue());
     }
 
     @Test
@@ -103,7 +103,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertInteger().apply(INTEGER_VALUE);
 
         // THEN
-        assertEquals((char) INTEGER_VALUE.intValue(), actual);
+        assertThat(actual).isEqualTo((char) INTEGER_VALUE.intValue());
     }
 
     @Test
@@ -114,7 +114,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertLong().apply(LONG_VALUE);
 
         // THEN
-        assertEquals((char) LONG_VALUE.longValue(), actual);
+        assertThat(actual).isEqualTo((char) LONG_VALUE.longValue());
     }
 
     @Test
@@ -125,7 +125,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertFloat().apply(FLOAT_VALUE);
 
         // THEN
-        assertEquals((char) FLOAT_VALUE.floatValue(), actual);
+        assertThat(actual).isEqualTo((char) FLOAT_VALUE.floatValue());
     }
 
     @Test
@@ -136,7 +136,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertDouble().apply(DOUBLE_VALUE);
 
         // THEN
-        assertEquals((char) DOUBLE_VALUE.doubleValue(), actual);
+        assertThat(actual).isEqualTo((char) DOUBLE_VALUE.doubleValue());
     }
 
     @Test
@@ -147,7 +147,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertEquals(CHAR_VALUE, actual);
+        assertThat(actual).isEqualTo(CHAR_VALUE);
     }
 
     /**
@@ -164,7 +164,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertBoolean().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -187,7 +187,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertString().apply(STRING_VALUE);
 
         // THEN
-        assertEquals(STRING_VALUE.charAt(0), actual);
+        assertThat(actual).isEqualTo(STRING_VALUE.charAt(0));
     }
 
     @Test
@@ -199,7 +199,7 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertBigInteger().apply(BigInteger.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual);
+        assertThat(actual).isEqualTo(expectedValue);
     }
 
     @Test
@@ -211,6 +211,6 @@ public class CharacterConversionTest extends AbstractConversionTest {
         char actual = underTest.convertBigDecimal().apply(BigDecimal.ZERO);
 
         // THEN
-        assertEquals(expectedValue, actual);
+        assertThat(actual).isEqualTo(expectedValue);
     }
 }

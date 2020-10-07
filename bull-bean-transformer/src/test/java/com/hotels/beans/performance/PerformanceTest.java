@@ -21,8 +21,8 @@ import static java.lang.Thread.sleep;
 import static java.util.Collections.singletonList;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -95,7 +95,7 @@ public class PerformanceTest {
     @BeforeClass
     public void beforeClass() {
         initObjects();
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
@@ -128,7 +128,9 @@ public class PerformanceTest {
 
         //THEN
         log.info("Object: {}, Average transformation time: {} ms", destObjectClass, avgTransformationTime);
-        assertTrue("Performance degradation! Expected: " + maxTransformationTime + ", actual: " + avgTransformationTime, avgTransformationTime <= maxTransformationTime);
+        assertThat(avgTransformationTime)
+                .as("Performance degradation! Expected: %s, actual: %s", maxTransformationTime, avgTransformationTime)
+                .isLessThanOrEqualTo(maxTransformationTime);
     }
 
     /**

@@ -2,7 +2,7 @@
 # These owners will be the default owners for everything on this repo.
 # https://github.com/HotelsDotCom/bull
 
-* @HotelsDotCom/bull-committers
+* @HotelsDotCom/bull-committers borriello.fabio@gmail.com
 
 # Only some members of Customer Insights can alter the CODEOWNERS file
-.github/CODEOWNERS @HotelsDotCom/bull-admin
+.github/CODEOWNERS borriello.fabio@gmail.com @HotelsDotCom/bull-admin

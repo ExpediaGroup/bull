@@ -16,8 +16,8 @@
 
 package com.hotels.transformer.cache;
 
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
@@ -43,7 +43,7 @@ public class CacheManagerFactoryTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
@@ -68,6 +68,6 @@ public class CacheManagerFactoryTest {
         final CacheManager actual = underTest.getCacheManager(CACHE_NAME);
 
         // THEN
-        assertNotNull(actual);
+        assertThat(actual).isNotNull();
     }
 }

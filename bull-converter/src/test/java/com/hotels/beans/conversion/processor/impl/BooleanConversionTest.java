@@ -16,10 +16,8 @@
 
 package com.hotels.beans.conversion.processor.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -46,7 +44,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
      */
     @BeforeClass
     public void beforeClass() {
-        initMocks(this);
+        openMocks(this);
     }
 
     /**
@@ -63,7 +61,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertByte().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -92,7 +90,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertByteArray().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -121,7 +119,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertShort().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -150,7 +148,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertInteger().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -179,7 +177,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertLong().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -208,7 +206,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertFloat().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -237,7 +235,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertDouble().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -260,7 +258,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertCharacter().apply(CHAR_VALUE);
 
         // THEN
-        assertFalse(actual);
+        assertThat(actual).isFalse();
     }
 
     @Test
@@ -271,7 +269,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertBoolean().apply(BOOLEAN_VALUE);
 
         // THEN
-        assertEquals(BOOLEAN_VALUE, actual);
+        assertThat(actual).isEqualTo(BOOLEAN_VALUE);
     }
 
     @Test
@@ -282,7 +280,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertString().apply(TRUE_AS_STRING);
 
         // THEN
-        assertTrue(actual);
+        assertThat(actual).isTrue();
     }
 
     /**
@@ -299,7 +297,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertBigInteger().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
@@ -328,7 +326,7 @@ public class BooleanConversionTest extends AbstractConversionTest {
         boolean actual = underTest.convertBigDecimal().apply(valueToConvert);
 
         // THEN
-        assertEquals(expectedResult, actual);
+        assertThat(actual).isEqualTo(expectedResult);
     }
 
     /**
