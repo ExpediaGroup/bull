@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.7.4] 2020.10.07
+#### Changed
+* Provides new utilities methods
+
 ### [1.7.3] 2020.06.09
 #### Changed
 * Removes the deprecated method: `setDefaultValueSetEnabled`
