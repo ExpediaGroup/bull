@@ -86,7 +86,7 @@ public class TransformerBytecodeAdapterTest {
                 underTest.newTransformer(Source.class, Destination.class);
 
         // THEN
-        assertThat(actual.getClass().getName()).startsWith(DEFAULT_PACKAGE);
+        assertThat(actual.getClass()).hasPackage(DEFAULT_PACKAGE);
     }
 
     @Test
@@ -103,7 +103,7 @@ public class TransformerBytecodeAdapterTest {
                 underTest.newTransformer(Source.class, Destination.class);
 
         // THEN
-        assertThat(actual.getClass().getName()).startsWith(packageName);
+        assertThat(actual.getClass()).hasPackage(packageName);
     }
 
     @Test(expectedExceptions = TransformerGeneratorException.class)
