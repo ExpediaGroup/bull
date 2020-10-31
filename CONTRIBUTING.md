@@ -1,7 +1,6 @@
 Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 ============
-If you want to contribute to the project and make it better, your help is very welcome. Contributing is also a great way to learn more about social coding on Github, new 
-technologies and their ecosystems and how to make constructive, helpful bug reports, feature requests and the noblest of all contributions: a good, clean pull request.
+If you want to contribute to the project and make it better, your help is very welcome. Contributing is also a great way to learn more about social coding on Github, new technologies and their ecosystems, and how to make constructive, helpful bug reports, feature requests, and the noblest of all contributions: a good, clean pull request.
 
 ### How to make a clean pull request
 
@@ -9,7 +8,7 @@ technologies and their ecosystems and how to make constructive, helpful bug repo
 - Clone the fork on your local machine. Your remote repo on Github is called `origin`.
 - Add the original repository as a remote called `upstream`.
 - If you created your fork a while ago be sure to pull upstream changes into your local repository.
-- Create a new branch to work on! Branch from `develop` if it exists, else from `master`.
+- Create a new branch to work on! A branch from `develop` if it exists, else from `master`.
 - **The branch name should follow the best practices naming convention:**
     1. Use grouping tokens (words) at the beginning of your branch names.
         * `feature`: Feature I'm adding or expanding
@@ -19,7 +18,7 @@ technologies and their ecosystems and how to make constructive, helpful bug repo
     3. Use slashes to separate parts of your branch names.
     4. Do not use bare numbers as leading parts.
     5. Avoid long descriptive names for long-lived branches.
-- Implement/fix your feature, comment your code.
+- Implement/fix your feature, comment on your code.
 - Follow the code style of the project, including indentation.
 - If the project has tests run them!
 - Write or adapt tests as needed.
@@ -37,6 +36,6 @@ did to the code.
 
 - The new code should be tested enough to meet the expected coverage
 - The default libraries for testing implementations are:
-    1. AssertJ for the assertion
-    2. Mockito for the object mocking
-    3. Testng for testing annotations and data provider
+    1. AssertJ for the assertion
+    2. Mockito for the object mocking
+    3. Testng for testing annotations and data provider

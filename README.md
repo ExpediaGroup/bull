@@ -4,8 +4,8 @@
 
 ## Bean Utils Light Library
 
-BULL is a Java Bean to Java Bean transformer that recursively copies data from one object to another, it is generic, flexible, reusable, configurable and incredibly fast.
-It's the only library able to transform Mutable, Immutable and Mixed bean without any custom configuration. 
+BULL is a Java Bean to Java Bean transformer that recursively copies data from one object to another, it is generic, flexible, reusable, configurable, and incredibly fast.
+It's the only library able to transform Mutable, Immutable, and Mixed bean without any custom configuration. 
 
 ## Start using
 
@@ -44,11 +44,11 @@ All BULL modules are available on Maven Central:
 
 **The project provides two different builds**, one compatible with `jdk 8` (or above) and one with `jdk 11` or above.
 
-In case you need to integrate it in a `jdk 8` (or above project) please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md) file or to [CHANGELOG](CHANGELOG.md) otherwise.
+In case you need to integrate it in a `jdk 8` (or above project) please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md) file or [CHANGELOG](CHANGELOG.md) otherwise.
 
 * #### Suggestions
 
-Some jdk versions removes the Java Bean constructor's argument names from the compiled code and this may cause problems to the library.
+Some jdk versions remove the Java Bean constructor's argument names from the compiled code and this may cause problems to the library.
 On top of that, it's suggested to configure the `maven-compiler-plugin`, inside your project, as follow:
 
 ```xml
@@ -110,7 +110,7 @@ mvnw.cmd clean install -P relaxed
 * support copy of beans with different field's name.
 * support lambda function field transformation.
 * support copy of java bean built through Builder.
-* easy usage, declarative way to define the property mapping (in case of different names) or simply adding the Lombok annotations.
+* easy usage, declarative way to define the property mapping (in case of different names), or simply adding the Lombok annotations.
 * allows setting the default value for all objects not existing in the source object.
 * allows skipping transformation for a given set of fields.
 * supports the retrieval of the value from getters if a field does not exist in the source object.
@@ -182,7 +182,7 @@ And one line code as:
 beanUtils.getTransformer().withFieldMapping(new FieldMapping<>("name", "differentName")).transform(fromBean, ToBean.class);                                                               
 ```
 
-### Mapping destination fields with correspondent fields contained inside one of the nested object in the source object:
+### Mapping destination fields with correspondent fields contained inside one of the nested objects in the source object:
 
 Assuming that the object `FromSubBean` is declared as follow:
 ```java
@@ -326,7 +326,7 @@ ToBean toBean = beanUtils.getTransformer()
                     .setDefaultValueForMissingPrimitiveField(false).transform(fromBean, ToBean.class);
 ```
 
-in this case the field `id` after the transformation will be `null`
+in this case, the field `id` after the transformation will be `null`
 
 ### Applying a transformation function in case of missing fields in the source object:
 
@@ -353,7 +353,7 @@ ToBean toBean = beanUtils.getTransformer()
 
 ### Apply a transformation function on a field contained in a nested object:
 
-This example shows of a lambda transformation function can be applied on a nested object field.
+This example shows off a lambda transformation function that can be applied to a nested object field.
 
 Given:
 
@@ -405,7 +405,7 @@ public class ToSubBean {
    // all args constructor
 }  // getters...          
 ```
-Assuming that the value `x` should be mapped into field: `x` contained into the `ToSubBean` object, the field mapping has to be defined as 
+Assuming that the value `x` should be mapped into the field: `x` contained into the `ToSubBean` object, the field mapping has to be defined as 
 follow:
 ```java
 ToBean toBean = beanUtils.getTransformer()
@@ -414,7 +414,7 @@ ToBean toBean = beanUtils.getTransformer()
 
 ### Apply a transformation function on all fields matching with the given one:
 
-This example shows how a lambda transformation function can be applied on all fields matching with the given one independently from their position.
+This example shows how a lambda transformation function can be applied to all fields matching with the given one independently from their position.
 
 Given:
 
@@ -538,7 +538,7 @@ beanUtils.getTransformer()
 
 where `nestedObject` is the name of the field in the destination object.
 
-This feature allows to **transform an object keeping the data from different sources**.
+This feature allows us to **transform an object keeping the data from different sources**.
 
 To better explain this function let's assume that the `ToBean` (defined above) should be transformed as follow:
 - `name` field value has been taken from the `FromBean` object
@@ -592,8 +592,8 @@ public class FromBean {                                     public class ToBean 
 ```
 
 as, by default the primitive type conversion is disabled, to get the above object converted we should have
-implemented transformer functions for both field `indexNumber` and `id`, but this can be done automatically from enabling the
-functionality described above.
+implemented transformer functions for both field `indexNumber` and `id`, but this can be done automatically by enabling the
+the functionality described above.
 
 ```java
 Transformer transformer = beanUtils.getTransformer()
@@ -603,7 +603,7 @@ ToBean toBean = transformer.transform(fromBean, ToBean.class);
 ```
 
 **IMPORTANT:** The primitive type transformation (if enabled) is executed before any other `FieldTransformer` function defined on a specific field.
-This means that the once the `FieldTransformer` function will be executed the field value has already been transformed.
+This means that once the `FieldTransformer` function will be executed the field value has already been transformed.
 
 ## Builder supported patterns
 
@@ -709,7 +709,7 @@ ToBean toBean = new BeanTransformer()
 
 More sample beans can be found in the test package: `com.hotels.beans.sample`
 
-## Third party library comparison
+## Third-party library comparison
 
 Following a comparison between the BULL functionalities and the following Third-Party libraries:
 
@@ -737,12 +737,12 @@ Following a comparison between the BULL functionalities and the following Third-
 | Annotation field validation | X | - | X | - |
 
 _[*] Immutable types are not supported by Dozer. When a type doesn't have a no-arg constructor and all fields are final, Dozer can't perform the mapping.
-  Workaround is introducing the Builder Pattern. An example can be found [here](http://codeslut.blogspot.com/2010/05/mapping-immutable-value-objects-with.html)_
+  A workaround is introducing the Builder Pattern. An example can be found [here](http://codeslut.blogspot.com/2010/05/mapping-immutable-value-objects-with.html)_
 _[+] Requires a custom configuration_
  
 ## Performance
 
-Let's have a look to the performance library performance. The test has been executed on the following objects:
+Let's have a look at the performance library performance. The test has been executed on the following objects:
 
 * Mutable objects
 * Mutable objects extending another mutable object
@@ -873,9 +873,9 @@ Converter converter = new BeanUtils().getPrimitiveTypeConverter();
 int indexNumber = converter.convertValue(indexNumber, int.class);
 ```
 
-### Obtain a conversion function that convert from char to byte:
+### Obtain a conversion function that converts from char to byte:
 
-It's possible to obtain a type conversion function, reusable several time in different places.
+It's possible to obtain a type conversion function, reusable several times in different places.
 Assuming that the required conversion is from `char` to `byte
 
 ```java
@@ -891,15 +891,15 @@ byte converted = conversionFunction.map(processor -> processor.apply(c)).orElse(
 ```
 
 * in case the conversion is not needed as the primitive type and the destination type are the same it will return an empty `Optional`
-* in case the conversion function is unavailable or no not possible the method throws a : `TypeConversionException`
+* in case the conversion function is unavailable or no not possible the method throws a: `TypeConversionException`
 
 ## `Map` transformation samples
 
-Samples on how to transform a `Map` and all others function applicable on it can be viewed [here](https://hotelsdotcom.github.io/bull/transformer/mapTransformer.html)
+Samples on how to transform a `Map` and all others function applicable to it can be viewed [here](https://hotelsdotcom.github.io/bull/transformer/mapTransformer.html)
 
 ## Documentation
 
-A detailed project documentation is available [here](https://hotelsdotcom.github.io/bull), including some samples for [testing the library](https://hotelsdotcom.github.io/bull/transformer/testing.html) inside your project.
+Detailed project documentation is available [here](https://hotelsdotcom.github.io/bull), including some samples for [testing the library](https://hotelsdotcom.github.io/bull/transformer/testing.html) inside your project.
 
 An article that explains how it works, with suggestion and examples is available on DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li) 
 
@@ -908,7 +908,7 @@ An article that explains how it works, with suggestion and examples is available
 Created by: [Fabio Borriello](https://github.com/fborriello) with the contribution of: [Patrizio Munzi](https://github.com/patriziomunzi), 
 [Andrea Marsiglia](https://github.com/AndreaMars94), [Giorgio Delle Grottaglie](https://github.com/geordie--) & the Hotels.com's Checkout team in Rome.
 
-The application's logo has been designed by: Rob Light.
+The application's logo has been designed by Rob Light.
 
 ## Related articles
 
@@ -917,7 +917,7 @@ The application's logo has been designed by: Rob Light.
 
 ## Release
 
-All the instructions for releasing a new version are available at: [RELEASES.md](RELEASE.md)
+All the instructions for releasing a new version are available at [RELEASES.md](RELEASE.md)
 
 ## Badge your project
 
@@ -933,7 +933,7 @@ Add the following snippet in your Markdown file:
 
 [![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk)
 
-For any question, proposal or help, please refer to the slack channel: [#bull](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk).
+For any question, proposal, or help, please refer to the slack channel: [#bull](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk).
 
 ## Legal
 
