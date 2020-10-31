@@ -4,29 +4,29 @@
 
 # Overview
 
-Software testing plays a fundamental role in the software development because we can evaluate one or more properties of interest. In general, these properties indicate the 
-extent to which the component or system under test:
+Software testing plays a fundamental role in software development because we can evaluate one or more properties of interest. In general, these properties indicate the 
+the extent to which the component or system under test:
 
-* meets the requirements that guided its design and development,
+* Meets the requirements that guided its design and development,
 * responds correctly to all kinds of inputs,
 * performs its functions within an acceptable time,
 * it is sufficiently usable,
-* can be installed and run in its intended environments
-* achieves the general result its stakeholders desire.
+* Can be installed and run in its intended environments
+* achieves the general result of its stakeholder's desire.
 
 This page will show how to test BULL into a simple project. All the examples utilize [JUnit](https://github.com/junit-team), [Mockito](https://site.mockito.org/) and [AssertJ](https://assertj.github.io/doc/)
 
-The Java Bean transformation function can be tested in two different ways that depends on the following scenarios:
+The Java Bean transformation function can be tested in two different ways that depend on the following scenarios:
 
 1. The destination object does not require a special configuration to get transformed
-2. The destination object requires a special configuration, but you are confident that the configuration is working fine as it doesn't includes any special action  
+2. The destination object requires a special configuration, but you are confident that the configuration is working fine as it doesn't include any special action  
 3. The destination object requires a special configuration that needs to be tested as we are not confident that it would work
 
-For both scenarios: 1 and 2 we can use a mocked version the `BeanUtils` object.
+For both scenarios: 1 and 2 we can use a mocked version of the `BeanUtils` object.
 
 ### Before start
 
-As BULL contains final methods that needs to be mocked and, as Mockito requires a special configuration in order to mock final classes/methods, an extension needs
+As BULL contains final methods that need to be mocked and, as Mockito requires a special configuration in order to mock final classes/methods, an extension needs
 to be added to the test resource folder. This file is available [here](https://github.com/HotelsDotCom/bull/tree/master/src/test/resources/mockito-extensions).
 
 All the examples will be based on the following source object and destination object:
@@ -156,7 +156,7 @@ public class SampleClassTest {
 
 ### Second scenario:
 
-#####The destination object requires a special configuration, but you are confident that the configuration is working fine as it doesn't includes any particular instruction.
+#####The destination object requires a special configuration, but you are confident that the configuration is working fine as it doesn't include any particular instruction.
 
 Given the following service class:
 ```java
