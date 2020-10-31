@@ -2,7 +2,7 @@
 
 ## Explanation of the process sequence
 
-Assumption that the current state of *master* will constitute the release...
+The assumption that the current state of *master* will constitute the release...
 
 #### 1. Pre-release checks
 
@@ -30,7 +30,7 @@ e.g. if the new release version would be `X.Y.Z` then the `jdk8` correspondent o
 
 #### Update the change log
 
-The changes, that are going to be released, needs to be specified in the `CHANGELOG` file.
+The changes, that are going to be released, need to be specified in the `CHANGELOG` file.
 Ensure it mentions any noteworthy changes since the previous release.
 
 Make the following check before performing a release:
@@ -44,9 +44,9 @@ the same changes must be reported in [CHANGELOG-JDK8.md](CHANGELOG-JDK8.md)
 
 #### 3. Prepare the jdk8 release
 
-All the changes implemented needs to be reported to a `jdk8` compatible version.
+All the changes implemented need to be reported to a `jdk8` compatible version.
 
-The BULL code for the `jdk8` is slightly different so all the changes needs to be reported on the other version starting
+The BULL code for the `jdk8` is slightly different so all the changes need to be reported on the other version starting
 from it's latest release tag.
 
 The first thing to do is to create a branch (that would have the same name as the `jdk11` one plus the suffix: `-jdk8`)
@@ -66,7 +66,7 @@ $ git checkout -b feature/my-new-feature-jdk8 1.7.0-jdk8
 **IMPORTANT:** In the new branch, apply only the changes introduced comparing the code with the `jdk11` branch.
 When completed, commit your code and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green. 
 
-## Example of release process sequence
+## Example of a release process sequence
 
 The following examples assume that your local repository is:
 
@@ -96,9 +96,9 @@ nothing to commit, working directory clean
 
 Assuming that:
 
-* the latest release for `jdk8` was: `A.B.C-jdk8` 
+* The latest release for `jdk8` was: `A.B.C-jdk8` 
 * your new feature branch is: `feature/my-new-feature`
-* the new release version is: `X.Y.Z-jdk8`
+* The new release version is: `X.Y.Z-jdk8`
 
 the release branch would be: `release/my-new-feature-jdk8`
 
@@ -154,9 +154,9 @@ nothing to commit, working directory clean
 
 Assuming that:
 
-* the latest release for `jdk11` was: `A.B.C` 
+* The latest release for `jdk11` was: `A.B.C` 
 * your new feature branch is: `feature/my-new-feature`
-* the new release version is: `X.Y.Z`
+* The new release version is: `X.Y.Z`
 
 the release branch would be: `release/my-new-feature`
 
