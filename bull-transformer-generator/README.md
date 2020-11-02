@@ -2,7 +2,7 @@
 
 This BULL module provides the ability to generate transformers that can map a source type to a destination type without resorting to reflection, either at compile-time through source generation, or at run-time through bytecode generation.
 
-It is composed by several modules each providing a focused functionality, here is a brief overview.
+It is composed of several modules each providing a focused functionality, here is a brief overview.
 
 ### Generator Core
 
@@ -23,9 +23,9 @@ TypeSpec transformer = spec.build(Source.class, Destination.class);
 ``` 
 `TransformerSpec` analyzes the destination type and produces code that can handle different mapping scenarios:
 
-1. **Mutable** - destination is instantiated using a no-arg constructor and properties are mapped from available source getters to destination setters. Destination type should follow the [JavaBean conventions](https://en.wikipedia.org/wiki/JavaBeans#JavaBean_conventions).
-2. **Immutable *(TODO)*** - destination is instantiated using the longest constructor and arguments are mapped from available source getters.
-3. **Mixed *(TODO)*** - destination is initialized as in the *Immutable* case and additional properties are mapped from available source getters to destination setters.
+1. **Mutable** - the destination is instantiated using a no-arg constructor and properties are mapped from available source getters to destination setters. Destination type should follow the [JavaBean conventions](https://en.wikipedia.org/wiki/JavaBeans#JavaBean_conventions).
+2. **Immutable *(TODO)*** - the destination is instantiated using the longest constructor and arguments are mapped from available source getters.
+3. **Mixed *(TODO)*** - the destination is initialized as in the *Immutable* case and additional properties are mapped from available source getters to destination setters.
 
 ### Source Adapter
 
