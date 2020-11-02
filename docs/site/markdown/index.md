@@ -10,8 +10,8 @@ This BeanUtils library is a utility library for managing Bean objects. The libra
 
 #### Bean Transformer: 
 
-is a Java Bean to Java Bean transformer that recursively copies data from one object to another, it is generic, flexible, reusable, configurable and incredibly fast.
-It's the only library able to transform Mutable, Immutable and Mixed bean without any custom configuration.
+is a Java Bean to Java Bean transformer that recursively copies data from one object to another, it is generic, flexible, reusable, configurable, and incredibly fast.
+It's the only library able to transform Mutable, Immutable, and Mixed bean without any custom configuration.
 
 ##### Features:
 * support copy of immutable beans.
@@ -29,7 +29,7 @@ It's the only library able to transform Mutable, Immutable and Mixed bean withou
 * support copy of beans with different field's name.
 * support lambda function field transformation.
 * support copy of java bean built through Builder.
-* easy usage, declarative way to define the property mapping (in case of different names) or simply adding the Lombok annotations.
+* easy usage, declarative way to define the property mapping (in case of different names), or simply adding the Lombok annotations.
 * allows setting the default value for all objects not existing in the source object.
 * allows skipping transformation for a given set of fields.
 * supports the retrieval of the value from getters if a field does not exist in the source object.
