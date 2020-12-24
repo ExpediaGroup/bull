@@ -19,7 +19,7 @@ package com.hotels.beans.sample.mixed;
 import java.math.BigInteger;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import com.hotels.beans.sample.immutable.ImmutableToSubFoo;
 
