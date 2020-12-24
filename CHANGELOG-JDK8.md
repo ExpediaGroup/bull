@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.7.4-jdk8] 2020.12.24
+#### Changed
+* Updated `hibernate-validator` version to `7.0.0.Final` (was `6.1.5.Final`).
+
 ### [1.7.3-jdk8] 2020.10.07
 #### Changed
 * Provides new utilities methods
