@@ -21,7 +21,7 @@ import static java.util.Objects.isNull;
 import java.util.List;
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolation;
 
 /**
  * Java Bean validation class.
