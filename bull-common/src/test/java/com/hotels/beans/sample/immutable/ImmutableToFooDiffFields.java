@@ -19,7 +19,7 @@ package com.hotels.beans.sample.immutable;
 import java.math.BigInteger;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

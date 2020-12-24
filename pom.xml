@@ -58,10 +58,9 @@
         <assertj-core.version>3.18.1</assertj-core.version>
         <!-- validation dependencies -->
         <validation-api.version>2.0.1.Final</validation-api.version>
-        <hibernate-validator.version>6.1.7.Final</hibernate-validator.version>
+        <hibernate-validator.version>7.0.0.Final</hibernate-validator.version>
         <slf4j-api.version>1.7.30</slf4j-api.version>
-        <javax.el-api.version>3.0.0</javax.el-api.version>
-        <glassfish.javax.el.version>2.2.6</glassfish.javax.el.version>
+        <glassfish.jakarta.el.version>4.0.0</glassfish.jakarta.el.version>
         <!-- JaCoCo & Sonar properties -->
         <jacoco.version>0.8.6</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
@@ -86,7 +85,7 @@
         <test.coverage.check.skip>false</test.coverage.check.skip>
         <pmd.check.skip>true</pmd.check.skip>
         <javadoc.skip>false</javadoc.skip>
-        <import.order>\#java,\#javax,\#org,\#,\#com,,\#lombok,java,javax,org,,com,,lombok</import.order>
+        <import.order>\#java,\#javax,\#jakarta,\#org,\#,\#com,,\#lombok,java,javax,jakarta,org,,com,,lombok</import.order>
         <spotless.plugin.skip>false</spotless.plugin.skip>
     </properties>
 
@@ -113,24 +112,14 @@
             </dependency>
             <!-- validation dependencies -->
             <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>${validation-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.el</groupId>
-                <artifactId>javax.el-api</artifactId>
-                <version>${javax.el-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish.web</groupId>
-                <artifactId>javax.el</artifactId>
-                <version>${glassfish.javax.el.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>jakarta.el</artifactId>
+                <version>${glassfish.jakarta.el.version}</version>
             </dependency>
             <!-- test dependencies -->
             <dependency>

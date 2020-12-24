@@ -110,11 +110,11 @@
         <module name="ImportOrder">
             <property name="option" value="top"/>
             <!-- simple imports -->
-            <property name="groups" value="/^java\./,javax,org,com,lombok"/>
+            <property name="groups" value="/^java\./,javax,jakarta,org,com,lombok"/>
             <property name="ordered" value="true"/>
             <property name="separated" value="true"/>
             <!-- static imports -->
-            <property name="staticGroups" value="/^java\./,javax,org,com,lombok"/>
+            <property name="staticGroups" value="/^java\./,javax,jakarta,org,com,lombok"/>
             <property name="sortStaticImportsAlphabetically" value="false"/>
             <property name="separatedStaticGroups" value="true"/>
         </module>
