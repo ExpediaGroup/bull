@@ -44,7 +44,7 @@ import java.util.Properties;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
