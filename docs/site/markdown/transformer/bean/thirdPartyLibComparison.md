@@ -2,7 +2,7 @@
     <title>Third Party Library comparison</title>
 </head>
 
-# Third Party Libraries comparison
+# Third-Party Libraries comparison
 
 This page compares the Transformer functionalities with the following Third-Party libraries:
 
@@ -32,5 +32,5 @@ This page compares the Transformer functionalities with the following Third-Part
 | Annotation field validation | X | - | X | - |
 
 _[*] Immutable types are not supported by Dozer. When a type doesn't have a no-arg constructor and all fields are final, Dozer can't perform the mapping.
-  Workaround is introducing the Builder Pattern. An example can be found [here](http://codeslut.blogspot.com/2010/05/mapping-immutable-value-objects-with.html)_
+The workaround is introducing the Builder Pattern. An example can be found [here](http://codeslut.blogspot.com/2010/05/mapping-immutable-value-objects-with.html)_
 _[+] Requires a custom configuration_

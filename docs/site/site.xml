@@ -36,6 +36,7 @@
         </breadcrumbs>
         <menu name="Project info">
             <item name="Glossary" href="/glossary.html" />
+            <item name="Use it in Kotlin" href="/kotlin.html" />
         </menu>
         <menu name="Transformer">
             <item name="Bean Transformer" collapse="true" href="/transformer/beanTransformer.html">
