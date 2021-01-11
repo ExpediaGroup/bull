@@ -19,7 +19,7 @@ package com.hotels.transformer.validator;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
-import static javax.validation.Validation.buildDefaultValidatorFactory;
+import static jakarta.validation.Validation.buildDefaultValidatorFactory;
 
 import static org.apache.commons.lang3.StringUtils.SPACE;
 
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
-import javax.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolation;
 
 import com.hotels.transformer.cache.CacheManager;
 import com.hotels.transformer.error.InvalidBeanException;
@@ -101,11 +101,11 @@ public class ValidatorImpl implements Validator {
      * Creates the validator.
      * @return a {@link javax.validation.Validator} instance.
      */
-    private javax.validation.Validator getValidator() {
+    private jakarta.validation.Validator getValidator() {
         String cacheKey = "BeanValidator";
-        return cacheManager.getFromCache(cacheKey, javax.validation.Validator.class)
+        return cacheManager.getFromCache(cacheKey, jakarta.validation.Validator.class)
                 .orElseGet(() -> {
-                    javax.validation.Validator validator = buildDefaultValidatorFactory().getValidator();
+                    jakarta.validation.Validator validator = buildDefaultValidatorFactory().getValidator();
                     cacheManager.cacheObject(cacheKey, validator);
                     return validator;
                 });
