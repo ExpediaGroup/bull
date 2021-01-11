@@ -8,7 +8,7 @@
     <parent>
         <groupId>com.hotels.beans</groupId>
         <artifactId>bean-utils-library-parent</artifactId>
-        <version>1.7.5-SNAPSHOT</version>
+        <version>1.7.7-SNAPSHOT</version>
     </parent>
 
     <dependencies>
