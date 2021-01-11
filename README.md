@@ -22,6 +22,18 @@ It's the only library able to transform Mutable, Immutable, and Mixed bean witho
 
 All BULL modules are available on Maven Central: 
 
+* ### Bean BOM
+
+It contains all the modules available in the project
+
+```xml
+<dependency>
+    <groupId>com.hotels.beans</groupId>
+    <artifactId>bull-bom</artifactId>
+    <version>x.y.z</version>
+</dependency>
+```
+
 * ### Bean Transformer
 
 ```xml
