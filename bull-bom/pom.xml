@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>BULL - BOM</name>
+    <artifactId>bull-bom</artifactId>
+    <packaging>jar</packaging>
+    <description>Contains all the modules available in the BULL project</description>
+
+    <parent>
+        <groupId>com.hotels.beans</groupId>
+        <artifactId>bean-utils-library-parent</artifactId>
+        <version>1.7.3-jdk8</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.hotels.beans</groupId>
+            <artifactId>bull-bean-transformer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hotels.beans</groupId>
+            <artifactId>bull-map-transformer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hotels.beans</groupId>
+            <artifactId>bull-converter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>
