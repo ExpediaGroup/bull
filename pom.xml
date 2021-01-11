@@ -21,7 +21,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>1.7.5-jdk8-SNAPSHOT</version>
+    <version>1.7.6-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -659,6 +659,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <skip>${javadoc.skip}</skip>
+                    <source>8</source>
                 </configuration>
                 <executions>
                     <execution>
@@ -706,6 +707,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
+                    <source>8</source>
                     <show>public</show>
                 </configuration>
                 <reportSets>
