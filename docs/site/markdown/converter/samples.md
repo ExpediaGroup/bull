@@ -19,9 +19,9 @@ Converter converter = new BeanUtils().getPrimitiveTypeConverter();
 int indexNumber = converter.convertValue(indexNumber, int.class);
 ```
 
-### Obtain a conversion function that convert from char to byte:
+### Obtain a conversion function that converts from char to byte:
 
-It's possible to obtain a type conversion function, reusable several time in different places.
+It's possible to obtain a type conversion function, reusable several times in different places.
 Assuming that the required conversion is from `char` to `byte
 
 ```java
@@ -37,7 +37,7 @@ byte converted = conversionFunction.map(processor -> processor.apply(c)).orElse(
 ```
 
 * in case the conversion is not needed as the primitive type and the destination type are the same it will return an empty `Optional`
-* in case the conversion function is unavailable or no not possible the method throws a : `TypeConversionException`
+* in case the conversion function is unavailable or no not possible the method throws a: `TypeConversionException`
 
 **IMPORTANT:** The primitive type transformation (if enabled) is executed before any other `FieldTransformer` function defined on a specific field.
-This means that the once the `FieldTransformer` function will be executed the field value has already been transformed.
+This means that once the `FieldTransformer` function will be executed the field value has already been transformed.

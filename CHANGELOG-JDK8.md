@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.7.4-jdk8] 2021.01.11
+#### Added
+* Provides new module `bull-bom` that includes all the project modules
+
+
 ### [1.7.3-jdk8] 2020.10.07
 #### Changed
 * Provides new utilities methods
@@ -26,11 +31,11 @@ All notable changes to this project will be documented in this file.
 * Updated `hotels-oss-parent` version to `5.0.0` (was `4.2.0`).
 * Updated `commons-lang3` version to `3.10` (was `3.9`).
 
-### [1.6.4-jdk8] 2020.01.21
+### [1.6.5] 2020.01.21
 #### Changed
 * Testing dependencies update
 
-### [1.6.3.2-jdk8] 2019.12.24
+### [1.6.4] 2019.12.24
 #### Added
 * Implemented Wildcards types support (see: [Issue 111](https://github.com/HotelsDotCom/bull/issues/111)).
 * Implemented transformation of a field declared with its interface.
