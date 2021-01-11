@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.7.4-jdk8] 2021.01.11
+### [1.7.5-jdk8] 2021.01.11
 #### Added
 * Provides new module `bull-bom` that includes all the project modules
 
