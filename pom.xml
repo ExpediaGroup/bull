@@ -56,7 +56,7 @@
         <!-- testing dependencies -->
         <mockito-core.version>3.7.7</mockito-core.version>
         <testng.version>7.3.0</testng.version>
-        <assertj-core.version>3.18.1</assertj-core.version>
+        <assertj-core.version>3.19.0</assertj-core.version>
         <!-- validation dependencies -->
         <validation-api.version>2.0.1.Final</validation-api.version>
         <hibernate-validator.version>7.0.0.Final</hibernate-validator.version>
