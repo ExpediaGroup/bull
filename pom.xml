@@ -80,7 +80,7 @@
         <maven.site.plugin.version>3.9.1</maven.site.plugin.version>
         <!-- build settings -->
         <maven.gpg.plugin.version>1.6</maven.gpg.plugin.version>
-        <maven.checkstyle.plugin.version>3.1.1</maven.checkstyle.plugin.version>
+        <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
         <test.coverage.check.skip>false</test.coverage.check.skip>
