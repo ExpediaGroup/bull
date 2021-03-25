@@ -89,21 +89,38 @@ On top of that, it's suggested to configure the `maven-compiler-plugin`, inside 
 ## Maven build
 
 Full build
+
 ```shell script
 ./mvnw clean install
 ```
 or on Windows
+
 ```shell script
 mvnw.cmd clean install
 ```
 
-Skip test coverage and checkstyle check
+### Skip test coverage and checkstyle check
+
 ```shell script
 ./mvnw clean install -P relaxed
 ```
+
 or on Windows
+
 ```shell script
 mvnw.cmd clean install -P relaxed
+```
+
+### Check for dependencies update
+
+```
+mvn versions:display-dependency-updates -P check-for-updates
+```
+
+or on Windows
+
+```shell script
+mvnw.cmd versions:display-dependency-updates -P check-for-updates
 ```
 
 ## Features:
