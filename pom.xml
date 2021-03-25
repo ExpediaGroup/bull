@@ -39,6 +39,7 @@
     <modules>
         <module>bull-common</module>
         <module>bull-bean-transformer</module>
+        <module>bull-map-transformer</module>
         <module>bull-converter</module>
         <module>bull-report</module>
         <module>bull-bom</module>
@@ -189,21 +190,6 @@
     <profiles>
         <!-- modules profiles -->
         <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>bull-map-transformer</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>map-transformer</id>
-            <modules>
-                <module>bull-map-transformer</module>
-            </modules>
-        </profile>
-        <profile>
             <id>relaxed</id>
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
@@ -213,9 +199,6 @@
         </profile>
         <profile>
             <id>fast</id>
-            <modules>
-                <module>bull-map-transformer</module>
-            </modules>
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
@@ -265,9 +248,6 @@
             <properties>
                 <javadoc.skip>true</javadoc.skip>
             </properties>
-            <modules>
-                <module>bull-map-transformer</module>
-            </modules>
         </profile>
         <!-- release profile -->
         <profile>
@@ -610,6 +590,7 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>${maven.versions.plugin.version}</version>
+                    <inherited>false</inherited>
                     <configuration>
                         <rulesUri>file:///${project.basedir}/config/maven/versions-plugin-rules.xml</rulesUri>
                     </configuration>
