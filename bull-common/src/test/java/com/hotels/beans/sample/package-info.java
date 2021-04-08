@@ -16,5 +16,4 @@
 /**
  * Sample Bean object for test purpose.
  */
-
 package com.hotels.beans.sample;

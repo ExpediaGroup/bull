@@ -16,5 +16,4 @@
 /**
  * Performance test package.
  */
-
 package com.hotels.beans.performance;
