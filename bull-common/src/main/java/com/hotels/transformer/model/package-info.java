@@ -16,5 +16,4 @@
 /**
  * Pojo package.
  */
-
 package com.hotels.transformer.model;

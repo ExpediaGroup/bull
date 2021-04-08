@@ -16,5 +16,4 @@
 /**
  * Base item package.
  */
-
 package com.hotels.transformer.base;

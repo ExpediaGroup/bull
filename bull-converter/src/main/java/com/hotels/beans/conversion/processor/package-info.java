@@ -16,5 +16,4 @@
 /**
  * Type conversion processor package.
  */
-
 package com.hotels.beans.conversion.processor;

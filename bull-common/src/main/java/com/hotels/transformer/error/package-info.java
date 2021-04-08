@@ -16,5 +16,4 @@
 /**
  * Exceptions package.
  */
-
 package com.hotels.transformer.error;

@@ -16,5 +16,4 @@
 /**
  * Annotations package.
  */
-
 package com.hotels.transformer.annotation;

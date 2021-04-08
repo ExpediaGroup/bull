@@ -16,5 +16,4 @@
 /**
  * Transformer test package.
  */
-
 package com.hotels.transformer;
