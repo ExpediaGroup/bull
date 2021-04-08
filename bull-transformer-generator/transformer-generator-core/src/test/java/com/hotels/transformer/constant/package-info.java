@@ -16,5 +16,4 @@
 /**
  * Copy of {@code ClassType} in module bull-common, modified for testing purposes.
  */
-
 package com.hotels.transformer.constant;

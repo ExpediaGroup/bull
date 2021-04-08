@@ -16,5 +16,4 @@
 /**
  * Sample immutable classes for testing purposes.
  */
-
 package com.hotels.beans.generator.core.sample.immutable;

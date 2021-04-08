@@ -16,5 +16,4 @@
 /**
  * Sample mixed classes for testing purposes.
  */
-
 package com.hotels.beans.generator.core.sample.mixed;

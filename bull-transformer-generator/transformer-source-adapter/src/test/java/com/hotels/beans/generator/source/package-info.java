@@ -16,5 +16,4 @@
 /**
  * Tests for the source adapter.
  */
-
 package com.hotels.beans.generator.source;

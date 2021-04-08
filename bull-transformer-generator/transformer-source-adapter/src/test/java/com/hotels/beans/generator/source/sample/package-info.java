@@ -16,5 +16,4 @@
 /**
  * Example usage of the source adapter.
  */
-
 package com.hotels.beans.generator.source.sample;

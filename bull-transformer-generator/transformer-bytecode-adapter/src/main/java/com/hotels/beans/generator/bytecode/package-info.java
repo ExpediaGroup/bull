@@ -24,5 +24,4 @@
  * Clients should prefer higher level interfaces such as {@code TransformerRegistry}
  * to obtain generated transformer instances.
  */
-
 package com.hotels.beans.generator.bytecode;

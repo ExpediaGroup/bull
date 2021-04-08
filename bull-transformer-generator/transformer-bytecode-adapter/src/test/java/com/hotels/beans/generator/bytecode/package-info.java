@@ -16,5 +16,4 @@
 /**
  * Tests for the bytecode adapter.
  */
-
 package com.hotels.beans.generator.bytecode;

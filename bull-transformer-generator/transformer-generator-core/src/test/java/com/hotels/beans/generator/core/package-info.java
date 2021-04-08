@@ -16,5 +16,4 @@
 /**
  * Tests for generator core model.
  */
-
 package com.hotels.beans.generator.core;

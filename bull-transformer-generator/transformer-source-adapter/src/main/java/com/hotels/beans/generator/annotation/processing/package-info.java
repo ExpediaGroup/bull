@@ -16,5 +16,4 @@
 /**
  * Contains the source adapter required annotation.
  */
-
 package com.hotels.beans.generator.annotation.processing;

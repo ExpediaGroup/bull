@@ -16,5 +16,4 @@
 /**
  * Sample JavaBean mutable classes for testing purposes.
  */
-
 package com.hotels.beans.generator.core.sample.javabean;

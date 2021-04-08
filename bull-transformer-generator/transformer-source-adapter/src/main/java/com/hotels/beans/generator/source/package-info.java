@@ -27,5 +27,4 @@
  * transformation and writing of models or, for example, if you need to implement a command-line utility.
  * Clients should prefer higher level interfaces such as {@code TransformerRegistry}.
  */
-
 package com.hotels.beans.generator.source;

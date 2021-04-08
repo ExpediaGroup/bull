@@ -16,5 +16,4 @@
 /**
  * Tests for mapping code block models.
  */
-
 package com.hotels.beans.generator.core.mapping;

@@ -22,5 +22,4 @@
  * All transformer models implement the {@link com.hotels.beans.generator.core.Transformer} interface.
  * The mapping code model is created using {@link com.hotels.beans.generator.core.mapping.MappingCode}.
  */
-
 package com.hotels.beans.generator.core;

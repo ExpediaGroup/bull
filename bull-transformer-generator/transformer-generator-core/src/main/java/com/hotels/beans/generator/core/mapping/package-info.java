@@ -19,5 +19,4 @@
  * The main entry point to obtain a mapping model is the factory method
  * {@link com.hotels.beans.generator.core.mapping.MappingCode#of(java.lang.Class, java.lang.Class)}.
  */
-
 package com.hotels.beans.generator.core.mapping;
