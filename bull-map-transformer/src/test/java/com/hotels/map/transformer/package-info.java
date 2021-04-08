@@ -16,5 +16,4 @@
 /**
  * Map transformer package.
  */
-
 package com.hotels.map.transformer;

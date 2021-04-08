@@ -16,5 +16,4 @@
 /**
  * Bean transformer package.
  */
-
 package com.hotels.beans.transformer;

@@ -16,5 +16,4 @@
 /**
  * Populator objects package.
  */
-
 package com.hotels.beans.populator;

@@ -16,5 +16,4 @@
 /**
  * Implementations of processors package.
  */
-
 package com.hotels.beans.conversion.processor.impl;

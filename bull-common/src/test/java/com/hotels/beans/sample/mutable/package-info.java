@@ -16,5 +16,4 @@
 /**
  * Mutable Bean package.
  */
-
 package com.hotels.beans.sample.mutable;

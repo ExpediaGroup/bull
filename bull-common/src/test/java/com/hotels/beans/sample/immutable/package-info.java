@@ -16,5 +16,4 @@
 /**
  * Immutable Bean package.
  */
-
 package com.hotels.beans.sample.immutable;

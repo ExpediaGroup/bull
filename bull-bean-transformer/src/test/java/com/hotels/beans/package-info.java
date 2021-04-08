@@ -16,5 +16,4 @@
 /**
  * Test package.
  */
-
 package com.hotels.beans;
