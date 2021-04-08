@@ -33,14 +33,16 @@
     <parent>
         <groupId>com.hotels</groupId>
         <artifactId>hotels-oss-parent</artifactId>
-        <version>6.2.0</version>
+        <version>6.2.1</version>
     </parent>
 
     <modules>
         <module>bull-common</module>
         <module>bull-bean-transformer</module>
+        <module>bull-map-transformer</module>
         <module>bull-converter</module>
         <module>bull-report</module>
+        <module>bull-bom</module>
     </modules>
 
     <properties>
@@ -49,18 +51,18 @@
         <jdk.version>1.8</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
-        <lombok.version>1.18.16</lombok.version>
-        <apache.commons-lang3.version>3.11</apache.commons-lang3.version>
+        <lombok.version>1.18.20</lombok.version>
+        <apache.commons-lang3.version>3.12.0</apache.commons-lang3.version>
         <hotels.oss.plugin.config.version>1.3.0</hotels.oss.plugin.config.version>
         <!-- testing dependencies -->
-        <mockito-core.version>3.6.28</mockito-core.version>
-        <testng.version>7.3.0</testng.version>
-        <assertj-core.version>3.18.1</assertj-core.version>
+        <mockito-core.version>3.9.0</mockito-core.version>
+        <testng.version>7.4.0</testng.version>
+        <assertj-core.version>3.19.0</assertj-core.version>
         <!-- validation dependencies -->
         <validation-api.version>2.0.1.Final</validation-api.version>
-        <hibernate-validator.version>7.0.0.Final</hibernate-validator.version>
+        <hibernate-validator.version>7.0.1.Final</hibernate-validator.version>
         <slf4j-api.version>1.7.30</slf4j-api.version>
-        <glassfish.jakarta.el.version>4.0.0</glassfish.jakarta.el.version>
+        <glassfish.jakarta.el.version>4.0.1</glassfish.jakarta.el.version>
         <!-- JaCoCo & Sonar properties -->
         <jacoco.version>0.8.6</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
@@ -73,13 +75,13 @@
         <!-- Required for coverall jdk >= 9 compatibility -->
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <!-- site properties -->
-        <wagon-ssh.version>3.4.2</wagon-ssh.version>
+        <wagon-ssh.version>3.4.3</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
         <github.global.server>github</github.global.server>
         <maven.site.plugin.version>3.9.1</maven.site.plugin.version>
         <!-- build settings -->
         <maven.gpg.plugin.version>1.6</maven.gpg.plugin.version>
-        <maven.checkstyle.plugin.version>3.1.1</maven.checkstyle.plugin.version>
+        <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
         <test.coverage.check.skip>false</test.coverage.check.skip>
@@ -186,35 +188,19 @@
 
     <!-- profile configuration -->
     <profiles>
-        <!-- modules profiles -->
         <profile>
             <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <modules>
-                <module>bull-map-transformer</module>
+            <properties>
+                <javadoc.skip>true</javadoc.skip>
                 <module>bull-transformer-generator</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>map-transformer</id>
-            <modules>
-                <module>bull-map-transformer</module>
-            </modules>
-        </profile>
-        <!-- Transformer generation project profile -->
-        <profile>
-            <id>transformer-generator</id>
-            <modules>
-                <module>bull-map-transformer</module>
-                <module>bull-transformer-generator</module>
-            </modules>
+            </properties>
         </profile>
         <profile>
             <id>relaxed</id>
             <modules>
-                <module>bull-map-transformer</module>
                 <module>bull-transformer-generator</module>
             </modules>
             <properties>
@@ -225,10 +211,6 @@
         </profile>
         <profile>
             <id>fast</id>
-            <modules>
-                <module>bull-map-transformer</module>
-                <module>bull-transformer-generator</module>
-            </modules>
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
@@ -254,7 +236,6 @@
         <profile>
             <id>site-release</id>
             <modules>
-                <module>bull-map-transformer</module>
                 <module>bull-transformer-generator</module>
             </modules>
             <properties>
@@ -283,7 +264,13 @@
                 <javadoc.skip>true</javadoc.skip>
             </properties>
             <modules>
-                <module>bull-map-transformer</module>
+                <module>bull-transformer-generator</module>
+            </modules>
+        </profile>
+        <!-- Transformer generation project profile -->
+        <profile>
+            <id>transformer-generator</id>
+            <modules>
                 <module>bull-transformer-generator</module>
             </modules>
         </profile>
@@ -628,6 +615,7 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>${maven.versions.plugin.version}</version>
+                    <inherited>false</inherited>
                     <configuration>
                         <rulesUri>file:///${project.basedir}/config/maven/versions-plugin-rules.xml</rulesUri>
                     </configuration>

@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 * Added transformer generation at run-time in module `transformer-bytecode-adapter`.
 * Added transformer source adapter which take the transformers generated from the Core module and decorate them to produce readable source file representations in module `transformer-source-adapter`.
 
+### [1.7.6] 2021.01.11
+#### Added
+* Provides new module `bull-bom` that includes all the project modules
+
 ### [1.7.4] 2020.10.07
 #### Changed
 * Provides new utilities methods

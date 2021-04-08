@@ -22,6 +22,18 @@ It's the only library able to transform Mutable, Immutable, and Mixed bean witho
 
 All BULL modules are available on Maven Central: 
 
+* ### Bean BOM
+
+It contains all the modules available in the project
+
+```xml
+<dependency>
+    <groupId>com.hotels.beans</groupId>
+    <artifactId>bull-bom</artifactId>
+    <version>x.y.z</version>
+</dependency>
+```
+
 * ### Bean Transformer
 
 ```xml
@@ -77,21 +89,38 @@ On top of that, it's suggested to configure the `maven-compiler-plugin`, inside 
 ## Maven build
 
 Full build
+
 ```shell script
 ./mvnw clean install
 ```
 or on Windows
+
 ```shell script
 mvnw.cmd clean install
 ```
 
-Skip test coverage and checkstyle check
+### Skip test coverage and checkstyle check
+
 ```shell script
 ./mvnw clean install -P relaxed
 ```
+
 or on Windows
+
 ```shell script
 mvnw.cmd clean install -P relaxed
+```
+
+### Check for dependencies update
+
+```
+mvn versions:display-dependency-updates -P check-for-updates
+```
+
+or on Windows
+
+```shell script
+mvnw.cmd versions:display-dependency-updates -P check-for-updates
 ```
 
 ## Features:

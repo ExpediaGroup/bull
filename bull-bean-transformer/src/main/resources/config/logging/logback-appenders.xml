@@ -18,13 +18,31 @@
             <charset>UTF-8</charset>
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${ROOT_LOG_DIR}/bull-bean-transformer-%d{yyyy-MM-dd}-%i.log.zip
-            </fileNamePattern>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${ROOT_LOG_DIR}/bull-bean-transformer-%d{yyyy-MM-dd}-%i.log.zip</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+            <!-- total size of all archive files, if total size is greater then the given value the old archives are deleted -->
+            <totalSizeCap>500MB</totalSizeCap>
+            <!-- days to keep -->
             <maxHistory>30</maxHistory>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>5MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Third party service log file -->
+    <appender name="THIRD_PARTY_SERVICE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${ROOT_LOG_DIR}/third-party-service.log</file>
+        <append>true</append>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${ROOT_LOG_DIR}/third-party-service-%d{yyyy-MM-dd}-%i.log.zip</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+            <!-- total size of all archive files, if total size is greater then the given value the old archives are deleted -->
+            <totalSizeCap>500MB</totalSizeCap>
+            <!-- days to keep -->
+            <maxHistory>30</maxHistory>
         </rollingPolicy>
     </appender>
 </included>
