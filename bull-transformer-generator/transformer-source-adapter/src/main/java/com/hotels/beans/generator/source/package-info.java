@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2020 Expedia, Inc.
+ * Copyright (C) 2019-2021 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,5 +27,4 @@
  * transformation and writing of models or, for example, if you need to implement a command-line utility.
  * Clients should prefer higher level interfaces such as {@code TransformerRegistry}.
  */
-
 package com.hotels.beans.generator.source;

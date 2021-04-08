@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2020 Expedia, Inc.
+ * Copyright (C) 2019-2021 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,5 +19,4 @@
  * The main entry point to obtain a mapping model is the factory method
  * {@link com.hotels.beans.generator.core.mapping.MappingCode#of(java.lang.Class, java.lang.Class)}.
  */
-
 package com.hotels.beans.generator.core.mapping;

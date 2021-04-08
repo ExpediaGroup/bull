@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2020 Expedia, Inc.
+ * Copyright (C) 2019-2021 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,5 +22,4 @@
  * All transformer models implement the {@link com.hotels.beans.generator.core.Transformer} interface.
  * The mapping code model is created using {@link com.hotels.beans.generator.core.mapping.MappingCode}.
  */
-
 package com.hotels.beans.generator.core;
