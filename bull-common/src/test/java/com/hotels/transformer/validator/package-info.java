@@ -16,5 +16,4 @@
 /**
  * validator test package.
  */
-
 package com.hotels.transformer.validator;

@@ -16,5 +16,4 @@
 /**
  * Mixed Bean package.
  */
-
 package com.hotels.beans.sample.mixed;

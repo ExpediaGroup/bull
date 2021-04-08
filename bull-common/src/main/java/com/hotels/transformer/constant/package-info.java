@@ -16,5 +16,4 @@
 /**
  * Constants package.
  */
-
 package com.hotels.transformer.constant;
