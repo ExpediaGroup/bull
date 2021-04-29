@@ -1,3 +1,4 @@
+# dependabot configuration available at: https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates
 version: 2
 updates:
 - package-ecosystem: maven
@@ -12,7 +13,3 @@ updates:
   labels:
   - configuration
   - update
-#  ignore:
-#  - dependency-name: com.hotels:hotels-oss-parent
-#    versions:
-#    - "> 4.3.0, < 4.4"
