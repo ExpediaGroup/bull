@@ -12,7 +12,7 @@ updates:
   labels:
   - configuration
   - update
-  ignore:
-  - dependency-name: com.hotels:hotels-oss-parent
-    versions:
-    - "> 4.3.0, < 4.4"
+#  ignore:
+#  - dependency-name: com.hotels:hotels-oss-parent
+#    versions:
+#    - "> 4.3.0, < 4.4"
