@@ -55,7 +55,7 @@
         <apache.commons-lang3.version>3.12.0</apache.commons-lang3.version>
         <hotels.oss.plugin.config.version>1.3.0</hotels.oss.plugin.config.version>
         <!-- testing dependencies -->
-        <mockito-core.version>3.11.0</mockito-core.version>
+        <mockito-core.version>3.11.1</mockito-core.version>
         <testng.version>7.4.0</testng.version>
         <assertj-core.version>3.19.0</assertj-core.version>
         <!-- validation dependencies -->
