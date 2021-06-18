@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../testapidocs/com/hotels/map/transformer/MapTransformerTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> * Copyright (C) 2019-2020 Expedia, Inc.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> * Copyright (C) 2019-2021 Expedia, Inc.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> * Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> * you may not use this file except in compliance with the License.</em>
@@ -21,172 +21,172 @@
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> * See the License for the specific language governing permissions and</em>
 <a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> * limitations under the License.</em>
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>  
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">package</strong> com.hotels.map.transformer;
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.math.BigInteger.ONE;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.math.BigInteger.ZERO;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Assertions.assertThat;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Assertions.entry;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.util.Lists.list;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.util.Maps.newHashMap;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mockito.MockitoAnnotations.openMocks;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> java.math.BigInteger;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.util.HashMap;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.mockito.InjectMocks;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.testng.annotations.AfterMethod;
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.testng.annotations.BeforeClass;
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.testng.annotations.DataProvider;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.testng.annotations.Test;
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> com.hotels.beans.BeanUtils;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> com.hotels.beans.sample.FromFooSimple;
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> com.hotels.beans.sample.mutable.MutableToFooSimple;
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> com.hotels.beans.transformer.BeanTransformer;
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> com.hotels.map.transformer.model.MapTransformerSettings;
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> com.hotels.transformer.AbstractTransformerTest;
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> com.hotels.transformer.error.InvalidFunctionException;
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> com.hotels.transformer.model.FieldMapping;
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> com.hotels.transformer.model.FieldTransformer;
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> com.hotels.transformer.model.TransformerSettings;
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment"> * Unit test for {@link MapTransformer}.</em>
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="MapTransformerTest" href="../../../../com/hotels/map/transformer/MapTransformerTest.html#MapTransformerTest">MapTransformerTest</a> <strong class="jxr_keyword">extends</strong> <a name="AbstractTransformerTest" href="../../../../com/hotels/transformer/AbstractTransformerTest.html#AbstractTransformerTest">AbstractTransformerTest</a> {
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> BeanTransformer BEAN_TRANSFORMER = <strong class="jxr_keyword">new</strong> BeanUtils().getTransformer();
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MAP_KEY_1 = <span class="jxr_string">"key1"</span>;
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MAP_KEY_2 = <span class="jxr_string">"key2"</span>;
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>  
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment">     * The class to be tested.</em>
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>      @InjectMocks
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>      <strong class="jxr_keyword">private</strong> MapTransformerImpl underTest;
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>  
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     * Initialized mocks.</em>
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>      @BeforeClass
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> beforeClass() {
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          openMocks(<strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          initObjects();
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>      }
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     * After method actions.</em>
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      @AfterMethod
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> afterMethod() {
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>          underTest.resetKeyTransformer();
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>      }
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>  
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">     * Test that the method {@code transform} raises an {@link IllegalArgumentException} if any parameter is null.</em>
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_javadoccomment">     * @param testCaseDescription the test case description</em>
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">     * @param sourceMap the map to transform</em>
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">     * @param beanTransformer the bean transformer</em>
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">     * @param &lt;T&gt; the key type</em>
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_javadoccomment">     * @param &lt;K&gt; the element type</em>
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>      @Test(expectedExceptions = IllegalArgumentException.<strong class="jxr_keyword">class</strong>, dataProvider = <span class="jxr_string">"dataTransformMethodWithTwoArgument"</span>)
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>      <strong class="jxr_keyword">public</strong> &lt;T, K&gt; <strong class="jxr_keyword">void</strong> testTransformRaisesExceptionIfItsCalledWithNullParameter(<strong class="jxr_keyword">final</strong> String testCaseDescription,
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>          <strong class="jxr_keyword">final</strong> Map&lt;T, K&gt; sourceMap, <strong class="jxr_keyword">final</strong> BeanTransformer beanTransformer) {
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>          <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>  
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>          <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>          underTest.transform(sourceMap, beanTransformer);
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>      }
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>  
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>  <em class="jxr_javadoccomment">     * Created the parameter to test that the method {@code transform} raises an {@link IllegalArgumentException} with an invalid parameter.</em>
-<a class="jxr_linenumber" name="L100" href="#L100">100</a> <em class="jxr_javadoccomment">     * @return parameters to be used for testing.</em>
-<a class="jxr_linenumber" name="L101" href="#L101">101</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>     @DataProvider
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>     <strong class="jxr_keyword">private</strong> Object[][] dataTransformMethodWithTwoArgument() {
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[][] {
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>                 {<span class="jxr_string">"Test that an IllegalArgumentException is thrown if the sourceMap is null"</span>, <strong class="jxr_keyword">null</strong>, BEAN_TRANSFORMER},
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>                 {<span class="jxr_string">"Test that an IllegalArgumentException is thrown if the transformer is null"</span>, SAMPLE_MAP, <strong class="jxr_keyword">null</strong>}
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>         };
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>     }
-<a class="jxr_linenumber" name="L109" href="#L109">109</a> 
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_javadoccomment">     * Test that the given map is correctly transformed.</em>
-<a class="jxr_linenumber" name="L112" href="#L112">112</a> <em class="jxr_javadoccomment">     * @param testCaseDescription the test case description</em>
-<a class="jxr_linenumber" name="L113" href="#L113">113</a> <em class="jxr_javadoccomment">     * @param sourceMap the map to transform</em>
-<a class="jxr_linenumber" name="L114" href="#L114">114</a> <em class="jxr_javadoccomment">     * @param &lt;T&gt; the key type</em>
-<a class="jxr_linenumber" name="L115" href="#L115">115</a> <em class="jxr_javadoccomment">     * @param &lt;K&gt; the element type</em>
-<a class="jxr_linenumber" name="L116" href="#L116">116</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>     @Test(dataProvider = <span class="jxr_string">"dataMapTransformerObject"</span>)
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>     <strong class="jxr_keyword">public</strong> &lt;T, K&gt; <strong class="jxr_keyword">void</strong> testTransformWorksProperly(<strong class="jxr_keyword">final</strong> String testCaseDescription, <strong class="jxr_keyword">final</strong> Map&lt;T, K&gt; sourceMap) {
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>         <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L120" href="#L120">120</a> 
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>         <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L122" href="#L122">122</a>         Map&lt;T, K&gt; actual = underTest.transform(sourceMap);
-<a class="jxr_linenumber" name="L123" href="#L123">123</a> 
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>         <em class="jxr_comment">//THEN</em>
-<a class="jxr_linenumber" name="L125" href="#L125">125</a>         assertThat(actual).isEqualTo(sourceMap);
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>     }
-<a class="jxr_linenumber" name="L127" href="#L127">127</a> 
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L129" href="#L129">129</a> <em class="jxr_javadoccomment">     * Creates the parameters to be used for testing the map transformations.</em>
-<a class="jxr_linenumber" name="L130" href="#L130">130</a> <em class="jxr_javadoccomment">     * @return parameters to be used for testing the map transformation.</em>
-<a class="jxr_linenumber" name="L131" href="#L131">131</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L132" href="#L132">132</a>     @DataProvider
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>     <strong class="jxr_keyword">private</strong> Object[][] dataMapTransformerObject() {
-<a class="jxr_linenumber" name="L134" href="#L134">134</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[][] {
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>                 {<span class="jxr_string">"Test that a simple Map is correctly transformed"</span>, SAMPLE_MAP},
-<a class="jxr_linenumber" name="L136" href="#L136">136</a>                 {<span class="jxr_string">"Test that a Map containing a list is correctly transformed"</span>, COMPLEX_MAP},
-<a class="jxr_linenumber" name="L137" href="#L137">137</a>                 {<span class="jxr_string">"Test that a Map containing a Map is correctly transformed"</span>, VERY_COMPLEX_MAP},
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>                 {<span class="jxr_string">"Test that a Map containing a Map that has an object as key, is correctly transformed"</span>, EXTREME_COMPLEX_MAP}
-<a class="jxr_linenumber" name="L139" href="#L139">139</a>         };
-<a class="jxr_linenumber" name="L140" href="#L140">140</a>     }
-<a class="jxr_linenumber" name="L141" href="#L141">141</a> 
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L143" href="#L143">143</a> <em class="jxr_javadoccomment">     * Test that the given map is correctly transformed if key mappings are defined.</em>
-<a class="jxr_linenumber" name="L144" href="#L144">144</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>     @Test
-<a class="jxr_linenumber" name="L146" href="#L146">146</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformWorksProperlyWithKeyMapping() {
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>         <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L148" href="#L148">148</a>         Map&lt;String, BigInteger&gt; sourceMap = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
-<a class="jxr_linenumber" name="L149" href="#L149">149</a>         sourceMap.put(MAP_KEY_1, ZERO);
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>         sourceMap.put(MAP_KEY_2, ONE);
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>         underTest.withFieldMapping(<strong class="jxr_keyword">new</strong> FieldMapping&lt;&gt;(MAP_KEY_1, MAP_KEY_2));
-<a class="jxr_linenumber" name="L152" href="#L152">152</a> 
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>         <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>         Map&lt;String, BigInteger&gt; actual = underTest.transform(sourceMap);
-<a class="jxr_linenumber" name="L155" href="#L155">155</a> 
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>         <em class="jxr_comment">//THEN</em>
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>         assertThat(actual).containsOnly(
-<a class="jxr_linenumber" name="L158" href="#L158">158</a>                 entry(MAP_KEY_1, ZERO),
-<a class="jxr_linenumber" name="L159" href="#L159">159</a>                 entry(MAP_KEY_2, ZERO)
-<a class="jxr_linenumber" name="L160" href="#L160">160</a>         );
-<a class="jxr_linenumber" name="L161" href="#L161">161</a>         underTest.resetFieldsMapping();
-<a class="jxr_linenumber" name="L162" href="#L162">162</a>     }
-<a class="jxr_linenumber" name="L163" href="#L163">163</a> 
-<a class="jxr_linenumber" name="L164" href="#L164">164</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     * Test that the given map is correctly transformed if key transformers are defined.</em>
-<a class="jxr_linenumber" name="L166" href="#L166">166</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>     @Test
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformWorksProperlyWithTransformer() {
-<a class="jxr_linenumber" name="L169" href="#L169">169</a>         <em class="jxr_comment">//GIVEN</em>
-<a class="jxr_linenumber" name="L170" href="#L170">170</a>         Map&lt;String, BigInteger&gt; sourceMap = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
-<a class="jxr_linenumber" name="L171" href="#L171">171</a>         sourceMap.put(MAP_KEY_1, ZERO);
-<a class="jxr_linenumber" name="L172" href="#L172">172</a>         sourceMap.put(MAP_KEY_2, ONE);
-<a class="jxr_linenumber" name="L173" href="#L173">173</a>         underTest.withKeyTransformer(<strong class="jxr_keyword">new</strong> FieldTransformer&lt;String, String&gt;(MAP_KEY_1, String::toUpperCase));
-<a class="jxr_linenumber" name="L174" href="#L174">174</a> 
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>         <em class="jxr_comment">//WHEN</em>
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>         Map&lt;String, BigInteger&gt; actual = underTest.transform(sourceMap);
-<a class="jxr_linenumber" name="L177" href="#L177">177</a> 
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>         <em class="jxr_comment">//THEN</em>
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>         assertThat(actual).isNotNull();
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>         assertThat(actual.size()).isEqualTo(sourceMap.size());
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>         assertThat(actual).containsKey(MAP_KEY_1.toUpperCase());
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> com.hotels.map.transformer;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.math.BigInteger.ONE;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.math.BigInteger.ZERO;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Assertions.assertThat;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Assertions.entry;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.util.Lists.list;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.util.Maps.newHashMap;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mockito.MockitoAnnotations.openMocks;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> java.math.BigInteger;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> java.util.HashMap;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.mockito.InjectMocks;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.testng.annotations.AfterMethod;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.testng.annotations.BeforeClass;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.testng.annotations.DataProvider;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.testng.annotations.Test;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> com.hotels.beans.BeanUtils;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> com.hotels.beans.sample.FromFooSimple;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> com.hotels.beans.sample.mutable.MutableToFooSimple;
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> com.hotels.beans.transformer.BeanTransformer;
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> com.hotels.map.transformer.model.MapTransformerSettings;
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> com.hotels.transformer.AbstractTransformerTest;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> com.hotels.transformer.error.InvalidFunctionException;
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> com.hotels.transformer.model.FieldMapping;
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> com.hotels.transformer.model.FieldTransformer;
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> com.hotels.transformer.model.TransformerSettings;
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment"> * Unit test for {@link MapTransformer}.</em>
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="MapTransformerTest" href="../../../../com/hotels/map/transformer/MapTransformerTest.html#MapTransformerTest">MapTransformerTest</a> <strong class="jxr_keyword">extends</strong> <a name="AbstractTransformerTest" href="../../../../com/hotels/transformer/AbstractTransformerTest.html#AbstractTransformerTest">AbstractTransformerTest</a> {
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> BeanTransformer BEAN_TRANSFORMER = <strong class="jxr_keyword">new</strong> BeanUtils().getTransformer();
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MAP_KEY_1 = <span class="jxr_string">"key1"</span>;
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MAP_KEY_2 = <span class="jxr_string">"key2"</span>;
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment">     * The class to be tested.</em>
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      @InjectMocks
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">private</strong> MapTransformerImpl underTest;
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>  
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  <em class="jxr_javadoccomment">     * Initialized mocks.</em>
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      @BeforeClass
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> beforeClass() {
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          openMocks(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          initObjects();
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      }
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     * After method actions.</em>
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      @AfterMethod
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> afterMethod() {
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          underTest.resetKeyTransformer();
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>      }
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>  
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment">     * Test that the method {@code transform} raises an {@link IllegalArgumentException} if any parameter is null.</em>
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">     * @param testCaseDescription the test case description</em>
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_javadoccomment">     * @param sourceMap the map to transform</em>
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">     * @param beanTransformer the bean transformer</em>
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">     * @param &lt;T&gt; the key type</em>
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">     * @param &lt;K&gt; the element type</em>
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>      @Test(expectedExceptions = IllegalArgumentException.<strong class="jxr_keyword">class</strong>, dataProvider = <span class="jxr_string">"dataTransformMethodWithTwoArgument"</span>)
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>      <strong class="jxr_keyword">public</strong> &lt;T, K&gt; <strong class="jxr_keyword">void</strong> testTransformRaisesExceptionIfItsCalledWithNullParameter(<strong class="jxr_keyword">final</strong> String testCaseDescription,
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>                                                                                  <strong class="jxr_keyword">final</strong> Map&lt;T, K&gt; sourceMap, <strong class="jxr_keyword">final</strong> BeanTransformer beanTransformer) {
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>  
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          underTest.transform(sourceMap, beanTransformer);
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>      }
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>  
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>  <em class="jxr_javadoccomment">     * Created the parameter to test that the method {@code transform} raises an {@link IllegalArgumentException} with an invalid parameter.</em>
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>  <em class="jxr_javadoccomment">     * @return parameters to be used for testing.</em>
+<a class="jxr_linenumber" name="L100" href="#L100">100</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>     @DataProvider
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>     <strong class="jxr_keyword">private</strong> Object[][] dataTransformMethodWithTwoArgument() {
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[][]{
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>                 {<span class="jxr_string">"Test that an IllegalArgumentException is thrown if the sourceMap is null"</span>, <strong class="jxr_keyword">null</strong>, BEAN_TRANSFORMER},
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>                 {<span class="jxr_string">"Test that an IllegalArgumentException is thrown if the transformer is null"</span>, SAMPLE_MAP, <strong class="jxr_keyword">null</strong>}
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         };
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     }
+<a class="jxr_linenumber" name="L108" href="#L108">108</a> 
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L110" href="#L110">110</a> <em class="jxr_javadoccomment">     * Test that the given map is correctly transformed.</em>
+<a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_javadoccomment">     * @param testCaseDescription the test case description</em>
+<a class="jxr_linenumber" name="L112" href="#L112">112</a> <em class="jxr_javadoccomment">     * @param sourceMap the map to transform</em>
+<a class="jxr_linenumber" name="L113" href="#L113">113</a> <em class="jxr_javadoccomment">     * @param &lt;T&gt; the key type</em>
+<a class="jxr_linenumber" name="L114" href="#L114">114</a> <em class="jxr_javadoccomment">     * @param &lt;K&gt; the element type</em>
+<a class="jxr_linenumber" name="L115" href="#L115">115</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>     @Test(dataProvider = <span class="jxr_string">"dataMapTransformerObject"</span>)
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>     <strong class="jxr_keyword">public</strong> &lt;T, K&gt; <strong class="jxr_keyword">void</strong> testTransformWorksProperly(<strong class="jxr_keyword">final</strong> String testCaseDescription, <strong class="jxr_keyword">final</strong> Map&lt;T, K&gt; sourceMap) {
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L119" href="#L119">119</a> 
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>         Map&lt;T, K&gt; actual = underTest.transform(sourceMap);
+<a class="jxr_linenumber" name="L122" href="#L122">122</a> 
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>         assertThat(actual).isEqualTo(sourceMap);
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>     }
+<a class="jxr_linenumber" name="L126" href="#L126">126</a> 
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L128" href="#L128">128</a> <em class="jxr_javadoccomment">     * Creates the parameters to be used for testing the map transformations.</em>
+<a class="jxr_linenumber" name="L129" href="#L129">129</a> <em class="jxr_javadoccomment">     * @return parameters to be used for testing the map transformation.</em>
+<a class="jxr_linenumber" name="L130" href="#L130">130</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>     @DataProvider
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>     <strong class="jxr_keyword">private</strong> Object[][] dataMapTransformerObject() {
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[][]{
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>                 {<span class="jxr_string">"Test that a simple Map is correctly transformed"</span>, SAMPLE_MAP},
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>                 {<span class="jxr_string">"Test that a Map containing a list is correctly transformed"</span>, COMPLEX_MAP},
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>                 {<span class="jxr_string">"Test that a Map containing a Map is correctly transformed"</span>, VERY_COMPLEX_MAP},
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>                 {<span class="jxr_string">"Test that a Map containing a Map that has an object as key, is correctly transformed"</span>, EXTREME_COMPLEX_MAP}
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>         };
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>     }
+<a class="jxr_linenumber" name="L140" href="#L140">140</a> 
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L142" href="#L142">142</a> <em class="jxr_javadoccomment">     * Test that the given map is correctly transformed if key mappings are defined.</em>
+<a class="jxr_linenumber" name="L143" href="#L143">143</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>     @Test
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformWorksProperlyWithKeyMapping() {
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>         Map&lt;String, BigInteger&gt; sourceMap = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>         sourceMap.put(MAP_KEY_1, ZERO);
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>         sourceMap.put(MAP_KEY_2, ONE);
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>         underTest.withFieldMapping(<strong class="jxr_keyword">new</strong> FieldMapping&lt;&gt;(MAP_KEY_1, MAP_KEY_2));
+<a class="jxr_linenumber" name="L151" href="#L151">151</a> 
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>         Map&lt;String, BigInteger&gt; actual = underTest.transform(sourceMap);
+<a class="jxr_linenumber" name="L154" href="#L154">154</a> 
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>         assertThat(actual).containsOnly(
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>                 entry(MAP_KEY_1, ZERO),
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>                 entry(MAP_KEY_2, ZERO)
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>         );
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>         underTest.resetFieldsMapping();
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>     }
+<a class="jxr_linenumber" name="L162" href="#L162">162</a> 
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L164" href="#L164">164</a> <em class="jxr_javadoccomment">     * Test that the given map is correctly transformed if key transformers are defined.</em>
+<a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>     @Test
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformWorksProperlyWithTransformer() {
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>         Map&lt;String, BigInteger&gt; sourceMap = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="L170" href="#L170">170</a>         sourceMap.put(MAP_KEY_1, ZERO);
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>         sourceMap.put(MAP_KEY_2, ONE);
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>         underTest.withKeyTransformer(<strong class="jxr_keyword">new</strong> FieldTransformer&lt;String, String&gt;(MAP_KEY_1, String::toUpperCase));
+<a class="jxr_linenumber" name="L173" href="#L173">173</a> 
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>         Map&lt;String, BigInteger&gt; actual = underTest.transform(sourceMap);
+<a class="jxr_linenumber" name="L176" href="#L176">176</a> 
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>         assertThat(actual)
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>                 .isNotNull()
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>              .hasSize(sourceMap.size())
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>              .containsKey(MAP_KEY_1.toUpperCase());
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>     }
 <a class="jxr_linenumber" name="L183" href="#L183">183</a> 
 <a class="jxr_linenumber" name="L184" href="#L184">184</a>     <em class="jxr_javadoccomment">/**</em>
@@ -194,12 +194,12 @@
 <a class="jxr_linenumber" name="L186" href="#L186">186</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L187" href="#L187">187</a>     @Test(expectedExceptions = InvalidFunctionException.<strong class="jxr_keyword">class</strong>)
 <a class="jxr_linenumber" name="L188" href="#L188">188</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid() {
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>         <em class="jxr_comment">//GIVEN</em>
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>         <em class="jxr_comment">// GIVEN</em>
 <a class="jxr_linenumber" name="L190" href="#L190">190</a>         Map&lt;String, BigInteger&gt; sourceMap = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
 <a class="jxr_linenumber" name="L191" href="#L191">191</a>         sourceMap.put(MAP_KEY_1, ZERO);
 <a class="jxr_linenumber" name="L192" href="#L192">192</a>         underTest.withKeyTransformer(<strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(MAP_KEY_1, ONE::add));
 <a class="jxr_linenumber" name="L193" href="#L193">193</a> 
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>         <em class="jxr_comment">//WHEN</em>
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>         <em class="jxr_comment">// WHEN</em>
 <a class="jxr_linenumber" name="L195" href="#L195">195</a>         underTest.transform(sourceMap);
 <a class="jxr_linenumber" name="L196" href="#L196">196</a>     }
 <a class="jxr_linenumber" name="L197" href="#L197">197</a> 
@@ -208,12 +208,12 @@
 <a class="jxr_linenumber" name="L200" href="#L200">200</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>     @Test
 <a class="jxr_linenumber" name="L202" href="#L202">202</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformWorksProperlyWithTargetKeyAndElemType() {
-<a class="jxr_linenumber" name="L203" href="#L203">203</a>         <em class="jxr_comment">//GIVEN</em>
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>         <em class="jxr_comment">// GIVEN</em>
 <a class="jxr_linenumber" name="L204" href="#L204">204</a> 
-<a class="jxr_linenumber" name="L205" href="#L205">205</a>         <em class="jxr_comment">//WHEN</em>
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>         <em class="jxr_comment">// WHEN</em>
 <a class="jxr_linenumber" name="L206" href="#L206">206</a>         Map&lt;MutableToFooSimple, Map&gt; actual = underTest.transform(EXTREME_COMPLEX_MAP, MutableToFooSimple.<strong class="jxr_keyword">class</strong>, Map.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L207" href="#L207">207</a> 
-<a class="jxr_linenumber" name="L208" href="#L208">208</a>         <em class="jxr_comment">//THEN</em>
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>         <em class="jxr_comment">// THEN</em>
 <a class="jxr_linenumber" name="L209" href="#L209">209</a>         assertThat(actual).isNotNull();
 <a class="jxr_linenumber" name="L210" href="#L210">210</a>         assertThat(actual.size()).isEqualTo(EXTREME_COMPLEX_MAP.size());
 <a class="jxr_linenumber" name="L211" href="#L211">211</a>         <em class="jxr_comment">// check that the element has been converted</em>
@@ -227,13 +227,13 @@
 <a class="jxr_linenumber" name="L219" href="#L219">219</a>     @Test
 <a class="jxr_linenumber" name="L220" href="#L220">220</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
 <a class="jxr_linenumber" name="L221" href="#L221">221</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformWorksProperlyWithMapContainingList() {
-<a class="jxr_linenumber" name="L222" href="#L222">222</a>         <em class="jxr_comment">//GIVEN</em>
+<a class="jxr_linenumber" name="L222" href="#L222">222</a>         <em class="jxr_comment">// GIVEN</em>
 <a class="jxr_linenumber" name="L223" href="#L223">223</a>         Map&lt;FromFooSimple, List&lt;String&gt;&gt; sourceMap = newHashMap(fromFooSimple, list(ITEM_1));
 <a class="jxr_linenumber" name="L224" href="#L224">224</a> 
-<a class="jxr_linenumber" name="L225" href="#L225">225</a>         <em class="jxr_comment">//WHEN</em>
+<a class="jxr_linenumber" name="L225" href="#L225">225</a>         <em class="jxr_comment">// WHEN</em>
 <a class="jxr_linenumber" name="L226" href="#L226">226</a>         Map&lt;MutableToFooSimple, List&gt; actual = underTest.transform(sourceMap, MutableToFooSimple.<strong class="jxr_keyword">class</strong>, List.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L227" href="#L227">227</a> 
-<a class="jxr_linenumber" name="L228" href="#L228">228</a>         <em class="jxr_comment">//THEN</em>
+<a class="jxr_linenumber" name="L228" href="#L228">228</a>         <em class="jxr_comment">// THEN</em>
 <a class="jxr_linenumber" name="L229" href="#L229">229</a>         assertThat(actual).allSatisfy((key, value) -&gt; {
 <a class="jxr_linenumber" name="L230" href="#L230">230</a>             assertThat(key).isInstanceOf(MutableToFooSimple.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L231" href="#L231">231</a>             assertThat(value).containsOnly(ITEM_1);
@@ -245,15 +245,15 @@
 <a class="jxr_linenumber" name="L237" href="#L237">237</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>     @Test
 <a class="jxr_linenumber" name="L239" href="#L239">239</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testResetKeyTransformerWorksProperly() {
-<a class="jxr_linenumber" name="L240" href="#L240">240</a>         <em class="jxr_comment">//GIVEN</em>
+<a class="jxr_linenumber" name="L240" href="#L240">240</a>         <em class="jxr_comment">// GIVEN</em>
 <a class="jxr_linenumber" name="L241" href="#L241">241</a>         underTest.withKeyTransformer(<strong class="jxr_keyword">new</strong> FieldTransformer&lt;String, String&gt;(MAP_KEY_1, String::toUpperCase));
 <a class="jxr_linenumber" name="L242" href="#L242">242</a> 
-<a class="jxr_linenumber" name="L243" href="#L243">243</a>         <em class="jxr_comment">//WHEN</em>
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>         <em class="jxr_comment">// WHEN</em>
 <a class="jxr_linenumber" name="L244" href="#L244">244</a>         underTest.resetKeyTransformer();
 <a class="jxr_linenumber" name="L245" href="#L245">245</a>         MapTransformerSettings transformerSettings =
 <a class="jxr_linenumber" name="L246" href="#L246">246</a>                 (MapTransformerSettings) REFLECTION_UTILS.getFieldValue(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L247" href="#L247">247</a> 
-<a class="jxr_linenumber" name="L248" href="#L248">248</a>         <em class="jxr_comment">//THEN</em>
+<a class="jxr_linenumber" name="L248" href="#L248">248</a>         <em class="jxr_comment">// THEN</em>
 <a class="jxr_linenumber" name="L249" href="#L249">249</a>         assertThat(transformerSettings.getKeyFieldsTransformers()).isEmpty();
 <a class="jxr_linenumber" name="L250" href="#L250">250</a>         underTest.resetKeyTransformer();
 <a class="jxr_linenumber" name="L251" href="#L251">251</a>     }
