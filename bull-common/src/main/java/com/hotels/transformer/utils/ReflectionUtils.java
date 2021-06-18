@@ -184,7 +184,7 @@ public final class ReflectionUtils {
         final String cacheKey = "GetterMethod-" + fieldClass.getName() + '-' + fieldName;
         return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
-                Method method = fieldClass.getMethod(getGetterMethodPrefix(fieldType) + capitalize(fieldName));
+                var method = fieldClass.getMethod(getGetterMethodPrefix(fieldType) + capitalize(fieldName));
                 method.setAccessible(true);
                 CACHE_MANAGER.cacheObject(cacheKey, method);
                 return method;
@@ -206,7 +206,7 @@ public final class ReflectionUtils {
             Function function;
             try {
                 Class<?> fieldType = getDeclaredFieldType(fieldName, fieldClass);
-                MethodHandles.Lookup privateLookupIn = privateLookupIn(fieldClass, METHOD_HANDLES_LOOKUP);
+                var privateLookupIn = privateLookupIn(fieldClass, METHOD_HANDLES_LOOKUP);
                 CallSite site = metafactory(privateLookupIn,
                         "apply",
                         methodType(Function.class),
@@ -278,7 +278,7 @@ public final class ReflectionUtils {
      */
     private Object getFieldValueDirectAccess(final Object target, final String fieldName) {
         try {
-            Field field = getDeclaredField(fieldName, target.getClass());
+            var field = getDeclaredField(fieldName, target.getClass());
             return field.get(target);
         } catch (MissingFieldException e) {
             throw e;
@@ -438,7 +438,7 @@ public final class ReflectionUtils {
         final String cacheKey = "SetterMethod-" + fieldClass.getName() + '-' + fieldName;
         return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
-                Method method = fieldClass.getMethod(SET.getPrefix() + capitalize(fieldName), fieldType);
+                var method = fieldClass.getMethod(SET.getPrefix() + capitalize(fieldName), fieldType);
                 method.setAccessible(true);
                 CACHE_MANAGER.cacheObject(cacheKey, method);
                 return method;
@@ -524,7 +524,7 @@ public final class ReflectionUtils {
                 keyType = buildItemType(fieldType, declaringClass, fieldName);
                 elemType = buildItemType(fieldType, declaringClass, fieldName);
             }
-            final MapType mapType = new MapType(keyType, elemType);
+            final var mapType = new MapType(keyType, elemType);
             CACHE_MANAGER.cacheObject(cacheKey, mapType);
             return mapType;
         });

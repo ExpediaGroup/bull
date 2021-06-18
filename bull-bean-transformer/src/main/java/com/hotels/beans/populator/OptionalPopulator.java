@@ -41,7 +41,7 @@ class OptionalPopulator extends Populator<Object> {
     @Override
     public Object getPopulatedObject(final Field field, final Object fieldValue) {
         Object res = null;
-        Optional optionalFieldValue = (Optional) fieldValue;
+        var optionalFieldValue = (Optional) fieldValue;
         if (optionalFieldValue.isPresent()) {
             res = transform(optionalFieldValue.get(), field.getType());
         }
