@@ -60,7 +60,7 @@ jobs:
     - stage: "JDK15 Release"
       name: "Releasing artifacts for JDK15"
       jdk: openjdk15
-      if: type NOT IN (pull_request) AND tag IS present AAND tag =~ ^.*-jdk15$
+      if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^.*-jdk15$
       script: skip
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
