@@ -81,6 +81,7 @@
         <maven.site.plugin.version>3.9.1</maven.site.plugin.version>
         <!-- build settings -->
         <maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version>
+        <maven.javadoc-plugin.version>3.3.0</maven.javadoc-plugin.version>
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
         <puppycrawl.checkstyle.version>8.42</puppycrawl.checkstyle.version>
         <maven.spotless.plugin.version>2.12.1</maven.spotless.plugin.version>
@@ -94,7 +95,8 @@
         <test.coverage.check.skip>false</test.coverage.check.skip>
         <pmd.check.skip>true</pmd.check.skip>
         <javadoc.skip>false</javadoc.skip>
-        <import.order>\#java,\#javax,\#jakarta,\#org,\#,\#com,,\#lombok,java,javax,jakarta,org,,com,,lombok</import.order>
+        <import.order>\#java,\#javax,\#jakarta,\#org,\#,\#com,,\#lombok,java,javax,jakarta,org,,com,,lombok
+        </import.order>
         <spotless.plugin.skip>false</spotless.plugin.skip>
     </properties>
 
@@ -254,6 +256,7 @@
                             <excludes>
                                 <exclude>**/PerformanceTest.java</exclude>
                             </excludes>
+                            <argLine>--enable-preview</argLine>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -298,6 +301,7 @@
                         <configuration>
                             <excludes>
                                 <exclude>**/PerformanceTest.java</exclude>
+                                <argLine>--enable-preview</argLine>
                             </excludes>
                         </configuration>
                     </plugin>
@@ -405,7 +409,8 @@
                                 <consoleOutput>true</consoleOutput>
                                 <failsOnError>true</failsOnError>
                                 <skip>${checkstyle.check.skip}</skip>
-                                <includeTestSourceDirectory>${checkstyle.includeTestSourceDirectory}</includeTestSourceDirectory>
+                                <includeTestSourceDirectory>${checkstyle.includeTestSourceDirectory}
+                                </includeTestSourceDirectory>
                                 <excludes>${checkstyle.exclusion}</excludes>
                             </configuration>
                         </execution>
@@ -509,7 +514,8 @@
                     <configuration>
                         <skip>${test.coverage.check.skip}</skip>
                         <jacocoReports>
-                            <jacocoReport>${project.basedir}/bull-report/target/site/jacoco-aggregate/jacoco.xml</jacocoReport>
+                            <jacocoReport>${project.basedir}/bull-report/target/site/jacoco-aggregate/jacoco.xml
+                            </jacocoReport>
                         </jacocoReports>
                     </configuration>
                     <dependencies>
@@ -605,7 +611,7 @@
                                     <requireMavenVersion>
                                         <version>${maven.required.version}</version>
                                     </requireMavenVersion>
-                                    <DependencyConvergence />
+                                    <DependencyConvergence/>
                                 </rules>
                             </configuration>
                         </execution>
@@ -664,6 +670,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc-plugin.version}</version>
                 <configuration>
                     <skip>${javadoc.skip}</skip>
                 </configuration>
@@ -697,8 +704,8 @@
                 <configuration>
                     <skip>${spotless.plugin.skip}</skip>
                     <java>
-                        <removeUnusedImports />
-                        <trimTrailingWhitespace />
+                        <removeUnusedImports/>
+                        <trimTrailingWhitespace/>
                         <importOrder>
                             <order>${import.order}</order>
                         </importOrder>
@@ -712,6 +719,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc-plugin.version}</version>
                 <configuration>
                     <show>public</show>
                 </configuration>
