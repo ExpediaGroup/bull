@@ -43,8 +43,8 @@ jobs:
         on:
           tags: true
     ### JDK15 release
-    - stage: "JDK15 Release"
-      name: "Releasing artifacts for JDK15"
+    - stage: "Artifact Release"
+      name: "Releasing artifacts"
       jdk: openjdk15
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^((?!-jdk8).)*$
       script: skip
