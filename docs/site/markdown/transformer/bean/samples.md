@@ -480,4 +480,18 @@ Transformer transformer = beanUtils.getTransformer()
 ToBean toBean = transformer.transform(fromBean, ToBean.class);
 ```
 
+## Transform Java Record
+
+### Simple case:
+
+```java
+public record FromFooRecord {                 public record RecordToFoo(BigInteger id, String name) {                           
+}                                             }  
+```
+And one line code as:
+
+```java
+var toBean = beanUtils.getTransformer().transform(fromBean, RecordToFoo.class);
+```
+
 More sample beans can be found in the test package: `com.hotels.beans.sample` or on DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)

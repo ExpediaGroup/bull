@@ -736,7 +736,7 @@ ToBean toBean = new BeanTransformer()
                          .transform(sourceObject, ToBean.class);
 ```
 
-## Java Record transformation samples
+## Transform Java Record
 
 ### Simple case:
 
