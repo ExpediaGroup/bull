@@ -15,26 +15,12 @@
  */
 package com.hotels.transformer.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
-
 /**
  * Specifies the field's name mapping between the source object and destination one.
  * @param <T> source element type
  * @param <K> target element type
+ * @param sourceFieldName the field name in the source object
+ * @param destFieldName the field name in the destination object.
  */
-@AllArgsConstructor
-@Getter
-@ToString
-public class FieldMapping<T, K> {
-    /**
-     * The field name in the source object.
-     */
-    private final T sourceFieldName;
-
-    /**
-     * The field name in the destination object.
-     */
-    private final K destFieldName;
+public record FieldMapping<T, K>(T sourceFieldName, K destFieldName) {
 }
