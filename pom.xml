@@ -15,14 +15,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>BULL - Bean Utils Light Library</name>
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.0</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -103,7 +102,7 @@
         <connection>scm:git:git@github.com:HotelsDotCom/bull.git</connection>
         <developerConnection>scm:git:git@github.com:HotelsDotCom/bull.git</developerConnection>
         <url>https://github.com/HotelsDotCom/bull</url>
-        <tag>HEAD</tag>
+        <tag>2.0.0</tag>
     </scm>
 
     <dependencyManagement>
@@ -609,7 +608,7 @@
                                     <requireMavenVersion>
                                         <version>${maven.required.version}</version>
                                     </requireMavenVersion>
-                                    <DependencyConvergence/>
+                                    <DependencyConvergence />
                                 </rules>
                             </configuration>
                         </execution>
@@ -704,8 +703,8 @@
                 <configuration>
                     <skip>${spotless.plugin.skip}</skip>
                     <java>
-                        <removeUnusedImports/>
-                        <trimTrailingWhitespace/>
+                        <removeUnusedImports />
+                        <trimTrailingWhitespace />
                         <importOrder>
                             <order>${import.order}</order>
                         </importOrder>
