@@ -86,7 +86,10 @@
         <maven.spotless.plugin.version>2.12.1</maven.spotless.plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <!-- excludes the Record classes from being analyzed as they are not yet supported by the checkstyle plugin -->
-        <checkstyle.exclusion>**/*Record*.java</checkstyle.exclusion>
+        <checkstyle.exclusion>
+            **/*Record*.java,
+            **/ItemType.java
+        </checkstyle.exclusion>
         <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
         <test.coverage.check.skip>false</test.coverage.check.skip>
         <pmd.check.skip>true</pmd.check.skip>
