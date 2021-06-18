@@ -91,7 +91,7 @@ public final class MavenWrapperDownloader {
             throw new Exception("ERROR: missing properties file: " + propertiesFileName);
         }
         var properties = new Properties();
-        try (FileInputStream mavenWrapperPropertyFileInputStream = new FileInputStream(mavenWrapperPropertyFile)) {
+        try (var mavenWrapperPropertyFileInputStream = new FileInputStream(mavenWrapperPropertyFile)) {
             properties.load(mavenWrapperPropertyFileInputStream);
             return properties;
         } catch (IOException e) {
