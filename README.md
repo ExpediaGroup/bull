@@ -56,10 +56,7 @@ It contains all the modules available in the project
 
 **The project provides two different builds**, one compatible with `jdk 8` (or above) and one with `jdk 11` or above.
 
-In case you need to integrate it in a:
-* `jdk 8` based project please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md) 
-* `jdk 11` based project please refer to [CHANGELOG-JDK8](CHANGELOG.md) 
-* `jdk 15 or above` based project please refer to [CHANGELOG-JDK15](CHANGELOG-JDK15.md) 
+In case you need to integrate it in a `jdk 8` please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md) file or [CHANGELOG](CHANGELOG.md) otherwise.
 
 * #### Suggestions
 
