@@ -362,8 +362,9 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         Object[] actual = (Object[]) getConstructorValuesFromFieldsMethod.invoke(underTest, fromFooAdvFields, ImmutableToFooAdvFields.class, "");
 
         // THEN
-        assertThat(actual).isNotNull();
-        assertThat(actual.length).isEqualTo(TOTAL_ADV_CLASS_FIELDS);
+        assertThat(actual)
+                .isNotNull()
+                .hasSize(TOTAL_ADV_CLASS_FIELDS);
 
         // restore modified objects
         restoreObjects(getConstructorValuesFromFieldsMethod);

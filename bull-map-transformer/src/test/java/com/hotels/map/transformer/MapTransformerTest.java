@@ -87,7 +87,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
      */
     @Test(expectedExceptions = IllegalArgumentException.class, dataProvider = "dataTransformMethodWithTwoArgument")
     public <T, K> void testTransformRaisesExceptionIfItsCalledWithNullParameter(final String testCaseDescription,
-        final Map<T, K> sourceMap, final BeanTransformer beanTransformer) {
+                                                                                final Map<T, K> sourceMap, final BeanTransformer beanTransformer) {
         // GIVEN
 
         // WHEN
@@ -100,7 +100,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
      */
     @DataProvider
     private Object[][] dataTransformMethodWithTwoArgument() {
-        return new Object[][] {
+        return new Object[][]{
                 {"Test that an IllegalArgumentException is thrown if the sourceMap is null", null, BEAN_TRANSFORMER},
                 {"Test that an IllegalArgumentException is thrown if the transformer is null", SAMPLE_MAP, null}
         };
@@ -130,7 +130,7 @@ public class MapTransformerTest extends AbstractTransformerTest {
      */
     @DataProvider
     private Object[][] dataMapTransformerObject() {
-        return new Object[][] {
+        return new Object[][]{
                 {"Test that a simple Map is correctly transformed", SAMPLE_MAP},
                 {"Test that a Map containing a list is correctly transformed", COMPLEX_MAP},
                 {"Test that a Map containing a Map is correctly transformed", VERY_COMPLEX_MAP},
@@ -175,9 +175,10 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<String, BigInteger> actual = underTest.transform(sourceMap);
 
         // THEN
-        assertThat(actual).isNotNull();
-        assertThat(actual.size()).isEqualTo(sourceMap.size());
-        assertThat(actual).containsKey(MAP_KEY_1.toUpperCase());
+        assertThat(actual)
+                .isNotNull()
+             .hasSize(sourceMap.size())
+             .containsKey(MAP_KEY_1.toUpperCase());
     }
 
     /**

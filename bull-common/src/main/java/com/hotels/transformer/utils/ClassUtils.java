@@ -481,7 +481,7 @@ public final class ClassUtils {
         return CACHE_MANAGER.getFromCache(cacheKey, Optional.class).orElseGet(() -> {
             Optional<Class> res = stream(getDeclaredClasses(targetClass))
                     .filter(nestedClass -> {
-                        boolean hasBuildMethod = true;
+                        var hasBuildMethod = true;
                         try {
                             getBuildMethod(targetClass, nestedClass);
                         } catch (MissingMethodException e) {
@@ -505,7 +505,7 @@ public final class ClassUtils {
         final String cacheKey = "BuildMethod-" + builderClass.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
-                Method method = builderClass.getDeclaredMethod(BUILD_METHOD_NAME);
+                var method = builderClass.getDeclaredMethod(BUILD_METHOD_NAME);
                 if (!method.getReturnType().equals(parentClass)) {
                     throw new MissingMethodException("Invalid " + BUILD_METHOD_NAME + " method definition. It must returns a: " + parentClass.getCanonicalName());
                 }
@@ -547,7 +547,7 @@ public final class ClassUtils {
         final String cacheKey = "NoArgsConstructor-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Supplier.class).orElseGet(() -> {
             try {
-                MethodHandles.Lookup privateLookupIn = privateLookupIn(clazz, METHOD_HANDLES_LOOKUP);
+                var privateLookupIn = privateLookupIn(clazz, METHOD_HANDLES_LOOKUP);
                 MethodHandle mh = privateLookupIn.findConstructor(clazz, methodType(void.class));
                 Supplier<K> constructor = (Supplier<K>) metafactory(
                         privateLookupIn, "get", methodType(Supplier.class), mh.type().generic(), mh, mh.type()
@@ -571,7 +571,7 @@ public final class ClassUtils {
         final String cacheKey = "AllArgsConstructor-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
             Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
-            final Constructor constructor = max(asList(declaredConstructors), comparing(Constructor::getParameterCount));
+            final var constructor = max(asList(declaredConstructors), comparing(Constructor::getParameterCount));
             constructor.setAccessible(true);
             CACHE_MANAGER.cacheObject(cacheKey, constructor);
             return constructor;
@@ -601,7 +601,7 @@ public final class ClassUtils {
     public boolean hasField(final Object target, final String fieldName) {
         final String cacheKey = "ClassHasField-" + target.getClass().getName() + '-' + fieldName;
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            boolean hasField = false;
+            var hasField = false;
             try {
                 target.getClass().getDeclaredField(fieldName);
                 hasField = true;
