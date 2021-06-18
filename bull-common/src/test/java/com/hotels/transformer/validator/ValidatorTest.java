@@ -80,9 +80,9 @@ public class ValidatorTest {
      */
     @Test(dataProvider = "dataIllegalArgumentExceptionTesting", expectedExceptions = IllegalArgumentException.class)
     public void testNotNullRaisesAnExceptionWhenTheGivenObjectIsNull(final String testCaseDescription, final Object elemToCheck, final String exceptionMessage) {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         if (nonNull(exceptionMessage)) {
             Validator.notNull(elemToCheck, exceptionMessage);
         } else {
@@ -111,9 +111,9 @@ public class ValidatorTest {
     @Test(dataProvider = "dataNoExceptionAreRaisedTesting")
     public void testThatNoExceptionAreThrownWhenTheGivenObjectIsNotNullEvenWithoutACustomMessage(final String testCaseDescription, final Object elemToCheck,
         final String exceptionMessage) {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         if (nonNull(exceptionMessage)) {
             Validator.notNull(elemToCheck, exceptionMessage);
         } else {
@@ -138,10 +138,10 @@ public class ValidatorTest {
      */
     @Test(expectedExceptions = InvalidBeanException.class)
     public void testValidateThrowsExceptionWhenTheBeanIsInvalid() {
-        //GIVEN
+        // GIVEN
         MixedToFoo validBean = createTestBean(null);
 
-        //WHEN
+        // WHEN
         underTest.validate(validBean);
     }
 
@@ -150,10 +150,10 @@ public class ValidatorTest {
      */
     @Test
     public void testValidateDoesNotThrowsExceptionWhenTheBeanIsValid() {
-        //GIVEN
+        // GIVEN
         MixedToFoo validBean = createTestBean(ID);
 
-        //WHEN
+        // WHEN
         underTest.validate(validBean);
     }
 
@@ -165,9 +165,9 @@ public class ValidatorTest {
      */
     @Test(dataProvider = "dataValidationConstraintsList")
     public void testGetConstraintViolationsWorksAsExpected(final String testCaseDescription, final Object elemToCheck, final int totalExpectedViolation) {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         List<String> actual = underTest.getConstraintViolationsMessages(elemToCheck);
 
         // THEN

@@ -37,13 +37,13 @@ public class BuilderObjectTransformationTest extends AbstractBeanTransformerTest
      */
     @Test(dataProvider = "transformationThroughBuilderTesting")
     public void testTransformationThroughBuilder(final String testDescription, final Object sourceObject, final Class<?> targetObjectClass) {
-        //GIVEN
+        // GIVEN
         underTest.setCustomBuilderTransformationEnabled(true);
 
-        //WHEN
+        // WHEN
         Object actual = underTest.transform(sourceObject, targetObjectClass);
 
-        //THEN
+        // THEN
         assertThat(actual).usingRecursiveComparison()
                 .isEqualTo(sourceObject);
         underTest.setCustomBuilderTransformationEnabled(false);
