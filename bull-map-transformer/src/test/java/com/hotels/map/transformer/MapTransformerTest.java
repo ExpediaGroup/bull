@@ -88,9 +88,9 @@ public class MapTransformerTest extends AbstractTransformerTest {
     @Test(expectedExceptions = IllegalArgumentException.class, dataProvider = "dataTransformMethodWithTwoArgument")
     public <T, K> void testTransformRaisesExceptionIfItsCalledWithNullParameter(final String testCaseDescription,
         final Map<T, K> sourceMap, final BeanTransformer beanTransformer) {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         underTest.transform(sourceMap, beanTransformer);
     }
 
@@ -115,12 +115,12 @@ public class MapTransformerTest extends AbstractTransformerTest {
      */
     @Test(dataProvider = "dataMapTransformerObject")
     public <T, K> void testTransformWorksProperly(final String testCaseDescription, final Map<T, K> sourceMap) {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         Map<T, K> actual = underTest.transform(sourceMap);
 
-        //THEN
+        // THEN
         assertThat(actual).isEqualTo(sourceMap);
     }
 
@@ -143,16 +143,16 @@ public class MapTransformerTest extends AbstractTransformerTest {
      */
     @Test
     public void testTransformWorksProperlyWithKeyMapping() {
-        //GIVEN
+        // GIVEN
         Map<String, BigInteger> sourceMap = new HashMap<>();
         sourceMap.put(MAP_KEY_1, ZERO);
         sourceMap.put(MAP_KEY_2, ONE);
         underTest.withFieldMapping(new FieldMapping<>(MAP_KEY_1, MAP_KEY_2));
 
-        //WHEN
+        // WHEN
         Map<String, BigInteger> actual = underTest.transform(sourceMap);
 
-        //THEN
+        // THEN
         assertThat(actual).containsOnly(
                 entry(MAP_KEY_1, ZERO),
                 entry(MAP_KEY_2, ZERO)
@@ -165,16 +165,16 @@ public class MapTransformerTest extends AbstractTransformerTest {
      */
     @Test
     public void testTransformWorksProperlyWithTransformer() {
-        //GIVEN
+        // GIVEN
         Map<String, BigInteger> sourceMap = new HashMap<>();
         sourceMap.put(MAP_KEY_1, ZERO);
         sourceMap.put(MAP_KEY_2, ONE);
         underTest.withKeyTransformer(new FieldTransformer<String, String>(MAP_KEY_1, String::toUpperCase));
 
-        //WHEN
+        // WHEN
         Map<String, BigInteger> actual = underTest.transform(sourceMap);
 
-        //THEN
+        // THEN
         assertThat(actual).isNotNull();
         assertThat(actual.size()).isEqualTo(sourceMap.size());
         assertThat(actual).containsKey(MAP_KEY_1.toUpperCase());
@@ -185,12 +185,12 @@ public class MapTransformerTest extends AbstractTransformerTest {
      */
     @Test(expectedExceptions = InvalidFunctionException.class)
     public void testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid() {
-        //GIVEN
+        // GIVEN
         Map<String, BigInteger> sourceMap = new HashMap<>();
         sourceMap.put(MAP_KEY_1, ZERO);
         underTest.withKeyTransformer(new FieldTransformer<>(MAP_KEY_1, ONE::add));
 
-        //WHEN
+        // WHEN
         underTest.transform(sourceMap);
     }
 
@@ -199,12 +199,12 @@ public class MapTransformerTest extends AbstractTransformerTest {
      */
     @Test
     public void testTransformWorksProperlyWithTargetKeyAndElemType() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         Map<MutableToFooSimple, Map> actual = underTest.transform(EXTREME_COMPLEX_MAP, MutableToFooSimple.class, Map.class);
 
-        //THEN
+        // THEN
         assertThat(actual).isNotNull();
         assertThat(actual.size()).isEqualTo(EXTREME_COMPLEX_MAP.size());
         // check that the element has been converted
@@ -218,13 +218,13 @@ public class MapTransformerTest extends AbstractTransformerTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testTransformWorksProperlyWithMapContainingList() {
-        //GIVEN
+        // GIVEN
         Map<FromFooSimple, List<String>> sourceMap = newHashMap(fromFooSimple, list(ITEM_1));
 
-        //WHEN
+        // WHEN
         Map<MutableToFooSimple, List> actual = underTest.transform(sourceMap, MutableToFooSimple.class, List.class);
 
-        //THEN
+        // THEN
         assertThat(actual).allSatisfy((key, value) -> {
             assertThat(key).isInstanceOf(MutableToFooSimple.class);
             assertThat(value).containsOnly(ITEM_1);
@@ -236,15 +236,15 @@ public class MapTransformerTest extends AbstractTransformerTest {
      */
     @Test
     public void testResetKeyTransformerWorksProperly() {
-        //GIVEN
+        // GIVEN
         underTest.withKeyTransformer(new FieldTransformer<String, String>(MAP_KEY_1, String::toUpperCase));
 
-        //WHEN
+        // WHEN
         underTest.resetKeyTransformer();
         MapTransformerSettings transformerSettings =
                 (MapTransformerSettings) REFLECTION_UTILS.getFieldValue(underTest, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
 
-        //THEN
+        // THEN
         assertThat(transformerSettings.getKeyFieldsTransformers()).isEmpty();
         underTest.resetKeyTransformer();
     }

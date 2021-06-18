@@ -48,7 +48,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jdk.version>11</jdk.version>
+        <jdk.version>15</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
         <lombok.version>1.18.20</lombok.version>
@@ -82,7 +82,11 @@
         <!-- build settings -->
         <maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version>
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
+        <puppycrawl.checkstyle.version>8.42</puppycrawl.checkstyle.version>
+        <maven.spotless.plugin.version>2.12.1</maven.spotless.plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
+        <!-- excludes the Record classes from being analyzed as they are not yet supported by the checkstyle plugin -->
+        <checkstyle.exclusion>**/*Record*.java</checkstyle.exclusion>
         <checkstyle.includeTestSourceDirectory>true</checkstyle.includeTestSourceDirectory>
         <test.coverage.check.skip>false</test.coverage.check.skip>
         <pmd.check.skip>true</pmd.check.skip>
@@ -344,6 +348,7 @@
                         <target>${maven.compiler.target}</target>
                         <parameters>true</parameters>
                         <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                        <compilerArgs>--enable-preview</compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -377,6 +382,13 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>${maven.checkstyle.plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${puppycrawl.checkstyle.version}</version>
+                        </dependency>
+                    </dependencies>
                     <executions>
                         <execution>
                             <phase>process-sources</phase>
@@ -391,6 +403,7 @@
                                 <failsOnError>true</failsOnError>
                                 <skip>${checkstyle.check.skip}</skip>
                                 <includeTestSourceDirectory>${checkstyle.includeTestSourceDirectory}</includeTestSourceDirectory>
+                                <excludes>${checkstyle.exclusion}</excludes>
                             </configuration>
                         </execution>
                     </executions>
@@ -401,6 +414,7 @@
                     <version>${maven.surefire.plugin.version}</version>
                     <configuration>
                         <parallelMavenExecution>false</parallelMavenExecution>
+                        <argLine>--enable-preview</argLine>
                     </configuration>
                 </plugin>
                 <!-- jacoco plugin configuration -->
@@ -668,7 +682,7 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>${spotless.maven.plugin.version}</version>
+                <version>${maven.spotless.plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>process-sources</phase>

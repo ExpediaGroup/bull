@@ -42,12 +42,12 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
      */
     @Test
     public void testMixedBeanWithoutAllArgsConstructorIsCorrectlyCopied() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         MixedToFooMissingAllArgsConstructor actual = underTest.transform(fromFoo, MixedToFooMissingAllArgsConstructor.class);
 
-        //THEN
+        // THEN
         assertThat(actual).usingRecursiveComparison()
                 .isEqualTo(fromFoo);
     }
@@ -57,12 +57,12 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
      */
     @Test
     public void testMixedBeanIsCorrectlyCopied() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.class);
 
-        //THEN
+        // THEN
         assertThat(actual).usingRecursiveComparison()
                 .isEqualTo(fromFoo);
     }
@@ -72,13 +72,13 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
      */
     @Test
     public void testMixedBeanWithDifferentFieldNamesIsCorrectlyCopied() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         MixedToFooDiffFields actual = beanTransformer.transform(fromFoo, MixedToFooDiffFields.class);
 
-        //THEN
+        // THEN
         assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId())
                 .usingRecursiveComparison()
                 .ignoringFields(IDENTIFIER_FIELD_NAME)
@@ -90,18 +90,18 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
      */
     @Test
     public void testMixedBeanWithDifferentFieldNamesIsCorrectlyCopiedThroughFieldTransformer() {
-        //GIVEN
+        // GIVEN
         /* Extended FieldTransformer function declaration.
          * Function<BigInteger, BigInteger> idTransformer = value -> value.negate();
          * FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", idTransformer);
          */
         FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>(IDENTIFIER_FIELD_NAME, BigInteger::negate);
 
-        //WHEN
+        // WHEN
         underTest.withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME)).withFieldTransformer(fieldTransformer);
         MixedToFooDiffFields actual = underTest.transform(fromFoo, MixedToFooDiffFields.class);
 
-        //THEN
+        // THEN
         assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId().negate())
                 .usingRecursiveComparison()
                 .ignoringFields(IDENTIFIER_FIELD_NAME)
@@ -113,10 +113,10 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
      */
     @Test
     public void testMixedBeanWithMissingFieldsReturnsTheDefaultValueWhenTheSourceObjectDoesNotContainARequiredField() {
-        //GIVEN
+        // GIVEN
         underTest.setDefaultValueForMissingField(true);
 
-        //WHEN
+        // WHEN
         MixedToFooMissingField actual = underTest.transform(fromFoo, MixedToFooMissingField.class);
 
         assertThat(actual.getFooField()).isNull();
@@ -128,10 +128,10 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
      */
     @Test(expectedExceptions = MissingFieldException.class)
     public void testMixedBeanWithMissingFieldsThrowsMissingFieldExceptionWhenTheSourceObjectDoesNotContainARequiredField() {
-        //GIVEN
+        // GIVEN
         underTest.setDefaultValueForMissingField(false);
 
-        //WHEN
+        // WHEN
         underTest.transform(fromFoo, MixedToFooMissingField.class);
     }
 
@@ -140,15 +140,15 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
      */
     @Test
     public void testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions() {
-        //GIVEN
+        // GIVEN
         FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
         FieldTransformer<Object, Integer> ageFieldTransformer = new FieldTransformer<>(AGE_FIELD_NAME, val -> AGE);
 
-        //WHEN
+        // WHEN
         underTest.withFieldTransformer(ageFieldTransformer);
         MixedToFooNotExistingFields mixedObjectBean = underTest.transform(fromFooSimple, MixedToFooNotExistingFields.class);
 
-        //THEN
+        // THEN
         assertThat(mixedObjectBean).hasFieldOrPropertyWithValue(AGE_FIELD_NAME, AGE);
     }
 
@@ -157,13 +157,13 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
      */
     @Test
     public void testFieldTransformationSkipWorksProperly() {
-        //GIVEN
+        // GIVEN
         underTest.skipTransformationForField(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
 
-        //WHEN
+        // WHEN
         MixedToFoo actual = underTest.transform(fromFoo, MixedToFoo.class);
 
-        //THEN
+        // THEN
         assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
         underTest.resetFieldsTransformationSkip();
     }
@@ -173,13 +173,13 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
      */
     @Test
     public void testTransformationOnAnExistingDestinationWorksProperly() {
-        //GIVEN
+        // GIVEN
         MixedToFoo mixedToFoo = new MixedToFoo(null, null, null, null, null);
 
-        //WHEN
+        // WHEN
         underTest.skipTransformationForField().transform(fromFoo, mixedToFoo);
 
-        //THEN
+        // THEN
         assertThat(mixedToFoo).usingRecursiveComparison()
                 .isEqualTo(fromFoo);
     }
