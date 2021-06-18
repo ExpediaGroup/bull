@@ -22,7 +22,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -254,7 +254,7 @@
                             <excludes>
                                 <exclude>**/PerformanceTest.java</exclude>
                             </excludes>
-                            <argLine>--enable-preview</argLine>
+                            <argLine>@{argLine} --enable-preview</argLine>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -299,7 +299,7 @@
                         <configuration>
                             <excludes>
                                 <exclude>**/PerformanceTest.java</exclude>
-                                <argLine>--enable-preview</argLine>
+                                <argLine>@{argLine} --enable-preview</argLine>
                             </excludes>
                         </configuration>
                     </plugin>
@@ -420,7 +420,7 @@
                     <version>${maven.surefire.plugin.version}</version>
                     <configuration>
                         <parallelMavenExecution>false</parallelMavenExecution>
-                        <argLine>--enable-preview</argLine>
+                        <argLine>@{argLine} --enable-preview</argLine>
                     </configuration>
                 </plugin>
                 <!-- jacoco plugin configuration -->
@@ -569,7 +569,6 @@
                     <configuration>
                         <siteDirectory>${project.basedir}/docs/site</siteDirectory>
                         <skipDeploy>true</skipDeploy>
-                        <!--                        <generateReports>false</generateReports>-->
                     </configuration>
                     <dependencies>
                         <dependency><!-- add support for ssh/scp -->
@@ -749,6 +748,5 @@
                 </reportSets>
             </plugin>
         </plugins>
-
     </reporting>
 </project>
