@@ -18,14 +18,23 @@ package com.hotels.transformer.cache;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
+import static lombok.AccessLevel.PROTECTED;
+
 import java.util.Map;
 import java.util.Optional;
 
+import lombok.AllArgsConstructor;
+
 /**
  * Cache Utils class.
- * @param cacheMap the ache store
  */
-public record CacheManager(Map<String, Object> cacheMap) {
+@AllArgsConstructor(access = PROTECTED)
+public final class CacheManager {
+    /**
+     * Cache store.
+     */
+    private final Map<String, Object> cacheMap;
+
     /**
      * Caches the given object.
      * @param cacheKey the cache key.
