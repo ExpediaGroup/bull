@@ -64,12 +64,12 @@ public class BeanUtilsTest {
      */
     @Test
     public void testGetTransformerWorksProperly() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         final BeanTransformer transformer = underTest.getTransformer();
 
-        //THEN
+        // THEN
         assertThat(transformer).isNotNull();
     }
 
@@ -78,9 +78,9 @@ public class BeanUtilsTest {
      */
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testGetTransformerThrowsExceptionIfTheBeanTransformerIsNull() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         underTest.getTransformer(null, ImmutableToFooSimple.class);
     }
 
@@ -91,16 +91,16 @@ public class BeanUtilsTest {
      */
     @Test(dataProvider = "dataStaticTransformationTesting")
     public void testGetTransformerFunctionWorksProperly(final String testCaseDescription, final Function<FromFooSimple, ImmutableToFooSimple> transformerFunction) {
-        //GIVEN
+        // GIVEN
         FromFooSimple fromFooSimple = createFromFooSimple();
         List<FromFooSimple> fromFooSimpleList = Arrays.asList(fromFooSimple, fromFooSimple);
 
-        //WHEN
+        // WHEN
         List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
                 .map(transformerFunction)
                 .collect(Collectors.toList());
 
-        //THEN
+        // THEN
         assertThat(transformerFunction).isNotNull();
         assertThat(actual).usingRecursiveComparison()
                 .ignoringAllOverriddenEquals()
@@ -127,11 +127,11 @@ public class BeanUtilsTest {
      */
     @Test
     public void testValidateWorksProperly() {
-        //GIVEN
+        // GIVEN
         ImmutableToFooMissingCustomAnnotation validBean =
                 new ImmutableToFooMissingCustomAnnotation(NAME, ID.intValue());
 
-        //WHEN
+        // WHEN
         underTest.getValidator().validate(validBean);
     }
 
@@ -140,11 +140,11 @@ public class BeanUtilsTest {
      */
     @Test(expectedExceptions = InvalidBeanException.class)
     public void testValidateThrowsExceptionIfTheGivenBeanIsInvalid() {
-        //GIVEN
+        // GIVEN
         ImmutableToFoo immutableToFoo =
                 new ImmutableToFoo(null, null, null, null, null);
 
-        //WHEN
+        // WHEN
         underTest.getValidator().validate(immutableToFoo);
     }
 
@@ -153,12 +153,12 @@ public class BeanUtilsTest {
      */
     @Test
     public void testGetPrimitiveTypeConverterWorksProperly() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         Converter actual = underTest.getPrimitiveTypeConverter();
 
-        //THEN
+        // THEN
         assertThat(actual).isNotNull();
     }
 

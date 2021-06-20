@@ -47,12 +47,12 @@ public class MapUtilsTest {
      */
     @Test
     public void testGetTransformerWorksProperly() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         final MapTransformer transformer = underTest.getTransformer();
 
-        //THEN
+        // THEN
         assertThat(transformer).isNotNull();
     }
 }

@@ -86,7 +86,7 @@ public class ArrayPopulatorTest {
             assertThat((Object[]) actual).isEqualTo(array);
         } else if (genericFieldType == MixedToFooStaticField.class) {
             assertThat((Object[]) actual)
-                    .usingElementComparatorOnFields(NORMAL_FIELD)
+                    .usingRecursiveFieldByFieldElementComparatorOnFields(NORMAL_FIELD)
                     .isEqualTo(array);
         } else {
             assertThat(actual).isEqualTo(array);

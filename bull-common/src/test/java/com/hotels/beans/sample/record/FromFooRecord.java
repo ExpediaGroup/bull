@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hotels.transformer.model;
+package com.hotels.beans.sample.record;
+
+import java.math.BigInteger;
 
 /**
- * Bean class for mapping the java.util.Map type.
- * @param keyType key object class
- * @param elemType elem object class
+ * Sample record object.
+ * @param id the id
+ * @param name the foo name
  */
-public record MapType(MapElemType keyType, MapElemType elemType) implements MapElemType {
+public record FromFooRecord(BigInteger id, String name) {
 }

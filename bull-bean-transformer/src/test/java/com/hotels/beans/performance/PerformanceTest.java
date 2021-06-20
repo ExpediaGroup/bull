@@ -109,10 +109,10 @@ public class PerformanceTest {
     @Test(dataProvider = "dataPerformanceTest")
     public void testCopyPropertiesGetsCompletedInTheExpectedTime(final double totalTransformation, final int waitInterval,
         final Object sourceObject, final Class<Object> destObjectClass, final double maxTransformationTime) throws InterruptedException {
-        //GIVEN
+        // GIVEN
         warmUp(sourceObject, destObjectClass);
 
-        //WHEN
+        // WHEN
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         BeanTransformer transformer = underTest.getTransformer();
@@ -125,7 +125,7 @@ public class PerformanceTest {
         stopWatch.stop();
         double avgTransformationTime = stopWatch.getTime(MILLISECONDS) / totalTransformation;
 
-        //THEN
+        // THEN
         log.info("Object: {}, Average transformation time: {} ms", destObjectClass, avgTransformationTime);
         assertThat(avgTransformationTime)
                 .as("Performance degradation! Expected: %s, actual: %s", maxTransformationTime, avgTransformationTime)

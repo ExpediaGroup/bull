@@ -96,12 +96,12 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     @Test(dataProvider = "dataDefaultTransformationTesting")
     public void testImmutableBeanIsCorrectlyCopied(final String testCaseDescription, final BeanTransformer transformer, final Object sourceObject,
         final Class<?> targetObjectClass) {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         Object actual = transformer.transform(sourceObject, targetObjectClass);
 
-        //THEN
+        // THEN
         assertThat(actual).usingRecursiveComparison()
                 .ignoringAllOverriddenEquals()
                 .isEqualTo(sourceObject);
@@ -132,13 +132,13 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test
     public void testTransformationOnAnExistingDestinationWorksProperly() {
-        //GIVEN
+        // GIVEN
         ImmutableToFooSimple immutableToFoo = new ImmutableToFooSimple(null, null, false);
 
-        //WHEN
+        // WHEN
         underTest.setValidationEnabled(true).transform(fromFooSimple, immutableToFoo);
 
-        //THEN
+        // THEN
         assertThat(immutableToFoo)
                 .usingRecursiveComparison()
                 .isEqualTo(fromFooSimple);
@@ -156,16 +156,16 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     @Test(dataProvider = "dataCompositeFieldNameTesting")
     public void testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected(final String testCaseDescription, final Object sourceObject, final String expectedName,
         final BigInteger expectedId, final int[] expectedPhoneNumbers) {
-        //GIVEN
+        // GIVEN
         TransformerImpl underTestMock = spy(new TransformerImpl());
         Constructor<ImmutableFlatToFoo> beanAllArgsConstructor = new ClassUtils().getAllArgsConstructor(ImmutableFlatToFoo.class);
         when(underTestMock.canBeInjectedByConstructorParams(beanAllArgsConstructor)).thenReturn(false);
         FieldMapping<String, String> phoneNumbersMapping = new FieldMapping<>(PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME, PHONE_NUMBER_DEST_FIELD_NAME);
 
-        //WHEN
+        // WHEN
         ImmutableFlatToFoo actual = underTestMock.withFieldMapping(phoneNumbersMapping).transform(sourceObject, ImmutableFlatToFoo.class);
 
-        //THEN
+        // THEN
         assertThat(actual).extracting(NAME_FIELD_NAME, ID_FIELD_NAME, PHONE_NUMBER_DEST_FIELD_NAME)
                 .containsExactly(expectedName, expectedId, expectedPhoneNumbers);
     }
@@ -194,9 +194,9 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     @Test(dataProvider = "dataConstructorErrorTesting", expectedExceptions = InvalidBeanException.class)
     public void testTransformThrowsExceptionIfTheConstructorInvocationThrowsException(final String testCaseDescription, final Object sourceObject,
         final Class<?> targetObjectClass) {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         underTest.setValidationEnabled(false).transform(sourceObject, targetObjectClass);
     }
 
@@ -218,11 +218,11 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test(expectedExceptions = InvalidBeanException.class)
     public void testTransformThrowsExceptionWhenImmutableIsInvalid() throws CloneNotSupportedException {
-        //GIVEN
+        // GIVEN
         FromFoo fromFooNullId = AbstractTransformerTest.fromFoo.clone();
         fromFooNullId.setId(null);
 
-        //WHEN
+        // WHEN
         underTest.setValidationEnabled(true).transform(fromFooNullId, ImmutableToFoo.class);
     }
 
@@ -231,10 +231,10 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test
     public void testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled() {
-        //GIVEN
+        // GIVEN
         fromFoo.setId(null);
 
-        //WHEN
+        // WHEN
         ImmutableToFoo actual = underTest.transform(fromFoo, ImmutableToFoo.class);
 
         // THEN
@@ -247,13 +247,13 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test
     public void testImmutableBeanWithDifferentFieldNamesIsCorrectlyCopied() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         final BeanTransformer beanTransformer = underTest.withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME));
         ImmutableToFooDiffFields actual = beanTransformer.transform(fromFoo, ImmutableToFooDiffFields.class);
 
-        //THEN
+        // THEN
         assertThat(actual).hasFieldOrPropertyWithValue(IDENTIFIER_FIELD_NAME, fromFoo.getId())
                 .usingRecursiveComparison()
                 .ignoringFields(IDENTIFIER_FIELD_NAME)
@@ -270,17 +270,17 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     @Test(dataProvider = "dataAdvancedFieldsCopyTesting")
     public void testImmutableBeanWithAdvancedFieldsIsCorrectlyCopied(final String testCaseDescription, final FromFooAdvFields sourceObject,
         final Class<?> targetObjectClass, final boolean isNameFieldEmpty) {
-        //GIVEN
+        // GIVEN
         final BeanTransformer beanTransformer = underTest
                 .withFieldMapping(new FieldMapping<>(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
                 .withFieldMapping(new FieldMapping<>(PRICE_FIELD_NAME, NET_PRICE_FIELD_NAME))
                 .withFieldMapping(new FieldMapping<>(PRICE_FIELD_NAME, GROSS_PRICE_FIELD_NAME))
                 .withFieldTransformer(new FieldTransformer<>(LOCALE_FIELD_NAME, Locale::forLanguageTag));
 
-        //WHEN
+        // WHEN
         ImmutableToFooAdvFields actual = (ImmutableToFooAdvFields) beanTransformer.transform(sourceObject, targetObjectClass);
 
-        //THEN
+        // THEN
         assertThat(actual).usingRecursiveComparison()
                 .ignoringFields(AGE_FIELD_NAME, PRICE_FIELD_NAME, LOCALE_FIELD_NAME)
                 .isEqualTo(sourceObject);
@@ -309,12 +309,12 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test
     public void testImmutableBeanWithMissingConstructorArgIsCorrectlyCopied() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         ImmutableToFooMissingCustomAnnotation actual = underTest.withFieldTransformer().transform(fromFooWithPrimitiveFields, ImmutableToFooMissingCustomAnnotation.class);
 
-        //THEN
+        // THEN
         assertThat(actual).isNotNull();
         assertThat(actual.getName()).isEqualTo(fromFooWithPrimitiveFields.getName());
     }
@@ -325,7 +325,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test
     public void testGetDestFieldNameIsRetrievedFromConstructorArgIfTheParamNameIsNotProvidedFromJVM() throws Exception {
-        //GIVEN
+        // GIVEN
         String declaringClassName = ImmutableToFoo.class.getName();
         // Parameter mock setup
         Parameter constructorParameter = mock(Parameter.class);
@@ -336,10 +336,10 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         Method getDestFieldNameMethod = underTest.getClass().getDeclaredMethod(GET_DEST_FIELD_NAME_METHOD_NAME, Parameter.class, String.class);
         getDestFieldNameMethod.setAccessible(true);
 
-        //WHEN
+        // WHEN
         String actual = (String) getDestFieldNameMethod.invoke(underTest, constructorParameter, declaringClassName);
 
-        //THEN
+        // THEN
         assertThat(actual).isEqualTo(DEST_FIELD_NAME);
 
         // restore modified objects
@@ -352,18 +352,19 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test
     public void testGetConstructorValuesFromFieldsWorksProperly() throws Exception {
-        //GIVEN
+        // GIVEN
         underTest.withFieldTransformer(new FieldTransformer<>(LOCALE_FIELD_NAME, Locale::forLanguageTag));
 
-        //WHEN
+        // WHEN
         final Method getConstructorValuesFromFieldsMethod =
                 underTest.getClass().getDeclaredMethod(GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME, Object.class, Class.class, String.class);
         getConstructorValuesFromFieldsMethod.setAccessible(true);
         Object[] actual = (Object[]) getConstructorValuesFromFieldsMethod.invoke(underTest, fromFooAdvFields, ImmutableToFooAdvFields.class, "");
 
-        //THEN
-        assertThat(actual).isNotNull();
-        assertThat(actual.length).isEqualTo(TOTAL_ADV_CLASS_FIELDS);
+        // THEN
+        assertThat(actual)
+                .isNotNull()
+                .hasSize(TOTAL_ADV_CLASS_FIELDS);
 
         // restore modified objects
         restoreObjects(getConstructorValuesFromFieldsMethod);
@@ -375,7 +376,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test
     public void testGetDestFieldNameReturnsNullIfConstructorParamHasNoNameProvidedFromJVMAndNoConstructorArgIsDefined() throws Exception {
-        //GIVEN
+        // GIVEN
         String declaringClassName = ImmutableToFoo.class.getName();
         // Parameter mock setup
         Parameter constructorParameter = mock(Parameter.class);
@@ -386,10 +387,10 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         Method getDestFieldNameMethod = underTest.getClass().getDeclaredMethod(GET_DEST_FIELD_NAME_METHOD_NAME, Parameter.class, String.class);
         getDestFieldNameMethod.setAccessible(true);
 
-        //WHEN
+        // WHEN
         String actual = (String) getDestFieldNameMethod.invoke(underTest, constructorParameter, declaringClassName);
 
-        //THEN
+        // THEN
         assertThat(actual).isEqualTo(DEST_FIELD_NAME);
 
         // restore modified objects
@@ -401,7 +402,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test
     public void testTransformationReturnsAMeaningfulException() {
-        //GIVEN
+        // GIVEN
         Class<ImmutableToFooSimpleWrongTypes> targetClass = ImmutableToFooSimpleWrongTypes.class;
         final String expectedExceptionMessageFormat =
                 "Constructor invoked with wrong arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String). "
@@ -411,10 +412,10 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         String expectedExceptionMessage =
                 format(expectedExceptionMessageFormat, targetClassName, targetClassName, targetClass.getSimpleName(), fromFooSimple.getClass().getName());
 
-        //WHEN
+        // WHEN
         ThrowingCallable actual = () -> underTest.transform(fromFooSimple, targetClass);
 
-        //THEN
+        // THEN
         assertThatThrownBy(actual).isInstanceOf(InvalidBeanException.class)
                 .hasMessage(expectedExceptionMessage);
     }
@@ -424,15 +425,15 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test
     public void testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions() {
-        //GIVEN
+        // GIVEN
         FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
         FieldTransformer<Object, Integer> ageFieldTransformer = new FieldTransformer<>(AGE_FIELD_NAME, () -> AGE);
 
-        //WHEN
+        // WHEN
         underTest.withFieldTransformer(ageFieldTransformer);
         ImmutableToFooNotExistingFields immutableObjectBean = underTest.transform(fromFooSimple, ImmutableToFooNotExistingFields.class);
 
-        //THEN
+        // THEN
         assertThat(immutableObjectBean).hasFieldOrPropertyWithValue(AGE_FIELD_NAME, AGE);
     }
 
@@ -441,13 +442,13 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test
     public void testFieldTransformationSkipWorksProperly() {
-        //GIVEN
+        // GIVEN
         underTest.skipTransformationForField("name", "nestedObject.phoneNumbers");
 
-        //WHEN
+        // WHEN
         ImmutableToFoo actual = underTest.transform(fromFoo, ImmutableToFoo.class);
 
-        //THEN
+        // THEN
         assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
         underTest.resetFieldsTransformationSkip();
     }
@@ -457,17 +458,17 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test
     public void testTransformerFunctionHasHigherPriorityThanDefaultValue() {
-        //GIVEN
+        // GIVEN
         FromFooSimpleBooleanField fromFooSimpleNullFields = new FromFooSimpleBooleanField();
         FieldTransformer<Boolean, Boolean> nullToTrue =
             new FieldTransformer<>(WORK_FIELD_NAME, aBoolean -> aBoolean == null || aBoolean);
 
-        //WHEN
+        // WHEN
         ImmutableToFooSimpleBoolean actual = underTest
             .withFieldTransformer(nullToTrue)
             .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
 
-        //THEN
+        // THEN
         assertThat(actual.getWork()).isTrue();
         underTest.resetFieldsTransformer();
     }
@@ -477,12 +478,12 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      */
     @Test(expectedExceptions = InvalidFunctionException.class)
     public void testTransformRaiseAnExceptionIfTheTransformerFunctionIsNotValid() {
-        //GIVEN
+        // GIVEN
         FromFooSimpleBooleanField fromFooSimpleNullFields = new FromFooSimpleBooleanField();
         FieldTransformer<String, String> upperCase =
                 new FieldTransformer<>(WORK_FIELD_NAME, String::toUpperCase);
 
-        //WHEN
+        // WHEN
         underTest.withFieldTransformer(upperCase)
                 .transform(fromFooSimpleNullFields, ImmutableToFooSimpleBoolean.class);
 

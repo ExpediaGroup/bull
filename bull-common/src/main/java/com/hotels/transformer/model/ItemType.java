@@ -16,23 +16,12 @@
 package com.hotels.transformer.model;
 
 import lombok.Builder;
-import lombok.Getter;
 
 /**
  * Bean class for mapping the "Generic" object type and its nested generic (if any).
+ * @param objectClass the object class. i.e. In case of: {@code Map<List<String>, Integer>} the value wil be {@code List}
+ * @param genericClass the generic object class in the key object (if any). i.e. In case of: {@code Map<List<String>, Integer>} the value wil be {@code String}
  */
-@Getter
 @Builder
-public class ItemType implements MapElemType {
-    /**
-     * The object class.
-     * i.e. In case of: {@code Map<List<String>, Integer>} the value wil be {@code List}
-     */
-    private final Class<?> objectClass;
-
-    /**
-     * The generic object class in the key object (if any).
-     * i.e. In case of: {@code Map<List<String>, Integer>} the value wil be {@code String}
-     */
-    private final Class<?> genericClass;
+public record ItemType(Class<?> objectClass, Class<?> genericClass) implements MapElemType {
 }
