@@ -1,12 +1,9 @@
 /**
  * Copyright (C) 2019-2021 Expedia, Inc.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
  * http://www.apache.org/licenses/LICENSE-2.0
- *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -177,8 +174,8 @@ public class MapTransformerTest extends AbstractTransformerTest {
         // THEN
         assertThat(actual)
                 .isNotNull()
-             .hasSize(sourceMap.size())
-             .containsKey(MAP_KEY_1.toUpperCase());
+                .hasSize(sourceMap.size())
+                .containsKey(MAP_KEY_1.toUpperCase());
     }
 
     /**
@@ -206,11 +203,11 @@ public class MapTransformerTest extends AbstractTransformerTest {
         Map<MutableToFooSimple, Map> actual = underTest.transform(EXTREME_COMPLEX_MAP, MutableToFooSimple.class, Map.class);
 
         // THEN
-        assertThat(actual).isNotNull();
-        assertThat(actual.size()).isEqualTo(EXTREME_COMPLEX_MAP.size());
-        // check that the element has been converted
-        assertThat(actual).allSatisfy((key, value) ->
-                assertThat(key).isInstanceOf(MutableToFooSimple.class));
+        assertThat(actual)
+                .isNotNull()
+                .hasSize(EXTREME_COMPLEX_MAP.size())
+                .allSatisfy((key, value) ->
+                        assertThat(key).isInstanceOf(MutableToFooSimple.class));
     }
 
     /**
