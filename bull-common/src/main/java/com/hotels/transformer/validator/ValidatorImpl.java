@@ -101,10 +101,10 @@ public class ValidatorImpl implements Validator {
      * @return a {@link javax.validation.Validator} instance.
      */
     private jakarta.validation.Validator getValidator() {
-        String cacheKey = "BeanValidator";
+        var cacheKey = "BeanValidator";
         return cacheManager.getFromCache(cacheKey, jakarta.validation.Validator.class)
                 .orElseGet(() -> {
-                    jakarta.validation.Validator validator = buildDefaultValidatorFactory().getValidator();
+                    var validator = buildDefaultValidatorFactory().getValidator();
                     cacheManager.cacheObject(cacheKey, validator);
                     return validator;
                 });

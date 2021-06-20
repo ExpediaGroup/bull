@@ -56,7 +56,7 @@ It contains all the modules available in the project
 
 **The project provides two different builds**, one compatible with `jdk 8` (or above) and one with `jdk 11` or above.
 
-In case you need to integrate it in a `jdk 8` (or above project) please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md) file or [CHANGELOG](CHANGELOG.md) otherwise.
+In case you need to integrate it in a `jdk 8` please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md) file or [CHANGELOG](CHANGELOG.md) otherwise.
 
 * #### Suggestions
 
@@ -127,6 +127,7 @@ mvnw.cmd versions:display-dependency-updates -P check-for-updates
 * support copy of immutable beans.
 * support copy of mutable beans.
 * support copy of hybrid beans (some fields private and some not).
+* support copy of Java Records.
 * support copy of Java beans without getter and setter methods.
 * support copy with Java primitive type.
 * support copy with Java Collection type. e.g. `List<BeanA> => List<BeanB>`
@@ -730,6 +731,20 @@ It's needed to enable the custom Builder Transformation as following:
 ToBean toBean = new BeanTransformer()
                          .setCustomBuilderTransformationEnabled(true)
                          .transform(sourceObject, ToBean.class);
+```
+
+## Transform Java Record
+
+### Simple case:
+
+```java
+public record FromFooRecord {                 public record RecordToFoo(BigInteger id, String name) {                           
+}                                             }  
+```
+And one line code as:
+
+```java
+var toBean = beanUtils.getTransformer().transform(fromBean, RecordToFoo.class);
 ```
 
 ## Constraints:

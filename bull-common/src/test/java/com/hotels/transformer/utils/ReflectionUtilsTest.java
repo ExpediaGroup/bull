@@ -177,7 +177,7 @@ public class ReflectionUtilsTest {
         // WHEN
         Object actual = underTestMock.getFieldValue(mutableToFoo, LIST_FIELD_NAME, FromFooSubClass.class);
 
-        //THEN
+        // THEN
         assertThat(actual).isNull();
         verify(underTestMock, times(1)).getDeclaredField(LIST_FIELD_NAME, MutableToFoo.class);
     }
@@ -498,9 +498,9 @@ public class ReflectionUtilsTest {
      */
     @Test
     public void testGetClassDeclaredFieldThrowsTheRightException() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         Throwable actualException = catchThrowable(() -> {
             Method getClassDeclaredFieldMethod = underTest.getClass().getDeclaredMethod(GET_CLASS_DECLARED_FIELD_METHOD_NAME, String.class, Class.class);
             getClassDeclaredFieldMethod.setAccessible(true);
@@ -785,14 +785,14 @@ public class ReflectionUtilsTest {
      */
     @Test
     public void testGetSourceFieldValueRaisesAnExceptionIfTheParameterAreNull() throws Exception {
-        //GIVEN
+        // GIVEN
         Method getRealTargetMethod = getMethod(underTest.getClass(), GET_REAL_TARGET_METHOD_NAME, true, Object.class);
         Optional<BigInteger> optionalBigInteger = Optional.of(ZERO);
 
-        //WHEN
+        // WHEN
         Object actual = getRealTargetMethod.invoke(underTest, optionalBigInteger);
 
-        //THEN
+        // THEN
         assertThat(actual).isEqualTo(ZERO);
     }
 

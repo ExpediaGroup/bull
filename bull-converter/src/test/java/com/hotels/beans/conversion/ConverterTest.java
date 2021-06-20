@@ -165,9 +165,9 @@ public class ConverterTest extends AbstractConversionTest {
      */
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testConvertValueRaisesExceptionIfItsCalledWithNullTargetClassParam() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
         underTest.convertValue(ZERO, null);
     }
 

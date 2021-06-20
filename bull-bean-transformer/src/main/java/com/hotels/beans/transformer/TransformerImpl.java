@@ -43,7 +43,6 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import com.hotels.transformer.annotation.ConstructorArg;
-import com.hotels.transformer.constant.ClassType;
 import com.hotels.transformer.error.InvalidBeanException;
 import com.hotels.transformer.error.MissingFieldException;
 import com.hotels.transformer.model.FieldTransformer;
@@ -118,7 +117,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     private <T, K> K injectValues(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
-        final ClassType classType = classUtils.getClassType(targetClass);
+        final var classType = classUtils.getClassType(targetClass);
         if (classType.is(MUTABLE)) {
             try {
                 k = classUtils.getNoArgsConstructor(targetClass).get();
@@ -238,7 +237,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     protected <T, K> Object[] getConstructorArgsValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
         final Parameter[] constructorParameters = classUtils.getConstructorParameters(constructor);
-        final Object[] constructorArgsValues = new Object[constructorParameters.length];
+        final var constructorArgsValues = new Object[constructorParameters.length];
         range(0, constructorParameters.length)
                 //.parallel()
                 .forEach(i -> {

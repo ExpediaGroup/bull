@@ -84,7 +84,7 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
     public final T withFieldMapping(final FieldMapping... fieldMapping) {
         final Map<P, P> fieldsNameMapping = settings.getFieldsNameMapping();
         for (FieldMapping mapping : fieldMapping) {
-            fieldsNameMapping.put((P) mapping.getDestFieldName(), (P) mapping.getSourceFieldName());
+            fieldsNameMapping.put((P) mapping.destFieldName(), (P) mapping.sourceFieldName());
         }
         return (T) this;
     }
