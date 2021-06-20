@@ -49,7 +49,7 @@ jobs:
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^((?!-jdk8).)*$
       script: skip
       before_deploy:
-        - openssl aes-256-cbc -K $encrypted_81c98acad902_key -iv $encrypted_81c98acad902_iv -in codesigning.asc.enc -out codesigning.asc -d
+        - openssl aes-256-cbc -K $encrypted_81c98acad902_key -iv $encrypted_81c98acad902_iv -in config/travis/codesigning.asc.enc -out config/travis/codesigning.asc -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
         - mvn install -DskipTests -Dmaven.test.skip=true javadoc:aggregate -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
       deploy:
@@ -65,7 +65,7 @@ jobs:
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^.*-jdk8$
       script: skip
       before_deploy:
-        - openssl aes-256-cbc -K $encrypted_81c98acad902_key -iv $encrypted_81c98acad902_iv -in codesigning.asc.enc -out codesigning.asc -d
+        - openssl aes-256-cbc -K $encrypted_81c98acad902_key -iv $encrypted_81c98acad902_iv -in config/travis/codesigning.asc.enc -out config/travis/codesigning.asc -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
         - mvn install javadoc:aggregate -P site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
       deploy:
