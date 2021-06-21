@@ -485,8 +485,8 @@ ToBean toBean = transformer.transform(fromBean, ToBean.class);
 ### Simple case:
 
 ```java
-public record FromFooRecord {                 public record RecordToFoo(BigInteger id, String name) {                           
-}                                             }  
+public record FromFooRecord(BigInteger id, String name) {      public record RecordToFoo(BigInteger id, String name) {                           
+}                                                              }  
 ```
 And one line code as:
 
