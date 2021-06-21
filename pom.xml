@@ -57,7 +57,7 @@
         <assertj-core.version>3.20.1</assertj-core.version>
         <!-- validation dependencies -->
         <hibernate-validator.version>7.0.1.Final</hibernate-validator.version>
-        <slf4j-api.version>1.7.30</slf4j-api.version>
+        <slf4j-api.version>1.7.31</slf4j-api.version>
         <glassfish.jakarta.el.version>4.0.1</glassfish.jakarta.el.version>
         <!-- JaCoCo & Sonar properties -->
         <jacoco.version>0.8.7</jacoco.version>
