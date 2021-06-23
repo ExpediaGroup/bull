@@ -55,6 +55,7 @@ import com.hotels.transformer.utils.ClassUtils;
 public class MutableObjectTransformationTest extends AbstractBeanTransformerTest {
     private static final boolean ACTIVE = true;
     private static final String PRICE_FIELD_NAME = "price";
+    private static final String UUID_FIELD_NAME = "uuid";
     private static final String CLASS_UTILS_FIELD_NAME = "classUtils";
     private static final String INJECT_VALUES_METHOD_NAME = "injectValues";
     private static final String NESTED_OBJECT_NAME_FIELD_NAME = "nestedObject.name";
@@ -333,12 +334,13 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFooOnlyPrimitiveTypes actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
 
         // THEN
-        assertThat(actual).extracting(CODE_FIELD_NAME, ID_FIELD_NAME, PRICE_FIELD_NAME, ACTIVE_FIELD_NAME)
+        assertThat(actual).extracting(CODE_FIELD_NAME, ID_FIELD_NAME, PRICE_FIELD_NAME, ACTIVE_FIELD_NAME, UUID_FIELD_NAME)
                 .containsExactly(
                         parseInt(fromFooPrimitiveTypes.getCode()),
                         String.valueOf(fromFooPrimitiveTypes.getId()),
                         (double) fromFooPrimitiveTypes.getPrice(),
-                        ACTIVE);
+                        ACTIVE,
+                        fromFooPrimitiveTypes.getUuid());
         underTest.setPrimitiveTypeConversionEnabled(false);
     }
 
@@ -356,12 +358,13 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         MutableToFooOnlyPrimitiveTypes actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
 
         // THEN
-        assertThat(actual).extracting(CODE_FIELD_NAME, ID_FIELD_NAME, ACTIVE_FIELD_NAME, PRICE_FIELD_NAME)
+        assertThat(actual).extracting(CODE_FIELD_NAME, ID_FIELD_NAME, ACTIVE_FIELD_NAME, PRICE_FIELD_NAME, UUID_FIELD_NAME)
                 .containsExactly(
                         parseInt(fromFooPrimitiveTypes.getCode()),
                         String.valueOf(fromFooPrimitiveTypes.getId()),
                         ACTIVE,
-                        newPrice);
+                        newPrice,
+                        fromFooPrimitiveTypes.getUuid());
         underTest.setPrimitiveTypeConversionEnabled(false);
         underTest.removeFieldTransformer(PRICE_FIELD_NAME);
     }
