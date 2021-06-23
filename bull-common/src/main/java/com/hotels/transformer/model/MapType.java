@@ -15,10 +15,23 @@
  */
 package com.hotels.transformer.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * Bean class for mapping the java.util.Map type.
- * @param keyType key object class
- * @param elemType elem object class
  */
-public record MapType(MapElemType keyType, MapElemType elemType) implements MapElemType {
+@AllArgsConstructor
+@Getter
+public class MapType implements MapElemType {
+    /**
+     * key object class.
+ */
+    private final MapElemType keyType;
+
+    /**
+     * elem object class.
+     */
+    private final MapElemType elemType;
+
 }

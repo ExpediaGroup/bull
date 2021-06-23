@@ -21,7 +21,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>2.0.2-SNAPSHOT</version>
+    <version>1.7.7-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -46,7 +46,7 @@
     </modules>
 
     <properties>
-        <jdk.version>15</jdk.version>
+        <jdk.version>11</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
         <lombok.version>1.18.20</lombok.version>
@@ -253,7 +253,6 @@
                             <excludes>
                                 <exclude>**/PerformanceTest.java</exclude>
                             </excludes>
-                            <argLine>@{argLine} --enable-preview</argLine>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -298,7 +297,6 @@
                         <configuration>
                             <excludes>
                                 <exclude>**/PerformanceTest.java</exclude>
-                                <argLine>@{argLine} --enable-preview</argLine>
                             </excludes>
                         </configuration>
                     </plugin>
@@ -352,7 +350,6 @@
                         <target>${maven.compiler.target}</target>
                         <parameters>true</parameters>
                         <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                        <compilerArgs>--enable-preview</compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -419,7 +416,6 @@
                     <version>${maven.surefire.plugin.version}</version>
                     <configuration>
                         <parallelMavenExecution>false</parallelMavenExecution>
-                        <argLine>@{argLine} --enable-preview</argLine>
                     </configuration>
                 </plugin>
                 <!-- jacoco plugin configuration -->
@@ -670,7 +666,6 @@
                 <version>${maven.javadoc-plugin.version}</version>
                 <configuration>
                     <skip>${javadoc.skip}</skip>
-                    <additionalOptions>--enable-preview</additionalOptions>
                     <release>${jdk.version}</release>
                 </configuration>
                 <executions>
@@ -720,7 +715,6 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <show>public</show>
-                    <additionalOptions>--enable-preview</additionalOptions>
                     <release>${jdk.version}</release>
                 </configuration>
                 <reportSets>
