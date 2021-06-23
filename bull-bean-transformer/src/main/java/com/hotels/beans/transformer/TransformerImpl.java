@@ -56,13 +56,18 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
-        final Optional<Class<?>> builderClass = getBuilderClass(targetClass);
-        if (builderClass.isPresent()) {
-            k = injectThroughBuilder(sourceObj, targetClass, builderClass.get(), breadcrumb);
+        if (targetClass.equals(Object.class)) {
+            k = (K) sourceObj;
         } else {
-            k = injectValues(sourceObj, targetClass, breadcrumb);
+            final Optional<Class<?>> builderClass = getBuilderClass(targetClass);
+            if (builderClass.isPresent()) {
+                k = injectThroughBuilder(sourceObj, targetClass, builderClass.get(), breadcrumb);
+            } else {
+                k = injectValues(sourceObj, targetClass, breadcrumb);
+            }
         }
         if (settings.isValidationEnabled()) {
             validator.validate(k);
@@ -176,7 +181,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @throws InvalidBeanException {@link InvalidBeanException} if the target object is not compliant with the requirements
      */
     protected <T, K> K handleInjectionException(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb,
-        final Object[] constructorArgs, final boolean forceConstructorInjection, final Exception e) {
+                                                final Object[] constructorArgs, final boolean forceConstructorInjection, final Exception e) {
         String errorMsg;
         if (!classUtils.areParameterNamesAvailable(constructor)) {
             if (!forceConstructorInjection) {
@@ -447,8 +452,8 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     @SuppressWarnings("unchecked")
     private Object getTransformedValue(final FieldTransformer transformerFunction, final Object fieldValue,
-        final Class<?> sourceObjectClass, final String sourceFieldName, final Field field,
-        final boolean isDestinationFieldPrimitiveType, final String breadcrumb) {
+                                       final Class<?> sourceObjectClass, final String sourceFieldName, final Field field,
+                                       final boolean isDestinationFieldPrimitiveType, final String breadcrumb) {
         Object transformedValue = fieldValue;
         if (settings.isPrimitiveTypeConversionEnabled() && isDestinationFieldPrimitiveType) {
             transformedValue = applyPrimitiveTypeConversion(sourceObjectClass, sourceFieldName, field, breadcrumb, transformedValue);
@@ -546,7 +551,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     @SuppressWarnings("unchecked")
     private Object applyPrimitiveTypeConversion(final Class<?> sourceObjectClass, final String sourceFieldName,
-        final Field field, final String fieldTransformerKey, final Object fieldValue) {
+                                                final Field field, final String fieldTransformerKey, final Object fieldValue) {
         Object transformedValue = fieldValue;
         FieldTransformer primitiveTypeTransformer = getPrimitiveTypeTransformer(sourceObjectClass, sourceFieldName, field, fieldTransformerKey);
         if (nonNull(primitiveTypeTransformer)) {
@@ -564,7 +569,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @return the default type transformer function
      */
     private FieldTransformer getPrimitiveTypeTransformer(final Class<?> sourceObjectClass, final String sourceFieldName,
-        final Field field, final String fieldTransformerKey) {
+                                                         final Field field, final String fieldTransformerKey) {
         String cacheKey = TRANSFORMER_FUNCTION_CACHE_PREFIX + "-" + field.getDeclaringClass().getName() + "-" + fieldTransformerKey + "-" + field.getName();
         return cacheManager.getFromCache(cacheKey, FieldTransformer.class)
                 .orElseGet(() -> {
