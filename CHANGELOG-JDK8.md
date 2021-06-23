@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.7.5-jdk8] 2020.06.23
+#### Changed
+* * Fixes an issue that was preventing the transformation of Object type fields
+
 ### [1.7.4-jdk8] 2020.12.24
 #### Changed
 * Updated `hibernate-validator` version to `7.0.0.Final` (was `6.1.5.Final`).

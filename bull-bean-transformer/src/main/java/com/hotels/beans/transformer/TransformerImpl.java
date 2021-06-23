@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2020 Expedia, Inc.
+ * Copyright (C) 2019-2021 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,13 +58,18 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
         final K k;
+        if (targetClass.equals(Object.class)) {
+            k = (K) sourceObj;
+        } else {
         final Optional<Class<?>> builderClass = getBuilderClass(targetClass);
         if (builderClass.isPresent()) {
             k = injectThroughBuilder(sourceObj, targetClass, builderClass.get(), breadcrumb);
         } else {
             k = injectValues(sourceObj, targetClass, breadcrumb);
+        }
         }
         if (settings.isValidationEnabled()) {
             validator.validate(k);

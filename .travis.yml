@@ -7,19 +7,18 @@ env:
     # HCOM OSS Sonatype jira info
     - secure: W40tXg80XoNy8L3GujgF4PzuiWqY4q5o+XVqppj1atLS7dFa/KuSjJ6bBWF0ootVjmXpRofUF5/Tg2zwcwtOKm9wSjCdgmoGht2CFryieoNVuwJ7MFBLheMvpKp940vHpXDMxb5mc/lff1yM/XNLd5aUa5ITw8GE7qowc3Irc2tUTZKQem+o3mwnuj0dBsRUQt2eGIEkqDWn/pQ5SfjUWSQp3YUVv0iPjIvwV+lHSEB9Mod8Am/5TYuFxINgo6R3MX5K7rwaXjvErSUz6gAP2kqoA+EZDUotmdhFr8zVVpB8e33bPwxNlTYJ5fePKIkLz3TjEb1UVpav2/Ie/jpD0QbfCL/hukEPV/JKye+4fOIJeRZGwBXOQQsscyfcNf9utHittG4ZEzOXwYutbSf4qjoI5V48/hC8hs0OL3RJGE6e4v9tQwvIxY/IopqreACVrHIRK34fOoABQpFUPsmcGTuLrAGJqjDn9UiXJqb9Qlgav1Ly0KKH5YnKQoxyc5RvQDC8NvafSDgex0udGwTVGDNYgQeGVmrOy/C6iDIyEe5hn5gXwDFWFMxETjHcYka7gCngCbDiGIOMxiOeHbnO2dG7HbNME6p9nRovdD/n5cnp4sj3ttysyMNRt8NE2IkZRfJ+LQUqcavpkeVRvN5O/drNBtYnTOXC+lGCV0XGL2E=
     - secure: cniGJvvR9/RcmRAp0F+iLvqQGH3zlvDYUb1GqZpX2ZKgqJ9syidk/Xy456HdR9WM9gTHZdQLNXYQFx9Dt41pa3Ft9nEi9LvmoLp/3rh/Siogx2X/madDxqHOXshCMYUg9ndSk8KKvjYSb+ztxT8j1qDW553Fax2YPWQiGRT5FXaEg1vl6znR362AhXaU1MgB8Wq+tDzTYJZugGj13u0S/vkNuTd30IQ5sW9YoQ4QwYPJIaG6ix1EUo0P3u96edakQjIAdciMLkggsfQkZr2MF5vAHjUI4+qW5wyAV2mzauc2MKhvKkJnF6WcNYOsXBOyDCAPJNo5YM4ODJM9ot7CcfKllecBaFUs4Uqh2U0lIe6opRtMdYPwV/GAAXwanSKgM1dNxgmPHnUWffWjaUJAbN94E/EH9JtGK2FAuxWqhbsPuMbpGK3XXuojU1fYj3oGGYFmSE3xWmhtSU89xiDrmrooGxxkaRt00eWtK+qCuiR8KGkN//i3+3x2F0ysVoOJL5WSSzNyfbtfp6laHTZv/LSAFgjSEmJF04L4m4Yhm/EDKaUXZjR/TAK2NZDTxlOxaOGVhwPA8Xj5YSwDMTd5k+cPntpYn/NbWtRr4fwk6VxI4XOOtksdiSk4Eiiaco2qEyd3X1tW/B9bPaAAFk8jHD35GNZAazgvNq7+kpMOg1s=
-    # GPG_KEYNAME
-    - secure: VGoLyHHb4exm8mw1OSS+zUWGqxcDOx9F2GF5q7TKr5uiqhMkBCz1Y4hTgBakYWfJLdhQl8F/UkUpjqVPN6NHz3q87aLeZtc5GB9D+kXhTuoMIZ34p0U5HEk63v06VvfmoMUfahEVZVeb3RWUAQGuliGokyiMRS3u4hK9UDTx91x4RRx/83pHn4o6NRAzIXyOoQIYwuLbCIleNVe35Ok2LKdk7NQ2i+nDVLdnjeuHWoF27R33CeiRRV+GvF7aJRksqKwPPS63nn6aGtEmlzemyYbiwDZ1wQbf9nuSZLaU78unTGq6qyVrYbpxegWHclPsM5EKxO34uqi3m0GLRuy/W+u0R9dRaCMk4aEPmz56ClDPrmjssMXn+pyumsKU4932aVA1Q/IP14H19P/3eH2FvJLnO00eGdKgqvVRbomOyRqlRWCI/mUsR0aAr+Go+32Orf88v79EAT0WmXBYgGiJR7d2Ig7YZxY5KnM+rto59J9tZbWQJRYr+jkw5W8dPTMVQ+a4T6kGcOR4e54KIqkW1BVa/I+aaiZSP0BrIGEbk2b1UmoYGOuxOBjs0ESDHaj6KFQK026WAoedQ/bYa8J+j7JRIg/ivlvH5eycXSFTXLt4Qym/iZ8SOnJr1mWTF4xCaOmyUBqSHS2tOPJiGuNdRpFep8QT9vBEXpej2yOLyDA=
+    # GPG_KEY_NAME
+    - secure: l0BUFY0eCMvGEOLC8/7qR4UQMzUbo6aYNJxaqzqmTsp1gHR1f6t0uFV5eGkaNwlLsay8SNleqoj/kvu2gWWa6uQ7vPMSMmlg1uB2gzJhT1B1QYuCAkOJQ7cvoakU859yiED1+ZFym3aTs+DstuZa/eyNI67RWmmfgUyl5nfQqMrV6NF24lbU2KqX7mrr1VVXjEkNHcW8/Lo5AVwp21jKar7hjgqxJhMRMqpLVY1ToVkpUAWUwRc0aEWDhqf/4Zjx6I1ebpKbNzSUE0VEJOd9+87dGlm+9CcgwMZsLo+tSl5CvbX8zWRGWX3OLqKfYnJpVJRgMweZcxvm5PeICGs0IZqbenKn3Xh2JxVp6hiZ8/I6kMB2KSVxlrk/3I9McfG2xoibKpbEqwUeX95IqNnBBw4Nm1pSkandW6bJjFjGatRaaO1Am5m4+DG+Su31TleKLq3+wew3we/Qu7ksAvaJ2b3/CLZv6FO2aB79Uh0wOfzU7tCRdDkzDUvFjGvQzvfS1iTrlHjlRgPAhQd+De4EYgtkh6rHixDnf58Z0AG+J7/+ZcJhV0ivCIb3QYZJDt8RjDZDr7EtOw7QGXO9PyTo8tL8DEIVg14I3AENQtoxop3C8hzb/NFGJTIf/0CBPzsmPw4K0RsYUfjkjRYJLFAYkm7pVpp0QnwkVXnQlobYyoA=
     # GPG_PASSPHRASE
-    - secure: bFylqtr43v1wetXH/b1RJDmsDzwn6ILfFnw0rVFVKdpYndoyL3J05A3qYdZ+K1cePP7cYnetfOlMnv/e1LDGSzQ/C2RmPgEZIPRozxg0t9S+QU/G+Ro5m1VhrEDOpJv2A7IxY7WBgWEhChIKTZlDK4c2rzXDJ/Z799QQRmiOu04zGVBUjPcbU01QlFF71e3Vf5sovBPSWPifmqyKHZPquqXbY5Jo36MDAO5b3aD/rk/6nkzB+b10fAEJ/9sXX14S0ItTc7CWkjGdqjMsu9lMYUZ8Au2YgBtGAU3XBG30+uhKk7Z2XZj8Ne9QJhPbzzt53bB0loa8pQ+k6NGcCPRoTZOI3tAKKPxXf1sRolE3gYmje1GcREvsXRnZbwfZuayCOBdEXFFZzmijz/H5UgNS5rUwrY+FH6Dl4AZsQvDJdC4nJ4IVo6knRM4yx4ooI47tJBLLQS5cFOTmpYnQdZZLr5s4EPRhFpqSa61a2ZoBzTDl4Jj3M/zZ9xtIajYEdYSZ/wGpErsA/KJbHnP32lukTVG86Ndh4E2xLVVo1U5iwTZA6EsvarHKvEqLGtOYMyC2TqxuTlgzsfuGkonAlj9jx8I51Hjc5NMuamqWl4uLY2nC2BpTY1Gaufb0AJkTfp0W1/yPxaS2SGYo18UDobOGQfDniEe4CiVUkpACj0Jq7kY=
-# Testing compatibility with newer jdk(s)
-jdk:
-  - openjdk11
-  - openjdk12
-  - openjdk13
-script: travis_retry mvn clean install jacoco:report-aggregate coveralls:report -DrepoToken=${COVERALLS_TOKEN} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
+    - secure: D/JuBQf12qen8ld0rV6l5OkqHJidrLwCZBBNP6zM86vYfYVneiulTFhrTSdMrmcJaCGllatc7m/8h8DBZIIQ/ax/OKnBF+SXBd2YghZyo17NALPsmNOmF1oHL6oGbBBfZ3EOoJ/B3j4zHrxtbX53+lJPvLkmveA6jTupQq/3mldVEyKekyPaRofJ88ZYsIiT4S0Q3OSoVTZuOE6Tcq24v6HkWYYH2q99c45HyI4u+xgmxsRjFJMRi+37iqecqr6VxL7Cj6RjwsjpOi2x0m2hMxa6eOrc7VdYDzV37U8O+vv9RRm02r1P0K9HAviE2VO7loOwEYW1y3ZtApwRFBQFtd2QG054mkw/HL1zLXcG+tQgndx8Ui1nmPT4uh19DjGT0vUAJ+8zP0I757sHC13DqrqPSWGatd7P+lkVIuc5QNi0Y3D7XxgnD5XAPIGy/T91GH5WQjIUJd+F0xe7PnW2h0GAsR0MyeBV3Wueh+5mKyIV9p/79nYuaIKSNhEjPj0iPTS2JzYVnutJHQGyH1uvCKDI3JaxFdgKDNNCoZY9BiVhEkbmcJmKlcsGlqFRSn9LWOFW9+NQWdo1FfKCFNCHppNzt23p7JxFd3wjy+0Fp1kRjQ3VHCm4mpx/bRI++5tjvPtQHq7D4VjiteO6FuhqJBBgz93mI9pGp66o91RwFrk=
 install: skip
 jobs:
   include:
+    ### Build
+    - stage: "Build"
+      name: "Build and Test"
+      jdk: openjdk15
+      script: travis_retry mvn clean install jacoco:report-aggregate coveralls:report -DrepoToken=${COVERALLS_TOKEN} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
     ### JDK8 build
     - stage: "JDK8 Build"
       name: "JDK8 Build and Test"
@@ -29,12 +28,12 @@ jobs:
         - travis_retry mvn clean install -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
     - stage: "Site Build and Quality check"
       name: "Publishing site and performing a code quality check"
-      jdk: openjdk11
+      jdk: openjdk15
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^((?!-jdk8).)*$
       script: skip
       before_deploy:
         - mvn versions:set -D newVersion=${TRAVIS_TAG} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-        - travis_retry mvn install sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} -Dcheckstyle.skip=true site:site javadoc:aggregate -P default,site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+        - travis_retry mvn install sonar:sonar -Dsonar.projectKey=${sonar_project_key} -Dsonar.organization=${sonar_organization} -Dsonar.host.url=${sonar_host_url} -Dsonar.login=${sonar_token} -Dcheckstyle.skip=true site:site javadoc:aggregate -P site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
       deploy:
         provider: pages
         local-dir: target/site
@@ -43,14 +42,14 @@ jobs:
         keep-history: true
         on:
           tags: true
-    ### JDK11 release
-    - stage: "JDK11 Release"
-      name: "Releasing artifacts for JDK11"
-      jdk: openjdk11
+    ### JDK15 release
+    - stage: "Artifact Release"
+      name: "Releasing artifacts"
+      jdk: openjdk15
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^((?!-jdk8).)*$
       script: skip
       before_deploy:
-        - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
+        - openssl aes-256-cbc -K $encrypted_81c98acad902_key -iv $encrypted_81c98acad902_iv -in config/travis/codesigning.asc.enc -out config/travis/codesigning.asc -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
         - mvn install -DskipTests -Dmaven.test.skip=true javadoc:aggregate -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
       deploy:
@@ -66,9 +65,9 @@ jobs:
       if: type NOT IN (pull_request) AND tag IS present AND tag =~ ^.*-jdk8$
       script: skip
       before_deploy:
-        - openssl aes-256-cbc -K $encrypted_bbb0f94c13c1_key -iv $encrypted_bbb0f94c13c1_iv -in config/travis/private-key.gpg.enc -out config/travis/private-key.gpg -d
+        - openssl aes-256-cbc -K $encrypted_81c98acad902_key -iv $encrypted_81c98acad902_iv -in config/travis/codesigning.asc.enc -out config/travis/codesigning.asc -d
         - mvn versions:set -D newVersion=${TRAVIS_TAG} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-        - mvn install javadoc:aggregate -P default,site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+        - mvn install javadoc:aggregate -P site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
       deploy:
         - provider: script
           script: config/travis/deploy.sh
