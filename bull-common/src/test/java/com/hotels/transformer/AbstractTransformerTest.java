@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.hotels.beans.sample.FromFoo;
 import com.hotels.beans.sample.FromFooAdvFields;
@@ -155,6 +156,6 @@ public abstract class AbstractTransformerTest {
      * @return the {@link FromFooOnlyPrimitiveTypes} instance.
      */
     private FromFooOnlyPrimitiveTypes createFromFooPrimitiveTypes() {
-        return new FromFooOnlyPrimitiveTypes(ID.toString(), ID.intValue(), PRICE, String.valueOf(ACTIVE));
+        return new FromFooOnlyPrimitiveTypes(ID.toString(), ID.intValue(), PRICE, String.valueOf(ACTIVE), UUID.randomUUID());
     }
 }

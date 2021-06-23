@@ -32,4 +32,5 @@ public class FromFooOnlyPrimitiveTypes {
     private int id;
     private float price;
     private String active;
+    private Object uuid;
 }
