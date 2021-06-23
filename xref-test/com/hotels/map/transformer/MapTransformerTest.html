@@ -185,8 +185,8 @@
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>         <em class="jxr_comment">// THEN</em>
 <a class="jxr_linenumber" name="L178" href="#L178">178</a>         assertThat(actual)
 <a class="jxr_linenumber" name="L179" href="#L179">179</a>                 .isNotNull()
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>              .hasSize(sourceMap.size())
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>              .containsKey(MAP_KEY_1.toUpperCase());
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>                 .hasSize(sourceMap.size())
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>                 .containsKey(MAP_KEY_1.toUpperCase());
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>     }
 <a class="jxr_linenumber" name="L183" href="#L183">183</a> 
 <a class="jxr_linenumber" name="L184" href="#L184">184</a>     <em class="jxr_javadoccomment">/**</em>
@@ -214,11 +214,11 @@
 <a class="jxr_linenumber" name="L206" href="#L206">206</a>         Map&lt;MutableToFooSimple, Map&gt; actual = underTest.transform(EXTREME_COMPLEX_MAP, MutableToFooSimple.<strong class="jxr_keyword">class</strong>, Map.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L207" href="#L207">207</a> 
 <a class="jxr_linenumber" name="L208" href="#L208">208</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L209" href="#L209">209</a>         assertThat(actual).isNotNull();
-<a class="jxr_linenumber" name="L210" href="#L210">210</a>         assertThat(actual.size()).isEqualTo(EXTREME_COMPLEX_MAP.size());
-<a class="jxr_linenumber" name="L211" href="#L211">211</a>         <em class="jxr_comment">// check that the element has been converted</em>
-<a class="jxr_linenumber" name="L212" href="#L212">212</a>         assertThat(actual).allSatisfy((key, value) -&gt;
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>                 assertThat(key).isInstanceOf(MutableToFooSimple.<strong class="jxr_keyword">class</strong>));
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>         assertThat(actual)
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>                 .isNotNull()
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>                 .hasSize(EXTREME_COMPLEX_MAP.size())
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>                 .allSatisfy((key, value) -&gt;
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>                         assertThat(key).isInstanceOf(MutableToFooSimple.<strong class="jxr_keyword">class</strong>));
 <a class="jxr_linenumber" name="L214" href="#L214">214</a>     }
 <a class="jxr_linenumber" name="L215" href="#L215">215</a> 
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>     <em class="jxr_javadoccomment">/**</em>
