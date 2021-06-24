@@ -194,15 +194,6 @@
 
     <!-- profile configuration -->
     <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <javadoc.skip>true</javadoc.skip>
-            </properties>
-        </profile>
         <!-- modules profiles -->
         <profile>
             <id>relaxed</id>
