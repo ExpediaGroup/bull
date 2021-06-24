@@ -21,7 +21,7 @@
     <groupId>com.hotels.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/HotelsDotCom/bull</url>
-    <version>2.0.2-SNAPSHOT</version>
+    <version>2.0.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -194,15 +194,6 @@
 
     <!-- profile configuration -->
     <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <javadoc.skip>true</javadoc.skip>
-            </properties>
-        </profile>
         <!-- modules profiles -->
         <profile>
             <id>relaxed</id>
