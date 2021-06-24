@@ -63,344 +63,347 @@
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="MutableObjectTransformationTest" href="../../../../com/hotels/beans/transformer/MutableObjectTransformationTest.html#MutableObjectTransformationTest">MutableObjectTransformationTest</a> <strong class="jxr_keyword">extends</strong> <a name="AbstractBeanTransformerTest" href="../../../../com/hotels/beans/transformer/AbstractBeanTransformerTest.html#AbstractBeanTransformerTest">AbstractBeanTransformerTest</a> {
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> ACTIVE = <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String PRICE_FIELD_NAME = <span class="jxr_string">"price"</span>;
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CLASS_UTILS_FIELD_NAME = <span class="jxr_string">"classUtils"</span>;
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String INJECT_VALUES_METHOD_NAME = <span class="jxr_string">"injectValues"</span>;
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String NESTED_OBJECT_NAME_FIELD_NAME = <span class="jxr_string">"nestedObject.name"</span>;
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ACTIVE_FIELD_NAME = <span class="jxr_string">"active"</span>;
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CODE_FIELD_NAME = <span class="jxr_string">"code"</span>;
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>  
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     * Test that an exception is thrown if there is no default constructor defined for the mutable bean object.</em>
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>      @Test(expectedExceptions = InvalidBeanException.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformThrowsExceptionWhenMutableBeanHasNoDefaultConstructor() {
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>          underTest.transform(fromFoo, MutableToFooInvalid.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      }
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>  
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  <em class="jxr_javadoccomment">     * Test mutable beans are correctly copied.</em>
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>      @Test
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMutableBeanIsCorrectlyCopied() {
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>          <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>  
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>          <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>          <a name="MutableToFoo" href="../../../../com/hotels/beans/sample/mutable/MutableToFoo.html#MutableToFoo">MutableToFoo</a> actual = underTest.transform(fromFoo, MutableToFoo.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>  
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>          <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>          assertThat(actual).usingRecursiveComparison()
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>                  .isEqualTo(fromFoo);
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>      }
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>  
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>  <em class="jxr_javadoccomment">     * Test transformation on an existing bean is correctly copied.</em>
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>      @Test
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformationOnAnExistingDestinationWorksProperly() {
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>          <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>          <a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/muta<a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSubClass.html#MutableToFooSubClass">MutableToFooSubClass</a>lass.html#MutableToFooSubClass">MutableToFooSubClass</a> mutableToFoo = <strong class="jxr_keyword">new</strong> <a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSubClass.html#MutableToFooSubClass">MutableToFooSubClass</a>();
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>  
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>          <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>          underTest.transform(fromFooSubClass, mutableToFoo);
-<a class="jxr_linenumber" name="L100" href="#L100">100</a> 
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>         assertThat(mutableToFoo).usingRecursiveComparison()
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>                 .isEqualTo(fromFooSubClass);
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>     }
-<a class="jxr_linenumber" name="L105" href="#L105">105</a> 
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L107" href="#L107">107</a> <em class="jxr_javadoccomment">     * Test that no exception is thrown if the destination object don't met the constraints and the validation is disabled.</em>
-<a class="jxr_linenumber" name="L108" href="#L108">108</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>     @Test
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled() {
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>         <a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/muta<a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSubClass.html#MutableToFooSubClass">MutableToFooSubClass</a>lass.html#MutableToFooSubClass">MutableToFooSubClass</a> mutableToFoo = <strong class="jxr_keyword">new</strong> <a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSubClass.html#MutableToFooSubClass">MutableToFooSubClass</a>();
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>         fromFooSubClass.setId(<strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="L114" href="#L114">114</a> 
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>         underTest.transform(fromFooSubClass, mutableToFoo);
-<a class="jxr_linenumber" name="L117" href="#L117">117</a> 
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>         assertThat(mutableToFoo).usingRecursiveComparison()
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>                 .isEqualTo(fromFooSubClass);
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>         fromFooSubClass.setId(ID);
-<a class="jxr_linenumber" name="L122" href="#L122">122</a>     }
-<a class="jxr_linenumber" name="L123" href="#L123">123</a> 
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L125" href="#L125">125</a> <em class="jxr_javadoccomment">     * Test that a given field transformer function is applied only to a specific field even if there are other ones with same name.</em>
-<a class="jxr_linenumber" name="L126" href="#L126">126</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>     @Test
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFieldTransformationIsAppliedOnlyToASpecificField() {
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L130" href="#L130">130</a>         String namePrefix = <span class="jxr_string">"prefix-"</span>;
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>         FieldTransformer&lt;String, String&gt; nameTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(NESTED_OBJECT_NAME_FIELD_NAME, val -&gt; namePrefix + val);
-<a class="jxr_linenumber" name="L132" href="#L132">132</a> 
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L134" href="#L134">134</a>         <a name="MutableToFoo" href="../../../../com/hotels/beans/sample/mutable/MutableToFoo.html#MutableToFoo">MutableToFoo</a> actual = underTest
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>                 .withFieldTransformer(nameTransformer)
-<a class="jxr_linenumber" name="L136" href="#L136">136</a>                 .transform(fromFoo, MutableToFoo.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L137" href="#L137">137</a> 
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L139" href="#L139">139</a>         assertThat(actual)
-<a class="jxr_linenumber" name="L140" href="#L140">140</a>                 .extracting(NAME_FIELD_NAME, NESTED_OBJECT_NAME_FIELD_NAME)
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>                 .containsExactly(fromFoo.getName(), namePrefix + fromFoo.getNestedObject().getName());
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>         underTest.resetFieldsTransformer();
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>     }
-<a class="jxr_linenumber" name="L144" href="#L144">144</a> 
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L146" href="#L146">146</a> <em class="jxr_javadoccomment">     * Test that a given field transformer function is applied to all field matching the given name when {@code flatFieldNameTransformation} is set to true.</em>
-<a class="jxr_linenumber" name="L147" href="#L147">147</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L148" href="#L148">148</a>     @Test
-<a class="jxr_linenumber" name="L149" href="#L149">149</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFieldTransformationIsAppliedToAllMatchingFields() {
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>         String namePrefix = <span class="jxr_string">"prefix-"</span>;
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>         FieldTransformer&lt;String, String&gt; nameTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(NAME_FIELD_NAME, val -&gt; namePrefix + val);
-<a class="jxr_linenumber" name="L153" href="#L153">153</a> 
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>         <a name="MutableToFoo" href="../../../../com/hotels/beans/sample/mutable/MutableToFoo.html#MutableToFoo">MutableToFoo</a> actual = underTest
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>                 .setFlatFieldNameTransformation(<strong class="jxr_keyword">true</strong>)
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>                 .withFieldTransformer(nameTransformer)
-<a class="jxr_linenumber" name="L158" href="#L158">158</a>                 .transform(fromFoo, MutableToFoo.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L159" href="#L159">159</a> 
-<a class="jxr_linenumber" name="L160" href="#L160">160</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L161" href="#L161">161</a>         assertThat(actual.getName()).isEqualTo(namePrefix + fromFoo.getName());
-<a class="jxr_linenumber" name="L162" href="#L162">162</a>         assertThat(actual.getNestedObject().getName())
-<a class="jxr_linenumber" name="L163" href="#L163">163</a>                 .isEqualTo(namePrefix + fromFoo.getNestedObject().getName());
-<a class="jxr_linenumber" name="L164" href="#L164">164</a>         underTest.resetFieldsTransformer();
-<a class="jxr_linenumber" name="L165" href="#L165">165</a>     }
-<a class="jxr_linenumber" name="L166" href="#L166">166</a> 
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L168" href="#L168">168</a> <em class="jxr_javadoccomment">     * Test that the transformer is able to copy object even if the source object has no setter methods and the destination</em>
-<a class="jxr_linenumber" name="L169" href="#L169">169</a> <em class="jxr_javadoccomment">     * object has no setter methods.</em>
-<a class="jxr_linenumber" name="L170" href="#L170">170</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L171" href="#L171">171</a>     @Test
-<a class="jxr_linenumber" name="L172" href="#L172">172</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformerIsAbleToCopyObjectsWithoutRequiredMethods() {
-<a class="jxr_linenumber" name="L173" href="#L173">173</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>         <a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleN<a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleNoGetters.html#FromFooSimpleNoGetters">FromFooSimpleNoGetters</a>impleNoGetters">FromFooSimpleNoGetters</a> fromFooSimpleNoGetters = <strong class="jxr_keyword">new</strong> <a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleNoGetters.html#FromFooSimpleNoGetters">FromFooSimpleNoGetters</a>(NAME, ID, ACTIVE);
-<a class="jxr_linenumber" name="L175" href="#L175">175</a> 
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>         <a name="MutableToFooSimpleNoSetters" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSimpleNoSetters.html#MutableToFooSimpleNoSetters">MutableToFooSimpleNoSetters</a> actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L178" href="#L178">178</a> 
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>         assertThat(actual).usingRecursiveComparison()
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>                 .isEqualTo(fromFooSimpleNoGetters);
-<a class="jxr_linenumber" name="L182" href="#L182">182</a>     }
-<a class="jxr_linenumber" name="L183" href="#L183">183</a> 
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L185" href="#L185">185</a> <em class="jxr_javadoccomment">     * Test that the transformer does not sets the default value for primitive type field in case it's disabled.</em>
-<a class="jxr_linenumber" name="L186" href="#L186">186</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>     @Test
-<a class="jxr_linenumber" name="L188" href="#L188">188</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformerDoesNotSetsTheDefaultValueForPrimitiveTypeField() {
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>         <a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleN<a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleNoGetters.html#FromFooSimpleNoGetters">FromFooSimpleNoGetters</a>impleNoGetters">FromFooSimpleNoGetters</a> fromFooSimpleNoGetters = <strong class="jxr_keyword">new</strong> <a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleNoGetters.html#FromFooSimpleNoGetters">FromFooSimpleNoGetters</a>(NAME, <strong class="jxr_keyword">null</strong>, ACTIVE);
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>         underTest.setDefaultValueForMissingPrimitiveField(false);
-<a class="jxr_linenumber" name="L192" href="#L192">192</a> 
-<a class="jxr_linenumber" name="L193" href="#L193">193</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>         <a name="MutableToFooSimpleNoSetters" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSimpleNoSetters.html#MutableToFooSimpleNoSetters">MutableToFooSimpleNoSetters</a> actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L195" href="#L195">195</a> 
-<a class="jxr_linenumber" name="L196" href="#L196">196</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L197" href="#L197">197</a>         assertThat(actual).usingRecursiveComparison()
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>                 .isEqualTo(fromFooSimpleNoGetters);
-<a class="jxr_linenumber" name="L199" href="#L199">199</a>         underTest.setDefaultValueForMissingPrimitiveField(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>     }
-<a class="jxr_linenumber" name="L201" href="#L201">201</a> 
-<a class="jxr_linenumber" name="L202" href="#L202">202</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L203" href="#L203">203</a> <em class="jxr_javadoccomment">     * Test that the transformer is able to copy object even if the source object has no fields but has getter methods.</em>
-<a class="jxr_linenumber" name="L204" href="#L204">204</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L205" href="#L205">205</a>     @Test
-<a class="jxr_linenumber" name="L206" href="#L206">206</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformerIsAbleToCopyObjectsWithoutFieldButWithGetterMethods() {
-<a class="jxr_linenumber" name="L207" href="#L207">207</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L208" href="#L208">208</a>         <a name="FromFooNoField" href="../../../../com/hotels/beans/sample/FromFo<a name="FromFooNoField" href="../../../../com/hotels/beans/sample/FromFooNoField.html#FromFooNoField">FromFooNoField</a>FromFooNoField">FromFooNoField</a> fromFooNoField = <strong class="jxr_keyword">new</strong> <a name="FromFooNoField" href="../../../../com/hotels/beans/sample/FromFooNoField.html#FromFooNoField">FromFooNoField</a>();
-<a class="jxr_linenumber" name="L209" href="#L209">209</a> 
-<a class="jxr_linenumber" name="L210" href="#L210">210</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L211" href="#L211">211</a>         <a name="MutableToFooSimpleNoSetters" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSimpleNoSetters.html#MutableToFooSimpleNoSetters">MutableToFooSimpleNoSetters</a> actual = underTest.transform(fromFooNoField, MutableToFooSimpleNoSetters.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L212" href="#L212">212</a> 
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L214" href="#L214">214</a>         assertThat(actual).extracting(ID_FIELD_NAME, NAME_FIELD_NAME, ACTIVE_FIELD_NAME)
-<a class="jxr_linenumber" name="L215" href="#L215">215</a>                 .containsExactly(fromFooNoField.getId(), fromFooNoField.getName(), fromFooNoField.isActive());
-<a class="jxr_linenumber" name="L216" href="#L216">216</a>     }
-<a class="jxr_linenumber" name="L217" href="#L217">217</a> 
-<a class="jxr_linenumber" name="L218" href="#L218">218</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L219" href="#L219">219</a> <em class="jxr_javadoccomment">     * Test that a bean containing a field not existing in the source object, but with a transformer function defined for such object is correctly copied.</em>
-<a class="jxr_linenumber" name="L220" href="#L220">220</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L221" href="#L221">221</a>     @Test
-<a class="jxr_linenumber" name="L222" href="#L222">222</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions() {
-<a class="jxr_linenumber" name="L223" href="#L223">223</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L224" href="#L224">224</a>         <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromF<a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>#FromFooSimple">FromFooSimple</a> fromFooSimple = <strong class="jxr_keyword">new</strong> <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>(NAME, ID, ACTIVE);
-<a class="jxr_linenumber" name="L225" href="#L225">225</a>         FieldTransformer&lt;Object, Integer&gt; ageFieldTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(AGE_FIELD_NAME, () -&gt; AGE);
-<a class="jxr_linenumber" name="L226" href="#L226">226</a> 
-<a class="jxr_linenumber" name="L227" href="#L227">227</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L228" href="#L228">228</a>         underTest.withFieldTransformer(ageFieldTransformer);
-<a class="jxr_linenumber" name="L229" href="#L229">229</a>         <a name="MutableToFooNotExistingFields" href="../../../../com/hotels/beans/sample/mutable/MutableToFooNotExistingFields.html#MutableToFooNotExistingFields">MutableToFooNotExistingFields</a> mutableObjectBean = underTest.transform(fromFooSimple, MutableToFooNotExistingFields.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L230" href="#L230">230</a> 
-<a class="jxr_linenumber" name="L231" href="#L231">231</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L232" href="#L232">232</a>         assertThat(mutableObjectBean).hasFieldOrPropertyWithValue(AGE_FIELD_NAME, AGE);
-<a class="jxr_linenumber" name="L233" href="#L233">233</a>         underTest.resetFieldsTransformer();
-<a class="jxr_linenumber" name="L234" href="#L234">234</a>     }
-<a class="jxr_linenumber" name="L235" href="#L235">235</a> 
-<a class="jxr_linenumber" name="L236" href="#L236">236</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L237" href="#L237">237</a> <em class="jxr_javadoccomment">     * Test that a bean containing a field not existing in the source object, and without a transformer function defined throws</em>
-<a class="jxr_linenumber" name="L238" href="#L238">238</a> <em class="jxr_javadoccomment">     * MissingFieldException even if the primitiveTypeConversionFunction is enabled.</em>
-<a class="jxr_linenumber" name="L239" href="#L239">239</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L240" href="#L240">240</a>     @Test
-<a class="jxr_linenumber" name="L241" href="#L241">241</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformerThrowsExceptionIfAFieldIsMissingAndThePrimitiveTypeConversionIsEnabled() {
-<a class="jxr_linenumber" name="L242" href="#L242">242</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L243" href="#L243">243</a>         <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromF<a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>#FromFooSimple">FromFooSimple</a> fromFooSimple = <strong class="jxr_keyword">new</strong> <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>(NAME, ID, ACTIVE);
-<a class="jxr_linenumber" name="L244" href="#L244">244</a>         underTest.setPrimitiveTypeConversionEnabled(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L245" href="#L245">245</a> 
-<a class="jxr_linenumber" name="L246" href="#L246">246</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L247" href="#L247">247</a>         ThrowingCallable actual = () -&gt; underTest.transform(fromFooSimple, MutableToFooNotExistingFields.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L248" href="#L248">248</a> 
-<a class="jxr_linenumber" name="L249" href="#L249">249</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L250" href="#L250">250</a>         assertThatThrownBy(actual).hasCauseInstanceOf(MissingFieldException.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L251" href="#L251">251</a>         underTest.setPrimitiveTypeConversionEnabled(false);
-<a class="jxr_linenumber" name="L252" href="#L252">252</a>     }
-<a class="jxr_linenumber" name="L253" href="#L253">253</a> 
-<a class="jxr_linenumber" name="L254" href="#L254">254</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L255" href="#L255">255</a> <em class="jxr_javadoccomment">     * Test that a bean containing a field not existing in the source object, and without a transformer function defined,</em>
-<a class="jxr_linenumber" name="L256" href="#L256">256</a> <em class="jxr_javadoccomment">     * does not throws MissingFieldException and the primitiveTypeConversionFunction is enabled.</em>
-<a class="jxr_linenumber" name="L257" href="#L257">257</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L258" href="#L258">258</a>     @Test
-<a class="jxr_linenumber" name="L259" href="#L259">259</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformerDoesNotThrowExceptionIfAFieldIsMissingAndTheDefaultValueSetIsEnabled() {
-<a class="jxr_linenumber" name="L260" href="#L260">260</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L261" href="#L261">261</a>         <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromF<a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>#FromFooSimple">FromFooSimple</a> fromFooSimple = <strong class="jxr_keyword">new</strong> <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>(NAME, ID, ACTIVE);
-<a class="jxr_linenumber" name="L262" href="#L262">262</a>         underTest.setPrimitiveTypeConversionEnabled(<strong class="jxr_keyword">true</strong>).setDefaultValueForMissingField(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L263" href="#L263">263</a> 
-<a class="jxr_linenumber" name="L264" href="#L264">264</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L265" href="#L265">265</a>         <a name="MutableToFooNotExistingFields" href="../../../../com/hotels/beans/sample/mutable/MutableToFooNotExistingFields.html#MutableToFooNotExistingFields">MutableToFooNotExistingFields</a> actual = underTest.transform(fromFooSimple, MutableToFooNotExistingFields.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L266" href="#L266">266</a> 
-<a class="jxr_linenumber" name="L267" href="#L267">267</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L268" href="#L268">268</a>         assertThat(actual).extracting(ID_FIELD_NAME, NAME_FIELD_NAME)
-<a class="jxr_linenumber" name="L269" href="#L269">269</a>                 .containsExactly(fromFooSimple.getId(), fromFooSimple.getName());
-<a class="jxr_linenumber" name="L270" href="#L270">270</a>         underTest.setPrimitiveTypeConversionEnabled(false).setDefaultValueForMissingField(false);
-<a class="jxr_linenumber" name="L271" href="#L271">271</a>     }
-<a class="jxr_linenumber" name="L272" href="#L272">272</a> 
-<a class="jxr_linenumber" name="L273" href="#L273">273</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L274" href="#L274">274</a> <em class="jxr_javadoccomment">     * Test transformation field with field transformer.</em>
-<a class="jxr_linenumber" name="L275" href="#L275">275</a> <em class="jxr_javadoccomment">     * @param testCaseDescription the test case description</em>
-<a class="jxr_linenumber" name="L276" href="#L276">276</a> <em class="jxr_javadoccomment">     * @param fieldToTransform the name of the field on which apply the transformation</em>
-<a class="jxr_linenumber" name="L277" href="#L277">277</a> <em class="jxr_javadoccomment">     * @param transformationResult the value to return after the transformation</em>
-<a class="jxr_linenumber" name="L278" href="#L278">278</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L279" href="#L279">279</a>     @Test(dataProvider = <span class="jxr_string">"dataTransformationTesting"</span>)
-<a class="jxr_linenumber" name="L280" href="#L280">280</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformationWithFieldTransformationWorksProperly(<strong class="jxr_keyword">final</strong> String testCaseDescription, <strong class="jxr_keyword">final</strong> String fieldToTransform, <strong class="jxr_keyword">final</strong> Object transformationResult) {
-<a class="jxr_linenumber" name="L281" href="#L281">281</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L282" href="#L282">282</a>         <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromF<a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>#FromFooSimple">FromFooSimple</a> fromFooSimple = <strong class="jxr_keyword">new</strong> <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>(NAME, ID, ACTIVE);
-<a class="jxr_linenumber" name="L283" href="#L283">283</a>         FieldTransformer&lt;Object, Object&gt; fieldTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(fieldToTransform, val -&gt; transformationResult);
-<a class="jxr_linenumber" name="L284" href="#L284">284</a> 
-<a class="jxr_linenumber" name="L285" href="#L285">285</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L286" href="#L286">286</a>         underTest.withFieldTransformer(fieldTransformer);
-<a class="jxr_linenumber" name="L287" href="#L287">287</a>         <a name="MutableToFooSimple" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSimple.html#MutableToFooSimple">MutableToFooSimple</a> actual = underTest.transform(fromFooSimple, MutableToFooSimple.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L288" href="#L288">288</a> 
-<a class="jxr_linenumber" name="L289" href="#L289">289</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L290" href="#L290">290</a>         assertThat(actual).hasFieldOrPropertyWithValue(fieldToTransform, transformationResult);
-<a class="jxr_linenumber" name="L291" href="#L291">291</a>         underTest.removeFieldTransformer(fieldToTransform);
-<a class="jxr_linenumber" name="L292" href="#L292">292</a>     }
-<a class="jxr_linenumber" name="L293" href="#L293">293</a> 
-<a class="jxr_linenumber" name="L294" href="#L294">294</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L295" href="#L295">295</a> <em class="jxr_javadoccomment">     * Creates the parameters to be used for testing the transformation with field transformer.</em>
-<a class="jxr_linenumber" name="L296" href="#L296">296</a> <em class="jxr_javadoccomment">     * @return parameters to be used for testing the transformation with field transformer.</em>
-<a class="jxr_linenumber" name="L297" href="#L297">297</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L298" href="#L298">298</a>     @DataProvider
-<a class="jxr_linenumber" name="L299" href="#L299">299</a>     <strong class="jxr_keyword">private</strong> Object[][] dataTransformationTesting() {
-<a class="jxr_linenumber" name="L300" href="#L300">300</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[][] {
-<a class="jxr_linenumber" name="L301" href="#L301">301</a>                 {<span class="jxr_string">"Test that the field transformation returns the expected values."</span>,
-<a class="jxr_linenumber" name="L302" href="#L302">302</a>                         NAME_FIELD_NAME, NAME.toLowerCase()},
-<a class="jxr_linenumber" name="L303" href="#L303">303</a>                 {<span class="jxr_string">"Test that the field transformation returns the expected values even if null."</span>,
-<a class="jxr_linenumber" name="L304" href="#L304">304</a>                         NAME_FIELD_NAME, <strong class="jxr_keyword">null</strong>}
-<a class="jxr_linenumber" name="L305" href="#L305">305</a>         };
-<a class="jxr_linenumber" name="L306" href="#L306">306</a>     }
-<a class="jxr_linenumber" name="L307" href="#L307">307</a> 
-<a class="jxr_linenumber" name="L308" href="#L308">308</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L309" href="#L309">309</a> <em class="jxr_javadoccomment">     * Test that, given a set of fields for which the transformation has to be skipped, they are actually skipped.</em>
-<a class="jxr_linenumber" name="L310" href="#L310">310</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L311" href="#L311">311</a>     @Test
-<a class="jxr_linenumber" name="L312" href="#L312">312</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFieldTransformationSkipWorksProperly() {
-<a class="jxr_linenumber" name="L313" href="#L313">313</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L314" href="#L314">314</a>         underTest.skipTransformationForField(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
-<a class="jxr_linenumber" name="L315" href="#L315">315</a> 
-<a class="jxr_linenumber" name="L316" href="#L316">316</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L317" href="#L317">317</a>         <a name="MutableToFoo" href="../../../../com/hotels/beans/sample/mutable/MutableToFoo.html#MutableToFoo">MutableToFoo</a> actual = underTest.transform(fromFoo, MutableToFoo.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L318" href="#L318">318</a> 
-<a class="jxr_linenumber" name="L319" href="#L319">319</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L320" href="#L320">320</a>         assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
-<a class="jxr_linenumber" name="L321" href="#L321">321</a>         underTest.resetFieldsTransformationSkip();
-<a class="jxr_linenumber" name="L322" href="#L322">322</a>     }
-<a class="jxr_linenumber" name="L323" href="#L323">323</a> 
-<a class="jxr_linenumber" name="L324" href="#L324">324</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L325" href="#L325">325</a> <em class="jxr_javadoccomment">     * Test that the automatic primitive type conversion works properly.</em>
-<a class="jxr_linenumber" name="L326" href="#L326">326</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L327" href="#L327">327</a>     @Test
-<a class="jxr_linenumber" name="L328" href="#L328">328</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testAutomaticPrimitiveTypeTransformationWorksProperly() {
-<a class="jxr_linenumber" name="L329" href="#L329">329</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L330" href="#L330">330</a>         underTest.setPrimitiveTypeConversionEnabled(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L331" href="#L331">331</a> 
-<a class="jxr_linenumber" name="L332" href="#L332">332</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L333" href="#L333">333</a>         <a name="MutableToFooOnlyPrimitiveTypes" href="../../../../com/hotels/beans/sample/mixed/MutableToFooOnlyPrimitiveTypes.html#MutableToFooOnlyPrimitiveTypes">MutableToFooOnlyPrimitiveTypes</a> actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L334" href="#L334">334</a> 
-<a class="jxr_linenumber" name="L335" href="#L335">335</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L336" href="#L336">336</a>         assertThat(actual).extracting(CODE_FIELD_NAME, ID_FIELD_NAME, PRICE_FIELD_NAME, ACTIVE_FIELD_NAME)
-<a class="jxr_linenumber" name="L337" href="#L337">337</a>                 .containsExactly(
-<a class="jxr_linenumber" name="L338" href="#L338">338</a>                         parseInt(fromFooPrimitiveTypes.getCode()),
-<a class="jxr_linenumber" name="L339" href="#L339">339</a>                         String.valueOf(fromFooPrimitiveTypes.getId()),
-<a class="jxr_linenumber" name="L340" href="#L340">340</a>                         (<strong class="jxr_keyword">double</strong>) fromFooPrimitiveTypes.getPrice(),
-<a class="jxr_linenumber" name="L341" href="#L341">341</a>                         ACTIVE);
-<a class="jxr_linenumber" name="L342" href="#L342">342</a>         underTest.setPrimitiveTypeConversionEnabled(false);
-<a class="jxr_linenumber" name="L343" href="#L343">343</a>     }
-<a class="jxr_linenumber" name="L344" href="#L344">344</a> 
-<a class="jxr_linenumber" name="L345" href="#L345">345</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L346" href="#L346">346</a> <em class="jxr_javadoccomment">     * Test that both primitive type transformation and custom transformation are executed.</em>
-<a class="jxr_linenumber" name="L347" href="#L347">347</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L348" href="#L348">348</a>     @Test
-<a class="jxr_linenumber" name="L349" href="#L349">349</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testThatBothPrimitiveTypeTransformationAndCustomTransformationAreExecuted() {
-<a class="jxr_linenumber" name="L350" href="#L350">350</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L351" href="#L351">351</a>         <strong class="jxr_keyword">double</strong> newPrice = PRICE * PRICE;
-<a class="jxr_linenumber" name="L352" href="#L352">352</a>         FieldTransformer&lt;Void, Double&gt; priceTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(PRICE_FIELD_NAME, () -&gt; newPrice);
-<a class="jxr_linenumber" name="L353" href="#L353">353</a>         underTest.setPrimitiveTypeConversionEnabled(<strong class="jxr_keyword">true</strong>).withFieldTransformer(priceTransformer);
-<a class="jxr_linenumber" name="L354" href="#L354">354</a> 
-<a class="jxr_linenumber" name="L355" href="#L355">355</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L356" href="#L356">356</a>         <a name="MutableToFooOnlyPrimitiveTypes" href="../../../../com/hotels/beans/sample/mixed/MutableToFooOnlyPrimitiveTypes.html#MutableToFooOnlyPrimitiveTypes">MutableToFooOnlyPrimitiveTypes</a> actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L357" href="#L357">357</a> 
-<a class="jxr_linenumber" name="L358" href="#L358">358</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L359" href="#L359">359</a>         assertThat(actual).extracting(CODE_FIELD_NAME, ID_FIELD_NAME, ACTIVE_FIELD_NAME, PRICE_FIELD_NAME)
-<a class="jxr_linenumber" name="L360" href="#L360">360</a>                 .containsExactly(
-<a class="jxr_linenumber" name="L361" href="#L361">361</a>                         parseInt(fromFooPrimitiveTypes.getCode()),
-<a class="jxr_linenumber" name="L362" href="#L362">362</a>                         String.valueOf(fromFooPrimitiveTypes.getId()),
-<a class="jxr_linenumber" name="L363" href="#L363">363</a>                         ACTIVE,
-<a class="jxr_linenumber" name="L364" href="#L364">364</a>                         newPrice);
-<a class="jxr_linenumber" name="L365" href="#L365">365</a>         underTest.setPrimitiveTypeConversionEnabled(false);
-<a class="jxr_linenumber" name="L366" href="#L366">366</a>         underTest.removeFieldTransformer(PRICE_FIELD_NAME);
-<a class="jxr_linenumber" name="L367" href="#L367">367</a>     }
-<a class="jxr_linenumber" name="L368" href="#L368">368</a> 
-<a class="jxr_linenumber" name="L369" href="#L369">369</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L370" href="#L370">370</a> <em class="jxr_javadoccomment">     * Test that an {@link InvalidBeanException} is raised if the class instantiation fails when the method {@code injectValues()} is called.</em>
-<a class="jxr_linenumber" name="L371" href="#L371">371</a> <em class="jxr_javadoccomment">     * @throws Exception if something goes wrong</em>
-<a class="jxr_linenumber" name="L372" href="#L372">372</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L373" href="#L373">373</a>     @Test
-<a class="jxr_linenumber" name="L374" href="#L374">374</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInjectValuesThrowsException() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L375" href="#L375">375</a>         <em class="jxr_comment">// GIVEN</em>
-<a class="jxr_linenumber" name="L376" href="#L376">376</a>         InvalidBeanException expectedException = <strong class="jxr_keyword">new</strong> InvalidBeanException(<span class="jxr_string">"Dummy exception"</span>);
-<a class="jxr_linenumber" name="L377" href="#L377">377</a>         TransformerImpl underTestMock = spy(TransformerImpl.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L378" href="#L378">378</a>         ClassUtils classUtils = mock(ClassUtils.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L379" href="#L379">379</a>         Constructor&lt;MutableToFooSimple&gt; constructor = classUtils.getAllArgsConstructor(MutableToFooSimple.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L380" href="#L380">380</a>         when(classUtils.getInstance(constructor)).thenThrow(InvalidBeanException.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L381" href="#L381">381</a>         when(classUtils.getConstructorParameters(constructor)).thenReturn(<strong class="jxr_keyword">new</strong> Parameter[] {});
-<a class="jxr_linenumber" name="L382" href="#L382">382</a>         when(classUtils.areParameterNamesAvailable(constructor)).thenReturn(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L383" href="#L383">383</a>         doReturn(expectedException).when(underTestMock).handleInjectionException(any(), any(), any(), any(), any(), anyBoolean(), any());
-<a class="jxr_linenumber" name="L384" href="#L384">384</a>         reflectionUtils.setFieldValue(underTestMock, CLASS_UTILS_FIELD_NAME, classUtils);
-<a class="jxr_linenumber" name="L385" href="#L385">385</a>         Method injectValuesMethod =
-<a class="jxr_linenumber" name="L386" href="#L386">386</a>             TransformerImpl.<strong class="jxr_keyword">class</strong>.getDeclaredMethod(INJECT_VALUES_METHOD_NAME, Object.<strong class="jxr_keyword">class</strong>, Class.<strong class="jxr_keyword">class</strong>, Constructor.<strong class="jxr_keyword">class</strong>, String.<strong class="jxr_keyword">class</strong>, <strong class="jxr_keyword">boolean</strong>.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L387" href="#L387">387</a>         injectValuesMethod.setAccessible(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L388" href="#L388">388</a> 
-<a class="jxr_linenumber" name="L389" href="#L389">389</a>         <em class="jxr_comment">// WHEN</em>
-<a class="jxr_linenumber" name="L390" href="#L390">390</a>         Object actual = injectValuesMethod.invoke(underTestMock, fromFooSimple, MutableToFooSimple.<strong class="jxr_keyword">class</strong>, constructor, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String UUID_FIELD_NAME = <span class="jxr_string">"uuid"</span>;
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CLASS_UTILS_FIELD_NAME = <span class="jxr_string">"classUtils"</span>;
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String INJECT_VALUES_METHOD_NAME = <span class="jxr_string">"injectValues"</span>;
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String NESTED_OBJECT_NAME_FIELD_NAME = <span class="jxr_string">"nestedObject.name"</span>;
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ACTIVE_FIELD_NAME = <span class="jxr_string">"active"</span>;
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CODE_FIELD_NAME = <span class="jxr_string">"code"</span>;
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * Test that an exception is thrown if there is no default constructor defined for the mutable bean object.</em>
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      @Test(expectedExceptions = InvalidBeanException.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformThrowsExceptionWhenMutableBeanHasNoDefaultConstructor() {
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>          <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          underTest.transform(fromFoo, MutableToFooInvalid.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      }
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">     * Test mutable beans are correctly copied.</em>
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      @Test
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMutableBeanIsCorrectlyCopied() {
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>  
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>          <a name="MutableToFoo" href="../../../../com/hotels/beans/sample/mutable/MutableToFoo.html#MutableToFoo">MutableToFoo</a> actual = underTest.transform(fromFoo, MutableToFoo.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          assertThat(actual).usingRecursiveComparison()
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>                  .isEqualTo(fromFoo);
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>      }
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment">     * Test transformation on an existing bean is correctly copied.</em>
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>      @Test
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformationOnAnExistingDestinationWorksProperly() {
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>          <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          <a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/muta<a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSubClass.html#MutableToFooSubClass">MutableToFooSubClass</a>lass.html#MutableToFooSubClass">MutableToFooSubClass</a> mutableToFoo = <strong class="jxr_keyword">new</strong> <a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSubClass.html#MutableToFooSubClass">MutableToFooSubClass</a>();
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>  
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         underTest.transform(fromFooSubClass, mutableToFoo);
+<a class="jxr_linenumber" name="L101" href="#L101">101</a> 
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         assertThat(mutableToFoo).usingRecursiveComparison()
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>                 .isEqualTo(fromFooSubClass);
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>     }
+<a class="jxr_linenumber" name="L106" href="#L106">106</a> 
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L108" href="#L108">108</a> <em class="jxr_javadoccomment">     * Test that no exception is thrown if the destination object don't met the constraints and the validation is disabled.</em>
+<a class="jxr_linenumber" name="L109" href="#L109">109</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>     @Test
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformThrowsNoExceptionIfTheDestinationObjectValuesAreNotValidAndTheValidationIsDisabled() {
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>         <a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/muta<a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSubClass.html#MutableToFooSubClass">MutableToFooSubClass</a>lass.html#MutableToFooSubClass">MutableToFooSubClass</a> mutableToFoo = <strong class="jxr_keyword">new</strong> <a name="MutableToFooSubClass" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSubClass.html#MutableToFooSubClass">MutableToFooSubClass</a>();
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>         fromFooSubClass.setId(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L115" href="#L115">115</a> 
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>         underTest.transform(fromFooSubClass, mutableToFoo);
+<a class="jxr_linenumber" name="L118" href="#L118">118</a> 
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>         assertThat(mutableToFoo).usingRecursiveComparison()
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>                 .isEqualTo(fromFooSubClass);
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>         fromFooSubClass.setId(ID);
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>     }
+<a class="jxr_linenumber" name="L124" href="#L124">124</a> 
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L126" href="#L126">126</a> <em class="jxr_javadoccomment">     * Test that a given field transformer function is applied only to a specific field even if there are other ones with same name.</em>
+<a class="jxr_linenumber" name="L127" href="#L127">127</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>     @Test
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFieldTransformationIsAppliedOnlyToASpecificField() {
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>         String namePrefix = <span class="jxr_string">"prefix-"</span>;
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>         FieldTransformer&lt;String, String&gt; nameTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(NESTED_OBJECT_NAME_FIELD_NAME, val -&gt; namePrefix + val);
+<a class="jxr_linenumber" name="L133" href="#L133">133</a> 
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>         <a name="MutableToFoo" href="../../../../com/hotels/beans/sample/mutable/MutableToFoo.html#MutableToFoo">MutableToFoo</a> actual = underTest
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>                 .withFieldTransformer(nameTransformer)
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>                 .transform(fromFoo, MutableToFoo.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L138" href="#L138">138</a> 
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>         assertThat(actual)
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>                 .extracting(NAME_FIELD_NAME, NESTED_OBJECT_NAME_FIELD_NAME)
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>                 .containsExactly(fromFoo.getName(), namePrefix + fromFoo.getNestedObject().getName());
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>         underTest.resetFieldsTransformer();
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>     }
+<a class="jxr_linenumber" name="L145" href="#L145">145</a> 
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L147" href="#L147">147</a> <em class="jxr_javadoccomment">     * Test that a given field transformer function is applied to all field matching the given name when {@code flatFieldNameTransformation} is set to true.</em>
+<a class="jxr_linenumber" name="L148" href="#L148">148</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>     @Test
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFieldTransformationIsAppliedToAllMatchingFields() {
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         String namePrefix = <span class="jxr_string">"prefix-"</span>;
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>         FieldTransformer&lt;String, String&gt; nameTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(NAME_FIELD_NAME, val -&gt; namePrefix + val);
+<a class="jxr_linenumber" name="L154" href="#L154">154</a> 
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>         <a name="MutableToFoo" href="../../../../com/hotels/beans/sample/mutable/MutableToFoo.html#MutableToFoo">MutableToFoo</a> actual = underTest
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>                 .setFlatFieldNameTransformation(<strong class="jxr_keyword">true</strong>)
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>                 .withFieldTransformer(nameTransformer)
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>                 .transform(fromFoo, MutableToFoo.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L160" href="#L160">160</a> 
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>         assertThat(actual.getName()).isEqualTo(namePrefix + fromFoo.getName());
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>         assertThat(actual.getNestedObject().getName())
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>                 .isEqualTo(namePrefix + fromFoo.getNestedObject().getName());
+<a class="jxr_linenumber" name="L165" href="#L165">165</a>         underTest.resetFieldsTransformer();
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>     }
+<a class="jxr_linenumber" name="L167" href="#L167">167</a> 
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L169" href="#L169">169</a> <em class="jxr_javadoccomment">     * Test that the transformer is able to copy object even if the source object has no setter methods and the destination</em>
+<a class="jxr_linenumber" name="L170" href="#L170">170</a> <em class="jxr_javadoccomment">     * object has no setter methods.</em>
+<a class="jxr_linenumber" name="L171" href="#L171">171</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>     @Test
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformerIsAbleToCopyObjectsWithoutRequiredMethods() {
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>         <a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleN<a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleNoGetters.html#FromFooSimpleNoGetters">FromFooSimpleNoGetters</a>impleNoGetters">FromFooSimpleNoGetters</a> fromFooSimpleNoGetters = <strong class="jxr_keyword">new</strong> <a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleNoGetters.html#FromFooSimpleNoGetters">FromFooSimpleNoGetters</a>(NAME, ID, ACTIVE);
+<a class="jxr_linenumber" name="L176" href="#L176">176</a> 
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>         <a name="MutableToFooSimpleNoSetters" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSimpleNoSetters.html#MutableToFooSimpleNoSetters">MutableToFooSimpleNoSetters</a> actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L179" href="#L179">179</a> 
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>         assertThat(actual).usingRecursiveComparison()
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>                 .isEqualTo(fromFooSimpleNoGetters);
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>     }
+<a class="jxr_linenumber" name="L184" href="#L184">184</a> 
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L186" href="#L186">186</a> <em class="jxr_javadoccomment">     * Test that the transformer does not sets the default value for primitive type field in case it's disabled.</em>
+<a class="jxr_linenumber" name="L187" href="#L187">187</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>     @Test
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformerDoesNotSetsTheDefaultValueForPrimitiveTypeField() {
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>         <a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleN<a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleNoGetters.html#FromFooSimpleNoGetters">FromFooSimpleNoGetters</a>impleNoGetters">FromFooSimpleNoGetters</a> fromFooSimpleNoGetters = <strong class="jxr_keyword">new</strong> <a name="FromFooSimpleNoGetters" href="../../../../com/hotels/beans/sample/FromFooSimpleNoGetters.html#FromFooSimpleNoGetters">FromFooSimpleNoGetters</a>(NAME, <strong class="jxr_keyword">null</strong>, ACTIVE);
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>         underTest.setDefaultValueForMissingPrimitiveField(false);
+<a class="jxr_linenumber" name="L193" href="#L193">193</a> 
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>         <a name="MutableToFooSimpleNoSetters" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSimpleNoSetters.html#MutableToFooSimpleNoSetters">MutableToFooSimpleNoSetters</a> actual = underTest.transform(fromFooSimpleNoGetters, MutableToFooSimpleNoSetters.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L196" href="#L196">196</a> 
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>         assertThat(actual).usingRecursiveComparison()
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>                 .isEqualTo(fromFooSimpleNoGetters);
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>         underTest.setDefaultValueForMissingPrimitiveField(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>     }
+<a class="jxr_linenumber" name="L202" href="#L202">202</a> 
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L204" href="#L204">204</a> <em class="jxr_javadoccomment">     * Test that the transformer is able to copy object even if the source object has no fields but has getter methods.</em>
+<a class="jxr_linenumber" name="L205" href="#L205">205</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>     @Test
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformerIsAbleToCopyObjectsWithoutFieldButWithGetterMethods() {
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>         <a name="FromFooNoField" href="../../../../com/hotels/beans/sample/FromFo<a name="FromFooNoField" href="../../../../com/hotels/beans/sample/FromFooNoField.html#FromFooNoField">FromFooNoField</a>FromFooNoField">FromFooNoField</a> fromFooNoField = <strong class="jxr_keyword">new</strong> <a name="FromFooNoField" href="../../../../com/hotels/beans/sample/FromFooNoField.html#FromFooNoField">FromFooNoField</a>();
+<a class="jxr_linenumber" name="L210" href="#L210">210</a> 
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>         <a name="MutableToFooSimpleNoSetters" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSimpleNoSetters.html#MutableToFooSimpleNoSetters">MutableToFooSimpleNoSetters</a> actual = underTest.transform(fromFooNoField, MutableToFooSimpleNoSetters.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L213" href="#L213">213</a> 
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>         assertThat(actual).extracting(ID_FIELD_NAME, NAME_FIELD_NAME, ACTIVE_FIELD_NAME)
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>                 .containsExactly(fromFooNoField.getId(), fromFooNoField.getName(), fromFooNoField.isActive());
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>     }
+<a class="jxr_linenumber" name="L218" href="#L218">218</a> 
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L220" href="#L220">220</a> <em class="jxr_javadoccomment">     * Test that a bean containing a field not existing in the source object, but with a transformer function defined for such object is correctly copied.</em>
+<a class="jxr_linenumber" name="L221" href="#L221">221</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L222" href="#L222">222</a>     @Test
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testThatAnyTypeOfBeanContainsANotExistingFieldInTheSourceObjectIsCorrectlyCopiedThroughTransformerFunctions() {
+<a class="jxr_linenumber" name="L224" href="#L224">224</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L225" href="#L225">225</a>         <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromF<a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>#FromFooSimple">FromFooSimple</a> fromFooSimple = <strong class="jxr_keyword">new</strong> <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>(NAME, ID, ACTIVE);
+<a class="jxr_linenumber" name="L226" href="#L226">226</a>         FieldTransformer&lt;Object, Integer&gt; ageFieldTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(AGE_FIELD_NAME, () -&gt; AGE);
+<a class="jxr_linenumber" name="L227" href="#L227">227</a> 
+<a class="jxr_linenumber" name="L228" href="#L228">228</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L229" href="#L229">229</a>         underTest.withFieldTransformer(ageFieldTransformer);
+<a class="jxr_linenumber" name="L230" href="#L230">230</a>         <a name="MutableToFooNotExistingFields" href="../../../../com/hotels/beans/sample/mutable/MutableToFooNotExistingFields.html#MutableToFooNotExistingFields">MutableToFooNotExistingFields</a> mutableObjectBean = underTest.transform(fromFooSimple, MutableToFooNotExistingFields.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L231" href="#L231">231</a> 
+<a class="jxr_linenumber" name="L232" href="#L232">232</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L233" href="#L233">233</a>         assertThat(mutableObjectBean).hasFieldOrPropertyWithValue(AGE_FIELD_NAME, AGE);
+<a class="jxr_linenumber" name="L234" href="#L234">234</a>         underTest.resetFieldsTransformer();
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>     }
+<a class="jxr_linenumber" name="L236" href="#L236">236</a> 
+<a class="jxr_linenumber" name="L237" href="#L237">237</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L238" href="#L238">238</a> <em class="jxr_javadoccomment">     * Test that a bean containing a field not existing in the source object, and without a transformer function defined throws</em>
+<a class="jxr_linenumber" name="L239" href="#L239">239</a> <em class="jxr_javadoccomment">     * MissingFieldException even if the primitiveTypeConversionFunction is enabled.</em>
+<a class="jxr_linenumber" name="L240" href="#L240">240</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>     @Test
+<a class="jxr_linenumber" name="L242" href="#L242">242</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformerThrowsExceptionIfAFieldIsMissingAndThePrimitiveTypeConversionIsEnabled() {
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L244" href="#L244">244</a>         <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromF<a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>#FromFooSimple">FromFooSimple</a> fromFooSimple = <strong class="jxr_keyword">new</strong> <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>(NAME, ID, ACTIVE);
+<a class="jxr_linenumber" name="L245" href="#L245">245</a>         underTest.setPrimitiveTypeConversionEnabled(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L246" href="#L246">246</a> 
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L248" href="#L248">248</a>         ThrowingCallable actual = () -&gt; underTest.transform(fromFooSimple, MutableToFooNotExistingFields.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L249" href="#L249">249</a> 
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L251" href="#L251">251</a>         assertThatThrownBy(actual).hasCauseInstanceOf(MissingFieldException.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L252" href="#L252">252</a>         underTest.setPrimitiveTypeConversionEnabled(false);
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>     }
+<a class="jxr_linenumber" name="L254" href="#L254">254</a> 
+<a class="jxr_linenumber" name="L255" href="#L255">255</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L256" href="#L256">256</a> <em class="jxr_javadoccomment">     * Test that a bean containing a field not existing in the source object, and without a transformer function defined,</em>
+<a class="jxr_linenumber" name="L257" href="#L257">257</a> <em class="jxr_javadoccomment">     * does not throws MissingFieldException and the primitiveTypeConversionFunction is enabled.</em>
+<a class="jxr_linenumber" name="L258" href="#L258">258</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L259" href="#L259">259</a>     @Test
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformerDoesNotThrowExceptionIfAFieldIsMissingAndTheDefaultValueSetIsEnabled() {
+<a class="jxr_linenumber" name="L261" href="#L261">261</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L262" href="#L262">262</a>         <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromF<a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>#FromFooSimple">FromFooSimple</a> fromFooSimple = <strong class="jxr_keyword">new</strong> <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>(NAME, ID, ACTIVE);
+<a class="jxr_linenumber" name="L263" href="#L263">263</a>         underTest.setPrimitiveTypeConversionEnabled(<strong class="jxr_keyword">true</strong>).setDefaultValueForMissingField(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L264" href="#L264">264</a> 
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L266" href="#L266">266</a>         <a name="MutableToFooNotExistingFields" href="../../../../com/hotels/beans/sample/mutable/MutableToFooNotExistingFields.html#MutableToFooNotExistingFields">MutableToFooNotExistingFields</a> actual = underTest.transform(fromFooSimple, MutableToFooNotExistingFields.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L267" href="#L267">267</a> 
+<a class="jxr_linenumber" name="L268" href="#L268">268</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L269" href="#L269">269</a>         assertThat(actual).extracting(ID_FIELD_NAME, NAME_FIELD_NAME)
+<a class="jxr_linenumber" name="L270" href="#L270">270</a>                 .containsExactly(fromFooSimple.getId(), fromFooSimple.getName());
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>         underTest.setPrimitiveTypeConversionEnabled(false).setDefaultValueForMissingField(false);
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>     }
+<a class="jxr_linenumber" name="L273" href="#L273">273</a> 
+<a class="jxr_linenumber" name="L274" href="#L274">274</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L275" href="#L275">275</a> <em class="jxr_javadoccomment">     * Test transformation field with field transformer.</em>
+<a class="jxr_linenumber" name="L276" href="#L276">276</a> <em class="jxr_javadoccomment">     * @param testCaseDescription the test case description</em>
+<a class="jxr_linenumber" name="L277" href="#L277">277</a> <em class="jxr_javadoccomment">     * @param fieldToTransform the name of the field on which apply the transformation</em>
+<a class="jxr_linenumber" name="L278" href="#L278">278</a> <em class="jxr_javadoccomment">     * @param transformationResult the value to return after the transformation</em>
+<a class="jxr_linenumber" name="L279" href="#L279">279</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L280" href="#L280">280</a>     @Test(dataProvider = <span class="jxr_string">"dataTransformationTesting"</span>)
+<a class="jxr_linenumber" name="L281" href="#L281">281</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransformationWithFieldTransformationWorksProperly(<strong class="jxr_keyword">final</strong> String testCaseDescription, <strong class="jxr_keyword">final</strong> String fieldToTransform, <strong class="jxr_keyword">final</strong> Object transformationResult) {
+<a class="jxr_linenumber" name="L282" href="#L282">282</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L283" href="#L283">283</a>         <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromF<a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>#FromFooSimple">FromFooSimple</a> fromFooSimple = <strong class="jxr_keyword">new</strong> <a name="FromFooSimple" href="../../../../com/hotels/beans/sample/FromFooSimple.html#FromFooSimple">FromFooSimple</a>(NAME, ID, ACTIVE);
+<a class="jxr_linenumber" name="L284" href="#L284">284</a>         FieldTransformer&lt;Object, Object&gt; fieldTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(fieldToTransform, val -&gt; transformationResult);
+<a class="jxr_linenumber" name="L285" href="#L285">285</a> 
+<a class="jxr_linenumber" name="L286" href="#L286">286</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L287" href="#L287">287</a>         underTest.withFieldTransformer(fieldTransformer);
+<a class="jxr_linenumber" name="L288" href="#L288">288</a>         <a name="MutableToFooSimple" href="../../../../com/hotels/beans/sample/mutable/MutableToFooSimple.html#MutableToFooSimple">MutableToFooSimple</a> actual = underTest.transform(fromFooSimple, MutableToFooSimple.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L289" href="#L289">289</a> 
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L291" href="#L291">291</a>         assertThat(actual).hasFieldOrPropertyWithValue(fieldToTransform, transformationResult);
+<a class="jxr_linenumber" name="L292" href="#L292">292</a>         underTest.removeFieldTransformer(fieldToTransform);
+<a class="jxr_linenumber" name="L293" href="#L293">293</a>     }
+<a class="jxr_linenumber" name="L294" href="#L294">294</a> 
+<a class="jxr_linenumber" name="L295" href="#L295">295</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L296" href="#L296">296</a> <em class="jxr_javadoccomment">     * Creates the parameters to be used for testing the transformation with field transformer.</em>
+<a class="jxr_linenumber" name="L297" href="#L297">297</a> <em class="jxr_javadoccomment">     * @return parameters to be used for testing the transformation with field transformer.</em>
+<a class="jxr_linenumber" name="L298" href="#L298">298</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L299" href="#L299">299</a>     @DataProvider
+<a class="jxr_linenumber" name="L300" href="#L300">300</a>     <strong class="jxr_keyword">private</strong> Object[][] dataTransformationTesting() {
+<a class="jxr_linenumber" name="L301" href="#L301">301</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[][] {
+<a class="jxr_linenumber" name="L302" href="#L302">302</a>                 {<span class="jxr_string">"Test that the field transformation returns the expected values."</span>,
+<a class="jxr_linenumber" name="L303" href="#L303">303</a>                         NAME_FIELD_NAME, NAME.toLowerCase()},
+<a class="jxr_linenumber" name="L304" href="#L304">304</a>                 {<span class="jxr_string">"Test that the field transformation returns the expected values even if null."</span>,
+<a class="jxr_linenumber" name="L305" href="#L305">305</a>                         NAME_FIELD_NAME, <strong class="jxr_keyword">null</strong>}
+<a class="jxr_linenumber" name="L306" href="#L306">306</a>         };
+<a class="jxr_linenumber" name="L307" href="#L307">307</a>     }
+<a class="jxr_linenumber" name="L308" href="#L308">308</a> 
+<a class="jxr_linenumber" name="L309" href="#L309">309</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L310" href="#L310">310</a> <em class="jxr_javadoccomment">     * Test that, given a set of fields for which the transformation has to be skipped, they are actually skipped.</em>
+<a class="jxr_linenumber" name="L311" href="#L311">311</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L312" href="#L312">312</a>     @Test
+<a class="jxr_linenumber" name="L313" href="#L313">313</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFieldTransformationSkipWorksProperly() {
+<a class="jxr_linenumber" name="L314" href="#L314">314</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L315" href="#L315">315</a>         underTest.skipTransformationForField(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
+<a class="jxr_linenumber" name="L316" href="#L316">316</a> 
+<a class="jxr_linenumber" name="L317" href="#L317">317</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L318" href="#L318">318</a>         <a name="MutableToFoo" href="../../../../com/hotels/beans/sample/mutable/MutableToFoo.html#MutableToFoo">MutableToFoo</a> actual = underTest.transform(fromFoo, MutableToFoo.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L319" href="#L319">319</a> 
+<a class="jxr_linenumber" name="L320" href="#L320">320</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L321" href="#L321">321</a>         assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
+<a class="jxr_linenumber" name="L322" href="#L322">322</a>         underTest.resetFieldsTransformationSkip();
+<a class="jxr_linenumber" name="L323" href="#L323">323</a>     }
+<a class="jxr_linenumber" name="L324" href="#L324">324</a> 
+<a class="jxr_linenumber" name="L325" href="#L325">325</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L326" href="#L326">326</a> <em class="jxr_javadoccomment">     * Test that the automatic primitive type conversion works properly.</em>
+<a class="jxr_linenumber" name="L327" href="#L327">327</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L328" href="#L328">328</a>     @Test
+<a class="jxr_linenumber" name="L329" href="#L329">329</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testAutomaticPrimitiveTypeTransformationWorksProperly() {
+<a class="jxr_linenumber" name="L330" href="#L330">330</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L331" href="#L331">331</a>         underTest.setPrimitiveTypeConversionEnabled(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L332" href="#L332">332</a> 
+<a class="jxr_linenumber" name="L333" href="#L333">333</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>         <a name="MutableToFooOnlyPrimitiveTypes" href="../../../../com/hotels/beans/sample/mixed/MutableToFooOnlyPrimitiveTypes.html#MutableToFooOnlyPrimitiveTypes">MutableToFooOnlyPrimitiveTypes</a> actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L335" href="#L335">335</a> 
+<a class="jxr_linenumber" name="L336" href="#L336">336</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L337" href="#L337">337</a>         assertThat(actual).extracting(CODE_FIELD_NAME, ID_FIELD_NAME, PRICE_FIELD_NAME, ACTIVE_FIELD_NAME, UUID_FIELD_NAME)
+<a class="jxr_linenumber" name="L338" href="#L338">338</a>                 .containsExactly(
+<a class="jxr_linenumber" name="L339" href="#L339">339</a>                         parseInt(fromFooPrimitiveTypes.getCode()),
+<a class="jxr_linenumber" name="L340" href="#L340">340</a>                         String.valueOf(fromFooPrimitiveTypes.getId()),
+<a class="jxr_linenumber" name="L341" href="#L341">341</a>                         (<strong class="jxr_keyword">double</strong>) fromFooPrimitiveTypes.getPrice(),
+<a class="jxr_linenumber" name="L342" href="#L342">342</a>                         ACTIVE,
+<a class="jxr_linenumber" name="L343" href="#L343">343</a>                         fromFooPrimitiveTypes.getUuid());
+<a class="jxr_linenumber" name="L344" href="#L344">344</a>         underTest.setPrimitiveTypeConversionEnabled(false);
+<a class="jxr_linenumber" name="L345" href="#L345">345</a>     }
+<a class="jxr_linenumber" name="L346" href="#L346">346</a> 
+<a class="jxr_linenumber" name="L347" href="#L347">347</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L348" href="#L348">348</a> <em class="jxr_javadoccomment">     * Test that both primitive type transformation and custom transformation are executed.</em>
+<a class="jxr_linenumber" name="L349" href="#L349">349</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L350" href="#L350">350</a>     @Test
+<a class="jxr_linenumber" name="L351" href="#L351">351</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testThatBothPrimitiveTypeTransformationAndCustomTransformationAreExecuted() {
+<a class="jxr_linenumber" name="L352" href="#L352">352</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L353" href="#L353">353</a>         <strong class="jxr_keyword">double</strong> newPrice = PRICE * PRICE;
+<a class="jxr_linenumber" name="L354" href="#L354">354</a>         FieldTransformer&lt;Void, Double&gt; priceTransformer = <strong class="jxr_keyword">new</strong> FieldTransformer&lt;&gt;(PRICE_FIELD_NAME, () -&gt; newPrice);
+<a class="jxr_linenumber" name="L355" href="#L355">355</a>         underTest.setPrimitiveTypeConversionEnabled(<strong class="jxr_keyword">true</strong>).withFieldTransformer(priceTransformer);
+<a class="jxr_linenumber" name="L356" href="#L356">356</a> 
+<a class="jxr_linenumber" name="L357" href="#L357">357</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L358" href="#L358">358</a>         <a name="MutableToFooOnlyPrimitiveTypes" href="../../../../com/hotels/beans/sample/mixed/MutableToFooOnlyPrimitiveTypes.html#MutableToFooOnlyPrimitiveTypes">MutableToFooOnlyPrimitiveTypes</a> actual = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L359" href="#L359">359</a> 
+<a class="jxr_linenumber" name="L360" href="#L360">360</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L361" href="#L361">361</a>         assertThat(actual).extracting(CODE_FIELD_NAME, ID_FIELD_NAME, ACTIVE_FIELD_NAME, PRICE_FIELD_NAME, UUID_FIELD_NAME)
+<a class="jxr_linenumber" name="L362" href="#L362">362</a>                 .containsExactly(
+<a class="jxr_linenumber" name="L363" href="#L363">363</a>                         parseInt(fromFooPrimitiveTypes.getCode()),
+<a class="jxr_linenumber" name="L364" href="#L364">364</a>                         String.valueOf(fromFooPrimitiveTypes.getId()),
+<a class="jxr_linenumber" name="L365" href="#L365">365</a>                         ACTIVE,
+<a class="jxr_linenumber" name="L366" href="#L366">366</a>                         newPrice,
+<a class="jxr_linenumber" name="L367" href="#L367">367</a>                         fromFooPrimitiveTypes.getUuid());
+<a class="jxr_linenumber" name="L368" href="#L368">368</a>         underTest.setPrimitiveTypeConversionEnabled(false);
+<a class="jxr_linenumber" name="L369" href="#L369">369</a>         underTest.removeFieldTransformer(PRICE_FIELD_NAME);
+<a class="jxr_linenumber" name="L370" href="#L370">370</a>     }
+<a class="jxr_linenumber" name="L371" href="#L371">371</a> 
+<a class="jxr_linenumber" name="L372" href="#L372">372</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L373" href="#L373">373</a> <em class="jxr_javadoccomment">     * Test that an {@link InvalidBeanException} is raised if the class instantiation fails when the method {@code injectValues()} is called.</em>
+<a class="jxr_linenumber" name="L374" href="#L374">374</a> <em class="jxr_javadoccomment">     * @throws Exception if something goes wrong</em>
+<a class="jxr_linenumber" name="L375" href="#L375">375</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L376" href="#L376">376</a>     @Test
+<a class="jxr_linenumber" name="L377" href="#L377">377</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInjectValuesThrowsException() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L378" href="#L378">378</a>         <em class="jxr_comment">// GIVEN</em>
+<a class="jxr_linenumber" name="L379" href="#L379">379</a>         InvalidBeanException expectedException = <strong class="jxr_keyword">new</strong> InvalidBeanException(<span class="jxr_string">"Dummy exception"</span>);
+<a class="jxr_linenumber" name="L380" href="#L380">380</a>         TransformerImpl underTestMock = spy(TransformerImpl.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L381" href="#L381">381</a>         ClassUtils classUtils = mock(ClassUtils.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L382" href="#L382">382</a>         Constructor&lt;MutableToFooSimple&gt; constructor = classUtils.getAllArgsConstructor(MutableToFooSimple.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L383" href="#L383">383</a>         when(classUtils.getInstance(constructor)).thenThrow(InvalidBeanException.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L384" href="#L384">384</a>         when(classUtils.getConstructorParameters(constructor)).thenReturn(<strong class="jxr_keyword">new</strong> Parameter[] {});
+<a class="jxr_linenumber" name="L385" href="#L385">385</a>         when(classUtils.areParameterNamesAvailable(constructor)).thenReturn(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L386" href="#L386">386</a>         doReturn(expectedException).when(underTestMock).handleInjectionException(any(), any(), any(), any(), any(), anyBoolean(), any());
+<a class="jxr_linenumber" name="L387" href="#L387">387</a>         reflectionUtils.setFieldValue(underTestMock, CLASS_UTILS_FIELD_NAME, classUtils);
+<a class="jxr_linenumber" name="L388" href="#L388">388</a>         Method injectValuesMethod =
+<a class="jxr_linenumber" name="L389" href="#L389">389</a>             TransformerImpl.<strong class="jxr_keyword">class</strong>.getDeclaredMethod(INJECT_VALUES_METHOD_NAME, Object.<strong class="jxr_keyword">class</strong>, Class.<strong class="jxr_keyword">class</strong>, Constructor.<strong class="jxr_keyword">class</strong>, String.<strong class="jxr_keyword">class</strong>, <strong class="jxr_keyword">boolean</strong>.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L390" href="#L390">390</a>         injectValuesMethod.setAccessible(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L391" href="#L391">391</a> 
-<a class="jxr_linenumber" name="L392" href="#L392">392</a>         <em class="jxr_comment">// THEN</em>
-<a class="jxr_linenumber" name="L393" href="#L393">393</a>         assertThat(actual).isSameAs(expectedException);
-<a class="jxr_linenumber" name="L394" href="#L394">394</a>     }
-<a class="jxr_linenumber" name="L395" href="#L395">395</a> }
+<a class="jxr_linenumber" name="L392" href="#L392">392</a>         <em class="jxr_comment">// WHEN</em>
+<a class="jxr_linenumber" name="L393" href="#L393">393</a>         Object actual = injectValuesMethod.invoke(underTestMock, fromFooSimple, MutableToFooSimple.<strong class="jxr_keyword">class</strong>, constructor, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L394" href="#L394">394</a> 
+<a class="jxr_linenumber" name="L395" href="#L395">395</a>         <em class="jxr_comment">// THEN</em>
+<a class="jxr_linenumber" name="L396" href="#L396">396</a>         assertThat(actual).isSameAs(expectedException);
+<a class="jxr_linenumber" name="L397" href="#L397">397</a>     }
+<a class="jxr_linenumber" name="L398" href="#L398">398</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2019&#x2013;2021 <a href="http://hotels.com">Hotels.com (Data Platform Team)</a>. All rights reserved.</div>

@@ -515,7 +515,7 @@
 <a class="jxr_linenumber" name="L507" href="#L507">507</a> <em class="jxr_javadoccomment">     * @param fieldName the field name</em>
 <a class="jxr_linenumber" name="L508" href="#L508">508</a> <em class="jxr_javadoccomment">     * @return the generic type class</em>
 <a class="jxr_linenumber" name="L509" href="#L509">509</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L510" href="#L510">510</a>     <strong class="jxr_keyword">public</strong> <a name="MapType" href="../../../../com/hotels/transformer/model/MapType.html#MapType">MapType</a> getMapGenericType(<strong class="jxr_keyword">final</strong> Type fieldType, <strong class="jxr_keyword">final</strong> String declaringClass, <strong class="jxr_keyword">final</strong> String fieldName) {
+<a class="jxr_linenumber" name="L510" href="#L510">510</a>     <strong class="jxr_keyword">public</strong> MapType getMapGenericType(<strong class="jxr_keyword">final</strong> Type fieldType, <strong class="jxr_keyword">final</strong> String declaringClass, <strong class="jxr_keyword">final</strong> String fieldName) {
 <a class="jxr_linenumber" name="L511" href="#L511">511</a>         <strong class="jxr_keyword">final</strong> Class&lt;?&gt; fieldClass = getArgumentTypeClass(fieldType, declaringClass, fieldName, false);
 <a class="jxr_linenumber" name="L512" href="#L512">512</a>         <strong class="jxr_keyword">final</strong> String cacheKey = <span class="jxr_string">"MapGenericFieldType-"</span> + fieldClass.getName() + '-' + fieldName;
 <a class="jxr_linenumber" name="L513" href="#L513">513</a>         <strong class="jxr_keyword">return</strong> CACHE_MANAGER.getFromCache(cacheKey, MapType.<strong class="jxr_keyword">class</strong>).orElseGet(() -&gt; {
@@ -532,7 +532,7 @@
 <a class="jxr_linenumber" name="L524" href="#L524">524</a>                 keyType = buildItemType(fieldType, declaringClass, fieldName);
 <a class="jxr_linenumber" name="L525" href="#L525">525</a>                 elemType = buildItemType(fieldType, declaringClass, fieldName);
 <a class="jxr_linenumber" name="L526" href="#L526">526</a>             }
-<a class="jxr_linenumber" name="L527" href="#L527">527</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">var</strong> mapType = <strong class="jxr_keyword">new</strong> <a name="MapType" href="../../../../com/hotels/transformer/model/MapType.html#MapType">MapType</a>(keyType, elemType);
+<a class="jxr_linenumber" name="L527" href="#L527">527</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">var</strong> mapType = <strong class="jxr_keyword">new</strong> MapType(keyType, elemType);
 <a class="jxr_linenumber" name="L528" href="#L528">528</a>             CACHE_MANAGER.cacheObject(cacheKey, mapType);
 <a class="jxr_linenumber" name="L529" href="#L529">529</a>             <strong class="jxr_keyword">return</strong> mapType;
 <a class="jxr_linenumber" name="L530" href="#L530">530</a>         });
@@ -569,7 +569,7 @@
 <a class="jxr_linenumber" name="L561" href="#L561">561</a> <em class="jxr_javadoccomment">     * @param fieldName the field name of which the argument belongs to</em>
 <a class="jxr_linenumber" name="L562" href="#L562">562</a> <em class="jxr_javadoccomment">     * @return the {@link ItemType} object</em>
 <a class="jxr_linenumber" name="L563" href="#L563">563</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L564" href="#L564">564</a>     <strong class="jxr_keyword">private</strong> <a name="ItemType" href="../../../../com/hotels/transformer/model/ItemType.html#ItemType">ItemType</a> buildItemType(<strong class="jxr_keyword">final</strong> Object argument, <strong class="jxr_keyword">final</strong> String declaringClass, <strong class="jxr_keyword">final</strong> String fieldName) {
+<a class="jxr_linenumber" name="L564" href="#L564">564</a>     <strong class="jxr_keyword">private</strong> ItemType buildItemType(<strong class="jxr_keyword">final</strong> Object argument, <strong class="jxr_keyword">final</strong> String declaringClass, <strong class="jxr_keyword">final</strong> String fieldName) {
 <a class="jxr_linenumber" name="L565" href="#L565">565</a>         <strong class="jxr_keyword">return</strong> ItemType.builder()
 <a class="jxr_linenumber" name="L566" href="#L566">566</a>                 .objectClass(getArgumentTypeClass(argument, declaringClass, fieldName, false))
 <a class="jxr_linenumber" name="L567" href="#L567">567</a>                 .genericClass(getArgumentTypeClass(argument, declaringClass, fieldName, <strong class="jxr_keyword">true</strong>))

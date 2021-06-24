@@ -91,8 +91,8 @@
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>      @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> T withFieldMapping(<strong class="jxr_keyword">final</strong> FieldMapping... fieldMapping) {
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>          <strong class="jxr_keyword">final</strong> Map&lt;P, P&gt; fieldsNameMapping = settings.getFieldsNameMapping();
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">for</strong> (<a name="FieldMapping" href="../../../com/hotels/transformer/model/FieldMapping.html#FieldMapping">FieldMapping</a> mapping : fieldMapping) {
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>              fieldsNameMapping.put((P) mapping.getDestFieldName(), (P) mapping.getSourceFieldName());
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">for</strong> (FieldMapping mapping : fieldMapping) {
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>              fieldsNameMapping.put((P) mapping.destFieldName(), (P) mapping.sourceFieldName());
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          }
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          <strong class="jxr_keyword">return</strong> (T) <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>      }
