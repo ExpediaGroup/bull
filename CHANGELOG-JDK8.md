@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [1.7.5-jdk8] 2020.06.23
+### [1.7.6-jdk8] 2020.06.23
 #### Changed
 * * Fixes an issue that was preventing the transformation of Object type fields
 
