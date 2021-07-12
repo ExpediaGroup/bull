@@ -247,6 +247,16 @@
                             <argLine>@{argLine} --enable-preview</argLine>
                         </configuration>
                     </plugin>
+                    <plugin>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <version>${license.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -255,6 +265,20 @@
             <properties>
                 <javadoc.skip>true</javadoc.skip>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <version>${license.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <!-- release profile -->
         <profile>
@@ -312,6 +336,16 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <version>${license.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -324,6 +358,16 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>versions-maven-plugin</artifactId>
                         <inherited>false</inherited>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <version>${license.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
