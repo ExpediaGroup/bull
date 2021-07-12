@@ -1,7 +1,7 @@
 name: BULL CI
 on: [push]
 jobs:
-  build:
+  BuildAndTest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
