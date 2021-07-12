@@ -1,0 +1,16 @@
+name: BULL Release
+on: [push]
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 15
+        uses: actions/setup-java@v2
+        with:
+          java-version: '15'
+          distribution: 'adopt'
+      - name: Build and Test
+        env:
+          COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+        run: mvn clean install jacoco:report-aggregate coveralls:report -DrepoToken=$COVERALLS_TOKEN -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
