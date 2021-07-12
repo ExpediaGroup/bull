@@ -64,7 +64,7 @@ $ git checkout -b feature/my-new-feature-jdk8 1.7.0-jdk8
 ```
 
 **IMPORTANT:** In the new branch, apply only the changes introduced comparing the code with the `jdk11` branch.
-When completed, commit your code and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green. 
+When completed, commit your code and verify that the [Travis build](https://travis-ci.org/ExpediaGroup/bull/builds) is green. 
 
 ## Example of a release process sequence
 
@@ -76,8 +76,8 @@ The following examples assume that your local repository is:
 
 The guide explains how to do a release both the `jdk11` and `jdk8` compatible:
 
-* [JDK8 Release](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk8-release)
-* [JDK11 Release](https://github.com/HotelsDotCom/bull/blob/master/RELEASE.md#jdk11-release)
+* [JDK8 Release](https://github.com/ExpediaGroup/bull/blob/master/RELEASE.md#jdk8-release)
+* [JDK11 Release](https://github.com/ExpediaGroup/bull/blob/master/RELEASE.md#jdk11-release)
 
 **IMPORTANT:** In case something goes wrong, do not leave ghost tags or tags not related to a successful release.
 
@@ -119,7 +119,7 @@ The maven version is now set with the latest released, but you need to change it
 $ mvn versions:set -D newVersion=X.Y.Z-jdk8
 ```
 
-Commit all the changes and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green.
+Commit all the changes and verify that the [Travis build](https://travis-ci.org/ExpediaGroup/bull/builds) is green.
 
 #### 4. Create a new tag for the release version
 
@@ -172,7 +172,7 @@ The maven version is now set with the latest released, but you need to change it
 $ mvn versions:set -D newVersion=X.Y.Z
 ```
 
-Commit all the changes and verify that the [Travis build](https://travis-ci.org/HotelsDotCom/bull/builds) is green.
+Commit all the changes and verify that the [Travis build](https://travis-ci.org/ExpediaGroup/bull/builds) is green.
 
 #### 3. Create a new tag for the release version
 
