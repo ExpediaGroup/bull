@@ -6,7 +6,8 @@ on:
     tags:
       - "*"
 jobs:
-  Release:
+  job:
+    name: "Site Build and Quality check"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
