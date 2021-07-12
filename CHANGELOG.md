@@ -38,7 +38,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.7.1] 2020.03.21
 #### Added
-* Implemented transformation of JavaBeans using custom Builder pattern (see: [Issue 144](https://github.com/HotelsDotCom/bull/issues/144)).
+* Implemented transformation of JavaBeans using custom Builder pattern (see: [Issue 144](https://github.com/ExpediaGroup/bull/issues/144)).
 #### Changed
 * Updated `hibernate-validator` version to `6.1.4.Final` (was `6.1.2.Final`).
 
@@ -53,7 +53,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.6.4] 2019.12.24
 #### Added
-* Implemented Wildcards types support (see: [Issue 111](https://github.com/HotelsDotCom/bull/issues/111)).
+* Implemented Wildcards types support (see: [Issue 111](https://github.com/ExpediaGroup/bull/issues/111)).
 * Implemented transformation of a field declared with its interface.
 
 ### [1.6.3.2] 2019.12.19
@@ -115,7 +115,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.5.0] 2019.08.06
 #### Added
-* Implemented automatic conversion of basic types (see: [Issue 61](https://github.com/HotelsDotCom/bull/issues/61)).
+* Implemented automatic conversion of basic types (see: [Issue 61](https://github.com/ExpediaGroup/bull/issues/61)).
 #### Changed
 * Modified Transformer initialization in order to create a `Validator` instance only if the validation is enabled
 * Modified Transformer initialization in order to create a `ConversionAnalyzer` instance only if the automatic conversion is enabled
@@ -126,18 +126,18 @@ All notable changes to this project will be documented in this file.
 
 ### [1.4.7] 2019.07.03
 #### Added
-* Implemented possibility to disable the default value set for primitive types in case its value is null (see: [Issue 73](https://github.com/HotelsDotCom/bull/issues/73)).
+* Implemented possibility to disable the default value set for primitive types in case its value is null (see: [Issue 73](https://github.com/ExpediaGroup/bull/issues/73)).
 
 ### [1.4.6] 2019.06.27
 #### Changed
-* Improved exception messages in order to provide more details (see: [Issue 70](https://github.com/HotelsDotCom/bull/issues/70)).
+* Improved exception messages in order to provide more details (see: [Issue 70](https://github.com/ExpediaGroup/bull/issues/70)).
 
 ### [1.4.5] 2019.06.05
 #### Added
-* Added new maven profile: `check-for-updates` for checking if any dependency can be updated (see: [Issue 68](https://github.com/HotelsDotCom/bull/issues/68)).
+* Added new maven profile: `check-for-updates` for checking if any dependency can be updated (see: [Issue 68](https://github.com/ExpediaGroup/bull/issues/68)).
 * Added check during project build in order to prevent the add different versions of the same dependency.
 #### Changed
-* Modified library in order to let it able to retrieve values from getters if a field does not exist (see: [Issue 66](https://github.com/HotelsDotCom/bull/issues/66)).
+* Modified library in order to let it able to retrieve values from getters if a field does not exist (see: [Issue 66](https://github.com/ExpediaGroup/bull/issues/66)).
 
 ### [1.4.4.1] 2019.05.29
 #### Changed
@@ -146,9 +146,9 @@ All notable changes to this project will be documented in this file.
 
 ### [1.4.2] 2019.05.24
 #### Added
-* Added possibility to define transformer function without arguments if not needed (see: [Issue 62](https://github.com/HotelsDotCom/bull/issues/62)).
+* Added possibility to define transformer function without arguments if not needed (see: [Issue 62](https://github.com/ExpediaGroup/bull/issues/62)).
 #### Fixed
-* Fixed a bug: FieldTransformer was receiving a default value instead of the source bean one (see: [Issue 64](https://github.com/HotelsDotCom/bull/issues/64)).
+* Fixed a bug: FieldTransformer was receiving a default value instead of the source bean one (see: [Issue 64](https://github.com/ExpediaGroup/bull/issues/64)).
 
 ### [1.4.1.1] 2019.05.24
 #### Changed
@@ -165,7 +165,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.3.2] 2019.05.11
 ### Added
-* Modified project structure in order to offer Java Bean validation feature against the defined constraints as public feature (see: [Issue 57](https://github.com/HotelsDotCom/bull/issues/57)).
+* Modified project structure in order to offer Java Bean validation feature against the defined constraints as public feature (see: [Issue 57](https://github.com/ExpediaGroup/bull/issues/57)).
 
 ### [1.3.1] 2019.05.08
 #### Changed
@@ -182,11 +182,11 @@ All notable changes to this project will be documented in this file.
 ### [1.2.7] 2019.04.18
 #### Changed
 * Improved optional usage.
-* Fixed a bug that was preventing the transformer function to return a null value (see: [Issue 52](https://github.com/HotelsDotCom/bull/issues/52)).  
+* Fixed a bug that was preventing the transformer function to return a null value (see: [Issue 52](https://github.com/ExpediaGroup/bull/issues/52)).  
 
 ### [1.2.6] 2019.04.06
 #### Added
-* Implemented possibility to use static transformation with a given transformer (see: [Issue 44](https://github.com/HotelsDotCom/bull/issues/44)).
+* Implemented possibility to use static transformation with a given transformer (see: [Issue 44](https://github.com/ExpediaGroup/bull/issues/44)).
 
 ### [1.2.5] 2019.03.31
 #### Added
@@ -198,7 +198,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.2.3] 2019.03.22
 #### Added
-* Implemented a new feature that allows to skip the transformation for a given set of fields (see: [Issue 38](https://github.com/HotelsDotCom/bull/issues/38))
+* Implemented a new feature that allows to skip the transformation for a given set of fields (see: [Issue 38](https://github.com/ExpediaGroup/bull/issues/38))
 * Performance improvement
 
 ### [1.2.2] 2019.03.20
@@ -207,12 +207,12 @@ All notable changes to this project will be documented in this file.
 
 ### [1.2.1] 2019.03.05
 #### Added
-* Implemented a new feature that allows the copy on an existing object instance (see: [Issue 24](https://github.com/HotelsDotCom/bull/issues/24))
+* Implemented a new feature that allows the copy on an existing object instance (see: [Issue 24](https://github.com/ExpediaGroup/bull/issues/24))
 * Added profile: `fast` that skips the following plugin execution: `javadoc`, `checkstyle`, `pmd` and `jacoco`
 
 ### [1.2.0] 2019.02.25
 #### Added
-* Added possibility to skip the object validation (see: [Issue 31](https://github.com/HotelsDotCom/bull/issues/31))
+* Added possibility to skip the object validation (see: [Issue 31](https://github.com/ExpediaGroup/bull/issues/31))
 * Provided documentation and samples for the above functionality
 ### Changed
 - Updated `jdk` version to `11` (was `1.8`).
@@ -221,7 +221,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.1.4] 2019.02.20
 #### Added
-* Added possibility to apply a transformation function only on a specific field (see: [Issue 27](https://github.com/HotelsDotCom/bull/issues/27)).
+* Added possibility to apply a transformation function only on a specific field (see: [Issue 27](https://github.com/ExpediaGroup/bull/issues/27)).
 * Added possibility to apply a transformation function on all fields matching with the given name without evaluating the full field path.
 * Added samples and tests for the above functionality
 #### Fixed
@@ -229,7 +229,7 @@ All notable changes to this project will be documented in this file.
 
 ### [1.1.3] 2019.02.17
 #### Added
-* Added static transformation functionality (see: [Issue 25](https://github.com/HotelsDotCom/bull/issues/25)).
+* Added static transformation functionality (see: [Issue 25](https://github.com/ExpediaGroup/bull/issues/25)).
 
 ### [1.1.2] 2019.02
 #### Added
@@ -263,7 +263,7 @@ All notable changes to this project will be documented in this file.
 * Updated `spring-boot` version to `2.1.2.RELEASE` (was `2.1.0.RELEASE`).
 * Updated `hotels-oss-parent` version to `4.0.0` (was `2.3.5`).
 #### Added
-* Configured Travis in order to automatically build the application, perform a quality check and publish site. Travis build site available [here](https://travis-ci.org/HotelsDotCom/bull) 
+* Configured Travis in order to automatically build the application, perform a quality check and publish site. Travis build site available [here](https://travis-ci.org/ExpediaGroup/bull) 
 * Added build, test coverage and security badge to readme file.
 
 ### [1.0.15] 2019.01.23
@@ -273,7 +273,7 @@ All notable changes to this project will be documented in this file.
 ### [1.0.14] 2019.01.18
 #### Added
 * Added possibility to configure the transformer in order to set the default value for all destination's object fields that are not existing in the source object.
-  See [README.md](https://github.com/HotelsDotCom/bull/blob/master/README.md) for more details.
+  See [README.md](https://github.com/ExpediaGroup/bull/blob/master/README.md) for more details.
 #### Changed
 * Jumped to version `1.0.14` in order to be consequent to the previous library version hosted on a private repo.
 

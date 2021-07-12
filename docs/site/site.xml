@@ -12,7 +12,7 @@
             <topBarEnabled>false</topBarEnabled>
             <sideBarEnabled>true</sideBarEnabled>
             <gitHub>
-                <projectId>HotelsDotCom/bull</projectId>
+                <projectId>ExpediaGroup/bull</projectId>
                 <ribbonOrientation>right</ribbonOrientation>
                 <ribbonColor>#cf2d35</ribbonColor>
             </gitHub>
@@ -57,7 +57,7 @@
         </menu>
         <menu name="Quality check">
             <item name="Sonar Cloud" href="https://sonarcloud.io/dashboard?id=BULL" />
-            <item name="Coveralls" href="https://coveralls.io/github/HotelsDotCom/bull" />
+            <item name="Coveralls" href="https://coveralls.io/github/ExpediaGroup/bull" />
         </menu>
         <menu name="Related Articles">
             <item name="DZone" href="https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li" />
