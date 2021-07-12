@@ -13,4 +13,4 @@ jobs:
       - name: Build and Test
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
-        run: mvn clean install jacoco:report-aggregate -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
+        run: mvn clean install jacoco:report-aggregate coveralls:report -DrepoToken=$COVERALLS_TOKEN -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
