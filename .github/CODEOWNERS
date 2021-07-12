@@ -1,8 +1,8 @@
 # CODEOWNERS file defines the users/teams that are able to approve pull requests.
 # These owners will be the default owners for everything on this repo.
-# https://github.com/HotelsDotCom/bull
+# https://github.com/ExpediaGroup/bull
 
-* @HotelsDotCom/bull-committers borriello.fabio@gmail.com
+* @ExpediaGroup/bull-committers borriello.fabio@gmail.com
 
 # Only some members of Customer Insights can alter the CODEOWNERS file
-.github/CODEOWNERS borriello.fabio@gmail.com @HotelsDotCom/bull-admin
+.github/CODEOWNERS borriello.fabio@gmail.com @ExpediaGroup/bull-admin
