@@ -27,7 +27,7 @@ For both scenarios: 1 and 2 we can use a mocked version of the `BeanUtils` objec
 ### Before start
 
 As BULL contains final methods that need to be mocked and, as Mockito requires a special configuration in order to mock final classes/methods, an extension needs
-to be added to the test resource folder. This file is available [here](https://github.com/HotelsDotCom/bull/tree/master/src/test/resources/mockito-extensions).
+to be added to the test resource folder. This file is available [here](https://github.com/ExpediaGroup/bull/tree/master/src/test/resources/mockito-extensions).
 
 All the examples will be based on the following source object and destination object:
 
