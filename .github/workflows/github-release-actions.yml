@@ -1,5 +1,5 @@
 name: BULL Release
-on: [ push ]
+on: [push]
 jobs:
   job:
     name: "BULL Release"
@@ -29,18 +29,12 @@ jobs:
         with:
           java-version: '15'
           distribution: 'adopt'
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
+      - name: Quality check
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.organization=borriello-fabio-bitbucket
-            -Dsonar.projectKey=BULL
-            -Dsonar.sources=**/*.java
-            -Dsonar.exclusions=**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*
-            -Dsonar.verbose=true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -P compatibility-mode
       - name: Site build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
