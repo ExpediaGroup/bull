@@ -265,6 +265,7 @@
             <id>compatibility-mode</id>
             <properties>
                 <javadoc.skip>true</javadoc.skip>
+                <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
             </properties>
             <build>
                 <plugins>
