@@ -94,7 +94,7 @@
         <javadoc.skip>false</javadoc.skip>
         <import.order>\#java,\#javax,\#jakarta,\#org,\#,\#com,,\#lombok,java,javax,jakarta,org,,com,,lombok
         </import.order>
-        <spotless.plugin.skip>false</spotless.plugin.skip>
+        <spotless.maven.plugin.skip>false</spotless.maven.plugin.skip>
     </properties>
 
     <!-- distribution configuration -->
@@ -737,7 +737,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <skip>${spotless.plugin.skip}</skip>
+                    <skip>${spotless.maven.plugin.skip}</skip>
                     <java>
                         <removeUnusedImports />
                         <trimTrailingWhitespace />
