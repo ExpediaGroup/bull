@@ -13,6 +13,11 @@ jobs:
         with:
           # mvn cache files are stored in `~/.m2`
           path: ~/.m2
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: Extract build information
         id: build_info
         run: |
