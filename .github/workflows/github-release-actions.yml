@@ -11,18 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Cache maven dependencies
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-maven-dependencies
+      - name: Cache Maven repository
+        uses: actions/cache@v2.1.6
         with:
-          # mvn cache files are stored in `~/.m2`
           path: ~/.m2
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
       - name: Extract build information
         id: build_info
         run: |
@@ -34,13 +28,17 @@ jobs:
         with:
           java-version: '15'
           distribution: 'adopt'
-          server-id: ossrh
+          server-id: oss-sonatype
           server-username: SONATYPE_USERNAME # env variable for username in deploy
           server-password: SONATYPE_PASSWORD # env variable for token in deploy
-      - name: Publish package
+          # only signed artifacts will be released to maven central. this sets up things for the maven-gpg-plugin
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
+          gpg-passphrase: GPG_PASSPHRASE # env variable for GPG private key passphrase
+          settings-path: ${{ github.workspace }}
+      - name: Release artifacts
+        run: |
+          mvn deploy -s $GITHUB_WORKSPACE/settings.xml --settings /home/runner/.m2/settings.xml -B -P release -Dmaven.test.skip=true
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-          GPG_PRIVATE_KEY_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
-        run: mvn deploy -Dgpg.keyname=${GPG_PRIVATE_KEY} -Dgpg.passphrase=${GPG_PRIVATE_KEY_PASSPHRASE}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
