@@ -54,7 +54,7 @@ jobs:
       - name: "Release artifacts"
         env:
           HCOM_SONATYPE_USERNAME: ${{ secrets.HCOM_SONATYPE_USERNAME }}
-          HCOM_SONATYPE_PASSWORD: ${{ secrets.HCOM_SONATYPE_USERNAME }}
+          HCOM_SONATYPE_PASSWORD: ${{ secrets.HCOM_SONATYPE_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
           TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
         run: |
