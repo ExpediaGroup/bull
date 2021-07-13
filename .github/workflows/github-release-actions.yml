@@ -23,7 +23,7 @@ jobs:
         with:
           java-version: '15'
           distribution: 'adopt'
-      - name: Quality check
+      - name: Quality check and Site build
         env:
           SOURCE_NAME: ${{ steps.build_info.outputs.SOURCE_NAME }}
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
@@ -31,12 +31,11 @@ jobs:
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=${SONAR_ORGANIZATION} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${SONAR_TOKEN} -P site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
-      - name: Site Build
+          mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=${SONAR_ORGANIZATION} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${SONAR_TOKEN} -Dcheckstyle.skip=true site:site javadoc:aggregate -P site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+      - name: Deploy GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.DEPLOY_GITHUB_TOKEN }}
           publish_dir: target/site
           user_name: eg-oss-ci
           user_email: oss@expediagroup.com
-        run: mvn install site:site javadoc:aggregate -P site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
