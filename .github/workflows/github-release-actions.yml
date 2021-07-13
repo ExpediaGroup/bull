@@ -6,6 +6,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Cache maven dependencies
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-maven-dependencies
+        with:
+          # mvn cache files are stored in `~/.m2`
+          path: ~/.m2
       - name: Extract build information
         id: build_info
         run: |
@@ -21,6 +28,6 @@ jobs:
         env:
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
-        run: mvn clean install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=${SONAR_ORGANIZATION} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3e48ff9274e9be71d176cb68da4272b08d749248 -P compatibility-mode
+        run: mvn clean install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3e48ff9274e9be71d176cb68da4272b08d749248 -P compatibility-mode
       - name: Site build
         run: mvn install site:site javadoc:aggregate -P site-release
