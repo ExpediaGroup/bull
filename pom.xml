@@ -82,6 +82,8 @@
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
         <puppycrawl.checkstyle.version>8.44</puppycrawl.checkstyle.version>
         <maven.spotless.plugin.version>2.12.1</maven.spotless.plugin.version>
+        <maven.release.plugin.version>3.0.0-M4</maven.release.plugin.version>
+        <maven.nexus-staging.plugin.version>1.6.8</maven.nexus-staging.plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <!-- excludes the Record classes from being analyzed as they are not yet supported by the checkstyle plugin -->
         <checkstyle.exclusion>
@@ -94,7 +96,7 @@
         <javadoc.skip>false</javadoc.skip>
         <import.order>\#java,\#javax,\#jakarta,\#org,\#,\#com,,\#lombok,java,javax,jakarta,org,,com,,lombok
         </import.order>
-        <spotless.plugin.skip>false</spotless.plugin.skip>
+        <spotless.maven.plugin.skip>false</spotless.maven.plugin.skip>
     </properties>
 
     <!-- distribution configuration -->
@@ -104,6 +106,19 @@
         <url>https://github.com/ExpediaGroup/bull</url>
         <tag>HEAD</tag>
     </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>oss-sonatype</id>
+            <name>Sonatype Nexus Snapshots Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>oss-sonatype</id>
+            <name>Sonatype Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>
@@ -233,6 +248,7 @@
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
                 <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
+                <test.coverage.check.skip>true</test.coverage.check.skip>
             </properties>
             <build>
                 <plugins>
@@ -247,6 +263,16 @@
                             <argLine>@{argLine} --enable-preview</argLine>
                         </configuration>
                     </plugin>
+                    <plugin>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <version>${license.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -254,7 +280,22 @@
             <id>compatibility-mode</id>
             <properties>
                 <javadoc.skip>true</javadoc.skip>
+                <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <version>${license.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <!-- release profile -->
         <profile>
@@ -279,8 +320,25 @@
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
+                                <configuration>
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>${maven.nexus-staging.plugin.version}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>oss-sonatype</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
                     </plugin>
                     <!-- skip some test cases during the release -->
                     <plugin>
@@ -312,6 +370,16 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <version>${license.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -324,6 +392,16 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>versions-maven-plugin</artifactId>
                         <inherited>false</inherited>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <version>${license.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -692,7 +770,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <skip>${spotless.plugin.skip}</skip>
+                    <skip>${spotless.maven.plugin.skip}</skip>
                     <java>
                         <removeUnusedImports />
                         <trimTrailingWhitespace />

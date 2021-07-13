@@ -11,14 +11,13 @@ It's the only library able to transform Mutable, Immutable, and Mixed bean witho
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer/badge.svg?subject=maven-central&color=blue)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer)
 [![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bull-bean-transformer.svg?color=blue)](http://www.javadoc.io/doc/com.hotels.beans/bull-bean-transformer)
-[![Build Status](https://travis-ci.com/ExpediaGroup/bull.svg?branch=master)](https://travis-ci.com/ExpediaGroup/bull)
+[![Build Status](https://github.com/ExpediaGroup/bull/actions/workflows/github-actions.yml/badge.svg)](https://github.com/ExpediaGroup/bull/actions/workflows/github-actions.yml/badge.svg)
 [![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk)
 
 [![GitHub site](https://img.shields.io/badge/GitHub-site-blue.svg)](https://opensource.expediagroup.com/bull/)
 [![Coverage Status](https://coveralls.io/repos/github/ExpediaGroup/bull/badge.svg?branch=master)](https://coveralls.io/github/ExpediaGroup/bull?branch=master)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=security_rating)](https://sonarcloud.io/dashboard?id=BULL)
 ![GitHub license](https://img.shields.io/github/license/ExpediaGroup/bull.svg)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ExpediaGroup/bull)](https://dependabot.com)
 
 All BULL modules are available on Maven Central: 
 

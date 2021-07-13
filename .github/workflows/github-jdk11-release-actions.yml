@@ -1,0 +1,62 @@
+name: BULL JDK 11 Release
+on:
+  push:
+    branches:
+      - "!*"
+    tags:
+      - "*-jdk11"
+jobs:
+  job:
+    name: "BULL Release"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Cache Maven repository"
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Extract build information
+        id: build_info
+        run: |
+          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
+          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
+          echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+      - name: "Set up JDK 11"
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          server-id: oss-sonatype # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: HCOM_SONATYPE_USERNAME # env variable for username in deploy
+          server-password: HCOM_SONATYPE_PASSWORD # env variable for token in deploy
+          # only signed artifacts will be released to maven central. this sets up things for the maven-gpg-plugin
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
+          gpg-passphrase: GPG_PASSPHRASE # env variable for GPG private key passphrase
+          settings-path: ${{ github.workspace }}
+      - name: "Quality check"
+        env:
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
+        run: |
+          mvn versions:set -D newVersion=${TAG_NAME}
+          mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -P compatibility-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+      - name: "Site build"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
+        run: |
+          mvn versions:set -D newVersion=${TAG_NAME}
+          mvn site:site javadoc:aggregate -P site-release -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+      - name: "Release artifacts"
+        env:
+          HCOM_SONATYPE_USERNAME: ${{ secrets.HCOM_SONATYPE_USERNAME }}
+          HCOM_SONATYPE_PASSWORD: ${{ secrets.HCOM_SONATYPE_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
+          TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
+        run: |
+          mvn versions:set -D newVersion=${TAG_NAME}
+          mvn deploy --settings $GITHUB_WORKSPACE/settings.xml -B -U -P release -DskipTests=true
