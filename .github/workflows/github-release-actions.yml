@@ -38,7 +38,7 @@ jobs:
       - name: Release artifacts
         run: |
           echo "/home/runner/.m2/settings.xml content"
-          cat /home/runner/.m2/settings.xml
+          cat $GITHUB_WORKSPACE/settings.xml
           echo "~/.m2/settings.xml content"
           cat ~/.m2/settings.xml
           mvn deploy -s $GITHUB_WORKSPACE/settings.xml --settings /home/runner/.m2/settings.xml -B -P release
