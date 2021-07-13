@@ -82,6 +82,8 @@
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
         <puppycrawl.checkstyle.version>8.44</puppycrawl.checkstyle.version>
         <maven.spotless.plugin.version>2.12.1</maven.spotless.plugin.version>
+        <maven.release.plugin.version>3.0.0-M4</maven.release.plugin.version>
+        <maven.nexus-staging.plugin.version>1.6.8</maven.nexus-staging.plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <!-- excludes the Record classes from being analyzed as they are not yet supported by the checkstyle plugin -->
         <checkstyle.exclusion>
@@ -104,6 +106,19 @@
         <url>https://github.com/ExpediaGroup/bull</url>
         <tag>HEAD</tag>
     </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>oss-sonatype</id>
+            <name>Sonatype Nexus Snapshots Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>oss-sonatype</id>
+            <name>Sonatype Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>
@@ -307,6 +322,30 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <!-- See https://central.sonatype.org/pages/apache-maven.html for release details -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>${maven.release.plugin.version}</version>
+                        <configuration>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <useReleaseProfile>false</useReleaseProfile>
+                            <releaseProfiles>release</releaseProfiles>
+                            <preparationGoals>clean compile</preparationGoals>
+                            <goals>deploy</goals>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>${maven.nexus-staging.plugin.version}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>oss-sonatype</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
                     </plugin>
                     <!-- skip some test cases during the release -->
                     <plugin>
