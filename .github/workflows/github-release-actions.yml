@@ -33,7 +33,7 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn clean install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=borriello-fabio-bitbucket -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${SONAR_TOKEN} -Dsonar.branch.name=test -Psite-release
+          mvn clean install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=${SONAR_ORGANIZATION} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${SONAR_TOKEN} -Dsonar.branch.name=test -Psite-release
       - name: Deploy GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
