@@ -329,19 +329,6 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- See https://central.sonatype.org/pages/apache-maven.html for release details -->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-release-plugin</artifactId>-->
-<!--                        <version>${maven.release.plugin.version}</version>-->
-<!--                        <configuration>-->
-<!--                            <autoVersionSubmodules>true</autoVersionSubmodules>-->
-<!--                            <useReleaseProfile>false</useReleaseProfile>-->
-<!--                            <releaseProfiles>release</releaseProfiles>-->
-<!--                            <preparationGoals>clean compile</preparationGoals>-->
-<!--                            <goals>deploy</goals>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
