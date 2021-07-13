@@ -39,7 +39,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       # Initializes the CodeQL tools for scanning.
-      - name: Initialize CodeQL
+      - name: "Initialize CodeQL"
         uses: github/codeql-action/init@v1
         with:
           languages: ${{ matrix.language }}
@@ -51,5 +51,5 @@ jobs:
       # 📚 https://git.io/JvXDl
       - run: |
           ./mvnw clean verify
-      - name: Perform CodeQL Analysis
+      - name: "Perform CodeQL Analysis"
         uses: github/codeql-action/analyze@v1
