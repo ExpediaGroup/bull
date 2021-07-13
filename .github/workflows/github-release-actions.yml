@@ -1,11 +1,10 @@
 name: BULL Release
-#on:
-#  push:
-#    branches:
-#      - "!*"
-#    tags:
-#      - "*"
-on: [push]
+on:
+  push:
+    branches:
+      - "!*"
+    tags:
+      - "*"
 jobs:
   job:
     name: "Site Build and Quality check"
@@ -23,12 +22,19 @@ jobs:
         with:
           java-version: '15'
           distribution: 'adopt'
-      - name: Quality check and Site build
+      - name: Project version set
         env:
-          SOURCE_NAME: ${{ steps.build_info.outputs.SOURCE_NAME }}
-          SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
           TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
+        run: |
+          mvn versions:set -D newVersion=${TAG_NAME} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+      - name: Quality check
+        env:
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=${SONAR_ORGANIZATION} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${SONAR_TOKEN} -Dcheckstyle.skip=true site:site javadoc:aggregate -P site-release
+          mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=${SONAR_ORGANIZATION} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${SONAR_TOKEN} -P site-release
+      - name: Site build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mvn install site:site javadoc:aggregate -P site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
