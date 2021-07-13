@@ -1,8 +1,6 @@
 name: Build and Test
 on:
   push:
-    branches:
-      - "**"
     tags-ignore:
       - "*"
 jobs:
