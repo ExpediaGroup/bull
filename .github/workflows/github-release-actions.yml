@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - "!*"
-    tags:
-      - "*"
     tags-ignore:
       - "*-jdk11"
 jobs:
