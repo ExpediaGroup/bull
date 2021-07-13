@@ -12,12 +12,17 @@ jobs:
           echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
           echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+      - name: Set up JDK 15
+        uses: actions/setup-java@v2
+        with:
+          java-version: '15'
+          distribution: 'adopt'
       - name: Quality check
         env:
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn clean install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=borriello-fabio-bitbucket -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3e48ff9274e9be71d176cb68da4272b08d749248 -Dsonar.branch.name=test -Psite-release
+          mvn clean install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=borriello-fabio-bitbucket -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3e48ff9274e9be71d176cb68da4272b08d749248 -Dsonar.branch.name=test -Pcompatibility-mode
       - name: Site build
         run: |
           mvn install site:site javadoc:aggregate -P site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
