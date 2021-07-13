@@ -1,10 +1,11 @@
 name: BULL Release
-on:
-  push:
-    branches:
-      - "!*"
-    tags:
-      - "*"
+#on:
+#  push:
+#    branches:
+#      - "!*"
+#    tags:
+#      - "*"
+on: [push]
 jobs:
   job:
     name: "Site Build and Quality check"
@@ -30,10 +31,10 @@ jobs:
           SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_LOGIN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn versions:set -D newVersion=$TAG_NAME -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-          mvn clean install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=borriello-fabio-bitbucket -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3e48ff9274e9be71d176cb68da4272b08d749248 -Dsonar.branch.name=test
+          mvn clean install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=borriello-fabio-bitbucket -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_LOGIN -Dsonar.branch.name=test -Psite-release
       - name: Deploy GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
