@@ -1,5 +1,5 @@
 name: BULL Release
-on: [push]
+on: [ push ]
 jobs:
   job:
     name: "BULL Release"
@@ -36,11 +36,11 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-          -Dsonar.organization=borriello-fabio-bitbucket
-          -Dsonar.projectKey=BULL
-          -Dsonar.sources=**/*.java
-          -Dsonar.exclusions=**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*
-          -Dsonar.verbose=true
+            -Dsonar.organization=borriello-fabio-bitbucket
+            -Dsonar.projectKey=BULL
+            -Dsonar.sources=**/*.java
+            -Dsonar.exclusions=**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*
+            -Dsonar.verbose=true
       - name: Site build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
