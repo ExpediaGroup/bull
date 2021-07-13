@@ -23,49 +23,49 @@ jobs:
           echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
           echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
-    - name: Set up JDK 15
-      uses: actions/setup-java@v2
-      with:
-        java-version: '15'
-        distribution: 'adopt'
-        server-id: oss-sonatype # Value of the distributionManagement/repository/id field of the pom.xml
-        server-username: SONATYPE_USERNAME # env variable for username in deploy
-        server-password: SONATYPE_PASSWORD # env variable for token in deploy
-        # only signed artifacts will be released to maven central. this sets up things for the maven-gpg-plugin
-        gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
-        gpg-passphrase: GPG_PASSPHRASE # env variable for GPG private key passphrase
-        settings-path: ${{ github.workspace }}
-    - name: Quality check
-      env:
-        SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
-      run: |
-        mvn versions:set -D newVersion=${TAG_NAME} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-        mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -P compatibility-mode
-    - name: Site build
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
-      run: |
-        mvn versions:set -D newVersion=${TAG_NAME} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-        mvn site:site javadoc:aggregate -P site-release
-    - name: Deploy GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./target/site
-        user_name: eg-oss-ci
-        user_email: oss@expediagroup.com
-      - name: Release artifacts
+      - name: Set up JDK 15
+        uses: actions/setup-java@v2
+        with:
+          java-version: '15'
+          distribution: 'adopt'
+          server-id: oss-sonatype # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: SONATYPE_USERNAME # env variable for username in deploy
+          server-password: SONATYPE_PASSWORD # env variable for token in deploy
+          # only signed artifacts will be released to maven central. this sets up things for the maven-gpg-plugin
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
+          gpg-passphrase: GPG_PASSPHRASE # env variable for GPG private key passphrase
+          settings-path: ${{ github.workspace }}
+      - name: Quality check
         env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
         run: |
-          echo "GITHUB_WORKSPACE/settings.xml content"
-          cat $GITHUB_WORKSPACE/settings.xml
           mvn versions:set -D newVersion=${TAG_NAME} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-          mvn deploy --settings $GITHUB_WORKSPACE/settings.xml -B -U -P release -DskipTests=true
+          mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -P compatibility-mode
+      - name: Site build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
+        run: |
+          mvn versions:set -D newVersion=${TAG_NAME} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+          mvn site:site javadoc:aggregate -P site-release
+      - name: Deploy GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target/site
+          user_name: eg-oss-ci
+          user_email: oss@expediagroup.com
+        - name: Release artifacts
+          env:
+            SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+            SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+            GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
+            TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
+          run: |
+            echo "GITHUB_WORKSPACE/settings.xml content"
+            cat $GITHUB_WORKSPACE/settings.xml
+            mvn versions:set -D newVersion=${TAG_NAME} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+            mvn deploy --settings $GITHUB_WORKSPACE/settings.xml -B -U -P release -DskipTests=true
