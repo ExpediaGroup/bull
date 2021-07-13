@@ -233,6 +233,7 @@
                 <checkstyle.check.skip>true</checkstyle.check.skip>
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
                 <spotless.maven.plugin.skip>true</spotless.maven.plugin.skip>
+                <test.coverage.check.skip>true</test.coverage.check.skip>
             </properties>
             <build>
                 <plugins>

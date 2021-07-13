@@ -34,3 +34,10 @@ jobs:
         run: |
           mvn versions:set -D newVersion=$TAG_NAME -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
           mvn install sonar:sonar -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=SONAR_TOKEN -Dcheckstyle.skip=true site:site javadoc:aggregate -P site-release -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+      - name: Deploy GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: target/site
+          user_name: eg-oss-ci
+          user_email: oss@expediagroup.com
