@@ -43,4 +43,4 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PRIVATE_KEY_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
-        run: mvn deploy -Dgpg.keyname=$GPG_PRIVATE_KEY -Dgpg.passphrase=$GPG_PRIVATE_KEY_PASSPHRASE --settings ./config/maven/mvn-settings.xml -P release -Dmaven.test.skip=true
+        run: mvn deploy -Dgpg.keyname=${GPG_PRIVATE_KEY} -Dgpg.passphrase=${GPG_PRIVATE_KEY_PASSPHRASE} --settings ./config/maven/mvn-settings.xml -P release -Dmaven.test.skip=true
