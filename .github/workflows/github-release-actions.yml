@@ -37,34 +37,10 @@ jobs:
           server-id: ossrh
           server-username: SONATYPE_USERNAME # env variable for username in deploy
           server-password: SONATYPE_PASSWORD # env variable for token in deploy
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
-          gpg-passphrase: GPG_PRIVATE_KEY_PASSPHRASE # env variable for GPG private key passphrase
-      - name: Project version set
-        env:
-          TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
-        run: |
-          mvn versions:set -D newVersion=${TAG_NAME} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-      - name: Quality check
-        env:
-          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -P compatibility-mode
-      - name: Site build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn site:site javadoc:aggregate -P site-release
-      - name: Deploy GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/site
-          user_name: eg-oss-ci
-          user_email: oss@expediagroup.com
       - name: Publish package
-        run: mvn deploy --settings ./config/maven/mvn-settings.xml -P release -Dmaven.test.skip=true
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PRIVATE_KEY_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
+        run: mvn deploy -Dgpg.keyname=$GPG_PRIVATE_KEY -Dgpg.passphrase=$GPG_PRIVATE_KEY_PASSPHRASE --settings ./config/maven/mvn-settings.xml -P release -Dmaven.test.skip=true
