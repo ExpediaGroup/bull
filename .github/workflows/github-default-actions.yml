@@ -2,9 +2,9 @@ name: Build and Test
 on:
   push:
     branches:
+      - "**"
+    tags-ignore:
       - "*"
-    tags:
-      - "!*"
 jobs:
     job:
       name: "Build and Test"
