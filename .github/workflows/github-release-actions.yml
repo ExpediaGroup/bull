@@ -58,14 +58,14 @@ jobs:
           publish_dir: ./target/site
           user_name: eg-oss-ci
           user_email: oss@expediagroup.com
-        - name: Release artifacts
-          env:
-            SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-            SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-            GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
-            TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
-          run: |
-            echo "GITHUB_WORKSPACE/settings.xml content"
-            cat $GITHUB_WORKSPACE/settings.xml
-            mvn versions:set -D newVersion=${TAG_NAME} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-            mvn deploy --settings $GITHUB_WORKSPACE/settings.xml -B -U -P release -DskipTests=true
+      - name: Release artifacts
+        env:
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
+          TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
+        run: |
+          echo "GITHUB_WORKSPACE/settings.xml content"
+          cat $GITHUB_WORKSPACE/settings.xml
+          mvn versions:set -D newVersion=${TAG_NAME} -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+          mvn deploy --settings $GITHUB_WORKSPACE/settings.xml -B -U -P release -DskipTests=true
