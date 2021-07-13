@@ -1,0 +1,23 @@
+<settings>
+  <servers>
+    <server>
+      <id>oss-sonatype</id>
+      <username>${env.SONATYPE_USERNAME}</username>
+      <password>${env.SONATYPE_PASSWORD}</password>
+    </server>
+  </servers>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <gpg.executable>gpg</gpg.executable>
+        <gpg.keyname>${env.GPG_PRIVATE_KEY}</gpg.keyname>
+        <gpg.passphrase>${env.GPG_PRIVATE_KEY_PASSPHRASE}</gpg.passphrase>
+      </properties>
+    </profile>
+  </profiles>
+</settings>
