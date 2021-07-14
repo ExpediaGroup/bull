@@ -1,8 +1,4 @@
 on:
-  push:
-    branches:
-      - "*"
-      - "*/*"
   issues:
     types: [ opened, edited, milestoned ]
   pull_request:
