@@ -30,10 +30,11 @@
         incredibly fast. It's the only library able to transform Mutable, Immutable and Mixed bean without any custom
         configuration.
     </description>
+
     <parent>
-        <groupId>com.hotels</groupId>
-        <artifactId>hotels-oss-parent</artifactId>
-        <version>6.2.1</version>
+        <groupId>com.expediagroup</groupId>
+        <artifactId>eg-oss-parent</artifactId>
+        <version>2.3.2</version>
     </parent>
 
     <modules>
@@ -77,6 +78,7 @@
         <github.global.server>github</github.global.server>
         <maven.site.plugin.version>3.9.1</maven.site.plugin.version>
         <!-- build settings -->
+        <maven.required.version>[3.3.9,)</maven.required.version>
         <maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version>
         <maven.javadoc-plugin.version>3.3.0</maven.javadoc-plugin.version>
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
