@@ -1,8 +1,15 @@
-on: push
-name: Slack Notification
+on:
+  issues:
+    types: [ opened, edited, milestoned ]
+  pull_request:
+    types: [ assigned, opened, synchronize, reopened ]
+  release:
+    types: [ published, created, released ]
+  deployment
+name: "Slack Notifier"
 jobs:
-  slackNotification:
-    name: "Slack Notification"
+  slack-notification:
+    name: "Notify on Slack"
     runs-on: ubuntu-latest
     steps:
       - name: Slack Notification
