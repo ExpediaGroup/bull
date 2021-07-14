@@ -5,6 +5,9 @@ on:
     types: [ assigned, opened, synchronize, reopened ]
   release:
     types: [ published, created, released ]
+  push:
+    tags:
+      - "*"
 name: "Slack Notifier"
 jobs:
   slack-notification:
