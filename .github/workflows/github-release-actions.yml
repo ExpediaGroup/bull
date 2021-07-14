@@ -6,92 +6,26 @@ on:
     tags-ignore:
       - "*-jdk11"
 jobs:
-  build-info-extraction:
-    name: "Build info extraction"
+  job:
+    name: "BULL Release"
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - name: "Cache Maven repository"
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
       - name: "Extract build information"
         id: build_info
         run: |
           echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
           echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
-  quality-check:
-    name: "Quality check"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: "Cache Maven repository"
-        uses: actions/cache@v2.1.6
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
       - name: "Project version set"
         env:
-          TAG_NAME: ${{ jobs.build-info-extraction.steps.build_info.outputs.TAG_NAME }}
-        run: |
-          mvn versions:set -D newVersion=${TAG_NAME}
-      - name: "Set up JDK 15"
-        uses: actions/setup-java@v2
-        with:
-          java-version: '15'
-          distribution: 'adopt'
-          settings-path: ${{ github.workspace }}
-      - name: "Quality check"
-        env:
-          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -P compatibility-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
-  site-build:
-    name: "Site Build"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: "Cache Maven repository"
-        uses: actions/cache@v2.1.6
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: "Project version set"
-        env:
-          TAG_NAME: ${{ jobs.build-info-extraction.steps.build_info.outputs.TAG_NAME }}
-        run: |
-          mvn versions:set -D newVersion=${TAG_NAME}
-      - name: "Set up JDK 15"
-        uses: actions/setup-java@v2
-        with:
-          java-version: '15'
-          distribution: 'adopt'
-      - name: "Site build"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mvn site:site javadoc:aggregate -P site-release -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q -DskipTests=true
-      - name: "Deploy GitHub Pages"
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          personal_token: ${{ secrets.SITE_BUILD_TOKEN }}
-          publish_dir: ./target/site
-          user_name: eg-oss-ci
-          user_email: oss@expediagroup.com
-  artifact-release:
-    name: "Publish artifact"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: "Cache Maven repository"
-        uses: actions/cache@v2.1.6
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: "Project version set"
-        env:
-          TAG_NAME: ${{ jobs.build-info-extraction.steps.build_info.outputs.TAG_NAME }}
+          TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
         run: |
           mvn versions:set -D newVersion=${TAG_NAME}
       - name: "Set up JDK 15"
@@ -106,6 +40,25 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
           gpg-passphrase: GPG_PASSPHRASE # env variable for GPG private key passphrase
           settings-path: ${{ github.workspace }}
+      - name: "Quality check"
+        env:
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -P compatibility-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+      - name: "Site build"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mvn site:site javadoc:aggregate -P site-release -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q -DskipTests=true
+      - name: "Deploy GitHub Pages"
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.SITE_BUILD_TOKEN }}
+          publish_dir: ./target/site
+          user_name: eg-oss-ci
+          user_email: oss@expediagroup.com
       - name: "Release artifacts"
         env:
           HCOM_SONATYPE_USERNAME: ${{ secrets.HCOM_SONATYPE_USERNAME }}
