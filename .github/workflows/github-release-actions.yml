@@ -23,17 +23,6 @@ jobs:
           echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
           echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
-      - name: "Send Slack Notification"
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: releases
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_ICON: https://raw.githubusercontent.com/ExpediaGroup/bull/master/docs/site/resources/images/bell.png
-          SLACK_TITLE: "BULL version: ${{ steps.build_info.outputs.TAG_NAME }} available."
-          SLACK_MESSAGE: "<https://github.com/ExpediaGroup/bull/blob/master/CHANGELOG.md|Check out the implemented changes in the *CHANGELOG* file>"
-          SLACK_USERNAME: "bull-notifier"
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_FOOTER: "Powered by BULL notifier"
       - name: "Project version set"
         env:
           TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
@@ -66,7 +55,7 @@ jobs:
       - name: "Deploy GitHub Pages"
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.SITE_BUILD_TOKEN }}
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./target/site
           user_name: eg-oss-ci
           user_email: oss@expediagroup.com
@@ -77,4 +66,15 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
         run: |
           mvn deploy --settings $GITHUB_WORKSPACE/settings.xml -B -U -P release -DskipTests=true
+      - name: "Send Slack Notification"
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: releases
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_ICON: https://raw.githubusercontent.com/ExpediaGroup/bull/master/docs/site/resources/images/bell.png
+          SLACK_TITLE: "BULL version: ${{ steps.build_info.outputs.TAG_NAME }} available."
+          SLACK_MESSAGE: "<https://github.com/ExpediaGroup/bull/blob/master/CHANGELOG.md|Check out the implemented changes in the *CHANGELOG* file>"
+          SLACK_USERNAME: "bull-notifier"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_FOOTER: "Powered by BULL notifier"
 
