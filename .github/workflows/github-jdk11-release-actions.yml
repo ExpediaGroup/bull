@@ -51,7 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mvn site:site javadoc:aggregate -P site-release -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+          mvn site:site javadoc:aggregate -P site-release -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q -DskipTests=true
       - name: "Release artifacts"
         env:
           HCOM_SONATYPE_USERNAME: ${{ secrets.HCOM_SONATYPE_USERNAME }}
