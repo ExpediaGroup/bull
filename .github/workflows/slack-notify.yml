@@ -1,12 +1,13 @@
 on:
+  push:
+    branches:
+      - "*"
   issues:
     types: [ opened, edited, milestoned ]
   pull_request:
     types: [ assigned, opened, synchronize, reopened ]
   release:
     types: [ published, created, released ]
-  deployment
-  push
 name: "Slack Notifier"
 jobs:
   slack-notification:
