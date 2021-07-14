@@ -15,4 +15,3 @@ jobs:
           SLACK_USERNAME: "bull-notifier"
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_FOOTER: "Powered by BULL notifier"
-}
