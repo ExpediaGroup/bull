@@ -6,6 +6,7 @@ on:
   release:
     types: [ published, created, released ]
   deployment
+  push
 name: "Slack Notifier"
 jobs:
   slack-notification:
