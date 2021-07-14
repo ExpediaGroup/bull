@@ -2,7 +2,7 @@
     <title>About</title>
 </head>
 
-# ![bull-logo](images/BullBranding_03.png)
+# ![bull-logo](images/BullBranding_04.png)
 
 # Overview
 
