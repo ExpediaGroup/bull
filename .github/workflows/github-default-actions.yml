@@ -1,4 +1,4 @@
-name: Build and Test
+name: "Build, test and quality check"
 on:
   push:
     branches-ignore:
@@ -35,6 +35,9 @@ jobs:
           mvn clean install jacoco:report-aggregate coveralls:report -DrepoToken=$COVERALLS_TOKEN -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
       - name: "Quality check"
         env:
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
         run: |
-          echo "Branch: $SOURCE_BRANCH"
+          mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dsonar.branch.name=$SOURCE_BRANCH -P compatibility-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
