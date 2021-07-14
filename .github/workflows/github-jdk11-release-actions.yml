@@ -59,3 +59,14 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
         run: |
           mvn deploy --settings $GITHUB_WORKSPACE/settings.xml -B -U -P release -DskipTests=true
+      - name: "Send Slack Notification"
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: releases
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_ICON: https://raw.githubusercontent.com/ExpediaGroup/bull/master/docs/site/resources/images/bell.png
+          SLACK_TITLE: "BULL version: ${{ steps.build_info.outputs.TAG_NAME }} available."
+          SLACK_MESSAGE: "<https://github.com/ExpediaGroup/bull/blob/master/CHANGELOG-JDK11.md|Check out the implemented changes in the *CHANGELOG-JDK11* file>"
+          SLACK_USERNAME: "bull-notifier"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_FOOTER: "Powered by BULL notifier"
