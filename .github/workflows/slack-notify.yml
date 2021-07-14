@@ -1,0 +1,19 @@
+on: push
+name: Slack Notification
+jobs:
+  slackNotification:
+    name: "Slack Notification"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: releases
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_ICON: https://raw.githubusercontent.com/ExpediaGroup/bull/master/docs/site/resources/images/bell.png
+          SLACK_TITLE: Message
+          SLACK_USERNAME: "bull-notifier"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_FOOTER: "Powered by BULL notifier"
+}
