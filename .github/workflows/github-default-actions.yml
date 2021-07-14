@@ -1,4 +1,4 @@
-name: "Build, test and quality check"
+name: "Build"
 on:
   push:
     branches-ignore:
@@ -18,7 +18,7 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Extract build information
+      - name: "Extract build information"
         id: build_info
         run: |
           echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
