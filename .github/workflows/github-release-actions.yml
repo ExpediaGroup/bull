@@ -55,7 +55,7 @@ jobs:
       - name: "Deploy GitHub Pages"
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.SITE_BUILD_TOKEN }}
+          personal_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           publish_dir: ./target/site
           user_name: eg-oss-ci
           user_email: oss@expediagroup.com
