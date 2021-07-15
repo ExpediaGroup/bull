@@ -9,7 +9,7 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: "CodeQL"
+name: "Security check"
 
 on:
   push:
@@ -22,7 +22,7 @@ on:
       - "*/*"
 jobs:
   analyze:
-    name: Analyze
+    name: "Analyze"
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -38,7 +38,7 @@ jobs:
         with:
           java-version: '15'
           distribution: 'adopt'
-      - name: Checkout repository
+      - name: "Checkout repository"
         uses: actions/checkout@v2
       # Initializes the CodeQL tools for scanning.
       - name: "Initialize CodeQL"
