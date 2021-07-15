@@ -14,7 +14,7 @@
             <gitHub>
                 <projectId>ExpediaGroup/bull</projectId>
                 <ribbonOrientation>right</ribbonOrientation>
-                <ribbonColor>#cf2d35</ribbonColor>
+                <ribbonColor>#00019B</ribbonColor>
             </gitHub>
         </fluidoSkin>
     </custom>
