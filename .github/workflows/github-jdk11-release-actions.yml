@@ -23,7 +23,7 @@ jobs:
           echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
           echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
-      - name: "Set up JDK 11"
+      - name: "JDK 11 set-up"
         uses: actions/setup-java@v2
         with:
           java-version: '11'
