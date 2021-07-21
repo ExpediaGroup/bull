@@ -46,10 +46,6 @@ jobs:
         with:
           java-version: '15'
           distribution: 'adopt'
-      - name: "Initialize CodeQL"
-        uses: github/codeql-action/init@v1
-        with:
-          languages: 'java'
       - name: "Quality check"
         env:
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
@@ -62,4 +58,28 @@ jobs:
           mvn jacoco:report-aggregate coveralls:report -DrepoToken=$COVERALLS_TOKEN -P compatibility-mode
           mvn verify sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dsonar.branch.name=$SOURCE_BRANCH -P compatibility-mode
       - name: "Security check"
+        uses: github/codeql-action/analyze@v1
+  security-check:
+    name: "Security check"
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+      - name: "JDK set-up"
+        uses: actions/setup-java@v2
+        with:
+          java-version: '15'
+          distribution: 'adopt'
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+      # Initializes the CodeQL tools for scanning.
+      - name: "Initialize CodeQL"
+        uses: github/codeql-action/init@v1
+        with:
+          languages: 'java'
+      - run: |
+          mvn clean verify
+      - name: "Perform Analysis"
         uses: github/codeql-action/analyze@v1
