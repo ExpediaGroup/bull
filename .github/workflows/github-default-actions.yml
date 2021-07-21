@@ -54,6 +54,5 @@ jobs:
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
         run: |
-          mvn test -P compatibility-mode
+          mvn test sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dsonar.branch.name=$SOURCE_BRANCH -P compatibility-mode -P compatibility-mode
           mvn jacoco:report-aggregate coveralls:report -DrepoToken=$COVERALLS_TOKEN -P compatibility-mode
-          mvn sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dsonar.branch.name=$SOURCE_BRANCH -P compatibility-mode
