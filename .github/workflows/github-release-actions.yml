@@ -28,7 +28,7 @@ jobs:
           TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
         run: |
           mvn versions:set -D newVersion=${TAG_NAME}
-      - name: "Set up JDK 15"
+      - name: "JDK set-up"
         uses: actions/setup-java@v2
         with:
           java-version: '15'
