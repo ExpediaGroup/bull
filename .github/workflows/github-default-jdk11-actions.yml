@@ -8,7 +8,7 @@ on:
       - "*"
 jobs:
   build:
-    name: "Build and test"
+    name: "Build"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,18 +18,16 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: "Set up JDK 11"
+      - name: "JDK 11 set-up"
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: "Build and Test"
-        env:
-          COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+      - name: "Build"
         run: |
-          mvn clean install jacoco:report-aggregate coveralls:report -DrepoToken=$COVERALLS_TOKEN -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
+          mvn clean install -B -DskipTests -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
   quality-check:
-    name: "Quality check"
+    name: "Test and quality check"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -43,7 +41,7 @@ jobs:
         id: build_info
         run: |
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
-      - name: "Set up JDK 11"
+      - name: "JDK 11 set-up"
         uses: actions/setup-java@v2
         with:
           java-version: '11'
@@ -54,5 +52,38 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
+          COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
         run: |
-          mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dsonar.branch.name=$SOURCE_BRANCH -P compatibility-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+          mvn verify -P compatibility-mode
+          mvn jacoco:report-aggregate coveralls:report -DrepoToken=$COVERALLS_TOKEN -P compatibility-mode
+          mvn sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dsonar.branch.name=$SOURCE_BRANCH -P compatibility-mode
+  security-check:
+    name: "Security check"
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+      - name: "Cache Maven repository"
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: "JDK 11 set-up"
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+      # Initializes the CodeQL tools for scanning.
+      - name: "Initialize CodeQL"
+        uses: github/codeql-action/init@v1
+        with:
+          languages: 'java'
+      - run: |
+          mvn clean install -B -DskipTests -P fast
+      - name: "Perform Analysis"
+        uses: github/codeql-action/analyze@v1
