@@ -78,6 +78,6 @@ jobs:
         with:
           languages: 'java'
       - run: |
-          mvn clean verify
+          mvn clean install -B -DskipTests -P compatibility-mode
       - name: "Perform Analysis"
         uses: github/codeql-action/analyze@v1
