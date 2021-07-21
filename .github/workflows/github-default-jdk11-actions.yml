@@ -69,10 +69,10 @@ jobs:
       matrix:
         language: [ 'java' ]
     steps:
-      - name: "JDK set-up"
+      - name: "JDK 11 set-up"
         uses: actions/setup-java@v2
         with:
-          java-version: '15'
+          java-version: '11'
           distribution: 'adopt'
       - name: "Checkout repository"
         uses: actions/checkout@v2
