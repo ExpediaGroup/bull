@@ -64,10 +64,6 @@ jobs:
       actions: read
       contents: read
       security-events: write
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'java' ]
     steps:
       - name: "JDK set-up"
         uses: actions/setup-java@v2
@@ -80,8 +76,8 @@ jobs:
       - name: "Initialize CodeQL"
         uses: github/codeql-action/init@v1
         with:
-          languages: ${{ matrix.language }}
+          languages: 'java'
       - run: |
-          ./mvnw clean verify
+          mvn clean verify
       - name: "Perform Analysis"
         uses: github/codeql-action/analyze@v1
