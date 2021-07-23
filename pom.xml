@@ -78,7 +78,7 @@
         <github.global.server>github</github.global.server>
         <maven.site.plugin.version>3.9.1</maven.site.plugin.version>
         <!-- build settings -->
-        <maven.required.version>[3.3.9,)</maven.required.version>
+        <maven.required.version>[3.8.1,)</maven.required.version>
         <maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version>
         <maven.javadoc-plugin.version>3.3.0</maven.javadoc-plugin.version>
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
