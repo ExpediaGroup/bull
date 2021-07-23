@@ -17,7 +17,7 @@ It's the only library able to transform Mutable, Immutable, and Mixed bean witho
 [![GitHub site](https://img.shields.io/badge/GitHub-site-blue.svg)](https://opensource.expediagroup.com/bull/)
 [![Coverage Status](https://coveralls.io/repos/github/ExpediaGroup/bull/badge.svg?branch=master)](https://coveralls.io/github/ExpediaGroup/bull?branch=master)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=security_rating)](https://sonarcloud.io/dashboard?id=BULL)
-![GitHub license](https://img.shields.io/github/license/ExpediaGroup/bull.svg)
+[![License](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)](https://opensource.org/licenses/Apache-2.0)
 
 All BULL modules are available on Maven Central: 
 
