@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.0.0-jdk11] 2021.07.23
+#### Adds
+* Renames the package from `com.hotels` to `com.expediagroup`
+
 ### [1.7.7] 2021.06.23
 #### Changed
 * Fixes an issue that was preventing the transformation of Object type fields
@@ -69,11 +73,12 @@ All notable changes to this project will be documented in this file.
 
 ### [1.6.0.2] 2019.10.30
 ### Removed
+
 * Removed deprecated module `bean-utils-library`, the new one is: `bean-bean-transformer`
 * The following deprecated classes has been removed:
-    * `com.hotels.beans.model.FieldMapping`
-    * `com.hotels.beans.model.FieldTransformer`
-    * `com.hotels.beans.Transformer`
+  * `com.expediagroup.beans.model.FieldMapping`
+  * `com.expediagroup.beans.model.FieldTransformer`
+  * `com.expediagroup.beans.Transformer`
 ### Added
 * New specific exception in case the Field Transformation function defined is not valid
 * Implemented a new functionality that allows to transform also Map object applying transformation function and mappings
@@ -86,7 +91,7 @@ All notable changes to this project will be documented in this file.
 * **The module `bean-utils-library` has been deprecated and will be no longer available since version `1.6.0`, use `bull-bean-transformer` instead.**
     ```xml
     <dependency>
-        <groupId>com.hotels.beans</groupId>
+        <groupId>com.expediagroup.beans</groupId>
         <artifactId>bull-bean-transformer</artifactId>
         <version>x.y.z</version>
     </dependency>
@@ -95,10 +100,10 @@ All notable changes to this project will be documented in this file.
 * The following classes has been deprecated, please find below the complete list and the new one to be used:
 
   | Deprecated | **New one** |
-      | :----------- | :----------- |
-  | `com.hotels.beans.model.FieldMapping` | `com.hotels.transformer.model.FieldMapping` |
-  | `com.hotels.beans.model.FieldTransformer` | `com.hotels.transformer.model.FieldTransformer` |
-  | `com.hotels.beans.Transformer` | `com.hotels.transformer.Transformer` |
+        | :----------- | :----------- |
+  | `com.expediagroup.beans.model.FieldMapping` | `FieldMapping` |
+  | `com.expediagroup.beans.model.FieldTransformer` | `FieldTransformer` |
+  | `com.expediagroup.beans.Transformer` | `Transformer` |
 
 ### [1.5.0] 2019.08.06
 #### Added

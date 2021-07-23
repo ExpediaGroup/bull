@@ -7,9 +7,9 @@
     <description>Contains all classes required from more than one module</description>
 
     <parent>
-        <groupId>com.hotels.beans</groupId>
+        <groupId>com.expediagroup.beans</groupId>
         <artifactId>bean-utils-library-parent</artifactId>
-        <version>2.0.2-SNAPSHOT</version>
+        <version>2.1.1-SNAPSHOT</version>
     </parent>
 
     <dependencies>

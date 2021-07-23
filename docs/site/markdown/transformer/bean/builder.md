@@ -41,7 +41,7 @@ public class ItemType {
             return this;
         }
 
-        public com.hotels.transformer.model.ItemType build() {
+        public com.expediagroup.transformer.model.ItemType build() {
             return new ItemType(this.objectClass, this.genericClass);
         }
     }
@@ -85,7 +85,7 @@ public class ItemType {
             return this;
         }
 
-        public com.hotels.transformer.model.ItemType build() {
+        public com.expediagroup.transformer.model.ItemType build() {
             return new ItemType(this);
         }
     }

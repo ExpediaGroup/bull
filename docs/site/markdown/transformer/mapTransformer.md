@@ -15,7 +15,7 @@ You can obtain BULL from Maven Central:
 
 ```xml
 <dependency>
-    <groupId>com.hotels.beans</groupId>
+    <groupId>com.expediagroup.beans</groupId>
     <artifactId>bull-map-transformer</artifactId>
     <version>x.y.z</version>
 </dependency>
