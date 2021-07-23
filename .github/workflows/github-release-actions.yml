@@ -1,0 +1,79 @@
+name: BULL Release
+on:
+  push:
+    branches:
+      - "!*"
+    tags-ignore:
+      - "*-jdk11"
+jobs:
+  job:
+    name: "BULL Release"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Cache Maven repository"
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: "Extract build information"
+        id: build_info
+        run: |
+          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
+          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
+          echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+      - name: "Project version set"
+        env:
+          TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}
+        run: |
+          mvn versions:set -D newVersion=${TAG_NAME}
+      - name: "JDK set-up"
+        uses: actions/setup-java@v2
+        with:
+          java-version: '15'
+          distribution: 'adopt'
+          server-id: oss-sonatype # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: HCOM_SONATYPE_USERNAME # env variable for username in deploy
+          server-password: HCOM_SONATYPE_PASSWORD # env variable for token in deploy
+          # only signed artifacts will be released to maven central. this sets up things for the maven-gpg-plugin
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
+          gpg-passphrase: GPG_PASSPHRASE # env variable for GPG private key passphrase
+          settings-path: ${{ github.workspace }}
+      - name: "Quality check"
+        env:
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mvn install sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -P compatibility-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+      - name: "Site build"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mvn site:site javadoc:aggregate -P site-release -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q -DskipTests=true
+      - name: "Deploy GitHub Pages"
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          publish_dir: ./target/site
+          user_name: eg-oss-ci
+          user_email: oss@expediagroup.com
+      - name: "Release artifacts"
+        env:
+          HCOM_SONATYPE_USERNAME: ${{ secrets.HCOM_SONATYPE_USERNAME }}
+          HCOM_SONATYPE_PASSWORD: ${{ secrets.HCOM_SONATYPE_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
+        run: |
+          mvn deploy --settings $GITHUB_WORKSPACE/settings.xml -B -U -P release -DskipTests=true
+      - name: "Send Slack Notification"
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: releases
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_ICON: https://raw.githubusercontent.com/ExpediaGroup/bull/master/docs/site/resources/images/bell.png
+          SLACK_TITLE: "BULL version: ${{ steps.build_info.outputs.TAG_NAME }} available."
+          SLACK_MESSAGE: "<https://github.com/ExpediaGroup/bull/blob/master/CHANGELOG.md|Check out the implemented changes in the *CHANGELOG* file>"
+          SLACK_USERNAME: "bull-notifier"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_FOOTER: "Powered by BULL notifier"
