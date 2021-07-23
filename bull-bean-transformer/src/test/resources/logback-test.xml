@@ -31,9 +31,9 @@
         <appender-ref ref="THIRD_PARTY_SERVICE_APPENDER" />
     </logger>
 
-    <logger name="com.hotels.beans" level="INFO" additivity="false">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="MAIN_APPENDER" />
+    <logger name="com.expediagroup.beans" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="MAIN_APPENDER"/>
     </logger>
 
     <root level="INFO">
