@@ -6,20 +6,20 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>com.hotels.beans</groupId>
+        <groupId>com.expediagroup.beans</groupId>
         <artifactId>bean-utils-library-parent</artifactId>
-        <version>2.0.2-SNAPSHOT</version>
+        <version>2.1.1-SNAPSHOT</version>
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>com.hotels.beans</groupId>
+            <groupId>com.expediagroup.beans</groupId>
             <artifactId>bull-converter</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- test dependencies -->
         <dependency>
-            <groupId>com.hotels.beans</groupId>
+            <groupId>com.expediagroup.beans</groupId>
             <artifactId>bull-common</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>

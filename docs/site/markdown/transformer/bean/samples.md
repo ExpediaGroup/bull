@@ -494,4 +494,5 @@ And one line code as:
 var toBean = beanUtils.getTransformer().transform(fromBean, RecordToFoo.class);
 ```
 
-More sample beans can be found in the test package: `com.hotels.beans.sample` or on DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)
+More sample beans can be found in the test package: `com.expediagroup.beans.sample` or on
+DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)
