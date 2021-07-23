@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 
 ### [2.0.0-jdk11] 2021.07.23
-
 #### Adds
-
 * Renames the package from `com.hotels` to `com.expediagroup`
 
 ### [1.7.7] 2021.06.23
-
 #### Changed
-
 * Fixes an issue that was preventing the transformation of Object type fields
 
 ### [1.7.6] 2021.01.11
-
 #### Added
-
 * Provides new module `bull-bom` that includes all the project modules
 
 ### [1.7.4] 2020.10.07
