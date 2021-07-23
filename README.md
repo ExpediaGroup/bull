@@ -9,8 +9,8 @@ It's the only library able to transform Mutable, Immutable, and Mixed bean witho
 
 ## Start using
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer/badge.svg?subject=maven-central&color=blue)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer)
-[![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bull-bean-transformer.svg?color=blue)](http://www.javadoc.io/doc/com.hotels.beans/bull-bean-transformer)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.expediagroup.beans/bull-bean-transformer/badge.svg?subject=maven-central&color=blue)](https://maven-badges.herokuapp.com/maven-central/com.expediagroup.beans/bull-bean-transformer)
+[![Javadocs](http://www.javadoc.io/badge/com.expediagroup.beans/bull-bean-transformer.svg?color=blue)](http://www.javadoc.io/doc/com.expediagroup.beans/bull-bean-transformer)
 [![Build Status](https://github.com/ExpediaGroup/bull/actions/workflows/github-default-actions.yml/badge.svg?branch=master)](https://github.com/ExpediaGroup/bull/actions)
 [![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk)
 
@@ -26,8 +26,9 @@ All BULL modules are available on Maven Central:
 It contains all the modules available in the project
 
 ```xml
+
 <dependency>
-    <groupId>com.hotels.beans</groupId>
+    <groupId>com.expediagroup.beans</groupId>
     <artifactId>bull-bom</artifactId>
     <version>x.y.z</version>
 </dependency>
@@ -36,8 +37,9 @@ It contains all the modules available in the project
 * ### Bean Transformer
 
 ```xml
+
 <dependency>
-    <groupId>com.hotels.beans</groupId>
+    <groupId>com.expediagroup.beans</groupId>
     <artifactId>bull-bean-transformer</artifactId>
     <version>x.y.z</version>
 </dependency>
@@ -46,8 +48,9 @@ It contains all the modules available in the project
 * ### `Map` Transformer
 
 ```xml
+
 <dependency>
-    <groupId>com.hotels.beans</groupId>
+    <groupId>com.expediagroup.beans</groupId>
     <artifactId>bull-map-transformer</artifactId>
     <version>x.y.z</version>
 </dependency>
@@ -677,7 +680,7 @@ public class ItemType {
             return this;
         }
 
-        public com.hotels.transformer.model.ItemType build() {
+        public ItemType build() {
             return new ItemType(this.objectClass, this.genericClass);
         }
     }
@@ -721,7 +724,7 @@ public class ItemType {
             return this;
         }
 
-        public com.hotels.transformer.model.ItemType build() {
+        public ItemType build() {
             return new ItemType(this);
         }
     }
@@ -754,7 +757,7 @@ var toBean = beanUtils.getTransformer().transform(fromBean, RecordToFoo.class);
 
 * the class's fields that have to be copied must not be static
 
-More sample beans can be found in the test package: `com.hotels.beans.sample`
+More sample beans can be found in the test package: `com.expediagroup.beans.sample`
 
 ## Third-party library comparison
 

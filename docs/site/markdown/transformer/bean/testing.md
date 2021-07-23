@@ -79,9 +79,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
-import com.hotels.beans.transformer.BeanUtils;
-import com.hotels.transformer.Transformer;
-import com.hotels.transformer.error.InvalidBeanException;
+import com.expediagroup.beans.transformer.BeanUtils;
+import com.expediagroup.transformer.Transformer;
+import com.expediagroup.transformer.error.InvalidBeanException;
 
 /**
  * Unit test for {@link SampleClass}.
@@ -196,9 +196,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
-import com.hotels.beans.transformer.BeanUtils;
-import com.hotels.transformer.Transformer;
-import com.hotels.transformer.error.InvalidBeanException;
+import com.expediagroup.beans.transformer.BeanUtils;
+import com.expediagroup.transformer.Transformer;
+import com.expediagroup.transformer.error.InvalidBeanException;
 
 /**
  * Unit test for {@link SampleClass}.
@@ -315,7 +315,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
-import com.hotels.beans.transformer.BeanUtils;
+import com.expediagroup.beans.transformer.BeanUtils;
 
 /**
  * Unit test for {@link SampleClass}.

@@ -31,9 +31,9 @@
         <appender-ref ref="THIRD_PARTY_SERVICE_APPENDER" />
     </logger>
 
-    <logger name="com.hotels.map" level="INFO" additivity="false">
-        <appender-ref ref="MAIN_APPENDER" />
-        <appender-ref ref="STDOUT" />
+    <logger name="com.expediagroup.map" level="INFO" additivity="false">
+        <appender-ref ref="MAIN_APPENDER"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
 
     <root level="INFO">
