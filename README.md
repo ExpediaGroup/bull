@@ -9,16 +9,16 @@ It's the only library able to transform Mutable, Immutable, and Mixed bean witho
 
 ## Start using
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer/badge.svg?subject=maven-central&color=blue)](https://maven-badges.herokuapp.com/maven-central/com.hotels.beans/bull-bean-transformer)
-[![Javadocs](http://www.javadoc.io/badge/com.hotels.beans/bull-bean-transformer.svg?color=blue)](http://www.javadoc.io/doc/com.hotels.beans/bull-bean-transformer)
-[![Build Status](https://travis-ci.com/HotelsDotCom/bull.svg?branch=master)](https://travis-ci.com/HotelsDotCom/bull)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.expediagroup.beans/bull-bean-transformer/badge.svg?subject=maven-central&color=blue)](https://maven-badges.herokuapp.com/maven-central/com.expediagroup.beans/bull-bean-transformer)
+[![Javadocs](http://www.javadoc.io/badge/com.expediagroup.beans/bull-bean-transformer.svg?color=blue)](http://www.javadoc.io/doc/com.expediagroup.beans/bull-bean-transformer)
+[![Build Status](https://travis-ci.com/ExpediaGroup/bull.svg?branch=master)](https://travis-ci.com/ExpediaGroup/bull)
 [![Join the chat at https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk](https://img.shields.io/badge/chat-on%20slack-ff69b4.svg)](https://join.slack.com/t/bull-crew/shared_invite/enQtNjM1MTE5ODg1MTQzLWI5ODhhYTQ2OWQxODgwYzU1ODMxMWJiZDkzODM3OTJkZjBlM2MwMTI3ZWZjMmU0OGZmN2RmNjg4NWI2NTMzOTk)
 
-[![GitHub site](https://img.shields.io/badge/GitHub-site-blue.svg)](https://hotelsdotcom.github.io/bull/)
-[![Coverage Status](https://coveralls.io/repos/github/HotelsDotCom/bull/badge.svg?branch=master)](https://coveralls.io/github/HotelsDotCom/bull?branch=master)
+[![GitHub site](https://img.shields.io/badge/GitHub-site-blue.svg)](https://ExpediaGroup.github.io/bull/)
+[![Coverage Status](https://coveralls.io/repos/github/ExpediaGroup/bull/badge.svg?branch=master)](https://coveralls.io/github/ExpediaGroup/bull?branch=master)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=security_rating)](https://sonarcloud.io/dashboard?id=BULL)
-![GitHub license](https://img.shields.io/github/license/HotelsDotCom/bull.svg)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=HotelsDotCom/bull)](https://dependabot.com)
+![GitHub license](https://img.shields.io/github/license/ExpediaGroup/bull.svg)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ExpediaGroup/bull)](https://dependabot.com)
 
 All BULL modules are available on Maven Central: 
 
@@ -28,7 +28,7 @@ It contains all the modules available in the project
 
 ```xml
 <dependency>
-    <groupId>com.hotels.beans</groupId>
+    <groupId>com.expediagroup.beans</groupId>
     <artifactId>bull-bom</artifactId>
     <version>x.y.z</version>
 </dependency>
@@ -38,7 +38,7 @@ It contains all the modules available in the project
 
 ```xml
 <dependency>
-    <groupId>com.hotels.beans</groupId>
+    <groupId>com.expediagroup.beans</groupId>
     <artifactId>bull-bean-transformer</artifactId>
     <version>x.y.z</version>
 </dependency>
@@ -48,7 +48,7 @@ It contains all the modules available in the project
 
 ```xml
 <dependency>
-    <groupId>com.hotels.beans</groupId>
+    <groupId>com.expediagroup.beans</groupId>
     <artifactId>bull-map-transformer</artifactId>
     <version>x.y.z</version>
 </dependency>
@@ -148,12 +148,12 @@ mvnw.cmd versions:display-dependency-updates -P check-for-updates
 
 # Feature samples
 
-* [Bean Transformation](https://github.com/HotelsDotCom/bull#bean-transformation-samples)
-* [Bean Validation](https://github.com/HotelsDotCom/bull#validation-samples)
-* [Primitive Type conversion](https://github.com/HotelsDotCom/bull#primitive-type-object-converter)
-* [Map Transformation](https://hotelsdotcom.github.io/bull/transformer/map/samples.html)
-* [Supported Builder Pattern](https://hotelsdotcom.github.io/bull/transformer/bean/builder.html)
-* [How to use it in Kotlin](https://hotelsdotcom.github.io/bull/kotlin.html)
+* [Bean Transformation](https://github.com/ExpediaGroup/bull#bean-transformation-samples)
+* [Bean Validation](https://github.com/ExpediaGroup/bull#validation-samples)
+* [Primitive Type conversion](https://github.com/ExpediaGroup/bull#primitive-type-object-converter)
+* [Map Transformation](https://ExpediaGroup.github.io/bull/transformer/map/samples.html)
+* [Supported Builder Pattern](https://ExpediaGroup.github.io/bull/transformer/bean/builder.html)
+* [How to use it in Kotlin](https://ExpediaGroup.github.io/bull/kotlin.html)
 
 ## Bean transformation samples
 
@@ -674,7 +674,7 @@ public class ItemType {
             return this;
         }
 
-        public com.hotels.transformer.model.ItemType build() {
+        public ItemType build() {
             return new ItemType(this.objectClass, this.genericClass);
         }
     }
@@ -718,7 +718,7 @@ public class ItemType {
             return this;
         }
 
-        public com.hotels.transformer.model.ItemType build() {
+        public ItemType build() {
             return new ItemType(this);
         }
     }
@@ -751,7 +751,7 @@ var toBean = beanUtils.getTransformer().transform(fromBean, RecordToFoo.class);
 
 * the class's fields that have to be copied must not be static
 
-More sample beans can be found in the test package: `com.hotels.beans.sample`
+More sample beans can be found in the test package: `com.expediagroup.beans.sample`
 
 ## Third-party library comparison
 
@@ -939,11 +939,11 @@ byte converted = conversionFunction.map(processor -> processor.apply(c)).orElse(
 
 ## `Map` transformation samples
 
-Samples on how to transform a `Map` and all others function applicable to it can be viewed [here](https://hotelsdotcom.github.io/bull/transformer/mapTransformer.html)
+Samples on how to transform a `Map` and all others function applicable to it can be viewed [here](https://ExpediaGroup.github.io/bull/transformer/mapTransformer.html)
 
 ## Documentation
 
-Detailed project documentation is available [here](https://hotelsdotcom.github.io/bull), including some samples for [testing the library](https://hotelsdotcom.github.io/bull/transformer/testing.html) inside your project.
+Detailed project documentation is available [here](https://ExpediaGroup.github.io/bull), including some samples for [testing the library](https://ExpediaGroup.github.io/bull/transformer/testing.html) inside your project.
 
 An article that explains how it works, with suggestion and examples is available on DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li) 
 
@@ -965,12 +965,12 @@ All the instructions for releasing a new version are available at [RELEASES.md](
 
 ## Badge your project
 
-[![Bull enabled](https://img.shields.io/badge/bull-enabled-red)](https://github.com/HotelsDotCom/bull)
+[![Bull enabled](https://img.shields.io/badge/bull-enabled-red)](https://github.com/ExpediaGroup/bull)
 
 Add the following snippet in your Markdown file:
 
 ```
-[![Bull enabled](https://img.shields.io/badge/bull-enabled-red)](https://github.com/HotelsDotCom/bull)
+[![Bull enabled](https://img.shields.io/badge/bull-enabled-red)](https://github.com/ExpediaGroup/bull)
 ```
 
 ## Support

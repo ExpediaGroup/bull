@@ -13,7 +13,7 @@ Add the project dependency into your `pom.xml` file:
 
 ```xml
 <dependency>
-    <groupId>com.hotels.beans</groupId>
+    <groupId>com.expediagroup.beans</groupId>
     <artifactId>bull-bean-transformer</artifactId>
     <version>x.y.z</version>
 </dependency>
