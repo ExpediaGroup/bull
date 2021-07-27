@@ -2,12 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.0.1-jdk11] TBD
+
+#### Changed
+
+* Updated `eg-oss-parent` version to `2.4.1` (was `2.4.0`).
+
 ### [2.0.0-jdk11] 2021.07.23
+
 #### Adds
+
 * Renames the package from `com.hotels` to `com.expediagroup`
 
 ### [1.7.7] 2021.06.23
+
 #### Changed
+
 * Fixes an issue that was preventing the transformation of Object type fields
 
 ### [1.7.6] 2021.01.11
