@@ -58,6 +58,7 @@
         <assertj-core.version>3.20.2</assertj-core.version>
         <!-- validation dependencies -->
         <hibernate-validator.version>7.0.1.Final</hibernate-validator.version>
+        <jboss-logging.version>3.4.2.Final</jboss-logging.version>
         <slf4j-api.version>1.7.32</slf4j-api.version>
         <glassfish.jakarta.el.version>4.0.1</glassfish.jakarta.el.version>
         <!-- JaCoCo & Sonar properties -->
@@ -142,6 +143,11 @@
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging</artifactId>
+                <version>${jboss-logging.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.glassfish</groupId>
