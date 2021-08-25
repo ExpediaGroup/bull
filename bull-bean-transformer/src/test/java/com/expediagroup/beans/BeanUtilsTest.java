@@ -70,7 +70,7 @@ public class BeanUtilsTest {
         final BeanTransformer transformer = underTest.getTransformer();
 
         // THEN
-        assertThat(transformer).isNull();
+        assertThat(transformer).isNotNull();
     }
 
     /**
