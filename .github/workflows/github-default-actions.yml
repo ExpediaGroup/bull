@@ -50,6 +50,7 @@ jobs:
         uses: nick-invision/retry@v2
         with:
           max_attempts: 3
+          timeout_minutes: 5
           command: |
             mvn verify -P compatibility-mode
             mvn jacoco:report-aggregate coveralls:report -DrepoToken=$COVERALLS_TOKEN -P compatibility-mode
