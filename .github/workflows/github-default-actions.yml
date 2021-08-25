@@ -26,7 +26,7 @@ jobs:
       - name: "Build"
         run: |
           mvn clean install -B -DskipTests -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
-  quality-check:
+  test-and-quality-check:
     name: "Test and quality check"
     runs-on: ubuntu-latest
     steps:
@@ -46,17 +46,20 @@ jobs:
         with:
           java-version: '15'
           distribution: 'adopt'
-      - name: "Quality check"
+      - name: "Test and Quality check"
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: 3
+          timeout_minutes: 5
+          retry_on: error
+          command: |
+            mvn verify jacoco:report-aggregate coveralls:report -D repoToken=$COVERALLS_TOKEN sonar:sonar -D sonar.projectKey=BULL -D sonar.organization=$SONAR_ORGANIZATION -D sonar.host.url=https://sonarcloud.io -D sonar.login=$SONAR_TOKEN -D sonar.branch.name=$SOURCE_BRANCH -P compatibility-mode
         env:
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
-        run: |
-          mvn verify -P compatibility-mode
-          mvn jacoco:report-aggregate coveralls:report -DrepoToken=$COVERALLS_TOKEN -P compatibility-mode
-          mvn sonar:sonar -Dsonar.projectKey=BULL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dsonar.branch.name=$SOURCE_BRANCH -P compatibility-mode
   security-check:
     name: "Security check"
     runs-on: ubuntu-latest
