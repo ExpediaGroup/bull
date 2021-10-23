@@ -61,7 +61,7 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
      * Contains both the field name mapping and the lambda function to be applied on fields.
      */
     @Getter
-    protected final S settings;
+    protected S settings;
 
     /**
      * Default constructor.
@@ -140,5 +140,14 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
     public final void resetFieldsTransformer() {
         settings.getFieldsTransformers().clear();
         cacheManager.removeMatchingKeys(transformerFunctionRegex);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public final void reset() {
+        settings = (S) new TransformerSettings<>();
     }
 }

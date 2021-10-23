@@ -59,7 +59,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
     private static final String CLASS_UTILS_FIELD_NAME = "classUtils";
     private static final String INJECT_VALUES_METHOD_NAME = "injectValues";
     private static final String NESTED_OBJECT_NAME_FIELD_NAME = "nestedObject.name";
-    private static final String ACTIVE_FIELD_NAME = "active";
     private static final String CODE_FIELD_NAME = "code";
 
     /**

@@ -5,7 +5,7 @@
 ## Bean Utils Light Library
 
 BULL is a Java Bean to Java Bean transformer that recursively copies data from one object to another, it is generic, flexible, reusable, configurable, and incredibly fast.
-It's the only library able to transform Mutable, Immutable, and Mixed bean without any custom configuration. 
+It's the only library able to transform Mutable, Immutable, and Mixed bean without any custom configuration.
 
 ## Start using
 
@@ -19,7 +19,7 @@ It's the only library able to transform Mutable, Immutable, and Mixed bean witho
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=security_rating)](https://sonarcloud.io/dashboard?id=BULL)
 [![License](https://img.shields.io/github/license/ExpediaGroup/bull.svg)](https://img.shields.io/github/license/ExpediaGroup/bull.svg)
 
-All BULL modules are available on Maven Central: 
+All BULL modules are available on Maven Central:
 
 * ### Bean BOM
 
@@ -166,16 +166,16 @@ mvnw.cmd versions:display-dependency-updates -P check-for-updates
 ### Simple case:
 
 ```java
-public class FromBean {                                     public class ToBean {                           
-   private final String name;                                  @NotNull                   
-   private final BigInteger id;                                public BigInteger id;                      
-   private final List<FromSubBean> subBeanList;                private final String name;                 
-   private List<String> list;                                  private final List<String> list;                    
-   private final FromSubBean subObject;                        private final List<ToSubBean> subBeanList;                    
-                                                               private ImmutableToSubFoo subObject;
-   
-   // all constructors                                         // all args constructor
-   // getters and setters...                                   // getters and setters... 
+public class FromBean {                                     public class ToBean {
+    private final String name;                                  @NotNull
+    private final BigInteger id;                                public BigInteger id;
+    private final List<FromSubBean> subBeanList;                private final String name;
+    private List<String> list;                                  private final List<String> list;
+    private final FromSubBean subObject;                        private final List<ToSubBean> subBeanList;
+    private ImmutableToSubFoo subObject;
+
+    // all constructors                                         // all args constructor
+    // getters and setters...                                   // getters and setters... 
 }    
 ```
 And one line code as:
@@ -187,30 +187,30 @@ ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
 
 From class and To class with different field names:
 ```java
-public class FromBean {                                     public class ToBean {                           
-                                                                                       
-   private final String name;                                  private final String differentName;                   
-   private final int id;                                       private final int id;                      
-   private final List<FromSubBean> subBeanList;                private final List<ToSubBean> subBeanList;                 
-   private final List<String> list;                            private final List<String> list;                    
-   private final FromSubBean subObject;                        private final ToSubBean subObject;                    
-    
-   // getters...
-                                                               public ToBean(final String differentName, 
-                                                                        final int id,
+public class FromBean {                                     public class ToBean {
+
+    private final String name;                                  private final String differentName;
+    private final int id;                                       private final int id;
+    private final List<FromSubBean> subBeanList;                private final List<ToSubBean> subBeanList;
+    private final List<String> list;                            private final List<String> list;
+    private final FromSubBean subObject;                        private final ToSubBean subObject;
+
+    // getters...
+    public ToBean(final String differentName,
+                  final int id,
 }                                                                       final List<ToSubBean> subBeanList,
-                                                                        final List<String> list,
-                                                                        final ToSubBean subObject) {
-                                                                        this.differentName = differentName;
-                                                                        this.id = id;
-                                                                        this.subBeanList = subBeanList;
-                                                                        this.list = list;
-                                                                        this.subObject = subObject; 
-                                                                    }
-                                                                
-                                                                    // getters...           
-                                              
-                                                                }
+    final List<String> list,
+    final ToSubBean subObject) {
+        this.differentName = differentName;
+        this.id = id;
+        this.subBeanList = subBeanList;
+        this.list = list;
+        this.subObject = subObject;
+    }
+
+    // getters...           
+
+}
 ```
 And one line code as:
 
@@ -218,34 +218,80 @@ And one line code as:
 beanUtils.getTransformer().withFieldMapping(new FieldMapping<>("name", "differentName")).transform(fromBean, ToBean.class);                                                               
 ```
 
+it is also possible to map a field in the source class into multiple fields in the destination object.
+
+Given the following source class:
+
+```
+public class SourceClass {
+    private final String name;
+    private final int id;
+}
+```
+
+the following destination class:
+
+```
+public class DestinationClass {
+    private final String name;
+    private final int id;
+    private final int index;
+}
+``` 
+
+and the following operations:
+
+```
+var sourceObj = new SourceClass("foo", 123);
+
+var multipleFieldMapping = new FieldMapping<>("id", "index", "identifier");
+
+var destObj = new BeanUtils().getBeanTransformer()
+                     .withFieldMapping(multipleFieldMapping)
+                     .transform(sourceObj, DestinationClass.class);
+
+System.out.println("name = " + destObj.getName());
+System.out.println("id = " + destObj.getId());
+System.out.println("index = " + destObj.getIndex());
+``` 
+
+the output will be:
+
+```
+name = foo
+id = 123
+index = 123
+```
+
+
 ### Mapping destination fields with correspondent fields contained inside one of the nested objects in the source object:
 
 Assuming that the object `FromSubBean` is declared as follow:
 ```java
-public class FromSubBean {                         
-                                                                                       
-   private String serialNumber;                 
-   private Date creationDate;                    
-   
-   // getters and setters... 
-   
+public class FromSubBean {
+
+    private String serialNumber;
+    private Date creationDate;
+
+    // getters and setters... 
+
 }
 ```
 and our source object and destination object are described as follow:
 ```java
-public class FromBean {                                     public class ToBean {                           
-                                                                                       
-   private final int id;                                       private final int id;                      
-   private final String name;                                  private final String name;                   
-   private final FromSubBean subObject;                        private final String serialNumber;                 
-                                                               private final Date creationDate;                    
-   
-   // all args constructor                                     // all args constructor
-   // getters...                                               // getters... 
-   
+public class FromBean {                                     public class ToBean {
+
+    private final int id;                                       private final int id;
+    private final String name;                                  private final String name;
+    private final FromSubBean subObject;                        private final String serialNumber;
+    private final Date creationDate;
+
+    // all args constructor                                     // all args constructor
+    // getters...                                               // getters... 
+
 }                                                           }
 ```
-the fields: `serialNumber` and `creationDate` needs to be retrieved from `subObject`, this can be done defining the whole path to the end property:
+the fields: `serialNumber` and `creationDate` needs to be retrieved from `subObject`, this can be done by defining the whole path to the end property:
 ```java  
 FieldMapping serialNumberMapping = new FieldMapping<>("subObject.serialNumber", "serialNumber");                                                             
 FieldMapping creationDateMapping = new FieldMapping<>("subObject.creationDate", "creationDate");
@@ -317,7 +363,7 @@ beanUtils.getTransformer()
 
 ### Assign a default value in case of missing field in the source object:
 
-Assign a default value in case of missing field in the source object:
+Assign a default value in case of a missing field in the source object:
 
 ```java
 public class FromBean {                                     public class ToBean {                           
@@ -339,7 +385,7 @@ ToBean toBean = beanUtils.getTransformer()
 
 ### Disable the default value set for primitive types in case they are null:
 
-BULL by default sets the default value for all primitive types fields in case their value in the source object.
+BULL by default sets the default value for all primitive types fields in case their value is in the source object.
 Given the following Java Bean:
 
 ```java
@@ -355,7 +401,7 @@ public class FromBean {                                     public class ToBean 
 ```
 
 in case the field `id` in the `FromBean` object is `null`, the value assigned the correspondent field in the `ToBean` object will be `0`.
-To disable this you can simply do: 
+To disable this you can simply do:
 
 ```java
 ToBean toBean = beanUtils.getTransformer()
@@ -366,7 +412,7 @@ in this case, the field `id` after the transformation will be `null`
 
 ### Applying a transformation function in case of missing fields in the source object:
 
-Assign a default value in case of missing field in the source object:
+Assign a default value in case of a missing field in the source object:
 
 ```java
 public class FromBean {                                     public class ToBean {                           
@@ -389,7 +435,7 @@ ToBean toBean = beanUtils.getTransformer()
 
 ### Apply a transformation function on a field contained in a nested object:
 
-This example shows off a lambda transformation function that can be applied to a nested object field.
+This example shows how a lambda transformation function can be applied to a nested object field.
 
 Given:
 
@@ -409,7 +455,7 @@ public class ToSubBean {
    private final long index;                    
 }
 ```
-Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as 
+Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as
 follow:
 ```java
 FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("nestedObject.name", StringUtils::capitalize);
@@ -441,7 +487,7 @@ public class ToSubBean {
    // all args constructor
 }  // getters...          
 ```
-Assuming that the value `x` should be mapped into the field: `x` contained into the `ToSubBean` object, the field mapping has to be defined as 
+Assuming that the value `x` should be mapped into the field: `x` contained into the `ToSubBean` object, the field mapping has to be defined as
 follow:
 ```java
 ToBean toBean = beanUtils.getTransformer()
@@ -474,7 +520,7 @@ public class FromSubBean {                                  public class ToSubBe
 }                                                           }
 ```
 Assuming that the lambda transformation function should be applied only to the field: `name` contained in the `ToSubBean` object, the transformation function has to be defined
- as 
+as
 follow:
 ```java
 FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("name", StringUtils::capitalize);
@@ -638,12 +684,12 @@ Transformer transformer = beanUtils.getTransformer()
 ToBean toBean = transformer.transform(fromBean, ToBean.class);
 ```
 
-**IMPORTANT:** The primitive type transformation (if enabled) is executed before any other `FieldTransformer` function defined on a specific field.
+**IMPORTANT:** The primitive type transformation (if enabled) is executed before any other `FieldTransformer` function is defined on a specific field.
 This means that once the `FieldTransformer` function will be executed the field value has already been transformed.
 
 ## Builder supported patterns
 
-The library support the transformation of Java Bean using the following Builder patterns:
+The library supports the transformation of Java Bean using the following Builder patterns:
 
 ### Standard pattern:
 
@@ -731,7 +777,7 @@ public class ItemType {
 }
 ```
 
-It's needed to enable the custom Builder Transformation as following:
+It's needed to enable the custom Builder Transformation as follows:
 
 ```java
 ToBean toBean = new BeanTransformer()
@@ -787,9 +833,9 @@ Following a comparison between the BULL functionalities and the following Third-
 | Annotation field validation | X | - | X | - |
 
 _[*] Immutable types are not supported by Dozer. When a type doesn't have a no-arg constructor and all fields are final, Dozer can't perform the mapping.
-  A workaround is introducing the Builder Pattern. An example can be found [here](http://codeslut.blogspot.com/2010/05/mapping-immutable-value-objects-with.html)_
+A workaround is introducing the Builder Pattern. An example can be found [here](http://codeslut.blogspot.com/2010/05/mapping-immutable-value-objects-with.html)_
 _[+] Requires a custom configuration_
- 
+
 ## Performance
 
 Let's have a look at the performance library performance. The test has been executed on the following objects:
@@ -812,7 +858,7 @@ Transformation time [screenshot](docs/site/resources/images/stats/performance/tr
 
 The Bean Utils library has been tested on a real case scenario integrating it into a real edge service (called BPE).
 The purpose was to compare the latency introduced by the library plus the memory/CPU usage.
-The dashboard's screenshot shows the latency of the invoked downstream service (called BPAS) and the one where the library has been installed (BPE). 
+The dashboard's screenshot shows the latency of the invoked downstream service (called BPAS) and the one where the library has been installed (BPE).
 Following the obtained results:
 
 | | **Classic transformer** | **BeanUtils library** |
@@ -826,7 +872,7 @@ Following the obtained results:
 
 ## Validation samples
 
-Validate a java bean has never been so simple. The library offers different API related to this, following some examples:
+Validating a java bean has never been so simple. The library offers different APIs related to this, following some examples:
 
 ### Validate a Java Bean:
 
@@ -884,7 +930,7 @@ And one line code as:
 List<String> violatedConstraints = beanUtils.getValidator().getConstraintViolationsMessages(sampleBean);
 ```
 
-this will returns a list containing a constraint validation message for the `id` field as it's null and the constraint: `@NotNull` is not met.
+this will return a list containing a constraint validation message for the `id` field as it's null and the constraint: `@NotNull` is not met.
 
 in case it's needed to have the `ConstraintViolation` object:
 ```java
@@ -894,7 +940,7 @@ Set<ConstraintViolation<Object>> violatedConstraints = beanUtils.getValidator().
 ## Primitive type object converter
 
 Converts a given primitive value into the given primitive type.
-The supported types, in which an object can be converted (from / to), are: 
+The supported types, in which an object can be converted (from/to), are:
 
 * `Byte`, `byte` or `byte[]`
 * `Short` or `short`
@@ -951,19 +997,19 @@ Samples on how to transform a `Map` and all others function applicable to it can
 
 Detailed project documentation is available [here](https://opensource.expediagroup.com/bull), including some samples for [testing the library](https://opensource.expediagroup.com/bull/transformer/testing.html) inside your project.
 
-An article that explains how it works, with suggestion and examples is available on DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li) 
+An article that explains how it works, with suggestions and examples, is available on DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)
 
 ## Credits
 
-Created by: [Fabio Borriello](https://github.com/fborriello) with the contribution of: [Patrizio Munzi](https://github.com/patriziomunzi), 
+Created by: [Fabio Borriello](https://github.com/fborriello) with the contribution of: [Patrizio Munzi](https://github.com/patriziomunzi),
 [Andrea Marsiglia](https://github.com/AndreaMars94), [Giorgio Delle Grottaglie](https://github.com/geordie--) & the Hotels.com's Checkout team in Rome.
 
 The application's logo has been designed by Rob Light.
 
 ## Related articles
 
- - DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)
- - InfoQ: [How Expedia Is Getting Rid of Java Bean Transformers](https://www.infoq.com/articles/expedia-rid-of-bean-transformers/) [[EN](https://www.infoq.com/articles/expedia-rid-of-bean-transformers/)] [[PT-BR](https://www.infoq.com/br/articles/expedia-rid-of-bean-transformers/)]
+- DZone: [How to Transform Any Type of Java Bean With BULL](https://dzone.com/articles/how-to-transform-any-type-of-java-bean-with-one-li)
+- InfoQ: [How Expedia Is Getting Rid of Java Bean Transformers](https://www.infoq.com/articles/expedia-rid-of-bean-transformers/) [[EN](https://www.infoq.com/articles/expedia-rid-of-bean-transformers/)] [[PT-BR](https://www.infoq.com/br/articles/expedia-rid-of-bean-transformers/)]
 
 ## Release
 
@@ -989,4 +1035,4 @@ For any question, proposal, or help, please refer to the slack channel: [#bull](
 
 This project is available under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
 
-Copyright 2018-2019 Expedia Inc.
+Copyright 2018-2021 Expedia Inc.

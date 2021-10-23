@@ -162,6 +162,31 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     }
 
     /**
+     * Test that is possible to remove all the transformer settings.
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testResetWorksProperly() {
+        // GIVEN
+        BeanTransformer beanTransformer = underTest
+                .withFieldTransformer(new FieldTransformer<>(DEST_FIELD_NAME, val -> val), new FieldTransformer<>(REFLECTION_UTILS_FIELD_NAME, val -> val))
+                .withFieldMapping(new FieldMapping<>(SOURCE_FIELD_NAME, DEST_FIELD_NAME))
+                .skipTransformationForField(NAME_FIELD_NAME)
+                .setDefaultValueForMissingField(true);
+
+        // WHEN
+        beanTransformer.reset();
+        TransformerSettings<String> transformerSettings =
+                (TransformerSettings<String>) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
+
+        // THEN
+        assertThat(transformerSettings.getFieldsTransformers()).isEmpty();
+        assertThat(transformerSettings.getFieldsNameMapping()).isEmpty();
+        assertThat(transformerSettings.getFieldsToSkip()).isEmpty();
+        assertThat(transformerSettings.isSetDefaultValueForMissingField()).isFalse();
+    }
+
+    /**
      * Test that the method: {@code getSourceFieldValue} raises a {@link NullPointerException} in case any of the parameters null.
      * @throws Exception uf the invocation fails
      */
