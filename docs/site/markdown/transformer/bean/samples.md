@@ -202,6 +202,13 @@ beanUtils.getTransformer()
     .withFieldTransformer(localeTransformer);
 ```
 
+It's also possible to apply the same transformation function on multiple fields. Taking as an example the above bean and
+assuming that we would negate both the id and the identifier, the transformer function has to be defined as follows:
+
+```java
+FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>(List.of("identifier", "index"), BigInteger::negate);
+```
+
 ### Assign a default value in case of missing field in the source object:
 
 Assign a default value in case of a missing field in the source object:

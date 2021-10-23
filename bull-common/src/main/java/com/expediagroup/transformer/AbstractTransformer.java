@@ -15,11 +15,10 @@
  */
 package com.expediagroup.transformer;
 
+import static java.util.Arrays.stream;
+
 import static com.expediagroup.transformer.cache.CacheManagerFactory.getCacheManager;
 import static com.expediagroup.transformer.validator.Validator.notNull;
-
-import java.util.Arrays;
-import java.util.Map;
 
 import com.expediagroup.transformer.cache.CacheManager;
 import com.expediagroup.transformer.model.FieldMapping;
@@ -32,6 +31,7 @@ import lombok.Getter;
 
 /**
  * Abstract class containing all method implementation that will be common to any {@link Transformer}.
+ *
  * @param <T> the {@link Transformer} implementation.
  * @param <S> the {@link TransformerSettings} implementation.
  * @param <P> the {@link FieldMapping} and {@link FieldTransformer} key class type.
@@ -65,9 +65,10 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
 
     /**
      * Default constructor.
+     *
      * @param transformerFunctionCachePrefix the cache key prefix for the Transformer Functions.
-     * @param cacheName the cache key prefix for the transformer.
-     * @param transformerSettings contains the transformer configuration.
+     * @param cacheName                      the cache key prefix for the transformer.
+     * @param transformerSettings            contains the transformer configuration.
      */
     protected AbstractTransformer(final String transformerFunctionCachePrefix, final String cacheName, final S transformerSettings) {
         this.reflectionUtils = new ReflectionUtils();
@@ -83,9 +84,9 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
     @Override
     @SuppressWarnings("unchecked")
     public final T withFieldMapping(final FieldMapping... fieldMapping) {
-        final Map<P, P> fieldsNameMapping = settings.getFieldsNameMapping();
+        var fieldsNameMapping = settings.getFieldsNameMapping();
         for (FieldMapping<P, P> mapping : fieldMapping) {
-            Arrays.asList(mapping.destFieldName())
+            stream(mapping.destFieldName())
                     .forEach(destField -> fieldsNameMapping.put(destField, mapping.sourceFieldName()));
         }
         return (T) this;
@@ -97,9 +98,10 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
     @Override
     @SuppressWarnings("unchecked")
     public final T withFieldTransformer(final FieldTransformer... fieldTransformer) {
-        Map<P, FieldTransformer> fieldsTransformers = settings.getFieldsTransformers();
-        for (FieldTransformer transformer : fieldTransformer) {
-            fieldsTransformers.put((P) transformer.getDestFieldName(), transformer);
+        var fieldsTransformers = settings.getFieldsTransformers();
+        for (var transformer : fieldTransformer) {
+            transformer.getDestFieldName()
+                    .forEach(destFieldName -> fieldsTransformers.put((P) destFieldName, transformer));
         }
         return (T) this;
     }

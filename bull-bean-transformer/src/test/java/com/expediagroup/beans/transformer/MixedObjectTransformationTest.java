@@ -15,9 +15,12 @@
  */
 package com.expediagroup.beans.transformer;
 
+import static java.math.BigInteger.ONE;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import org.testng.annotations.Test;
 
@@ -208,6 +211,38 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
                 .hasFieldOrPropertyWithValue(INDEX_FIELD_NAME, fromFoo.getId())
                 .usingRecursiveComparison()
                 .ignoringFields(INDEX_FIELD_NAME, AGE_FIELD_NAME, ACTIVE_FIELD_NAME)
+                .isEqualTo(fromFoo);
+        underTest.reset();
+    }
+
+    /**
+     * Test that bean containing both final fields (with different names) and not with a source field mapped into
+     * multiple destination fields and field transformeration applies on mutliple fields is correctly copied.
+     */
+    @Test
+    public void testMixedBeanWithASourceFieldMappedIntoMultipleDestinationFieldsAndMultipleFieldTransformerIsCorrectlyCopied() {
+        // GIVEN
+        var valueToAdd = ONE;
+        var expectedIdValue = fromFooSimple.getId().add(valueToAdd);
+        var multipleDestinationFieldMapping = new FieldMapping<>(ID_FIELD_NAME,
+                ID_FIELD_NAME, INDEX_FIELD_NAME);
+        var multipleDestinationFieldTransformer =
+                new FieldTransformer<BigInteger, BigInteger>(List.of(ID_FIELD_NAME, INDEX_FIELD_NAME),
+                        val -> val.add(valueToAdd));
+
+        // WHEN
+        var actual = underTest
+                .withFieldMapping(multipleDestinationFieldMapping)
+                .withFieldTransformer(multipleDestinationFieldTransformer)
+                .setDefaultValueForMissingField(true)
+                .transform(fromFooSimple, MixedToFooSimpleNotExistingFields.class);
+
+        // THEN
+        assertThat(actual)
+                .hasFieldOrPropertyWithValue(ID_FIELD_NAME, expectedIdValue)
+                .hasFieldOrPropertyWithValue(INDEX_FIELD_NAME, expectedIdValue)
+                .usingRecursiveComparison()
+                .ignoringFields(ID_FIELD_NAME, INDEX_FIELD_NAME, AGE_FIELD_NAME, ACTIVE_FIELD_NAME)
                 .isEqualTo(fromFoo);
         underTest.reset();
     }

@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 #### Added
 * Adds a function to reset all the defined settings
 * Adds the possibility to map the same source field into multiple fields
+* Adds the possibility to apply the same field transformation function on multiple fields
 #### Changed
 * Updated `eg-oss-parent` version to `2.4.1` (was `2.4.0`).
 

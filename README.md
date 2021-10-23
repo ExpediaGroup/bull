@@ -340,6 +340,7 @@ ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
 public class FromBean {                                     public class ToBean {                           
    private final String name;                                  @NotNull                   
    private final BigInteger id;                                public BigInteger identifier;                      
+   private final BigInteger index;                             public BigInteger index;                      
    private final List<FromSubBean> subBeanList;                private final String name;                 
    private List<String> list;                                  private final List<String> list;                    
    private final FromSubBean subObject;                        private final List<ImmutableToSubFoo> nestedObjectList;                    
@@ -359,6 +360,13 @@ beanUtils.getTransformer()
     .withFieldMapping(new FieldMapping<>("id", "identifier"))
     .withFieldTransformer(fieldTransformer).transform(fromBean, ToBean.class)
     .withFieldTransformer(localeTransformer);
+```
+
+It's also possible to apply the same transformation function on multiple fields. Taking as an example the above bean and
+assuming that we would negate both the id and the identifier, the transformer function has to be defined as follows:
+
+```java
+FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>(List.of("identifier", "index"), BigInteger::negate);
 ```
 
 ### Assign a default value in case of missing field in the source object:
