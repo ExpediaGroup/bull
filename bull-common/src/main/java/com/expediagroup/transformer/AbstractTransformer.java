@@ -18,6 +18,7 @@ package com.expediagroup.transformer;
 import static com.expediagroup.transformer.cache.CacheManagerFactory.getCacheManager;
 import static com.expediagroup.transformer.validator.Validator.notNull;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import com.expediagroup.transformer.cache.CacheManager;
@@ -83,8 +84,9 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
     @SuppressWarnings("unchecked")
     public final T withFieldMapping(final FieldMapping... fieldMapping) {
         final Map<P, P> fieldsNameMapping = settings.getFieldsNameMapping();
-        for (FieldMapping mapping : fieldMapping) {
-            fieldsNameMapping.put((P) mapping.destFieldName(), (P) mapping.sourceFieldName());
+        for (FieldMapping<P, P> mapping : fieldMapping) {
+            Arrays.asList(mapping.destFieldName())
+                    .forEach(destField -> fieldsNameMapping.put(destField, mapping.sourceFieldName()));
         }
         return (T) this;
     }
