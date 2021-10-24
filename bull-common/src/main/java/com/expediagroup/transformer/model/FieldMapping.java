@@ -23,4 +23,7 @@ package com.expediagroup.transformer.model;
  * @param destFieldName the field name in the destination object.
  */
 public record FieldMapping<T, K>(T sourceFieldName, K... destFieldName) {
+    @SafeVarargs
+    public FieldMapping {
+    }
 }
