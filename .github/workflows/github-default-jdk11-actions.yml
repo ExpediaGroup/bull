@@ -26,11 +26,12 @@ jobs:
       - name: "Build"
         run: |
           mvn clean install -B -DskipTests -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
+          git checkout -b test-version-increase
           git config --global user.email "bull-action@github.com"
           git config --global user.name "BULL action workflow"
           mvn release:clean release:prepare
           git add . && git commit -m "Preparing next release" && git push
-          git checkout master
+
   test-and-quality-check:
     name: "Test and quality check"
     runs-on: ubuntu-latest

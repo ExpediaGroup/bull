@@ -66,12 +66,6 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
         run: |
           mvn deploy --settings $GITHUB_WORKSPACE/settings.xml -B -U -P release -DskipTests=true
-          git checkout master
-          git config --global user.email "bull-action@github.com"
-          git config --global user.name "BULL action workflow"
-          mvn release:clean release:prepare
-          git add . && git commit -m "Preparing next release" && git push
-          git fetch orgin master:develop
       - name: "Send Slack Notification"
         uses: rtCamp/action-slack-notify@v2
         env:
