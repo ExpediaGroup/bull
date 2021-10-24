@@ -26,6 +26,8 @@ jobs:
       - name: "Build"
         run: |
           mvn clean install -B -DskipTests -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
+          mvn release:clean release:prepare
+          git add . && git commit -m "Preparing next release" && git push
   test-and-quality-check:
     name: "Test and quality check"
     runs-on: ubuntu-latest
