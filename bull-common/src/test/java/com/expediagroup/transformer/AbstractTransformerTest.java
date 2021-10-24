@@ -64,6 +64,7 @@ public abstract class AbstractTransformerTest {
     protected static final String PHONE_NUMBER_DEST_FIELD_NAME = "phoneNumbers";
     protected static final String PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME = "nestedObject.phoneNumbers";
     protected static final String NAME_FIELD_NAME = "name";
+    protected static final String ACTIVE_FIELD_NAME = "active";
     protected static final float PRICE = 10.0f;
     protected static final Map<String, String> SAMPLE_MAP = new HashMap<>();
     protected static final Map<String, List<String>> COMPLEX_MAP = new HashMap<>();

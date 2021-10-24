@@ -58,4 +58,9 @@ public interface Transformer<N extends Transformer> {
      * Removes all the configured fields transformer.
      */
     void resetFieldsTransformer();
+
+    /**
+     * Removes all the configured settings.
+     */
+    void reset();
 }

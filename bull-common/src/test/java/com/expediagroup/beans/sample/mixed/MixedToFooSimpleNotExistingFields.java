@@ -13,14 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expediagroup.transformer.model;
+package com.expediagroup.beans.sample.mixed;
+
+import java.math.BigInteger;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * Specifies the field's name mapping between the source object and destination one.
- * @param <T> source element type
- * @param <K> target element type
- * @param sourceFieldName the field name in the source object
- * @param destFieldName the field name in the destination object.
+ * Sample mixed object that contains multiple fields not existing in the source object.
  */
-public record FieldMapping<T, K>(T sourceFieldName, K... destFieldName) {
+@AllArgsConstructor
+@Getter
+@Setter
+public class MixedToFooSimpleNotExistingFields {
+    private final String name;
+    private final BigInteger id;
+    private final BigInteger index;
+    private int age;
 }

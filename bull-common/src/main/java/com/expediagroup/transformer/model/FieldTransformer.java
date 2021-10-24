@@ -19,6 +19,7 @@ import static java.util.Objects.nonNull;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -41,7 +42,7 @@ public class FieldTransformer<T, K> {
     /**
      * The field name in the destination object.
      */
-    private final String destFieldName;
+    private final List<String> destFieldName;
 
     /**
      * The field transformer function.
@@ -54,12 +55,21 @@ public class FieldTransformer<T, K> {
     private final Supplier<K> transformerSupplier;
 
     /**
+     * Creates a field transformer with a lambda function to be applied on a list of fields.
+     * @param destinationFieldNames the field name in the destination object.
+     * @param fieldTransformerFunction the transformer function to apply on field
+     */
+    public FieldTransformer(final List<String> destinationFieldNames, final Function<T, K> fieldTransformerFunction) {
+        this(destinationFieldNames, fieldTransformerFunction, null);
+    }
+
+    /**
      * Creates a field transformer with a lambda function to be applied on the field.
      * @param destinationFieldName the field name in the destination object.
      * @param fieldTransformerFunction the transformer function to apply on field
      */
     public FieldTransformer(final String destinationFieldName, final Function<T, K> fieldTransformerFunction) {
-        this(destinationFieldName, fieldTransformerFunction, null);
+        this(List.of(destinationFieldName), fieldTransformerFunction, null);
     }
 
     /**
@@ -68,7 +78,7 @@ public class FieldTransformer<T, K> {
      * @param fieldTransformerSupplier the transformer supplier to apply on field
      */
     public FieldTransformer(final String destinationFieldName, final Supplier<K> fieldTransformerSupplier) {
-        this(destinationFieldName, null, fieldTransformerSupplier);
+        this(List.of(destinationFieldName), null, fieldTransformerSupplier);
     }
 
     /**

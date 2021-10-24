@@ -7,18 +7,17 @@
 ### Simple case:
 
 ```java
-public class FromBean {                                     public class ToBean {                           
-   private final String name;                                  @NotNull                   
-   private final BigInteger id;                                public BigInteger id;                      
-   private final List<FromSubBean> subBeanList;                private final String name;                 
-   private List<String> list;                                  private final List<String> list;                    
-   private final FromSubBean subObject;                        private final List<ToSubBean> subBeanList;                    
-                                                               private ImmutableToSubFoo subObject;
-   
-   // all constructors                                         // all args constructor
-   // getters and setters...                                   // getters and setters... 
-}                                                               
-                                                            }
+public class FromBean {                                     public class ToBean {
+    private final String name;                                  @NotNull
+    private final BigInteger id;                                public BigInteger id;
+    private final List<FromSubBean> subBeanList;                private final String name;
+    private List<String> list;                                  private final List<String> list;
+    private final FromSubBean subObject;                        private final List<ToSubBean> subBeanList;
+    private ImmutableToSubFoo subObject;
+
+    // all constructors                                         // all args constructor
+    // getters and setters...                                   // getters and setters... 
+}    
 ```
 And one line code as:
 ```java
@@ -29,65 +28,111 @@ ToBean toBean = beanUtils.getTransformer().transform(fromBean, ToBean.class);
 
 From class and To class with different field names:
 ```java
-public class FromBean {                                     public class ToBean {                           
-                                                                                       
-   private final String name;                                  private final String differentName;                   
-   private final int id;                                       private final int id;                      
-   private final List<FromSubBean> subBeanList;                private final List<ToSubBean> subBeanList;                 
-   private final List<String> list;                            private final List<String> list;                    
-   private final FromSubBean subObject;                        private final ToSubBean subObject;                    
-    
-   // getters...
-                                                               public ToBean(final String differentName, 
-                                                                        final int id,
+public class FromBean {                                     public class ToBean {
+
+    private final String name;                                  private final String differentName;
+    private final int id;                                       private final int id;
+    private final List<FromSubBean> subBeanList;                private final List<ToSubBean> subBeanList;
+    private final List<String> list;                            private final List<String> list;
+    private final FromSubBean subObject;                        private final ToSubBean subObject;
+
+    // getters...
+    public ToBean(final String differentName,
+                  final int id,
 }                                                                       final List<ToSubBean> subBeanList,
-                                                                        final List<String> list,
-                                                                        final ToSubBean subObject) {
-                                                                        this.differentName = differentName;
-                                                                        this.id = id;
-                                                                        this.subBeanList = subBeanList;
-                                                                        this.list = list;
-                                                                        this.subObject = subObject; 
-                                                                    }
-                                                                
-                                                                    // getters...           
-                                              
-                                                                }
+    final List<String> list,
+    final ToSubBean subObject) {
+        this.differentName = differentName;
+        this.id = id;
+        this.subBeanList = subBeanList;
+        this.list = list;
+        this.subObject = subObject;
+    }
+
+    // getters...           
+
+}
 ```
 And one line code as:
 
 ```java                                                                
-beanUtils.getTransformer().withFieldMapping(new FieldMapping<>("name", "differentName")).transform(fromBean, ToBean.class);`                                                               
+beanUtils.getTransformer().withFieldMapping(new FieldMapping<>("name", "differentName")).transform(fromBean, ToBean.class);                                                               
 ```
 
-### Mapping destination fields with correspondent fields contained inside one of the nested object in the source object:
+it is also possible to map a field in the source class into multiple fields in the destination object.
+
+Given the following source class:
+
+```
+public class SourceClass {
+    private final String name;
+    private final int id;
+}
+```
+
+the following destination class:
+
+```
+public class DestinationClass {
+    private final String name;
+    private final int id;
+    private final int index;
+}
+``` 
+
+and the following operations:
+
+```
+var sourceObj = new SourceClass("foo", 123);
+
+var multipleFieldMapping = new FieldMapping<>("id", "index", "identifier");
+
+var destObj = new BeanUtils().getBeanTransformer()
+                     .withFieldMapping(multipleFieldMapping)
+                     .transform(sourceObj, DestinationClass.class);
+
+System.out.println("name = " + destObj.getName());
+System.out.println("id = " + destObj.getId());
+System.out.println("index = " + destObj.getIndex());
+``` 
+
+the output will be:
+
+```
+name = foo
+id = 123
+index = 123
+```
+
+
+### Mapping destination fields with correspondent fields contained inside one of the nested objects in the source object:
 
 Assuming that the object `FromSubBean` is declared as follow:
 ```java
-public class FromSubBean {                         
-                                                                                       
-   private String serialNumber;                 
-   private Date creationDate;                    
-   
-   // getters and setters... 
-   
+public class FromSubBean {
+
+    private String serialNumber;
+    private Date creationDate;
+
+    // getters and setters... 
+
 }
 ```
 and our source object and destination object are described as follow:
 ```java
-public class FromBean {                                     public class ToBean {                           
-                                                                                       
-   private final int id;                                       private final int id;                      
-   private final String name;                                  private final String name;                   
-   private final FromSubBean subObject;                        private final String serialNumber;                 
-                                                               private final Date creationDate;                    
-   
-   // all args constructor                                     // all args constructor
-   // getters...                                               // getters... 
-   
+public class FromBean {                                     public class ToBean {
+
+    private final int id;                                       private final int id;
+    private final String name;                                  private final String name;
+    private final FromSubBean subObject;                        private final String serialNumber;
+    private final Date creationDate;
+
+    // all args constructor                                     // all args constructor
+    // getters...                                               // getters... 
+
 }                                                           }
 ```
-the fields: `serialNumber` and `creationDate` needs to be retrieved from `subObject`, this can be done defining the whole path to the end property:
+the fields: `serialNumber` and `creationDate` needs to be retrieved from `subObject`, this can be done by defining the whole path to the end property:
 ```java  
 FieldMapping serialNumberMapping = new FieldMapping<>("subObject.serialNumber", "serialNumber");                                                             
 FieldMapping creationDateMapping = new FieldMapping<>("subObject.creationDate", "creationDate");
@@ -157,9 +202,16 @@ beanUtils.getTransformer()
     .withFieldTransformer(localeTransformer);
 ```
 
+It's also possible to apply the same transformation function on multiple fields. Taking as an example the above bean and
+assuming that we would negate both the id and the identifier, the transformer function has to be defined as follows:
+
+```java
+FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>(List.of("identifier", "index"), BigInteger::negate);
+```
+
 ### Assign a default value in case of missing field in the source object:
 
-Assign a default value in case of missing field in the source object:
+Assign a default value in case of a missing field in the source object:
 
 ```java
 public class FromBean {                                     public class ToBean {                           
@@ -181,7 +233,7 @@ ToBean toBean = beanUtils.getTransformer()
 
 ### Disable the default value set for primitive types in case they are null:
 
-BULL by default sets the default value for all primitive types fields in case their value in the source object.
+BULL by default sets the default value for all primitive types fields in case their value is in the source object.
 Given the following Java Bean:
 
 ```java
@@ -197,18 +249,18 @@ public class FromBean {                                     public class ToBean 
 ```
 
 in case the field `id` in the `FromBean` object is `null`, the value assigned the correspondent field in the `ToBean` object will be `0`.
-To disable this you can simply do: 
+To disable this you can simply do:
 
 ```java
 ToBean toBean = beanUtils.getTransformer()
                     .setDefaultValueForMissingPrimitiveField(false).transform(fromBean, ToBean.class);
 ```
 
-in this case the field `id` after the transformation will be `null`
+in this case, the field `id` after the transformation will be `null`
 
 ### Applying a transformation function in case of missing fields in the source object:
 
-Assign a default value in case of missing field in the source object:
+Assign a default value in case of a missing field in the source object:
 
 ```java
 public class FromBean {                                     public class ToBean {                           
@@ -231,7 +283,7 @@ ToBean toBean = beanUtils.getTransformer()
 
 ### Apply a transformation function on a field contained in a nested object:
 
-This example shows of a lambda transformation function can be applied on a nested object field.
+This example shows how a lambda transformation function can be applied to a nested object field.
 
 Given:
 
@@ -251,7 +303,7 @@ public class ToSubBean {
    private final long index;                    
 }
 ```
-Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as 
+Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as
 follow:
 ```java
 FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("nestedObject.name", StringUtils::capitalize);
@@ -283,7 +335,7 @@ public class ToSubBean {
    // all args constructor
 }  // getters...          
 ```
-Assuming that the value `x` should be mapped into field: `x` contained into the `ToSubBean` object, the field mapping has to be defined as 
+Assuming that the value `x` should be mapped into the field: `x` contained into the `ToSubBean` object, the field mapping has to be defined as
 follow:
 ```java
 ToBean toBean = beanUtils.getTransformer()
@@ -292,7 +344,7 @@ ToBean toBean = beanUtils.getTransformer()
 
 ### Apply a transformation function on all fields matching with the given one:
 
-This example shows how a lambda transformation function can be applied on all fields matching with the given one independently from their position.
+This example shows how a lambda transformation function can be applied to all fields matching with the given one independently from their position.
 
 Given:
 
@@ -315,7 +367,8 @@ public class FromSubBean {                                  public class ToSubBe
    // getters...                                               // getters...
 }                                                           }
 ```
-Assuming that the lambda transformation function should be applied only to field: `name` contained into the `ToSubBean` object, the transformation function has to be defined as 
+Assuming that the lambda transformation function should be applied only to the field: `name` contained in the `ToSubBean` object, the transformation function has to be defined
+as
 follow:
 ```java
 FieldTransformer<String, String> nameTransformer = new FieldTransformer<>("name", StringUtils::capitalize);
@@ -345,7 +398,7 @@ List<ImmutableToFooSimple> actual = fromFooSimpleList.stream()
                 .collect(Collectors.toList());
 ```
 
-### Disable Java Beans validation:
+### Enable Java Beans validation:
 
 Assuming that the field: `id` in the fromBean instance is null.
 ```java
@@ -358,10 +411,10 @@ public class FromBean {                                     public class ToBean 
    // getters...                                               // getters and setters...
 }                                                            }
 ```
-adding the following configuration no exception will be thrown:
+adding the following configuration an exception will be thrown:
 ```java
 ToBean toBean = beanUtils.getTransformer()
-                     .setValidationDisabled(true)
+                     .setValidationEnabled(true)
                      .transform(fromBean, ToBean.class);
 ```
 
@@ -415,11 +468,11 @@ beanUtils.getTransformer()
 
 where `nestedObject` is the name of the field in the destination object.
 
-This feature allows to **transform an object keeping the data from different sources**.
+This feature allows us to **transform an object keeping the data from different sources**.
 
 To better explain this function let's assume that the `ToBean` (defined above) should be transformed as follow:
-- `name` field value has be taken from the `FromBean` object
-- `nestedObject` field value has be taken from the `FromBean2` object
+- `name` field value has been taken from the `FromBean` object
+- `nestedObject` field value has been taken from the `FromBean2` object
 
 the objective can be reached by doing:
 ```java
@@ -438,8 +491,7 @@ beanUtils.getTransformer()
 ```
 
 ### Not existing field in the source object:
-
-In case the destination class has a field that does not exist in the source object, but it contains a getter method returning the value, the library gets the field value from that method.
+In case the destination class has a field that does not exist in the source object, but it contains a getter method returning the value, the library should gets the field value from that method.
 ```java
 public class FromBean {                                     public class ToBean {                           
                                                                private final BigInteger id;
@@ -470,8 +522,8 @@ public class FromBean {                                     public class ToBean 
 ```
 
 as, by default the primitive type conversion is disabled, to get the above object converted we should have
-implemented transformer functions for both field `indexNumber` and `id`, but this can be done automatically from enabling the
-functionality described above.
+implemented transformer functions for both field `indexNumber` and `id`, but this can be done automatically by enabling the
+the functionality described above.
 
 ```java
 Transformer transformer = beanUtils.getTransformer()
@@ -480,13 +532,16 @@ Transformer transformer = beanUtils.getTransformer()
 ToBean toBean = transformer.transform(fromBean, ToBean.class);
 ```
 
+**IMPORTANT:** The primitive type transformation (if enabled) is executed before any other `FieldTransformer` function is defined on a specific field.
+This means that once the `FieldTransformer` function will be executed the field value has already been transformed.
+
 ## Transform Java Record
 
 ### Simple case:
 
 ```java
-public record FromFooRecord(BigInteger id, String name) {      public record RecordToFoo(BigInteger id, String name) {                           
-}                                                              }  
+public record FromFooRecord(BigInteger id, String name) {    public record RecordToFoo(BigInteger id, String name) {                           
+}                                                            }  
 ```
 And one line code as:
 
