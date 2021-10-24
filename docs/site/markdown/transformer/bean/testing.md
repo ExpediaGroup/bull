@@ -80,8 +80,8 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 
 import com.expediagroup.beans.transformer.BeanUtils;
-import Transformer;
-import InvalidBeanException;
+import com.expediagroup.transformer.Transformer;
+import com.expediagroup.transformer.error.InvalidBeanException;
 
 /**
  * Unit test for {@link SampleClass}.
@@ -197,8 +197,8 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 
 import com.expediagroup.beans.transformer.BeanUtils;
-import Transformer;
-import InvalidBeanException;
+import com.expediagroup.transformer.Transformer;
+import com.expediagroup.transformer.error.InvalidBeanException;
 
 /**
  * Unit test for {@link SampleClass}.

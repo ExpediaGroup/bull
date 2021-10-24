@@ -48,7 +48,7 @@ public interface BeanTransformer extends Transformer<BeanTransformer> {
      * It allows to configure the transformer in order to set a default value in case some field is missing in the source object.
      * If set to true the default value is set, if false if it raises a: {@link MissingFieldException} in case of missing fields.
      * @param useDefaultValue true in case the default value should be set, false if it should raise a:
-     *                        {@link MissingFieldException} in case of missing field.
+     * {@link MissingFieldException} in case of missing field.
      * @return the {@link BeanTransformer} instance
      */
     BeanTransformer setDefaultValueForMissingField(boolean useDefaultValue);

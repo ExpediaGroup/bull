@@ -32,8 +32,8 @@
     </logger>
 
     <logger name="com.expediagroup.beans" level="INFO" additivity="false">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="MAIN_APPENDER" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="MAIN_APPENDER"/>
     </logger>
 
     <root level="INFO">

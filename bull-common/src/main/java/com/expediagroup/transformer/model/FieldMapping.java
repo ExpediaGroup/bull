@@ -15,7 +15,6 @@
  */
 package com.expediagroup.transformer.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -24,7 +23,6 @@ import lombok.ToString;
  * @param <T> source element type
  * @param <K> target element type
  */
-@AllArgsConstructor
 @Getter
 @ToString
 public class FieldMapping<T, K> {
@@ -36,5 +34,15 @@ public class FieldMapping<T, K> {
     /**
      * The field name in the destination object.
      */
-    private final K destFieldName;
+    private final K[] destFieldNames;
+
+    /**
+     * Constructor.
+     * @param srcFieldName the field name in the source object
+     * @param destFieldName the field name in the destination object
+     */
+    public FieldMapping(final T srcFieldName, final K... destFieldName) {
+        this.sourceFieldName = srcFieldName;
+        this.destFieldNames = destFieldName;
+    }
 }

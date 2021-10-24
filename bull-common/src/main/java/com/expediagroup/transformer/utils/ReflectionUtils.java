@@ -24,6 +24,11 @@ import static java.lang.reflect.Modifier.isPublic;
 import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.capitalize;
 
+import static com.expediagroup.transformer.cache.CacheManagerFactory.getCacheManager;
+import static com.expediagroup.transformer.constant.MethodPrefix.GET;
+import static com.expediagroup.transformer.constant.MethodPrefix.IS;
+import static com.expediagroup.transformer.constant.MethodPrefix.SET;
+
 import java.lang.annotation.Annotation;
 import java.lang.invoke.CallSite;
 import java.lang.invoke.MethodHandles;
@@ -42,8 +47,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 import com.expediagroup.transformer.cache.CacheManager;
-import com.expediagroup.transformer.cache.CacheManagerFactory;
-import com.expediagroup.transformer.constant.MethodPrefix;
 import com.expediagroup.transformer.error.InvalidBeanException;
 import com.expediagroup.transformer.error.MissingFieldException;
 import com.expediagroup.transformer.error.MissingMethodException;
@@ -84,7 +87,7 @@ public final class ReflectionUtils {
     /**
      * CacheManager instance {@link CacheManager}.
      */
-    private static final CacheManager CACHE_MANAGER = CacheManagerFactory.getCacheManager("reflectionUtils");
+    private static final CacheManager CACHE_MANAGER = getCacheManager("reflectionUtils");
 
     /**
      * Invokes the method.
@@ -417,7 +420,7 @@ public final class ReflectionUtils {
     private String getGetterMethodPrefix(final Class<?> fieldType) {
         final String cacheKey = "GetterMethodPrefix-" + fieldType.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, String.class).orElseGet(() -> {
-            String res = Boolean.class.equals(fieldType) || fieldType.getName().equals(BOOLEAN) ? MethodPrefix.IS.getPrefix() : MethodPrefix.GET.getPrefix();
+            String res = Boolean.class.equals(fieldType) || fieldType.getName().equals(BOOLEAN) ? IS.getPrefix() : GET.getPrefix();
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -435,7 +438,7 @@ public final class ReflectionUtils {
         final String cacheKey = "SetterMethod-" + fieldClass.getName() + '-' + fieldName;
         return CACHE_MANAGER.getFromCache(cacheKey, Method.class).orElseGet(() -> {
             try {
-                var method = fieldClass.getMethod(MethodPrefix.SET.getPrefix() + capitalize(fieldName), fieldType);
+                var method = fieldClass.getMethod(SET.getPrefix() + capitalize(fieldName), fieldType);
                 method.setAccessible(true);
                 CACHE_MANAGER.cacheObject(cacheKey, method);
                 return method;

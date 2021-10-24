@@ -33,6 +33,11 @@ import static java.util.Optional.ofNullable;
 import static java.util.Set.of;
 import static java.util.stream.Collectors.toList;
 
+import static com.expediagroup.transformer.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
+import static com.expediagroup.transformer.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
+import static com.expediagroup.transformer.constant.Filters.IS_NOT_FINAL_FIELD;
+import static com.expediagroup.transformer.validator.Validator.notNull;
+
 import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -60,11 +65,9 @@ import com.expediagroup.transformer.base.Defaults;
 import com.expediagroup.transformer.cache.CacheManager;
 import com.expediagroup.transformer.cache.CacheManagerFactory;
 import com.expediagroup.transformer.constant.ClassType;
-import com.expediagroup.transformer.constant.Filters;
 import com.expediagroup.transformer.error.InstanceCreationException;
 import com.expediagroup.transformer.error.InvalidBeanException;
 import com.expediagroup.transformer.error.MissingMethodException;
-import com.expediagroup.transformer.validator.Validator;
 
 /**
  * Reflection utils for Class objects.
@@ -284,7 +287,7 @@ public final class ClassUtils {
      */
     @SuppressWarnings("unchecked")
     public List<Field> getPrivateFinalFields(final Class<?> clazz) {
-        Validator.notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "PrivateFinalFields-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
             final List<Field> res = new ArrayList<>();
@@ -293,7 +296,7 @@ public final class ClassUtils {
             }
             res.addAll(stream(getDeclaredFields(clazz))
                     //.parallel()
-                    .filter(Filters.IS_FINAL_AND_NOT_STATIC_FIELD)
+                    .filter(IS_FINAL_AND_NOT_STATIC_FIELD)
                     .collect(toList()));
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
@@ -316,7 +319,7 @@ public final class ClassUtils {
      * @return the total matching item.
      */
     public int getTotalFields(final Class<?> clazz, final Predicate<? super Field> predicate) {
-        Validator.notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "TotalFields-" + clazz.getName() + '-' + predicate;
         return CACHE_MANAGER.getFromCache(cacheKey, Integer.class).orElseGet(() -> {
             List<Field> declaredFields = getDeclaredFields(clazz, true);
@@ -345,7 +348,7 @@ public final class ClassUtils {
      */
     @SuppressWarnings("unchecked")
     public List<Field> getPrivateFields(final Class<?> clazz, final boolean skipFinal) {
-        Validator.notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "PrivateFields-" + clazz.getName() + "-skipFinal-" + skipFinal;
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
             final List<Field> res = new ArrayList<>();
@@ -455,7 +458,7 @@ public final class ClassUtils {
      * @return all classes defined into the given one
      */
     public Class[] getDeclaredClasses(final Class<?> clazz) {
-        Validator.notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         String cacheKey = "DeclaredClasses-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Class[].class).orElseGet(() -> {
             Class[] declaredClasses = clazz.getDeclaredClasses();
@@ -616,7 +619,7 @@ public final class ClassUtils {
      * @return true if has at least one setter method, false otherwise
      */
     public boolean hasSetterMethods(final Class<?> clazz) {
-        Validator.notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "HasSetterMethods-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class)
                 .orElseGet(() -> {
@@ -632,7 +635,7 @@ public final class ClassUtils {
      * @return the class declared methods.
      */
     private Method[] getDeclaredMethods(final Class<?> clazz) {
-        Validator.notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = "DeclaredMethods-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Method[].class)
                 .orElseGet(() -> {
@@ -648,8 +651,8 @@ public final class ClassUtils {
      * @return true if it has private final field, false otherwise.
      */
     public boolean hasFinalFields(final Class<?> clazz) {
-        Validator.notNull(clazz, CLAZZ_CANNOT_BE_NULL);
-        return hasFieldsMatchingCondition(clazz, Filters.IS_FINAL_AND_NOT_STATIC_FIELD, "HasFinalNotStaticFields-");
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        return hasFieldsMatchingCondition(clazz, IS_FINAL_AND_NOT_STATIC_FIELD, "HasFinalNotStaticFields-");
     }
 
     /**
@@ -658,8 +661,8 @@ public final class ClassUtils {
      * @return true if it has private final field, false otherwise.
      */
     private boolean hasNotFinalFields(final Class<?> clazz) {
-        Validator.notNull(clazz, CLAZZ_CANNOT_BE_NULL);
-        return hasFieldsMatchingCondition(clazz, Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD, "HasNotFinalNotStaticFields-");
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        return hasFieldsMatchingCondition(clazz, IS_NOT_FINAL_AND_NOT_STATIC_FIELD, "HasNotFinalNotStaticFields-");
     }
 
     /**
@@ -766,7 +769,7 @@ public final class ClassUtils {
      */
     @SuppressWarnings("unchecked")
     private List<Method> getMethods(final Class<?> clazz, final String cacheKeyPrefix, final Predicate<Method> methodFilter) {
-        Validator.notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = cacheKeyPrefix + "-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
             final List<Method> methods = new LinkedList<>();
@@ -807,7 +810,7 @@ public final class ClassUtils {
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
             List<Field> notFinalFields = getDeclaredFields(clazz, skipStatic)
                     .stream()
-                    .filter(Filters.IS_NOT_FINAL_FIELD).collect(toList());
+                    .filter(IS_NOT_FINAL_FIELD).collect(toList());
             CACHE_MANAGER.cacheObject(cacheKey, notFinalFields);
             return notFinalFields;
         });

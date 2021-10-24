@@ -37,9 +37,9 @@ public interface Converter {
      * Converts a given primitive value into the given primitive type.
      * @param valueToConvert the value to be converted
      * @param targetClass the destination field class
-     * @return the converted value
      * @param <T> the value to convert type
      * @param <K> the target object type
+     * @return the converted value
      * @throws TypeConversionException in case there is no converter for the given class
      * @throws IllegalArgumentException in case the destination field type is null.
      */

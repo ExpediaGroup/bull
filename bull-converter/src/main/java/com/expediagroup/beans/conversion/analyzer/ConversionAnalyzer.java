@@ -18,7 +18,6 @@ package com.expediagroup.beans.conversion.analyzer;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
-import static com.expediagroup.beans.conversion.processor.ConversionProcessorFactory.getConversionProcessor;
 import static com.expediagroup.transformer.cache.CacheManagerFactory.getCacheManager;
 import static com.expediagroup.transformer.utils.ClassUtils.isBigDecimal;
 import static com.expediagroup.transformer.utils.ClassUtils.isBigInteger;
@@ -37,6 +36,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import com.expediagroup.beans.conversion.processor.ConversionProcessor;
+import com.expediagroup.beans.conversion.processor.ConversionProcessorFactory;
 import com.expediagroup.transformer.cache.CacheManager;
 import com.expediagroup.transformer.utils.ClassUtils;
 
@@ -74,7 +74,7 @@ public final class ConversionAnalyzer {
             Optional conversionFunction = empty();
             if (!targetClass.getSimpleName().equalsIgnoreCase(sourceClass.getSimpleName())
                     && (classUtils.isPrimitiveType(sourceClass) || classUtils.isPrimitiveTypeArray(sourceClass))) {
-                conversionFunction = getConversionProcessor(targetClass)
+                conversionFunction = ConversionProcessorFactory.getConversionProcessor(targetClass)
                         .flatMap(cp -> getTypeConversionFunction(cp, sourceClass));
             }
             CACHE_MANAGER.cacheObject(cacheKey, conversionFunction);

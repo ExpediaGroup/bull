@@ -26,6 +26,7 @@ import static java.util.stream.IntStream.range;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
+import static com.expediagroup.beans.populator.PopulatorFactory.getPopulator;
 import static com.expediagroup.transformer.base.Defaults.defaultValue;
 import static com.expediagroup.transformer.constant.ClassType.MIXED;
 import static com.expediagroup.transformer.constant.ClassType.MUTABLE;
@@ -41,7 +42,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import com.expediagroup.beans.populator.PopulatorFactory;
 import com.expediagroup.transformer.annotation.ConstructorArg;
 import com.expediagroup.transformer.error.InvalidBeanException;
 import com.expediagroup.transformer.error.MissingFieldException;
@@ -597,7 +597,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     @SuppressWarnings("unchecked")
     private <K> Object getFieldValue(final Class<K> targetClass, final Field field, final Object fieldValue, final String breadcrumb) {
-        return PopulatorFactory.getPopulator(field.getType(), fieldValue.getClass(), this)
+        return getPopulator(field.getType(), fieldValue.getClass(), this)
                 .map(populator -> populator.getPopulatedObject(targetClass, field.getName(), fieldValue))
                 .orElseGet(() ->
                         // recursively inject object

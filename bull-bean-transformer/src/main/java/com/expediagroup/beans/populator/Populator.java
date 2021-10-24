@@ -15,8 +15,6 @@
  */
 package com.expediagroup.beans.populator;
 
-import static com.expediagroup.beans.populator.PopulatorFactory.getPopulator;
-
 import java.lang.reflect.Field;
 import java.util.Optional;
 
@@ -103,7 +101,7 @@ public abstract class Populator<O> {
         if (classUtils.isPrimitiveOrSpecialType(sourceObj.getClass())) {
             res = (K) sourceObj;
         } else {
-            final Optional<Populator> optPopulator = getPopulator(targetClass, sourceObj.getClass(), transformer);
+            final Optional<Populator> optPopulator = PopulatorFactory.getPopulator(targetClass, sourceObj.getClass(), transformer);
             res = (K) optPopulator
                     .map(populator -> ((ICollectionPopulator<Object>) populator).getPopulatedObject(targetClass, targetClass, sourceObj, nestedGenericClass))
                     .orElseGet(() -> transformer.transform(sourceObj, targetClass));

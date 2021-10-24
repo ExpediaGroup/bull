@@ -23,8 +23,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-import static com.expediagroup.transformer.utils.ClassUtils.BUILD_METHOD_NAME;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -1036,8 +1034,8 @@ public class ClassUtilsTest {
 
         // THEN
         assertThat(actual).isNotNull();
-        assertThat(actual.getName()).isEqualTo(BUILD_METHOD_NAME);
-        assertThat(actual).hasFieldOrPropertyWithValue(NAME_FIELD_NAME, BUILD_METHOD_NAME);
+        assertThat(actual.getName()).isEqualTo(ClassUtils.BUILD_METHOD_NAME);
+        assertThat(actual).hasFieldOrPropertyWithValue(NAME_FIELD_NAME, ClassUtils.BUILD_METHOD_NAME);
     }
 
     /**

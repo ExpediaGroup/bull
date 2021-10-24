@@ -32,7 +32,7 @@ import lombok.Getter;
 public class MapTransformerSettings extends TransformerSettings<Object> {
     /**
      * Contains the lambda functions to be applied on a given map key.
-     * This features allows to apply transformation on the destination object value.
+     * This feature allows applying transformation on the destination object value.
      * e.g. The following instructions allows to negate the destination value of the identifier field.
      * {@code
      *      FieldTransformer<BigInteger, BigInteger> fieldTransformer = new FieldTransformer<>("identifier", BigInteger::negate);

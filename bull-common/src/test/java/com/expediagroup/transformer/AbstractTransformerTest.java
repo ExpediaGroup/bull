@@ -18,8 +18,6 @@ package com.expediagroup.transformer;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
-import static com.expediagroup.transformer.constant.ClassType.IMMUTABLE;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
@@ -28,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.expediagroup.beans.sample.FromFoo;
 import com.expediagroup.beans.sample.FromFooAdvFields;
@@ -37,6 +36,7 @@ import com.expediagroup.beans.sample.FromFooSimple;
 import com.expediagroup.beans.sample.FromFooSubClass;
 import com.expediagroup.beans.sample.FromFooWithPrimitiveFields;
 import com.expediagroup.beans.sample.FromSubFoo;
+import com.expediagroup.transformer.constant.ClassType;
 import com.expediagroup.transformer.utils.ReflectionUtils;
 
 /**
@@ -64,6 +64,7 @@ public abstract class AbstractTransformerTest {
     protected static final String PHONE_NUMBER_DEST_FIELD_NAME = "phoneNumbers";
     protected static final String PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME = "nestedObject.phoneNumbers";
     protected static final String NAME_FIELD_NAME = "name";
+    protected static final String ACTIVE_FIELD_NAME = "active";
     protected static final float PRICE = 10.0f;
     protected static final Map<String, String> SAMPLE_MAP = new HashMap<>();
     protected static final Map<String, List<String>> COMPLEX_MAP = new HashMap<>();
@@ -146,7 +147,7 @@ public abstract class AbstractTransformerTest {
      */
     @SuppressWarnings("unchecked")
     private FromFooAdvFields createFromFooAdvFields() {
-        return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, IMMUTABLE, Locale.ENGLISH.getLanguage(),
+        return new FromFooAdvFields(Optional.of(NAME), Optional.of(AGE), INDEX_NUMBER, ClassType.IMMUTABLE, Locale.ENGLISH.getLanguage(),
                 PRICE, sourceFooSimpleList, (Collection) sourceFooSimpleList, SAMPLE_MAP, (Map) SAMPLE_MAP, fromSubFoo);
     }
 
@@ -155,6 +156,6 @@ public abstract class AbstractTransformerTest {
      * @return the {@link FromFooOnlyPrimitiveTypes} instance.
      */
     private FromFooOnlyPrimitiveTypes createFromFooPrimitiveTypes() {
-        return new FromFooOnlyPrimitiveTypes(ID.toString(), ID.intValue(), PRICE, String.valueOf(ACTIVE));
+        return new FromFooOnlyPrimitiveTypes(ID.toString(), ID.intValue(), PRICE, String.valueOf(ACTIVE), UUID.randomUUID());
     }
 }

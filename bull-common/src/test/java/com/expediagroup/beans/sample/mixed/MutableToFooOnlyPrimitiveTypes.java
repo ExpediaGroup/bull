@@ -28,4 +28,5 @@ public class MutableToFooOnlyPrimitiveTypes {
     private String id;
     private double price;
     private boolean active;
+    private Object uuid;
 }

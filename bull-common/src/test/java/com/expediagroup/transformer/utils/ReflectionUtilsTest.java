@@ -24,13 +24,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
-
-import static com.expediagroup.transformer.constant.MethodPrefix.GET;
-import static com.expediagroup.transformer.constant.MethodPrefix.IS;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -65,6 +63,7 @@ import com.expediagroup.beans.sample.immutable.ImmutableToSubFoo;
 import com.expediagroup.beans.sample.mutable.MutableToFoo;
 import com.expediagroup.beans.sample.mutable.MutableToFooAdvFields;
 import com.expediagroup.beans.sample.mutable.MutableToFooSimple;
+import com.expediagroup.transformer.constant.MethodPrefix;
 import com.expediagroup.transformer.error.MissingFieldException;
 import com.expediagroup.transformer.error.MissingMethodException;
 import com.expediagroup.transformer.model.ItemType;
@@ -340,11 +339,11 @@ public class ReflectionUtilsTest {
      */
     @DataProvider
     private Object[][] dataGetGetterMethodPrefixTesting() throws Exception {
-        return new Object[][] {
-                {"Tests that the method returns the prefix: 'get' in case the returned class is a String ", String.class, GET.getPrefix()},
-                {"Tests that the method returns the prefix: 'is' in case the returned class is a Boolean", Boolean.class, IS.getPrefix()},
+        return new Object[][]{
+                {"Tests that the method returns the prefix: 'get' in case the returned class is a String ", String.class, MethodPrefix.GET.getPrefix()},
+                {"Tests that the method returns the prefix: 'is' in case the returned class is a Boolean", Boolean.class, MethodPrefix.IS.getPrefix()},
                 {"Tests that the method returns the prefix: 'is' in case the returned class is a primitive boolean",
-                        FromFooSubClass.class.getDeclaredField(CHECK_FIELD_NAME).getType(), IS.getPrefix()}
+                        FromFooSubClass.class.getDeclaredField(CHECK_FIELD_NAME).getType(), MethodPrefix.IS.getPrefix()}
         };
     }
 
@@ -728,7 +727,7 @@ public class ReflectionUtilsTest {
     @Test
     public void testSetFieldValueInvokesTheSetterMethodInCaseAnExceptionIsRaised() {
         // GIVEN
-        ReflectionUtils underTestMock = Mockito.spy(ReflectionUtils.class);
+        ReflectionUtils underTestMock = spy(ReflectionUtils.class);
         MutableToFooSimple mutableToFoo = new MutableToFooSimple();
         Field idField = underTest.getDeclaredField(ID_FIELD_NAME, mutableToFoo.getClass());
         doThrow(RuntimeException.class).when(underTestMock).setFieldValueWithoutSetterMethod(mutableToFoo, idField, ONE);

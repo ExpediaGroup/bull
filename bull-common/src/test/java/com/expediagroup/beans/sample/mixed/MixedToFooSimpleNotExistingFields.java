@@ -13,24 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expediagroup.beans.sample;
+package com.expediagroup.beans.sample.mixed;
+
+import java.math.BigInteger;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Sample class containing only primitive types.
+ * Sample mixed object that contains multiple fields not existing in the source object.
  */
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class FromFooOnlyPrimitiveTypes {
-    private String code;
-    private int id;
-    private float price;
-    private String active;
-    private Object uuid;
+public class MixedToFooSimpleNotExistingFields {
+    private final String name;
+    private final BigInteger id;
+    private final BigInteger index;
+    private int age;
 }
