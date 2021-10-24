@@ -15,9 +15,12 @@
  */
 package com.expediagroup.beans.transformer;
 
+import static java.math.BigInteger.ONE;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import org.testng.annotations.Test;
 
@@ -27,6 +30,7 @@ import com.expediagroup.beans.sample.mixed.MixedToFooDiffFields;
 import com.expediagroup.beans.sample.mixed.MixedToFooMissingAllArgsConstructor;
 import com.expediagroup.beans.sample.mixed.MixedToFooMissingField;
 import com.expediagroup.beans.sample.mixed.MixedToFooNotExistingFields;
+import com.expediagroup.beans.sample.mixed.MixedToFooSimpleNotExistingFields;
 import com.expediagroup.transformer.error.MissingFieldException;
 import com.expediagroup.transformer.model.FieldMapping;
 import com.expediagroup.transformer.model.FieldTransformer;
@@ -36,6 +40,7 @@ import com.expediagroup.transformer.model.FieldTransformer;
  */
 public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
     private static final boolean ACTIVE = true;
+    private static final String INDEX_FIELD_NAME = "index";
 
     /**
      * Test that a Mixed bean with a constructor containing the final field only is correctly copied.
@@ -182,5 +187,63 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         // THEN
         assertThat(mixedToFoo).usingRecursiveComparison()
                 .isEqualTo(fromFoo);
+    }
+
+    /**
+     * Test that bean containing both final fields (with different names) and not with a source field mapped into
+     * multiple destination fields is correctly copied.
+     */
+    @Test
+    public void testMixedBeanWithASourceFieldMappedIntoMultipleDestinationFieldsIsCorrectlyCopied() {
+        // GIVEN
+        var multipleDestinationFieldMapping = new FieldMapping<>(ID_FIELD_NAME,
+                ID_FIELD_NAME, INDEX_FIELD_NAME);
+
+        // WHEN
+        var actual = underTest
+                .withFieldMapping(multipleDestinationFieldMapping)
+                .setDefaultValueForMissingField(true)
+                .transform(fromFooSimple, MixedToFooSimpleNotExistingFields.class);
+
+        // THEN
+        assertThat(actual)
+                .hasFieldOrPropertyWithValue(ID_FIELD_NAME, fromFoo.getId())
+                .hasFieldOrPropertyWithValue(INDEX_FIELD_NAME, fromFoo.getId())
+                .usingRecursiveComparison()
+                .ignoringFields(INDEX_FIELD_NAME, AGE_FIELD_NAME, ACTIVE_FIELD_NAME)
+                .isEqualTo(fromFoo);
+        underTest.reset();
+    }
+
+    /**
+     * Test that bean containing both final fields (with different names) and not with a source field mapped into
+     * multiple destination fields and field transformeration applies on mutliple fields is correctly copied.
+     */
+    @Test
+    public void testMixedBeanWithASourceFieldMappedIntoMultipleDestinationFieldsAndMultipleFieldTransformerIsCorrectlyCopied() {
+        // GIVEN
+        var valueToAdd = ONE;
+        var expectedIdValue = fromFooSimple.getId().add(valueToAdd);
+        var multipleDestinationFieldMapping = new FieldMapping<>(ID_FIELD_NAME,
+                ID_FIELD_NAME, INDEX_FIELD_NAME);
+        var multipleDestinationFieldTransformer =
+                new FieldTransformer<BigInteger, BigInteger>(List.of(ID_FIELD_NAME, INDEX_FIELD_NAME),
+                        val -> val.add(valueToAdd));
+
+        // WHEN
+        var actual = underTest
+                .withFieldMapping(multipleDestinationFieldMapping)
+                .withFieldTransformer(multipleDestinationFieldTransformer)
+                .setDefaultValueForMissingField(true)
+                .transform(fromFooSimple, MixedToFooSimpleNotExistingFields.class);
+
+        // THEN
+        assertThat(actual)
+                .hasFieldOrPropertyWithValue(ID_FIELD_NAME, expectedIdValue)
+                .hasFieldOrPropertyWithValue(INDEX_FIELD_NAME, expectedIdValue)
+                .usingRecursiveComparison()
+                .ignoringFields(ID_FIELD_NAME, INDEX_FIELD_NAME, AGE_FIELD_NAME, ACTIVE_FIELD_NAME)
+                .isEqualTo(fromFoo);
+        underTest.reset();
     }
 }

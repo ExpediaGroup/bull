@@ -59,10 +59,12 @@ abstract class AbstractMapTransformer extends AbstractTransformer<MapTransformer
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public MapTransformer withKeyTransformer(final FieldTransformer... keyFieldTransformer) {
         final Map<Object, FieldTransformer> keyFieldsTransformers = settings.getKeyFieldsTransformers();
-        for (FieldTransformer transformer : keyFieldTransformer) {
-            keyFieldsTransformers.put(transformer.getDestFieldName(), transformer);
+        for (var transformer : keyFieldTransformer) {
+            transformer.getDestFieldName()
+                    .forEach(destFieldName -> keyFieldsTransformers.put(destFieldName, transformer));
         }
         return this;
     }

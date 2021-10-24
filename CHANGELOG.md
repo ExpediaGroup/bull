@@ -2,22 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
-### [2.1.1] TBD
-
+### [2.1.1] 2021.10.24
+#### Added
+* Adds a function to reset all the defined settings
+* Adds the possibility to map the same source field into multiple fields
+* Adds the possibility to apply the same field transformation function on multiple fields
 #### Changed
-
 * Updated `eg-oss-parent` version to `2.4.1` (was `2.4.0`).
 
 ### [2.1.0] 2021.07.23
-
-#### Adds
-
+#### Changed
 * Renames the package from `com.hotels` to `com.expediagroup`
 
 ### [2.0.1.1] 2021.06.24
-
-#### Adds
-
+#### Added
 * Adds the javadoc generation to the release
 
 ### [2.0.1] 2021.06.23
