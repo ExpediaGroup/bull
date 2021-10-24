@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [2.0.1-jdk11] TBD
+### [2.0.1-jdk11] 2021.10.24
 #### Added
 * Adds a function to reset all the defined settings
 * Adds the possibility to map the same source field into multiple fields
