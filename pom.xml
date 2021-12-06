@@ -687,7 +687,8 @@
                                     <requireMavenVersion>
                                         <version>${maven.required.version}</version>
                                     </requireMavenVersion>
-                                    <DependencyConvergence />
+                                    <dependencyConvergence />
+                                    <banDuplicatePomDependencyVersions />
                                 </rules>
                             </configuration>
                         </execution>
