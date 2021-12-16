@@ -99,7 +99,7 @@
         <pmd.check.skip>true</pmd.check.skip>
         <javadoc.skip>false</javadoc.skip>
         <spotless.config.import.order.def>
-            \#java,\#javax,\#jakarta,\#org,\#,\#com,\#com.expedia,\#com.expediagroup,\#com.hotels,,\#lombok,java,javax,jakarta,org,,com,com.expedia,com.expediagroup,com.hotels,lombok
+            \#java,\#javax,\#jakarta,\#org,\#com,\#com.expediagroup,\#lombok,java,javax,jakarta,org,com,com.expediagroup,lombok,
         </spotless.config.import.order.def>
         <spotless.config.execution.skip>false</spotless.config.execution.skip>
     </properties>
