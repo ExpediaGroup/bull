@@ -74,7 +74,7 @@
         <!-- Required for coverall jdk >= 9 compatibility -->
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <!-- site properties -->
-        <wagon-ssh.version>3.4.3</wagon-ssh.version>
+        <wagon-ssh.version>3.5.0</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
         <github.global.server>github</github.global.server>
         <maven.site.plugin.version>3.9.1</maven.site.plugin.version>
