@@ -1,7 +1,12 @@
+
 # BULL Change Log
 
 All notable changes to this project will be documented in this file.
 
+### [2.1.2] 2022.01.05
+#### Changed
+* Removes Java Records objects to avoid hosting projects to being forced to use the `enable-preview` options
+ 
 ### [2.1.1] 2021.10.24
 #### Added
 * Adds a function to reset all the defined settings
