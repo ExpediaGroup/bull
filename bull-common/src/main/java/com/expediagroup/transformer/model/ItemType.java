@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,23 @@
 package com.expediagroup.transformer.model;
 
 import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Bean class for mapping the "Generic" object type and its nested generic (if any).
- * @param objectClass the object class. i.e. In case of: {@code Map<List<String>, Integer>} the value wil be {@code List}
- * @param genericClass the generic object class in the key object (if any). i.e. In case of: {@code Map<List<String>, Integer>} the value wil be {@code String}
  */
+@Getter
 @Builder
-public record ItemType(Class<?> objectClass, Class<?> genericClass) implements MapElemType {
+public class ItemType implements MapElemType {
+    /**
+     * The object class.
+     * i.e. In case of: {@code Map<List<String>, Integer>} the value wil be {@code List}
+     */
+    private final Class<?> objectClass;
+
+    /**
+     * The generic object class in the key object (if any).
+     * i.e. In case of: {@code Map<List<String>, Integer>} the value wil be {@code String}
+     */
+    private final Class<?> genericClass;
 }
