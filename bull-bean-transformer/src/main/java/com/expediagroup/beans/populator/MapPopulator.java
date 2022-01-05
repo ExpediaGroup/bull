@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,8 +54,8 @@ class MapPopulator extends Populator<Map<?, ?>> {
      * @return the populated map
      */
     private Map<?, ?> getPopulatedObject(final Map<?, ?> fieldValue, final MapType mapType) {
-        final MapElemType keyType = mapType.keyType();
-        final MapElemType elemType = mapType.elemType();
+        final MapElemType keyType = mapType.getKeyType();
+        final MapElemType elemType = mapType.getElemType();
         final boolean keyIsPrimitive = isPrimitive(keyType);
         final boolean elemIsPrimitive = isPrimitive(elemType);
         Map<?, ?> populatedObject;
@@ -78,7 +78,7 @@ class MapPopulator extends Populator<Map<?, ?>> {
      * @return true if it's primitive, false otherwise
      */
     private boolean isPrimitive(final MapElemType mapElemType) {
-        return mapElemType.getClass().equals(ItemType.class) && classUtils.isPrimitiveOrSpecialType(((ItemType) mapElemType).objectClass());
+        return mapElemType.getClass().equals(ItemType.class) && classUtils.isPrimitiveOrSpecialType(((ItemType) mapElemType).getObjectClass());
     }
 
     /**
@@ -96,7 +96,7 @@ class MapPopulator extends Populator<Map<?, ?>> {
             elemValue = value;
         } else {
             if (mapElemType.getClass().equals(ItemType.class)) {
-                elemValue = (T) transform(value, ((ItemType) mapElemType).objectClass(), ((ItemType) mapElemType).genericClass());
+                elemValue = (T) transform(value, ((ItemType) mapElemType).getObjectClass(), ((ItemType) mapElemType).getGenericClass());
             } else {
                 elemValue = (T) getPopulatedObject((Map) value, (MapType) mapElemType);
             }

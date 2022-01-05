@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,23 @@
  */
 package com.expediagroup.transformer.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * Bean class for mapping the java.util.Map type.
- * @param keyType key object class
- * @param elemType elem object class
  */
-public record MapType(MapElemType keyType, MapElemType elemType) implements MapElemType {
+@AllArgsConstructor
+@Getter
+public class MapType implements MapElemType {
+    /**
+     * key object class.
+     */
+    private final MapElemType keyType;
+
+    /**
+     * elem object class.
+     */
+    private final MapElemType elemType;
+
 }

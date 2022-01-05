@@ -270,7 +270,7 @@
                             <excludes>
                                 <exclude>**/PerformanceTest.java</exclude>
                             </excludes>
-                            <argLine>@{argLine} --enable-preview</argLine>
+                            <argLine>@{argLine}</argLine>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -357,7 +357,7 @@
                         <configuration>
                             <excludes>
                                 <exclude>**/PerformanceTest.java</exclude>
-                                <argLine>@{argLine} --enable-preview</argLine>
+                                <argLine>@{argLine}</argLine>
                             </excludes>
                         </configuration>
                     </plugin>
@@ -431,7 +431,6 @@
                         <target>${maven.compiler.target}</target>
                         <parameters>true</parameters>
                         <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                        <compilerArgs>--enable-preview</compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -498,7 +497,7 @@
                     <version>${maven.surefire.plugin.version}</version>
                     <configuration>
                         <parallelMavenExecution>false</parallelMavenExecution>
-                        <argLine>@{argLine} --enable-preview</argLine>
+                        <argLine>@{argLine}</argLine>
                     </configuration>
                 </plugin>
                 <!-- jacoco plugin configuration -->
@@ -750,7 +749,6 @@
                 <version>${maven.javadoc-plugin.version}</version>
                 <configuration>
                     <skip>${javadoc.skip}</skip>
-                    <additionalOptions>--enable-preview</additionalOptions>
                     <release>${jdk.version}</release>
                 </configuration>
                 <executions>
@@ -776,7 +774,6 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <show>public</show>
-                    <additionalOptions>--enable-preview</additionalOptions>
                     <release>${jdk.version}</release>
                 </configuration>
                 <reportSets>

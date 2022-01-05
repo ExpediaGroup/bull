@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,12 +82,12 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public final T withFieldMapping(final FieldMapping... fieldMapping) {
         var fieldsNameMapping = settings.getFieldsNameMapping();
         for (FieldMapping<P, P> mapping : fieldMapping) {
-            stream(mapping.destFieldName())
-                    .forEach(destField -> fieldsNameMapping.put(destField, mapping.sourceFieldName()));
+            stream(mapping.getDestFieldName())
+                    .forEach(destField -> fieldsNameMapping.put(destField, mapping.getSourceFieldName()));
         }
         return (T) this;
     }
@@ -96,7 +96,7 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public final T withFieldTransformer(final FieldTransformer... fieldTransformer) {
         var fieldsTransformers = settings.getFieldsTransformers();
         for (var transformer : fieldTransformer) {
