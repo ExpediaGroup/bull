@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import static java.util.Objects.isNull;
 import java.util.List;
 import java.util.Set;
 
-import jakarta.validation.ConstraintViolation;
+import javax.validation.ConstraintViolation;
 
 import com.expediagroup.transformer.error.InvalidBeanException;
 
