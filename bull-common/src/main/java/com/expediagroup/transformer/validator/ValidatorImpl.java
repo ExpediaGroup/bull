@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package com.expediagroup.transformer.validator;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
-import static jakarta.validation.Validation.buildDefaultValidatorFactory;
+import static javax.validation.Validation.buildDefaultValidatorFactory;
 
 import static org.apache.commons.lang3.StringUtils.SPACE;
 
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
-import jakarta.validation.ConstraintViolation;
+import javax.validation.ConstraintViolation;
 
 import com.expediagroup.transformer.cache.CacheManager;
 import com.expediagroup.transformer.cache.CacheManagerFactory;
@@ -98,9 +98,9 @@ public class ValidatorImpl implements Validator {
      * Creates the validator.
      * @return a {@link javax.validation.Validator} instance.
      */
-    private jakarta.validation.Validator getValidator() {
+    private javax.validation.Validator getValidator() {
         var cacheKey = "BeanValidator";
-        return cacheManager.getFromCache(cacheKey, jakarta.validation.Validator.class)
+        return cacheManager.getFromCache(cacheKey, javax.validation.Validator.class)
                 .orElseGet(() -> {
                     var validator = buildDefaultValidatorFactory().getValidator();
                     cacheManager.cacheObject(cacheKey, validator);

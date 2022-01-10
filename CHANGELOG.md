@@ -3,6 +3,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.2.0] 2022.01.10
+#### Changed
+* Updated `hibernate-validator` version to `6.2.1.Final` (was `7.0.1.Final`). This replaces the jakarta validation with the javax one.
+
 ### [2.1.2] 2022.01.05
 #### Changed
 * Removes Java Records objects to avoid hosting projects to being forced to use the `enable-preview` options
