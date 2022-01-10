@@ -29,12 +29,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.el</artifactId>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el</artifactId>
         </dependency>
     </dependencies>
     <build>
