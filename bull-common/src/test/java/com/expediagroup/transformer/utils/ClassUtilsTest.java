@@ -665,7 +665,6 @@ public class ClassUtilsTest {
         // GIVEN
         Constructor<?> constructor = ImmutableToFooCustomAnnotation.class.getConstructors()[0];
 
-
         // WHEN
         boolean actual = underTest.allParameterAnnotatedWith(constructor, annotationClass);
 
