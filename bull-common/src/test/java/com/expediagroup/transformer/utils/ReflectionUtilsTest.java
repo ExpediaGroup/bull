@@ -464,7 +464,6 @@ public class ReflectionUtilsTest {
         MutableToFoo mutableToFoo = createMutableToFoo(null);
         Method idSetterMethod = underTest.getSetterMethodForField(MutableToFoo.class, LIST_FIELD_NAME, List.class);
 
-
         // WHEN
         ThrowingCallable actual = () ->
                 getMethod(underTest.getClass(), INVOKE_METHOD_NAME, true, Method.class, Object.class, Object[].class)
@@ -548,7 +547,6 @@ public class ReflectionUtilsTest {
         // THEN
         assertThat(actual).isNotNull();
     }
-
 
     /**
      * Tests that the method {@code getGenericFieldType} works properly.

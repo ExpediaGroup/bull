@@ -32,7 +32,6 @@ public interface Converter {
      */
     Optional<Function<Object, Object>> getConversionFunction(Class<?> sourceClass, Class<?> targetClass);
 
-
     /**
      * Converts a given primitive value into the given primitive type.
      * @param valueToConvert the value to be converted
