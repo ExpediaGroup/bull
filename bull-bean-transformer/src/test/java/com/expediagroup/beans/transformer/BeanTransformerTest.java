@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -471,7 +471,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code setValidationEnabled}.
-     * @return parameters to be used for testing the the method {@code setValidationEnabled}.
+     * @return parameters to be used for testing the method {@code setValidationEnabled}.
      */
     @DataProvider
     private Object[][] dataValidationInitializationTesting() {
@@ -501,7 +501,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code setValidationEnabled}.
-     * @return parameters to be used for testing the the method {@code setValidationEnabled}.
+     * @return parameters to be used for testing the method {@code setValidationEnabled}.
      */
     @DataProvider
     private Object[][] dataConversionAnalyzerInitializationTesting() {
@@ -547,7 +547,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code handleInjectionExceptionTesting}.
-     * @return parameters to be used for testing the the method {@code handleInjectionExceptionTesting}.
+     * @return parameters to be used for testing the method {@code handleInjectionExceptionTesting}.
      */
     @DataProvider
     private Object[][] dataHandleInjectionExceptionTesting() {

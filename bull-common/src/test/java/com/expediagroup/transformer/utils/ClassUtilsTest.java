@@ -141,7 +141,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code isPrimitiveType}.
-     * @return parameters to be used for testing the the method {@code isPrimitiveType}.
+     * @return parameters to be used for testing the method {@code isPrimitiveType}.
      */
     @DataProvider
     private Object[][] dataIsPrimitiveTypeObjectTesting() {
@@ -175,7 +175,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code isSpecialType}.
-     * @return parameters to be used for testing the the method {@code isSpecialType}.
+     * @return parameters to be used for testing the method {@code isSpecialType}.
      */
     @DataProvider
     private Object[][] dataSpecialTypeObjectTesting() {
@@ -208,7 +208,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code isPrimitiveOrSpecialType}.
-     * @return parameters to be used for testing the the method {@code isPrimitiveOrSpecialType}.
+     * @return parameters to be used for testing the method {@code isPrimitiveOrSpecialType}.
      */
     @DataProvider
     private Object[][] dataPrimitiveOrSpecialTypeObjectTesting() {
@@ -239,7 +239,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code isPrimitiveArrayType}.
-     * @return parameters to be used for testing the the method {@code isPrimitiveArrayType}.
+     * @return parameters to be used for testing the method {@code isPrimitiveArrayType}.
      */
     @DataProvider
     private Object[][] dataPrimitiveArrayTypeTesting() {
@@ -275,7 +275,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getPrivateFinalFields}.
-     * @return parameters to be used for testing the the method {@code getPrivateFinalFields}.
+     * @return parameters to be used for testing the method {@code getPrivateFinalFields}.
      */
     @DataProvider
     private Object[][] dataGetPrivateFinalFieldsTesting() {
@@ -306,7 +306,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getNotFinalFields}.
-     * @return parameters to be used for testing the the method {@code getNotFinalFields}.
+     * @return parameters to be used for testing the method {@code getNotFinalFields}.
      */
     @DataProvider
     private Object[][] dataGetNotFinalFieldsTesting() {
@@ -337,7 +337,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getTotalFields}.
-     * @return parameters to be used for testing the the method {@code getTotalFields}.
+     * @return parameters to be used for testing the method {@code getTotalFields}.
      */
     @DataProvider
     private Object[][] dataGetTotalFieldsTesting() {
@@ -368,7 +368,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getPrivateFields}.
-     * @return parameters to be used for testing the the method {@code getPrivateFields}.
+     * @return parameters to be used for testing the method {@code getPrivateFields}.
      */
     @DataProvider
     private Object[][] dataGetPrivateFieldsTesting() {
@@ -410,7 +410,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getDeclaredFields}.
-     * @return parameters to be used for testing the the method {@code getDeclaredFields}.
+     * @return parameters to be used for testing the method {@code getDeclaredFields}.
      */
     @DataProvider
     private Object[][] dataGetDeclaredFieldsTesting() {
@@ -443,7 +443,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getDeclaredClasses}.
-     * @return parameters to be used for testing the the method {@code getDeclaredClasses}.
+     * @return parameters to be used for testing the method {@code getDeclaredClasses}.
      */
     @DataProvider
     private Object[][] dataGetDeclaredClassesTesting() {
@@ -587,7 +587,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code hasField}.
-     * @return parameters to be used for testing the the method {@code hasField}.
+     * @return parameters to be used for testing the method {@code hasField}.
      */
     @DataProvider
     private Object[][] dataHasFieldTesting() {
@@ -616,7 +616,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code hasFinalFields}.
-     * @return parameters to be used for testing the the method {@code hasFinalFields}.
+     * @return parameters to be used for testing the method {@code hasFinalFields}.
      */
     @DataProvider
     private Object[][] dataHasFinalFieldTesting() {
@@ -645,7 +645,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code hasSetterMethods}.
-     * @return parameters to be used for testing the the method {@code hasSetterMethods}.
+     * @return parameters to be used for testing the method {@code hasSetterMethods}.
      */
     @DataProvider
     private Object[][] dataHasSetterMethodsTesting() {
@@ -675,7 +675,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code notAllParameterAnnotatedWith}.
-     * @return parameters to be used for testing the the method {@code notAllParameterAnnotatedWith}.
+     * @return parameters to be used for testing the method {@code notAllParameterAnnotatedWith}.
      */
     @DataProvider
     private Object[][] dataNotAllParameterAnnotatedWithTesting() {
@@ -704,7 +704,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getClassType}.
-     * @return parameters to be used for testing the the method {@code getClassType}.
+     * @return parameters to be used for testing the method {@code getClassType}.
      */
     @DataProvider
     private Object[][] dataGetClassTypeTesting() {
@@ -734,7 +734,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getSetterMethods}.
-     * @return parameters to be used for testing the the method {@code getSetterMethods}.
+     * @return parameters to be used for testing the method {@code getSetterMethods}.
      */
     @DataProvider
     private Object[][] dataGetSetterMethodsTesting() {
@@ -763,7 +763,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getGetterMethods}.
-     * @return parameters to be used for testing the the method {@code getGetterMethods}.
+     * @return parameters to be used for testing the method {@code getGetterMethods}.
      */
     @DataProvider
     private Object[][] dataGetGetterMethodsTesting() {
@@ -791,7 +791,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code usesBuilderPattern}.
-     * @return parameters to be used for testing the the method {@code usesBuilderPattern}.
+     * @return parameters to be used for testing the method {@code usesBuilderPattern}.
      */
     @DataProvider
     private Object[][] dataUsesBuilderPatternTesting() {
@@ -820,7 +820,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code hasAccessibleConstructors}.
-     * @return parameters to be used for testing the the method {@code hasAccessibleConstructors}.
+     * @return parameters to be used for testing the method {@code hasAccessibleConstructors}.
      */
     @DataProvider
     private Object[][] dataHasAccessibleConstructorsTesting() {
@@ -849,7 +849,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code isString}.
-     * @return parameters to be used for testing the the method {@code isString}.
+     * @return parameters to be used for testing the method {@code isString}.
      */
     @DataProvider
     private Object[][] dataIsStringTesting() {
@@ -878,7 +878,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code isBigInteger}.
-     * @return parameters to be used for testing the the method {@code isBigInteger}.
+     * @return parameters to be used for testing the method {@code isBigInteger}.
      */
     @DataProvider
     private Object[][] dataIsBigIntegerTesting() {
@@ -907,7 +907,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code isBigDecimal}.
-     * @return parameters to be used for testing the the method {@code isBigDecimal}.
+     * @return parameters to be used for testing the method {@code isBigDecimal}.
      */
     @DataProvider
     private Object[][] dataIsBigDecimalTesting() {
@@ -936,7 +936,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code isByteArray}.
-     * @return parameters to be used for testing the the method {@code isByteArray}.
+     * @return parameters to be used for testing the method {@code isByteArray}.
      */
     @DataProvider
     private Object[][] dataIsByteArrayTesting() {
@@ -983,7 +983,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getConcreteClass}.
-     * @return parameters to be used for testing the the method {@code getConcreteClass}.
+     * @return parameters to be used for testing the method {@code getConcreteClass}.
      * @throws Exception if something goes wrong
      */
     @DataProvider
@@ -1011,7 +1011,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getBuildMethod}.
-     * @return parameters to be used for testing the the method {@code getBuildMethod}.
+     * @return parameters to be used for testing the method {@code getBuildMethod}.
      */
     @DataProvider
     private Object[][] dataGetBuilderMethodExceptionTesting() {
@@ -1057,7 +1057,7 @@ public class ClassUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getBuilderClass}.
-     * @return parameters to be used for testing the the method {@code getBuilderClass}.
+     * @return parameters to be used for testing the method {@code getBuilderClass}.
      */
     @DataProvider
     private Object[][] dataGetBuilderClassTesting() {
