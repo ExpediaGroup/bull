@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -761,7 +761,7 @@ public final class ClassUtils {
     }
 
     /**
-     * Retrieves all the class methods matching to the the given filter.
+     * Retrieves all the class methods matching to the given filter.
      * @param clazz the class containing the methods.
      * @param cacheKeyPrefix the prefix to adopt for the cache key
      * @param methodFilter the filter to apply to the retrieved methods
