@@ -87,7 +87,7 @@
         <maven.versions.plugin.version>2.9.0</maven.versions.plugin.version>
         <puppycrawl.checkstyle.version>9.3</puppycrawl.checkstyle.version>
         <maven.release.plugin.version>3.0.0-M4</maven.release.plugin.version>
-        <maven.nexus-staging.plugin.version>1.6.11</maven.nexus-staging.plugin.version>
+        <maven.nexus-staging.plugin.version>1.6.12</maven.nexus-staging.plugin.version>
         <maven.project.info.reports.plugin.version>3.1.2</maven.project.info.reports.plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <!-- excludes the Record classes from being analyzed as they are not yet supported by the checkstyle plugin -->
