@@ -63,7 +63,7 @@
         <slf4j-api.version>1.7.36</slf4j-api.version>
         <glassfish.javax.el.version>3.0.0</glassfish.javax.el.version>
         <!-- JaCoCo & Sonar properties -->
-        <jacoco.version>0.8.7</jacoco.version>
+        <jacoco.version>0.8.8</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
         <jacoco.instructionRatio>0.98</jacoco.instructionRatio>
         <jacoco.methodRatio>1.0</jacoco.methodRatio>
