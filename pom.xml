@@ -58,7 +58,7 @@
         <assertj-core.version>3.22.0</assertj-core.version>
         <!-- validation dependencies -->
         <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
-        <jboss-logging.version>3.4.3.Final</jboss-logging.version>
+        <jboss-logging.version>3.5.0.Final</jboss-logging.version>
         <jboss-logging-modules.version>2.2.1.Final</jboss-logging-modules.version>
         <slf4j-api.version>1.7.36</slf4j-api.version>
         <glassfish.javax.el.version>3.0.0</glassfish.javax.el.version>
