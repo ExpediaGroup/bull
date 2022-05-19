@@ -1,11 +1,23 @@
-# dependabot configuration available at: https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates
+# dependabot configuration available at: https://docs.github.com/en/code-security/dependabot
 version: 2
 updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: develop
+    reviewers:
+      - fborriello
+    labels:
+      - configuration
+      - update
+      - github-actions-lib
+  # Maintain dependencies for maven
   - package-ecosystem: maven
     directory: "/"
     schedule:
       interval: daily
-      time: "02:00"
     open-pull-requests-limit: 10
     target-branch: develop
     reviewers:
@@ -13,4 +25,4 @@ updates:
     labels:
       - configuration
       - update
-    rebase-strategy: "auto"
+      - dependencies
