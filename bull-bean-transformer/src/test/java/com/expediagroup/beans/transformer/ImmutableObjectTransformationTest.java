@@ -25,8 +25,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.testng.annotations.AfterMethod;
@@ -97,7 +99,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         // GIVEN
 
         // WHEN
-        Object actual = transformer.transform(sourceObject, targetObjectClass);
+        var actual = transformer.transform(sourceObject, targetObjectClass);
 
         // THEN
         assertThat(actual).usingRecursiveComparison()
@@ -119,10 +121,40 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
                         beanUtils.getTransformer().withFieldMapping(), fromFoo, ImmutableToFoo.class},
                 {"Test that immutable beans with constructor arguments parameter annotated with: @ConstructorArg are correctly copied.",
                         beanUtils.getTransformer(), fromFoo, ImmutableToFooCustomAnnotation.class},
-                {"Test that bean that extends another class are correctly copied", beanUtils.getTransformer(), fromFooSubClass, ImmutableToFooSubClass.class},
-                {"Test that immutable beans with extremely complex map are correctly transformed.",
-                        beanUtils.getTransformer(), fromFooMap, ImmutableToFooMap.class},
+                {"Test that bean that extends another class are correctly copied", beanUtils.getTransformer(), fromFooSubClass, ImmutableToFooSubClass.class}
         };
+    }
+
+    /**
+     * Test that immutable beans with extremely complex map are correctly transformed.
+     */
+    @Test
+    public void testImmutableBeanIsCorrectlyCopied() {
+        // GIVEN
+
+        // WHEN
+        var actual = new BeanUtils().getTransformer().transform(fromFooMap, ImmutableToFooMap.class);
+
+        // THEN
+        assertThat(actual).usingRecursiveComparison()
+                .ignoringAllOverriddenEquals()
+                .ignoringFields("extremeComplexMap")
+                .isEqualTo(fromFooMap);
+
+        var fromFooMapKeys = new ArrayList<>(fromFooMap.getExtremeComplexMap().keySet());
+        var actualMapKeys = new ArrayList<>(actual.getExtremeComplexMap().keySet());
+        IntStream.range(0, fromFooMapKeys.size())
+                        .forEach(i -> {
+                            var actualKey = actualMapKeys.get(i);
+                            var sourceKey = fromFooMapKeys.get(i);
+                            assertThat(actualKey).usingRecursiveComparison()
+                                    .ignoringAllOverriddenEquals()
+                                    .isEqualTo(sourceKey);
+
+                            assertThat(actual.getExtremeComplexMap().get(actualKey))
+                                    .usingRecursiveComparison()
+                                    .isEqualTo(fromFooMap.getExtremeComplexMap().get(sourceKey));
+                        });
     }
 
     /**
