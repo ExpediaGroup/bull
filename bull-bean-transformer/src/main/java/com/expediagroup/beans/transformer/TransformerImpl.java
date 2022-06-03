@@ -205,7 +205,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * Creates a string containing the arguments used to invoke the given class constructor.
      * @param targetClass the class containing the constructor
      * @param constructorArgs the passed arguments
-     * @param <K> he target object type
+     * @param <K> the target object type
      * @return the formatted constructor arguments
      */
     private <K> String getFormattedConstructorArgs(final Class<K> targetClass, final Object[] constructorArgs) {
@@ -350,8 +350,8 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param <K> the target object type
      * @return a {@link Consumer} that sets the field value in the target object
      */
-    private <T, K> Consumer<Field> setFieldValue(final T sourceObj, final K targetObject, final Class<?> targetObjectClass, final String breadcrumb) {
-        return field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb));
+    private <T, K> Consumer<Field> setFieldValue(final T sourceObj, final K targetObject, final Class targetObjectClass, final String breadcrumb) {
+        return field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObject, targetObjectClass, field, breadcrumb));
     }
 
     /**
@@ -385,7 +385,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
                 .forEach(setFieldValue(sourceObj, targetObject, targetObjectClass, breadcrumb));
     }
 
-    /**
+     /**
      * Retrieves the value of a field. In case it is not a primitive type it recursively inject the values inside the object.
      * @param sourceObj sourceObj the source object
      * @param targetClass the destination object class
@@ -397,8 +397,13 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private <T, K> Object getFieldValue(final T sourceObj, final Class<K> targetClass, final Field field, final String breadcrumb) {
+        K k = null;
+        return getFieldValue(sourceObj, k, targetClass, field, breadcrumb);
+    }
+
+    private <T, K> Object getFieldValue(final T sourceObj, final K targetObject, final Class<K> targetClass, final Field field, final String breadcrumb) {
         String sourceFieldName = getSourceFieldName(field);
-        return getFieldValue(sourceObj, sourceFieldName, targetClass, field, breadcrumb);
+        return getFieldValue(sourceObj, sourceFieldName, targetObject, targetClass, field, breadcrumb);
     }
 
     /**
@@ -414,10 +419,17 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final Class<K> targetClass, final Field field, final String breadcrumb) {
+        return getFieldValue(sourceObj, sourceFieldName, null, targetClass, field, breadcrumb);
+    }
+
+    private <T, K> Object getFieldValue(final T sourceObj, final String sourceFieldName, final K targetObject,
+                                        final Class<K> targetClass, final Field field, final String breadcrumb) {
         String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
         Class<?> fieldType = field.getType();
         if (doSkipTransformation(fieldBreadcrumb)) {
-            return defaultValue(fieldType);
+            return Optional.ofNullable(targetObject)
+                    .map(to -> reflectionUtils.getFieldValue(to, fieldBreadcrumb, fieldType))
+                    .orElseGet(() -> defaultValue(fieldType));
         }
         boolean primitiveType = classUtils.isPrimitiveType(fieldType);
         FieldTransformer transformerFunction = getTransformerFunction(field, fieldBreadcrumb);
@@ -425,7 +437,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
         Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isTransformerFunctionDefined);
         if (nonNull(fieldValue)) {
             // is not a primitive type or an optional && there are no transformer function
-            // defined it recursively evaluate the value
+            // defined it recursively evaluates the value
             boolean notPrimitiveAndNotSpecialType = !primitiveType && !classUtils.isSpecialType(fieldType);
             if (!isTransformerFunctionDefined
                     && (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))) {

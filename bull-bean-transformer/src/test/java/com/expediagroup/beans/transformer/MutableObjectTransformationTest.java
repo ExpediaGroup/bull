@@ -31,6 +31,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -60,6 +61,13 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
     private static final String INJECT_VALUES_METHOD_NAME = "injectValues";
     private static final String NESTED_OBJECT_NAME_FIELD_NAME = "nestedObject.name";
     private static final String CODE_FIELD_NAME = "code";
+
+    @BeforeMethod
+    void beforeMethod() {
+        super.beforeMethod();
+        underTest.resetFieldsTransformer();
+        underTest.resetFieldsTransformationSkip();
+    }
 
     /**
      * Test that an exception is thrown if there is no default constructor defined for the mutable bean object.
@@ -139,7 +147,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         assertThat(actual)
                 .extracting(NAME_FIELD_NAME, NESTED_OBJECT_NAME_FIELD_NAME)
                 .containsExactly(fromFoo.getName(), namePrefix + fromFoo.getNestedObject().getName());
-        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -161,7 +168,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         assertThat(actual.getName()).isEqualTo(namePrefix + fromFoo.getName());
         assertThat(actual.getNestedObject().getName())
                 .isEqualTo(namePrefix + fromFoo.getNestedObject().getName());
-        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -230,7 +236,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
 
         // THEN
         assertThat(mutableObjectBean).hasFieldOrPropertyWithValue(AGE_FIELD_NAME, AGE);
-        underTest.resetFieldsTransformer();
     }
 
     /**
