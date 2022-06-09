@@ -336,7 +336,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private <T, K> void injectAllFields(final T sourceObj, final K targetObject, final String breadcrumb) {
-        final Class<?> targetObjectClass = targetObject.getClass();
+        final Class<K> targetObjectClass = (Class<K>) targetObject.getClass();
         injectFields(classUtils.getDeclaredFields(targetObjectClass, true), sourceObj, targetObject, targetObjectClass, breadcrumb);
     }
 
@@ -350,7 +350,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param <K> the target object type
      * @return a {@link Consumer} that sets the field value in the target object
      */
-    private <T, K> Consumer<Field> setFieldValue(final T sourceObj, final K targetObject, final Class targetObjectClass, final String breadcrumb) {
+    private <T, K> Consumer<Field> setFieldValue(final T sourceObj, final K targetObject, final Class<K> targetObjectClass, final String breadcrumb) {
         return field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObject, targetObjectClass, field, breadcrumb));
     }
 
@@ -364,7 +364,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private <T, K> void injectNotFinalFields(final T sourceObj, final K targetObject, final String breadcrumb) {
-        final Class<?> targetObjectClass = targetObject.getClass();
+        final Class<K> targetObjectClass = (Class<K>) targetObject.getClass();
         injectFields(classUtils.getNotFinalFields(targetObjectClass, true), sourceObj, targetObject, targetObjectClass, breadcrumb);
     }
 
@@ -379,7 +379,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param <K> the target object type
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
-    private <T, K> void injectFields(final List<Field> fieldList, final T sourceObj, final K targetObject, final Class<?> targetObjectClass, final String breadcrumb) {
+    private <T, K> void injectFields(final List<Field> fieldList, final T sourceObj, final K targetObject, final Class<K> targetObjectClass, final String breadcrumb) {
         fieldList
                 //.parallelStream()
                 .forEach(setFieldValue(sourceObj, targetObject, targetObjectClass, breadcrumb));
