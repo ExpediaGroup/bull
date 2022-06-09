@@ -382,7 +382,7 @@ public final class ReflectionUtils {
      * @param field the field to set
      * @param fieldValue the value to set
      */
-    protected void setFieldValueWithoutSetterMethod(final Object target, final Field field, final Object fieldValue) {
+    void setFieldValueWithoutSetterMethod(final Object target, final Field field, final Object fieldValue) {
         try {
             field.set(target, fieldValue);
         } catch (final Exception e) {
@@ -618,7 +618,7 @@ public final class ReflectionUtils {
      * @param ex the exception
      * @return the exception to be thrown
      */
-    protected RuntimeException handleReflectionException(final Exception ex) {
+    RuntimeException handleReflectionException(final Exception ex) {
         RuntimeException e;
         if (ex instanceof NoSuchMethodException) {
             e = new MissingMethodException("Method not found: " + ex.getMessage());

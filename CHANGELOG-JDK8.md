@@ -95,11 +95,11 @@ All notable changes to this project will be documented in this file.
 * Module `bean-utils-library` has been relocated into `bull-bean-transformer`.
 * The following classes has been deprecated, please find below the complete list and the new one to be used:
 
-  | Deprecated | **New one** |
-      | :----------- | :----------- |
-  | `com.expediagroup.beans.model.FieldMapping` | `FieldMapping` |
+  | Deprecated                                      | **New one**        |
+  |:------------------------------------------------|:-------------------|
+  | `com.expediagroup.beans.model.FieldMapping`     | `FieldMapping`     |
   | `com.expediagroup.beans.model.FieldTransformer` | `FieldTransformer` |
-  | `com.expediagroup.beans.Transformer` | `Transformer` |
+  | `com.expediagroup.beans.Transformer`            | `Transformer`      |
     
 ### [1.1.23] 2019.08.06
 #### Added

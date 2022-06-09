@@ -321,8 +321,9 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     private <T, K> Object[] getConstructorValuesFromFields(final T sourceObj, final Class<K> targetClass, final String breadcrumb) {
         final List<Field> declaredFields = classUtils.getDeclaredFields(targetClass, true);
+        K k = null;
         return declaredFields.stream()
-                .map(field -> getFieldValue(sourceObj, targetClass, field, breadcrumb))
+                .map(field -> getFieldValue(sourceObj, k, targetClass, field, breadcrumb))
                 .toArray(Object[]::new);
     }
 
@@ -383,22 +384,6 @@ public class TransformerImpl extends AbstractBeanTransformer {
         fieldList
                 //.parallelStream()
                 .forEach(setFieldValue(sourceObj, targetObject, targetObjectClass, breadcrumb));
-    }
-
-    /**
-     * Retrieves the value of a field. In case it is not a primitive type it recursively inject the values inside the object.
-     * @param sourceObj sourceObj the source object
-     * @param targetClass the destination object class
-     * @param field The field for which the value has to be retrieved
-     * @param breadcrumb  the full path of the current field starting from his ancestor
-     * @param <T> the sourceObj object type
-     * @param <K> the target object type
-     * @return the field value
-     * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
-     */
-    private <T, K> Object getFieldValue(final T sourceObj, final Class<K> targetClass, final Field field, final String breadcrumb) {
-        K k = null;
-        return getFieldValue(sourceObj, k, targetClass, field, breadcrumb);
     }
 
     private <T, K> Object getFieldValue(final T sourceObj, final K targetObject, final Class<K> targetClass, final Field field, final String breadcrumb) {
