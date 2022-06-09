@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Constructor;
@@ -30,7 +31,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
-import org.mockito.Mockito;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -139,7 +139,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         assertThat(actual)
                 .extracting(NAME_FIELD_NAME, NESTED_OBJECT_NAME_FIELD_NAME)
                 .containsExactly(fromFoo.getName(), namePrefix + fromFoo.getNestedObject().getName());
-        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -161,7 +160,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         assertThat(actual.getName()).isEqualTo(namePrefix + fromFoo.getName());
         assertThat(actual.getNestedObject().getName())
                 .isEqualTo(namePrefix + fromFoo.getNestedObject().getName());
-        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -230,7 +228,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
 
         // THEN
         assertThat(mutableObjectBean).hasFieldOrPropertyWithValue(AGE_FIELD_NAME, AGE);
-        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -318,7 +315,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
 
         // THEN
         assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
-        underTest.resetFieldsTransformationSkip();
     }
 
     /**
@@ -376,7 +372,7 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
     public void testInjectValuesThrowsException() throws Exception {
         // GIVEN
         InvalidBeanException expectedException = new InvalidBeanException("Dummy exception");
-        TransformerImpl underTestMock = Mockito.spy(TransformerImpl.class);
+        TransformerImpl underTestMock = spy(TransformerImpl.class);
         ClassUtils classUtils = mock(ClassUtils.class);
         Constructor<MutableToFooSimple> constructor = classUtils.getAllArgsConstructor(MutableToFooSimple.class);
         when(classUtils.getInstance(constructor)).thenThrow(InvalidBeanException.class);

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -299,7 +299,6 @@ public final class ReflectionUtils {
             Field field;
             try {
                 field = targetClass.getDeclaredField(fieldName);
-                field.setAccessible(true);
             } catch (NoSuchFieldException e) {
                 Class<?> superclass = targetClass.getSuperclass();
                 if (!superclass.equals(Object.class)) {
@@ -310,6 +309,7 @@ public final class ReflectionUtils {
             } catch (final Exception e) {
                 throw handleReflectionException(e);
             }
+            field.setAccessible(true);
             CACHE_MANAGER.cacheObject(cacheKey, field);
             return field;
         });

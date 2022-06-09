@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class FieldMapping<T, K> {
+
     /**
      * The field name in the source object.
      */
@@ -34,15 +35,15 @@ public class FieldMapping<T, K> {
     /**
      * The field name in the destination object.
      */
-    private final K[] destFieldNames;
+    private final K[] destFieldName;
 
     /**
-     * Constructor.
+     * Specifies the field's name mapping between the source object and destination one.
      * @param srcFieldName the field name in the source object
-     * @param destFieldName the field name in the destination object
+     * @param destFieldsName the field name in the destination object.
      */
-    public FieldMapping(final T srcFieldName, final K... destFieldName) {
+    public FieldMapping(final T srcFieldName, final K... destFieldsName) {
         this.sourceFieldName = srcFieldName;
-        this.destFieldNames = destFieldName;
+        this.destFieldName = destFieldsName;
     }
 }

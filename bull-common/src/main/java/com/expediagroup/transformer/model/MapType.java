@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import lombok.Getter;
 public class MapType implements MapElemType {
     /**
      * key object class.
- */
+     */
     private final MapElemType keyType;
 
     /**

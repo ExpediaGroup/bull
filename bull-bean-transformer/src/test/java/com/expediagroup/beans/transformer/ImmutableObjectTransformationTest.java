@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,22 @@
  */
 package com.expediagroup.beans.transformer;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
-import org.mockito.Mockito;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -82,7 +83,6 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     @AfterMethod
     public void afterMethod() {
         underTest.setValidationEnabled(false);
-        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -120,10 +120,40 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
                         beanUtils.getTransformer().withFieldMapping(), fromFoo, ImmutableToFoo.class},
                 {"Test that immutable beans with constructor arguments parameter annotated with: @ConstructorArg are correctly copied.",
                         beanUtils.getTransformer(), fromFoo, ImmutableToFooCustomAnnotation.class},
-                {"Test that bean that extends another class are correctly copied", beanUtils.getTransformer(), fromFooSubClass, ImmutableToFooSubClass.class},
-                {"Test that immutable beans with extremely complex map are correctly transformed.",
-                        beanUtils.getTransformer(), fromFooMap, ImmutableToFooMap.class},
+                {"Test that bean that extends another class are correctly copied", beanUtils.getTransformer(), fromFooSubClass, ImmutableToFooSubClass.class}
         };
+    }
+
+    /**
+     * Test that immutable beans with extremely complex map are correctly transformed.
+     */
+    @Test
+    public void testImmutableBeanIsCorrectlyCopied() {
+        // GIVEN
+
+        // WHEN
+        var actual = new BeanUtils().getTransformer().transform(fromFooMap, ImmutableToFooMap.class);
+
+        // THEN
+        assertThat(actual).usingRecursiveComparison()
+                .ignoringAllOverriddenEquals()
+                .ignoringFields("extremeComplexMap")
+                .isEqualTo(fromFooMap);
+
+        var fromFooMapKeys = new ArrayList<>(fromFooMap.getExtremeComplexMap().keySet());
+        var actualMapKeys = new ArrayList<>(actual.getExtremeComplexMap().keySet());
+        IntStream.range(0, fromFooMapKeys.size())
+                        .forEach(i -> {
+                            var actualKey = actualMapKeys.get(i);
+                            var sourceKey = fromFooMapKeys.get(i);
+                            assertThat(actualKey).usingRecursiveComparison()
+                                    .ignoringAllOverriddenEquals()
+                                    .isEqualTo(sourceKey);
+
+                            assertThat(actual.getExtremeComplexMap().get(actualKey))
+                                    .usingRecursiveComparison()
+                                    .isEqualTo(fromFooMap.getExtremeComplexMap().get(sourceKey));
+                        });
     }
 
     /**
@@ -156,7 +186,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     public void testTransformationWithCompositeFieldNameMappingIsWorkingAsExpected(final String testCaseDescription, final Object sourceObject, final String expectedName,
         final BigInteger expectedId, final int[] expectedPhoneNumbers) {
         // GIVEN
-        TransformerImpl underTestMock = Mockito.spy(new TransformerImpl());
+        TransformerImpl underTestMock = spy(new TransformerImpl());
         Constructor<ImmutableFlatToFoo> beanAllArgsConstructor = new ClassUtils().getAllArgsConstructor(ImmutableFlatToFoo.class);
         when(underTestMock.canBeInjectedByConstructorParams(beanAllArgsConstructor)).thenReturn(false);
         FieldMapping<String, String> phoneNumbersMapping = new FieldMapping<>(PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME, PHONE_NUMBER_DEST_FIELD_NAME);
@@ -449,7 +479,6 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
 
         // THEN
         assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
-        underTest.resetFieldsTransformationSkip();
     }
 
     /**
@@ -469,7 +498,6 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
 
         // THEN
         assertThat(actual.getWork()).isTrue();
-        underTest.resetFieldsTransformer();
     }
 
     /**

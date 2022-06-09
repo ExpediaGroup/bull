@@ -18,6 +18,7 @@ It's the only library able to transform Mutable, Immutable, and Mixed bean witho
 [![Coverage Status](https://coveralls.io/repos/github/ExpediaGroup/bull/badge.svg?branch=master)](https://coveralls.io/github/ExpediaGroup/bull?branch=master)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BULL&metric=security_rating)](https://sonarcloud.io/dashboard?id=BULL)
 [![License](https://img.shields.io/github/license/ExpediaGroup/bull.svg)](https://img.shields.io/github/license/ExpediaGroup/bull.svg)
+[![Dependabot](https://img.shields.io/badge/dependabot-enabled-success?logo=dependabot)](https://img.shields.io/badge/dependabot-enabled-success?logo=dependabot)
 
 All BULL modules are available on Maven Central:
 
@@ -1025,12 +1026,12 @@ All the instructions for releasing a new version are available at [RELEASES.md](
 
 ## Badge your project
 
-[![Bull enabled](https://img.shields.io/badge/bull-enabled-red)](https://github.com/ExpediaGroup/bull)
+[![Bull enabled](https://img.shields.io/badge/bull-enabled-red?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAA8FBMVEUAAADRKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi////+bJRrYAAAATnRSTlMAABoFB0UGATtcHQsinVIEAz3Dy6QwHmzlylsTl/uGVvXonjMm0+pLApjjNO3nv0H3/N9VTVnauEn49r391vCCcnsJCn76aa6LFxnVZrus5DL8AAAApElEQVR42k2NA7rDABAGM89mbZupbbd7/9sU8Xzc/aUYwN09igMeHp+eHR94eX17tx/w8fn1+m08gJ/fv3+XG+vh8fpE/AEPGI9gKCxXIrYlGhOJJ5KWI5UWyWRzmBP3+au/UASe0Qy/peujXKlyr9XyHJIrtbraaLa0x1tbdGKdlPbo9vqDQX84GstEu5kOZ/PFcrXOqpsf7bFN72B/mHA8LVAuoY0XA5ziPJYAAAAASUVORK5CYII=)](https://github.com/ExpediaGroup/bull)
 
 Add the following snippet in your Markdown file:
 
 ```
-[![Bull enabled](https://img.shields.io/badge/bull-enabled-red)](https://github.com/ExpediaGroup/bull)
+[![Bull enabled](https://img.shields.io/badge/bull-enabled-red?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAA8FBMVEUAAADRKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi/RKi////+bJRrYAAAATnRSTlMAABoFB0UGATtcHQsinVIEAz3Dy6QwHmzlylsTl/uGVvXonjMm0+pLApjjNO3nv0H3/N9VTVnauEn49r391vCCcnsJCn76aa6LFxnVZrus5DL8AAAApElEQVR42k2NA7rDABAGM89mbZupbbd7/9sU8Xzc/aUYwN09igMeHp+eHR94eX17tx/w8fn1+m08gJ/fv3+XG+vh8fpE/AEPGI9gKCxXIrYlGhOJJ5KWI5UWyWRzmBP3+au/UASe0Qy/peujXKlyr9XyHJIrtbraaLa0x1tbdGKdlPbo9vqDQX84GstEu5kOZ/PFcrXOqpsf7bFN72B/mHA8LVAuoY0XA5ziPJYAAAAASUVORK5CYII=)](https://github.com/ExpediaGroup/bull)
 ```
 
 ## Support

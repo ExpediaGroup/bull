@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ public interface Converter {
      * @return an {@link Optional} containing the conversion function (if exists)
      */
     Optional<Function<Object, Object>> getConversionFunction(Class<?> sourceClass, Class<?> targetClass);
-
 
     /**
      * Converts a given primitive value into the given primitive type.

@@ -148,7 +148,7 @@ public class ReflectionUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getFieldValue}.
-     * @return parameters to be used for testing the the method {@code getFieldValue}.
+     * @return parameters to be used for testing the method {@code getFieldValue}.
      */
     @DataProvider
     private Object[][] dataGetFieldValueTesting() {
@@ -230,7 +230,7 @@ public class ReflectionUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getFieldValueDirectAccess}.
-     * @return parameters to be used for testing the the method {@code getFieldValueDirectAccess}.
+     * @return parameters to be used for testing the method {@code getFieldValueDirectAccess}.
      */
     @DataProvider
     private Object[][] dataGetFieldValueDirectAccessTesting() {
@@ -334,7 +334,7 @@ public class ReflectionUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getGetterMethodPrefix}.
-     * @return parameters to be used for testing the the method {@code getGetterMethodPrefix}.
+     * @return parameters to be used for testing the method {@code getGetterMethodPrefix}.
      * @throws Exception if the method does not exists or the invoke fails.
      */
     @DataProvider
@@ -368,7 +368,7 @@ public class ReflectionUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getFieldAnnotation}.
-     * @return parameters to be used for testing the the method {@code getFieldAnnotation}.
+     * @return parameters to be used for testing the method {@code getFieldAnnotation}.
      */
     @DataProvider
     private Object[][] dataGetFieldAnnotationTesting() {
@@ -464,7 +464,6 @@ public class ReflectionUtilsTest {
         MutableToFoo mutableToFoo = createMutableToFoo(null);
         Method idSetterMethod = underTest.getSetterMethodForField(MutableToFoo.class, LIST_FIELD_NAME, List.class);
 
-
         // WHEN
         ThrowingCallable actual = () ->
                 getMethod(underTest.getClass(), INVOKE_METHOD_NAME, true, Method.class, Object.class, Object[].class)
@@ -511,7 +510,7 @@ public class ReflectionUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getDeclaredField}.
-     * @return parameters to be used for testing the the method {@code getDeclaredField}.
+     * @return parameters to be used for testing the method {@code getDeclaredField}.
      */
     @DataProvider
     private Object[][] dataGetDeclaredFieldTesting() {
@@ -549,7 +548,6 @@ public class ReflectionUtilsTest {
         assertThat(actual).isNotNull();
     }
 
-
     /**
      * Tests that the method {@code getGenericFieldType} works properly.
      * @param testCaseDescription the test case description
@@ -571,7 +569,7 @@ public class ReflectionUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code getGenericFieldType}.
-     * @return parameters to be used for testing the the method {@code getGenericFieldType}.
+     * @return parameters to be used for testing the method {@code getGenericFieldType}.
      */
     @DataProvider
     private Object[][] dataGetGenericFieldTypeTesting() {
@@ -765,7 +763,7 @@ public class ReflectionUtilsTest {
 
     /**
      * Creates the parameters to be used for testing the method {@code invokeMethod}.
-     * @return parameters to be used for testing the the method {@code invokeMethod}.
+     * @return parameters to be used for testing the method {@code invokeMethod}.
      */
     @DataProvider
     private Object[][] dataInvokeMethodTesting() {

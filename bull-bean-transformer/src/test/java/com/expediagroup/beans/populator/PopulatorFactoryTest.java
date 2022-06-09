@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2021 Expedia, Inc.
+ * Copyright (C) 2019-2022 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.assertj.core.api.Assertions;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.testng.annotations.BeforeClass;
@@ -90,7 +89,7 @@ public class PopulatorFactoryTest {
         final boolean isNonNullObjectExpected = nonNull(expectedResult);
         assertThat(populator.isPresent()).isEqualTo(isNonNullObjectExpected);
         if (isNonNullObjectExpected) {
-            Assertions.assertThat(populator).containsInstanceOf(expectedResult);
+            assertThat(populator).containsInstanceOf(expectedResult);
         }
     }
 }
