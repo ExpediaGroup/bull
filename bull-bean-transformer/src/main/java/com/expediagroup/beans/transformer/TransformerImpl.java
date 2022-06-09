@@ -385,7 +385,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
                 .forEach(setFieldValue(sourceObj, targetObject, targetObjectClass, breadcrumb));
     }
 
-     /**
+    /**
      * Retrieves the value of a field. In case it is not a primitive type it recursively inject the values inside the object.
      * @param sourceObj sourceObj the source object
      * @param targetClass the destination object class
