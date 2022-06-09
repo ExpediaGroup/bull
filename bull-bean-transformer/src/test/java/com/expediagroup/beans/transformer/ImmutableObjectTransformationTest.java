@@ -83,7 +83,6 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
     @AfterMethod
     public void afterMethod() {
         underTest.setValidationEnabled(false);
-        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -480,7 +479,6 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
 
         // THEN
         assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
-        underTest.resetFieldsTransformationSkip();
     }
 
     /**
@@ -500,7 +498,6 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
 
         // THEN
         assertThat(actual.getWork()).isTrue();
-        underTest.resetFieldsTransformer();
     }
 
     /**

@@ -53,5 +53,7 @@ public abstract class AbstractBeanTransformerTest extends AbstractTransformerTes
     @BeforeMethod
     void beforeMethod() {
         openMocks(this);
+        underTest.resetFieldsTransformer();
+        underTest.resetFieldsTransformationSkip();
     }
 }

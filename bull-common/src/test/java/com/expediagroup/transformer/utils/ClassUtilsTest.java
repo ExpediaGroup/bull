@@ -509,7 +509,7 @@ public class ClassUtilsTest {
     private Object[][] dataAreParameterNamesAvailableTesting() {
         return new Object[][] {
                 {"Tests that the method returns false if the constructor parameter names are not available", createMockedConstructor(), false},
-//                {"Tests that the method returns false if the constructor parameter names are available", underTest.getAllArgsConstructor(MixedToFoo.class), true}
+                {"Tests that the method returns false if the constructor parameter names are available", underTest.getAllArgsConstructor(MixedToFoo.class), true}
         };
     }
 

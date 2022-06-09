@@ -139,7 +139,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         assertThat(actual)
                 .extracting(NAME_FIELD_NAME, NESTED_OBJECT_NAME_FIELD_NAME)
                 .containsExactly(fromFoo.getName(), namePrefix + fromFoo.getNestedObject().getName());
-        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -161,7 +160,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
         assertThat(actual.getName()).isEqualTo(namePrefix + fromFoo.getName());
         assertThat(actual.getNestedObject().getName())
                 .isEqualTo(namePrefix + fromFoo.getNestedObject().getName());
-        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -230,7 +228,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
 
         // THEN
         assertThat(mutableObjectBean).hasFieldOrPropertyWithValue(AGE_FIELD_NAME, AGE);
-        underTest.resetFieldsTransformer();
     }
 
     /**
@@ -318,7 +315,6 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
 
         // THEN
         assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
-        underTest.resetFieldsTransformationSkip();
     }
 
     /**

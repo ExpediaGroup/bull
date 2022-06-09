@@ -170,7 +170,6 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
 
         // THEN
         assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
-        underTest.resetFieldsTransformationSkip();
     }
 
     /**
@@ -179,14 +178,18 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
     @Test
     public void testTransformationOnAnExistingDestinationWorksProperly() {
         // GIVEN
-        MixedToFoo mixedToFoo = new MixedToFoo(null, null, null, null, null);
+        final BigInteger presetFieldId = BigInteger.valueOf(777);
+        final String fieldNameToIgnore = "id";
+        MixedToFoo mixedToFoo = new MixedToFoo(presetFieldId, null, null, null, null);
 
         // WHEN
-        underTest.skipTransformationForField().transform(fromFoo, mixedToFoo);
+        underTest.skipTransformationForField(fieldNameToIgnore).transform(fromFoo, mixedToFoo);
 
         // THEN
         assertThat(mixedToFoo).usingRecursiveComparison()
+                .ignoringFields(fieldNameToIgnore)
                 .isEqualTo(fromFoo);
+        assertThat(mixedToFoo.getId()).isEqualTo(presetFieldId);
     }
 
     /**

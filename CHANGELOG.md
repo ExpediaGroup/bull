@@ -1,7 +1,9 @@
-
 # BULL Change Log
 
 All notable changes to this project will be documented in this file.
+
+### [2.2.1] 2022.06.09
+* Fixes an issue that was preventing skipping the injection for a given field. For more info about the feature see [here](README.md#skip-transformation-on-a-given-set-of-fields).
 
 ### [2.2.0] 2022.01.10
 #### Changed
