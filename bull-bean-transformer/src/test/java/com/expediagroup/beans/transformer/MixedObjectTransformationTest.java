@@ -170,7 +170,6 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
 
         // THEN
         assertThat(actual).hasNoNullFieldsOrPropertiesExcept(NAME_FIELD_NAME, PHONE_NUMBER_NESTED_OBJECT_FIELD_NAME);
-        underTest.resetFieldsTransformationSkip();
     }
 
     /**

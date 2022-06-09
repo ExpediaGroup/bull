@@ -427,9 +427,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
         String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
         Class<?> fieldType = field.getType();
         if (doSkipTransformation(fieldBreadcrumb)) {
-            return Optional.ofNullable(targetObject)
-                    .map(to -> reflectionUtils.getFieldValue(to, fieldBreadcrumb, fieldType))
-                    .orElseGet(() -> defaultValue(fieldType));
+            return getDefaultFieldValue(targetObject, fieldBreadcrumb, fieldType);
         }
         boolean primitiveType = classUtils.isPrimitiveType(fieldType);
         FieldTransformer transformerFunction = getTransformerFunction(field, fieldBreadcrumb);
@@ -448,6 +446,20 @@ public class TransformerImpl extends AbstractBeanTransformer {
         }
         fieldValue = getTransformedValue(transformerFunction, fieldValue, sourceObj.getClass(), sourceFieldName, field, primitiveType, fieldBreadcrumb);
         return fieldValue;
+    }
+
+    private <K> Object getDefaultFieldValue(final K targetObject, final String fieldBreadcrumb, final Class<?> fieldType) {
+        return Optional.ofNullable(targetObject)
+                .map(to -> {
+                    Object val;
+                    try {
+                        val = reflectionUtils.getFieldValue(to, fieldBreadcrumb, fieldType);
+                    } catch (Exception e) {
+                        val = defaultValue(fieldType);
+                    }
+                    return val;
+                })
+                .orElseGet(() -> defaultValue(fieldType));
     }
 
     /**
