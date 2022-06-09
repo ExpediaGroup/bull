@@ -412,7 +412,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param sourceFieldName sourceFieldName the field name in the source object (if different from the target one)
      * @param targetClass the destination object class
      * @param field The field for which the value has to be retrieved
-     * @param breadcrumb  the full path of the current field starting from his ancestor
+     * @param breadcrumb the full path of the current field starting from his ancestor
      * @param <T> the sourceObj object type
      * @param <K> the target object type
      * @return the field value
@@ -448,16 +448,24 @@ public class TransformerImpl extends AbstractBeanTransformer {
         return fieldValue;
     }
 
+    /**
+     * Gets the existing value for a given field in the target object (if any) otherwise it gets the default one.
+     * @param targetObject the destination object instance
+     * @param fieldBreadcrumb the full path of the current field starting from his ancestor
+     * @param fieldType the field class
+     * @param <K> the target object type
+     * @return the existing value for a given field in the target object (if any) otherwise it gets the default one.
+     */
     private <K> Object getDefaultFieldValue(final K targetObject, final String fieldBreadcrumb, final Class<?> fieldType) {
         return Optional.ofNullable(targetObject)
                 .map(to -> {
-                    Object val;
+                    Object fieldValue;
                     try {
-                        val = reflectionUtils.getFieldValue(to, fieldBreadcrumb, fieldType);
+                        fieldValue = reflectionUtils.getFieldValue(to, fieldBreadcrumb, fieldType);
                     } catch (Exception e) {
-                        val = defaultValue(fieldType);
+                        fieldValue = defaultValue(fieldType);
                     }
-                    return val;
+                    return fieldValue;
                 })
                 .orElseGet(() -> defaultValue(fieldType));
     }
