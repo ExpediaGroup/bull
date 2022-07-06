@@ -32,6 +32,8 @@ It contains all the modules available in the project
     <groupId>com.expediagroup.beans</groupId>
     <artifactId>bull-bom</artifactId>
     <version>x.y.z</version>
+    <type>pom</type>
+    <scope>import</scope>
 </dependency>
 ```
 
