@@ -28,7 +28,7 @@ Please describe the tests that you ran to verify your changes. Please also note 
 - [ ] Any dependent changes have been merged and published in downstream modules
 - [ ] My changes have no bad impacts on performances
 - [ ] My changes have been tested through Unit Tests and the overall coverage has not decreased. Check the coverall report for your branch: [here](https://coveralls.io/github/ExpediaGroup/bull)
-- [ ] Any implemented change has been added in the [CHANGELOG.md](./CHANGELOG.md) file 
-- [ ] Any implemented change has been added in the [CHANGELOG-JDK11.md](./CHANGELOG-JDK11.md) file 
+- [ ] Any implemented change has been added in the [CHANGELOG.md](../CHANGELOG.md) file 
+- [ ] Any implemented change has been added in the [CHANGELOG-JDK11.md](../CHANGELOG-JDK11.md) file 
 - [ ] My changes have been applied on a separate branch too with compatibility with Java 11. Follow this [instructions](https://github.com/ExpediaGroup/bull/blob/master/RELEASE.md#3-prepare-the-jdk11-release) for help.
 - [ ] The maven version has been increased. 
