@@ -6,6 +6,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+      time: "12:00"
+      timezone: "Etc/UTC"
     target-branch: develop
     reviewers:
       - fborriello
