@@ -53,7 +53,7 @@ jobs:
           timeout_minutes: 5
           retry_on: error
           command: |
-            mvn verify jacoco:report-aggregate coveralls:report -D repoToken=$COVERALLS_TOKEN sonar:sonar -D sonar.projectKey=BULL -D sonar.organization=$SONAR_ORGANIZATION -D sonar.host.url=https://sonarcloud.io -D sonar.login=$SONAR_TOKEN -D sonar.branch.name=$SOURCE_BRANCH -P compatibility-mode
+            mvn verify jacoco:report-aggregate coveralls:report -D repoToken=${{ secrets.COVERALLS_TOKEN }} sonar:sonar -D sonar.projectKey=BULL -D sonar.organization=$SONAR_ORGANIZATION -D sonar.host.url=https://sonarcloud.io -D sonar.login=$SONAR_TOKEN -D sonar.branch.name=$SOURCE_BRANCH -P compatibility-mode
         env:
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
