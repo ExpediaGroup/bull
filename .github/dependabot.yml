@@ -6,7 +6,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "11:00"  # UTC
+      time: "11:30"
+      timezone: "UTC"
     target-branch: develop
     reviewers:
       - fborriello
@@ -19,7 +20,8 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-      time: "11:00" # UTC
+      time: "11:30"
+      timezone: "UTC"
     open-pull-requests-limit: 10
     target-branch: develop
     reviewers:
