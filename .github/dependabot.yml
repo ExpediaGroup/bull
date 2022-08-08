@@ -6,7 +6,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "11:00"
+      time: "11:30"
       timezone: "UTC"
     target-branch: develop
     reviewers:
@@ -20,7 +20,7 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-      time: "11:00"
+      time: "11:30"
       timezone: "UTC"
     open-pull-requests-limit: 10
     target-branch: develop
