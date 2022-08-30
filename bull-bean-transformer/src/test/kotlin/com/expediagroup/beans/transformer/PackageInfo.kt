@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Type conversion processor implementation test package.
+ * Bean transformer package.
  */
-package com.expediagroup.beans.conversion.processor.impl
-
+package com.expediagroup.beans.transformer

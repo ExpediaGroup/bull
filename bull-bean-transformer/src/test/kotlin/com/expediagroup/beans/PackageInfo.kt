@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Transformer test package.
+ * Test package.
  */
-package com.expediagroup.transformer
-
+package com.expediagroup.beans

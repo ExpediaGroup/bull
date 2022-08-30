@@ -41,6 +41,7 @@ class FromFooAdvFields : Cloneable {
     private val map: Map<*, *>? = null
     private val supertypeMap: Map<in Any, in Any>? = null
     private val nestedObject: ISubClass? = null
+
     @Throws(CloneNotSupportedException::class)
     public override fun clone(): FromFooAdvFields {
         return super.clone() as FromFooAdvFields

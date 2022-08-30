@@ -26,6 +26,9 @@ import java.math.BigInteger
 @Getter
 @Builder
 class MixedToFooWithBuilder(
-    private val name: String, private val id: BigInteger, private val nestedObjectList: List<ImmutableToSubFoo>,
-    private val list: List<String>, private val nestedObject: ImmutableToSubFoo
+    private val name: String,
+    private val id: BigInteger,
+    private val nestedObjectList: List<ImmutableToSubFoo>,
+    private val list: List<String>,
+    private val nestedObject: ImmutableToSubFoo
 )

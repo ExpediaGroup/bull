@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Immutable Bean package.
+ * Type conversion test package.
  */
-package com.expediagroup.beans.sample.immutable
-
+package com.expediagroup.beans.conversion

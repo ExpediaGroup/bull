@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Sample Bean object for test purpose.
+ * Base item package.
  */
-package com.expediagroup.beans.sample
-
+package com.expediagroup.transformer.base

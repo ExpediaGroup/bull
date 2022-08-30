@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Type conversion processor test package.
+ * Map Transformer Test package.
  */
-package com.expediagroup.beans.conversion.processor
-
+package com.expediagroup.map

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Type conversion Analyzer test package.
+ * Performance test package.
  */
-package com.expediagroup.beans.conversion.analyzer
-
+package com.expediagroup.beans.performance

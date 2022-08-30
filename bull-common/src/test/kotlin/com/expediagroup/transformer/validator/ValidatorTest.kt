@@ -181,9 +181,11 @@ class ValidatorTest {
     private fun dataValidationConstraintsList(): Array<Array<Any>> {
         return arrayOf(
             arrayOf(
-                "Tests that no constraints violation are returned if the object is valid.", createTestBean(
+                "Tests that no constraints violation are returned if the object is valid.",
+                createTestBean(
                     ID
-                ), BigInteger.ZERO.toInt()
+                ),
+                BigInteger.ZERO.toInt()
             ),
             arrayOf(
                 "Tests that one constraints violation is returned if the object id is null.",

@@ -26,6 +26,9 @@ import java.math.BigInteger
 @Getter
 @Builder
 class ImmutableToFooWithBuilder(
-    private val name: String, private val id: BigInteger, private val nestedObjectList: List<FromSubFoo>,
-    private val list: List<String>, private val nestedObject: FromSubFoo
+    private val name: String,
+    private val id: BigInteger,
+    private val nestedObjectList: List<FromSubFoo>,
+    private val list: List<String>,
+    private val nestedObject: FromSubFoo
 )

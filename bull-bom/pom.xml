@@ -12,6 +12,10 @@
         <version>2.2.3-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <ktlint.check.skip>true</ktlint.check.skip>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

@@ -18,4 +18,4 @@ package com.expediagroup.beans.sample
 /**
  * Sample interface for sub class Java Bean.
  */
-interface ISubClass 
+interface ISubClass

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Performance test package.
+ * validator test package.
  */
-package com.expediagroup.beans.performance
-
+package com.expediagroup.transformer.validator

@@ -30,11 +30,9 @@ class ImmutableToSubFooCustomAnnotation
  * Constructor.
  * @param name name
  */(
-    @param:ConstructorArg("name") private val name: @NotNull String?, @param:ConstructorArg(
-        "phoneNumbers"
-    ) private val phoneNumbers: IntArray,
-    @param:ConstructorArg("sampleMap") private val sampleMap: Map<String, String>, @param:ConstructorArg(
-        "complexMap"
-    ) private val complexMap: Map<String, List<String>>,
+    @param:ConstructorArg("name") private val name: @NotNull String?,
+    @param:ConstructorArg("phoneNumbers") private val phoneNumbers: IntArray,
+    @param:ConstructorArg("sampleMap") private val sampleMap: Map<String, String>,
+    @param:ConstructorArg("complexMap") private val complexMap: Map<String, List<String>>,
     @param:ConstructorArg("veryComplexMap") private val veryComplexMap: Map<String, Map<String, String>>
 )

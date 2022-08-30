@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Bean transformer package.
+ * Mutable Bean package.
  */
-package com.expediagroup.beans.transformer
-
+package com.expediagroup.beans.sample.mutable

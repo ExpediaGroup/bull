@@ -175,7 +175,8 @@ class CharacterConversionTest : AbstractConversionTest() {
                 "Tests that the method returns T if the value is true",
                 BOOLEAN_VALUE,
                 TRUE_AS_CHAR
-            ), arrayOf("Tests that the method returns F if the value is false", java.lang.Boolean.FALSE, FALSE_AS_CHAR)
+            ),
+            arrayOf("Tests that the method returns F if the value is false", java.lang.Boolean.FALSE, FALSE_AS_CHAR)
         )
     }
 

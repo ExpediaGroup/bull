@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Mutable Bean package.
+ * Type conversion processor test package.
  */
-package com.expediagroup.beans.sample.mutable
-
+package com.expediagroup.beans.conversion.processor

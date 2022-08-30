@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Type conversion test package.
+ * Transformer test package.
  */
-package com.expediagroup.beans.conversion
-
+package com.expediagroup.transformer

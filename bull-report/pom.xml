@@ -13,6 +13,7 @@
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
+        <ktlint.check.skip>true</ktlint.check.skip>
     </properties>
 
     <dependencies>

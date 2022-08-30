@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * cache package.
+ * Type conversion Analyzer test package.
  */
-package com.expediagroup.transformer.cache
-
+package com.expediagroup.beans.conversion.analyzer

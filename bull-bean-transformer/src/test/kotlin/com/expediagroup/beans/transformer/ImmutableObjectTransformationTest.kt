@@ -75,7 +75,9 @@ class ImmutableObjectTransformationTest : AbstractBeanTransformerTest() {
      */
     @Test(dataProvider = "dataDefaultTransformationTesting")
     fun testImmutableBeanIsCorrectlyCopied(
-        testCaseDescription: String?, transformer: BeanTransformer, sourceObject: Any?,
+        testCaseDescription: String?,
+        transformer: BeanTransformer,
+        sourceObject: Any?,
         targetObjectClass: Class<*>?
     ) {
         // GIVEN
@@ -99,15 +101,21 @@ class ImmutableObjectTransformationTest : AbstractBeanTransformerTest() {
         return arrayOf(
             arrayOf(
                 "Test that immutable beans without constructor arguments parameter annotated with: @ConstructorArg are correctly copied.",
-                beanUtils.transformer, fromFoo, ImmutableToFoo::class.java
+                beanUtils.transformer,
+                fromFoo,
+                ImmutableToFoo::class.java
             ),
             arrayOf(
                 "Test that immutable beans without custom field mapping are correctly transformed.",
-                beanUtils.transformer.withFieldMapping(), fromFoo, ImmutableToFoo::class.java
+                beanUtils.transformer.withFieldMapping(),
+                fromFoo,
+                ImmutableToFoo::class.java
             ),
             arrayOf(
                 "Test that immutable beans with constructor arguments parameter annotated with: @ConstructorArg are correctly copied.",
-                beanUtils.transformer, fromFoo, ImmutableToFooCustomAnnotation::class.java
+                beanUtils.transformer,
+                fromFoo,
+                ImmutableToFooCustomAnnotation::class.java
             ),
             arrayOf(
                 "Test that bean that extends another class are correctly copied",
@@ -207,15 +215,16 @@ class ImmutableObjectTransformationTest : AbstractBeanTransformerTest() {
     private fun dataCompositeFieldNameTesting(): Array<Array<Any?>> {
         return arrayOf(
             arrayOf(
-                "Test that, in case a destination object field is contained into a nested object of the source field, defining a composite FieldMapping"
-                        + "the field is correctly set.",
+                "Test that, in case a destination object field is contained into a nested object of the source field, defining a composite FieldMapping" +
+                    "the field is correctly set.",
                 fromFoo,
                 fromFoo.name,
                 fromFoo.id,
                 fromFoo.nestedObject.phoneNumbers
-            ), arrayOf(
-                "Test that, in case a destination object field is contained into a nested object of the source field, defining a composite {@link FieldMapping}"
-                        + " the field is correctly set even if some of them are null.",
+            ),
+            arrayOf(
+                "Test that, in case a destination object field is contained into a nested object of the source field, defining a composite {@link FieldMapping}" +
+                    " the field is correctly set even if some of them are null.",
                 fromFooWithNullProperties,
                 fromFooWithNullProperties.name,
                 fromFooWithNullProperties.id,
@@ -326,11 +335,13 @@ class ImmutableObjectTransformationTest : AbstractBeanTransformerTest() {
             .withFieldMapping(FieldMapping(ID_FIELD_NAME, IDENTIFIER_FIELD_NAME))
             .withFieldMapping(FieldMapping(PRICE_FIELD_NAME, NET_PRICE_FIELD_NAME))
             .withFieldMapping(FieldMapping(PRICE_FIELD_NAME, GROSS_PRICE_FIELD_NAME))
-            .withFieldTransformer(FieldTransformer(LOCALE_FIELD_NAME) { languageTag: String? ->
-                Locale.forLanguageTag(
-                    languageTag
-                )
-            })
+            .withFieldTransformer(
+                FieldTransformer(LOCALE_FIELD_NAME) { languageTag: String? ->
+                    Locale.forLanguageTag(
+                        languageTag
+                    )
+                }
+            )
 
         // WHEN
         val actual = beanTransformer.transform(sourceObject, targetObjectClass) as ImmutableToFooAdvFields
@@ -427,15 +438,20 @@ class ImmutableObjectTransformationTest : AbstractBeanTransformerTest() {
     @Throws(Exception::class)
     fun testGetConstructorValuesFromFieldsWorksProperly() {
         // GIVEN
-        underTest!!.withFieldTransformer(FieldTransformer(LOCALE_FIELD_NAME) { languageTag: String? ->
-            Locale.forLanguageTag(
-                languageTag
-            )
-        })
+        underTest!!.withFieldTransformer(
+            FieldTransformer(LOCALE_FIELD_NAME) { languageTag: String? ->
+                Locale.forLanguageTag(
+                    languageTag
+                )
+            }
+        )
 
         // WHEN
         val getConstructorValuesFromFieldsMethod = underTest!!.javaClass.getDeclaredMethod(
-            GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME, Any::class.java, Class::class.java, String::class.java
+            GET_CONSTRUCTOR_VALUES_FROM_FIELDS_METHOD_NAME,
+            Any::class.java,
+            Class::class.java,
+            String::class.java
         )
         getConstructorValuesFromFieldsMethod.isAccessible = true
         val actual = getConstructorValuesFromFieldsMethod.invoke(
@@ -494,9 +510,11 @@ class ImmutableObjectTransformationTest : AbstractBeanTransformerTest() {
         // GIVEN
         val targetClass = ImmutableToFooSimpleWrongTypes::class.java
         val expectedExceptionMessageFormat =
-            ("Constructor invoked with wrong arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String). "
-                    + "Double check that each %s's field have the same type and name than the source object: %s otherwise specify a transformer configuration. "
-                    + "Error message: argument type mismatch")
+            (
+                "Constructor invoked with wrong arguments. Expected: public %s(java.lang.Integer,java.lang.String); Found: %s(java.math.BigInteger,java.lang.String). " +
+                    "Double check that each %s's field have the same type and name than the source object: %s otherwise specify a transformer configuration. " +
+                    "Error message: argument type mismatch"
+                )
         val targetClassName = targetClass.name
         val expectedExceptionMessage = String.format(
             expectedExceptionMessageFormat,

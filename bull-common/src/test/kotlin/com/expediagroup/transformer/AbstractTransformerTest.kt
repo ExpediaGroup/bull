@@ -131,6 +131,7 @@ abstract class AbstractTransformerTest {
         protected const val NAME = "Goofy"
         protected var fromFoo: FromFoo? = null
         protected var fromFooWithNullProperties: FromFoo? = null
+
         @JvmField
         protected var fromFooSimple: FromFooSimple? = null
         protected var fromFooWithPrimitiveFields: FromFooWithPrimitiveFields? = null
@@ -151,16 +152,21 @@ abstract class AbstractTransformerTest {
         protected const val NAME_FIELD_NAME = "name"
         protected const val ACTIVE_FIELD_NAME = "active"
         protected const val PRICE = 10.0f
+
         @JvmField
         protected val SAMPLE_MAP: MutableMap<String, String> = HashMap()
+
         @JvmField
         protected val COMPLEX_MAP: MutableMap<String, List<String>> = HashMap()
+
         @JvmField
         protected val VERY_COMPLEX_MAP: MutableMap<String, Map<String, String>> = HashMap()
+
         @JvmField
         protected val EXTREME_COMPLEX_MAP: MutableMap<FromFooSimple?, Map<String, String>> = HashMap()
         protected val UNPARAMETRIZED_MAP: Map<*, *> = HashMap<Any, Any>()
         protected const val TRANSFORMER_SETTINGS_FIELD_NAME = "settings"
+
         @JvmField
         protected val REFLECTION_UTILS = ReflectionUtils()
         protected const val ITEM_1 = "donald"

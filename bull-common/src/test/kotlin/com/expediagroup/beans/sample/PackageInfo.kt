@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Map Transformer Test package.
+ * Sample Bean object for test purpose.
  */
-package com.expediagroup.map
-
+package com.expediagroup.beans.sample

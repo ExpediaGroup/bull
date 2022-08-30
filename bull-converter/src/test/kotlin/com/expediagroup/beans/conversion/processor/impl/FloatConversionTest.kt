@@ -175,7 +175,8 @@ class FloatConversionTest : AbstractConversionTest() {
                 "Tests that the method returns 1 if the value is true",
                 BOOLEAN_VALUE,
                 TRUE_AS_FLOAT
-            ), arrayOf("Tests that the method returns 0 if the value is false", java.lang.Boolean.FALSE, FALSE_AS_FLOAT)
+            ),
+            arrayOf("Tests that the method returns 0 if the value is false", java.lang.Boolean.FALSE, FALSE_AS_FLOAT)
         )
     }
 

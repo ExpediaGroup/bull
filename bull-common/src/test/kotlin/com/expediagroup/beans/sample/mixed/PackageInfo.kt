@@ -17,4 +17,3 @@
  * Mixed Bean package.
  */
 package com.expediagroup.beans.sample.mixed
-

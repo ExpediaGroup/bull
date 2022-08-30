@@ -78,8 +78,11 @@ class ReflectionUtilsTest {
      */
     @Test(dataProvider = "dataGetFieldValueTesting")
     fun testGetFieldValueWorksAsExpected(
-        testCaseDescription: String?, beanObject: Any?,
-        fieldName: String?, fieldType: Class<*>?, expectedResult: Any?
+        testCaseDescription: String?,
+        beanObject: Any?,
+        fieldName: String?,
+        fieldType: Class<*>?,
+        expectedResult: Any?
     ) {
         // GIVEN
 
@@ -122,13 +125,15 @@ class ReflectionUtilsTest {
                 ID_FIELD_NAME,
                 BigInteger::class.java,
                 BigInteger.ZERO
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns null if the required field is inside a null object",
                 mutableToFoo,
                 NESTED_OBJECT_NAME_FIELD_NAME,
                 String::class.java,
                 null
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns the field value even if there is no getter method defined",
                 createFromFooSimpleNoGetters(),
                 ID_FIELD_NAME,
@@ -179,7 +184,9 @@ class ReflectionUtilsTest {
         // GIVEN
         val mutableToFoo = createMutableToFoo(BigInteger.ZERO)
         val getFieldValueDirectAccessMethod = ReflectionUtils::class.java.getDeclaredMethod(
-            GET_FIELD_VALUE_DIRECT_ACCESS_METHOD_NAME, Any::class.java, String::class.java
+            GET_FIELD_VALUE_DIRECT_ACCESS_METHOD_NAME,
+            Any::class.java,
+            String::class.java
         )
         getFieldValueDirectAccessMethod.isAccessible = true
 
@@ -206,11 +213,14 @@ class ReflectionUtilsTest {
     )
     fun testGetFieldValueDirectAccessThrowsExceptionIfTheFieldDoesNotExists(
         testCaseDescription: String?,
-        beanObject: Any?, fieldName: String?
+        beanObject: Any?,
+        fieldName: String?
     ) {
         // GIVEN
         val getFieldValueDirectAccessMethod = ReflectionUtils::class.java.getDeclaredMethod(
-            GET_FIELD_VALUE_DIRECT_ACCESS_METHOD_NAME, Any::class.java, String::class.java
+            GET_FIELD_VALUE_DIRECT_ACCESS_METHOD_NAME,
+            Any::class.java,
+            String::class.java
         )
         getFieldValueDirectAccessMethod.isAccessible = true
 
@@ -352,7 +362,8 @@ class ReflectionUtilsTest {
             ),
             arrayOf(
                 "Tests that the method returns the prefix: 'is' in case the returned class is a primitive boolean",
-                FromFooSubClass::class.java.getDeclaredField(CHECK_FIELD_NAME).type, MethodPrefix.IS.prefix
+                FromFooSubClass::class.java.getDeclaredField(CHECK_FIELD_NAME).type,
+                MethodPrefix.IS.prefix
             )
         )
     }
@@ -365,7 +376,8 @@ class ReflectionUtilsTest {
      */
     @Test(dataProvider = "dataGetFieldAnnotationTesting")
     fun testGetFieldAnnotationWorksProperly(
-        testCaseDescription: String?, annotationToGet: Class<out Annotation?>?,
+        testCaseDescription: String?,
+        annotationToGet: Class<out Annotation?>?,
         expectNull: Boolean
     ) {
         // GIVEN
@@ -887,7 +899,8 @@ class ReflectionUtilsTest {
                 BigInteger.ZERO,
                 true,
                 IllegalArgumentException::class.java
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method raises an IllegalAccessException in case the method is not accessible",
                 MutableToFooAdvFields(),
                 SET_INDEX_METHOD_NAME,

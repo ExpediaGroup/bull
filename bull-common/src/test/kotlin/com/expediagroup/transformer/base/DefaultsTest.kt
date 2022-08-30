@@ -54,21 +54,42 @@ class DefaultsTest {
     @DataProvider
     private fun dataProvider(): Array<Array<Any?>> {
         return arrayOf(
-            arrayOf(Boolean::class.javaPrimitiveType, Boolean.FALSE), arrayOf(
-                Boolean::class.java, Boolean.FALSE
-            ), arrayOf(Char::class.java, '\u0000'), arrayOf(
-                Char::class.javaPrimitiveType, '\u0000'
-            ), arrayOf(Byte::class.java, 0), arrayOf(
-                Byte::class.javaPrimitiveType, 0
-            ), arrayOf(Int::class.java, 0), arrayOf(Int::class.javaPrimitiveType, 0), arrayOf(
-                Short::class.java, 0
-            ), arrayOf(Short::class.javaPrimitiveType, 0), arrayOf(Long::class.java, 0L), arrayOf(
-                Long::class.javaPrimitiveType, 0L
-            ), arrayOf(Float::class.java, 0.0f), arrayOf(
-                Float::class.javaPrimitiveType, 0.0f
-            ), arrayOf(Double::class.java, 0.0), arrayOf(
-                Double::class.javaPrimitiveType, 0.0
-            ), arrayOf(FromFoo::class.java, null)
+            arrayOf(Boolean::class.javaPrimitiveType, Boolean.FALSE),
+            arrayOf(
+                Boolean::class.java,
+                Boolean.FALSE
+            ),
+            arrayOf(Char::class.java, '\u0000'),
+            arrayOf(
+                Char::class.javaPrimitiveType,
+                '\u0000'
+            ),
+            arrayOf(Byte::class.java, 0),
+            arrayOf(
+                Byte::class.javaPrimitiveType,
+                0
+            ),
+            arrayOf(Int::class.java, 0), arrayOf(Int::class.javaPrimitiveType, 0),
+            arrayOf(
+                Short::class.java,
+                0
+            ),
+            arrayOf(Short::class.javaPrimitiveType, 0), arrayOf(Long::class.java, 0L),
+            arrayOf(
+                Long::class.javaPrimitiveType,
+                0L
+            ),
+            arrayOf(Float::class.java, 0.0f),
+            arrayOf(
+                Float::class.javaPrimitiveType,
+                0.0f
+            ),
+            arrayOf(Double::class.java, 0.0),
+            arrayOf(
+                Double::class.javaPrimitiveType,
+                0.0
+            ),
+            arrayOf(FromFoo::class.java, null)
         )
     }
 }

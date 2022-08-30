@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * utilities package.
+ * Populator objects package.
  */
-package com.expediagroup.transformer.utils
-
+package com.expediagroup.beans.populator

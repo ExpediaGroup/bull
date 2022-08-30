@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Populator objects package.
+ * Immutable Bean package.
  */
-package com.expediagroup.beans.populator
-
+package com.expediagroup.beans.sample.immutable

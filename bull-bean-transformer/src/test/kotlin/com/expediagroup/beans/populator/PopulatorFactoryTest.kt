@@ -57,11 +57,17 @@ class PopulatorFactoryTest {
     @DataProvider
     fun dataProvider(): Array<Array<Any?>> {
         return arrayOf(
-            arrayOf(Array<String>::class.java, ArrayPopulator::class.java), arrayOf(
-                MutableList::class.java, CollectionPopulator::class.java
-            ), arrayOf(MutableMap::class.java, MapPopulator::class.java), arrayOf(
-                FromFoo::class.java, null
-            ), arrayOf(Optional::class.java, OptionalPopulator::class.java)
+            arrayOf(Array<String>::class.java, ArrayPopulator::class.java),
+            arrayOf(
+                MutableList::class.java,
+                CollectionPopulator::class.java
+            ),
+            arrayOf(MutableMap::class.java, MapPopulator::class.java),
+            arrayOf(
+                FromFoo::class.java,
+                null
+            ),
+            arrayOf(Optional::class.java, OptionalPopulator::class.java)
         )
     }
 

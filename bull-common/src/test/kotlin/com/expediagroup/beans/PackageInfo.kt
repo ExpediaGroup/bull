@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Test package.
+ * Bean test package.
  */
 package com.expediagroup.beans
-

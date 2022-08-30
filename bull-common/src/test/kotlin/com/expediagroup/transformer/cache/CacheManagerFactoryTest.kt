@@ -16,29 +16,12 @@
 package com.expediagroup.transformer.cache
 
 import org.assertj.core.api.Assertions
-import org.mockito.InjectMocks
-import org.mockito.MockitoAnnotations
-import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 
 /**
  * Unit test for class: [CacheManagerFactory].
  */
 class CacheManagerFactoryTest {
-    /**
-     * The class to be tested.
-     */
-    @InjectMocks
-    private val underTest: CacheManagerFactory? = null
-
-    /**
-     * Initializes mock.
-     */
-    @BeforeClass
-    fun beforeClass() {
-        MockitoAnnotations.openMocks(this)
-    }
-
     /**
      * Tests that the method: `getCacheManager` returns a [CacheManager] instance.
      */

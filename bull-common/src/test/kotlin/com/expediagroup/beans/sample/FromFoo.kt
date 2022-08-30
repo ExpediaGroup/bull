@@ -34,6 +34,7 @@ open class FromFoo : Cloneable {
     private val nestedObjectList: List<FromSubFoo>? = null
     private val list: List<String>? = null
     private val nestedObject: FromSubFoo? = null
+
     @Throws(CloneNotSupportedException::class)
     public override fun clone(): FromFoo {
         return super.clone() as FromFoo

@@ -284,10 +284,13 @@ class MutableObjectTransformationTest : AbstractBeanTransformerTest() {
         return arrayOf(
             arrayOf(
                 "Test that the field transformation returns the expected values.",
-                NAME_FIELD_NAME, NAME.lowercase(Locale.getDefault())
-            ), arrayOf(
+                NAME_FIELD_NAME,
+                NAME.lowercase(Locale.getDefault())
+            ),
+            arrayOf(
                 "Test that the field transformation returns the expected values even if null.",
-                NAME_FIELD_NAME, null
+                NAME_FIELD_NAME,
+                null
             )
         )
     }
@@ -349,7 +352,8 @@ class MutableObjectTransformationTest : AbstractBeanTransformerTest() {
         Assertions.assertThat(actual)
             .extracting(CODE_FIELD_NAME, ID_FIELD_NAME, ACTIVE_FIELD_NAME, PRICE_FIELD_NAME, UUID_FIELD_NAME)
             .containsExactly(
-                fromFooPrimitiveTypes.code.toInt(), fromFooPrimitiveTypes.id.toString(),
+                fromFooPrimitiveTypes.code.toInt(),
+                fromFooPrimitiveTypes.id.toString(),
                 ACTIVE,
                 newPrice,
                 fromFooPrimitiveTypes.uuid

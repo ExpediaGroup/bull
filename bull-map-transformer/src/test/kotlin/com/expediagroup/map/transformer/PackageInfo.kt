@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Base item package.
+ * Map transformer package.
  */
-package com.expediagroup.transformer.base
-
+package com.expediagroup.map.transformer
