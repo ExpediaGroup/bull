@@ -19,14 +19,9 @@ import javax.validation.constraints.NotNull;
 
 import com.expediagroup.transformer.annotation.ConstructorArg;
 
-import lombok.Getter;
-import lombok.ToString;
-
 /**
  * Sample immutable object without all constructor's parameter annotated with {@link ConstructorArg}.
  */
-@Getter
-@ToString
 public class ImmutableToFooMissingCustomAnnotation {
     @NotNull
     private final String name;
@@ -39,5 +34,21 @@ public class ImmutableToFooMissingCustomAnnotation {
     public ImmutableToFooMissingCustomAnnotation(@ConstructorArg("name") final String name, final int id) {
         this.name = name;
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableToFooMissingCustomAnnotation{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

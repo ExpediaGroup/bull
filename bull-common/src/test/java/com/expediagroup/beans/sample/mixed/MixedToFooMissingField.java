@@ -17,18 +17,38 @@ package com.expediagroup.beans.sample.mixed;
 
 import java.math.BigInteger;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
-
 /**
  * Sample mixed object with different column names.
  */
-@Getter
-@AllArgsConstructor
-@ToString
 public class MixedToFooMissingField {
     private final String name;
     private final BigInteger id;
     private final String fooField;
+
+    public MixedToFooMissingField(final String name, final BigInteger id, final String fooField) {
+        this.name = name;
+        this.id = id;
+        this.fooField = fooField;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public String getFooField() {
+        return fooField;
+    }
+
+    @Override
+    public String toString() {
+        return "MixedToFooMissingField{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", fooField='" + fooField + '\'' +
+                '}';
+    }
 }

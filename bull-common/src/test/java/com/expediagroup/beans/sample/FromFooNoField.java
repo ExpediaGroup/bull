@@ -20,12 +20,9 @@ import static java.math.BigInteger.ONE;
 
 import java.math.BigInteger;
 
-import lombok.ToString;
-
 /**
  * Sample object without any field but with getter methods.
  */
-@ToString
 public class FromFooNoField {
 
     public String getName() {
@@ -38,5 +35,10 @@ public class FromFooNoField {
 
     public boolean isActive() {
         return TRUE;
+    }
+
+    @Override
+    public String toString() {
+        return "FromFooNoField{}";
     }
 }

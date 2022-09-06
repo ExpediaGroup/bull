@@ -17,18 +17,32 @@ package com.expediagroup.beans.sample;
 
 import java.math.BigInteger;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 /**
  * Sample object without getter methods.
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
 public class FromFooSimpleNoGetters {
     public String name;
     public BigInteger id;
     public boolean active;
+
+    public FromFooSimpleNoGetters() {
+    }
+
+    public FromFooSimpleNoGetters(final String name, final BigInteger id, final boolean active) {
+        this.name = name;
+        this.id = id;
+        this.active = active;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public void setId(final BigInteger id) {
+        this.id = id;
+    }
+
+    public void setActive(final boolean active) {
+        this.active = active;
+    }
 }

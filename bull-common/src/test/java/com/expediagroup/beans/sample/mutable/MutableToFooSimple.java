@@ -17,16 +17,35 @@ package com.expediagroup.beans.sample.mutable;
 
 import java.math.BigInteger;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Sample mutable object.
  */
-@Getter
-@Setter
 public class MutableToFooSimple {
     private String name;
     private BigInteger id;
     private boolean active;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(final BigInteger id) {
+        this.id = id;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(final boolean active) {
+        this.active = active;
+    }
 }

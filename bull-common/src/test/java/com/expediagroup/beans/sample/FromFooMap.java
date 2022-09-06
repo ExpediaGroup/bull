@@ -18,20 +18,52 @@ package com.expediagroup.beans.sample;
 import java.util.List;
 import java.util.Map;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
-
 /**
  * Sample immutable object containing extremely complex map.
  */
-@AllArgsConstructor
-@Getter
-@ToString
 public class FromFooMap {
     private final Map<String, String> sampleMap;
     private final Map<String, List<String>> complexMap;
     private final Map<String, Map<String, String>> veryComplexMap;
     private final Map<FromFooSimple, Map<String, String>> extremeComplexMap;
     private final Map unparametrizedMap;
+
+    public FromFooMap(final Map<String, String> sampleMap, final Map<String, List<String>> complexMap, final Map<String, Map<String, String>> veryComplexMap, final Map<FromFooSimple, Map<String, String>> extremeComplexMap, final Map unparametrizedMap) {
+        this.sampleMap = sampleMap;
+        this.complexMap = complexMap;
+        this.veryComplexMap = veryComplexMap;
+        this.extremeComplexMap = extremeComplexMap;
+        this.unparametrizedMap = unparametrizedMap;
+    }
+
+    public Map<String, String> getSampleMap() {
+        return sampleMap;
+    }
+
+    public Map<String, List<String>> getComplexMap() {
+        return complexMap;
+    }
+
+    public Map<String, Map<String, String>> getVeryComplexMap() {
+        return veryComplexMap;
+    }
+
+    public Map<FromFooSimple, Map<String, String>> getExtremeComplexMap() {
+        return extremeComplexMap;
+    }
+
+    public Map getUnparametrizedMap() {
+        return unparametrizedMap;
+    }
+
+    @Override
+    public String toString() {
+        return "FromFooMap{" +
+                "sampleMap=" + sampleMap +
+                ", complexMap=" + complexMap +
+                ", veryComplexMap=" + veryComplexMap +
+                ", extremeComplexMap=" + extremeComplexMap +
+                ", unparametrizedMap=" + unparametrizedMap +
+                '}';
+    }
 }

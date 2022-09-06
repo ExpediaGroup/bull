@@ -15,12 +15,10 @@
  */
 package com.expediagroup.beans.sample.immutable;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 /**
  * Immutable object without constructor.
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ImmutableToFooNoConstructors {
+    private ImmutableToFooNoConstructors() {
+    }
 }

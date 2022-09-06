@@ -18,14 +18,10 @@ package com.expediagroup.beans.sample.mutable;
 import java.math.BigInteger;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Mutable object instantiable only through a wrong Builder.
  */
-@Getter
-@Setter
 public final class MutableToFooWithWrongBuilder {
     private String name;
     private BigInteger id;
@@ -43,6 +39,46 @@ public final class MutableToFooWithWrongBuilder {
         this.list = builder.list;
         this.nestedObjectList = builder.nestedObjectList;
         this.nestedObject = builder.nestedObject;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(final BigInteger id) {
+        this.id = id;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public void setList(final List<String> list) {
+        this.list = list;
+    }
+
+    public List<MutableToSubFoo> getNestedObjectList() {
+        return nestedObjectList;
+    }
+
+    public void setNestedObjectList(final List<MutableToSubFoo> nestedObjectList) {
+        this.nestedObjectList = nestedObjectList;
+    }
+
+    public MutableToSubFoo getNestedObject() {
+        return nestedObject;
+    }
+
+    public void setNestedObject(final MutableToSubFoo nestedObject) {
+        this.nestedObject = nestedObject;
     }
 
     /**
@@ -66,7 +102,7 @@ public final class MutableToFooWithWrongBuilder {
         }
 
         public Builder build() {
-           return this;
+            return this;
         }
     }
 }

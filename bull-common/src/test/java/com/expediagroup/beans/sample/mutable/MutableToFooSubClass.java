@@ -17,19 +17,55 @@ package com.expediagroup.beans.sample.mutable;
 
 import java.math.BigDecimal;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Sample mutable object extending a class.
  */
-@Getter
-@Setter
-@ToString
 public class MutableToFooSubClass extends MutableToFoo {
     private String surname;
     private int phone;
     private boolean check;
     private BigDecimal amount;
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(final String surname) {
+        this.surname = surname;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(final int phone) {
+        this.phone = phone;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(final boolean check) {
+        this.check = check;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(final BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "MutableToFooSubClass{" +
+                "surname='" + surname + '\'' +
+                ", phone=" + phone +
+                ", check=" + check +
+                ", amount=" + amount +
+                '}';
+    }
 }

@@ -24,16 +24,9 @@ import java.util.Optional;
 import com.expediagroup.beans.sample.ISubClass;
 import com.expediagroup.transformer.constant.ClassType;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  * Sample mutable object containing special fields.
  */
-@Getter
-@Setter
-@ToString
 public class MutableToFooAdvFields {
     private Optional<String> name;
     private Optional<Integer> age;
@@ -46,7 +39,103 @@ public class MutableToFooAdvFields {
     private Map<? super Object, ? super Object> supertypeMap;
     private ISubClass nestedObject;
 
+    public Optional<String> getName() {
+        return name;
+    }
+
+    public void setName(final Optional<String> name) {
+        this.name = name;
+    }
+
+    public Optional<Integer> getAge() {
+        return age;
+    }
+
+    public void setAge(final Optional<Integer> age) {
+        this.age = age;
+    }
+
+    public String getIndexNumber() {
+        return indexNumber;
+    }
+
+    public void setIndexNumber(final String indexNumber) {
+        this.indexNumber = indexNumber;
+    }
+
+    public ClassType getClassType() {
+        return classType;
+    }
+
+    public void setClassType(final ClassType classType) {
+        this.classType = classType;
+    }
+
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public void setLocale(final Locale locale) {
+        this.locale = locale;
+    }
+
+    public List<?> getList() {
+        return list;
+    }
+
+    public void setList(final List<?> list) {
+        this.list = list;
+    }
+
+    public Collection<? super Object> getCollection() {
+        return collection;
+    }
+
+    public void setCollection(final Collection<? super Object> collection) {
+        this.collection = collection;
+    }
+
+    public Map<?, ?> getMap() {
+        return map;
+    }
+
+    public void setMap(final Map<?, ?> map) {
+        this.map = map;
+    }
+
+    public Map<? super Object, ? super Object> getSupertypeMap() {
+        return supertypeMap;
+    }
+
+    public void setSupertypeMap(final Map<? super Object, ? super Object> supertypeMap) {
+        this.supertypeMap = supertypeMap;
+    }
+
+    public ISubClass getNestedObject() {
+        return nestedObject;
+    }
+
+    public void setNestedObject(final ISubClass nestedObject) {
+        this.nestedObject = nestedObject;
+    }
+
     private void setIndex(final String indexNumber) {
         this.indexNumber = indexNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "MutableToFooAdvFields{" +
+                "name=" + name +
+                ", age=" + age +
+                ", indexNumber='" + indexNumber + '\'' +
+                ", classType=" + classType +
+                ", locale=" + locale +
+                ", list=" + list +
+                ", collection=" + collection +
+                ", map=" + map +
+                ", supertypeMap=" + supertypeMap +
+                ", nestedObject=" + nestedObject +
+                '}';
     }
 }

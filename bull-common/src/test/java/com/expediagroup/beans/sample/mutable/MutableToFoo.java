@@ -18,20 +18,64 @@ package com.expediagroup.beans.sample.mutable;
 import java.math.BigInteger;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  * Sample mutable object.
  */
-@Getter
-@Setter
-@ToString
 public class MutableToFoo {
     private String name;
     private BigInteger id;
     private List<String> list;
     private List<MutableToSubFoo> nestedObjectList;
     private MutableToSubFoo nestedObject;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(final BigInteger id) {
+        this.id = id;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public void setList(final List<String> list) {
+        this.list = list;
+    }
+
+    public List<MutableToSubFoo> getNestedObjectList() {
+        return nestedObjectList;
+    }
+
+    public void setNestedObjectList(final List<MutableToSubFoo> nestedObjectList) {
+        this.nestedObjectList = nestedObjectList;
+    }
+
+    public MutableToSubFoo getNestedObject() {
+        return nestedObject;
+    }
+
+    public void setNestedObject(final MutableToSubFoo nestedObject) {
+        this.nestedObject = nestedObject;
+    }
+
+    @Override
+    public String toString() {
+        return "MutableToFoo{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", list=" + list +
+                ", nestedObjectList=" + nestedObjectList +
+                ", nestedObject=" + nestedObject +
+                '}';
+    }
 }

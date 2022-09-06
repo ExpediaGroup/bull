@@ -16,21 +16,53 @@
 package com.expediagroup.beans.sample.immutable;
 
 import java.math.BigInteger;
-
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import java.util.Objects;
 
 /**
  * Sample immutable object.
  */
-@AllArgsConstructor
-@Getter
-@ToString
-@EqualsAndHashCode
 public class ImmutableToFooSimple {
     private final String name;
     private final BigInteger id;
     private final boolean active;
+
+    public ImmutableToFooSimple(final String name, final BigInteger id, final boolean active) {
+        this.name = name;
+        this.id = id;
+        this.active = active;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableToFooSimple{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", active=" + active +
+                '}';
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ImmutableToFooSimple that = (ImmutableToFooSimple) o;
+        return active == that.active && Objects.equals(name, that.name) && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, id, active);
+    }
 }

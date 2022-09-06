@@ -19,14 +19,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.ToString;
-
 /**
  * Sample sub class.
  */
-@Getter
-@ToString
 public class FromFooSubClass extends FromFoo {
     private final String surname;
     private final int phone;
@@ -34,11 +29,37 @@ public class FromFooSubClass extends FromFoo {
     private final BigDecimal amount;
 
     public FromFooSubClass(final String name, final BigInteger id, final List<FromSubFoo> nestedObjectList, final List<String> list, final FromSubFoo nestedObject,
-        final String surname, final int phone, final boolean check, final BigDecimal amount) {
+                           final String surname, final int phone, final boolean check, final BigDecimal amount) {
         super(name, id, nestedObjectList, list, nestedObject);
         this.surname = surname;
         this.phone = phone;
         this.check = check;
         this.amount = amount;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    @Override
+    public String toString() {
+        return "FromFooSubClass{" +
+                "surname='" + surname + '\'' +
+                ", phone=" + phone +
+                ", check=" + check +
+                ", amount=" + amount +
+                '}';
     }
 }

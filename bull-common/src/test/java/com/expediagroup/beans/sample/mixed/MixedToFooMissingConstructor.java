@@ -19,18 +19,31 @@ import java.math.BigInteger;
 
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-
 /**
  * Sample mixed object with missing default constructor.
  */
-@Getter
-@ToString
-@RequiredArgsConstructor
 public class MixedToFooMissingConstructor {
+    private final String name;
     @NotNull
     public BigInteger id;
-    private final String name;
+
+    public MixedToFooMissingConstructor(final String name) {
+        this.name = name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "MixedToFooMissingConstructor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

@@ -15,22 +15,65 @@
  */
 package com.expediagroup.beans.sample;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * Sample class containing only primitive types.
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 public class FromFooOnlyPrimitiveTypes {
     private String code;
     private int id;
     private float price;
     private String active;
     private Object uuid;
+
+    public FromFooOnlyPrimitiveTypes() {
+    }
+
+    public FromFooOnlyPrimitiveTypes(final String code, final int id, final float price, final String active, final Object uuid) {
+        this.code = code;
+        this.id = id;
+        this.price = price;
+        this.active = active;
+        this.uuid = uuid;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(final String code) {
+        this.code = code;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(final int id) {
+        this.id = id;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(final float price) {
+        this.price = price;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(final String active) {
+        this.active = active;
+    }
+
+    public Object getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(final Object uuid) {
+        this.uuid = uuid;
+    }
 }

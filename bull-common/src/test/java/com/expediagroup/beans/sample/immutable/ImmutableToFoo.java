@@ -20,16 +20,9 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
-
 /**
  * Sample immutable object.
  */
-@AllArgsConstructor
-@Getter
-@ToString
 public class ImmutableToFoo {
     private final String name;
     @NotNull
@@ -40,4 +33,43 @@ public class ImmutableToFoo {
     private final List<ImmutableToSubFoo> nestedObjectList;
     @NotNull
     private final ImmutableToSubFoo nestedObject;
+
+    public ImmutableToFoo(final String name, final BigInteger id, final List<String> list, final List<ImmutableToSubFoo> nestedObjectList, final ImmutableToSubFoo nestedObject) {
+        this.name = name;
+        this.id = id;
+        this.list = list;
+        this.nestedObjectList = nestedObjectList;
+        this.nestedObject = nestedObject;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public List<ImmutableToSubFoo> getNestedObjectList() {
+        return nestedObjectList;
+    }
+
+    public ImmutableToSubFoo getNestedObject() {
+        return nestedObject;
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableToFoo{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", list=" + list +
+                ", nestedObjectList=" + nestedObjectList +
+                ", nestedObject=" + nestedObject +
+                '}';
+    }
 }

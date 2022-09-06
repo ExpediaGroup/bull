@@ -17,19 +17,39 @@ package com.expediagroup.beans.sample.mixed;
 
 import java.math.BigInteger;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Sample mixed object that contains multiple fields not existing in the source object.
  */
-@AllArgsConstructor
-@Getter
-@Setter
 public class MixedToFooSimpleNotExistingFields {
     private final String name;
     private final BigInteger id;
     private final BigInteger index;
     private int age;
+
+    public MixedToFooSimpleNotExistingFields(final String name, final BigInteger id, final BigInteger index, final int age) {
+        this.name = name;
+        this.id = id;
+        this.index = index;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public BigInteger getIndex() {
+        return index;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(final int age) {
+        this.age = age;
+    }
 }

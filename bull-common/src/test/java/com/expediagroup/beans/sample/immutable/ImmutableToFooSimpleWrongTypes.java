@@ -15,17 +15,32 @@
  */
 package com.expediagroup.beans.sample.immutable;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
 
 /**
  * Sample immutable object with different field than the source object.
  */
-@AllArgsConstructor
-@Getter
-@ToString
 public class ImmutableToFooSimpleWrongTypes {
     private final Integer id;
     private final String name;
+
+    public ImmutableToFooSimpleWrongTypes(final Integer id, final String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableToFooSimpleWrongTypes{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

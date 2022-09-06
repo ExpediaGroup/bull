@@ -22,12 +22,9 @@ import javax.validation.constraints.NotNull;
 
 import com.expediagroup.transformer.annotation.ConstructorArg;
 
-import lombok.ToString;
-
 /**
  * Sample immutable object.
  */
-@ToString
 public class ImmutableToFooCustomAnnotation {
     @NotNull
     private final String name;
@@ -41,10 +38,10 @@ public class ImmutableToFooCustomAnnotation {
     private final ImmutableToSubFooCustomAnnotation nestedObject;
 
     public ImmutableToFooCustomAnnotation(@ConstructorArg("name") final String name,
-        @ConstructorArg("id") final BigInteger id,
-        @ConstructorArg("list") final List<String> list,
-        @ConstructorArg("nestedObjectList") final List<ImmutableToSubFooCustomAnnotation> nestedObjectList,
-        @ConstructorArg("nestedObject") final ImmutableToSubFooCustomAnnotation nestedObject) {
+                                          @ConstructorArg("id") final BigInteger id,
+                                          @ConstructorArg("list") final List<String> list,
+                                          @ConstructorArg("nestedObjectList") final List<ImmutableToSubFooCustomAnnotation> nestedObjectList,
+                                          @ConstructorArg("nestedObject") final ImmutableToSubFooCustomAnnotation nestedObject) {
         this.name = name;
         this.id = id;
         this.list = list;
@@ -70,5 +67,16 @@ public class ImmutableToFooCustomAnnotation {
 
     public ImmutableToSubFooCustomAnnotation getNestedObject() {
         return nestedObject;
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableToFooCustomAnnotation{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", list=" + list +
+                ", nestedObjectList=" + nestedObjectList +
+                ", nestedObject=" + nestedObject +
+                '}';
     }
 }

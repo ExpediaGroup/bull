@@ -17,14 +17,23 @@ package com.expediagroup.beans.sample.mutable;
 
 import java.math.BigInteger;
 
-import lombok.Getter;
-
 /**
  * Sample mutable object without setter methods.
  */
-@Getter
 public class MutableToFooSimpleNoSetters {
     private String name;
     private BigInteger id;
     private boolean active;
+
+    public String getName() {
+        return name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
 }

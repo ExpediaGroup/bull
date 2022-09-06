@@ -15,20 +15,31 @@
  */
 package com.expediagroup.beans.sample;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  * Sample immutable object with a {@link Boolean} field.
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
 public class FromFooSimpleBooleanField {
     public Boolean work;
+
+    public FromFooSimpleBooleanField() {
+    }
+
+    public FromFooSimpleBooleanField(final Boolean work) {
+        this.work = work;
+    }
+
+    public Boolean getWork() {
+        return work;
+    }
+
+    public void setWork(final Boolean work) {
+        this.work = work;
+    }
+
+    @Override
+    public String toString() {
+        return "FromFooSimpleBooleanField{" +
+                "work=" + work +
+                '}';
+    }
 }

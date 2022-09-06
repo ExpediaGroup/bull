@@ -17,20 +17,52 @@ package com.expediagroup.beans.sample.immutable;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
-
 /**
  * Sample immutable object with different fields type than source object.
  */
-@AllArgsConstructor
-@Getter
-@ToString
 public class ImmutableToFooDiffTypesFields {
     private final String name;
     private final String id;
     private final List<String> list;
     private final List<ImmutableToSubFoo> nestedObjectList;
     private final ImmutableToSubFoo nestedObject;
+
+    public ImmutableToFooDiffTypesFields(final String name, final String id, final List<String> list, final List<ImmutableToSubFoo> nestedObjectList, final ImmutableToSubFoo nestedObject) {
+        this.name = name;
+        this.id = id;
+        this.list = list;
+        this.nestedObjectList = nestedObjectList;
+        this.nestedObject = nestedObject;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public List<ImmutableToSubFoo> getNestedObjectList() {
+        return nestedObjectList;
+    }
+
+    public ImmutableToSubFoo getNestedObject() {
+        return nestedObject;
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableToFooDiffTypesFields{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", list=" + list +
+                ", nestedObjectList=" + nestedObjectList +
+                ", nestedObject=" + nestedObject +
+                '}';
+    }
 }

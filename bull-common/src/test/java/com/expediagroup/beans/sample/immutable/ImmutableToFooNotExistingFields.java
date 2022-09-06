@@ -17,16 +17,29 @@ package com.expediagroup.beans.sample.immutable;
 
 import java.math.BigInteger;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * Sample immutable object that contains a field not existing in the source object.
  */
-@AllArgsConstructor
-@Getter
 public class ImmutableToFooNotExistingFields {
     private final String name;
     private final BigInteger id;
     private final int age;
+
+    public ImmutableToFooNotExistingFields(final String name, final BigInteger id, final int age) {
+        this.name = name;
+        this.id = id;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public int getAge() {
+        return age;
+    }
 }

@@ -15,17 +15,25 @@
  */
 package com.expediagroup.beans.sample.mixed;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  * Mixed bean class containing a static fields.
  */
-@Getter
-@Setter
-@ToString
 public class MixedToFooStaticField {
     private static final int STATIC_FIELD = 0;
     private String normalField;
+
+    public String getNormalField() {
+        return normalField;
+    }
+
+    public void setNormalField(final String normalField) {
+        this.normalField = normalField;
+    }
+
+    @Override
+    public String toString() {
+        return "MixedToFooStaticField{" +
+                "normalField='" + normalField + '\'' +
+                '}';
+    }
 }

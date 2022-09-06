@@ -15,18 +15,53 @@
  */
 package com.expediagroup.beans.sample.mixed;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Sample class containing only primitive types.
  */
-@Getter
-@Setter
 public class MutableToFooOnlyPrimitiveTypes {
     private int code;
     private String id;
     private double price;
     private boolean active;
     private Object uuid;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(final int code) {
+        this.code = code;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(final double price) {
+        this.price = price;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(final boolean active) {
+        this.active = active;
+    }
+
+    public Object getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(final Object uuid) {
+        this.uuid = uuid;
+    }
 }

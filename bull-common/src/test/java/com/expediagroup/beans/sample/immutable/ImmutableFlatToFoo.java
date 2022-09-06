@@ -16,23 +16,43 @@
 package com.expediagroup.beans.sample.immutable;
 
 import java.math.BigInteger;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import java.util.Arrays;
 
 /**
  * Sample immutable object containing properties available in the source object inside other objects.
  * <p>
- *     e.g. phoneNumbers field is available inside <code>FromFoo.nestedObject.phoneNumbers</code>
+ * e.g. phoneNumbers field is available inside <code>FromFoo.nestedObject.phoneNumbers</code>
  * </p>
  */
-@AllArgsConstructor
-@Getter
-@ToString
 public class ImmutableFlatToFoo {
     private final String name;
     private final BigInteger id;
     private final int[] phoneNumbers;
 
+    public ImmutableFlatToFoo(final String name, final BigInteger id, final int[] phoneNumbers) {
+        this.name = name;
+        this.id = id;
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public int[] getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableFlatToFoo{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", phoneNumbers=" + Arrays.toString(phoneNumbers) +
+                '}';
+    }
 }

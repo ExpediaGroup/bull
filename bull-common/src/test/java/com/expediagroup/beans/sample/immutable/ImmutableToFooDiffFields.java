@@ -20,16 +20,9 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
-
 /**
  * Sample immutable object with different fields than source object.
  */
-@AllArgsConstructor
-@Getter
-@ToString
 public class ImmutableToFooDiffFields {
     @NotNull
     private final String name;
@@ -45,4 +38,43 @@ public class ImmutableToFooDiffFields {
 
     @NotNull
     private final ImmutableToSubFoo nestedObject;
+
+    public ImmutableToFooDiffFields(final String name, final BigInteger identifier, final List<String> list, final List<ImmutableToSubFoo> nestedObjectList, final ImmutableToSubFoo nestedObject) {
+        this.name = name;
+        this.identifier = identifier;
+        this.list = list;
+        this.nestedObjectList = nestedObjectList;
+        this.nestedObject = nestedObject;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigInteger getIdentifier() {
+        return identifier;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public List<ImmutableToSubFoo> getNestedObjectList() {
+        return nestedObjectList;
+    }
+
+    public ImmutableToSubFoo getNestedObject() {
+        return nestedObject;
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableToFooDiffFields{" +
+                "name='" + name + '\'' +
+                ", identifier=" + identifier +
+                ", list=" + list +
+                ", nestedObjectList=" + nestedObjectList +
+                ", nestedObject=" + nestedObject +
+                '}';
+    }
 }

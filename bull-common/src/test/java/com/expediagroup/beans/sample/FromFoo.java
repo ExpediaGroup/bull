@@ -18,26 +18,60 @@ package com.expediagroup.beans.sample;
 import java.math.BigInteger;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  * Sample mixed object.
  */
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
 public class FromFoo implements Cloneable {
     private final String name;
-    private BigInteger id;
     private final List<FromSubFoo> nestedObjectList;
     private final List<String> list;
     private final FromSubFoo nestedObject;
+    private BigInteger id;
+
+    public FromFoo(final String name, final BigInteger id, final List<FromSubFoo> nestedObjectList, final List<String> list, final FromSubFoo nestedObject) {
+        this.name = name;
+        this.id = id;
+        this.nestedObjectList = nestedObjectList;
+        this.list = list;
+        this.nestedObject = nestedObject;
+    }
 
     public FromFoo clone() throws CloneNotSupportedException {
         return (FromFoo) super.clone();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(final BigInteger id) {
+        this.id = id;
+    }
+
+    public List<FromSubFoo> getNestedObjectList() {
+        return nestedObjectList;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public FromSubFoo getNestedObject() {
+        return nestedObject;
+    }
+
+    @Override
+    public String toString() {
+        return "FromFoo{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", nestedObjectList=" + nestedObjectList +
+                ", list=" + list +
+                ", nestedObject=" + nestedObject +
+                '}';
     }
 }

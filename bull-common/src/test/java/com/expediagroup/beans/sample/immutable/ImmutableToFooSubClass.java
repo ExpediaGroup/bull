@@ -21,14 +21,9 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
-import lombok.ToString;
-
 /**
  * Sample immutable object extending a class.
  */
-@Getter
-@ToString
 public class ImmutableToFooSubClass extends ImmutableToFoo {
     @NotNull
     private final String surname;
@@ -43,12 +38,38 @@ public class ImmutableToFooSubClass extends ImmutableToFoo {
      * Constructor.
      */
     public ImmutableToFooSubClass(final String name, final BigInteger id, final List<String> list,
-        final List<ImmutableToSubFoo> nestedObjectList, final ImmutableToSubFoo nestedObject, final String surname,
-        final int phone, final boolean check, final BigDecimal amount) {
+                                  final List<ImmutableToSubFoo> nestedObjectList, final ImmutableToSubFoo nestedObject, final String surname,
+                                  final int phone, final boolean check, final BigDecimal amount) {
         super(name, id, list, nestedObjectList, nestedObject);
         this.surname = surname;
         this.phone = phone;
         this.check = check;
         this.amount = amount;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableToFooSubClass{" +
+                "surname='" + surname + '\'' +
+                ", phone=" + phone +
+                ", check=" + check +
+                ", amount=" + amount +
+                '}';
     }
 }

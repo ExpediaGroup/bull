@@ -20,27 +20,105 @@ import java.util.List;
 
 import com.expediagroup.beans.sample.immutable.ImmutableToSubFoo;
 
-import lombok.Builder;
-import lombok.Getter;
-
 /**
  * Mixed bean instantiable only through a Builder.
  */
-@Getter
-@Builder
 public class MixedToFooWithBuilder {
     private final String name;
-    private BigInteger id;
     private final List<ImmutableToSubFoo> nestedObjectList;
     private final List<String> list;
     private final ImmutableToSubFoo nestedObject;
+    private final BigInteger id;
 
-    public MixedToFooWithBuilder(final String name, final BigInteger id, final List<ImmutableToSubFoo> nestedObjectList,
-        final List<String> list, final ImmutableToSubFoo nestedObject) {
+    public MixedToFooWithBuilder(final String name, final BigInteger id, final List<ImmutableToSubFoo> nestedObjectList, final List<String> list, final ImmutableToSubFoo nestedObject) {
         this.name = name;
         this.id = id;
         this.nestedObjectList = nestedObjectList;
         this.list = list;
         this.nestedObject = nestedObject;
+    }
+
+    public static MixedToFooWithBuilder.MixedToFooWithBuilderBuilder builder() {
+        return new MixedToFooWithBuilder.MixedToFooWithBuilderBuilder();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public BigInteger getId() {
+        return this.id;
+    }
+
+    public List<ImmutableToSubFoo> getNestedObjectList() {
+        return this.nestedObjectList;
+    }
+
+    public List<String> getList() {
+        return this.list;
+    }
+
+    public ImmutableToSubFoo getNestedObject() {
+        return this.nestedObject;
+    }
+
+    public static class MixedToFooWithBuilderBuilder {
+        private String name;
+        private BigInteger id;
+        private List<ImmutableToSubFoo> nestedObjectList;
+        private List<String> list;
+        private ImmutableToSubFoo nestedObject;
+
+        MixedToFooWithBuilderBuilder() {
+        }
+
+        /**
+         * @return {@code this}.
+         */
+        public MixedToFooWithBuilder.MixedToFooWithBuilderBuilder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * @return {@code this}.
+         */
+        public MixedToFooWithBuilder.MixedToFooWithBuilderBuilder id(final BigInteger id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * @return {@code this}.
+         */
+        public MixedToFooWithBuilder.MixedToFooWithBuilderBuilder nestedObjectList(final List<ImmutableToSubFoo> nestedObjectList) {
+            this.nestedObjectList = nestedObjectList;
+            return this;
+        }
+
+        /**
+         * @return {@code this}.
+         */
+        public MixedToFooWithBuilder.MixedToFooWithBuilderBuilder list(final List<String> list) {
+            this.list = list;
+            return this;
+        }
+
+        /**
+         * @return {@code this}.
+         */
+        public MixedToFooWithBuilder.MixedToFooWithBuilderBuilder nestedObject(final ImmutableToSubFoo nestedObject) {
+            this.nestedObject = nestedObject;
+            return this;
+        }
+
+        public MixedToFooWithBuilder build() {
+            return new MixedToFooWithBuilder(this.name, this.id, this.nestedObjectList, this.list, this.nestedObject);
+        }
+
+        @Override
+        public String toString() {
+            return "MixedToFooWithBuilder.MixedToFooWithBuilderBuilder(name=" + this.name + ", id=" + this.id + ", nestedObjectList=" + this.nestedObjectList + ", list=" + this.list + ", nestedObject=" + this.nestedObject + ")";
+        }
     }
 }

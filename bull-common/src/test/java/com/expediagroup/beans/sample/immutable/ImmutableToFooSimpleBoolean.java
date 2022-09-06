@@ -15,16 +15,24 @@
  */
 package com.expediagroup.beans.sample.immutable;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
-
 /**
  * Sample immutable object.
  */
-@AllArgsConstructor
-@Getter
-@ToString
 public class ImmutableToFooSimpleBoolean {
     private final Boolean work;
+
+    public ImmutableToFooSimpleBoolean(final Boolean work) {
+        this.work = work;
+    }
+
+    public Boolean getWork() {
+        return work;
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableToFooSimpleBoolean{" +
+                "work=" + work +
+                '}';
+    }
 }

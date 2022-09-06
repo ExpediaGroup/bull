@@ -20,14 +20,9 @@ import java.util.List;
 
 import com.expediagroup.beans.sample.FromSubFoo;
 
-import lombok.Builder;
-import lombok.Getter;
-
 /**
  * Immutable bean instantiable only through a Builder.
  */
-@Getter
-@Builder
 public class ImmutableToFooWithBuilder {
     private final String name;
     private final BigInteger id;
@@ -35,12 +30,101 @@ public class ImmutableToFooWithBuilder {
     private final List<String> list;
     private final FromSubFoo nestedObject;
 
-    public ImmutableToFooWithBuilder(final String name, final BigInteger id, final List<FromSubFoo> nestedObjectList,
-        final List<String> list, final FromSubFoo nestedObject) {
+    public ImmutableToFooWithBuilder(final String name, final BigInteger id, final List<FromSubFoo> nestedObjectList, final List<String> list, final FromSubFoo nestedObject) {
         this.name = name;
         this.id = id;
         this.nestedObjectList = nestedObjectList;
         this.list = list;
         this.nestedObject = nestedObject;
+    }
+
+    public static class ImmutableToFooWithBuilderBuilder {
+
+        private String name;
+
+        private BigInteger id;
+
+        private List<FromSubFoo> nestedObjectList;
+
+        private List<String> list;
+
+        private FromSubFoo nestedObject;
+
+        ImmutableToFooWithBuilderBuilder() {
+        }
+
+        /**
+         * @return {@code this}.
+         */
+        public ImmutableToFooWithBuilder.ImmutableToFooWithBuilderBuilder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * @return {@code this}.
+         */
+        public ImmutableToFooWithBuilder.ImmutableToFooWithBuilderBuilder id(final BigInteger id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * @return {@code this}.
+         */
+        public ImmutableToFooWithBuilder.ImmutableToFooWithBuilderBuilder nestedObjectList(final List<FromSubFoo> nestedObjectList) {
+            this.nestedObjectList = nestedObjectList;
+            return this;
+        }
+
+        /**
+         * @return {@code this}.
+         */
+        public ImmutableToFooWithBuilder.ImmutableToFooWithBuilderBuilder list(final List<String> list) {
+            this.list = list;
+            return this;
+        }
+
+        /**
+         * @return {@code this}.
+         */
+        public ImmutableToFooWithBuilder.ImmutableToFooWithBuilderBuilder nestedObject(final FromSubFoo nestedObject) {
+            this.nestedObject = nestedObject;
+            return this;
+        }
+
+        public ImmutableToFooWithBuilder build() {
+            return new ImmutableToFooWithBuilder(this.name, this.id, this.nestedObjectList, this.list, this.nestedObject);
+        }
+
+        @java.lang.Override
+
+        public java.lang.String toString() {
+            return "ImmutableToFooWithBuilder.ImmutableToFooWithBuilderBuilder(name=" + this.name + ", id=" + this.id + ", nestedObjectList=" + this.nestedObjectList + ", list=" + this.list + ", nestedObject=" + this.nestedObject + ")";
+        }
+    }
+
+    public static ImmutableToFooWithBuilder.ImmutableToFooWithBuilderBuilder builder() {
+        return new ImmutableToFooWithBuilder.ImmutableToFooWithBuilderBuilder();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public BigInteger getId() {
+        return this.id;
+    }
+
+    public List<FromSubFoo> getNestedObjectList() {
+        return this.nestedObjectList;
+    }
+
+    public List<String> getList() {
+        return this.list;
+    }
+
+    public FromSubFoo getNestedObject() {
+        return this.nestedObject;
     }
 }

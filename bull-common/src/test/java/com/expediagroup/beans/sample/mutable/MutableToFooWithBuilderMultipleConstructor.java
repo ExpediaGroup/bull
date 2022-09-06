@@ -18,13 +18,11 @@ package com.expediagroup.beans.sample.mutable;
 import java.math.BigInteger;
 import java.util.List;
 
-import lombok.Getter;
 
 /**
  * Mutable object instantiable only through a Builder.
  * The Builder class contains multiple constructors.
  */
-@Getter
 public final class MutableToFooWithBuilderMultipleConstructor {
     private String name;
     private BigInteger id;
@@ -36,6 +34,26 @@ public final class MutableToFooWithBuilderMultipleConstructor {
      * Private constructor.
      */
     private MutableToFooWithBuilderMultipleConstructor() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public List<MutableToSubFoo> getNestedObjectList() {
+        return nestedObjectList;
+    }
+
+    public MutableToSubFoo getNestedObject() {
+        return nestedObject;
     }
 
     /**

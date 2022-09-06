@@ -17,15 +17,24 @@ package com.expediagroup.beans.sample;
 
 import java.math.BigInteger;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * Abstract class for testing purpose.
  */
-@AllArgsConstructor
-@Getter
 public abstract class AbstractClass {
     private final String name;
     private final BigInteger id;
+
+    public AbstractClass(final String name, final BigInteger id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
 }

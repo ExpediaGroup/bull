@@ -17,16 +17,35 @@ package com.expediagroup.beans.sample.mutable;
 
 import java.math.BigInteger;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Sample mutable object that contains a field not existing in the source object.
  */
-@Getter
-@Setter
 public class MutableToFooNotExistingFields {
     private String name;
     private BigInteger id;
     private int age;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(final BigInteger id) {
+        this.id = id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(final int age) {
+        this.age = age;
+    }
 }

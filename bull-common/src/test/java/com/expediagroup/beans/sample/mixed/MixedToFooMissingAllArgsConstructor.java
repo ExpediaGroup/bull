@@ -22,23 +22,59 @@ import javax.validation.constraints.NotNull;
 
 import com.expediagroup.beans.sample.immutable.ImmutableToSubFoo;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  * Sample mixed object with a constructor containing the final fields only.
  */
-@Getter
-@Setter
-@RequiredArgsConstructor
-@ToString
 public class MixedToFooMissingAllArgsConstructor {
-    @NotNull
-    public BigInteger id;
     private final String name;
     private final List<String> list;
     private final List<ImmutableToSubFoo> nestedObjectList;
+    @NotNull
+    public BigInteger id;
     private ImmutableToSubFoo nestedObject;
+
+    public MixedToFooMissingAllArgsConstructor(final String name, final List<String> list, final List<ImmutableToSubFoo> nestedObjectList) {
+        this.name = name;
+        this.list = list;
+        this.nestedObjectList = nestedObjectList;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(final BigInteger id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public List<ImmutableToSubFoo> getNestedObjectList() {
+        return nestedObjectList;
+    }
+
+    public ImmutableToSubFoo getNestedObject() {
+        return nestedObject;
+    }
+
+    public void setNestedObject(final ImmutableToSubFoo nestedObject) {
+        this.nestedObject = nestedObject;
+    }
+
+    @Override
+    public String toString() {
+        return "MixedToFooMissingAllArgsConstructor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", list=" + list +
+                ", nestedObjectList=" + nestedObjectList +
+                ", nestedObject=" + nestedObject +
+                '}';
+    }
 }
