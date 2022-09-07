@@ -94,6 +94,7 @@
         <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
+        <maven-antrun.check.skip>false</maven-antrun.check.skip>
         <!-- excludes the Record classes from being analyzed as they are not yet supported by the checkstyle plugin -->
         <checkstyle.exclusion>
             **/*Record*.java,
@@ -238,6 +239,7 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -752,6 +754,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>${maven-antrun-plugin.version}</version>
+                <configuration>
+                    <skip>${maven-antrun.check.skip}</skip>
+                </configuration>
                 <executions>
                     <!-- this can be run separately with mvn clean antrun:run@ktlint-format -->
                     <execution>
@@ -852,13 +857,6 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
                 <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
                     <execution>
                         <id>test-compile</id>
                         <phase>test-compile</phase>

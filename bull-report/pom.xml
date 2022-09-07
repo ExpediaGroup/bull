@@ -13,6 +13,7 @@
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
+        <maven-antrun.check.skip>true</maven-antrun.check.skip>
     </properties>
 
     <dependencies>
