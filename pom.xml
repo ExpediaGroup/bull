@@ -761,7 +761,7 @@
                                 <java taskname="ktlint" dir="${project.basedir}" fork="true" failonerror="false"
                                       classname="com.pinterest.ktlint.Main" classpathref="maven.plugin.classpath">
                                     <arg value="-F"/>
-                                    <arg value="src/test/**/*.kt"/>
+                                    <arg value="src/**/*.kt"/>
                                 </java>
                             </target>
                         </configuration>
@@ -777,7 +777,7 @@
                             <target name="ktlint">
                                 <java taskname="ktlint" dir="${project.basedir}" fork="true" failonerror="true"
                                       classname="com.pinterest.ktlint.Main" classpathref="maven.plugin.classpath">
-                                    <arg value="src/test/**/*.kt"/>
+                                    <arg value="src/**/*.kt"/>
                                     <arg value="--reporter=plain"/>
                                     <arg value="--reporter=checkstyle,output=${project.build.directory}/ktlint.xml"/>
                                 </java>
