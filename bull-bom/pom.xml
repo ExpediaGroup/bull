@@ -12,6 +12,10 @@
         <version>2.2.3-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <maven-antrun.check.skip>true</maven-antrun.check.skip>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
