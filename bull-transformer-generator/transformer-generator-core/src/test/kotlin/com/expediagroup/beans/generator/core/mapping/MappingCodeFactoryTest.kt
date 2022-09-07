@@ -69,6 +69,10 @@ class MappingCodeFactoryTest {
 
     @DataProvider
     private fun typePairs(): Array<Array<Object?>> {
-        return arrayOf(arrayOf(null, Object::class.java), arrayOf(Object::class.java, null), arrayOf(null, null))
+        return arrayOf(
+            arrayOf(null, Object::class.java),
+            arrayOf(Object::class.java, null),
+            arrayOf(null, null)
+        )
     }
 }

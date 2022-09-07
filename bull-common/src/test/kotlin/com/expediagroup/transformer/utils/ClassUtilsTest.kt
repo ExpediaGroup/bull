@@ -344,7 +344,8 @@ class ClassUtilsTest {
                 "Tests that the method returns 0 if the given class has only private fields",
                 CLASS_WITH_PRIVATE_FINAL_FIELDS,
                 ZERO
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns the expected value if the class has private final fields",
                 CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, EXPECTED_MIXED_CLASS_TOTAL_NOT_FINAL_FIELDS
             )
@@ -386,7 +387,8 @@ class ClassUtilsTest {
                 CLASS_WITHOUT_PRIVATE_FINAL_FIELDS,
                 IS_FINAL_FIELD_PREDICATE,
                 ZERO
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns the expected value if the class has private final fields",
                 CLASS_WITH_PRIVATE_FINAL_FIELDS,
                 IS_FINAL_FIELD_PREDICATE,
@@ -433,26 +435,32 @@ class ClassUtilsTest {
                 CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS,
                 false,
                 EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns the expected value if the class has private and public fields and skipFinal is not passed as param",
                 CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, null, EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns the expected value if the class has private final fields only",
                 CLASS_WITH_PRIVATE_FINAL_FIELDS,
                 false,
                 EXPECTED_PRIVATE_FINAL_FIELDS
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns the expected value if the class has private final fields only and skipFinal is not passed as param",
                 CLASS_WITH_PRIVATE_FINAL_FIELDS, null, EXPECTED_PRIVATE_FINAL_FIELDS
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns the expected value if the class extends another class",
                 ImmutableToFooSubClass::class.java,
                 false,
                 EXPECTED_SUB_CLASS_PRIVATE_FIELDS
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns the expected value if the class extends another class and skipFinal is not passed as param",
                 ImmutableToFooSubClass::class.java, null, EXPECTED_SUB_CLASS_PRIVATE_FIELDS
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns the expected value if the skipFinal is enabled",
                 CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS,
                 true,
@@ -496,12 +504,14 @@ class ClassUtilsTest {
                 CLASS_WITH_STATIC_FIELDS,
                 true,
                 EXPECTED_NOT_STATIC_FIELDS
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns the expected value if the class has private final fields only",
                 CLASS_WITH_STATIC_FIELDS,
                 false,
                 CLASS_WITH_STATIC_FIELDS.declaredFields.size
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns the expected total number of fields when the skipStatic param is true and the class extends another class",
                 CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, true, EXPECTED_SUB_CLASS_PRIVATE_FIELDS
             )
@@ -540,7 +550,8 @@ class ClassUtilsTest {
                 "Test that the a manual declared Builder is returned by method: {@code getDeclaredClasses}",
                 MutableToFooWithBuilder::class.java,
                 MutableToFooWithBuilder.Builder::class.java
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Test that the a Builder created by lombok is returned by method: {@code getDeclaredClasses}",
                 MixedToFooWithBuilder::class.java,
                 MixedToFooWithBuilder.builder().javaClass
@@ -608,7 +619,8 @@ class ClassUtilsTest {
                 "Tests that the method returns false if the constructor parameter names are not available",
                 createMockedConstructor(),
                 false
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method returns false if the constructor parameter names are available",
                 underTest.getAllArgsConstructor(
                     MixedToFoo::class.java
@@ -702,7 +714,8 @@ class ClassUtilsTest {
                 "Tests that the method returns false if the given field does not exists",
                 NOT_EXISTING_FIELD_NAME,
                 false
-            ), arrayOf("Tests that the method returns true if the given field exists", NAME_FIELD_NAME, true)
+            ),
+            arrayOf("Tests that the method returns true if the given field exists", NAME_FIELD_NAME, true)
         )
     }
 
@@ -993,7 +1006,8 @@ class ClassUtilsTest {
                 "Tests that the method returns true if the class has a builder",
                 MutableToFooWithBuilder::class.java,
                 true
-            ), arrayOf("Tests that the method returns false if the class hasn't a builder", FromFoo::class.java, false)
+            ),
+            arrayOf("Tests that the method returns false if the class hasn't a builder", FromFoo::class.java, false)
         )
     }
 
@@ -1273,7 +1287,8 @@ class ClassUtilsTest {
                 "Tests that the method raises a MissingMethodException if the class has no builder build method",
                 ImmutableToFoo::class.java,
                 ImmutableToFoo::class.java
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the method raises a MissingMethodException if the class has a builder build method that does not return the parent class",
                 MutableToFooWithWrongBuilder::class.java, MutableToFooWithWrongBuilder.Builder::class.java
             )

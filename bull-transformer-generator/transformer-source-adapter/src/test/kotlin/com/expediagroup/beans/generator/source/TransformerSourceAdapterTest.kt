@@ -21,10 +21,12 @@ import org.assertj.core.api.Assertions.assertThat
  * Tests for [TransformerSourceAdapter].
  */
 class TransformerSourceAdapterTest {
-    private val generated: TypeSpec = TypeSpec.classBuilder("AtoBTransformer").build()
+    private val generated: TypeSpec = TypeSpec.classBuilder("AtoBTransformer")
+        .build()
 
     @Mock
     private val spec: TransformerSpec? = null
+
     @BeforeMethod
     fun setUp() {
         MockitoAnnotations.openMocks(this)

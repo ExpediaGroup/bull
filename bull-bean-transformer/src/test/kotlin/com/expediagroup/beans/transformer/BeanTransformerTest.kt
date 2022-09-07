@@ -495,7 +495,8 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
             arrayOf(
                 "Test that the primitive type conversion function is not executed if the primitive type conversion is disabled",
                 AGE_FIELD_NAME, BigInteger.ZERO.toInt(), null, false, true, BigInteger.ZERO.toInt()
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Test that the primitive type conversion function is not executed if the destination field type is not primitive",
                 AGE_FIELD_NAME, null, null, true, false, null
             )
@@ -591,7 +592,8 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
                 "Tests that the Validator object is not created if the validation is disabled",
                 false,
                 true
-            ), arrayOf("Tests that the Validator object is created if the validation is enabled", true, false)
+            ),
+            arrayOf("Tests that the Validator object is created if the validation is enabled", true, false)
         )
     }
 
@@ -710,7 +712,8 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
                 "Tests that the handleInjectionException returns an error message if the forceConstructorInjection is true",
                 true,
                 InvalidBeanException::class.java
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Tests that the handleInjectionException invokes the injectValues (that throws a MutableToFoo object) if the forceConstructorInjection is false",
                 false, MutableToFoo::class.java
             )

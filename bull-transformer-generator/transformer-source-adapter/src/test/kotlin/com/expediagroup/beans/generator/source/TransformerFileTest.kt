@@ -22,9 +22,11 @@ import org.assertj.core.api.Assertions.assertThat
  */
 class TransformerFileTest {
     private val fs: FileSystem = Jimfs.newFileSystem(Configuration.unix())
-    private val generated: TypeSpec = TypeSpec.classBuilder("Generated").build()
+    private val generated: TypeSpec = TypeSpec.classBuilder("Generated")
+        .build()
     private val generatedFileName: String = generated.name + ".java"
     private var outputDir: Path? = null
+
     @BeforeClass
     @Throws(IOException::class)
     fun setUp() {

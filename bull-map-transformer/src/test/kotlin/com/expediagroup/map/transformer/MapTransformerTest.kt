@@ -95,7 +95,8 @@ class MapTransformerTest : AbstractTransformerTest() {
                 "Test that an IllegalArgumentException is thrown if the sourceMap is null",
                 null,
                 BEAN_TRANSFORMER
-            ), arrayOf("Test that an IllegalArgumentException is thrown if the transformer is null", SAMPLE_MAP, null)
+            ),
+            arrayOf("Test that an IllegalArgumentException is thrown if the transformer is null", SAMPLE_MAP, null)
         )
     }
 

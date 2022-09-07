@@ -285,7 +285,8 @@ class MutableObjectTransformationTest : AbstractBeanTransformerTest() {
             arrayOf(
                 "Test that the field transformation returns the expected values.",
                 NAME_FIELD_NAME, NAME.lowercase(Locale.getDefault())
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Test that the field transformation returns the expected values even if null.",
                 NAME_FIELD_NAME, null
             )

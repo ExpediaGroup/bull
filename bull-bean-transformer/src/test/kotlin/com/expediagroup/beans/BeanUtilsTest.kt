@@ -111,7 +111,8 @@ class BeanUtilsTest {
             arrayOf(
                 "Test that the transformer function returned is able to transform the given object.",
                 BeanUtils.getTransformer<Any, ImmutableToFooSimple>(ImmutableToFooSimple::class.java)
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Test that the transformer function returned is able to transform the given object with the given transformer.",
                 BeanUtils.getTransformer<Any, ImmutableToFooSimple>(
                     beanUtils.transformer,

@@ -21,7 +21,8 @@ import org.assertj.core.api.Assertions.assertThat
  * Tests for [SourceTransformerSpec].
  */
 class SourceTransformerSpecTest {
-    private val generated: TypeSpec = TypeSpec.classBuilder("AtoBTransformer").build()
+    private val generated: TypeSpec = TypeSpec.classBuilder("AtoBTransformer")
+        .build()
 
     @Spy
     private val clock: Clock = Clock.fixed(Instant.EPOCH, ZoneId.systemDefault())
@@ -50,9 +51,14 @@ class SourceTransformerSpecTest {
 
         // THEN
         assertSoftly { softly ->
-            softly.assertThat(sourceModel.name).`as`("Name is unchanged").isEqualTo(generated.name)
-            softly.assertThat(sourceModel.javadoc.isEmpty()).`as`("Adds a Javadoc").isFalse()
-            softly.assertThat(sourceModel.annotations).`as`("Adds a @Generated annotation")
+            softly.assertThat(sourceModel.name)
+                .`as`("Name is unchanged")
+                .isEqualTo(generated.name)
+            softly.assertThat(sourceModel.javadoc.isEmpty())
+                .`as`("Adds a Javadoc")
+                .isFalse()
+            softly.assertThat(sourceModel.annotations)
+                .`as`("Adds a @Generated annotation")
                 .anyMatch { annotationSpec -> annotationSpec.type.equals(TypeName.get(Generated::class.java)) }
         }
     }
@@ -63,7 +69,12 @@ class SourceTransformerSpecTest {
         val sourceModel: TypeSpec = sourceTransformerSpec.build(Source::class.java, Destination::class.java)
 
         // THEN
-        val expectedTimeStamp: Unit = list(CodeBlock.of(clock.instant().toString()))
+        val expectedTimeStamp: Unit = list(
+            CodeBlock.of(
+                clock.instant()
+                    .toString()
+            )
+        )
         assertThat(sourceModel.annotations)
             .anyMatch { annotationSpec -> annotationSpec.members.containsValue(expectedTimeStamp) }
     }

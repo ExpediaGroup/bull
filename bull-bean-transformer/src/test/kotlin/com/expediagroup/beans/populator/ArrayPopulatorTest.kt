@@ -96,11 +96,15 @@ class ArrayPopulatorTest {
     @DataProvider
     fun dataProvider(): Array<Array<Any>> {
         return arrayOf(
-            arrayOf(String::class.java, STRING_ARRAY), arrayOf(
+            arrayOf(String::class.java, STRING_ARRAY),
+            arrayOf(
                 Char::class.java, CHAR_ARRAY
-            ), arrayOf(Int::class.java, INT_ARRAY), arrayOf(
+            ),
+            arrayOf(Int::class.java, INT_ARRAY),
+            arrayOf(
                 MixedToFooStaticField::class.java, createMixedToFooArray()
-            ), arrayOf(
+            ),
+            arrayOf(
                 Any::class.java, createBooleanArray()
             )
         )

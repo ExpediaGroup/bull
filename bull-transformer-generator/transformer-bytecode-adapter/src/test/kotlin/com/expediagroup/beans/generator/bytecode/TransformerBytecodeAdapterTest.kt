@@ -31,6 +31,7 @@ class TransformerBytecodeAdapterTest {
      * The class to be tested.
      */
     private var underTest: TransformerBytecodeAdapter? = null
+
     @BeforeMethod
     private fun beforeMethod() {
         openMocks(this)
@@ -47,7 +48,8 @@ class TransformerBytecodeAdapterTest {
         // THEN
         assertThat(actual).`as`("a new Transformer instance is never null")
             .isNotNull()
-        then(spec).should().build(Source::class.java, Destination::class.java)
+        then(spec).should()
+            .build(Source::class.java, Destination::class.java)
     }
 
     @Test

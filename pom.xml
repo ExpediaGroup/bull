@@ -63,6 +63,7 @@
         <jboss-logging-modules.version>2.2.1.Final</jboss-logging-modules.version>
         <slf4j-api.version>2.0.0</slf4j-api.version>
         <glassfish.javax.el.version>3.0.0</glassfish.javax.el.version>
+        <kotlin-ktlint.version>0.47.0</kotlin-ktlint.version>
         <!-- JaCoCo & Sonar properties -->
         <jacoco.version>0.8.8</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
@@ -79,8 +80,8 @@
         <wagon-ssh.version>3.5.2</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
         <github.global.server>github</github.global.server>
-        <maven.site.plugin.version>3.12.1</maven.site.plugin.version>
         <!-- build settings -->
+        <maven.site.plugin.version>3.12.1</maven.site.plugin.version>
         <maven.required.version>[3.8.1,)</maven.required.version>
         <maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version>
         <maven.javadoc-plugin.version>3.4.1</maven.javadoc-plugin.version>
@@ -91,6 +92,7 @@
         <maven.nexus-staging.plugin.version>1.6.13</maven.nexus-staging.plugin.version>
         <maven.project.info.reports.plugin.version>3.1.2</maven.project.info.reports.plugin.version>
         <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
+        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <!-- excludes the Record classes from being analyzed as they are not yet supported by the checkstyle plugin -->
         <checkstyle.exclusion>
@@ -748,6 +750,55 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven-antrun-plugin.version}</version>
+                <executions>
+                    <!-- this can be run separately with mvn clean antrun:run@ktlint-format -->
+                    <execution>
+                        <id>ktlint-format</id>
+                        <configuration>
+                            <target name="ktlint">
+                                <java taskname="ktlint" dir="${project.basedir}" fork="true" failonerror="true"
+                                      classname="com.pinterest.ktlint.Main" classpathref="maven.plugin.classpath">
+                                    <arg value="-F"/>
+                                    <arg value="src/test/**/*.kt"/>
+                                </java>
+                            </target>
+                        </configuration>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <!-- this can be run separately with mvn clean antrun:run@ktlint -->
+                        <id>ktlint</id>
+                        <configuration>
+                            <target name="ktlint">
+                                <java taskname="ktlint" dir="${project.basedir}" fork="true" failonerror="true"
+                                      classname="com.pinterest.ktlint.Main" classpathref="maven.plugin.classpath">
+                                    <arg value="src/test/**/*.kt"/>
+                                    <arg value="--reporter=plain"/>
+                                    <arg value="--reporter=checkstyle,output=${project.build.directory}/ktlint.xml"/>
+                                </java>
+                            </target>
+                        </configuration>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.pinterest</groupId>
+                        <artifactId>ktlint</artifactId>
+                        <version>${kotlin-ktlint.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <executions>
                     <execution>
@@ -816,9 +867,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <jvmTarget>1.8</jvmTarget>
-                </configuration>
             </plugin>
         </plugins>
     </build>

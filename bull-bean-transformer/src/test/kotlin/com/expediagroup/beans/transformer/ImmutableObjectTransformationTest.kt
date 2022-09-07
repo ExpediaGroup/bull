@@ -213,7 +213,8 @@ class ImmutableObjectTransformationTest : AbstractBeanTransformerTest() {
                 fromFoo.name,
                 fromFoo.id,
                 fromFoo.nestedObject!!.phoneNumbers
-            ), arrayOf(
+            ),
+            arrayOf(
                 "Test that, in case a destination object field is contained into a nested object of the source field, defining a composite {@link FieldMapping}"
                         + " the field is correctly set even if some of them are null.",
                 fromFooWithNullProperties,
