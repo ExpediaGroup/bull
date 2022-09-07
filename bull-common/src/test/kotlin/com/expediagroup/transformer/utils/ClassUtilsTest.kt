@@ -311,7 +311,8 @@ class ClassUtilsTest {
             ),
             arrayOf(
                 "Tests that the method returns the expected value if the class has private final fields and extends another class",
-                CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, EXPECTED_SUB_CLASS_PRIVATE_FIELDS
+                CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS,
+                EXPECTED_SUB_CLASS_PRIVATE_FIELDS
             )
         )
     }
@@ -414,13 +415,18 @@ class ClassUtilsTest {
         // GIVEN
 
         // WHEN
-        val actual = if (Objects.nonNull(skipFinal)) underTest.getPrivateFields(
-            testClass,
-            skipFinal
-        ) else underTest.getPrivateFields(testClass)
+        val actual = if (Objects.nonNull(skipFinal)) {
+            underTest.getPrivateFields(
+                testClass,
+                skipFinal
+            )
+        } else {
+            underTest.getPrivateFields(testClass)
+        }
 
         // THEN
-        Assertions.assertThat(actual).hasSize(expectedResult)
+        Assertions.assertThat(actual)
+            .hasSize(expectedResult)
     }
 
     /**
@@ -438,7 +444,9 @@ class ClassUtilsTest {
             ),
             arrayOf(
                 "Tests that the method returns the expected value if the class has private and public fields and skipFinal is not passed as param",
-                CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, null, EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS
+                CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS,
+                null,
+                EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_FIELDS
             ),
             arrayOf(
                 "Tests that the method returns the expected value if the class has private final fields only",
@@ -448,7 +456,9 @@ class ClassUtilsTest {
             ),
             arrayOf(
                 "Tests that the method returns the expected value if the class has private final fields only and skipFinal is not passed as param",
-                CLASS_WITH_PRIVATE_FINAL_FIELDS, null, EXPECTED_PRIVATE_FINAL_FIELDS
+                CLASS_WITH_PRIVATE_FINAL_FIELDS,
+                null,
+                EXPECTED_PRIVATE_FINAL_FIELDS
             ),
             arrayOf(
                 "Tests that the method returns the expected value if the class extends another class",
@@ -458,7 +468,9 @@ class ClassUtilsTest {
             ),
             arrayOf(
                 "Tests that the method returns the expected value if the class extends another class and skipFinal is not passed as param",
-                ImmutableToFooSubClass::class.java, null, EXPECTED_SUB_CLASS_PRIVATE_FIELDS
+                ImmutableToFooSubClass::class.java,
+                null,
+                EXPECTED_SUB_CLASS_PRIVATE_FIELDS
             ),
             arrayOf(
                 "Tests that the method returns the expected value if the skipFinal is enabled",
