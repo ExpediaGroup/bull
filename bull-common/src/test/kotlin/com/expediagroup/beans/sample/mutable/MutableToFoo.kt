@@ -28,11 +28,11 @@ open class MutableToFoo {
     var nestedObject: MutableToSubFoo? = null
     override fun toString(): String {
         return "MutableToFoo{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", list=" + list +
-                ", nestedObjectList=" + nestedObjectList +
-                ", nestedObject=" + nestedObject +
-                '}'
+            "name='" + name + '\'' +
+            ", id=" + id +
+            ", list=" + list +
+            ", nestedObjectList=" + nestedObjectList +
+            ", nestedObject=" + nestedObject +
+            '}'
     }
 }

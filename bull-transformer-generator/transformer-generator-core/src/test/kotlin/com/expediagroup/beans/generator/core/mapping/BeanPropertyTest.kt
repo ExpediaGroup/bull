@@ -25,6 +25,7 @@ class BeanPropertyTest {
      * The class to be tested.
      */
     private var underTest: BeanProperty? = null
+
     @BeforeClass
     @Throws(NoSuchMethodException::class)
     fun beforeClass() {

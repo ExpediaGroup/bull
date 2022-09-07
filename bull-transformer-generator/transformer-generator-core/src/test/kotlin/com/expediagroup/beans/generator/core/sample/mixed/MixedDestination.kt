@@ -16,12 +16,9 @@
  */
 package com.expediagroup.beans.generator.core.sample.mixed
 
-import kotlin.Throws
-
 /**
  * Sample class that represents a mixed destination type.
  */
 class MixedDestination(val aString: String, val aLong: Long) {
     var isABoolean = false
-
 }

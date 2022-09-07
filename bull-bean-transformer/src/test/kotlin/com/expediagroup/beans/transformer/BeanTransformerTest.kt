@@ -106,9 +106,12 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
     fun testResetFieldsTransformerWorksProperly() {
         // GIVEN
         val beanTransformer = underTest
-            .withFieldTransformer(FieldTransformer(DEST_FIELD_NAME) { `val`: Any? -> `val` }, FieldTransformer(
-                REFLECTION_UTILS_FIELD_NAME
-            ) { `val`: Any? -> `val` })
+            .withFieldTransformer(
+                FieldTransformer(DEST_FIELD_NAME) { `val`: Any? -> `val` },
+                FieldTransformer(
+                    REFLECTION_UTILS_FIELD_NAME
+                ) { `val`: Any? -> `val` }
+            )
 
         // WHEN
         beanTransformer.resetFieldsTransformer()
@@ -163,9 +166,12 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
     fun testResetWorksProperly() {
         // GIVEN
         val beanTransformer = underTest
-            .withFieldTransformer(FieldTransformer(DEST_FIELD_NAME) { `val`: Any? -> `val` }, FieldTransformer(
-                REFLECTION_UTILS_FIELD_NAME
-            ) { `val`: Any? -> `val` })
+            .withFieldTransformer(
+                FieldTransformer(DEST_FIELD_NAME) { `val`: Any? -> `val` },
+                FieldTransformer(
+                    REFLECTION_UTILS_FIELD_NAME
+                ) { `val`: Any? -> `val` }
+            )
             .withFieldMapping(FieldMapping(SOURCE_FIELD_NAME, DEST_FIELD_NAME))
             .skipTransformationForField(NAME_FIELD_NAME)
             .setDefaultValueForMissingField(true)
@@ -283,7 +289,8 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
         )
         Mockito.`when`<Optional<*>>(
             cacheManager.getFromCache(
-                ArgumentMatchers.anyString(), ArgumentMatchers.any(
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.any(
                     Class::class.java
                 )
             )
@@ -307,7 +314,8 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
 
         // THEN
         Mockito.verify(cacheManager).getFromCache(
-            ArgumentMatchers.anyString(), ArgumentMatchers.any(
+            ArgumentMatchers.anyString(),
+            ArgumentMatchers.any(
                 Class::class.java
             )
         )
@@ -335,7 +343,8 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
         val settings = Mockito.mock(TransformerSettings::class.java)
         Mockito.`when`<Optional<*>>(
             cacheManager.getFromCache(
-                ArgumentMatchers.anyString(), ArgumentMatchers.any(
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.any(
                     Class::class.java
                 )
             )
@@ -361,7 +370,8 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
 
         // THEN
         Mockito.verify(cacheManager).getFromCache(
-            ArgumentMatchers.anyString(), ArgumentMatchers.any(
+            ArgumentMatchers.anyString(),
+            ArgumentMatchers.any(
                 Class::class.java
             )
         )
@@ -389,7 +399,8 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
         val settings = Mockito.mock(TransformerSettings::class.java)
         Mockito.`when`<Optional<*>>(
             cacheManager.getFromCache(
-                ArgumentMatchers.anyString(), ArgumentMatchers.any(
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.any(
                     Class::class.java
                 )
             )
@@ -417,7 +428,8 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
         // THEN
         Assertions.assertThatThrownBy(actual).hasCauseInstanceOf(MissingFieldException::class.java)
         Mockito.verify(cacheManager).getFromCache(
-            ArgumentMatchers.anyString(), ArgumentMatchers.any(
+            ArgumentMatchers.anyString(),
+            ArgumentMatchers.any(
                 Class::class.java
             )
         )
@@ -494,11 +506,21 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
         return arrayOf(
             arrayOf(
                 "Test that the primitive type conversion function is not executed if the primitive type conversion is disabled",
-                AGE_FIELD_NAME, BigInteger.ZERO.toInt(), null, false, true, BigInteger.ZERO.toInt()
+                AGE_FIELD_NAME,
+                BigInteger.ZERO.toInt(),
+                null,
+                false,
+                true,
+                BigInteger.ZERO.toInt()
             ),
             arrayOf(
                 "Test that the primitive type conversion function is not executed if the destination field type is not primitive",
-                AGE_FIELD_NAME, null, null, true, false, null
+                AGE_FIELD_NAME,
+                null,
+                null,
+                true,
+                false,
+                null
             )
         )
     }
@@ -715,7 +737,8 @@ class BeanTransformerTest : AbstractBeanTransformerTest() {
             ),
             arrayOf(
                 "Tests that the handleInjectionException invokes the injectValues (that throws a MutableToFoo object) if the forceConstructorInjection is false",
-                false, MutableToFoo::class.java
+                false,
+                MutableToFoo::class.java
             )
         )
     }

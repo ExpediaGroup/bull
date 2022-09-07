@@ -758,7 +758,7 @@
                         <id>ktlint-format</id>
                         <configuration>
                             <target name="ktlint">
-                                <java taskname="ktlint" dir="${project.basedir}" fork="true" failonerror="true"
+                                <java taskname="ktlint" dir="${project.basedir}" fork="true" failonerror="false"
                                       classname="com.pinterest.ktlint.Main" classpathref="maven.plugin.classpath">
                                     <arg value="-F"/>
                                     <arg value="src/test/**/*.kt"/>

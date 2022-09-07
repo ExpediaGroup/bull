@@ -35,11 +35,11 @@ open class FromFoo(
 
     override fun toString(): String {
         return "FromFoo{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", nestedObjectList=" + nestedObjectList +
-                ", list=" + list +
-                ", nestedObject=" + nestedObject +
-                '}'
+            "name='" + name + '\'' +
+            ", id=" + id +
+            ", nestedObjectList=" + nestedObjectList +
+            ", list=" + list +
+            ", nestedObject=" + nestedObject +
+            '}'
     }
 }

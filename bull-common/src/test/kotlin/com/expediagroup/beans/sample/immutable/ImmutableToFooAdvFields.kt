@@ -49,18 +49,18 @@ class ImmutableToFooAdvFields(
 
     override fun toString(): String {
         return "ImmutableToFooAdvFields{" +
-                "name=" + name +
-                ", age=" + age +
-                ", indexNumber='" + indexNumber + '\'' +
-                ", classType=" + classType +
-                ", locale=" + locale +
-                ", price=" + price +
-                ", list=" + list +
-                ", collection=" + collection +
-                ", map=" + map +
-                ", supertypeMap=" + supertypeMap +
-                ", nestedObject=" + nestedObject +
-                '}'
+            "name=" + name +
+            ", age=" + age +
+            ", indexNumber='" + indexNumber + '\'' +
+            ", classType=" + classType +
+            ", locale=" + locale +
+            ", price=" + price +
+            ", list=" + list +
+            ", collection=" + collection +
+            ", map=" + map +
+            ", supertypeMap=" + supertypeMap +
+            ", nestedObject=" + nestedObject +
+            '}'
     }
 }
 

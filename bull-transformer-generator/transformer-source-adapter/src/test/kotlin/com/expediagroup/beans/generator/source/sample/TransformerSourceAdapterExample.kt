@@ -16,8 +16,6 @@
  */
 package com.expediagroup.beans.generator.source.sample
 
-import lombok.AccessLevel.PRIVATE
-
 /**
  * Example of generating and using a Transformer at runtime.
  */

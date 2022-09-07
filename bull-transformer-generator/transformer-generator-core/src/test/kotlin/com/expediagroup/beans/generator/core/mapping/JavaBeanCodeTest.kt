@@ -25,6 +25,7 @@ class JavaBeanCodeTest {
      * The class to be tested.
      */
     private val underTest: JavaBeanCode = JavaBeanCode(Source::class.java, Destination::class.java, ClassUtils())
+
     @Test
     fun shouldInstantiateAndReturnDestination() {
         // WHEN

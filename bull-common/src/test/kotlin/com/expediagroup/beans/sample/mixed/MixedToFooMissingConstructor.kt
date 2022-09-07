@@ -26,8 +26,8 @@ class MixedToFooMissingConstructor(val name: String) {
 
     override fun toString(): String {
         return "MixedToFooMissingConstructor{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}'
+            "id=" + id +
+            ", name='" + name + '\'' +
+            '}'
     }
 }

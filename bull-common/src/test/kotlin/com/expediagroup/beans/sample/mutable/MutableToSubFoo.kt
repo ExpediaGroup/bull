@@ -28,11 +28,11 @@ class MutableToSubFoo : ISubClass {
     private var veryComplexMap: Map<String, Map<String, String>>? = null
     override fun toString(): String {
         return "MutableToSubFoo{" +
-                "name='" + name + '\'' +
-                ", phoneNumbers=" + phoneNumbers.contentToString() +
-                ", sampleMap=" + sampleMap +
-                ", complexMap=" + complexMap +
-                ", veryComplexMap=" + veryComplexMap +
-                '}'
+            "name='" + name + '\'' +
+            ", phoneNumbers=" + phoneNumbers.contentToString() +
+            ", sampleMap=" + sampleMap +
+            ", complexMap=" + complexMap +
+            ", veryComplexMap=" + veryComplexMap +
+            '}'
     }
 }

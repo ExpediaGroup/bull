@@ -58,7 +58,8 @@ class ArrayPopulatorTest {
         // GIVEN
         Mockito.`when`(
             transformer.transform(
-                ArgumentMatchers.any<Any>(), ArgumentMatchers.eq(
+                ArgumentMatchers.any<Any>(),
+                ArgumentMatchers.eq(
                     MixedToFooStaticField::class.java
                 )
             )
@@ -98,14 +99,17 @@ class ArrayPopulatorTest {
         return arrayOf(
             arrayOf(String::class.java, STRING_ARRAY),
             arrayOf(
-                Char::class.java, CHAR_ARRAY
+                Char::class.java,
+                CHAR_ARRAY
             ),
             arrayOf(Int::class.java, INT_ARRAY),
             arrayOf(
-                MixedToFooStaticField::class.java, createMixedToFooArray()
+                MixedToFooStaticField::class.java,
+                createMixedToFooArray()
             ),
             arrayOf(
-                Any::class.java, createBooleanArray()
+                Any::class.java,
+                createBooleanArray()
             )
         )
     }

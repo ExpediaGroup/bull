@@ -193,7 +193,8 @@ class MixedObjectTransformationTest : AbstractBeanTransformerTest() {
         // GIVEN
         val multipleDestinationFieldMapping = FieldMapping(
             ID_FIELD_NAME,
-            ID_FIELD_NAME, INDEX_FIELD_NAME
+            ID_FIELD_NAME,
+            INDEX_FIELD_NAME
         )
 
         // WHEN
@@ -223,7 +224,8 @@ class MixedObjectTransformationTest : AbstractBeanTransformerTest() {
         val expectedIdValue = fromFooSimple.id!!.add(valueToAdd)
         val multipleDestinationFieldMapping = FieldMapping(
             ID_FIELD_NAME,
-            ID_FIELD_NAME, INDEX_FIELD_NAME
+            ID_FIELD_NAME,
+            INDEX_FIELD_NAME
         )
         val multipleDestinationFieldTransformer = FieldTransformer(
             listOf(ID_FIELD_NAME, INDEX_FIELD_NAME)

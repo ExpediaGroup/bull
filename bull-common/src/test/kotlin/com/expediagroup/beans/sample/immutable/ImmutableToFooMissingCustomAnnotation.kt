@@ -28,8 +28,8 @@ class ImmutableToFooMissingCustomAnnotation
 
     override fun toString(): String {
         return "ImmutableToFooMissingCustomAnnotation{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                '}'
+            "name='" + name + '\'' +
+            ", id=" + id +
+            '}'
     }
 }

@@ -28,11 +28,11 @@ class FromFooMap(
 
     override fun toString(): String {
         return "FromFooMap{" +
-                "sampleMap=" + sampleMap +
-                ", complexMap=" + complexMap +
-                ", veryComplexMap=" + veryComplexMap +
-                ", extremeComplexMap=" + extremeComplexMap +
-                ", unparametrizedMap=" + unparametrizedMap +
-                '}'
+            "sampleMap=" + sampleMap +
+            ", complexMap=" + complexMap +
+            ", veryComplexMap=" + veryComplexMap +
+            ", extremeComplexMap=" + extremeComplexMap +
+            ", unparametrizedMap=" + unparametrizedMap +
+            '}'
     }
 }

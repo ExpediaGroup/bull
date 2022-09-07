@@ -85,19 +85,23 @@ class ConversionAnalyzerTest {
         return arrayOf(
             arrayOf(
                 "Tests that the method returns an empty optional in case the source field type is equal to the destination field type",
-                Int::class.javaPrimitiveType, Int::class.javaPrimitiveType
+                Int::class.javaPrimitiveType,
+                Int::class.javaPrimitiveType
             ),
             arrayOf(
                 "Tests that the method returns an empty optional in case the source field type is not equal to the source field type but it's not primitive",
-                Pair::class.java, Int::class.javaPrimitiveType
+                Pair::class.java,
+                Int::class.javaPrimitiveType
             ),
             arrayOf(
                 "Tests that the method returns an empty optional in case the source field type is not equal to the source field type and the destination type is void",
-                Int::class.javaPrimitiveType, Void::class.java
+                Int::class.javaPrimitiveType,
+                Void::class.java
             ),
             arrayOf(
                 "Tests that the method returns an empty optional in case the source field type is not equal to the source field type and the source type is void",
-                Void::class.java, Int::class.javaPrimitiveType
+                Void::class.java,
+                Int::class.javaPrimitiveType
             )
         )
     }
@@ -134,23 +138,33 @@ class ConversionAnalyzerTest {
         return arrayOf(
             arrayOf(
                 "Tests that the method returns a IntegerConversionProcessor that converts from String to int",
-                String::class.java, Int::class.javaPrimitiveType, IntegerConversionProcessor().convertString()
+                String::class.java,
+                Int::class.javaPrimitiveType,
+                IntegerConversionProcessor().convertString()
             ),
             arrayOf(
                 "Tests that the method returns a StringConversionProcessor that converts from byte to String",
-                Byte::class.javaPrimitiveType, String::class.java, StringConversionProcessor().convertByte()
+                Byte::class.javaPrimitiveType,
+                String::class.java,
+                StringConversionProcessor().convertByte()
             ),
             arrayOf(
                 "Tests that the method returns a ShortConversionProcessor that converts from short to byte",
-                Short::class.javaPrimitiveType, Byte::class.javaPrimitiveType, ByteConversionProcessor().convertShort()
+                Short::class.javaPrimitiveType,
+                Byte::class.javaPrimitiveType,
+                ByteConversionProcessor().convertShort()
             ),
             arrayOf(
                 "Tests that the method returns a StringConversionProcessor that converts from int to String",
-                Int::class.javaPrimitiveType, String::class.java, StringConversionProcessor().convertInteger()
+                Int::class.javaPrimitiveType,
+                String::class.java,
+                StringConversionProcessor().convertInteger()
             ),
             arrayOf(
                 "Tests that the method returns a IntegerConversionProcessor that converts from long to int",
-                Long::class.javaPrimitiveType, Int::class.javaPrimitiveType, IntegerConversionProcessor().convertLong()
+                Long::class.javaPrimitiveType,
+                Int::class.javaPrimitiveType,
+                IntegerConversionProcessor().convertLong()
             ),
             arrayOf(
                 "Tests that the method returns a DoubleConversionProcessor that converts from float to double",
@@ -166,7 +180,9 @@ class ConversionAnalyzerTest {
             ),
             arrayOf(
                 "Tests that the method returns a StringConversionProcessor that converts from char to String",
-                Char::class.javaPrimitiveType, String::class.java, StringConversionProcessor().convertCharacter()
+                Char::class.javaPrimitiveType,
+                String::class.java,
+                StringConversionProcessor().convertCharacter()
             ),
             arrayOf(
                 "Tests that the method returns a CharacterConversionProcessor that converts from char to boolean",
@@ -176,19 +192,27 @@ class ConversionAnalyzerTest {
             ),
             arrayOf(
                 "Tests that the method returns a BooleanConversionProcessor that converts from String to boolean",
-                String::class.java, Boolean::class.javaPrimitiveType, BooleanConversionProcessor().convertString()
+                String::class.java,
+                Boolean::class.javaPrimitiveType,
+                BooleanConversionProcessor().convertString()
             ),
             arrayOf(
                 "Tests that the method returns a BigIntegerConversionProcessor that converts from BigDecimal to BigInteger",
-                BigDecimal::class.java, BigInteger::class.java, BigIntegerConversionProcessor().convertBigDecimal()
+                BigDecimal::class.java,
+                BigInteger::class.java,
+                BigIntegerConversionProcessor().convertBigDecimal()
             ),
             arrayOf(
                 "Tests that the method returns a BigDecimalConversionProcessor that converts from String to BigDecimal",
-                String::class.java, BigDecimal::class.java, BigDecimalConversionProcessor().convertString()
+                String::class.java,
+                BigDecimal::class.java,
+                BigDecimalConversionProcessor().convertString()
             ),
             arrayOf(
                 "Tests that the method returns a ByteConversionProcessor that converts from String to byte[]",
-                String::class.java, ByteArray::class.java, ByteArrayConversionProcessor().convertString()
+                String::class.java,
+                ByteArray::class.java,
+                ByteArrayConversionProcessor().convertString()
             )
         )
     }

@@ -35,10 +35,10 @@ class FromFooSubClass(
 
     override fun toString(): String {
         return "FromFooSubClass{" +
-                "surname='" + surname + '\'' +
-                ", phone=" + phone +
-                ", check=" + isCheck +
-                ", amount=" + amount +
-                '}'
+            "surname='" + surname + '\'' +
+            ", phone=" + phone +
+            ", check=" + isCheck +
+            ", amount=" + amount +
+            '}'
     }
 }

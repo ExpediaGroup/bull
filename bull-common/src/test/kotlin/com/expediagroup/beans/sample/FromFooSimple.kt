@@ -46,9 +46,9 @@ class FromFooSimple {
 
     override fun toString(): String {
         return "FromFooSimple{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", active=" + isActive +
-                '}'
+            "name='" + name + '\'' +
+            ", id=" + id +
+            ", active=" + isActive +
+            '}'
     }
 }

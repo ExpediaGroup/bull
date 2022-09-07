@@ -144,9 +144,11 @@ class TransformerBytecodeAdapterTest {
         @DataProvider
         fun nonCompliantTransformers(): Array<Array<Object>> {
             return arrayOf(
-                arrayOf<Object>(TransformerPrivateCtor::class.java), arrayOf<Object>(
+                arrayOf<Object>(TransformerPrivateCtor::class.java),
+                arrayOf<Object>(
                     TransformerCtorWithArgs::class.java
-                ), arrayOf<Object>(TransformerCtorThrows::class.java)
+                ),
+                arrayOf<Object>(TransformerCtorThrows::class.java)
             )
         }
     }

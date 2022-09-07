@@ -16,8 +16,6 @@
  */
 package com.expediagroup.beans.generator.core.sample.immutable
 
-import kotlin.Throws
-
 /**
  * Sample class that represents an immutable destination type.
  */

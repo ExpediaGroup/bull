@@ -24,9 +24,9 @@ class MixedToFooMissingField(val name: String, val id: BigInteger, val fooField:
 
     override fun toString(): String {
         return "MixedToFooMissingField{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", fooField='" + fooField + '\'' +
-                '}'
+            "name='" + name + '\'' +
+            ", id=" + id +
+            ", fooField='" + fooField + '\'' +
+            '}'
     }
 }

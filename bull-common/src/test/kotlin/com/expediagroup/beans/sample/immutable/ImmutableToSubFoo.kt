@@ -30,11 +30,11 @@ class ImmutableToSubFoo(
 
     override fun toString(): String {
         return "ImmutableToSubFoo{" +
-                "name='" + name + '\'' +
-                ", phoneNumbers=" + phoneNumbers.contentToString() +
-                ", sampleMap=" + sampleMap +
-                ", complexMap=" + complexMap +
-                ", veryComplexMap=" + veryComplexMap +
-                '}'
+            "name='" + name + '\'' +
+            ", phoneNumbers=" + phoneNumbers.contentToString() +
+            ", sampleMap=" + sampleMap +
+            ", complexMap=" + complexMap +
+            ", veryComplexMap=" + veryComplexMap +
+            '}'
     }
 }

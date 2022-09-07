@@ -28,11 +28,11 @@ class FromSubFoo(
 
     override fun toString(): String {
         return "FromSubFoo{" +
-                "name='" + name + '\'' +
-                ", phoneNumbers=" + phoneNumbers.contentToString() +
-                ", sampleMap=" + sampleMap +
-                ", complexMap=" + complexMap +
-                ", veryComplexMap=" + veryComplexMap +
-                '}'
+            "name='" + name + '\'' +
+            ", phoneNumbers=" + phoneNumbers.contentToString() +
+            ", sampleMap=" + sampleMap +
+            ", complexMap=" + complexMap +
+            ", veryComplexMap=" + veryComplexMap +
+            '}'
     }
 }

@@ -78,8 +78,11 @@ class ReflectionUtilsTest {
      */
     @Test(dataProvider = "dataGetFieldValueTesting")
     fun testGetFieldValueWorksAsExpected(
-        testCaseDescription: String?, beanObject: Any?,
-        fieldName: String?, fieldType: Class<*>?, expectedResult: Any?
+        testCaseDescription: String?,
+        beanObject: Any?,
+        fieldName: String?,
+        fieldType: Class<*>?,
+        expectedResult: Any?
     ) {
         // GIVEN
 
@@ -181,7 +184,9 @@ class ReflectionUtilsTest {
         // GIVEN
         val mutableToFoo = createMutableToFoo(BigInteger.ZERO)
         val getFieldValueDirectAccessMethod = ReflectionUtils::class.java.getDeclaredMethod(
-            GET_FIELD_VALUE_DIRECT_ACCESS_METHOD_NAME, Any::class.java, String::class.java
+            GET_FIELD_VALUE_DIRECT_ACCESS_METHOD_NAME,
+            Any::class.java,
+            String::class.java
         )
         getFieldValueDirectAccessMethod.isAccessible = true
 
@@ -208,11 +213,14 @@ class ReflectionUtilsTest {
     )
     fun testGetFieldValueDirectAccessThrowsExceptionIfTheFieldDoesNotExists(
         testCaseDescription: String?,
-        beanObject: Any?, fieldName: String?
+        beanObject: Any?,
+        fieldName: String?
     ) {
         // GIVEN
         val getFieldValueDirectAccessMethod = ReflectionUtils::class.java.getDeclaredMethod(
-            GET_FIELD_VALUE_DIRECT_ACCESS_METHOD_NAME, Any::class.java, String::class.java
+            GET_FIELD_VALUE_DIRECT_ACCESS_METHOD_NAME,
+            Any::class.java,
+            String::class.java
         )
         getFieldValueDirectAccessMethod.isAccessible = true
 
@@ -354,7 +362,8 @@ class ReflectionUtilsTest {
             ),
             arrayOf(
                 "Tests that the method returns the prefix: 'is' in case the returned class is a primitive boolean",
-                FromFooSubClass::class.java.getDeclaredField(CHECK_FIELD_NAME).type, MethodPrefix.IS.prefix
+                FromFooSubClass::class.java.getDeclaredField(CHECK_FIELD_NAME).type,
+                MethodPrefix.IS.prefix
             )
         )
     }
@@ -367,7 +376,8 @@ class ReflectionUtilsTest {
      */
     @Test(dataProvider = "dataGetFieldAnnotationTesting")
     fun testGetFieldAnnotationWorksProperly(
-        testCaseDescription: String?, annotationToGet: Class<out Annotation?>?,
+        testCaseDescription: String?,
+        annotationToGet: Class<out Annotation?>?,
         expectNull: Boolean
     ) {
         // GIVEN

@@ -28,7 +28,7 @@ class FromFooSimpleBooleanField {
 
     override fun toString(): String {
         return "FromFooSimpleBooleanField{" +
-                "work=" + work +
-                '}'
+            "work=" + work +
+            '}'
     }
 }

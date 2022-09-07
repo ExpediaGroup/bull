@@ -26,10 +26,12 @@ class ImmutableToSubFooCustomAnnotation
  * Constructor.
  * @param name name
  */(
-    @param:ConstructorArg("name") val name: @NotNull String?, @param:ConstructorArg(
+    @param:ConstructorArg("name") val name: @NotNull String?,
+    @param:ConstructorArg(
         "phoneNumbers"
     ) val phoneNumbers: IntArray,
-    @param:ConstructorArg("sampleMap") val sampleMap: Map<String, String>, @param:ConstructorArg(
+    @param:ConstructorArg("sampleMap") val sampleMap: Map<String, String>,
+    @param:ConstructorArg(
         "complexMap"
     ) val complexMap: Map<String, List<String>>,
     @param:ConstructorArg("veryComplexMap") val veryComplexMap: Map<String, Map<String, String>>
@@ -37,11 +39,11 @@ class ImmutableToSubFooCustomAnnotation
 
     override fun toString(): String {
         return "ImmutableToSubFooCustomAnnotation{" +
-                "name='" + name + '\'' +
-                ", phoneNumbers=" + phoneNumbers.contentToString() +
-                ", sampleMap=" + sampleMap +
-                ", complexMap=" + complexMap +
-                ", veryComplexMap=" + veryComplexMap +
-                '}'
+            "name='" + name + '\'' +
+            ", phoneNumbers=" + phoneNumbers.contentToString() +
+            ", sampleMap=" + sampleMap +
+            ", complexMap=" + complexMap +
+            ", veryComplexMap=" + veryComplexMap +
+            '}'
     }
 }

@@ -22,8 +22,8 @@ class MixedToFooStaticField {
     var normalField: String? = null
     override fun toString(): String {
         return "MixedToFooStaticField{" +
-                "normalField='" + normalField + '\'' +
-                '}'
+            "normalField='" + normalField + '\'' +
+            '}'
     }
 
     companion object {

@@ -28,9 +28,9 @@ class ImmutableFlatToFoo(val name: String, val id: BigInteger, private val phone
 
     override fun toString(): String {
         return "ImmutableFlatToFoo{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", phoneNumbers=" + phoneNumbers.contentToString() +
-                '}'
+            "name='" + name + '\'' +
+            ", id=" + id +
+            ", phoneNumbers=" + phoneNumbers.contentToString() +
+            '}'
     }
 }

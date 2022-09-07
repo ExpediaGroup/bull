@@ -25,6 +25,7 @@ class MappingCodeFactoryTest {
      * The class to be tested.
      */
     private val underTest: MappingCodeFactory = MappingCodeFactory.newInstance()
+
     @Test
     fun shouldReturnAnInstanceForMutableDestination() {
         // WHEN

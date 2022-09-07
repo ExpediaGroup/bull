@@ -174,7 +174,9 @@ class ByteArrayConversionTest : AbstractConversionTest() {
                 )
             ),
             arrayOf(
-                "Tests that the method returns {0} if the value is false", false, byteArrayOf(
+                "Tests that the method returns {0} if the value is false",
+                false,
+                byteArrayOf(
                     FALSE_AS_BYTE
                 )
             )

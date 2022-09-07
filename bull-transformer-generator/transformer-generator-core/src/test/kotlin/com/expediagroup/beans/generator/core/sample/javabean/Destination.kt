@@ -16,8 +16,6 @@
  */
 package com.expediagroup.beans.generator.core.sample.javabean
 
-import kotlin.Throws
-
 /**
  * Sample class that represents a mutable destination type.
  */

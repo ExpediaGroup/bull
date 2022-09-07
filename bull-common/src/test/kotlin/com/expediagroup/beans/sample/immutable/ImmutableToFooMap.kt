@@ -28,11 +28,11 @@ class ImmutableToFooMap(
 
     override fun toString(): String {
         return "ImmutableToFooMap{" +
-                "sampleMap=" + sampleMap +
-                ", complexMap=" + complexMap +
-                ", veryComplexMap=" + veryComplexMap +
-                ", extremeComplexMap=" + extremeComplexMap +
-                ", unparametrizedMap=" + unparametrizedMap +
-                '}'
+            "sampleMap=" + sampleMap +
+            ", complexMap=" + complexMap +
+            ", veryComplexMap=" + veryComplexMap +
+            ", extremeComplexMap=" + extremeComplexMap +
+            ", unparametrizedMap=" + unparametrizedMap +
+            '}'
     }
 }

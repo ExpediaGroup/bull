@@ -28,11 +28,11 @@ class ImmutableToFooDiffTypesFields(
 
     override fun toString(): String {
         return "ImmutableToFooDiffTypesFields{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", list=" + list +
-                ", nestedObjectList=" + nestedObjectList +
-                ", nestedObject=" + nestedObject +
-                '}'
+            "name='" + name + '\'' +
+            ", id='" + id + '\'' +
+            ", list=" + list +
+            ", nestedObjectList=" + nestedObjectList +
+            ", nestedObject=" + nestedObject +
+            '}'
     }
 }

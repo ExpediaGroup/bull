@@ -16,8 +16,6 @@
  */
 package com.expediagroup.beans.generator.bytecode.sample
 
-import lombok.AccessLevel.PRIVATE
-
 /**
  * Non-compliant transformer implementation: constructor is not accessible.
  */

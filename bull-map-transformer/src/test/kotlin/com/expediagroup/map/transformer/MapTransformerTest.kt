@@ -71,7 +71,7 @@ class MapTransformerTest : AbstractTransformerTest() {
      * @param beanTransformer the bean transformer
      * @param <T> the key type
      * @param <K> the element type
-    </K></T> */
+     </K></T> */
     @Test(expectedExceptions = [IllegalArgumentException::class], dataProvider = "dataTransformMethodWithTwoArgument")
     fun <T, K> testTransformRaisesExceptionIfItsCalledWithNullParameter(
         testCaseDescription: String?,
@@ -106,7 +106,7 @@ class MapTransformerTest : AbstractTransformerTest() {
      * @param sourceMap the map to transform
      * @param <T> the key type
      * @param <K> the element type
-    </K></T> */
+     </K></T> */
     @Test(dataProvider = "dataMapTransformerObject")
     fun <T, K> testTransformWorksProperly(testCaseDescription: String?, sourceMap: Map<T, K>) {
         // GIVEN
@@ -201,7 +201,9 @@ class MapTransformerTest : AbstractTransformerTest() {
 
         // WHEN
         val actual = underTest.transform<FromFooSimple, Map<String, String>, MutableToFooSimple, Map<*, *>>(
-            EXTREME_COMPLEX_MAP, MutableToFooSimple::class.java, MutableMap::class.java as Class<Map<*, *>>
+            EXTREME_COMPLEX_MAP,
+            MutableToFooSimple::class.java,
+            MutableMap::class.java as Class<Map<*, *>>
         )
 
         // THEN

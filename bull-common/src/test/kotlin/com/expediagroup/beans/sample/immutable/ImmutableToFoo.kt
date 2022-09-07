@@ -48,11 +48,11 @@ open class ImmutableToFoo(
 
     override fun toString(): String {
         return "ImmutableToFoo{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", list=" + list +
-                ", nestedObjectList=" + nestedObjectList +
-                ", nestedObject=" + nestedObject +
-                '}'
+            "name='" + name + '\'' +
+            ", id=" + id +
+            ", list=" + list +
+            ", nestedObjectList=" + nestedObjectList +
+            ", nestedObject=" + nestedObject +
+            '}'
     }
 }

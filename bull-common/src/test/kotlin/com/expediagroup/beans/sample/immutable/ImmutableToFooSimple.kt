@@ -25,10 +25,10 @@ class ImmutableToFooSimple(val name: String?, val id: BigInteger?, private val i
 
     override fun toString(): String {
         return "ImmutableToFooSimple{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", active=" + isActive +
-                '}'
+            "name='" + name + '\'' +
+            ", id=" + id +
+            ", active=" + isActive +
+            '}'
     }
 
     override fun equals(o: Any?): Boolean {

@@ -27,10 +27,10 @@ class MutableToFooSubClass : MutableToFoo() {
     private var amount: BigDecimal? = null
     override fun toString(): String {
         return "MutableToFooSubClass{" +
-                "surname='" + surname + '\'' +
-                ", phone=" + phone +
-                ", check=" + isCheck +
-                ", amount=" + amount +
-                '}'
+            "surname='" + surname + '\'' +
+            ", phone=" + phone +
+            ", check=" + isCheck +
+            ", amount=" + amount +
+            '}'
     }
 }

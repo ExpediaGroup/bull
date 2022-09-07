@@ -32,11 +32,11 @@ class MixedToFooDiffFields(
 
     override fun toString(): String {
         return "MixedToFooDiffFields{" +
-                "name='" + name + '\'' +
-                ", identifier=" + identifier +
-                ", list=" + list +
-                ", nestedObjectList=" + nestedObjectList +
-                ", nestedObject=" + nestedObject +
-                '}'
+            "name='" + name + '\'' +
+            ", identifier=" + identifier +
+            ", list=" + list +
+            ", nestedObjectList=" + nestedObjectList +
+            ", nestedObject=" + nestedObject +
+            '}'
     }
 }

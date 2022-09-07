@@ -26,17 +26,23 @@ class ImmutableToFooSubClass
 /**
  * Constructor.
  */(
-    name: String?, id: BigInteger?, list: List<String>?,
-    nestedObjectList: List<ImmutableToSubFoo>?, nestedObject: ImmutableToSubFoo?, private val surname: @NotNull String?,
-    private val phone: @NotNull Int, private val isCheck: @NotNull Boolean, private val amount: @NotNull BigDecimal?
+    name: String?,
+    id: BigInteger?,
+    list: List<String>?,
+    nestedObjectList: List<ImmutableToSubFoo>?,
+    nestedObject: ImmutableToSubFoo?,
+    private val surname: @NotNull String?,
+    private val phone: @NotNull Int,
+    private val isCheck: @NotNull Boolean,
+    private val amount: @NotNull BigDecimal?
 ) : ImmutableToFoo(name, id, list, nestedObjectList, nestedObject) {
 
     override fun toString(): String {
         return "ImmutableToFooSubClass{" +
-                "surname='" + surname + '\'' +
-                ", phone=" + phone +
-                ", check=" + isCheck +
-                ", amount=" + amount +
-                '}'
+            "surname='" + surname + '\'' +
+            ", phone=" + phone +
+            ", check=" + isCheck +
+            ", amount=" + amount +
+            '}'
     }
 }

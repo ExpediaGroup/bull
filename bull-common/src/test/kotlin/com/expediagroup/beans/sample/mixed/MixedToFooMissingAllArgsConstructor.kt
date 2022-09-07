@@ -32,11 +32,11 @@ class MixedToFooMissingAllArgsConstructor(
 
     override fun toString(): String {
         return "MixedToFooMissingAllArgsConstructor{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", list=" + list +
-                ", nestedObjectList=" + nestedObjectList +
-                ", nestedObject=" + nestedObject +
-                '}'
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", list=" + list +
+            ", nestedObjectList=" + nestedObjectList +
+            ", nestedObject=" + nestedObject +
+            '}'
     }
 }

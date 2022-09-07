@@ -39,16 +39,16 @@ class MutableToFooAdvFields {
 
     override fun toString(): String {
         return "MutableToFooAdvFields{" +
-                "name=" + name +
-                ", age=" + age +
-                ", indexNumber='" + indexNumber + '\'' +
-                ", classType=" + classType +
-                ", locale=" + locale +
-                ", list=" + list +
-                ", collection=" + collection +
-                ", map=" + map +
-                ", supertypeMap=" + supertypeMap +
-                ", nestedObject=" + nestedObject +
-                '}'
+            "name=" + name +
+            ", age=" + age +
+            ", indexNumber='" + indexNumber + '\'' +
+            ", classType=" + classType +
+            ", locale=" + locale +
+            ", list=" + list +
+            ", collection=" + collection +
+            ", map=" + map +
+            ", supertypeMap=" + supertypeMap +
+            ", nestedObject=" + nestedObject +
+            '}'
     }
 }

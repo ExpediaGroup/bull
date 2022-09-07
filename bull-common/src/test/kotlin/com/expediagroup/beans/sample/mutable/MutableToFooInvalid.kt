@@ -30,11 +30,11 @@ class MutableToFooInvalid(
 
     override fun toString(): String {
         return "MutableToFooInvalid{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", list=" + list +
-                ", nestedObjectList=" + nestedObjectList +
-                ", nestedObject=" + nestedObject +
-                '}'
+            "name='" + name + '\'' +
+            ", id=" + id +
+            ", list=" + list +
+            ", nestedObjectList=" + nestedObjectList +
+            ", nestedObject=" + nestedObject +
+            '}'
     }
 }

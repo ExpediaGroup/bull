@@ -65,17 +65,21 @@ class TransformerSpecTest {
         return spec.superinterfaces
             .stream()
             .anyMatch { typeName ->
-                (typeName is ParameterizedTypeName
-                        && (typeName as ParameterizedTypeName).rawType.equals(I_TRANSFORMER))
+                (
+                    typeName is ParameterizedTypeName &&
+                        (typeName as ParameterizedTypeName).rawType.equals(I_TRANSFORMER)
+                    )
             }
     }
 
     private fun findTransformMethod(transformer: TypeSpec, sourceClass: Type, destinationClass: Type): MethodSpec {
         return transformer.methodSpecs.stream()
             .filter { methodSpec ->
-                (methodSpec.name.equals("transform")
-                        && methodSpec.parameters.get(0).type.equals(TypeName.get(sourceClass))
-                        && methodSpec.returnType.equals(TypeName.get(destinationClass)))
+                (
+                    methodSpec.name.equals("transform") &&
+                        methodSpec.parameters.get(0).type.equals(TypeName.get(sourceClass)) &&
+                        methodSpec.returnType.equals(TypeName.get(destinationClass))
+                    )
             }
             .findFirst()
             .orElse(null)

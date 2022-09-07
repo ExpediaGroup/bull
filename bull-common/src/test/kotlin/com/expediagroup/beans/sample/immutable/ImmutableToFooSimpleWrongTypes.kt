@@ -22,8 +22,8 @@ class ImmutableToFooSimpleWrongTypes(val id: Int, val name: String) {
 
     override fun toString(): String {
         return "ImmutableToFooSimpleWrongTypes{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}'
+            "id=" + id +
+            ", name='" + name + '\'' +
+            '}'
     }
 }

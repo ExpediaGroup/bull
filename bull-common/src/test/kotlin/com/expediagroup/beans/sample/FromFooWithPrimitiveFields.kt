@@ -29,12 +29,12 @@ class FromFooWithPrimitiveFields(
 
     override fun toString(): String {
         return "FromFooWithPrimitiveFields{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", age=" + age +
-                ", nestedObjectList=" + nestedObjectList +
-                ", list=" + list +
-                ", nestedObject=" + nestedObject +
-                '}'
+            "name='" + name + '\'' +
+            ", id=" + id +
+            ", age=" + age +
+            ", nestedObjectList=" + nestedObjectList +
+            ", list=" + list +
+            ", nestedObject=" + nestedObject +
+            '}'
     }
 }

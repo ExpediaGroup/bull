@@ -22,7 +22,7 @@ class ImmutableToFooSimpleBoolean(val work: Boolean) {
 
     override fun toString(): String {
         return "ImmutableToFooSimpleBoolean{" +
-                "work=" + work +
-                '}'
+            "work=" + work +
+            '}'
     }
 }

@@ -348,7 +348,8 @@ class ClassUtilsTest {
             ),
             arrayOf(
                 "Tests that the method returns the expected value if the class has private final fields",
-                CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, EXPECTED_MIXED_CLASS_TOTAL_NOT_FINAL_FIELDS
+                CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS,
+                EXPECTED_MIXED_CLASS_TOTAL_NOT_FINAL_FIELDS
             )
         )
     }
@@ -525,7 +526,9 @@ class ClassUtilsTest {
             ),
             arrayOf(
                 "Tests that the method returns the expected total number of fields when the skipStatic param is true and the class extends another class",
-                CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, true, EXPECTED_SUB_CLASS_PRIVATE_FIELDS
+                CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS,
+                true,
+                EXPECTED_SUB_CLASS_PRIVATE_FIELDS
             )
         )
     }
@@ -1302,7 +1305,8 @@ class ClassUtilsTest {
             ),
             arrayOf(
                 "Tests that the method raises a MissingMethodException if the class has a builder build method that does not return the parent class",
-                MutableToFooWithWrongBuilder::class.java, MutableToFooWithWrongBuilder.Builder::class.java
+                MutableToFooWithWrongBuilder::class.java,
+                MutableToFooWithWrongBuilder.Builder::class.java
             )
         )
     }
@@ -1353,7 +1357,9 @@ class ClassUtilsTest {
     private fun dataGetBuilderClassTesting(): Array<Array<Any>> {
         return arrayOf(
             arrayOf(
-                "Tests that the method returns the builder class", MutableToFooWithBuilder::class.java, Optional.of(
+                "Tests that the method returns the builder class",
+                MutableToFooWithBuilder::class.java,
+                Optional.of(
                     MutableToFooWithBuilder.Builder::class.java
                 )
             ),
@@ -1377,7 +1383,7 @@ class ClassUtilsTest {
      * @param <T> the object instance type
      * @return the class field with the given name
      * @throws NoSuchFieldException if the field is missing
-    </T> */
+     </T> */
     @Throws(NoSuchFieldException::class)
     private fun <T> getField(objectInstance: T, fieldName: String): Field {
         val field: Field = objectInstance!!::class.java.javaClass.getDeclaredField(fieldName)
