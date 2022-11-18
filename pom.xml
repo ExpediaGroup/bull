@@ -60,7 +60,7 @@
         <hibernate-validator.version>6.2.5.Final</hibernate-validator.version>
         <jboss-logging.version>3.5.0.Final</jboss-logging.version>
         <jboss-logging-modules.version>2.2.1.Final</jboss-logging-modules.version>
-        <slf4j-api.version>2.0.3</slf4j-api.version>
+        <slf4j-api.version>2.0.4</slf4j-api.version>
         <glassfish.javax.el.version>3.0.0</glassfish.javax.el.version>
         <!-- JaCoCo & Sonar properties -->
         <jacoco.version>0.8.8</jacoco.version>
