@@ -653,6 +653,31 @@ beanUtils.getTransformer()
     .transform(fromBean2, toBean);
 ```
 
+### Keep a field type value from the source object as is:
+
+Given:
+
+```java
+public class FromBean {                                     public class ToBean {                           
+   private final String name;                                  private String name;                   
+   private final DateTime dateTime;                            private final DateTime dateTime;              
+
+   // all args constructor                                     // constructor
+   // getters...                                               // getters and setters...
+}                                                           }
+```
+
+if you need to keep the value of a field type from the source object as it, you can add all the types you want to keep as they are
+by doing:
+
+```java
+ClassUtils.CUSTOM_SPECIAL_TYPES.add(DateTime.class);
+
+ToBean toBean = new ToBean();
+beanUtils.getTransformer()
+    .transform(fromBean, toBean);
+```
+
 ### Not existing field in the source object:
 In case the destination class has a field that does not exist in the source object, but it contains a getter method returning the value, the library should gets the field value from that method.
 ```java
