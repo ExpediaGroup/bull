@@ -53,15 +53,15 @@
         <lombok.version>1.18.24</lombok.version>
         <apache.commons-lang3.version>3.12.0</apache.commons-lang3.version>
         <!-- testing dependencies -->
-        <mockito-core.version>4.6.0</mockito-core.version>
-        <testng.version>7.6.0</testng.version>
+        <mockito-core.version>4.9.0</mockito-core.version>
+        <testng.version>7.6.1</testng.version>
         <assertj-core.version>3.23.1</assertj-core.version>
         <!-- validation dependencies -->
-        <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
+        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
         <jboss-logging.version>3.5.0.Final</jboss-logging.version>
         <jboss-logging-modules.version>2.2.1.Final</jboss-logging-modules.version>
-        <slf4j-api.version>1.7.36</slf4j-api.version>
-        <glassfish.javax.el.version>3.0.0</glassfish.javax.el.version>
+        <slf4j-api.version>2.0.5</slf4j-api.version>
+        <glassfish.jakarta.el.version>4.0.2</glassfish.jakarta.el.version>
         <!-- JaCoCo & Sonar properties -->
         <jacoco.version>0.8.8</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
@@ -75,20 +75,21 @@
         <!-- Required for coverall jdk >= 9 compatibility -->
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <!-- site properties -->
-        <wagon-ssh.version>3.5.1</wagon-ssh.version>
+        <wagon-ssh.version>3.5.2</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
         <github.global.server>github</github.global.server>
         <maven.site.plugin.version>3.12.0</maven.site.plugin.version>
         <!-- build settings -->
         <maven.required.version>[3.8.1,)</maven.required.version>
         <maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version>
-        <maven.javadoc-plugin.version>3.4.0</maven.javadoc-plugin.version>
-        <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
-        <maven.versions.plugin.version>2.11.0</maven.versions.plugin.version>
-        <puppycrawl.checkstyle.version>10.3</puppycrawl.checkstyle.version>
+        <maven.javadoc-plugin.version>3.4.1</maven.javadoc-plugin.version>
+        <maven.checkstyle.plugin.version>3.2.0</maven.checkstyle.plugin.version>
+        <maven.versions.plugin.version>2.13.0</maven.versions.plugin.version>
+        <puppycrawl.checkstyle.version>10.5.0</puppycrawl.checkstyle.version>
         <maven.release.plugin.version>3.0.0-M4</maven.release.plugin.version>
         <maven.nexus-staging.plugin.version>1.6.13</maven.nexus-staging.plugin.version>
         <maven.project.info.reports.plugin.version>3.1.2</maven.project.info.reports.plugin.version>
+        <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <!-- excludes the Record classes from being analyzed as they are not yet supported by the checkstyle plugin -->
         <checkstyle.exclusion>
@@ -110,7 +111,7 @@
         <connection>scm:git:git@github.com:ExpediaGroup/bull.git</connection>
         <developerConnection>scm:git:git@github.com:ExpediaGroup/bull.git</developerConnection>
         <url>https://github.com/ExpediaGroup/bull</url>
-        <tag>2.1.1-jdk11</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
@@ -162,8 +163,8 @@
             </dependency>
             <dependency>
                 <groupId>org.glassfish</groupId>
-                <artifactId>javax.el</artifactId>
-                <version>${glassfish.javax.el.version}</version>
+                <artifactId>jakarta.el</artifactId>
+                <version>${glassfish.jakarta.el.version}</version>
             </dependency>
             <!-- test dependencies -->
             <dependency>
@@ -690,6 +691,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>enforce-maven</id>

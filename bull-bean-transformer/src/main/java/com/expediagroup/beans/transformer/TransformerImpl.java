@@ -321,8 +321,9 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     private <T, K> Object[] getConstructorValuesFromFields(final T sourceObj, final Class<K> targetClass, final String breadcrumb) {
         final List<Field> declaredFields = classUtils.getDeclaredFields(targetClass, true);
+        K k = null;
         return declaredFields.stream()
-                .map(field -> getFieldValue(sourceObj, targetClass, field, breadcrumb))
+                .map(field -> getFieldValue(sourceObj, k, targetClass, field, breadcrumb))
                 .toArray(Object[]::new);
     }
 
@@ -336,7 +337,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private <T, K> void injectAllFields(final T sourceObj, final K targetObject, final String breadcrumb) {
-        final Class<?> targetObjectClass = targetObject.getClass();
+        final Class<K> targetObjectClass = (Class<K>) targetObject.getClass();
         injectFields(classUtils.getDeclaredFields(targetObjectClass, true), sourceObj, targetObject, targetObjectClass, breadcrumb);
     }
 
@@ -350,7 +351,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param <K> the target object type
      * @return a {@link Consumer} that sets the field value in the target object
      */
-    private <T, K> Consumer<Field> setFieldValue(final T sourceObj, final K targetObject, final Class targetObjectClass, final String breadcrumb) {
+    private <T, K> Consumer<Field> setFieldValue(final T sourceObj, final K targetObject, final Class<K> targetObjectClass, final String breadcrumb) {
         return field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObject, targetObjectClass, field, breadcrumb));
     }
 
@@ -364,7 +365,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
     private <T, K> void injectNotFinalFields(final T sourceObj, final K targetObject, final String breadcrumb) {
-        final Class<?> targetObjectClass = targetObject.getClass();
+        final Class<K> targetObjectClass = (Class<K>) targetObject.getClass();
         injectFields(classUtils.getNotFinalFields(targetObjectClass, true), sourceObj, targetObject, targetObjectClass, breadcrumb);
     }
 
@@ -379,26 +380,10 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param <K> the target object type
      * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
      */
-    private <T, K> void injectFields(final List<Field> fieldList, final T sourceObj, final K targetObject, final Class<?> targetObjectClass, final String breadcrumb) {
+    private <T, K> void injectFields(final List<Field> fieldList, final T sourceObj, final K targetObject, final Class<K> targetObjectClass, final String breadcrumb) {
         fieldList
                 //.parallelStream()
                 .forEach(setFieldValue(sourceObj, targetObject, targetObjectClass, breadcrumb));
-    }
-
-     /**
-     * Retrieves the value of a field. In case it is not a primitive type it recursively inject the values inside the object.
-     * @param sourceObj sourceObj the source object
-     * @param targetClass the destination object class
-     * @param field The field for which the value has to be retrieved
-     * @param breadcrumb  the full path of the current field starting from his ancestor
-     * @param <T> the sourceObj object type
-     * @param <K> the target object type
-     * @return the field value
-     * @throws InvalidBeanException {@link InvalidBeanException} if an error occurs while retrieving the value
-     */
-    private <T, K> Object getFieldValue(final T sourceObj, final Class<K> targetClass, final Field field, final String breadcrumb) {
-        K k = null;
-        return getFieldValue(sourceObj, k, targetClass, field, breadcrumb);
     }
 
     private <T, K> Object getFieldValue(final T sourceObj, final K targetObject, final Class<K> targetClass, final Field field, final String breadcrumb) {
@@ -412,7 +397,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param sourceFieldName sourceFieldName the field name in the source object (if different from the target one)
      * @param targetClass the destination object class
      * @param field The field for which the value has to be retrieved
-     * @param breadcrumb  the full path of the current field starting from his ancestor
+     * @param breadcrumb the full path of the current field starting from his ancestor
      * @param <T> the sourceObj object type
      * @param <K> the target object type
      * @return the field value
@@ -448,16 +433,24 @@ public class TransformerImpl extends AbstractBeanTransformer {
         return fieldValue;
     }
 
+    /**
+     * Gets the existing value for a given field in the target object (if any) otherwise it gets the default one.
+     * @param targetObject the destination object instance
+     * @param fieldBreadcrumb the full path of the current field starting from his ancestor
+     * @param fieldType the field class
+     * @param <K> the target object type
+     * @return the existing value for a given field in the target object (if any) otherwise it gets the default one.
+     */
     private <K> Object getDefaultFieldValue(final K targetObject, final String fieldBreadcrumb, final Class<?> fieldType) {
         return Optional.ofNullable(targetObject)
                 .map(to -> {
-                    Object val;
+                    Object fieldValue;
                     try {
-                        val = reflectionUtils.getFieldValue(to, fieldBreadcrumb, fieldType);
+                        fieldValue = reflectionUtils.getFieldValue(to, fieldBreadcrumb, fieldType);
                     } catch (Exception e) {
-                        val = defaultValue(fieldType);
+                        fieldValue = defaultValue(fieldType);
                     }
-                    return val;
+                    return fieldValue;
                 })
                 .orElseGet(() -> defaultValue(fieldType));
     }

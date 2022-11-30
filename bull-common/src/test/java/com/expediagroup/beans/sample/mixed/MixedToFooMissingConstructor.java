@@ -17,7 +17,7 @@ package com.expediagroup.beans.sample.mixed;
 
 import java.math.BigInteger;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
