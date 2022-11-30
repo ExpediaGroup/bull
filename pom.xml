@@ -57,11 +57,11 @@
         <testng.version>7.6.1</testng.version>
         <assertj-core.version>3.23.1</assertj-core.version>
         <!-- validation dependencies -->
-        <hibernate-validator.version>6.2.5.Final</hibernate-validator.version>
+        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
         <jboss-logging.version>3.5.0.Final</jboss-logging.version>
         <jboss-logging-modules.version>2.2.1.Final</jboss-logging-modules.version>
         <slf4j-api.version>2.0.5</slf4j-api.version>
-        <glassfish.javax.el.version>3.0.0</glassfish.javax.el.version>
+        <glassfish.jakarta.el.version>4.0.2</glassfish.jakarta.el.version>
         <!-- JaCoCo & Sonar properties -->
         <jacoco.version>0.8.8</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
@@ -163,8 +163,8 @@
             </dependency>
             <dependency>
                 <groupId>org.glassfish</groupId>
-                <artifactId>javax.el</artifactId>
-                <version>${glassfish.javax.el.version}</version>
+                <artifactId>jakarta.el</artifactId>
+                <version>${glassfish.jakarta.el.version}</version>
             </dependency>
             <!-- test dependencies -->
             <dependency>

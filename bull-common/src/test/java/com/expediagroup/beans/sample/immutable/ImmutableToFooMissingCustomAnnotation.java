@@ -15,7 +15,7 @@
  */
 package com.expediagroup.beans.sample.immutable;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import com.expediagroup.transformer.annotation.ConstructorArg;
 
