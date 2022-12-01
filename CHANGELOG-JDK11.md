@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [2.1.2-jdk11] 2022.11.29
+### [2.1.2-jdk11] 2022.12.01
 * Adds the Bill of Materials (BOM) module
 * Replaces javax with jakarta
 * Add the possibility to customize the special types avoiding any transformation on them
