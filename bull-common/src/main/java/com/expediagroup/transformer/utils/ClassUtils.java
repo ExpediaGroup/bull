@@ -98,8 +98,7 @@ public final class ClassUtils {
      * Primitive types list.
      */
     private static final Set<Class<?>> PRIMITIVE_TYPES = of(String.class, Boolean.class, Integer.class, Long.class,
-            Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class, Void.class,
-            Date.class);
+            Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class, Void.class);
 
     /**
      * Special type list.
@@ -176,7 +175,7 @@ public final class ClassUtils {
      */
     public boolean isSpecialType(final Class<?> clazz) {
         return clazz.isSynthetic() || SPECIAL_TYPES.stream()
-                .anyMatch(specialTypeClazz -> specialTypeClazz.isAssignableFrom(clazz) || clazz.equals(specialTypeClazz))
+                .anyMatch(specialTypeClazz -> clazz.equals(specialTypeClazz) || specialTypeClazz.isAssignableFrom(clazz))
                 || isCustomSpecialType(clazz);
     }
 
@@ -187,7 +186,7 @@ public final class ClassUtils {
      */
     private boolean isCustomSpecialType(final Class<?> clazz) {
         return CUSTOM_SPECIAL_TYPES.stream()
-                .anyMatch(customTypeClazz -> customTypeClazz.isAssignableFrom(clazz) || clazz.equals(customTypeClazz));
+                .anyMatch(customTypeClazz -> clazz.equals(customTypeClazz) || customTypeClazz.isAssignableFrom(clazz));
     }
 
     /**
