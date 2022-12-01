@@ -52,6 +52,7 @@ import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -79,6 +80,11 @@ public final class ClassUtils {
     public static final String BUILD_METHOD_NAME = "build";
 
     /**
+     * Custom special types.
+     */
+    public static final Set<Class<?>> CUSTOM_SPECIAL_TYPES = new HashSet<>();
+
+    /**
      * Class nullability error message constant.
      */
     private static final String CLAZZ_CANNOT_BE_NULL = "clazz cannot be null!";
@@ -92,7 +98,12 @@ public final class ClassUtils {
      * Primitive types list.
      */
     private static final Set<Class<?>> PRIMITIVE_TYPES = of(String.class, Boolean.class, Integer.class, Long.class,
-           Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class, Void.class);
+            Double.class, BigDecimal.class, BigInteger.class, Short.class, Float.class, Character.class, Byte.class, Void.class);
+
+    /**
+     * Special type list.
+     */
+    private static final Set<Class<?>> SPECIAL_TYPES = of(Currency.class, Locale.class, Temporal.class, Date.class, Properties.class);
 
     /**
      * Method Handles lookup.
@@ -163,13 +174,19 @@ public final class ClassUtils {
      * @return true if is special type, false otherwise
      */
     public boolean isSpecialType(final Class<?> clazz) {
-        final String cacheKey = "isSpecial-" + clazz.getName();
-        return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
-            final Boolean res = clazz.equals(Currency.class) || clazz.equals(Locale.class) || Temporal.class.isAssignableFrom(clazz)
-                    || clazz.equals(Date.class) || clazz.equals(Properties.class) || clazz.isSynthetic();
-            CACHE_MANAGER.cacheObject(cacheKey, res);
-            return res;
-        });
+        return clazz.isSynthetic() || SPECIAL_TYPES.stream()
+                .anyMatch(specialTypeClazz -> clazz.equals(specialTypeClazz) || specialTypeClazz.isAssignableFrom(clazz))
+                || isCustomSpecialType(clazz);
+    }
+
+    /**
+     * Checks if the given class is a custom provided special type.
+     * @param clazz the class to check
+    * @return true if is special type, false otherwise
+     */
+    private boolean isCustomSpecialType(final Class<?> clazz) {
+        return CUSTOM_SPECIAL_TYPES.stream()
+                .anyMatch(customTypeClazz -> clazz.equals(customTypeClazz) || customTypeClazz.isAssignableFrom(clazz));
     }
 
     /**

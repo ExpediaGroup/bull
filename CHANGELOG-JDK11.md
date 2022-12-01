@@ -2,8 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-### [2.1.2-jdk11] 2022.07.06
+### [2.1.3-jdk11] 2022.12.01
 * Adds the Bill of Materials (BOM) module
+* Replaces javax with jakarta
+* Add the possibility to customize the special types avoiding any transformation on them
 
 ### [2.1.1-jdk11] 2022.06.09
 * Fixes an issue that was preventing skipping the injection for a given field. For more info about the feature see [here](README.md#skip-transformation-on-a-given-set-of-fields).

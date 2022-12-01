@@ -41,8 +41,11 @@ import java.util.Properties;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
+import org.joda.time.base.BaseLocal;
 import org.mockito.InjectMocks;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -179,13 +182,42 @@ public class ClassUtilsTest {
      */
     @DataProvider
     private Object[][] dataSpecialTypeObjectTesting() {
+        ClassUtils.CUSTOM_SPECIAL_TYPES.clear();
         return new Object[][] {
                 {"Tests that the method returns true if the class is a special type object", Locale.class, true},
                 {"Tests that the method returns false if the class is not a special type object", BigDecimal.class, false},
                 {"Tests that the method returns true if the class is an instance of Temporal interface", Instant.class, true},
                 {"Tests that the method returns true if the class is an instance of Properties class", Properties.class, true},
                 {"Tests that the method returns true if the class is an instance of Currency class", Currency.class, true},
-                {"Tests that the method returns true if the class is an instance of Date class", Date.class, true}
+                {"Tests that the method returns true if the class is an instance of Date class", Date.class, true},
+                {"Tests that the method returns false if the class is an instance of DateTime class", DateTime.class, false}
+        };
+    }
+
+    /**
+     * Tests that the method {@code isSpecialType} returns the expected value in case of custom special types.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataCustomSpecialTypeObjectTesting")
+    public void testIsCustomSpecialTypeWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.isSpecialType(testClass);
+
+        // THEN
+        assertThat(actual).isEqualTo(expectedResult);
+    }
+
+    @DataProvider
+    private Object[][] dataCustomSpecialTypeObjectTesting() {
+        ClassUtils.CUSTOM_SPECIAL_TYPES.addAll(List.of(FromFooSimple.class, BaseLocal.class));
+        return new Object[][] {
+                {"Tests that the method returns true if the class is an instance of DateTime class", LocalDateTime.class, true},
+                {"Tests that the method returns false if the class is an instance of Properties class", ImmutableToFoo.class, false},
+                {"Tests that the method returns true if the class is a custom special type object", FromFooSimple.class, true}
         };
     }
 
