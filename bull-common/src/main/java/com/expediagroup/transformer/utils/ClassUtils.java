@@ -175,7 +175,7 @@ public final class ClassUtils {
      */
     public boolean isSpecialType(final Class<?> clazz) {
         return clazz.isSynthetic() || SPECIAL_TYPES.stream()
-                .anyMatch(specialTypeClazz -> specialTypeClazz.isAssignableFrom(clazz) || clazz.equals(specialTypeClazz))
+                .anyMatch(specialTypeClazz -> clazz.equals(specialTypeClazz) || specialTypeClazz.isAssignableFrom(clazz))
                 || isCustomSpecialType(clazz);
     }
 
@@ -186,7 +186,7 @@ public final class ClassUtils {
      */
     private boolean isCustomSpecialType(final Class<?> clazz) {
         return CUSTOM_SPECIAL_TYPES.stream()
-                .anyMatch(customTypeClazz -> customTypeClazz.isAssignableFrom(clazz) || clazz.equals(customTypeClazz));
+                .anyMatch(customTypeClazz -> clazz.equals(customTypeClazz) || customTypeClazz.isAssignableFrom(clazz));
     }
 
     /**
