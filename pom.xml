@@ -21,7 +21,7 @@
     <groupId>com.expediagroup.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/ExpediaGroup/bull</url>
-    <version>2.1.2-jdk11-SNAPSHOT</version>
+    <version>2.1.2-jdk11</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -112,7 +112,7 @@
         <connection>scm:git:git@github.com:ExpediaGroup/bull.git</connection>
         <developerConnection>scm:git:git@github.com:ExpediaGroup/bull.git</developerConnection>
         <url>https://github.com/ExpediaGroup/bull</url>
-        <tag>HEAD</tag>
+        <tag>2.1.2-jdk11</tag>
     </scm>
 
     <distributionManagement>
