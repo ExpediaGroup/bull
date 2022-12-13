@@ -61,7 +61,7 @@
         <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
         <jboss-logging.version>3.5.0.Final</jboss-logging.version>
         <jboss-logging-modules.version>2.2.1.Final</jboss-logging-modules.version>
-        <slf4j-api.version>2.0.5</slf4j-api.version>
+        <slf4j-api.version>2.0.6</slf4j-api.version>
         <glassfish.jakarta.el.version>4.0.2</glassfish.jakarta.el.version>
         <!-- JaCoCo & Sonar properties -->
         <jacoco.version>0.8.8</jacoco.version>
