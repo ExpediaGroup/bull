@@ -83,7 +83,7 @@
         <!-- build settings -->
         <maven.required.version>[3.8.1,)</maven.required.version>
         <maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version>
-        <maven.javadoc-plugin.version>3.4.1</maven.javadoc-plugin.version>
+        <maven.javadoc-plugin.version>3.5.0</maven.javadoc-plugin.version>
         <maven.checkstyle.plugin.version>3.2.1</maven.checkstyle.plugin.version>
         <maven.versions.plugin.version>2.14.2</maven.versions.plugin.version>
         <puppycrawl.checkstyle.version>10.7.0</puppycrawl.checkstyle.version>
