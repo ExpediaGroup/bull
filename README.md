@@ -1071,4 +1071,4 @@ For any question, proposal, or help, please refer to the slack channel: [#bull](
 
 This project is available under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
 
-Copyright 2018-2021 Expedia Inc.
+Copyright 2018-2023 Expedia Inc.
