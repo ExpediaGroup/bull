@@ -503,7 +503,7 @@
                             <configuration>
                                 <configLocation>config/checkstyle/rules.xml</configLocation>
                                 <suppressionsLocation>config/checkstyle/suppression.xml</suppressionsLocation>
-                                <encoding>UTF-8</encoding>
+                                <inputEncoding>UTF-8</inputEncoding>
                                 <consoleOutput>true</consoleOutput>
                                 <failsOnError>true</failsOnError>
                                 <skip>${checkstyle.check.skip}</skip>
