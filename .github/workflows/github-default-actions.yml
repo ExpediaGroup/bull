@@ -15,7 +15,7 @@ jobs:
       - name: "Cache Maven repository"
         uses: actions/cache@v3.3.1
         with:
-          path: ~/.m2
+          path: $HOME/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: "JDK set-up"
@@ -34,7 +34,7 @@ jobs:
       - name: "Cache Maven repository"
         uses: actions/cache@v3.3.1
         with:
-          path: ~/.m2
+          path: $HOME/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: "Extract build information"
@@ -71,7 +71,7 @@ jobs:
       - name: "Cache Maven repository"
         uses: actions/cache@v3.3.1
         with:
-          path: ~/.m2
+          path: $HOME/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: "JDK set-up"
