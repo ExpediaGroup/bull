@@ -86,7 +86,7 @@
         <maven.javadoc-plugin.version>3.5.0</maven.javadoc-plugin.version>
         <maven.checkstyle.plugin.version>3.3.0</maven.checkstyle.plugin.version>
         <maven.versions.plugin.version>2.16.0</maven.versions.plugin.version>
-        <puppycrawl.checkstyle.version>10.12.2</puppycrawl.checkstyle.version>
+        <puppycrawl.checkstyle.version>10.12.3</puppycrawl.checkstyle.version>
         <maven.release.plugin.version>3.0.0-M4</maven.release.plugin.version>
         <maven.nexus-staging.plugin.version>1.6.13</maven.nexus-staging.plugin.version>
         <maven.project.info.reports.plugin.version>3.1.2</maven.project.info.reports.plugin.version>
