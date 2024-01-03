@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.1.4-jdk11] 2024.01.03
+* Bumps to the latest version available all the project dependencies 
+
 ### [2.1.3-jdk11] 2022.12.01
 * Adds the Bill of Materials (BOM) module
 * Replaces javax with jakarta

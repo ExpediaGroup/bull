@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.2.4] 2024.01.03
+* Bumps to the latest version available all the project dependencies
+
 ### [2.2.3] 2022.12.01
 * Replaces javax with jakarta
 * Add the possibility to customize the special types avoiding any transformation on them
