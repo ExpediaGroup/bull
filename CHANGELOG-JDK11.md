@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.1.4-jdk11] 2024.01.03
+* Bumps to the latest version available all the project dependencies 
+
 ### [2.1.3-jdk11] 2022.12.01
 * Adds the Bill of Materials (BOM) module
 * Replaces javax with jakarta
@@ -119,11 +122,11 @@ All notable changes to this project will be documented in this file.
 * Module `bean-utils-library` has been relocated into `bull-bean-transformer`.
 * The following classes has been deprecated, please find below the complete list and the new one to be used:
 
-  | Deprecated | **New one** |
-        | :----------- | :----------- |
-  | `com.expediagroup.beans.model.FieldMapping` | `FieldMapping` |
+  | Deprecated                                      | **New one**        |
+  |:------------------------------------------------|:-------------------|
+  | `com.expediagroup.beans.model.FieldMapping`     | `FieldMapping`     |
   | `com.expediagroup.beans.model.FieldTransformer` | `FieldTransformer` |
-  | `com.expediagroup.beans.Transformer` | `Transformer` |
+  | `com.expediagroup.beans.Transformer`            | `Transformer`      |
 
 ### [1.5.0] 2019.08.06
 #### Added

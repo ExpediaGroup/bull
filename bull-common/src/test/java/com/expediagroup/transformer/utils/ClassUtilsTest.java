@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2024 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -697,7 +697,6 @@ public class ClassUtilsTest {
     public void testAllParameterAnnotatedWithWorksAsExpected(final String testCaseDescription, final Class<? extends Annotation> annotationClass, final boolean expectedResult) {
         // GIVEN
         Constructor<?> constructor = ImmutableToFooCustomAnnotation.class.getConstructors()[0];
-
 
         // WHEN
         boolean actual = underTest.allParameterAnnotatedWith(constructor, annotationClass);

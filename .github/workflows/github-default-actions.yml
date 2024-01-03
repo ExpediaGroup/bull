@@ -11,15 +11,15 @@ jobs:
     name: "Build"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: "Cache Maven repository"
-        uses: actions/cache@v3.0.4
+        uses: actions/cache@v3.3.2
         with:
-          path: ~/.m2
+          path: $HOME/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: "JDK set-up"
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '15'
           distribution: 'adopt'
@@ -30,11 +30,11 @@ jobs:
     name: "Test and quality check"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: "Cache Maven repository"
-        uses: actions/cache@v3.0.4
+        uses: actions/cache@v3.3.2
         with:
-          path: ~/.m2
+          path: $HOME/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: "Extract build information"
@@ -42,24 +42,24 @@ jobs:
         run: |
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
       - name: "JDK set-up"
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '15'
           distribution: 'adopt'
       - name: "Test and Quality check"
         uses: nick-invision/retry@v2
-        with:
-          max_attempts: 3
-          timeout_minutes: 5
-          retry_on: error
-          command: |
-            mvn verify jacoco:report-aggregate coveralls:report -D repoToken=$COVERALLS_TOKEN sonar:sonar -D sonar.projectKey=BULL -D sonar.organization=$SONAR_ORGANIZATION -D sonar.host.url=https://sonarcloud.io -D sonar.login=$SONAR_TOKEN -D sonar.branch.name=$SOURCE_BRANCH -P compatibility-mode
         env:
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
-          COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+          COVERALLS_IO_TOKEN: ${{ secrets.COVERALLS_IO_TOKEN }}
+        with:
+          max_attempts: 3
+          timeout_minutes: 10
+          retry_on: error
+          command: |
+            mvn verify jacoco:report-aggregate coveralls:report -D repoToken=$COVERALLS_IO_TOKEN sonar:sonar -D sonar.projectKey=BULL -D sonar.organization=$SONAR_ORGANIZATION -D sonar.host.url=https://sonarcloud.io -D sonar.login=$SONAR_TOKEN -D sonar.branch.name=$SOURCE_BRANCH -P compatibility-mode
   security-check:
     name: "Security check"
     runs-on: ubuntu-latest
@@ -69,24 +69,24 @@ jobs:
       security-events: write
     steps:
       - name: "Cache Maven repository"
-        uses: actions/cache@v3.0.4
+        uses: actions/cache@v3.3.2
         with:
-          path: ~/.m2
+          path: $HOME/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: "JDK set-up"
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '15'
           distribution: 'adopt'
       - name: "Checkout repository"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       # Initializes the CodeQL tools for scanning.
       - name: "Initialize CodeQL"
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3
         with:
           languages: 'java'
       - run: |
           mvn clean install -B -DskipTests -P fast
       - name: "Perform Analysis"
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3

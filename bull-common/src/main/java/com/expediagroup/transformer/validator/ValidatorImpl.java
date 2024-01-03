@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2024 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,9 +102,11 @@ public class ValidatorImpl implements Validator {
         var cacheKey = "BeanValidator";
         return cacheManager.getFromCache(cacheKey, jakarta.validation.Validator.class)
                 .orElseGet(() -> {
-                    var validator = buildDefaultValidatorFactory().getValidator();
-                    cacheManager.cacheObject(cacheKey, validator);
-                    return validator;
+                    try (var validatorFactory = buildDefaultValidatorFactory()) {
+                        var validator = validatorFactory.getValidator();
+                        cacheManager.cacheObject(cacheKey, validator);
+                        return validator;
+                    }
                 });
     }
 }
