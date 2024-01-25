@@ -71,8 +71,8 @@
         <jacoco.branchRatio>0.89</jacoco.branchRatio>
         <jacoco.complexityRatio>0.91</jacoco.complexityRatio>
         <jacoco.lineRatio>0.98</jacoco.lineRatio>
-        <sonar.coverage.exclusions>**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*
-        </sonar.coverage.exclusions>
+        <sonar.coverage.exclusions>**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*</sonar.coverage.exclusions>
+        <sonar.scanner.force-deprecated-java-version>true</sonar.scanner.force-deprecated-java-version>
         <!-- Required for coverall jdk >= 9 compatibility -->
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <!-- site properties -->
