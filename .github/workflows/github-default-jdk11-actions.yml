@@ -47,7 +47,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: "Test and Quality check"
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@v3
         env:
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
