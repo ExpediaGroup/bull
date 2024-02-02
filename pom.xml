@@ -63,7 +63,7 @@
         <jboss-logging-modules.version>2.2.1.Final</jboss-logging-modules.version>
         <slf4j-api.version>2.0.11</slf4j-api.version>
         <glassfish.jakarta.el.version>4.0.2</glassfish.jakarta.el.version>
-        <!-- JaCoCo & Sonar properties -->
+        <!-- JaCoCo properties -->
         <jacoco.version>0.8.11</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
         <jacoco.instructionRatio>0.98</jacoco.instructionRatio>
@@ -71,8 +71,6 @@
         <jacoco.branchRatio>0.89</jacoco.branchRatio>
         <jacoco.complexityRatio>0.91</jacoco.complexityRatio>
         <jacoco.lineRatio>0.98</jacoco.lineRatio>
-        <sonar.coverage.exclusions>**/AbstractTransformer.*,**/model/*,**/constant/*,**/error/*,**/annotation/*</sonar.coverage.exclusions>
-        <sonar.scanner.force-deprecated-java-version>true</sonar.scanner.force-deprecated-java-version>
         <!-- Required for coverall jdk >= 9 compatibility -->
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <!-- site properties -->

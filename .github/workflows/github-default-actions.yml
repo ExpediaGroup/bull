@@ -49,8 +49,6 @@ jobs:
       - name: "Test and Quality check"
         uses: nick-invision/retry@v3
         env:
-          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
           COVERALLS_IO_TOKEN: ${{ secrets.COVERALLS_IO_TOKEN }}
