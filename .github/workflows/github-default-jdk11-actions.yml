@@ -47,10 +47,8 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: "Test and Quality check"
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@v3
         env:
-          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
           COVERALLS_IO_TOKEN: ${{ secrets.COVERALLS_IO_TOKEN }}
@@ -59,7 +57,7 @@ jobs:
           timeout_minutes: 10
           retry_on: error
           command: |
-            mvn verify jacoco:report-aggregate coveralls:report -D repoToken=$COVERALLS_IO_TOKEN sonar:sonar -D sonar.projectKey=BULL -D sonar.organization=$SONAR_ORGANIZATION -D sonar.host.url=https://sonarcloud.io -D sonar.login=$SONAR_TOKEN -D sonar.branch.name=$SOURCE_BRANCH -P compatibility-mode
+            mvn verify jacoco:report-aggregate coveralls:report -D repoToken=$COVERALLS_IO_TOKEN -P compatibility-mode
   security-check:
     name: "Security check"
     runs-on: ubuntu-latest

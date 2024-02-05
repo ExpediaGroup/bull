@@ -56,7 +56,6 @@
             <item name="Samples" href="/converter/samples.html" />
         </menu>
         <menu name="Quality check">
-            <item name="Sonar Cloud" href="https://sonarcloud.io/dashboard?id=BULL" />
             <item name="Coveralls" href="https://coveralls.io/github/ExpediaGroup/bull" />
         </menu>
         <menu name="Related Articles">
