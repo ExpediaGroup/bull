@@ -54,7 +54,7 @@
         <apache.commons-lang3.version>3.14.0</apache.commons-lang3.version>
         <!-- testing dependencies -->
         <mockito-core.version>4.11.0</mockito-core.version>
-        <testng.version>7.10.1</testng.version>
+        <testng.version>7.10.2</testng.version>
         <assertj-core.version>3.25.3</assertj-core.version>
         <joda-time.version>2.12.7</joda-time.version>
         <!-- validation dependencies -->
