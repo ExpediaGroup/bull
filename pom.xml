@@ -30,7 +30,7 @@
         incredibly fast. It's the only library able to transform Mutable, Immutable and Mixed bean without any custom
         configuration.
     </description>
-
+<!--Temp-->
     <parent>
         <groupId>com.expediagroup</groupId>
         <artifactId>eg-oss-parent</artifactId>
