@@ -60,7 +60,7 @@
         <!-- validation dependencies -->
         <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
         <jboss-logging.version>3.6.0.Final</jboss-logging.version>
-        <jboss-logging-modules.version>3.0.0.Final</jboss-logging-modules.version>
+        <jboss-logging-modules.version>3.0.1.Final</jboss-logging-modules.version>
         <slf4j-api.version>2.0.13</slf4j-api.version>
         <glassfish.jakarta.el.version>4.0.2</glassfish.jakarta.el.version>
         <!-- JaCoCo properties -->
