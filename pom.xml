@@ -77,7 +77,7 @@
         <wagon-ssh.version>3.5.3</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
         <github.global.server>github</github.global.server>
-        <maven.site.plugin.version>3.12.1</maven.site.plugin.version>
+        <maven.site.plugin.version>3.20.0</maven.site.plugin.version>
         <!-- build settings -->
         <maven.required.version>[3.8.1,)</maven.required.version>
         <maven.gpg.plugin.version>3.2.5</maven.gpg.plugin.version>
