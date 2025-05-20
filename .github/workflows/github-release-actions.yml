@@ -31,8 +31,8 @@ jobs:
       - name: "JDK set-up"
         uses: actions/setup-java@v4
         with:
-          java-version: '15'
-          distribution: 'adopt'
+          java-version: '17'
+          distribution: 'adoptium'
           server-id: oss-sonatype # Value of the distributionManagement/repository/id field of the pom.xml
           server-username: SONATYPE_USERNAME # env variable for username in deploy
           server-password: SONATYPE_PASSWORD # env variable for token in deploy

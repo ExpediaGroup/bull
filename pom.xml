@@ -47,7 +47,7 @@
     </modules>
 
     <properties>
-        <jdk.version>22</jdk.version>
+        <jdk.version>17</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
         <lombok.version>1.18.38</lombok.version>
