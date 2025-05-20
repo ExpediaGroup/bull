@@ -50,21 +50,21 @@
         <jdk.version>22</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
-        <lombok.version>1.18.32</lombok.version>
-        <apache.commons-lang3.version>3.14.0</apache.commons-lang3.version>
+        <lombok.version>1.18.38</lombok.version>
+        <apache.commons-lang3.version>3.17.0</apache.commons-lang3.version>
         <!-- testing dependencies -->
         <mockito-core.version>4.11.0</mockito-core.version>
-        <testng.version>7.10.2</testng.version>
-        <assertj-core.version>3.26.0</assertj-core.version>
-        <joda-time.version>2.12.7</joda-time.version>
+        <testng.version>7.11.0</testng.version>
+        <assertj-core.version>3.27.3</assertj-core.version>
+        <joda-time.version>2.14.0</joda-time.version>
         <!-- validation dependencies -->
         <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
-        <jboss-logging.version>3.6.0.Final</jboss-logging.version>
-        <jboss-logging-modules.version>2.2.1.Final</jboss-logging-modules.version>
-        <slf4j-api.version>2.0.13</slf4j-api.version>
+        <jboss-logging.version>3.6.1.Final</jboss-logging.version>
+        <jboss-logging-modules.version>3.0.4.Final</jboss-logging-modules.version>
+        <slf4j-api.version>2.0.17</slf4j-api.version>
         <glassfish.jakarta.el.version>4.0.2</glassfish.jakarta.el.version>
         <!-- JaCoCo properties -->
-        <jacoco.version>0.8.12</jacoco.version>
+        <jacoco.version>0.8.13</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
         <jacoco.instructionRatio>0.98</jacoco.instructionRatio>
         <jacoco.methodRatio>1.0</jacoco.methodRatio>
@@ -77,19 +77,19 @@
         <wagon-ssh.version>3.5.3</wagon-ssh.version>
         <github.site.maven.plugin.version>0.12</github.site.maven.plugin.version>
         <github.global.server>github</github.global.server>
-        <maven.site.plugin.version>3.12.1</maven.site.plugin.version>
+        <maven.site.plugin.version>3.21.0</maven.site.plugin.version>
         <!-- build settings -->
         <maven.required.version>[3.8.1,)</maven.required.version>
-        <maven.gpg.plugin.version>3.2.4</maven.gpg.plugin.version>
-        <maven.javadoc-plugin.version>3.6.3</maven.javadoc-plugin.version>
-        <maven.checkstyle.plugin.version>3.3.1</maven.checkstyle.plugin.version>
-        <maven.versions.plugin.version>2.16.2</maven.versions.plugin.version>
-        <puppycrawl.checkstyle.version>10.17.0</puppycrawl.checkstyle.version>
+        <maven.gpg.plugin.version>3.2.7</maven.gpg.plugin.version>
+        <maven.javadoc-plugin.version>3.11.2</maven.javadoc-plugin.version>
+        <maven.checkstyle.plugin.version>3.6.0</maven.checkstyle.plugin.version>
+        <maven.versions.plugin.version>2.18.0</maven.versions.plugin.version>
+        <puppycrawl.checkstyle.version>10.23.1</puppycrawl.checkstyle.version>
         <maven.release.plugin.version>3.0.0-M4</maven.release.plugin.version>
         <maven.nexus-staging.plugin.version>1.7.0</maven.nexus-staging.plugin.version>
         <maven.project.info.reports.plugin.version>3.1.2</maven.project.info.reports.plugin.version>
-        <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
-        <maven-spotless-plugin.version>2.17.0</maven-spotless-plugin.version>
+        <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
+        <spotless.maven.plugin.version>2.44.4</spotless.maven.plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <!-- excludes the Record classes from being analyzed as they are not yet supported by the checkstyle plugin -->
         <checkstyle.exclusion>
@@ -447,7 +447,7 @@
                 <plugin>
                     <groupId>com.diffplug.spotless</groupId>
                     <artifactId>spotless-maven-plugin</artifactId>
-                    <version>${maven-spotless-plugin.version}</version>
+                    <version>${spotless.maven.plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
