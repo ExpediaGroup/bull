@@ -58,7 +58,7 @@
         <assertj-core.version>3.27.3</assertj-core.version>
         <joda-time.version>2.14.0</joda-time.version>
         <!-- validation dependencies -->
-        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+        <hibernate-validator.version>9.0.0.Final</hibernate-validator.version>
         <jboss-logging.version>3.6.1.Final</jboss-logging.version>
         <jboss-logging-modules.version>3.0.4.Final</jboss-logging-modules.version>
         <slf4j-api.version>2.0.17</slf4j-api.version>
