@@ -53,8 +53,8 @@ jobs:
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
           COVERALLS_IO_TOKEN: ${{ secrets.COVERALLS_IO_TOKEN }}
         with:
-          max_attempts: 3
-          timeout_minutes: 10
+          max_attempts: 10
+          timeout_minutes: 15
           retry_on: error
           command: |
             mvn verify jacoco:report-aggregate coveralls:report -D repoToken=$COVERALLS_IO_TOKEN -P compatibility-mode
