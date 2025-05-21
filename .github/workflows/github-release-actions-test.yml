@@ -1,6 +1,11 @@
-name: Run On Demand
+name: Script testing
 on:
-  workflow_dispatch:
+  push:
+    branches-ignore:
+      - "*-jdk11"
+      - "*/*-jdk11"
+    tags-ignore:
+      - "*"
 jobs:
   job:
     name: "BULL Release"
