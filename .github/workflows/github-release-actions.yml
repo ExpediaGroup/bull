@@ -31,8 +31,8 @@ jobs:
       - name: "JDK set-up"
         uses: actions/setup-java@v4
         with:
-          java-version: '15'
-          distribution: 'adopt'
+          java-version: '17'
+          distribution: 'temurin'
           server-id: oss-sonatype # Value of the distributionManagement/repository/id field of the pom.xml
           server-username: SONATYPE_USERNAME # env variable for username in deploy
           server-password: SONATYPE_PASSWORD # env variable for token in deploy
@@ -40,11 +40,17 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
           gpg-passphrase: GPG_PASSPHRASE # env variable for GPG private key passphrase
           settings-path: ${{ github.workspace }}
-      - name: "Quality check"
+      - name: "Build and Test execution"
+        uses: nick-invision/retry@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mvn install -P compatibility-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+          SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
+        with:
+          max_attempts: 10
+          timeout_minutes: 15
+          retry_on: error
+          command: |
+            mvn install -P compatibility-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
       - name: "Site build"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

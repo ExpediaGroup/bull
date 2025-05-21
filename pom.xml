@@ -21,7 +21,7 @@
     <groupId>com.expediagroup.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/ExpediaGroup/bull</url>
-    <version>2.2.5-SNAPSHOT</version>
+    <version>3.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -47,7 +47,7 @@
     </modules>
 
     <properties>
-        <jdk.version>15</jdk.version>
+        <jdk.version>17</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
         <lombok.version>1.18.38</lombok.version>
@@ -58,7 +58,7 @@
         <assertj-core.version>3.27.3</assertj-core.version>
         <joda-time.version>2.14.0</joda-time.version>
         <!-- validation dependencies -->
-        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+        <hibernate-validator.version>9.0.0.Final</hibernate-validator.version>
         <jboss-logging.version>3.6.1.Final</jboss-logging.version>
         <jboss-logging-modules.version>3.0.4.Final</jboss-logging-modules.version>
         <slf4j-api.version>2.0.17</slf4j-api.version>
@@ -89,6 +89,7 @@
         <maven.nexus-staging.plugin.version>1.7.0</maven.nexus-staging.plugin.version>
         <maven.project.info.reports.plugin.version>3.1.2</maven.project.info.reports.plugin.version>
         <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
+        <spotless.maven.plugin.version>2.44.4</spotless.maven.plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <!-- excludes the Record classes from being analyzed as they are not yet supported by the checkstyle plugin -->
         <checkstyle.exclusion>
@@ -291,7 +292,7 @@
                             <excludes>
                                 <exclude>**/PerformanceTest.java</exclude>
                             </excludes>
-                            <argLine>@{argLine}</argLine>
+                            <argLine>--add-opens java.base/java.lang.reflect=ALL-UNNAMED @{argLine}</argLine>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -378,7 +379,7 @@
                         <configuration>
                             <excludes>
                                 <exclude>**/PerformanceTest.java</exclude>
-                                <argLine>@{argLine}</argLine>
+                                <argLine>--add-opens java.base/java.lang.reflect=ALL-UNNAMED @{argLine}</argLine>
                             </excludes>
                         </configuration>
                     </plugin>
@@ -443,6 +444,11 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>com.diffplug.spotless</groupId>
+                    <artifactId>spotless-maven-plugin</artifactId>
+                    <version>${spotless.maven.plugin.version}</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -518,7 +524,7 @@
                     <version>${maven.surefire.plugin.version}</version>
                     <configuration>
                         <parallelMavenExecution>false</parallelMavenExecution>
-                        <argLine>@{argLine}</argLine>
+                        <argLine>--add-opens java.base/java.lang.reflect=ALL-UNNAMED @{argLine}</argLine>
                     </configuration>
                 </plugin>
                 <!-- jacoco plugin configuration -->

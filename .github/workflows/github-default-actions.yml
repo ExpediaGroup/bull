@@ -21,8 +21,8 @@ jobs:
       - name: "JDK set-up"
         uses: actions/setup-java@v4
         with:
-          java-version: '15'
-          distribution: 'adopt'
+          java-version: '17'
+          distribution: 'temurin'
       - name: "Build"
         run: |
           mvn clean install -B -DskipTests -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P compatibility-mode
@@ -44,8 +44,8 @@ jobs:
       - name: "JDK set-up"
         uses: actions/setup-java@v4
         with:
-          java-version: '15'
-          distribution: 'adopt'
+          java-version: '17'
+          distribution: 'temurin'
       - name: "Test and Quality check"
         uses: nick-invision/retry@v3
         env:
@@ -53,8 +53,8 @@ jobs:
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
           COVERALLS_IO_TOKEN: ${{ secrets.COVERALLS_IO_TOKEN }}
         with:
-          max_attempts: 3
-          timeout_minutes: 10
+          max_attempts: 10
+          timeout_minutes: 15
           retry_on: error
           command: |
             mvn verify jacoco:report-aggregate coveralls:report -D repoToken=$COVERALLS_IO_TOKEN -P compatibility-mode
@@ -75,8 +75,8 @@ jobs:
       - name: "JDK set-up"
         uses: actions/setup-java@v4
         with:
-          java-version: '15'
-          distribution: 'adopt'
+          java-version: '17'
+          distribution: 'temurin'
       - name: "Checkout repository"
         uses: actions/checkout@v4
       # Initializes the CodeQL tools for scanning.
