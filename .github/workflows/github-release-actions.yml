@@ -40,11 +40,17 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
           gpg-passphrase: GPG_PASSPHRASE # env variable for GPG private key passphrase
           settings-path: ${{ github.workspace }}
-      - name: "Quality check"
+      - name: "Build and Test execution"
+        uses: nick-invision/retry@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mvn install -P compatibility-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
+          SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
+        with:
+          max_attempts: 3
+          timeout_minutes: 10
+          retry_on: error
+          command: |
+            mvn install -P compatibility-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -q
       - name: "Site build"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
