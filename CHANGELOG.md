@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [3.0.0] 2025.05.21
+### [3.0.0] TBD
 * Increase the jdk version to 17
 
 ### [2.2.4] 2024.01.03
