@@ -59,7 +59,7 @@ It contains all the modules available in the project
 ```
 
 **The project provides two different builds**, one compatible with `jdk 8` (or above),
-one with `jdk 11` and on with `jdk 15` or above.
+one with `jdk 11` and on with `jdk 17` or above.
 
 In case you need to integrate it in a:
 * `jdk 8` please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md)
