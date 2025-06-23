@@ -9,8 +9,6 @@ updates:
       time: "11:30"
       timezone: "UTC"
     target-branch: develop
-    reviewers:
-      - fborriello
     labels:
       - configuration
       - update
