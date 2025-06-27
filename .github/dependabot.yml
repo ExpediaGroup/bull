@@ -22,8 +22,6 @@ updates:
       timezone: "UTC"
     open-pull-requests-limit: 10
     target-branch: develop
-    reviewers:
-      - fborriello
     labels:
       - configuration
       - update
