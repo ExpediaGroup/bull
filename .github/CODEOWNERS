@@ -5,4 +5,4 @@
 * @ExpediaGroup/bull-committers borriello.fabio@gmail.com @fborriello
 
 # Only some members of Customer Insights can alter the CODEOWNERS file
-.github/CODEOWNERS @ExpediaGroup/bull-admin @fborriello
+.github/CODEOWNERS @ExpediaGroup/bull-admin borriello.fabio@gmail.com
