@@ -19,6 +19,8 @@ It's the only library able to transform Mutable, Immutable, and Mixed bean witho
 [![License](https://img.shields.io/github/license/ExpediaGroup/bull.svg)](https://img.shields.io/github/license/ExpediaGroup/bull.svg)
 [![Dependabot](https://img.shields.io/badge/dependabot-enabled-success?logo=dependabot)](https://img.shields.io/badge/dependabot-enabled-success?logo=dependabot)
 
+A tutorial that integrates the library can be found [here](https://github.com/fborriello/bull-tutorial).
+
 All BULL modules are available on Maven Central:
 
 * ### Bean BOM
