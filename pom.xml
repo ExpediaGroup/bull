@@ -89,7 +89,7 @@
         <maven.nexus-staging.plugin.version>1.7.0</maven.nexus-staging.plugin.version>
         <maven.project.info.reports.plugin.version>3.1.2</maven.project.info.reports.plugin.version>
         <maven-enforcer-plugin.version>3.6.1</maven-enforcer-plugin.version>
-        <spotless.maven.plugin.version>2.46.1</spotless.maven.plugin.version>
+        <spotless.maven.plugin.version>3.0.0</spotless.maven.plugin.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <!-- excludes the Record classes from being analyzed as they are not yet supported by the checkstyle plugin -->
         <checkstyle.exclusion>
