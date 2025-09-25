@@ -51,7 +51,7 @@
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
         <lombok.version>1.18.42</lombok.version>
-        <apache.commons-lang3.version>3.18.0</apache.commons-lang3.version>
+        <apache.commons-lang3.version>3.19.0</apache.commons-lang3.version>
         <!-- testing dependencies -->
         <mockito-core.version>4.11.0</mockito-core.version>
         <testng.version>7.11.0</testng.version>
