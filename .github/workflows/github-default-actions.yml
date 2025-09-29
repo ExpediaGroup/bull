@@ -51,13 +51,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
-          COVERALLS_IO_TOKEN: ${{ secrets.COVERALLS_IO_TOKEN }}
         with:
           max_attempts: 10
           timeout_minutes: 15
           retry_on: error
           command: |
-            mvn verify jacoco:report-aggregate coveralls:report -D repoToken=$COVERALLS_IO_TOKEN -P compatibility-mode
+            mvn verify jacoco:report-aggregate -P compatibility-mode
+      - name: "Submit coverage to Coveralls"
+        if: ${{ env.COVERALLS_IO_TOKEN != '' }}
+        env:
+          COVERALLS_IO_TOKEN: ${{ secrets.COVERALLS_IO_TOKEN }}
+        run: |
+          mvn coveralls:report -DrepoToken=$COVERALLS_IO_TOKEN
   security-check:
     name: "Security check"
     runs-on: ubuntu-latest
