@@ -58,7 +58,7 @@ jobs:
           command: |
             mvn verify jacoco:report-aggregate -P compatibility-mode
       - name: "Submit coverage to Coveralls"
-        if: ${{ secrets.COVERALLS_IO_TOKEN }}
+        if: ${{ env.COVERALLS_IO_TOKEN != '' }}
         env:
           COVERALLS_IO_TOKEN: ${{ secrets.COVERALLS_IO_TOKEN }}
         run: |
