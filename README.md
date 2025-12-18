@@ -1039,7 +1039,7 @@ An article that explains how it works, with suggestions and examples, is availab
 ## Credits
 
 Created by: [Fabio Borriello](https://github.com/fborriello) with the contribution of: [Patrizio Munzi](https://github.com/patriziomunzi),
-[Andrea Marsiglia](https://github.com/AndreaMars94), [Giorgio Delle Grottaglie](https://github.com/geordie--) & the Hotels.com's Checkout team in Rome.
+[Andrea Marsiglia](https://github.com/AndreaMars94), [Giorgio Delle Grottaglie](https://github.com/giorgiodg/) & the Hotels.com's Checkout team in Rome.
 
 The application's logo has been designed by Rob Light.
 
