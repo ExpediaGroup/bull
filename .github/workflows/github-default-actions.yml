@@ -47,7 +47,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: "Test and Quality check"
-        uses: nick-invision/retry@v3
+        uses: nick-invision/retry@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
