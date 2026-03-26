@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,9 @@ import java.util.List;
 import org.testng.annotations.Test;
 
 import com.expediagroup.beans.sample.FromFooSimple;
+import com.expediagroup.beans.sample.FromFooSimpleNested;
+import com.expediagroup.beans.sample.FromFooWithPrimitiveAndNestedObject;
+import com.expediagroup.beans.sample.ToFooWithNestedFieldMapping;
 import com.expediagroup.beans.sample.mixed.MixedToFoo;
 import com.expediagroup.beans.sample.mixed.MixedToFooDiffFields;
 import com.expediagroup.beans.sample.mixed.MixedToFooMissingAllArgsConstructor;
@@ -41,6 +44,7 @@ import com.expediagroup.transformer.model.FieldTransformer;
 public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
     private static final boolean ACTIVE = true;
     private static final String INDEX_FIELD_NAME = "index";
+    private static final int EXPECTED_X_VALUE = 20;
 
     /**
      * Test that a Mixed bean with a constructor containing the final field only is correctly copied.
@@ -247,6 +251,29 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
                 .usingRecursiveComparison()
                 .ignoringFields(ID_FIELD_NAME, INDEX_FIELD_NAME, AGE_FIELD_NAME, ACTIVE_FIELD_NAME)
                 .isEqualTo(fromFoo);
+        underTest.reset();
+    }
+
+    /**
+     * Test that a primitive field from the source root can be mapped into a nested destination field.
+     * This verifies the fix for issue #559.
+     */
+    @Test
+    public void testPrimitiveFieldMappedIntoNestedObject() {
+        // GIVEN
+        FromFooWithPrimitiveAndNestedObject source = new FromFooWithPrimitiveAndNestedObject(
+                "Lucas", new FromFooSimpleNested("Mendes", 1L), EXPECTED_X_VALUE);
+
+        // WHEN
+        ToFooWithNestedFieldMapping actual = underTest
+                .withFieldMapping(new FieldMapping<>("x", "nestedObject.x"))
+                .transform(source, ToFooWithNestedFieldMapping.class);
+
+        // THEN
+        assertThat(actual.getName()).isEqualTo("Lucas");
+        assertThat(actual.getNestedObject().getName()).isEqualTo("Mendes");
+        assertThat(actual.getNestedObject().getIndex()).isEqualTo(1L);
+        assertThat(actual.getNestedObject().getX()).isEqualTo(EXPECTED_X_VALUE);
         underTest.reset();
     }
 }
