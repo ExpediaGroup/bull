@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,6 +60,7 @@ import com.expediagroup.beans.sample.FromFooSubClass;
 import com.expediagroup.beans.sample.immutable.ImmutableToFoo;
 import com.expediagroup.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.expediagroup.beans.sample.immutable.ImmutableToFooSubClass;
+import com.expediagroup.beans.sample.immutable.ImmutableToFooWithKotlinDefaultConstructor;
 import com.expediagroup.beans.sample.mixed.MixedToFoo;
 import com.expediagroup.beans.sample.mixed.MixedToFooMissingConstructor;
 import com.expediagroup.beans.sample.mixed.MixedToFooStaticField;
@@ -499,6 +500,22 @@ public class ClassUtilsTest {
 
         // THEN
         assertThat(actual).isNotNull();
+    }
+
+    /**
+     * Tests that the method {@code getAllArgsConstructor} skips the Kotlin synthetic constructor
+     * with {@code DefaultConstructorMarker} and returns the real all-args constructor.
+     */
+    @Test
+    public void testGetAllArgsConstructorSkipsKotlinSyntheticConstructor() {
+        // GIVEN
+
+        // WHEN
+        Constructor actual = underTest.getAllArgsConstructor(ImmutableToFooWithKotlinDefaultConstructor.class);
+
+        // THEN
+        assertThat(actual).isNotNull();
+        assertThat(actual.getParameterCount()).isEqualTo(2);
     }
 
     /**

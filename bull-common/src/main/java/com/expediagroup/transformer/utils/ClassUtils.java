@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -585,11 +585,32 @@ public final class ClassUtils {
         final String cacheKey = "AllArgsConstructor-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
             Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
-            final var constructor = max(asList(declaredConstructors), comparing(Constructor::getParameterCount));
+            var candidates = stream(declaredConstructors)
+                    .filter(c -> !isKotlinSyntheticConstructor(c))
+                    .collect(toList());
+            if (candidates.isEmpty()) {
+                candidates = asList(declaredConstructors);
+            }
+            final var constructor = max(candidates, comparing(Constructor::getParameterCount));
             constructor.setAccessible(true);
             CACHE_MANAGER.cacheObject(cacheKey, constructor);
             return constructor;
         });
+    }
+
+    /**
+     * Checks if a constructor is a Kotlin synthetic constructor generated for default parameter values.
+     * Such constructors have {@code kotlin.jvm.internal.DefaultConstructorMarker} as a parameter type.
+     * @param constructor the constructor to check
+     * @return true if the constructor is a Kotlin synthetic default constructor
+     */
+    private boolean isKotlinSyntheticConstructor(final Constructor<?> constructor) {
+        for (Class<?> paramType : constructor.getParameterTypes()) {
+            if ("kotlin.jvm.internal.DefaultConstructorMarker".equals(paramType.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
