@@ -1,0 +1,119 @@
+name: "PR Coverage Comment"
+
+on:
+  workflow_run:
+    workflows: ["PR Coverage Build"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  comment:
+    name: "Post Coverage Report"
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: "Download coverage artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: pr-coverage-report
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: "Download baseline coverage"
+        uses: dawidd6/action-download-artifact@v6
+        continue-on-error: true
+        with:
+          workflow: github-default-actions.yml
+          branch: master
+          name: jacoco-coverage-baseline
+          path: baseline/
+
+      - name: "Generate coverage table"
+        run: |
+          python3 << 'EOF'
+          import json, os, xml.etree.ElementTree as ET
+
+          def parse(xml_path):
+              root = ET.parse(xml_path).getroot()
+              result = {}
+              for c in root.findall('counter'):
+                  covered = int(c.get('covered', 0))
+                  missed  = int(c.get('missed',  0))
+                  total   = covered + missed
+                  result[c.get('type')] = {
+                      'covered': covered,
+                      'total':   total,
+                      'pct':     round(covered / total * 100, 2) if total > 0 else 0.0
+                  }
+              return result
+
+          def fmt(p):       return f'{p:.2f}%'
+          def frac(c, t):   return f'{c}/{t}'
+          def sign(d):      return f'{d:+.2f}%'
+          def emoji(d):
+              if d >  0.01: return '💚'
+              if d < -0.01: return '🔴'
+              return '💙'
+
+          build_xml    = 'jacoco.xml'
+          baseline_xml = 'baseline/jacoco.xml'
+
+          build    = parse(build_xml)
+          baseline = parse(baseline_xml) if os.path.exists(baseline_xml) else build
+
+          metrics = [
+              ('LINE',        'Lines'),
+              ('BRANCH',      'Branches'),
+              ('INSTRUCTION', 'Instructions'),
+              ('COMPLEXITY',  'Complexity'),
+              ('METHOD',      'Methods'),
+              ('CLASS',       'Classes'),
+          ]
+
+          rows = []
+          norm_base = norm_build = 0
+          for key, label in metrics:
+              b  = baseline.get(key, {})
+              c  = build.get(key, {})
+              bp = b.get('pct', 0.0)
+              cp = c.get('pct', 0.0)
+              d  = cp - bp
+              norm_base  += bp
+              norm_build += cp
+              rows.append(
+                  f'| {label} | {fmt(bp)} | {frac(b.get("covered",0), b.get("total",0))} '
+                  f'| {fmt(cp)} | {frac(c.get("covered",0), c.get("total",0))} '
+                  f'| {sign(d)} | {emoji(d)} |'
+              )
+
+          count = len(metrics)
+          nb = norm_base  / count
+          nc = norm_build / count
+          nd = nc - nb
+          rows.append(f'| **Normalised Score** | {fmt(nb)} | | {fmt(nc)} | | {sign(nd)} | {emoji(nd)} |')
+
+          header = (
+              '| Coverage | Baseline | | Build | | Diff | |\n'
+              '|---|---|---|---|---|---|---|'
+          )
+          table = header + '\n' + '\n'.join(rows)
+          report = f'## Test Coverage Report\n\n{table}\n'
+
+          with open('coverage_comment.md', 'w') as f:
+              f.write(report)
+          EOF
+
+      - name: "Read PR number"
+        id: pr
+        run: echo "number=$(cat pr_number.txt)" >> $GITHUB_OUTPUT
+
+      - name: "Post coverage comment"
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          number: ${{ steps.pr.outputs.number }}
+          path: coverage_comment.md
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
