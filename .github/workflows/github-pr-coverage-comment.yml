@@ -59,7 +59,7 @@ jobs:
               if d < -0.01: return '🔴'
               return '💙'
 
-          build_xml    = 'jacoco.xml'
+          build_xml    = 'bull-report/target/site/jacoco-aggregate/jacoco.xml'
           baseline_xml = 'baseline/jacoco.xml'
 
           build    = parse(build_xml)
