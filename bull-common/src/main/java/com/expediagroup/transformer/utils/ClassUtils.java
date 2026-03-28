@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,6 +88,11 @@ public final class ClassUtils {
      * Class nullability error message constant.
      */
     private static final String CLAZZ_CANNOT_BE_NULL = "clazz cannot be null!";
+
+    /**
+     * Fully qualified class name of the Kotlin synthetic default constructor marker.
+     */
+    private static final String KOTLIN_DEFAULT_CONSTRUCTOR_MARKER = "kotlin.jvm.internal.DefaultConstructorMarker";
 
     /**
      * CacheManager class {@link CacheManager}.
@@ -585,11 +590,28 @@ public final class ClassUtils {
         final String cacheKey = "AllArgsConstructor-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
             Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
-            final var constructor = max(asList(declaredConstructors), comparing(Constructor::getParameterCount));
+            var candidates = stream(declaredConstructors)
+                    .filter(c -> !isKotlinSyntheticConstructor(c))
+                    .collect(toList());
+            if (candidates.isEmpty()) {
+                candidates = asList(declaredConstructors);
+            }
+            final var constructor = max(candidates, comparing(Constructor::getParameterCount));
             constructor.setAccessible(true);
             CACHE_MANAGER.cacheObject(cacheKey, constructor);
             return constructor;
         });
+    }
+
+    /**
+     * Checks if a constructor is a Kotlin synthetic constructor generated for default parameter values.
+     * Such constructors have a parameter of type {@code kotlin.jvm.internal.DefaultConstructorMarker}.
+     * @param constructor the constructor to check
+     * @return true if the constructor is a Kotlin synthetic default constructor
+     */
+    private boolean isKotlinSyntheticConstructor(final Constructor<?> constructor) {
+        return stream(constructor.getParameterTypes())
+                .anyMatch(paramType -> KOTLIN_DEFAULT_CONSTRUCTOR_MARKER.equals(paramType.getName()));
     }
 
     /**

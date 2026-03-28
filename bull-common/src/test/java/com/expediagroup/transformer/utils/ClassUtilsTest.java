@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,6 +60,8 @@ import com.expediagroup.beans.sample.FromFooSubClass;
 import com.expediagroup.beans.sample.immutable.ImmutableToFoo;
 import com.expediagroup.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.expediagroup.beans.sample.immutable.ImmutableToFooSubClass;
+import com.expediagroup.beans.sample.immutable.ImmutableToFooWithKotlinDefaultConstructor;
+import com.expediagroup.beans.sample.immutable.ImmutableToFooWithOnlySyntheticConstructor;
 import com.expediagroup.beans.sample.mixed.MixedToFoo;
 import com.expediagroup.beans.sample.mixed.MixedToFooMissingConstructor;
 import com.expediagroup.beans.sample.mixed.MixedToFooStaticField;
@@ -105,6 +107,8 @@ public class ClassUtilsTest {
     private static final long[] PRIMITIVE_LONG_ARRAY = {};
     private static final Integer[] PRIMITIVE_INTEGER_ARRAY = {};
     private static final FromFoo[] NOT_PRIMITIVE_ARRAY = {};
+    private static final int KOTLIN_PRIMARY_CONSTRUCTOR_PARAMS = 2;
+    private static final int KOTLIN_SYNTHETIC_CONSTRUCTOR_PARAMS = 4;
     private static final int FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS = 11;
     private static final int FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS = 3;
     private static final int FROM_FOO_SUB_CLASS_EXPECTED_GETTER_METHODS = 9;
@@ -499,6 +503,38 @@ public class ClassUtilsTest {
 
         // THEN
         assertThat(actual).isNotNull();
+    }
+
+    /**
+     * Tests that the method {@code getAllArgsConstructor} skips the Kotlin synthetic constructor
+     * with {@code DefaultConstructorMarker} and returns the real all-args constructor.
+     */
+    @Test
+    public void testGetAllArgsConstructorSkipsKotlinSyntheticConstructor() {
+        // GIVEN
+
+        // WHEN
+        Constructor<?> actual = underTest.getAllArgsConstructor(ImmutableToFooWithKotlinDefaultConstructor.class);
+
+        // THEN
+        assertThat(actual).isNotNull();
+        assertThat(actual.getParameterCount()).isEqualTo(KOTLIN_PRIMARY_CONSTRUCTOR_PARAMS);
+    }
+
+    /**
+     * Tests that the method {@code getAllArgsConstructor} falls back to all constructors
+     * when every constructor is synthetic, returning the one with the most parameters.
+     */
+    @Test
+    public void testGetAllArgsConstructorFallsBackWhenAllConstructorsAreSynthetic() {
+        // GIVEN
+
+        // WHEN
+        Constructor<?> actual = underTest.getAllArgsConstructor(ImmutableToFooWithOnlySyntheticConstructor.class);
+
+        // THEN
+        assertThat(actual).isNotNull();
+        assertThat(actual.getParameterCount()).isEqualTo(KOTLIN_SYNTHETIC_CONSTRUCTOR_PARAMS);
     }
 
     /**

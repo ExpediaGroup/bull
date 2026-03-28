@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.0.1] TBD
+* Fixes an issue that was preventing the transformation of Kotlin classes with default parameter values
+
 ### [3.0.0] 2025.05.21
 * Increase the jdk version to 17
 

@@ -57,6 +57,7 @@
         <testng.version>7.12.0</testng.version>
         <assertj-core.version>3.27.7</assertj-core.version>
         <joda-time.version>2.14.1</joda-time.version>
+        <kotlin.version>1.9.25</kotlin.version>
         <!-- validation dependencies -->
         <hibernate-validator.version>9.0.0.Final</hibernate-validator.version>
         <jboss-logging.version>3.6.3.Final</jboss-logging.version>
@@ -209,6 +210,12 @@
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>${joda-time.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib</artifactId>
+                <version>${kotlin.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
@@ -454,10 +461,16 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven.compiler.plugin.version}</version>
                     <configuration>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
+                        <release>${jdk.version}</release>
                         <parameters>true</parameters>
                         <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
                     </configuration>
                 </plugin>
                 <plugin>
