@@ -90,6 +90,11 @@ public final class ClassUtils {
     private static final String CLAZZ_CANNOT_BE_NULL = "clazz cannot be null!";
 
     /**
+     * Fully qualified class name of the Kotlin synthetic default constructor marker.
+     */
+    private static final String KOTLIN_DEFAULT_CONSTRUCTOR_MARKER = "kotlin.jvm.internal.DefaultConstructorMarker";
+
+    /**
      * CacheManager class {@link CacheManager}.
      */
     private static final CacheManager CACHE_MANAGER = CacheManagerFactory.getCacheManager("classUtils");
@@ -600,13 +605,13 @@ public final class ClassUtils {
 
     /**
      * Checks if a constructor is a Kotlin synthetic constructor generated for default parameter values.
-     * Such constructors have {@code kotlin.jvm.internal.DefaultConstructorMarker} as a parameter type.
+     * Such constructors have a parameter of type {@code kotlin.jvm.internal.DefaultConstructorMarker}.
      * @param constructor the constructor to check
      * @return true if the constructor is a Kotlin synthetic default constructor
      */
     private boolean isKotlinSyntheticConstructor(final Constructor<?> constructor) {
         for (Class<?> paramType : constructor.getParameterTypes()) {
-            if ("kotlin.jvm.internal.DefaultConstructorMarker".equals(paramType.getName())) {
+            if (KOTLIN_DEFAULT_CONSTRUCTOR_MARKER.equals(paramType.getName())) {
                 return true;
             }
         }
