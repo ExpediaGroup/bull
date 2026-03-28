@@ -1,0 +1,137 @@
+name: "PR Coverage Report"
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  coverage:
+    name: "Test Coverage Report"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: "Cache Maven repository"
+        uses: actions/cache@v5.0.4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: "JDK set-up"
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: "Build and Test"
+        uses: nick-invision/retry@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          max_attempts: 3
+          timeout_minutes: 15
+          retry_on: error
+          command: |
+            mvn verify jacoco:report-aggregate -B -P compatibility-mode -DskipPerformanceTests=true \
+              -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+
+      - name: "Download baseline coverage"
+        uses: dawidd6/action-download-artifact@v6
+        continue-on-error: true
+        with:
+          workflow: github-default-actions.yml
+          branch: master
+          name: jacoco-coverage-baseline
+          path: baseline/
+
+      - name: "Generate coverage table"
+        run: |
+          python3 << 'EOF'
+          import json, os, xml.etree.ElementTree as ET
+
+          def parse(xml_path):
+              root = ET.parse(xml_path).getroot()
+              result = {}
+              for c in root.findall('counter'):
+                  covered = int(c.get('covered', 0))
+                  missed  = int(c.get('missed',  0))
+                  total   = covered + missed
+                  result[c.get('type')] = {
+                      'covered': covered,
+                      'total':   total,
+                      'pct':     round(covered / total * 100, 2) if total > 0 else 0.0
+                  }
+              return result
+
+          def fmt(p):       return f'{p:.2f}%'
+          def frac(c, t):   return f'{c}/{t}'
+          def sign(d):      return f'{d:+.2f}%'
+          def emoji(d):
+              if d >  0.01: return '💚'
+              if d < -0.01: return '🔴'
+              return '💙'
+
+          build_xml    = 'bull-report/target/site/jacoco-aggregate/jacoco.xml'
+          baseline_xml = 'baseline/jacoco.xml'
+
+          build    = parse(build_xml)
+          baseline = parse(baseline_xml) if os.path.exists(baseline_xml) else build
+
+          metrics = [
+              ('LINE',        'Lines'),
+              ('BRANCH',      'Branches'),
+              ('INSTRUCTION', 'Instructions'),
+              ('COMPLEXITY',  'Complexity'),
+              ('METHOD',      'Methods'),
+              ('CLASS',       'Classes'),
+          ]
+
+          rows = []
+          norm_base = norm_build = 0
+          for key, label in metrics:
+              b  = baseline.get(key, {})
+              c  = build.get(key, {})
+              bp = b.get('pct', 0.0)
+              cp = c.get('pct', 0.0)
+              d  = cp - bp
+              norm_base  += bp
+              norm_build += cp
+              rows.append(
+                  f'| {label} | {fmt(bp)} | {frac(b.get("covered",0), b.get("total",0))} '
+                  f'| {fmt(cp)} | {frac(c.get("covered",0), c.get("total",0))} '
+                  f'| {sign(d)} | {emoji(d)} |'
+              )
+
+          count = len(metrics)
+          nb = norm_base  / count
+          nc = norm_build / count
+          nd = nc - nb
+          rows.append(f'| **Normalised Score** | {fmt(nb)} | | {fmt(nc)} | | {sign(nd)} | {emoji(nd)} |')
+
+          header = (
+              '| Coverage | Baseline | | Build | | Diff | |\n'
+              '|---|---|---|---|---|---|---|'
+          )
+          table = header + '\n' + '\n'.join(rows)
+          report = f'## Test Coverage Report\n\n{table}\n'
+
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write(report)
+          with open('coverage_comment.md', 'w') as f:
+              f.write(report)
+          EOF
+
+      - name: "Post coverage comment"
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: coverage_comment.md
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

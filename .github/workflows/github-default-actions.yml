@@ -57,6 +57,13 @@ jobs:
           retry_on: error
           command: |
             mvn verify jacoco:report-aggregate -P compatibility-mode
+      - name: "Upload coverage baseline"
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-coverage-baseline
+          path: bull-report/target/site/jacoco-aggregate/jacoco.xml
+          retention-days: 90
       - name: "Submit coverage to Coveralls"
         if: ${{ env.COVERALLS_IO_TOKEN != '' }}
         env:
