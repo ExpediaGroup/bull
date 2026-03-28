@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.1.5-jdk11] TBD
+* Fixes an issue that was preventing the transformation of Kotlin classes with default parameter values
+
 ### [2.1.4-jdk11] 2024.01.03
 * Bumps to the latest version available all the project dependencies 
 
