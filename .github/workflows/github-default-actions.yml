@@ -6,6 +6,9 @@ on:
       - "*/*-jdk11"
     tags-ignore:
       - "*"
+  pull_request:
+    branches:
+      - master
 jobs:
   build:
     name: "Build"
