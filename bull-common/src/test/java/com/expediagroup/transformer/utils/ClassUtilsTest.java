@@ -61,6 +61,7 @@ import com.expediagroup.beans.sample.immutable.ImmutableToFoo;
 import com.expediagroup.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.expediagroup.beans.sample.immutable.ImmutableToFooSubClass;
 import com.expediagroup.beans.sample.immutable.ImmutableToFooWithKotlinDefaultConstructor;
+import com.expediagroup.beans.sample.immutable.ImmutableToFooWithOnlySyntheticConstructor;
 import com.expediagroup.beans.sample.mixed.MixedToFoo;
 import com.expediagroup.beans.sample.mixed.MixedToFooMissingConstructor;
 import com.expediagroup.beans.sample.mixed.MixedToFooStaticField;
@@ -516,6 +517,22 @@ public class ClassUtilsTest {
         // THEN
         assertThat(actual).isNotNull();
         assertThat(actual.getParameterCount()).isEqualTo(2);
+    }
+
+    /**
+     * Tests that the method {@code getAllArgsConstructor} falls back to all constructors
+     * when every constructor is synthetic, returning the one with the most parameters.
+     */
+    @Test
+    public void testGetAllArgsConstructorFallsBackWhenAllConstructorsAreSynthetic() {
+        // GIVEN
+
+        // WHEN
+        Constructor<?> actual = underTest.getAllArgsConstructor(ImmutableToFooWithOnlySyntheticConstructor.class);
+
+        // THEN
+        assertThat(actual).isNotNull();
+        assertThat(actual.getParameterCount()).isEqualTo(4);
     }
 
     /**
