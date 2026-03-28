@@ -31,7 +31,6 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.Set.of;
-import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 import static com.expediagroup.transformer.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
@@ -591,9 +590,12 @@ public final class ClassUtils {
         final String cacheKey = "AllArgsConstructor-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, Constructor.class).orElseGet(() -> {
             Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
-            final var candidates = stream(declaredConstructors)
+            var candidates = stream(declaredConstructors)
                     .filter(c -> !isKotlinSyntheticConstructor(c))
-                    .collect(collectingAndThen(toList(), list -> list.isEmpty() ? asList(declaredConstructors) : list));
+                    .collect(toList());
+            if (candidates.isEmpty()) {
+                candidates = asList(declaredConstructors);
+            }
             final var constructor = max(candidates, comparing(Constructor::getParameterCount));
             constructor.setAccessible(true);
             CACHE_MANAGER.cacheObject(cacheKey, constructor);
