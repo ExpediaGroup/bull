@@ -69,12 +69,14 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param <T> the source object type
      */
     private static final class EffectiveSource<T> {
+        /** The source object to read the field from. */
         final T source;
+        /** The field name to read from the source. */
         final String fieldName;
 
-        EffectiveSource(final T source, final String fieldName) {
-            this.source = source;
-            this.fieldName = fieldName;
+        EffectiveSource(final T src, final String fName) {
+            this.source = src;
+            this.fieldName = fName;
         }
     }
 
