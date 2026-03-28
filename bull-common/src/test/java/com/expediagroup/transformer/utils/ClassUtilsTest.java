@@ -511,7 +511,7 @@ public class ClassUtilsTest {
         // GIVEN
 
         // WHEN
-        Constructor actual = underTest.getAllArgsConstructor(ImmutableToFooWithKotlinDefaultConstructor.class);
+        Constructor<?> actual = underTest.getAllArgsConstructor(ImmutableToFooWithKotlinDefaultConstructor.class);
 
         // THEN
         assertThat(actual).isNotNull();
