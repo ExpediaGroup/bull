@@ -60,7 +60,6 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
-            <version>1.9.25</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
