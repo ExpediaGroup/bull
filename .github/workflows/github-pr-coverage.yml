@@ -1,0 +1,59 @@
+name: "PR Coverage Report"
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  coverage:
+    name: "Test Coverage Report"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: "Cache Maven repository"
+        uses: actions/cache@v5.0.4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: "JDK set-up"
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: "Build and Test"
+        uses: nick-invision/retry@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          max_attempts: 3
+          timeout_minutes: 15
+          retry_on: error
+          command: |
+            mvn verify jacoco:report-aggregate -B -P compatibility-mode \
+              -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+
+      - name: "Post Coverage Report"
+        uses: madrapps/jacoco-report@v1.7.1
+        with:
+          paths: |
+            ${{ github.workspace }}/bull-common/target/site/jacoco/jacoco.xml,
+            ${{ github.workspace }}/bull-bean-transformer/target/site/jacoco/jacoco.xml,
+            ${{ github.workspace }}/bull-converter/target/site/jacoco/jacoco.xml,
+            ${{ github.workspace }}/bull-map-transformer/target/site/jacoco/jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "## Test Coverage Report"
+          update-comment: true
+          min-coverage-overall: 90
+          min-coverage-changed-files: 90
