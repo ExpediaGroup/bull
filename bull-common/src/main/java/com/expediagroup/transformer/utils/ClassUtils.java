@@ -49,6 +49,7 @@ import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.temporal.Temporal;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
@@ -610,12 +611,8 @@ public final class ClassUtils {
      * @return true if the constructor is a Kotlin synthetic default constructor
      */
     private boolean isKotlinSyntheticConstructor(final Constructor<?> constructor) {
-        for (Class<?> paramType : constructor.getParameterTypes()) {
-            if (KOTLIN_DEFAULT_CONSTRUCTOR_MARKER.equals(paramType.getName())) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.stream(constructor.getParameterTypes())
+                .anyMatch(paramType -> KOTLIN_DEFAULT_CONSTRUCTOR_MARKER.equals(paramType.getName()));
     }
 
     /**
