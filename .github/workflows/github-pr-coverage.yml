@@ -41,8 +41,7 @@ jobs:
           timeout_minutes: 15
           retry_on: error
           command: |
-            mvn verify jacoco:report-aggregate -B -P compatibility-mode \
-              -Dsurefire.excludes=**/PerformanceTest.java \
+            mvn verify jacoco:report-aggregate -B -P compatibility-mode,skip-performance-tests \
               -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 
       - name: "Download baseline coverage"

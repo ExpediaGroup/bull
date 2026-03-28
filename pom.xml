@@ -250,6 +250,22 @@
     <profiles>
         <!-- modules profiles -->
         <profile>
+            <id>skip-performance-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/PerformanceTest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>relaxed</id>
             <properties>
                 <checkstyle.check.skip>true</checkstyle.check.skip>
