@@ -337,20 +337,6 @@ public class TransformerImpl extends AbstractBeanTransformer {
     }
 
     /**
-     * Returns the field name in the source object, first checking the full breadcrumb path
-     * and then falling back to the simple field name.
-     * This allows mappings like "x" -> "nestedObject.x" to be resolved when processing
-     * nested destination fields.
-     * @param fieldBreadcrumb the full path of the field (e.g. "nestedObject.x")
-     * @param fieldName the simple field name (e.g. "x")
-     * @return the source field name.
-     */
-    private String getSourceFieldName(final String fieldBreadcrumb, final String fieldName) {
-        return ofNullable(settings.getFieldsNameMapping().get(fieldBreadcrumb))
-                .orElseGet(() -> getSourceFieldName(fieldName));
-    }
-
-    /**
      * Returns the field name in the source object.
      * @param fieldName the field name that has to be set.
      * @return the source field name.

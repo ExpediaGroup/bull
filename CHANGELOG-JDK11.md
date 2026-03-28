@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ### [2.1.5-jdk11] TBD
 * Fixes an issue that was preventing the transformation of Kotlin classes with default parameter values
+* Fixes MissingFieldException when mapping a root-level primitive field into a nested destination object via `withFieldMapping` (issue #559)
 
 ### [2.1.4-jdk11] 2024.01.03
 * Bumps to the latest version available all the project dependencies 
