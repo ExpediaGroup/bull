@@ -56,8 +56,41 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * Holds the root source object for the current transformation.
      * Used to resolve field mappings that reference root-level source fields
      * from within nested destination objects.
+     *
+     * Note: if a FieldTransformer callback re-invokes transform() on this same
+     * instance for a different source object, the inner call will still see
+     * the outer root. This is acceptable for current use cases.
      */
     private final ThreadLocal<Object> rootSourceObj = new ThreadLocal<>();
+
+    /**
+     * Holds the resolved effective source object and field name after checking
+     * breadcrumb-based field mappings against the root source.
+     * @param source the source object to read the field from
+     * @param fieldName the field name to read from the source
+     * @param <T> the source object type
+     */
+    private record EffectiveSource<T>(T source, String fieldName) { }
+
+    /**
+     * Resolves the effective source object and field name for a destination field.
+     * If a breadcrumb-based mapping exists (e.g. "nestedObject.x" -> "x"), the root source
+     * object is used instead of the current nested source.
+     * @param sourceObj the current source object
+     * @param destFieldName the destination field name
+     * @param breadcrumb the current breadcrumb path
+     * @param <T> the source object type
+     * @return the effective source and field name to use
+     */
+    @SuppressWarnings("unchecked")
+    private <T> EffectiveSource<T> resolveEffectiveSource(final T sourceObj, final String destFieldName, final String breadcrumb) {
+        String fieldBreadcrumb = evalBreadcrumb(destFieldName, breadcrumb);
+        String mapped = settings.getFieldsNameMapping().get(fieldBreadcrumb);
+        if (mapped != null && rootSourceObj.get() != null) {
+            return new EffectiveSource<>((T) rootSourceObj.get(), mapped);
+        }
+        return new EffectiveSource<>(sourceObj, getSourceFieldName(destFieldName));
+    }
 
     /**
      * {@inheritDoc}
@@ -277,18 +310,9 @@ public class TransformerImpl extends AbstractBeanTransformer {
                     if (isNull(destFieldName)) {
                         constructorArgsValues[i] = classUtils.getDefaultTypeValue(constructorParameters[i].getType());
                     } else {
-                        String fieldBreadcrumb = evalBreadcrumb(destFieldName, breadcrumb);
-                        String mappedViaBreadcrumb = ofNullable(settings.getFieldsNameMapping().get(fieldBreadcrumb)).orElse(null);
-                        Object effectiveSource = sourceObj;
-                        String sourceFieldName;
-                        if (mappedViaBreadcrumb != null && rootSourceObj.get() != null) {
-                            effectiveSource = rootSourceObj.get();
-                            sourceFieldName = mappedViaBreadcrumb;
-                        } else {
-                            sourceFieldName = getSourceFieldName(destFieldName);
-                        }
+                        EffectiveSource<T> effective = resolveEffectiveSource(sourceObj, destFieldName, breadcrumb);
                         constructorArgsValues[i] =
-                                getFieldValue(effectiveSource, sourceFieldName, targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb);
+                                getFieldValue(effective.source(), effective.fieldName(), targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb);
                     }
                 });
         return constructorArgsValues;
@@ -436,20 +460,9 @@ public class TransformerImpl extends AbstractBeanTransformer {
                 .forEach(setFieldValue(sourceObj, targetObject, targetObjectClass, breadcrumb));
     }
 
-    @SuppressWarnings("unchecked")
     private <T, K> Object getFieldValue(final T sourceObj, final K targetObject, final Class<K> targetClass, final Field field, final String breadcrumb) {
-        String fieldBreadcrumb = evalBreadcrumb(field.getName(), breadcrumb);
-        // Check if there is a mapping for the full breadcrumb path (e.g. "nestedObject.x" -> "x").
-        // If so, the source field should be resolved from the root source object, not the current nested one.
-        String mappedViaBreadcrumb = ofNullable(settings.getFieldsNameMapping().get(fieldBreadcrumb)).orElse(null);
-        if (mappedViaBreadcrumb != null) {
-            Object root = rootSourceObj.get();
-            if (root != null) {
-                return getFieldValue((T) root, mappedViaBreadcrumb, targetObject, targetClass, field, breadcrumb);
-            }
-        }
-        String sourceFieldName = getSourceFieldName(field);
-        return getFieldValue(sourceObj, sourceFieldName, targetObject, targetClass, field, breadcrumb);
+        EffectiveSource<T> effective = resolveEffectiveSource(sourceObj, field.getName(), breadcrumb);
+        return getFieldValue(effective.source(), effective.fieldName(), targetObject, targetClass, field, breadcrumb);
     }
 
     /**
