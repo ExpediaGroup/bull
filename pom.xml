@@ -251,6 +251,12 @@
         <!-- modules profiles -->
         <profile>
             <id>skip-performance-tests</id>
+            <activation>
+                <property>
+                    <name>skipPerformanceTests</name>
+                    <value>true</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -304,20 +310,10 @@
                 <checkstyle.includeTestSourceDirectory>false</checkstyle.includeTestSourceDirectory>
                 <spotless.config.execution.skip>true</spotless.config.execution.skip>
                 <test.coverage.check.skip>true</test.coverage.check.skip>
+                <skipPerformanceTests>true</skipPerformanceTests>
             </properties>
             <build>
                 <plugins>
-                    <!-- skip some test cases during the release -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <excludes>
-                                <exclude>**/PerformanceTest.java</exclude>
-                            </excludes>
-                            <argLine>--add-opens java.base/java.lang.reflect=ALL-UNNAMED @{argLine}</argLine>
-                        </configuration>
-                    </plugin>
                     <plugin>
                         <groupId>com.mycila</groupId>
                         <artifactId>license-maven-plugin</artifactId>
@@ -361,6 +357,7 @@
                 <test.coverage.check.skip>true</test.coverage.check.skip>
                 <javadoc.skip>true</javadoc.skip>
                 <spotless.config.execution.skip>true</spotless.config.execution.skip>
+                <skipPerformanceTests>true</skipPerformanceTests>
             </properties>
             <build>
                 <plugins>
@@ -393,17 +390,6 @@
                             <serverId>oss-sonatype</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
-                    </plugin>
-                    <!-- skip some test cases during the release -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <excludes>
-                                <exclude>**/PerformanceTest.java</exclude>
-                                <argLine>--add-opens java.base/java.lang.reflect=ALL-UNNAMED @{argLine}</argLine>
-                            </excludes>
                         </configuration>
                     </plugin>
                     <!-- replace the bean-utils-library javadoc jar file with the one containing all modules -->
