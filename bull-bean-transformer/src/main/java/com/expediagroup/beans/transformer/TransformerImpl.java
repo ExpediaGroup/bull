@@ -337,15 +337,6 @@ public class TransformerImpl extends AbstractBeanTransformer {
 
     /**
      * Returns the field name in the source object.
-     * @param field the field that has to be set.
-     * @return the source field name.
-     */
-    private String getSourceFieldName(final Field field) {
-        return getSourceFieldName(field.getName());
-    }
-
-    /**
-     * Returns the field name in the source object.
      * @param fieldName the field name that has to be set.
      * @return the source field name.
      */
