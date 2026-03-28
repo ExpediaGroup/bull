@@ -107,6 +107,8 @@ public class ClassUtilsTest {
     private static final long[] PRIMITIVE_LONG_ARRAY = {};
     private static final Integer[] PRIMITIVE_INTEGER_ARRAY = {};
     private static final FromFoo[] NOT_PRIMITIVE_ARRAY = {};
+    private static final int KOTLIN_PRIMARY_CONSTRUCTOR_PARAMS = 2;
+    private static final int KOTLIN_SYNTHETIC_CONSTRUCTOR_PARAMS = 4;
     private static final int FROM_FOO_ADV_FIELD_EXPECTED_GETTER_METHODS = 11;
     private static final int FROM_FOO_SIMPLE_EXPECTED_GETTER_METHODS = 3;
     private static final int FROM_FOO_SUB_CLASS_EXPECTED_GETTER_METHODS = 9;
@@ -516,7 +518,7 @@ public class ClassUtilsTest {
 
         // THEN
         assertThat(actual).isNotNull();
-        assertThat(actual.getParameterCount()).isEqualTo(2);
+        assertThat(actual.getParameterCount()).isEqualTo(KOTLIN_PRIMARY_CONSTRUCTOR_PARAMS);
     }
 
     /**
@@ -532,7 +534,7 @@ public class ClassUtilsTest {
 
         // THEN
         assertThat(actual).isNotNull();
-        assertThat(actual.getParameterCount()).isEqualTo(4);
+        assertThat(actual.getParameterCount()).isEqualTo(KOTLIN_SYNTHETIC_CONSTRUCTOR_PARAMS);
     }
 
     /**
