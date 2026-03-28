@@ -461,10 +461,16 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven.compiler.plugin.version}</version>
                     <configuration>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
+                        <release>${jdk.version}</release>
                         <parameters>true</parameters>
                         <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
                     </configuration>
                 </plugin>
                 <plugin>
