@@ -62,7 +62,7 @@ jobs:
             mvn verify jacoco:report-aggregate -P compatibility-mode
       - name: "Upload coverage baseline"
         if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: jacoco-coverage-baseline
           path: bull-report/target/site/jacoco-aggregate/jacoco.xml
