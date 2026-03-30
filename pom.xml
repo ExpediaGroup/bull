@@ -330,6 +330,7 @@
             <properties>
                 <javadoc.skip>true</javadoc.skip>
                 <spotless.config.execution.skip>true</spotless.config.execution.skip>
+                <skipPerformanceTests>true</skipPerformanceTests>
             </properties>
             <build>
                 <plugins>
