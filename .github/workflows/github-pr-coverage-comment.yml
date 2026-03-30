@@ -24,7 +24,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
 
       - name: "Download baseline coverage"
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v19
         continue-on-error: true
         with:
           workflow: github-default-actions.yml
