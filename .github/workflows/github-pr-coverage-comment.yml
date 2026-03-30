@@ -17,14 +17,14 @@ jobs:
     if: github.event.workflow_run.conclusion == 'success'
     steps:
       - name: "Download coverage artifact"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: pr-coverage-report
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
 
       - name: "Download baseline coverage"
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v19
         continue-on-error: true
         with:
           workflow: github-default-actions.yml
@@ -112,7 +112,7 @@ jobs:
         run: echo "number=$(cat pr_number.txt)" >> $GITHUB_OUTPUT
 
       - name: "Post coverage comment"
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           number: ${{ steps.pr.outputs.number }}
           path: coverage_comment.md
