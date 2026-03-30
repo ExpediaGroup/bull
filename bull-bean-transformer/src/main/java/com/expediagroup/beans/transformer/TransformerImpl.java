@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2024 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,26 +53,84 @@ import com.expediagroup.transformer.model.FieldTransformer;
  */
 public class TransformerImpl extends AbstractBeanTransformer {
     /**
+     * Holds the root source object for the current transformation.
+     * Used to resolve field mappings that reference root-level source fields
+     * from within nested destination objects.
+     *
+     * Note: if a FieldTransformer callback re-invokes transform() on this same
+     * instance for a different source object, the inner call will still see
+     * the outer root. This is acceptable for current use cases.
+     */
+    private final ThreadLocal<Object> rootSourceObj = new ThreadLocal<>();
+
+    /**
+     * Holds the resolved effective source object and field name after checking
+     * breadcrumb-based field mappings against the root source.
+     * @param <T> the source object type
+     */
+    private static final class EffectiveSource<T> {
+        /** The source object to read the field from. */
+        final T source;
+        /** The field name to read from the source. */
+        final String fieldName;
+
+        EffectiveSource(final T src, final String fName) {
+            this.source = src;
+            this.fieldName = fName;
+        }
+    }
+
+    /**
+     * Resolves the effective source object and field name for a destination field.
+     * If a breadcrumb-based mapping exists (e.g. "nestedObject.x" -> "x"), the root source
+     * object is used instead of the current nested source.
+     * @param sourceObj the current source object
+     * @param destFieldName the destination field name
+     * @param breadcrumb the current breadcrumb path
+     * @param <T> the source object type
+     * @return the effective source and field name to use
+     */
+    @SuppressWarnings("unchecked")
+    private <T> EffectiveSource<T> resolveEffectiveSource(final T sourceObj, final String destFieldName, final String breadcrumb) {
+        String fieldBreadcrumb = evalBreadcrumb(destFieldName, breadcrumb);
+        String mapped = settings.getFieldsNameMapping().get(fieldBreadcrumb);
+        if (mapped != null && rootSourceObj.get() != null) {
+            return new EffectiveSource<>((T) rootSourceObj.get(), mapped);
+        }
+        return new EffectiveSource<>(sourceObj, getSourceFieldName(destFieldName));
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     @SuppressWarnings("unchecked")
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
-        final K k;
-        if (targetClass.equals(Object.class)) {
-            k = (K) sourceObj;
-        } else {
-            final Optional<Class<?>> builderClass = getBuilderClass(targetClass);
-            if (builderClass.isPresent()) {
-                k = injectThroughBuilder(sourceObj, targetClass, builderClass.get(), breadcrumb);
+        boolean isRoot = rootSourceObj.get() == null;
+        if (isRoot) {
+            rootSourceObj.set(sourceObj);
+        }
+        try {
+            final K k;
+            if (targetClass.equals(Object.class)) {
+                k = (K) sourceObj;
             } else {
-                k = injectValues(sourceObj, targetClass, breadcrumb);
+                final Optional<Class<?>> builderClass = getBuilderClass(targetClass);
+                if (builderClass.isPresent()) {
+                    k = injectThroughBuilder(sourceObj, targetClass, builderClass.get(), breadcrumb);
+                } else {
+                    k = injectValues(sourceObj, targetClass, breadcrumb);
+                }
+            }
+            if (settings.isValidationEnabled()) {
+                validator.validate(k);
+            }
+            return k;
+        } finally {
+            if (isRoot) {
+                rootSourceObj.remove();
             }
         }
-        if (settings.isValidationEnabled()) {
-            validator.validate(k);
-        }
-        return k;
     }
 
     /**
@@ -105,9 +163,19 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     @Override
     protected final <T, K> void transform(final T sourceObj, final K targetObject, final String breadcrumb) {
-        injectAllFields(sourceObj, targetObject, breadcrumb);
-        if (settings.isValidationEnabled()) {
-            validator.validate(targetObject);
+        boolean isRoot = rootSourceObj.get() == null;
+        if (isRoot) {
+            rootSourceObj.set(sourceObj);
+        }
+        try {
+            injectAllFields(sourceObj, targetObject, breadcrumb);
+            if (settings.isValidationEnabled()) {
+                validator.validate(targetObject);
+            }
+        } finally {
+            if (isRoot) {
+                rootSourceObj.remove();
+            }
         }
     }
 
@@ -250,9 +318,9 @@ public class TransformerImpl extends AbstractBeanTransformer {
                     if (isNull(destFieldName)) {
                         constructorArgsValues[i] = classUtils.getDefaultTypeValue(constructorParameters[i].getType());
                     } else {
-                        String sourceFieldName = getSourceFieldName(destFieldName);
+                        EffectiveSource<T> effective = resolveEffectiveSource(sourceObj, destFieldName, breadcrumb);
                         constructorArgsValues[i] =
-                                getFieldValue(sourceObj, sourceFieldName, targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb);
+                                getFieldValue(effective.source, effective.fieldName, targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb);
                     }
                 });
         return constructorArgsValues;
@@ -265,15 +333,6 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     private boolean doSkipTransformation(final String breadcrumb) {
         return settings.getFieldsToSkip().contains(breadcrumb);
-    }
-
-    /**
-     * Returns the field name in the source object.
-     * @param field the field that has to be set.
-     * @return the source field name.
-     */
-    private String getSourceFieldName(final Field field) {
-        return getSourceFieldName(field.getName());
     }
 
     /**
@@ -387,8 +446,8 @@ public class TransformerImpl extends AbstractBeanTransformer {
     }
 
     private <T, K> Object getFieldValue(final T sourceObj, final K targetObject, final Class<K> targetClass, final Field field, final String breadcrumb) {
-        String sourceFieldName = getSourceFieldName(field);
-        return getFieldValue(sourceObj, sourceFieldName, targetObject, targetClass, field, breadcrumb);
+        EffectiveSource<T> effective = resolveEffectiveSource(sourceObj, field.getName(), breadcrumb);
+        return getFieldValue(effective.source, effective.fieldName, targetObject, targetClass, field, breadcrumb);
     }
 
     /**

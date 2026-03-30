@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.expediagroup.beans.sample.mutable;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
- * Example usage of the bytecode adapter plus other sample types used in tests.
+ * Mutable nested destination bean with an extra field mapped from the source root.
  */
-package com.expediagroup.beans.generator.bytecode.sample;
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+public class MutableToFooSimpleNestedWithExtra {
+    private String name;
+    private long index;
+    private int x;
+}

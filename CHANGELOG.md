@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.0.1] 2026.03.30
+* Fixes an issue that was preventing the transformation of Kotlin classes with default parameter values
+* Fixes MissingFieldException when mapping a root-level primitive field into a nested destination object via `withFieldMapping` (issue #559)
+
+### [3.0.0] 2025.05.21
+* Increase the jdk version to 17
+
 ### [2.2.4] 2024.01.03
 * Bumps to the latest version available all the project dependencies
 

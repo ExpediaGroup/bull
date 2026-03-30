@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2024 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,17 @@ import java.util.List;
 import org.testng.annotations.Test;
 
 import com.expediagroup.beans.sample.FromFooSimple;
+import com.expediagroup.beans.sample.FromFooSimpleNested;
+import com.expediagroup.beans.sample.FromFooWithPrimitiveAndNestedObject;
+import com.expediagroup.beans.sample.ToFooNestedWithDiffFieldName;
+import com.expediagroup.beans.sample.ToFooWithNestedFieldMapping;
 import com.expediagroup.beans.sample.mixed.MixedToFoo;
 import com.expediagroup.beans.sample.mixed.MixedToFooDiffFields;
 import com.expediagroup.beans.sample.mixed.MixedToFooMissingAllArgsConstructor;
 import com.expediagroup.beans.sample.mixed.MixedToFooMissingField;
 import com.expediagroup.beans.sample.mixed.MixedToFooNotExistingFields;
 import com.expediagroup.beans.sample.mixed.MixedToFooSimpleNotExistingFields;
+import com.expediagroup.beans.sample.mutable.MutableToFooWithNestedFieldMapping;
 import com.expediagroup.transformer.error.MissingFieldException;
 import com.expediagroup.transformer.model.FieldMapping;
 import com.expediagroup.transformer.model.FieldTransformer;
@@ -41,6 +46,7 @@ import com.expediagroup.transformer.model.FieldTransformer;
 public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
     private static final boolean ACTIVE = true;
     private static final String INDEX_FIELD_NAME = "index";
+    private static final int EXPECTED_X_VALUE = 20;
 
     /**
      * Test that a Mixed bean with a constructor containing the final field only is correctly copied.
@@ -247,6 +253,136 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
                 .usingRecursiveComparison()
                 .ignoringFields(ID_FIELD_NAME, INDEX_FIELD_NAME, AGE_FIELD_NAME, ACTIVE_FIELD_NAME)
                 .isEqualTo(fromFoo);
+        underTest.reset();
+    }
+
+    /**
+     * Test that a primitive field from the source root can be mapped into a nested destination field.
+     * This verifies the fix for issue #559.
+     */
+    @Test
+    public void testPrimitiveFieldMappedIntoNestedObject() {
+        // GIVEN
+        FromFooWithPrimitiveAndNestedObject source = new FromFooWithPrimitiveAndNestedObject(
+                "Lucas", new FromFooSimpleNested("Mendes", 1L), EXPECTED_X_VALUE);
+
+        // WHEN
+        ToFooWithNestedFieldMapping actual = underTest
+                .withFieldMapping(new FieldMapping<>("x", "nestedObject.x"))
+                .transform(source, ToFooWithNestedFieldMapping.class);
+
+        // THEN
+        assertThat(actual.getName()).isEqualTo("Lucas");
+        assertThat(actual.getNestedObject().getName()).isEqualTo("Mendes");
+        assertThat(actual.getNestedObject().getIndex()).isEqualTo(1L);
+        assertThat(actual.getNestedObject().getX()).isEqualTo(EXPECTED_X_VALUE);
+        underTest.reset();
+    }
+
+    /**
+     * Test that a primitive field mapped into a nested destination works via the setter-injection path
+     * (mutable destination bean). This exercises the transform(T, K, String) overload and
+     * the getFieldValue overload with breadcrumb-aware root resolution.
+     */
+    @Test
+    public void testPrimitiveFieldMappedIntoNestedMutableObject() {
+        // GIVEN
+        FromFooWithPrimitiveAndNestedObject source = new FromFooWithPrimitiveAndNestedObject(
+                "Lucas", new FromFooSimpleNested("Mendes", 1L), EXPECTED_X_VALUE);
+
+        // WHEN
+        MutableToFooWithNestedFieldMapping actual = underTest
+                .withFieldMapping(new FieldMapping<>("x", "nestedObject.x"))
+                .transform(source, MutableToFooWithNestedFieldMapping.class);
+
+        // THEN
+        assertThat(actual.getName()).isEqualTo("Lucas");
+        assertThat(actual.getNestedObject().getName()).isEqualTo("Mendes");
+        assertThat(actual.getNestedObject().getIndex()).isEqualTo(1L);
+        assertThat(actual.getNestedObject().getX()).isEqualTo(EXPECTED_X_VALUE);
+        underTest.reset();
+    }
+
+    /**
+     * Test that breadcrumb-based mapping works when source and destination field names differ.
+     * Maps "x" from root source into "nestedObject.y" in the destination, verifying the lookup
+     * does not accidentally fall through to matching by field name alone.
+     */
+    @Test
+    public void testPrimitiveFieldMappedIntoNestedObjectWithDifferentFieldName() {
+        // GIVEN
+        FromFooWithPrimitiveAndNestedObject source = new FromFooWithPrimitiveAndNestedObject(
+                "Lucas", new FromFooSimpleNested("Mendes", 1L), EXPECTED_X_VALUE);
+
+        // WHEN
+        ToFooNestedWithDiffFieldName actual = underTest
+                .withFieldMapping(new FieldMapping<>("x", "nestedObject.y"))
+                .transform(source, ToFooNestedWithDiffFieldName.class);
+
+        // THEN
+        assertThat(actual.getName()).isEqualTo("Lucas");
+        assertThat(actual.getNestedObject().getName()).isEqualTo("Mendes");
+        assertThat(actual.getNestedObject().getIndex()).isEqualTo(1L);
+        assertThat(actual.getNestedObject().getY()).isEqualTo(EXPECTED_X_VALUE);
+        underTest.reset();
+    }
+
+    /**
+     * Test that a zero (default int) value is correctly mapped through breadcrumb-based resolution.
+     * Ensures there is no confusion between "field not found" and "field value is default".
+     */
+    @Test
+    public void testPrimitiveFieldMappedIntoNestedObjectWithZeroValue() {
+        // GIVEN
+        int zeroValue = 0;
+        FromFooWithPrimitiveAndNestedObject source = new FromFooWithPrimitiveAndNestedObject(
+                "Lucas", new FromFooSimpleNested("Mendes", 1L), zeroValue);
+
+        // WHEN
+        ToFooWithNestedFieldMapping actual = underTest
+                .withFieldMapping(new FieldMapping<>("x", "nestedObject.x"))
+                .transform(source, ToFooWithNestedFieldMapping.class);
+
+        // THEN
+        assertThat(actual.getName()).isEqualTo("Lucas");
+        assertThat(actual.getNestedObject().getX()).isEqualTo(zeroValue);
+        underTest.reset();
+    }
+
+    /**
+     * Test that when no FieldMapping is provided and the nested destination has a field
+     * that does not exist in the nested source, MissingFieldException is thrown.
+     * This confirms the transformer does not silently resolve unmapped fields from the root.
+     */
+    @Test(expectedExceptions = MissingFieldException.class)
+    public void testNestedFieldWithoutMappingThrowsMissingFieldException() {
+        // GIVEN
+        FromFooWithPrimitiveAndNestedObject source = new FromFooWithPrimitiveAndNestedObject(
+                "Lucas", new FromFooSimpleNested("Mendes", 1L), EXPECTED_X_VALUE);
+
+        // WHEN - no field mapping defined, nested destination has 'x' but nested source does not
+        underTest.transform(source, ToFooWithNestedFieldMapping.class);
+    }
+
+    /**
+     * Test that multiple root-level primitive fields can be mapped into the same nested
+     * destination object simultaneously.
+     */
+    @Test
+    public void testMultipleRootFieldsMappedIntoSameNestedObject() {
+        // GIVEN
+        FromFooWithPrimitiveAndNestedObject source = new FromFooWithPrimitiveAndNestedObject(
+                "Lucas", new FromFooSimpleNested("Mendes", 1L), EXPECTED_X_VALUE);
+
+        // WHEN
+        ToFooWithNestedFieldMapping actual = underTest
+                .withFieldMapping(new FieldMapping<>("x", "nestedObject.x"))
+                .withFieldMapping(new FieldMapping<>("name", "nestedObject.name"))
+                .transform(source, ToFooWithNestedFieldMapping.class);
+
+        // THEN
+        assertThat(actual.getNestedObject().getX()).isEqualTo(EXPECTED_X_VALUE);
+        assertThat(actual.getNestedObject().getName()).isEqualTo("Lucas");
         underTest.reset();
     }
 }

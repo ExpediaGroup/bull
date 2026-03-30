@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.expediagroup.beans.sample;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
 /**
- * Example usage of the bytecode adapter plus other sample types used in tests.
+ * Destination bean where a root-level source field is mapped into a nested field.
  */
-package com.expediagroup.beans.generator.bytecode.sample;
+@AllArgsConstructor
+@Getter
+@ToString
+public class ToFooWithNestedFieldMapping {
+    private final String name;
+    private final ToFooSimpleNestedWithExtra nestedObject;
+}
