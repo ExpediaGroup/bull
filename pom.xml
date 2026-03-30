@@ -87,7 +87,7 @@
         <maven.versions.plugin.version>2.21.0</maven.versions.plugin.version>
         <puppycrawl.checkstyle.version>12.3.0</puppycrawl.checkstyle.version>
         <maven.release.plugin.version>3.0.0-M4</maven.release.plugin.version>
-        <maven.nexus-staging.plugin.version>1.7.0</maven.nexus-staging.plugin.version>
+        <maven.central-publishing.plugin.version>0.7.0</maven.central-publishing.plugin.version>
         <maven.project.info.reports.plugin.version>3.1.2</maven.project.info.reports.plugin.version>
         <maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
         <spotless.maven.plugin.version>3.4.0</spotless.maven.plugin.version>
@@ -117,14 +117,12 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>oss-sonatype</id>
-            <name>Sonatype Nexus Snapshots Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>central</id>
+            <url>https://central.sonatype.com/</url>
         </snapshotRepository>
         <repository>
-            <id>oss-sonatype</id>
-            <name>Sonatype Nexus Release Repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>central</id>
+            <url>https://central.sonatype.com/</url>
         </repository>
     </distributionManagement>
 
@@ -382,14 +380,14 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>${maven.nexus-staging.plugin.version}</version>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>${maven.central-publishing.plugin.version}</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <serverId>oss-sonatype</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                            <publishingServerId>central</publishingServerId>
+                            <autoPublish>true</autoPublish>
+                            <waitUntil>published</waitUntil>
                         </configuration>
                     </plugin>
                     <!-- replace the bean-utils-library javadoc jar file with the one containing all modules -->
