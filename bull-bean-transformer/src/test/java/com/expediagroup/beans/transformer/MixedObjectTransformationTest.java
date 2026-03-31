@@ -24,11 +24,15 @@ import java.util.List;
 
 import org.testng.annotations.Test;
 
+import com.expediagroup.beans.sample.FromFooContainingList;
 import com.expediagroup.beans.sample.FromFooSimple;
 import com.expediagroup.beans.sample.FromFooSimpleNested;
+import com.expediagroup.beans.sample.FromFooWithFullName;
 import com.expediagroup.beans.sample.FromFooWithPrimitiveAndNestedObject;
 import com.expediagroup.beans.sample.ToFooNestedWithDiffFieldName;
 import com.expediagroup.beans.sample.ToFooWithNestedFieldMapping;
+import com.expediagroup.beans.sample.immutable.ImmutableToFooContainingList;
+import com.expediagroup.beans.sample.immutable.ImmutableToFooWithSplitName;
 import com.expediagroup.beans.sample.mixed.MixedToFoo;
 import com.expediagroup.beans.sample.mixed.MixedToFooDiffFields;
 import com.expediagroup.beans.sample.mixed.MixedToFooMissingAllArgsConstructor;
@@ -383,6 +387,65 @@ public class MixedObjectTransformationTest extends AbstractBeanTransformerTest {
         // THEN
         assertThat(actual.getNestedObject().getX()).isEqualTo(EXPECTED_X_VALUE);
         assertThat(actual.getNestedObject().getName()).isEqualTo("Lucas");
+        underTest.reset();
+    }
+
+    /**
+     * Test that field transformers on collection elements use the element as source, not the root object.
+     * Regression test for the NPE introduced in 2.1.5-jdk11 when using setFlatFieldNameTransformation(true)
+     * together with withFieldMapping and withFieldTransformer on a bean containing a List.
+     */
+    @Test
+    public void testFieldTransformerOnCollectionElementsUsesElementNotRootAsSource() {
+        // GIVEN
+        final String space = " ";
+        FromFooContainingList source = new FromFooContainingList("root-id",
+                List.of(new FromFooWithFullName("Donald Duck"), new FromFooWithFullName("Daisy Duck")));
+
+        // WHEN
+        ImmutableToFooContainingList actual = underTest
+                .setFlatFieldNameTransformation(true)
+                .withFieldMapping(new FieldMapping<>("fullName", "name"))
+                .withFieldMapping(new FieldMapping<>("fullName", "surname"))
+                .withFieldTransformer(new FieldTransformer<String, String>("name", fullName -> fullName.split(space)[0]))
+                .withFieldTransformer(new FieldTransformer<String, String>("surname", fullName -> fullName.split(space)[1]))
+                .transform(source, ImmutableToFooContainingList.class);
+
+        // THEN
+        assertThat(actual.getId()).isEqualTo("root-id");
+        assertThat(actual.getItems()).hasSize(2);
+        assertThat(actual.getItems().get(0).getName()).isEqualTo("Donald");
+        assertThat(actual.getItems().get(0).getSurname()).isEqualTo("Duck");
+        assertThat(actual.getItems().get(1).getName()).isEqualTo("Daisy");
+        assertThat(actual.getItems().get(1).getSurname()).isEqualTo("Duck");
+        underTest.reset();
+    }
+
+    /**
+     * Test that all collection elements are independently transformed from their own source.
+     */
+    @Test
+    public void testAllCollectionElementsAreIndependentlyTransformedFromTheirOwnSource() {
+        // GIVEN
+        final String space = " ";
+        FromFooContainingList source = new FromFooContainingList("root-id",
+                List.of(new FromFooWithFullName("Tony Stark"), new FromFooWithFullName("Bruce Banner"),
+                        new FromFooWithFullName("Steve Rogers")));
+
+        // WHEN
+        ImmutableToFooContainingList actual = underTest
+                .setFlatFieldNameTransformation(true)
+                .withFieldMapping(new FieldMapping<>("fullName", "name"))
+                .withFieldMapping(new FieldMapping<>("fullName", "surname"))
+                .withFieldTransformer(new FieldTransformer<String, String>("name", fullName -> fullName.split(space)[0]))
+                .withFieldTransformer(new FieldTransformer<String, String>("surname", fullName -> fullName.split(space)[1]))
+                .transform(source, ImmutableToFooContainingList.class);
+
+        // THEN
+        assertThat(actual.getItems()).extracting(ImmutableToFooWithSplitName::getName)
+                .containsExactly("Tony", "Bruce", "Steve");
+        assertThat(actual.getItems()).extracting(ImmutableToFooWithSplitName::getSurname)
+                .containsExactly("Stark", "Banner", "Rogers");
         underTest.reset();
     }
 }

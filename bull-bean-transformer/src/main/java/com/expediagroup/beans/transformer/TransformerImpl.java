@@ -93,9 +93,11 @@ public class TransformerImpl extends AbstractBeanTransformer {
     @SuppressWarnings("unchecked")
     private <T> EffectiveSource<T> resolveEffectiveSource(final T sourceObj, final String destFieldName, final String breadcrumb) {
         String fieldBreadcrumb = evalBreadcrumb(destFieldName, breadcrumb);
-        String mapped = settings.getFieldsNameMapping().get(fieldBreadcrumb);
-        if (mapped != null && rootSourceObj.get() != null) {
-            return new EffectiveSource<>((T) rootSourceObj.get(), mapped);
+        if (isNotEmpty(breadcrumb)) {
+            String mapped = settings.getFieldsNameMapping().get(fieldBreadcrumb);
+            if (mapped != null && rootSourceObj.get() != null) {
+                return new EffectiveSource<>((T) rootSourceObj.get(), mapped);
+            }
         }
         return new EffectiveSource<>(sourceObj, getSourceFieldName(destFieldName));
     }
