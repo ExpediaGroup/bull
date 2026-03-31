@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,5 +55,6 @@ public abstract class AbstractBeanTransformerTest extends AbstractTransformerTes
         openMocks(this);
         underTest.resetFieldsTransformer();
         underTest.resetFieldsTransformationSkip();
+        underTest.resetFieldsMapping();
     }
 }
