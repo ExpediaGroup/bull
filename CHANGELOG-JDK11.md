@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.1.6-jdk11] 2026.03.31
+* Fixes a regression introduced in 2.1.5-jdk11 where field transformers applied to collection elements were incorrectly resolved against the root source object instead of the current element, causing a NullPointerException when a flat field name mapping existed with the same name as the destination field
+
 ### [2.1.5-jdk11] 2026.03.30
 * Fixes an issue that was preventing the transformation of Kotlin classes with default parameter values
 * Fixes MissingFieldException when mapping a root-level primitive field into a nested destination object via `withFieldMapping` (issue #559)
