@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -336,6 +336,25 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
                         (double) fromFooPrimitiveTypes.getPrice(),
                         ACTIVE,
                         fromFooPrimitiveTypes.getUuid());
+        underTest.setPrimitiveTypeConversionEnabled(false);
+    }
+
+    /**
+     * Test that the second transformation with primitive type conversion enabled hits the null-marker
+     * cache entry for fields where source and destination types are the same (no conversion needed).
+     */
+    @Test
+    public void testAutomaticPrimitiveTypeTransformationCachesNullConversionForSameTypeFields() {
+        // GIVEN
+        underTest.setPrimitiveTypeConversionEnabled(true);
+
+        // WHEN - first transform computes and caches a null-marker for fields with no conversion
+        MutableToFooOnlyPrimitiveTypes first = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
+        // WHEN - second transform hits the null-marker cache for same-type fields
+        MutableToFooOnlyPrimitiveTypes second = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
+
+        // THEN
+        assertThat(second).usingRecursiveComparison().isEqualTo(first);
         underTest.setPrimitiveTypeConversionEnabled(false);
     }
 

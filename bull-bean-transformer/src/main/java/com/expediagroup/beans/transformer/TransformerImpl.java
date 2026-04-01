@@ -77,14 +77,11 @@ public class TransformerImpl extends AbstractBeanTransformer {
     private static final Class<?> ABSENT_SOURCE_FIELD_TYPE = AbsentFieldType.class;
 
     /**
-     * Sentinel {@link FieldTransformer} cached by {@link #getPrimitiveTypeTransformer} when no
-     * primitive-type conversion is applicable for a given field. Acts as an identity transform so
-     * the caller's {@code nonNull} check still short-circuits correctly without applying any
-     * conversion, and the sentinel is distinguishable from a real transformer via identity ({@code ==}).
+     * Cache key suffix appended to the primary key in {@link #getPrimitiveTypeTransformer} when the
+     * result is {@code null} (no primitive-type conversion is applicable). Storing a {@link Boolean}
+     * marker under this secondary key avoids the need for a sentinel object with an unreachable lambda.
      */
-    @SuppressWarnings("rawtypes")
-    private static final FieldTransformer NO_OP_FIELD_TRANSFORMER_SENTINEL =
-            new FieldTransformer<Object, Object>("__no_conversion__", x -> x);
+    private static final String NULL_PRIMITIVE_TRANSFORMER_SUFFIX = ".nullConversion";
 
     /**
      * Holds a per-thread stack of root source objects for active transformations.
@@ -695,12 +692,12 @@ public class TransformerImpl extends AbstractBeanTransformer {
     private FieldTransformer getPrimitiveTypeTransformer(final Class<?> sourceObjectClass, final String sourceFieldName,
                                                          final Field field, final String fieldTransformerKey) {
         String cacheKey = TRANSFORMER_FUNCTION_CACHE_PREFIX + "-" + field.getDeclaringClass().getName() + "-" + fieldTransformerKey + "-" + field.getName();
-        // Use NO_OP_FIELD_TRANSFORMER_SENTINEL to cache null results (no conversion applicable).
-        // The sentinel is an identity transformer, so if it leaks past the sentinel check it is still safe.
         var fromCache = cacheManager.getFromCache(cacheKey, FieldTransformer.class);
         if (fromCache.isPresent()) {
-            FieldTransformer cached = fromCache.get();
-            return cached == NO_OP_FIELD_TRANSFORMER_SENTINEL ? null : cached;
+            return fromCache.get();
+        }
+        if (cacheManager.getFromCache(cacheKey + NULL_PRIMITIVE_TRANSFORMER_SUFFIX, Boolean.class).isPresent()) {
+            return null;
         }
         FieldTransformer primitiveTypeTransformer = null;
         Class<?> sourceFieldType = getSourceFieldType(sourceObjectClass, sourceFieldName);
@@ -709,7 +706,11 @@ public class TransformerImpl extends AbstractBeanTransformer {
                     .map(conversionFunction -> new FieldTransformer<>(fieldTransformerKey, conversionFunction))
                     .orElse(null);
         }
-        cacheManager.cacheObject(cacheKey, primitiveTypeTransformer, NO_OP_FIELD_TRANSFORMER_SENTINEL);
+        if (primitiveTypeTransformer != null) {
+            cacheManager.cacheObject(cacheKey, primitiveTypeTransformer);
+        } else {
+            cacheManager.cacheObject(cacheKey + NULL_PRIMITIVE_TRANSFORMER_SUFFIX, Boolean.TRUE);
+        }
         return primitiveTypeTransformer;
     }
 

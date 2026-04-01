@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -423,6 +423,35 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
         assertThat(actual).isEqualTo(DEST_FIELD_NAME);
 
         // restore modified objects
+        restoreObjects(getDestFieldNameMethod);
+    }
+
+    /**
+     * Test that {@code getDestFieldName} caches and returns {@code null} on second call when
+     * the parameter has no compiled name and no {@link ConstructorArg} annotation.
+     * @throws Exception the thrown exception
+     */
+    @Test
+    public void testGetDestFieldNameReturnsCachedNullForParameterWithNoAnnotation() throws Exception {
+        // GIVEN - a parameter with no compiled name and no @ConstructorArg annotation
+        Parameter constructorParameter = mock(Parameter.class);
+        when(constructorParameter.isNamePresent()).thenReturn(false);
+        when(constructorParameter.getName()).thenReturn("absentArgParam");
+
+        Method getDestFieldNameMethod = underTest.getClass().getDeclaredMethod(GET_DEST_FIELD_NAME_METHOD_NAME, Parameter.class, String.class);
+        getDestFieldNameMethod.setAccessible(true);
+
+        String uniqueClassName = "com.example.UniqueClassForAbsentCacheTest";
+
+        // WHEN - first call computes null (no annotation) and caches the ABSENT_FIELD_NAME sentinel
+        String firstResult = (String) getDestFieldNameMethod.invoke(underTest, constructorParameter, uniqueClassName);
+        // WHEN - second call hits the ABSENT_FIELD_NAME sentinel from cache and returns null
+        String secondResult = (String) getDestFieldNameMethod.invoke(underTest, constructorParameter, uniqueClassName);
+
+        // THEN
+        assertThat(firstResult).isNull();
+        assertThat(secondResult).isNull();
+
         restoreObjects(getDestFieldNameMethod);
     }
 
