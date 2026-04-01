@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-### [2.1.6-jdk11] 2026.03.31
+### [2.1.7-jdk11] 2026.04.01
+* Refactors `TransformerImpl` to use direct field access via reflection utilities instead of string-literal field names, improving maintainability and robustness
+* Eliminates redundant `ThreadLocal` initialisation by reusing the existing `rootSourceStack` instance
+* Raises JaCoCo code coverage thresholds to 100% across all modules and adds the corresponding branch-coverage tests
+
+### [2.1.7-jdk11] 2026.03.31
+* Fixes a regression introduced in 2.1.5-jdk11 where field transformers applied to collection elements were incorrectly resolved against the root source object instead of the current element, causing a NullPointerException when a flat field name mapping existed with the same name as the destination field
+
+### [2.1.5-jdk11] 2026.03.30
 * Fixes an issue that was preventing the transformation of Kotlin classes with default parameter values
 * Fixes MissingFieldException when mapping a root-level primitive field into a nested destination object via `withFieldMapping` (issue #559)
 * Fixes a regression where field transformers applied to collection elements would receive `null` instead of the element's own field value when using `setFlatFieldNameTransformation(true)` together with `withFieldMapping` and `withFieldTransformer`
