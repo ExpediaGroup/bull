@@ -62,6 +62,7 @@ import com.expediagroup.beans.sample.immutable.ImmutableToFooCustomAnnotation;
 import com.expediagroup.beans.sample.immutable.ImmutableToFooSubClass;
 import com.expediagroup.beans.sample.immutable.ImmutableToFooWithKotlinDefaultConstructor;
 import com.expediagroup.beans.sample.immutable.ImmutableToFooWithOnlySyntheticConstructor;
+import com.expediagroup.beans.sample.immutable.ImmutableToFooWithStaticField;
 import com.expediagroup.beans.sample.mixed.MixedToFoo;
 import com.expediagroup.beans.sample.mixed.MixedToFooMissingConstructor;
 import com.expediagroup.beans.sample.mixed.MixedToFooStaticField;
@@ -351,7 +352,8 @@ public class ClassUtilsTest {
                 {"Tests that the method returns 0 if the given class has no private final fields", CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, ZERO},
                 {"Tests that the method returns the expected value if the class has private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS, EXPECTED_PRIVATE_FINAL_FIELDS},
                 {"Tests that the method returns the expected value if the class has private final fields and extends another class",
-                    CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, EXPECTED_SUB_CLASS_PRIVATE_FIELDS}
+                    CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
+                {"Tests that static final fields are excluded from private final fields", CLASS_WITH_STATIC_FIELDS, ZERO}
         };
     }
 
@@ -814,7 +816,8 @@ public class ClassUtilsTest {
         return new Object[][] {
                 {"Tests that the method returns immutable if the given class is immutable", ImmutableToFoo.class, ClassType.IMMUTABLE},
                 {"Tests that the method returns mutable if the given class is mutable", MutableToFoo.class, ClassType.MUTABLE},
-                {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED}
+                {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED},
+                {"Tests that static non-final fields are ignored when determining IMMUTABLE class type", ImmutableToFooWithStaticField.class, ClassType.IMMUTABLE}
         };
     }
 
