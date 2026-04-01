@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.0.3] 2026.04.01
+* Refactors `TransformerImpl` to use direct field access via reflection utilities instead of string-literal field names, improving maintainability and robustness
+* Eliminates redundant `ThreadLocal` initialisation by reusing the existing `rootSourceStack` instance
+* Raises JaCoCo code coverage thresholds to 100% across all modules and adds the corresponding branch-coverage tests
+
 ### [3.0.2] 2026.03.31
 * Fixes a regression introduced in 3.0.1 where field transformers applied to collection elements were incorrectly resolved against the root source object instead of the current element, causing a NullPointerException when a flat field name mapping existed with the same name as the destination field
 
