@@ -38,6 +38,8 @@ import static com.expediagroup.transformer.constant.Punctuation.RPAREN;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -47,38 +49,70 @@ import com.expediagroup.transformer.error.InvalidBeanException;
 import com.expediagroup.transformer.error.MissingFieldException;
 import com.expediagroup.transformer.model.FieldTransformer;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Utility methods for populating Mutable, Immutable and Hybrid JavaBeans properties via reflection.
  * The implementations are provided by BeanUtils.
  */
+@Slf4j
 public class TransformerImpl extends AbstractBeanTransformer {
     /**
-     * Holds the root source object for the current transformation.
-     * Used to resolve field mappings that reference root-level source fields
-     * from within nested destination objects.
-     *
-     * Note: if a FieldTransformer callback re-invokes transform() on this same
-     * instance for a different source object, the inner call will still see
-     * the outer root. This is acceptable for current use cases.
+     * Sentinel used to cache a null result from {@link #getDestFieldName}: means the constructor
+     * parameter has no compiled name and carries no {@link ConstructorArg} annotation.
      */
-    private final ThreadLocal<Object> rootSourceObj = new ThreadLocal<>();
+    private static final String ABSENT_FIELD_NAME = "\0";
+
+    /**
+     * Marker class whose {@link Class} object is cached by {@link #getSourceFieldType} when the
+     * field does not exist in the source and default-value-for-missing-field mode is active.
+     * Using a dedicated type avoids confusing a "not-found" result with any real field type.
+     */
+    private static final class AbsentFieldType { }
+
+    /**
+     * The {@link Class} token for {@link AbsentFieldType}, used as a sentinel value in
+     * {@link #getSourceFieldType} to represent a cached {@code null} result.
+     */
+    private static final Class<?> ABSENT_SOURCE_FIELD_TYPE = AbsentFieldType.class;
+
+    /**
+     * Sentinel {@link FieldTransformer} cached by {@link #getPrimitiveTypeTransformer} when no
+     * primitive-type conversion is applicable for a given field. Acts as an identity transform so
+     * the caller's {@code nonNull} check still short-circuits correctly without applying any
+     * conversion, and the sentinel is distinguishable from a real transformer via identity ({@code ==}).
+     */
+    @SuppressWarnings("rawtypes")
+    private static final FieldTransformer NO_OP_FIELD_TRANSFORMER_SENTINEL =
+            new FieldTransformer<Object, Object>("__no_conversion__", x -> x);
+
+    /**
+     * Holds a per-thread stack of root source objects for active transformations.
+     * The bottom of the stack is the outermost root; each nested transform that starts
+     * a new logical root (breadcrumb == null) pushes its own source and pops it in {@code finally}.
+     *
+     * <p>Note: collection elements are transformed via {@link com.expediagroup.beans.populator.Populator}
+     * with a null breadcrumb, which means they also push their own source. As a result,
+     * breadcrumb-based field mappings (root-source redirects) are intentionally guarded by
+     * {@code isNotEmpty(breadcrumb)} so they are never triggered for flat / collection-element calls.
+     *
+     * <p>Re-entrancy limitation: a {@link FieldTransformer} callback that calls
+     * {@code transform(otherObj, OtherClass.class)} on <em>this</em> instance will push {@code otherObj}
+     * as the new root for its own transformation chain, which is correct. However, any breadcrumb-based
+     * field mappings active at that point will resolve against {@code otherObj}'s root rather than the
+     * outer root. This is acceptable for current use-cases; a complete fix would require passing
+     * root-source context explicitly through the call chain rather than via a ThreadLocal.
+     */
+    private final ThreadLocal<Deque<Object>> rootSourceStack = ThreadLocal.withInitial(ArrayDeque::new);
 
     /**
      * Holds the resolved effective source object and field name after checking
      * breadcrumb-based field mappings against the root source.
      * @param <T> the source object type
+     * @param source the source object to read the field from
+     * @param fieldName the field name to read from the source
      */
-    private static final class EffectiveSource<T> {
-        /** The source object to read the field from. */
-        final T source;
-        /** The field name to read from the source. */
-        final String fieldName;
-
-        EffectiveSource(final T src, final String fName) {
-            this.source = src;
-            this.fieldName = fName;
-        }
-    }
+    private record EffectiveSource<T>(T source, String fieldName) { }
 
     /**
      * Resolves the effective source object and field name for a destination field.
@@ -92,11 +126,12 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     @SuppressWarnings("unchecked")
     private <T> EffectiveSource<T> resolveEffectiveSource(final T sourceObj, final String destFieldName, final String breadcrumb) {
-        String fieldBreadcrumb = evalBreadcrumb(destFieldName, breadcrumb);
         if (isNotEmpty(breadcrumb)) {
+            String fieldBreadcrumb = evalBreadcrumb(destFieldName, breadcrumb);
             String mapped = settings.getFieldsNameMapping().get(fieldBreadcrumb);
-            if (mapped != null && rootSourceObj.get() != null) {
-                return new EffectiveSource<>((T) rootSourceObj.get(), mapped);
+            Deque<Object> stack = rootSourceStack.get();
+            if (mapped != null && !stack.isEmpty()) {
+                return new EffectiveSource<>((T) stack.peek(), mapped);
             }
         }
         return new EffectiveSource<>(sourceObj, getSourceFieldName(destFieldName));
@@ -108,9 +143,10 @@ public class TransformerImpl extends AbstractBeanTransformer {
     @Override
     @SuppressWarnings("unchecked")
     protected final <T, K> K transform(final T sourceObj, final Class<? extends K> targetClass, final String breadcrumb) {
-        boolean isRoot = rootSourceObj.get() == null;
+        final Deque<Object> stack = rootSourceStack.get();
+        final boolean isRoot = stack.isEmpty();
         if (isRoot) {
-            rootSourceObj.set(sourceObj);
+            stack.push(sourceObj);
         }
         try {
             final K k;
@@ -130,7 +166,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
             return k;
         } finally {
             if (isRoot) {
-                rootSourceObj.remove();
+                stack.pop();
             }
         }
     }
@@ -165,9 +201,10 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     @Override
     protected final <T, K> void transform(final T sourceObj, final K targetObject, final String breadcrumb) {
-        boolean isRoot = rootSourceObj.get() == null;
+        final Deque<Object> stack = rootSourceStack.get();
+        final boolean isRoot = stack.isEmpty();
         if (isRoot) {
-            rootSourceObj.set(sourceObj);
+            stack.push(sourceObj);
         }
         try {
             injectAllFields(sourceObj, targetObject, breadcrumb);
@@ -176,7 +213,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
             }
         } finally {
             if (isRoot) {
-                rootSourceObj.remove();
+                stack.pop();
             }
         }
     }
@@ -312,20 +349,18 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     protected <T, K> Object[] getConstructorArgsValues(final T sourceObj, final Class<K> targetClass, final Constructor constructor, final String breadcrumb) {
         final Parameter[] constructorParameters = classUtils.getConstructorParameters(constructor);
-        final var constructorArgsValues = new Object[constructorParameters.length];
-        range(0, constructorParameters.length)
+        // mapToObj makes the stream safe to parallelize in the future (no side-effectful array writes).
+        return range(0, constructorParameters.length)
                 //.parallel()
-                .forEach(i -> {
+                .mapToObj(i -> {
                     String destFieldName = getDestFieldName(constructorParameters[i], targetClass.getName());
                     if (isNull(destFieldName)) {
-                        constructorArgsValues[i] = classUtils.getDefaultTypeValue(constructorParameters[i].getType());
-                    } else {
-                        EffectiveSource<T> effective = resolveEffectiveSource(sourceObj, destFieldName, breadcrumb);
-                        constructorArgsValues[i] =
-                                getFieldValue(effective.source, effective.fieldName, targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb);
+                        return classUtils.getDefaultTypeValue(constructorParameters[i].getType());
                     }
-                });
-        return constructorArgsValues;
+                    EffectiveSource<T> effective = resolveEffectiveSource(sourceObj, destFieldName, breadcrumb);
+                    return getFieldValue(effective.source(), effective.fieldName(), targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb);
+                })
+                .toArray(Object[]::new);
     }
 
     /**
@@ -354,19 +389,23 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     private String getDestFieldName(final Parameter constructorParameter, final String declaringClassName) {
         String cacheKey = "DestFieldName-" + declaringClassName + "-" + constructorParameter.getName();
-        return cacheManager.getFromCache(cacheKey, String.class)
-                .orElseGet(() -> {
-                    String destFieldName;
-                    if (constructorParameter.isNamePresent()) {
-                        destFieldName = constructorParameter.getName();
-                    } else {
-                        destFieldName = ofNullable(reflectionUtils.getParameterAnnotation(constructorParameter, ConstructorArg.class, declaringClassName))
-                                .map(ConstructorArg::value)
-                                .orElse(null);
-                    }
-                    cacheManager.cacheObject(cacheKey, destFieldName);
-                    return destFieldName;
-                });
+        // Use ABSENT_FIELD_NAME as sentinel so that null results (no compiled name, no @ConstructorArg)
+        // are stored and retrieved from cache correctly rather than causing a cache miss every time.
+        var fromCache = cacheManager.getFromCache(cacheKey, String.class);
+        if (fromCache.isPresent()) {
+            String cached = fromCache.get();
+            return ABSENT_FIELD_NAME.equals(cached) ? null : cached;
+        }
+        String destFieldName;
+        if (constructorParameter.isNamePresent()) {
+            destFieldName = constructorParameter.getName();
+        } else {
+            destFieldName = ofNullable(reflectionUtils.getParameterAnnotation(constructorParameter, ConstructorArg.class, declaringClassName))
+                    .map(ConstructorArg::value)
+                    .orElse(null);
+        }
+        cacheManager.cacheObject(cacheKey, destFieldName, ABSENT_FIELD_NAME);
+        return destFieldName;
     }
 
     /**
@@ -382,9 +421,8 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     private <T, K> Object[] getConstructorValuesFromFields(final T sourceObj, final Class<K> targetClass, final String breadcrumb) {
         final List<Field> declaredFields = classUtils.getDeclaredFields(targetClass, true);
-        K k = null;
         return declaredFields.stream()
-                .map(field -> getFieldValue(sourceObj, k, targetClass, field, breadcrumb))
+                .map(field -> getFieldValue(sourceObj, (K) null, targetClass, field, breadcrumb))
                 .toArray(Object[]::new);
     }
 
@@ -449,7 +487,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
 
     private <T, K> Object getFieldValue(final T sourceObj, final K targetObject, final Class<K> targetClass, final Field field, final String breadcrumb) {
         EffectiveSource<T> effective = resolveEffectiveSource(sourceObj, field.getName(), breadcrumb);
-        return getFieldValue(effective.source, effective.fieldName, targetObject, targetClass, field, breadcrumb);
+        return getFieldValue(effective.source(), effective.fieldName(), targetObject, targetClass, field, breadcrumb);
     }
 
     /**
@@ -571,6 +609,9 @@ public class TransformerImpl extends AbstractBeanTransformer {
                 fieldValue = sourceObj;
             } else if (!isFieldTransformerDefined && !settings.isSetDefaultValueForMissingField()) {
                 throw e;
+            } else {
+                log.debug("Field '{}' not found in source type '{}'; field transformer will receive null.",
+                        sourceFieldName, sourceObj.getClass().getName());
             }
         } catch (Exception e) {
             if (!isFieldTransformerDefined) {
@@ -588,23 +629,27 @@ public class TransformerImpl extends AbstractBeanTransformer {
      */
     private Class<?> getSourceFieldType(final Class<?> sourceObjectClass, final String sourceFieldName) {
         String cacheKey = "SourceFieldType-" + sourceObjectClass.getName() + "-" + sourceFieldName;
-        return cacheManager.getFromCache(cacheKey, Class.class)
-                .orElseGet(() -> {
-                    Class<?> classType = null;
-                    try {
-                        classType = reflectionUtils.getDeclaredFieldType(sourceFieldName, sourceObjectClass);
-                    } catch (MissingFieldException e) {
-                        // in case the source field is a primitive type and the destination one is composite,
-                        // the source field type is returned without going in deep
-                        if (classUtils.isPrimitiveType(sourceObjectClass)) {
-                            classType = sourceObjectClass;
-                        } else if (!settings.isSetDefaultValueForMissingField()) {
-                            throw e;
-                        }
-                    }
-                    cacheManager.cacheObject(cacheKey, classType);
-                    return classType;
-                });
+        // Use ABSENT_SOURCE_FIELD_TYPE as sentinel so that null results (field not present in source
+        // when default-value mode is active) are cached and not recomputed on every call.
+        var fromCache = cacheManager.getFromCache(cacheKey, Class.class);
+        if (fromCache.isPresent()) {
+            Class<?> cached = fromCache.get();
+            return cached == ABSENT_SOURCE_FIELD_TYPE ? null : cached;
+        }
+        Class<?> classType = null;
+        try {
+            classType = reflectionUtils.getDeclaredFieldType(sourceFieldName, sourceObjectClass);
+        } catch (MissingFieldException e) {
+            // in case the source field is a primitive type and the destination one is composite,
+            // the source field type is returned without going in deep
+            if (classUtils.isPrimitiveType(sourceObjectClass)) {
+                classType = sourceObjectClass;
+            } else if (!settings.isSetDefaultValueForMissingField()) {
+                throw e;
+            }
+        }
+        cacheManager.cacheObject(cacheKey, classType, ABSENT_SOURCE_FIELD_TYPE);
+        return classType;
     }
 
     /**
@@ -646,21 +691,26 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * @param fieldTransformerKey the field name or the full path to the field to which assign the transformer
      * @return the default type transformer function
      */
+    @SuppressWarnings("rawtypes")
     private FieldTransformer getPrimitiveTypeTransformer(final Class<?> sourceObjectClass, final String sourceFieldName,
                                                          final Field field, final String fieldTransformerKey) {
         String cacheKey = TRANSFORMER_FUNCTION_CACHE_PREFIX + "-" + field.getDeclaringClass().getName() + "-" + fieldTransformerKey + "-" + field.getName();
-        return cacheManager.getFromCache(cacheKey, FieldTransformer.class)
-                .orElseGet(() -> {
-                    FieldTransformer primitiveTypeTransformer = null;
-                    Class<?> sourceFieldType = getSourceFieldType(sourceObjectClass, sourceFieldName);
-                    if (nonNull(sourceFieldType)) {
-                        primitiveTypeTransformer = conversionAnalyzer.getConversionFunction(sourceFieldType, field.getType())
-                                .map(conversionFunction -> new FieldTransformer<>(fieldTransformerKey, conversionFunction))
-                                .orElse(null);
-                    }
-                    cacheManager.cacheObject(cacheKey, primitiveTypeTransformer);
-                    return primitiveTypeTransformer;
-                });
+        // Use NO_OP_FIELD_TRANSFORMER_SENTINEL to cache null results (no conversion applicable).
+        // The sentinel is an identity transformer, so if it leaks past the sentinel check it is still safe.
+        var fromCache = cacheManager.getFromCache(cacheKey, FieldTransformer.class);
+        if (fromCache.isPresent()) {
+            FieldTransformer cached = fromCache.get();
+            return cached == NO_OP_FIELD_TRANSFORMER_SENTINEL ? null : cached;
+        }
+        FieldTransformer primitiveTypeTransformer = null;
+        Class<?> sourceFieldType = getSourceFieldType(sourceObjectClass, sourceFieldName);
+        if (nonNull(sourceFieldType)) {
+            primitiveTypeTransformer = conversionAnalyzer.getConversionFunction(sourceFieldType, field.getType())
+                    .map(conversionFunction -> new FieldTransformer<>(fieldTransformerKey, conversionFunction))
+                    .orElse(null);
+        }
+        cacheManager.cacheObject(cacheKey, primitiveTypeTransformer, NO_OP_FIELD_TRANSFORMER_SENTINEL);
+        return primitiveTypeTransformer;
     }
 
     /**

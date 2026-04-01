@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,18 @@ import com.expediagroup.transformer.utils.ReflectionUtils;
  */
 public abstract class Populator<O> {
     /**
+     * Shared singleton — ReflectionUtils is stateless (all cache state lives in static fields),
+     * so a single instance is safe to reuse across all Populator instances and threads.
+     */
+    private static final ReflectionUtils SHARED_REFLECTION_UTILS = new ReflectionUtils();
+
+    /**
+     * Shared singleton — ClassUtils is stateless (all cache state lives in static fields),
+     * so a single instance is safe to reuse across all Populator instances and threads.
+     */
+    private static final ClassUtils SHARED_CLASS_UTILS = new ClassUtils();
+
+    /**
      * Reflection utils instance {@link ReflectionUtils}.
      */
     final ReflectionUtils reflectionUtils;
@@ -49,8 +61,8 @@ public abstract class Populator<O> {
      */
     Populator(final BeanTransformer beanTransformer) {
         transformer = beanTransformer;
-        reflectionUtils = new ReflectionUtils();
-        classUtils = new ClassUtils();
+        reflectionUtils = SHARED_REFLECTION_UTILS;
+        classUtils = SHARED_CLASS_UTILS;
     }
 
     /**

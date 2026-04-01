@@ -48,13 +48,16 @@ public abstract class AbstractBeanTransformerTest extends AbstractTransformerTes
     }
 
     /**
-     * Initialized mocks.
+     * Initialized mocks and resets all transformer state between tests.
+     * openMocks(this) recreates underTest with fresh TransformerSettings, so individual
+     * settings (mappings, skip list, etc.) are already clean. resetFieldsTransformer() is
+     * still required explicitly because the CacheManager backing store is shared statically
+     * across instances and is not wiped when a new instance is created.
      */
     @BeforeMethod
     void beforeMethod() {
         openMocks(this);
+        underTest.reset();
         underTest.resetFieldsTransformer();
-        underTest.resetFieldsTransformationSkip();
-        underTest.resetFieldsMapping();
     }
 }
