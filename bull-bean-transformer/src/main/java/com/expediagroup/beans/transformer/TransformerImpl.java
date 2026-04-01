@@ -106,10 +106,22 @@ public class TransformerImpl extends AbstractBeanTransformer {
      * Holds the resolved effective source object and field name after checking
      * breadcrumb-based field mappings against the root source.
      * @param <T> the source object type
-     * @param source the source object to read the field from
-     * @param fieldName the field name to read from the source
      */
-    private record EffectiveSource<T>(T source, String fieldName) { }
+    private static final class EffectiveSource<T> {
+        /**
+         * The source object to read the field from.
+         */
+        final T source;
+        /**
+         * The field name to read from the source.
+         */
+        final String fieldName;
+
+        EffectiveSource(final T src, final String name) {
+            this.source = src;
+            this.fieldName = name;
+        }
+    }
 
     /**
      * Resolves the effective source object and field name for a destination field.
@@ -355,7 +367,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
                         return classUtils.getDefaultTypeValue(constructorParameters[i].getType());
                     }
                     EffectiveSource<T> effective = resolveEffectiveSource(sourceObj, destFieldName, breadcrumb);
-                    return getFieldValue(effective.source(), effective.fieldName(), targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb);
+                    return getFieldValue(effective.source, effective.fieldName, targetClass, reflectionUtils.getDeclaredField(destFieldName, targetClass), breadcrumb);
                 })
                 .toArray(Object[]::new);
     }
@@ -484,7 +496,7 @@ public class TransformerImpl extends AbstractBeanTransformer {
 
     private <T, K> Object getFieldValue(final T sourceObj, final K targetObject, final Class<K> targetClass, final Field field, final String breadcrumb) {
         EffectiveSource<T> effective = resolveEffectiveSource(sourceObj, field.getName(), breadcrumb);
-        return getFieldValue(effective.source(), effective.fieldName(), targetObject, targetClass, field, breadcrumb);
+        return getFieldValue(effective.source, effective.fieldName, targetObject, targetClass, field, breadcrumb);
     }
 
     /**
