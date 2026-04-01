@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -91,5 +91,22 @@ public class PopulatorFactoryTest {
         if (isNonNullObjectExpected) {
             assertThat(populator).containsInstanceOf(expectedResult);
         }
+    }
+
+    /**
+     * Tests that an {@link OptionalPopulator} is returned when the destination type is {@link Optional} but the
+     * source type is not. Covers the false branch of {@code Optional.class == sourceObjectClass} combined with
+     * the true branch of {@code Optional.class == destObjectClass}.
+     */
+    @Test
+    @SuppressWarnings({"unchecked"})
+    public void testGetPopulatorReturnsOptionalPopulatorWhenOnlyDestIsOptional() {
+        // GIVEN - dest is Optional, source is not Optional (covers the second condition of the || expression)
+
+        // WHEN
+        Optional<Populator> populator = underTest.getPopulator(Optional.class, String.class, transformer);
+
+        // THEN
+        assertThat(populator).containsInstanceOf(OptionalPopulator.class);
     }
 }

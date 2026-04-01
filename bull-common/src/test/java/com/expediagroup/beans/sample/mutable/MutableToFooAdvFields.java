@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,5 +48,14 @@ public class MutableToFooAdvFields {
 
     private void setIndex(final String indexNumber) {
         this.indexNumber = indexNumber;
+    }
+
+    public MutableToFooAdvFields setFluent(final String val) {
+        this.indexNumber = val;
+        return this;
+    }
+
+    public void getNone() {
+        // getter-like name with void return — used to cover isSetter/isGetter branch in tests
     }
 }

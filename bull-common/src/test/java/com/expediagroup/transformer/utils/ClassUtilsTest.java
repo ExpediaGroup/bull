@@ -160,6 +160,7 @@ public class ClassUtilsTest {
                 {"Tests that the method returns true if the class is a Byte", Byte.class, true},
                 {"Tests that the method returns true if the class is a Void", Void.class, true},
                 {"Tests that the method returns true if the class is a String", String.class, true},
+                {"Tests that the method returns true if the class is an Enum", ClassType.class, true},
         };
     }
 
@@ -196,6 +197,22 @@ public class ClassUtilsTest {
                 {"Tests that the method returns true if the class is an instance of Date class", Date.class, true},
                 {"Tests that the method returns false if the class is an instance of DateTime class", DateTime.class, false}
         };
+    }
+
+    /**
+     * Tests that {@code isSpecialType} returns true for a synthetic class (JDK dynamic proxy),
+     * covering the true branch of {@code clazz.isSynthetic()}.
+     */
+    @Test
+    public void testIsSpecialTypeReturnsTrueForSyntheticClass() {
+        // GIVEN - lambda classes are hidden/synthetic (isSynthetic() == true)
+        Runnable lambda = () -> { };
+
+        // WHEN
+        boolean actual = underTest.isSpecialType(lambda.getClass());
+
+        // THEN
+        assertThat(actual).isTrue();
     }
 
     /**
@@ -290,6 +307,21 @@ public class ClassUtilsTest {
                 {"Tests that the method returns true if the array is of type Integer[]", PRIMITIVE_INTEGER_ARRAY, true},
                 {"Tests that the method returns false if the array is of type FromFoo[]", NOT_PRIMITIVE_ARRAY, false}
         };
+    }
+
+    /**
+     * Tests that {@code isPrimitiveTypeArray} returns false for a non-array class,
+     * covering the false branch of {@code clazz.isArray()}.
+     */
+    @Test
+    public void testIsPrimitiveArrayTypeReturnsFalseForNonArray() {
+        // GIVEN
+
+        // WHEN
+        boolean actual = underTest.isPrimitiveTypeArray(String.class);
+
+        // THEN
+        assertThat(actual).isFalse();
     }
 
     /**
@@ -422,7 +454,9 @@ public class ClassUtilsTest {
                 {"Tests that the method returns the expected value if the class extends another class and skipFinal is not passed as param",
                     ImmutableToFooSubClass.class, null, EXPECTED_SUB_CLASS_PRIVATE_FIELDS},
                 {"Tests that the method returns the expected value if the skipFinal is enabled", CLASS_WITH_PRIVATE_AND_PUBLIC_FIELDS, true,
-                    EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_NOT_FINAL_FIELDS}
+                    EXPECTED_MIXED_CLASS_TOTAL_PRIVATE_NOT_FINAL_FIELDS},
+                {"Tests that static fields are excluded from private fields", CLASS_WITH_STATIC_FIELDS, false, EXPECTED_NOT_STATIC_FIELDS},
+                {"Tests that the method returns empty list for an interface class (null superclass)", Runnable.class, false, ZERO}
         };
     }
 
@@ -690,7 +724,8 @@ public class ClassUtilsTest {
     private Object[][] dataHasFinalFieldTesting() {
         return new Object[][] {
                 {"Tests that the method returns true if the given class has private final fields", CLASS_WITH_PRIVATE_FINAL_FIELDS_AND_SUB_CLASS, true},
-                {"Tests that the method returns true if the given class has no private final fields", CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, false}
+                {"Tests that the method returns true if the given class has no private final fields", CLASS_WITHOUT_PRIVATE_FINAL_FIELDS, false},
+                {"Tests that the method returns false for an interface with a null superclass", Runnable.class, false}
         };
     }
 
@@ -855,6 +890,21 @@ public class ClassUtilsTest {
 
         // THEN
         assertThat(actual).isEqualTo(EXPECTED_DEFAULT_VALUE);
+    }
+
+    /**
+     * Tests that {@code getDefaultTypeValue} returns null for a non-primitive class,
+     * covering the false branch of {@code isPrimitiveType(objectType)}.
+     */
+    @Test
+    public void testGetDefaultTypeValueReturnsNullForNonPrimitive() {
+        // GIVEN
+
+        // WHEN
+        Object actual = underTest.getDefaultTypeValue(FromFoo.class);
+
+        // THEN
+        assertThat(actual).isNull();
     }
 
     /**
@@ -1057,9 +1107,12 @@ public class ClassUtilsTest {
     @DataProvider
     private Object[][] dataGetConcreteClassTesting() throws Exception {
         Field listField = getField(createFromFoo(), LIST_FIELD_NAME);
+        Field nameField = FromFooSimple.class.getDeclaredField(NAME_FIELD_NAME);
+        nameField.setAccessible(true);
         return new Object[][] {
                 {"Tests that the method returns Object if the field value is null", listField, null, Object.class},
-                {"Tests that the method returns LinkedList if the concrete field class is a LinkedList", listField, LINKED_LIST, LINKED_LIST.getClass()}
+                {"Tests that the method returns LinkedList if the concrete field class is a LinkedList", listField, LINKED_LIST, LINKED_LIST.getClass()},
+                {"Tests that the method returns the field type for a concrete (non-interface) field", nameField, "test", String.class}
         };
     }
 
@@ -1134,6 +1187,24 @@ public class ClassUtilsTest {
                 {"Tests that the method returns an empty optional if the class has no builder", ImmutableToFoo.class, Optional.empty()},
                 {"Tests that the method returns an empty optional if the class has a wrong builder", MutableToFooWithWrongBuilder.class, Optional.empty()}
         };
+    }
+
+    /**
+     * Tests that the method {@link ClassUtils#getInstance(Constructor, Object...)} successfully creates an instance
+     * using a valid no-args constructor, covering the happy path of {@code constructor.newInstance}.
+     *
+     * @throws NoSuchMethodException if the constructor is not found
+     */
+    @Test
+    public void testGetInstanceReturnsANewInstanceWhenConstructorIsValid() throws NoSuchMethodException {
+        // GIVEN
+        Constructor<MutableToFoo> constructor = MutableToFoo.class.getConstructor();
+
+        // WHEN
+        MutableToFoo actual = underTest.getInstance(constructor);
+
+        // THEN
+        assertThat(actual).isNotNull().isInstanceOf(MutableToFoo.class);
     }
 
     /**

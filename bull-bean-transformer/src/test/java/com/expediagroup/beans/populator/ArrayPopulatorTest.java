@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ public class ArrayPopulatorTest {
     private static final String VAL_1 = "val1";
     private static final String VAL_2 = "val2";
     private static final String[] STRING_ARRAY = new String[] {VAL_1, VAL_2};
+    private static final Object[] OBJECT_STRING_ARRAY = new Object[] {VAL_1, VAL_2};
     private static final char CHAR = '\u0000';
     private static final char[] CHAR_ARRAY = new char[] {CHAR};
     private static final int ZERO = 0;
@@ -104,7 +105,12 @@ public class ArrayPopulatorTest {
                 {Character.class, CHAR_ARRAY},
                 {Integer.class, INT_ARRAY},
                 {MixedToFooStaticField.class, createMixedToFooArray()},
-                {Object.class, createBooleanArray()}
+                {Object.class, createBooleanArray()},
+                // isPrimitiveTypeArray=false, isPrimitiveOrSpecialType(String)=true → res=fieldValue (covers 4th branch)
+                {String.class, OBJECT_STRING_ARRAY},
+                // isPrimitiveTypeArray(Object[])=false, isPrimitiveOrSpecialType(Object)=false → else branch,
+                // elements are Strings (primitive type) → lambda TRUE branch covered
+                {Object.class, OBJECT_STRING_ARRAY}
         };
     }
 

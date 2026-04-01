@@ -303,6 +303,21 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
     }
 
     /**
+     * Test that calling {@code skipTransformationForField} with no arguments is a no-op and does not skip any fields.
+     */
+    @Test
+    public void testSkipTransformationForFieldWithNoArgsDoesNothing() {
+        // GIVEN
+        underTest.skipTransformationForField();
+
+        // WHEN
+        MutableToFoo actual = underTest.transform(fromFoo, MutableToFoo.class);
+
+        // THEN
+        assertThat(actual).usingRecursiveComparison().isEqualTo(fromFoo);
+    }
+
+    /**
      * Test that, given a set of fields for which the transformation has to be skipped, they are actually skipped.
      */
     @Test
@@ -340,22 +355,23 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
     }
 
     /**
-     * Test that the second transformation with primitive type conversion enabled hits the null-marker
-     * cache entry for fields where source and destination types are the same (no conversion needed).
+     * Test that the second transformation hits the null-marker cache entry for a primitive destination
+     * field whose source counterpart is absent (default-value mode active, no conversion function found).
      */
     @Test
-    public void testAutomaticPrimitiveTypeTransformationCachesNullConversionForSameTypeFields() {
-        // GIVEN
-        underTest.setPrimitiveTypeConversionEnabled(true);
+    public void testAutomaticPrimitiveTypeTransformationCachesNullConversionForMissingSourceField() {
+        // GIVEN - FromFooSimple has no "age" field; MutableToFooNotExistingFields.age is int (primitive)
+        FromFooSimple fromFooSimple = new FromFooSimple(NAME, ID, ACTIVE);
+        underTest.setPrimitiveTypeConversionEnabled(true).setDefaultValueForMissingField(true);
 
-        // WHEN - first transform computes and caches a null-marker for fields with no conversion
-        MutableToFooOnlyPrimitiveTypes first = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
-        // WHEN - second transform hits the null-marker cache for same-type fields
-        MutableToFooOnlyPrimitiveTypes second = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
+        // WHEN - first transform: no source type → null-marker stored for the "age" field
+        MutableToFooNotExistingFields first = underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
+        // WHEN - second transform: null-marker is found in cache → returns null without recomputing
+        MutableToFooNotExistingFields second = underTest.transform(fromFooSimple, MutableToFooNotExistingFields.class);
 
         // THEN
         assertThat(second).usingRecursiveComparison().isEqualTo(first);
-        underTest.setPrimitiveTypeConversionEnabled(false);
+        underTest.setPrimitiveTypeConversionEnabled(false).setDefaultValueForMissingField(false);
     }
 
     /**

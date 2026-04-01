@@ -67,11 +67,11 @@
         <!-- JaCoCo properties -->
         <jacoco.version>0.8.14</jacoco.version>
         <jacoco.classRatio>1.0</jacoco.classRatio>
-        <jacoco.instructionRatio>0.98</jacoco.instructionRatio>
+        <jacoco.instructionRatio>1.0</jacoco.instructionRatio>
         <jacoco.methodRatio>1.0</jacoco.methodRatio>
-        <jacoco.branchRatio>0.89</jacoco.branchRatio>
-        <jacoco.complexityRatio>0.91</jacoco.complexityRatio>
-        <jacoco.lineRatio>0.98</jacoco.lineRatio>
+        <jacoco.branchRatio>1.0</jacoco.branchRatio>
+        <jacoco.complexityRatio>1.0</jacoco.complexityRatio>
+        <jacoco.lineRatio>1.0</jacoco.lineRatio>
         <!-- Required for coverall jdk >= 9 compatibility -->
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <!-- site properties -->

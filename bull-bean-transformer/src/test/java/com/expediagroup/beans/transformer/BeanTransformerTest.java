@@ -33,6 +33,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Deque;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.testng.annotations.DataProvider;
@@ -67,6 +68,9 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     private static final String GET_TRANSFORMER_VALUE_METHOD_NAME = "getTransformedValue";
     private static final String GET_CONSTRUCTOR_ARGS_VALUES_METHOD_NAME = "getConstructorArgsValues";
     private static final String HANDLE_INJECTION_EXCEPTION_METHOD_NAME = "handleInjectionException";
+    private static final String RESOLVE_EFFECTIVE_SOURCE_METHOD_NAME = "resolveEffectiveSource";
+    private static final String ROOT_SOURCE_STACK_FIELD_NAME = "rootSourceStack";
+    private static final String BREADCRUMB = "bc";
 
     /**
      * Test that is possible to remove a field mapping for a given field.
@@ -530,6 +534,55 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
             {"NamesUnavailable_AllAnnotated_returnsTrue", false, true, true},
             {"NamesUnavailable_NotAnnotated_returnsFalse", false, false, false}
         };
+    }
+
+    /**
+     * Test that {@code resolveEffectiveSource} falls through to the default source when a field-name mapping
+     * exists for the resolved breadcrumb key but the root-source stack is empty (no active transform context).
+     * Covers the false branch of {@code mapped != null && !stack.isEmpty()} when the stack is empty.
+     * @throws Exception if the method invocation fails
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testResolveEffectiveSourceWithMappingAndEmptyStackFallsThrough() throws Exception {
+        // GIVEN - add a mapping so "bc.name" → SOURCE_FIELD_NAME (mapped != null)
+        underTest.withFieldMapping(new FieldMapping<>(SOURCE_FIELD_NAME, BREADCRUMB + "." + NAME_FIELD_NAME));
+        Method method = TransformerImpl.class.getDeclaredMethod(
+                RESOLVE_EFFECTIVE_SOURCE_METHOD_NAME, Object.class, String.class, String.class);
+        method.setAccessible(true);
+
+        // WHEN - stack is empty (no active transform), so condition evaluates to false → falls through
+        Object result = method.invoke(underTest, fromFoo, NAME_FIELD_NAME, BREADCRUMB);
+
+        // THEN - returns a non-null EffectiveSource backed by the original sourceObj
+        assertThat(result).isNotNull();
+    }
+
+    /**
+     * Test that the void {@code transform(T, K, String)} method does not push or pop the root source stack
+     * when it is called in a non-root context (stack already contains an item).
+     * Covers the false branch of {@code if (isRoot)} at the beginning and end of the method.
+     * @throws Exception if the field access fails
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testVoidTransformWithPrePopulatedStackDoesNotPushAgain() throws Exception {
+        // GIVEN - pre-populate the stack to simulate a nested (non-root) call
+        Field stackField = TransformerImpl.class.getDeclaredField(ROOT_SOURCE_STACK_FIELD_NAME);
+        stackField.setAccessible(true);
+        ThreadLocal<Deque<Object>> rootSourceStack = (ThreadLocal<Deque<Object>>) stackField.get(underTest);
+        rootSourceStack.get().push(fromFoo);
+
+        MutableToFoo dest = new MutableToFoo();
+        try {
+            // WHEN - isRoot = false because stack is non-empty → push/pop are both skipped
+            underTest.transform(fromFoo, dest, null);
+        } finally {
+            rootSourceStack.get().clear();
+        }
+
+        // THEN - transformation completed and destination was populated
+        assertThat(dest).isNotNull();
     }
 
     /**

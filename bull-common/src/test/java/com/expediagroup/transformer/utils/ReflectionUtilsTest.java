@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2023 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,11 +35,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.Type;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -158,7 +161,9 @@ public class ReflectionUtilsTest {
                 {"Tests that the method returns null if the required field is inside a null object", mutableToFoo, NESTED_OBJECT_NAME_FIELD_NAME,
                     String.class, null},
                 {"Tests that the method returns the field value even if there is no getter method defined", createFromFooSimpleNoGetters(),
-                    ID_FIELD_NAME, BigInteger.class, ZERO}
+                    ID_FIELD_NAME, BigInteger.class, ZERO},
+                {"Tests that the method returns the class via getter fallback when field name has no declared field but a matching getter exists",
+                    mutableToFoo, "class", Class.class, MutableToFoo.class}
         };
     }
 
@@ -633,6 +638,53 @@ public class ReflectionUtilsTest {
     }
 
     /**
+     * Tests that the method {@code getMapGenericType} handles a map with a collection value type (e.g. {@code Map<String, List<String>>}),
+     * covering the {@code ParameterizedType} branch with {@code getNestedGenericClass=true} in {@code getArgumentTypeClass}.
+     */
+    @Test
+    public void testMapGenericFieldTypeWorksProperlyForMapWithCollectionValues() {
+        // GIVEN
+        MapElemType keyType = ItemType.builder()
+                .objectClass(String.class)
+                .build();
+        MapElemType elemType = ItemType.builder()
+                .objectClass(List.class)
+                .genericClass(String.class)
+                .build();
+        final MapType expectedMapType = new MapType(keyType, elemType);
+        Field field = underTest.getDeclaredField("complexMap", ImmutableToSubFoo.class);
+
+        // WHEN
+        MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
+
+        // THEN
+        assertThat(actual).usingRecursiveComparison()
+                .isEqualTo(expectedMapType);
+    }
+
+    /**
+     * Tests that the method {@code getMapGenericType} handles a map with wildcard type arguments (e.g. {@code Map<?, ?>}),
+     * covering the {@code WildcardType} branch in {@code getArgumentTypeClass}.
+     */
+    @Test
+    public void testMapGenericFieldTypeWorksProperlyForWildcardMap() {
+        // GIVEN
+        MapElemType wildcardType = ItemType.builder()
+                .objectClass(Object.class)
+                .genericClass(Object.class)
+                .build();
+        final MapType expectedMapType = new MapType(wildcardType, wildcardType);
+        Field field = underTest.getDeclaredField("map", ImmutableToFooAdvFields.class);
+
+        // WHEN
+        MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
+
+        // THEN
+        assertThat(actual).usingRecursiveComparison()
+                .isEqualTo(expectedMapType);
+    }
+
+    /**
      * Tests that the method {@code getGetterMethod} works properly.
      * @throws Exception in case an error occurs
      */
@@ -790,6 +842,154 @@ public class ReflectionUtilsTest {
 
         // THEN
         assertThat(actual).isEqualTo(ZERO);
+    }
+
+    /**
+     * Tests that {@code isSetter} returns false for a method matching the setter name pattern but with more than one parameter,
+     * covering the false branch of {@code method.getParameterTypes().length == 1}.
+     *
+     * @throws NoSuchMethodException if the method is not found
+     */
+    @Test
+    public void testIsSetterReturnsFalseWhenMethodHasMoreThanOneParameter() throws NoSuchMethodException {
+        // GIVEN - StringBuilder.setCharAt(int, char) matches ^set[A-Z].* but has 2 params
+        Method setCharAtMethod = StringBuilder.class.getMethod("setCharAt", int.class, char.class);
+
+        // WHEN
+        boolean actual = underTest.isSetter(setCharAtMethod);
+
+        // THEN
+        assertThat(actual).isFalse();
+    }
+
+    /**
+     * Tests that {@code isSetter} returns false for a method matching the setter name and having one parameter
+     * but returning a non-void type, covering the false branch of {@code method.getReturnType().equals(void.class)}.
+     *
+     * @throws NoSuchMethodException if the method is not found
+     */
+    @Test
+    public void testIsSetterReturnsFalseWhenMethodHasNonVoidReturnType() throws NoSuchMethodException {
+        // GIVEN - setFluent(String) matches ^set[A-Z].*, has 1 param, returns MutableToFooAdvFields (non-void)
+        Method setFluentMethod = MutableToFooAdvFields.class.getMethod("setFluent", String.class);
+
+        // WHEN
+        boolean actual = underTest.isSetter(setFluentMethod);
+
+        // THEN
+        assertThat(actual).isFalse();
+    }
+
+    /**
+     * Tests that {@code isGetter} returns false for a method matching the getter name pattern but with parameters,
+     * covering the false branch of {@code method.getParameterTypes().length == 0}.
+     *
+     * @throws NoSuchMethodException if the method is not found
+     */
+    @Test
+    public void testIsGetterReturnsFalseWhenMethodHasParameters() throws NoSuchMethodException {
+        // GIVEN - AtomicInteger.getAndSet(int) matches ^(get|is)[A-Z].* but has 1 param
+        Method getAndSetMethod = AtomicInteger.class.getMethod("getAndSet", int.class);
+
+        // WHEN
+        boolean actual = underTest.isGetter(getAndSetMethod);
+
+        // THEN
+        assertThat(actual).isFalse();
+    }
+
+    /**
+     * Tests that {@code isGetter} returns false for a method matching the getter name pattern with no parameters
+     * but returning void, covering the false branch of {@code !method.getReturnType().equals(void.class)}.
+     *
+     * @throws NoSuchMethodException if the method is not found
+     */
+    @Test
+    public void testIsGetterReturnsFalseWhenMethodReturnsVoid() throws NoSuchMethodException {
+        // GIVEN - MutableToFooAdvFields.getNone() matches ^(get|is)[A-Z].*, has 0 params, returns void
+        Method getNoneMethod = MutableToFooAdvFields.class.getMethod("getNone");
+
+        // WHEN
+        boolean actual = underTest.isGetter(getNoneMethod);
+
+        // THEN
+        assertThat(actual).isFalse();
+    }
+
+    /**
+     * Tests that {@code getGenericFieldType} returns null for a non-parameterized (raw) field,
+     * covering the false branch of the {@code ParameterizedType} check in {@code getGenericFieldType}.
+     */
+    @Test
+    public void testGetGenericFieldTypeReturnsNullForNonParametrizedField() {
+        // GIVEN - FromFooSimple.id is a plain BigInteger field (not parameterized)
+        Field idField = underTest.getDeclaredField(ID_FIELD_NAME, FromFooSimple.class);
+
+        // WHEN
+        Class<?> actual = underTest.getGenericFieldType(idField);
+
+        // THEN
+        assertThat(actual).isNull();
+    }
+
+    /**
+     * Tests that {@code getMapGenericType} correctly handles a map with lower-bounded wildcard type arguments
+     * (e.g. {@code Map<? super Object, ? super Object>}), covering the false branch of
+     * {@code isEmpty(getLowerBounds())} inside {@code getGenericClassType(WildcardType)}.
+     */
+    @Test
+    public void testMapGenericFieldTypeWorksProperlyForLowerBoundedWildcardMap() {
+        // GIVEN - supertypeMap is Map<? super Object, ? super Object>; getLowerBounds() is non-empty
+        MapElemType supertypeWildcard = ItemType.builder()
+                .objectClass(Object.class)
+                .genericClass(Object.class)
+                .build();
+        final MapType expectedMapType = new MapType(supertypeWildcard, supertypeWildcard);
+        Field field = underTest.getDeclaredField("supertypeMap", ImmutableToFooAdvFields.class);
+
+        // WHEN
+        MapType actual = underTest.getMapGenericType(field.getGenericType(), field.getDeclaringClass().getName(), field.getName());
+
+        // THEN
+        assertThat(actual).usingRecursiveComparison()
+                .isEqualTo(expectedMapType);
+    }
+
+    /**
+     * Tests that {@code getGenericClassType} returns null when called with an empty type-arguments array,
+     * covering the false branch of {@code actualTypeArguments.length != 0}.
+     *
+     * @throws Exception if the private method cannot be accessed
+     */
+    @Test
+    public void testGetGenericClassTypeWithEmptyTypeArgumentsReturnsNull() throws Exception {
+        // GIVEN
+        Method method = ReflectionUtils.class.getDeclaredMethod("getGenericClassType", Type[].class);
+        method.setAccessible(true);
+
+        // WHEN
+        Class<?> actual = (Class<?>) method.invoke(underTest, (Object) new Type[0]);
+
+        // THEN
+        assertThat(actual).isNull();
+    }
+
+    /**
+     * Tests that {@code getArgumentTypeClass} returns null when the argument is a {@link List} instance
+     * (not a {@link Class}, {@link java.lang.reflect.ParameterizedType}, or {@link java.lang.reflect.WildcardType}),
+     * covering the {@code List}-branch of the cache-key expression (L583) and the final {@code else-if} false
+     * branch (L594) in {@code getArgumentTypeClass}.
+     */
+    @Test
+    public void testGetArgumentTypeClassWithListInstanceReturnsNull() {
+        // GIVEN - an ArrayList is a List subtype but not a Type (Class/ParameterizedType/WildcardType)
+        List<String> listArgument = new ArrayList<>();
+
+        // WHEN
+        Class<?> actual = underTest.getArgumentTypeClass(listArgument, "testDeclaringClass", "testField", false);
+
+        // THEN
+        assertThat(actual).isNull();
     }
 
     /**
