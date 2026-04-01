@@ -51,7 +51,8 @@ jobs:
                   }
               return result
 
-          def fmt(p, c, t): return f'{p:.2f}% ({c}/{t})'
+          def fmt(p):       return f'{p:.2f}%'
+          def frac(c, t):   return f'{c}/{t}'
           def sign(d):      return f'{d:+.2f}%'
           def emoji(d):
               if d >  0.01: return '💚'
@@ -84,8 +85,8 @@ jobs:
               norm_base  += bp
               norm_build += cp
               rows.append(
-                  f'| {label} | {fmt(bp, b.get("covered",0), b.get("total",0))} '
-                  f'| {fmt(cp, c.get("covered",0), c.get("total",0))} '
+                  f'| {label} | {fmt(bp)} | {frac(b.get("covered",0), b.get("total",0))} '
+                  f'| {fmt(cp)} | {frac(c.get("covered",0), c.get("total",0))} '
                   f'| {sign(d)} | {emoji(d)} |'
               )
 
@@ -93,11 +94,11 @@ jobs:
           nb = norm_base  / count
           nc = norm_build / count
           nd = nc - nb
-          rows.append(f'| **Normalised Score** | {nb:.2f}% | {nc:.2f}% | {sign(nd)} | {emoji(nd)} |')
+          rows.append(f'| **Normalised Score** | {fmt(nb)} | | {fmt(nc)} | | {sign(nd)} | {emoji(nd)} |')
 
           header = (
-              '| Coverage | Baseline | Build | Diff | |\n'
-              '|---|---|---|---|---|'
+              '| Coverage | Baseline | | Build | | Diff | |\n'
+              '|---|---|---|---|---|---|---|'
           )
           table = header + '\n' + '\n'.join(rows)
           report = f'## Test Coverage Report\n\n{table}\n'
