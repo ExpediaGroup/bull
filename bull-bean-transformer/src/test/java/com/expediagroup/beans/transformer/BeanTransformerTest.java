@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2024 Expedia, Inc.
+ * Copyright (C) 2019-2026 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,7 @@ import com.expediagroup.beans.conversion.analyzer.ConversionAnalyzer;
 import com.expediagroup.beans.sample.FromFooSimple;
 import com.expediagroup.beans.sample.mutable.MutableToFoo;
 import com.expediagroup.beans.sample.mutable.MutableToFooAdvFields;
+import com.expediagroup.transformer.annotation.ConstructorArg;
 import com.expediagroup.transformer.cache.CacheManager;
 import com.expediagroup.transformer.error.InvalidBeanException;
 import com.expediagroup.transformer.error.MissingFieldException;
@@ -187,6 +188,24 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     }
 
     /**
+     * Test that is possible to remove all the transformation skip settings.
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testResetFieldsTransformationSkipWorksProperly() {
+        // GIVEN
+        BeanTransformer beanTransformer = underTest.skipTransformationForField(NAME_FIELD_NAME);
+
+        // WHEN
+        beanTransformer.resetFieldsTransformationSkip();
+        TransformerSettings<String> transformerSettings =
+                (TransformerSettings<String>) REFLECTION_UTILS.getFieldValue(beanTransformer, TRANSFORMER_SETTINGS_FIELD_NAME, TransformerSettings.class);
+
+        // THEN
+        assertThat(transformerSettings.getFieldsToSkip()).isEmpty();
+    }
+
+    /**
      * Test that the method: {@code getSourceFieldValue} raises a {@link NullPointerException} in case any of the parameters null.
      * @throws Exception uf the invocation fails
      */
@@ -321,6 +340,29 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
     }
 
     /**
+     * Test that the method: {@code getSourceFieldType} caches and returns {@code null} on second call when
+     * the field does not exist in the source class and default-value-for-missing-field mode is active.
+     * @throws Exception if the invoke method fails
+     */
+    @Test
+    public void testGetSourceFieldTypeReturnsCachedNullForAbsentField() throws Exception {
+        // GIVEN
+        underTest.setDefaultValueForMissingField(true);
+
+        Method getSourceFieldTypeMethod = underTest.getClass().getDeclaredMethod(GET_SOURCE_FIELD_TYPE_METHOD_NAME, Class.class, String.class);
+        getSourceFieldTypeMethod.setAccessible(true);
+
+        // WHEN - first call: field does not exist, default value mode active → returns null, caches ABSENT sentinel
+        Class<?> firstResult = (Class<?>) getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, "nonExistentFieldForCacheTest");
+        // WHEN - second call: hits the ABSENT sentinel from cache → returns null without recomputing
+        Class<?> secondResult = (Class<?>) getSourceFieldTypeMethod.invoke(underTest, FromFooSimple.class, "nonExistentFieldForCacheTest");
+
+        // THEN
+        assertThat(firstResult).isNull();
+        assertThat(secondResult).isNull();
+    }
+
+    /**
      * Test that the method: {@code getSourceFieldType} throws {@link MissingFieldException} in case the given field does not exists
      * in the given class and the source object class is not primitive and the default value set for missing fields feature is disabled.
      * @throws Exception if the invoke method fails
@@ -442,6 +484,52 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         verify(classUtils).getDefaultTypeValue(Integer.class);
         assertThat(actual).containsOnly(0);
         restoreUnderTestObject();
+    }
+
+    /**
+     * Test that the {@code canBeInjectedByConstructorParams} lambda correctly evaluates both branches
+     * of the {@code areParameterNamesAvailable || allParameterAnnotatedWith} expression.
+     * @param testCaseDescription the test case description
+     * @param areNamesAvailable whether parameter names are available
+     * @param allAnnotated whether all parameters are annotated with {@link ConstructorArg}
+     * @param expected the expected result
+     * @throws Exception if something goes wrong
+     */
+    @Test(dataProvider = "dataCanBeInjectedByConstructorParamsTesting")
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public void testCanBeInjectedByConstructorParamsLambdaBranchesWorkCorrectly(final String testCaseDescription,
+            final boolean areNamesAvailable, final boolean allAnnotated, final boolean expected) throws Exception {
+        // GIVEN - use a real Constructor and mock both ClassUtils and CacheManager so the lambda always runs
+        ClassUtils classUtilsMock = mock(ClassUtils.class);
+        CacheManager cacheManagerMock = mock(CacheManager.class);
+        Constructor<?> constructor = String.class.getDeclaredConstructors()[0];
+
+        when(cacheManagerMock.getFromCache(anyString(), any(Class.class))).thenReturn(empty());
+        when(classUtilsMock.areParameterNamesAvailable(constructor)).thenReturn(areNamesAvailable);
+        if (!areNamesAvailable) {
+            when(classUtilsMock.allParameterAnnotatedWith(constructor, ConstructorArg.class)).thenReturn(allAnnotated);
+        }
+        reflectionUtils.setFieldValue(underTest, CLASS_UTILS_FIELD_NAME, classUtilsMock);
+        reflectionUtils.setFieldValue(underTest, CACHE_MANAGER_FIELD_NAME, cacheManagerMock);
+
+        // WHEN
+        boolean actual = underTest.canBeInjectedByConstructorParams(constructor);
+
+        // THEN
+        assertThat(actual).isEqualTo(expected);
+        restoreUnderTestObject();
+    }
+
+    /**
+     * Creates the parameters to be used for testing the {@code canBeInjectedByConstructorParams} lambda branches.
+     * @return parameters to be used for testing the {@code canBeInjectedByConstructorParams} lambda branches.
+     */
+    @DataProvider
+    private Object[][] dataCanBeInjectedByConstructorParamsTesting() {
+        return new Object[][] {
+            {"NamesUnavailable_AllAnnotated_returnsTrue", false, true, true},
+            {"NamesUnavailable_NotAnnotated_returnsFalse", false, false, false}
+        };
     }
 
     /**
