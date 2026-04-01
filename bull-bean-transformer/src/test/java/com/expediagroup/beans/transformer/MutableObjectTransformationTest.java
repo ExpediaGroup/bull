@@ -375,6 +375,25 @@ public class MutableObjectTransformationTest extends AbstractBeanTransformerTest
     }
 
     /**
+     * Test that the second transformation hits the cached {@link com.expediagroup.transformer.model.FieldTransformer}
+     * for a primitive conversion, covering the {@code fromCache.isPresent()} true branch.
+     */
+    @Test
+    public void testAutomaticPrimitiveTypeTransformerCacheHitOnSecondTransform() {
+        // GIVEN
+        underTest.setPrimitiveTypeConversionEnabled(true);
+
+        // WHEN - first transform computes and caches the FieldTransformer for primitive conversions (e.g. String → int for "code")
+        underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
+        // WHEN - second transform hits the cached FieldTransformer (covers fromCache.isPresent() == true)
+        MutableToFooOnlyPrimitiveTypes second = underTest.transform(fromFooPrimitiveTypes, MutableToFooOnlyPrimitiveTypes.class);
+
+        // THEN
+        assertThat(second).isNotNull();
+        underTest.setPrimitiveTypeConversionEnabled(false);
+    }
+
+    /**
      * Test that both primitive type transformation and custom transformation are executed.
      */
     @Test
