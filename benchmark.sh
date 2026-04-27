@@ -18,13 +18,23 @@ if [[ "$(uname -s)" == MINGW* || "$(uname -s)" == CYGWIN* ]]; then
 fi
 
 echo "==> Building benchmark jar..."
-"$MVN" package -pl "$MODULES" -DskipTests -Djacoco.skip=true -q
+BUILD_LOG=$(mktemp)
+trap 'rm -f "$TMPOUT" "$BUILD_LOG"' EXIT
+if ! "$MVN" package -pl "$MODULES" -DskipTests -Djacoco.skip=true -q >"$BUILD_LOG" 2>&1; then
+    cat "$BUILD_LOG"
+    exit 1
+fi
 
 TMPOUT=$(mktemp)
-trap 'rm -f "$TMPOUT"' EXIT
 
 echo "==> Running benchmarks..."
-java -jar "$JAR" "$@" | tee "$TMPOUT"
+java -jar "$JAR" "$@" 2>&1 \
+    | grep -v \
+        -e "^NOTE:" \
+        -e "^WARNING:" \
+        -e "^Processing [0-9]" \
+        -e "^Writing out" \
+    | tee "$TMPOUT"
 
 # -----------------------------------------------------------------------
 # Pretty-print a transformation-time summary from the JMH result lines.
