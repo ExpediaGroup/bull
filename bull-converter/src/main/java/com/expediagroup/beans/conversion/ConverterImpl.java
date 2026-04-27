@@ -58,7 +58,8 @@ public class ConverterImpl implements Converter {
         notNull(targetClass, "The destination field type cannot be null.");
         if (isNull(valueToConvert)) {
             return null;
-        } else if (targetClass.getSimpleName().equalsIgnoreCase(valueToConvert.getClass().getSimpleName())) {
+        } else if (targetClass == valueToConvert.getClass()
+                || targetClass.getSimpleName().equalsIgnoreCase(valueToConvert.getClass().getSimpleName())) {
             return (K) valueToConvert;
         }
         return (K) getConversionFunction(valueToConvert.getClass(), targetClass)

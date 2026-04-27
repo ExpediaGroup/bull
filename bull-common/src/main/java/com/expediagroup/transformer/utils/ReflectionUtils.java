@@ -43,7 +43,6 @@ import java.lang.reflect.WildcardType;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 import com.expediagroup.transformer.cache.CacheManager;
@@ -261,10 +260,7 @@ public final class ReflectionUtils {
      */
     private <A extends Annotation> A getAnnotation(final AnnotatedElement element, final Class<A> annotationClazz, final String cacheKey) {
         return CACHE_MANAGER.getFromCache(cacheKey, annotationClazz).orElseGet(() -> {
-            A annotation = null;
-            if (element.isAnnotationPresent(annotationClazz)) {
-                annotation = element.getAnnotation(annotationClazz);
-            }
+            A annotation = element.getAnnotation(annotationClazz);
             CACHE_MANAGER.cacheObject(cacheKey, annotation);
             return annotation;
         });
@@ -396,20 +392,10 @@ public final class ReflectionUtils {
      * @return the encapsulated object (if any)
      */
     private Object getRealTarget(final Object target) {
-        AtomicReference<Object> realTarget = new AtomicReference<>(target);
-        if (isOptionalType(target)) {
-            ((Optional<?>) target).ifPresent(realTarget::set);
+        if (target instanceof Optional<?> opt) {
+            return opt.orElse(null);
         }
-        return realTarget.get();
-    }
-
-    /**
-     * Checks if an object is encapsulated into a type {@link Optional}.
-     * @param object the object to check
-     * @return true if the given object is an Optional, false otherwise.
-     */
-    private boolean isOptionalType(final Object object) {
-        return object instanceof Optional;
+        return target;
     }
 
     /**
@@ -489,15 +475,12 @@ public final class ReflectionUtils {
      * @return the generic class type
      */
     private Class<?> getGenericClassType(final Type[] actualTypeArguments) {
-        Class<?> res = null;
-        if (actualTypeArguments.length != 0) {
-            if (WildcardType.class.isAssignableFrom(actualTypeArguments[0].getClass())) {
-                res = getGenericClassType((WildcardType) actualTypeArguments[0]);
-            } else {
-                res = (Class<?>) actualTypeArguments[0];
-            }
+        if (actualTypeArguments.length == 0) {
+            return null;
         }
-        return res;
+        return actualTypeArguments[0] instanceof WildcardType wt
+                ? getGenericClassType(wt)
+                : (Class<?>) actualTypeArguments[0];
     }
 
     /**
@@ -619,16 +602,13 @@ public final class ReflectionUtils {
      * @return the exception to be thrown
      */
     RuntimeException handleReflectionException(final Exception ex) {
-        RuntimeException e;
-        if (ex instanceof NoSuchMethodException) {
-            e = new MissingMethodException("Method not found: " + ex.getMessage());
-        } else if (ex instanceof IllegalAccessException) {
-            e = new IllegalStateException("Could not access method: " + ex.getMessage(), ex);
-        } else if (ex instanceof RuntimeException) {
-            e = (RuntimeException) ex;
-        } else {
-            e = new UndeclaredThrowableException(ex);
+        if (ex instanceof NoSuchMethodException e) {
+            return new MissingMethodException("Method not found: " + e.getMessage());
+        } else if (ex instanceof IllegalAccessException e) {
+            return new IllegalStateException("Could not access method: " + e.getMessage(), e);
+        } else if (ex instanceof RuntimeException e) {
+            return e;
         }
-        return e;
+        return new UndeclaredThrowableException(ex);
     }
 }

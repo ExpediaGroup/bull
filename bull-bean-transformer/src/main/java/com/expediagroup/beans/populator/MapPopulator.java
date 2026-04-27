@@ -15,9 +15,8 @@
  */
 package com.expediagroup.beans.populator;
 
-import static java.util.stream.Collectors.toMap;
-
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.expediagroup.beans.transformer.BeanTransformer;
@@ -58,16 +57,14 @@ class MapPopulator extends Populator<Map<?, ?>> {
         final MapElemType elemType = mapType.getElemType();
         final boolean keyIsPrimitive = isPrimitive(keyType);
         final boolean elemIsPrimitive = isPrimitive(elemType);
-        Map<?, ?> populatedObject;
         if (keyIsPrimitive && elemIsPrimitive) {
-            populatedObject = fieldValue;
-        } else {
-            populatedObject = fieldValue.keySet()
-                    .stream()
-//                    .parallelStream()
-                    .collect(toMap(
-                        key -> getElemValue(keyType, keyIsPrimitive, key),
-                        key -> getElemValue(elemType, elemIsPrimitive, fieldValue.get(key))));
+            return fieldValue;
+        }
+        Map<Object, Object> populatedObject = new HashMap<>(fieldValue.size());
+        for (Map.Entry<?, ?> entry : fieldValue.entrySet()) {
+            populatedObject.put(
+                    getElemValue(keyType, keyIsPrimitive, entry.getKey()),
+                    getElemValue(elemType, elemIsPrimitive, entry.getValue()));
         }
         return populatedObject;
     }
@@ -78,7 +75,7 @@ class MapPopulator extends Populator<Map<?, ?>> {
      * @return true if it's primitive, false otherwise
      */
     private boolean isPrimitive(final MapElemType mapElemType) {
-        return mapElemType.getClass().equals(ItemType.class) && classUtils.isPrimitiveOrSpecialType(((ItemType) mapElemType).getObjectClass());
+        return mapElemType instanceof ItemType itemType && classUtils.isPrimitiveOrSpecialType(itemType.getObjectClass());
     }
 
     /**
@@ -91,16 +88,12 @@ class MapPopulator extends Populator<Map<?, ?>> {
      */
     @SuppressWarnings("unchecked")
     private <T> T getElemValue(final MapElemType mapElemType, final boolean elemIsPrimitiveType, final T value) {
-        final T elemValue;
         if (elemIsPrimitiveType || classUtils.isPrimitiveOrSpecialType(value.getClass())) {
-            elemValue = value;
-        } else {
-            if (mapElemType.getClass().equals(ItemType.class)) {
-                elemValue = (T) transform(value, ((ItemType) mapElemType).getObjectClass(), ((ItemType) mapElemType).getGenericClass());
-            } else {
-                elemValue = (T) getPopulatedObject((Map) value, (MapType) mapElemType);
-            }
+            return value;
         }
-        return elemValue;
+        if (mapElemType instanceof ItemType itemType) {
+            return (T) transform(value, itemType.getObjectClass(), itemType.getGenericClass());
+        }
+        return (T) getPopulatedObject((Map<?, ?>) value, (MapType) mapElemType);
     }
 }

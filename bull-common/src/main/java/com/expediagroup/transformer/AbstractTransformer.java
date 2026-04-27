@@ -15,8 +15,6 @@
  */
 package com.expediagroup.transformer;
 
-import static java.util.Arrays.stream;
-
 import static com.expediagroup.transformer.cache.CacheManagerFactory.getCacheManager;
 import static com.expediagroup.transformer.validator.Validator.notNull;
 
@@ -86,8 +84,9 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
     public final T withFieldMapping(final FieldMapping... fieldMapping) {
         var fieldsNameMapping = settings.getFieldsNameMapping();
         for (FieldMapping<P, P> mapping : fieldMapping) {
-            stream(mapping.getDestFieldName())
-                    .forEach(destField -> fieldsNameMapping.put(destField, mapping.getSourceFieldName()));
+            for (P destField : mapping.getDestFieldName()) {
+                fieldsNameMapping.put(destField, mapping.getSourceFieldName());
+            }
         }
         return (T) this;
     }
@@ -100,8 +99,9 @@ public abstract class AbstractTransformer<T extends Transformer, P, S extends Tr
     public final T withFieldTransformer(final FieldTransformer... fieldTransformer) {
         var fieldsTransformers = settings.getFieldsTransformers();
         for (var transformer : fieldTransformer) {
-            transformer.getDestFieldName()
-                    .forEach(destFieldName -> fieldsTransformers.put((P) destFieldName, transformer));
+            for (var destFieldName : transformer.getDestFieldName()) {
+                fieldsTransformers.put((P) destFieldName, transformer);
+            }
         }
         return (T) this;
     }

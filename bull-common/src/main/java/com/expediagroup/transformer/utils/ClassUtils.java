@@ -31,7 +31,6 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.Set.of;
-import static java.util.stream.Collectors.toList;
 
 import static com.expediagroup.transformer.constant.Filters.IS_FINAL_AND_NOT_STATIC_FIELD;
 import static com.expediagroup.transformer.constant.Filters.IS_NOT_FINAL_AND_NOT_STATIC_FIELD;
@@ -53,7 +52,6 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -179,19 +177,29 @@ public final class ClassUtils {
      * @return true if is special type, false otherwise
      */
     public boolean isSpecialType(final Class<?> clazz) {
-        return clazz.isSynthetic() || SPECIAL_TYPES.stream()
-                .anyMatch(specialTypeClazz -> clazz.equals(specialTypeClazz) || specialTypeClazz.isAssignableFrom(clazz))
-                || isCustomSpecialType(clazz);
+        if (clazz.isSynthetic()) {
+            return true;
+        }
+        for (Class<?> specialTypeClazz : SPECIAL_TYPES) {
+            if (clazz.equals(specialTypeClazz) || specialTypeClazz.isAssignableFrom(clazz)) {
+                return true;
+            }
+        }
+        return isCustomSpecialType(clazz);
     }
 
     /**
      * Checks if the given class is a custom provided special type.
      * @param clazz the class to check
-    * @return true if is special type, false otherwise
+     * @return true if is special type, false otherwise
      */
     private boolean isCustomSpecialType(final Class<?> clazz) {
-        return CUSTOM_SPECIAL_TYPES.stream()
-                .anyMatch(customTypeClazz -> clazz.equals(customTypeClazz) || customTypeClazz.isAssignableFrom(clazz));
+        for (Class<?> customTypeClazz : CUSTOM_SPECIAL_TYPES) {
+            if (clazz.equals(customTypeClazz) || customTypeClazz.isAssignableFrom(clazz)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -316,10 +324,9 @@ public final class ClassUtils {
             if (hasSuperclass(clazz.getSuperclass())) {
                 res.addAll(getPrivateFinalFields(clazz.getSuperclass()));
             }
-            res.addAll(stream(getDeclaredFields(clazz))
-                    //.parallel()
+            stream(getDeclaredFields(clazz))
                     .filter(IS_FINAL_AND_NOT_STATIC_FIELD)
-                    .collect(toList()));
+                    .forEach(res::add);
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -377,12 +384,11 @@ public final class ClassUtils {
             if (hasSuperclass(clazz.getSuperclass())) {
                 res.addAll(getPrivateFields(clazz.getSuperclass(), skipFinal));
             }
-            res.addAll(stream(getDeclaredFields(clazz))
-                    //.parallel()
+            stream(getDeclaredFields(clazz))
                     .filter(field -> isPrivate(field.getModifiers())
                             && (!skipFinal || !isFinal(field.getModifiers()))
                             && !isStatic(field.getModifiers()))
-                    .collect(toList()));
+                    .forEach(res::add);
             CACHE_MANAGER.cacheObject(cacheKey, res);
             return res;
         });
@@ -592,7 +598,7 @@ public final class ClassUtils {
             Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
             var candidates = stream(declaredConstructors)
                     .filter(c -> !isKotlinSyntheticConstructor(c))
-                    .collect(toList());
+                    .toList();
             if (candidates.isEmpty()) {
                 candidates = asList(declaredConstructors);
             }
@@ -811,13 +817,13 @@ public final class ClassUtils {
         notNull(clazz, CLAZZ_CANNOT_BE_NULL);
         final String cacheKey = cacheKeyPrefix + "-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
-            final List<Method> methods = new LinkedList<>();
+            final List<Method> methods = new ArrayList<>();
             if (hasSuperclass(clazz.getSuperclass())) {
                 methods.addAll(getMethods(clazz.getSuperclass(), cacheKeyPrefix, methodFilter));
             }
-            methods.addAll(stream(getDeclaredMethods(clazz))
+            stream(getDeclaredMethods(clazz))
                     .filter(methodFilter)
-                    .collect(toList()));
+                    .forEach(methods::add);
             CACHE_MANAGER.cacheObject(cacheKey, methods);
             return methods;
         });
@@ -849,7 +855,8 @@ public final class ClassUtils {
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
             List<Field> notFinalFields = getDeclaredFields(clazz, skipStatic)
                     .stream()
-                    .filter(IS_NOT_FINAL_FIELD).collect(toList());
+                    .filter(IS_NOT_FINAL_FIELD)
+                    .toList();
             CACHE_MANAGER.cacheObject(cacheKey, notFinalFields);
             return notFinalFields;
         });

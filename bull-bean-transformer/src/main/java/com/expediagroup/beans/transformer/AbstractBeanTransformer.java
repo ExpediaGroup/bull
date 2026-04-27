@@ -15,8 +15,6 @@
  */
 package com.expediagroup.beans.transformer;
 
-import static java.util.Arrays.asList;
-
 import static com.expediagroup.transformer.validator.Validator.notNull;
 
 import com.expediagroup.beans.conversion.analyzer.ConversionAnalyzer;
@@ -150,8 +148,8 @@ abstract class AbstractBeanTransformer extends AbstractTransformer<BeanTransform
      */
     @Override
     public BeanTransformer skipTransformationForField(final String... fieldName) {
-        if (fieldName.length != 0) {
-            settings.getFieldsToSkip().addAll(asList(fieldName));
+        for (String field : fieldName) {
+            settings.getFieldsToSkip().add(field);
         }
         return this;
     }

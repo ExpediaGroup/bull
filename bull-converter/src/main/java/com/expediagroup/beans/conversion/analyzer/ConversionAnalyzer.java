@@ -19,18 +19,6 @@ import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
 import static com.expediagroup.transformer.cache.CacheManagerFactory.getCacheManager;
-import static com.expediagroup.transformer.utils.ClassUtils.isBigDecimal;
-import static com.expediagroup.transformer.utils.ClassUtils.isBigInteger;
-import static com.expediagroup.transformer.utils.ClassUtils.isBoolean;
-import static com.expediagroup.transformer.utils.ClassUtils.isByte;
-import static com.expediagroup.transformer.utils.ClassUtils.isByteArray;
-import static com.expediagroup.transformer.utils.ClassUtils.isChar;
-import static com.expediagroup.transformer.utils.ClassUtils.isDouble;
-import static com.expediagroup.transformer.utils.ClassUtils.isFloat;
-import static com.expediagroup.transformer.utils.ClassUtils.isInt;
-import static com.expediagroup.transformer.utils.ClassUtils.isLong;
-import static com.expediagroup.transformer.utils.ClassUtils.isShort;
-import static com.expediagroup.transformer.utils.ClassUtils.isString;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -86,37 +74,25 @@ public final class ConversionAnalyzer {
      * Returns a function that converts to a primitive type: {@link Byte}, {@link Short}, {@link Integer}, {@link Long},
      * {@link Float}, {@link Double}, {@link Character} and {@link Boolean}.
      * @param conversionProcessor the {@link ConversionProcessor} for the given type
-     * @param sourceFieldType he source field class
+     * @param sourceFieldType the source field class
      * @return the conversion function
      */
     @SuppressWarnings("unchecked")
     private Optional<Function<?, ?>> getTypeConversionFunction(final ConversionProcessor conversionProcessor, final Class<?> sourceFieldType) {
-        Optional<Function<?, ?>> conversionFunction = empty();
-        if (isString(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertString());
-        } else if (isByte(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertByte());
-        } else if (isShort(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertShort());
-        } else if (isInt(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertInteger());
-        } else if (isLong(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertLong());
-        } else if (isFloat(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertFloat());
-        } else if (isDouble(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertDouble());
-        } else if (isChar(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertCharacter());
-        } else if (isBoolean(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertBoolean());
-        } else if (isBigInteger(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertBigInteger());
-        } else if (isBigDecimal(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertBigDecimal());
-        } else if (isByteArray(sourceFieldType)) {
-            conversionFunction = of(conversionProcessor.convertByteArray());
-        }
-        return conversionFunction;
+        return switch (sourceFieldType.getName()) {
+            case "java.lang.String" -> of(conversionProcessor.convertString());
+            case "java.lang.Byte", "byte" -> of(conversionProcessor.convertByte());
+            case "java.lang.Short", "short" -> of(conversionProcessor.convertShort());
+            case "java.lang.Integer", "int" -> of(conversionProcessor.convertInteger());
+            case "java.lang.Long", "long" -> of(conversionProcessor.convertLong());
+            case "java.lang.Float", "float" -> of(conversionProcessor.convertFloat());
+            case "java.lang.Double", "double" -> of(conversionProcessor.convertDouble());
+            case "java.lang.Character", "char" -> of(conversionProcessor.convertCharacter());
+            case "java.lang.Boolean", "boolean" -> of(conversionProcessor.convertBoolean());
+            case "java.math.BigInteger" -> of(conversionProcessor.convertBigInteger());
+            case "java.math.BigDecimal" -> of(conversionProcessor.convertBigDecimal());
+            case "[B" -> of(conversionProcessor.convertByteArray());
+            default -> empty();
+        };
     }
 }
