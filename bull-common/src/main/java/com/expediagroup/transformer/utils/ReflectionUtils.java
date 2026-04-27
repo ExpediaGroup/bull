@@ -393,6 +393,7 @@ public final class ReflectionUtils {
      */
     private Object getRealTarget(final Object target) {
         if (target instanceof Optional<?> opt) {
+            // empty Optional unwraps to null; the caller's null-check then short-circuits field traversal
             return opt.orElse(null);
         }
         return target;

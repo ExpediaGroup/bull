@@ -853,10 +853,10 @@ public final class ClassUtils {
     public List<Field> getNotFinalFields(final Class<?> clazz, final Boolean skipStatic) {
         final String cacheKey = "NotFinalFields-" + clazz.getName() + "-" + skipStatic;
         return CACHE_MANAGER.getFromCache(cacheKey, List.class).orElseGet(() -> {
-            List<Field> notFinalFields = getDeclaredFields(clazz, skipStatic)
+            List<Field> notFinalFields = new ArrayList<>(getDeclaredFields(clazz, skipStatic)
                     .stream()
                     .filter(IS_NOT_FINAL_FIELD)
-                    .toList();
+                    .toList());
             CACHE_MANAGER.cacheObject(cacheKey, notFinalFields);
             return notFinalFields;
         });
