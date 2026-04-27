@@ -22,74 +22,34 @@ statistical sampling correctly — unlike a plain `StopWatch` loop — so the nu
 
 All benchmarks report **average time per operation in microseconds** (`AverageTime / µs`).
 
-## Building
+## Running
 
-The benchmark fat jar is built as part of the normal Maven build. It is skipped during `./mvnw install` because
-`bull-benchmark` sets `<skipTests>true</skipTests>` and `<maven.deploy.skip>true</maven.deploy.skip>`.
+A convenience script at the project root builds the fat jar and runs it in one step:
 
-Build the fat jar explicitly:
+```shell
+./benchmark.sh
+```
+
+Any arguments after the script name are forwarded directly to JMH:
+
+| Goal | Command |
+|:---|:---|
+| Full run — accurate results (~10–15 min) | `./benchmark.sh` |
+| Quick smoke run (~2 min) | `./benchmark.sh -f 1 -wi 2 -i 3` |
+| Single benchmark | `./benchmark.sh mutableSimpleBean` |
+| Nanosecond output | `./benchmark.sh -tu ns` |
+| Write JSON results | `./benchmark.sh -rf json -rff results.json` |
+| Write CSV results | `./benchmark.sh -rf csv -rff results.csv` |
+| All JMH options | `./benchmark.sh -help` |
+
+The default JMH configuration is **2 forks**, **5 warmup iterations** of 1 s, and **10 measurement
+iterations** of 1 s per benchmark.
+
+If you need to build the fat jar separately first (e.g. in CI), run:
 
 ```shell
 ./mvnw package -pl bull-common,bull-converter,bull-bean-transformer,bull-benchmark -DskipTests -Djacoco.skip=true
-```
-
-or on Windows:
-
-```shell
-mvnw.cmd package -pl bull-common,bull-converter,bull-bean-transformer,bull-benchmark -DskipTests -Djacoco.skip=true
-```
-
-The output jar is: `bull-benchmark/target/benchmarks.jar`
-
-## Running
-
-### Full run (recommended for accurate results)
-
-The default configuration uses **2 forks**, **5 warmup iterations** of 1 s each, and **10 measurement
-iterations** of 1 s each per benchmark. This takes roughly 10–15 minutes and produces statistically
-stable results.
-
-```shell
 java -jar bull-benchmark/target/benchmarks.jar
-```
-
-### Quick run
-
-Reduce forks and iterations for a fast sanity check (~2 minutes):
-
-```shell
-java -jar bull-benchmark/target/benchmarks.jar -f 1 -wi 2 -i 3
-```
-
-### Single benchmark
-
-Run only one benchmark by passing a regex that matches its name:
-
-```shell
-java -jar bull-benchmark/target/benchmarks.jar mutableSimpleBean
-```
-
-### Change output time unit
-
-```shell
-# Report in nanoseconds instead of microseconds
-java -jar bull-benchmark/target/benchmarks.jar -tu ns
-```
-
-### Write results to a file
-
-```shell
-# JSON output (useful for plotting or diffing across commits)
-java -jar bull-benchmark/target/benchmarks.jar -rf json -rff results.json
-
-# CSV output
-java -jar bull-benchmark/target/benchmarks.jar -rf csv -rff results.csv
-```
-
-### All JMH options
-
-```shell
-java -jar bull-benchmark/target/benchmarks.jar -help
 ```
 
 ## Comparing two commits
@@ -100,13 +60,11 @@ then compare the JSON outputs:
 ```shell
 # On the baseline branch (e.g. master)
 git checkout master
-./mvnw package -pl bull-common,bull-converter,bull-bean-transformer,bull-benchmark -DskipTests -Djacoco.skip=true -q
-java -jar bull-benchmark/target/benchmarks.jar -rf json -rff baseline.json
+./benchmark.sh -rf json -rff baseline.json
 
 # On the candidate branch
 git checkout feature/my-improvement
-./mvnw package -pl bull-common,bull-converter,bull-bean-transformer,bull-benchmark -DskipTests -Djacoco.skip=true -q
-java -jar bull-benchmark/target/benchmarks.jar -rf json -rff candidate.json
+./benchmark.sh -rf json -rff candidate.json
 ```
 
 Then diff the two JSON files or load them into
