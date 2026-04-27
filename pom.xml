@@ -44,6 +44,7 @@
         <module>bull-converter</module>
         <module>bull-report</module>
         <module>bull-bom</module>
+        <module>bull-benchmark</module>
     </modules>
 
     <properties>
