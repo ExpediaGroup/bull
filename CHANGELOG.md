@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.0.4] 2026.04.27
+* Replaces 12-branch if-else chains in `ConversionProcessorFactory` and `ConversionAnalyzer` with switch expressions and cached processor singletons, eliminating per-call object allocation in the type conversion hot path
+* Removes `AtomicReference` allocation in `ReflectionUtils.getRealTarget` using instanceof pattern matching; eliminates redundant `isAnnotationPresent` check before `getAnnotation`
+* Replaces stream-based type checks in `ClassUtils.isSpecialType` and `isCustomSpecialType` with plain loops to avoid lambda allocation on frequently-called paths
+* Replaces `LinkedList` with `ArrayList` in `ClassUtils.getMethods` for better cache locality; replaces intermediate `collect(toList())` with `toList()` throughout
+* Replaces inner stream+lambda in `AbstractTransformer.withFieldMapping` and `withFieldTransformer` with plain for-each loops
+* Replaces `keySet().stream().collect(toMap(...))` in `MapPopulator` with an `entrySet()` imperative loop and pre-sized `HashMap`; applies instanceof pattern matching to eliminate `getClass().equals()` calls
+* Adds JMH microbenchmarks covering simple-bean, complex-bean, map, and type-conversion transformation paths
+
 ### [3.0.3] 2026.04.01
 * Refactors `TransformerImpl` to use direct field access via reflection utilities instead of string-literal field names, improving maintainability and robustness
 * Eliminates redundant `ThreadLocal` initialisation by reusing the existing `rootSourceStack` instance
