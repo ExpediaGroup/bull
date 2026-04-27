@@ -66,6 +66,17 @@
             <version>${jmh.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
@@ -124,7 +135,13 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-            <!-- Generate JMH benchmark metadata via bytecode scanning (JDK 25 compatible) -->
+            <!--
+                Step 1 (process-classes): scan compiled benchmark classes and emit the JMH
+                harness Java sources into a staging directory.
+                - arg1: input  – compiled classes to scan
+                - arg2: output – where to write the generated *_jmhTest.java files
+                - arg3: output – where to write META-INF/BenchmarkList (must be on the classpath)
+            -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -140,10 +157,33 @@
                             <mainClass>org.openjdk.jmh.generators.bytecode.JmhBytecodeGenerator</mainClass>
                             <arguments>
                                 <argument>${project.build.outputDirectory}</argument>
-                                <argument>${project.build.outputDirectory}</argument>
+                                <argument>${project.build.directory}/generated-sources/jmh</argument>
                                 <argument>${project.build.outputDirectory}</argument>
                                 <argument>default</argument>
                             </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--
+                Step 2 (prepare-package): compile the generated harness sources so the
+                *_jmhTest classes end up in target/classes before the shade plugin runs.
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>jmh-compile-generated</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <compileSourceRoots>
+                                <compileSourceRoot>${project.build.directory}/generated-sources/jmh</compileSourceRoot>
+                            </compileSourceRoots>
+                            <annotationProcessorPaths/>
                         </configuration>
                     </execution>
                 </executions>
