@@ -38,35 +38,57 @@ java -jar "$JAR" "$@" 2>&1 \
 
 # -----------------------------------------------------------------------
 # Pretty-print a transformation-time summary from the JMH result lines.
+# Scores are in µs/op; we convert to ms for readability.
 # Result lines look like either of:
 #   TransformerBenchmark.mutableSimpleBean  avgt   2   0.536          us/op
 #   TransformerBenchmark.mutableSimpleBean  avgt  20   0.536 ± 0.012  us/op
 # -----------------------------------------------------------------------
 echo ""
-echo "==> Transformation times summary:"
+echo "==> Transformation times summary (ms/op):"
 echo ""
 
 awk '
-BEGIN {
-    SEP = "  "
-    printf "  %-44s  %10s  %-13s  %s\n", "Benchmark", "Score", "Error", "Unit"
-    printf "  %-44s  %10s  %-13s  %s\n", \
-        "--------------------------------------------", \
-        "----------", "-------------", "-----"
+function us_to_ms(v,    r) {
+    r = v / 1000
+    # print with enough decimals to show non-zero values even for fast paths
+    return sprintf("%.6f", r)
 }
 /^TransformerBenchmark\./ {
-    # $1 = full name, $2 = mode, $3 = cnt, $4 = score
-    # $5 = "±" (multi-iter) or unit (single-iter)
     split($1, parts, ".")
-    name = parts[2]
+    name  = parts[2]
     score = $4
-    if ($5 == "±") {
-        error = "± " $6
-        unit  = $7
+    if ($5 == "±") { error = "± " us_to_ms($6); unit = $7 }
+    else            { error = "";                unit = $5 }
+    scores[name]  = us_to_ms(score)
+    errors[name]  = error
+    # classify into bean transformations vs type conversions
+    if (name ~ /typeConversion/) {
+        conv[length(conv)+1] = name
     } else {
-        error = ""
-        unit  = $5
+        beans[length(beans)+1] = name
     }
-    printf "  %-44s  %10s  %-13s  %s\n", name, score, error, unit
+}
+END {
+    fmt = "  %-44s  %12s  %-16s\n"
+    sep = "  " sprintf("%-44s", "--------------------------------------------") \
+          "  " sprintf("%-12s", "------------") \
+          "  " sprintf("%-16s", "----------------")
+
+    print "  Bean transformations:"
+    printf fmt, "  Benchmark", "Time (ms/op)", "Error (ms/op)"
+    print sep
+    for (i = 1; i <= length(beans); i++) {
+        n = beans[i]
+        printf fmt, "  " n, scores[n], errors[n]
+    }
+
+    print ""
+    print "  Type conversions:"
+    printf fmt, "  Benchmark", "Time (ms/op)", "Error (ms/op)"
+    print sep
+    for (i = 1; i <= length(conv); i++) {
+        n = conv[i]
+        printf fmt, "  " n, scores[n], errors[n]
+    }
 }
 ' "$TMPOUT"
