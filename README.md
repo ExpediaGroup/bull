@@ -2,7 +2,7 @@
   <img width="420" alt="BULL" src="./docs/site/resources/images/BullBranding_04.png">
 </h1>
 
-## Bean Utils Light Library
+## Bean Utils Light Library (BULL)
 
 BULL is a Java Bean to Java Bean transformer that recursively copies data from one object to another, it is generic, flexible, reusable, configurable, and incredibly fast.
 It's the only library able to transform Mutable, Immutable, and Mixed bean without any custom configuration.
