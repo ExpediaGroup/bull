@@ -11,7 +11,7 @@ jobs:
     name: "Build"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: "Cache Maven repository"
         uses: actions/cache@v5.0.5
         with:
@@ -30,7 +30,7 @@ jobs:
     name: "Test and quality check"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: "Cache Maven repository"
         uses: actions/cache@v5.0.5
         with:
@@ -83,7 +83,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: "Checkout repository"
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       # Initializes the CodeQL tools for scanning.
       - name: "Initialize CodeQL"
         uses: github/codeql-action/init@v4
