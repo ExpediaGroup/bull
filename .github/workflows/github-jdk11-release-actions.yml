@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: "Cache Maven repository"
-        uses: actions/cache@v6.0.0
+        uses: actions/cache@v6.1.0
         with:
           path: $HOME/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
