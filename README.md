@@ -66,7 +66,7 @@ one with `jdk 11` and on with `jdk 17` or above.
 In case you need to integrate it in a:
 * `jdk 8` please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md)
 * `jdk 11` please refer to [CHANGELOG-JDK11](CHANGELOG-JDK11.md)
-* `jdk 15` [CHANGELOG](CHANGELOG.md)
+* `jdk 17` [CHANGELOG](CHANGELOG.md)
 
 * #### Suggestions
 
