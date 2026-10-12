@@ -591,6 +591,8 @@
                                     <exclude>**/constant/*</exclude>
                                     <exclude>**/error/*</exclude>
                                     <exclude>**/annotation/*</exclude>
+                                    <exclude>**/RecordUtils.*</exclude>
+                                    <exclude>**/VirtualThreadUtils.*</exclude>
                                 </excludes>
                                 <rules>
                                     <rule>
