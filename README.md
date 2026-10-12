@@ -60,13 +60,13 @@ It contains all the modules available in the project
 </dependency>
 ```
 
-**The project provides two different builds**, one compatible with `jdk 8` (or above),
-one with `jdk 11` and on with `jdk 17` or above.
+**The project provides multiple builds**, one compatible with `jdk 8` (or above),
+one with `jdk 11`, one with `jdk 17`, and the latest version supporting `jdk 26` with full Java 25+ features.
 
 In case you need to integrate it in a:
 * `jdk 8` please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md)
 * `jdk 11` please refer to [CHANGELOG-JDK11](CHANGELOG-JDK11.md)
-* `jdk 17` [CHANGELOG](CHANGELOG.md)
+* `jdk 26` [CHANGELOG](CHANGELOG.md)
 
 * #### Suggestions
 

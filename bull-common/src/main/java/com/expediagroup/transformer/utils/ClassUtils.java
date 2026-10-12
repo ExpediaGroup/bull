@@ -748,6 +748,22 @@ public final class ClassUtils {
     }
 
     /**
+     * Checks if a class is a Java Record (Java 16+).
+     * Records are immutable classes and have all parameters compiled with names.
+     * @param clazz the class to check
+     * @return true if the class is a Java Record, false otherwise
+     */
+    public boolean isRecord(final Class<?> clazz) {
+        notNull(clazz, CLAZZ_CANNOT_BE_NULL);
+        final String cacheKey = "IsRecord-" + clazz.getName();
+        return CACHE_MANAGER.getFromCache(cacheKey, Boolean.class).orElseGet(() -> {
+            final boolean res = clazz.isRecord();
+            CACHE_MANAGER.cacheObject(cacheKey, res);
+            return res;
+        });
+    }
+
+    /**
      * Checks if the constructor's parameters names are defined.
      * @param constructor the constructor to check.
      * @return true if some parameters names are not defined, false otherwise.
@@ -764,6 +780,7 @@ public final class ClassUtils {
 
     /**
      * Returns the class type.
+     * Records (Java 16+) are always classified as IMMUTABLE since they are inherently immutable.
      * @param clazz the class to check
      * @return the class type {@link ClassType}
      */
@@ -771,15 +788,19 @@ public final class ClassUtils {
         final String cacheKey = "ClassType-" + clazz.getName();
         return CACHE_MANAGER.getFromCache(cacheKey, ClassType.class).orElseGet(() -> {
             final ClassType classType;
-            boolean hasFinalFields = hasFinalFields(clazz);
-            if (!hasFinalFields) {
-                classType = ClassType.MUTABLE;
+            if (isRecord(clazz)) {
+                classType = ClassType.IMMUTABLE;
             } else {
-                boolean hasNotFinalFields = hasNotFinalFields(clazz);
-                if (hasNotFinalFields) {
-                    classType = ClassType.MIXED;
+                boolean hasFinalFields = hasFinalFields(clazz);
+                if (!hasFinalFields) {
+                    classType = ClassType.MUTABLE;
                 } else {
-                    classType = ClassType.IMMUTABLE;
+                    boolean hasNotFinalFields = hasNotFinalFields(clazz);
+                    if (hasNotFinalFields) {
+                        classType = ClassType.MIXED;
+                    } else {
+                        classType = ClassType.IMMUTABLE;
+                    }
                 }
             }
             CACHE_MANAGER.cacheObject(cacheKey, classType);

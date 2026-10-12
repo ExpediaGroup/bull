@@ -71,6 +71,7 @@ import com.expediagroup.beans.sample.mutable.MutableToFoo;
 import com.expediagroup.beans.sample.mutable.MutableToFooSubClass;
 import com.expediagroup.beans.sample.mutable.MutableToFooWithBuilder;
 import com.expediagroup.beans.sample.mutable.MutableToFooWithWrongBuilder;
+import com.expediagroup.beans.sample.record.TestRecord;
 import com.expediagroup.transformer.annotation.ConstructorArg;
 import com.expediagroup.transformer.constant.ClassType;
 import com.expediagroup.transformer.error.InstanceCreationException;
@@ -791,6 +792,36 @@ public class ClassUtilsTest {
     }
 
     /**
+     * Tests that the method {@code isRecord} works as expected.
+     * @param testCaseDescription the test case description
+     * @param testClass the class to test
+     * @param expectedResult the expected result
+     */
+    @Test(dataProvider = "dataIsRecordTesting")
+    public void testIsRecordWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
+        // GIVEN
+
+        // WHEN
+        final boolean actual = underTest.isRecord(testClass);
+
+        // THEN
+        assertThat(actual).isEqualTo(expectedResult);
+    }
+
+    /**
+     * Creates the parameters to be used for testing the method {@code isRecord}.
+     * @return parameters to be used for testing the method {@code isRecord}.
+     */
+    @DataProvider
+    private Object[][] dataIsRecordTesting() {
+        return new Object[][] {
+                {"Tests that the method returns true for a Java Record", TestRecord.class, true},
+                {"Tests that the method returns false for a regular immutable class", ImmutableToFoo.class, false},
+                {"Tests that the method returns false for a mutable class", MutableToFoo.class, false}
+        };
+    }
+
+    /**
      * Tests that the method {@code getClassType} works as expected.
      * @param testCaseDescription the test case description
      * @param testClass the class to test
@@ -817,7 +848,8 @@ public class ClassUtilsTest {
                 {"Tests that the method returns immutable if the given class is immutable", ImmutableToFoo.class, ClassType.IMMUTABLE},
                 {"Tests that the method returns mutable if the given class is mutable", MutableToFoo.class, ClassType.MUTABLE},
                 {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED},
-                {"Tests that static non-final fields are ignored when determining IMMUTABLE class type", ImmutableToFooWithStaticField.class, ClassType.IMMUTABLE}
+                {"Tests that static non-final fields are ignored when determining IMMUTABLE class type", ImmutableToFooWithStaticField.class, ClassType.IMMUTABLE},
+                {"Tests that Java Records are recognized as IMMUTABLE", TestRecord.class, ClassType.IMMUTABLE}
         };
     }
 

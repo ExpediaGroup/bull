@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.1.0] (Unreleased)
+* Upgrade minimum JDK requirement to Java 26 with full support for JEP 25 (String Templates in preview)
+* Add explicit record detection and optimization via new `ClassUtils.isRecord()` method
+* Enhance `getClassType()` to recognize Java Records as IMMUTABLE with improved performance
+* Add comprehensive support for Java 25+ record objects with optimized constructor parameter resolution
+* Update GitHub Actions workflows to use Java 26
+* Records are now explicitly detected and processed with fast-path optimization
+
 ### [3.0.4] 2026.04.27
 * Replaces 12-branch if-else chains in `ConversionProcessorFactory` and `ConversionAnalyzer` with switch expressions and cached processor singletons, eliminating per-call object allocation in the type conversion hot path
 * Removes `AtomicReference` allocation in `ReflectionUtils.getRealTarget` using instanceof pattern matching; eliminates redundant `isAnnotationPresent` check before `getAnnotation`
