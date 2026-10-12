@@ -29,6 +29,7 @@ public class VirtualThreadUtilsTest {
     private static final int MULTIPLIER = 2;
     private static final int FIRST = 1;
     private static final int SECOND = 2;
+    private static final int SECOND_RESULT = 4;
 
     /**
      * Tests that isVirtualThreadSupported returns true on Java 19+.
@@ -60,7 +61,7 @@ public class VirtualThreadUtilsTest {
             numbers,
             num -> num * MULTIPLIER
         );
-        assertThat(results).containsExactly(MULTIPLIER, 4);
+        assertThat(results).containsExactly(MULTIPLIER, SECOND_RESULT);
     }
 
     /**
@@ -71,5 +72,30 @@ public class VirtualThreadUtilsTest {
         var result = VirtualThreadUtils.executeAsync(() -> "test-result");
         assertThat(result).isNotNull();
         assertThat(result.get()).isEqualTo("test-result");
+    }
+
+    /**
+     * Tests that transformConcurrently handles empty collections.
+     */
+    @Test
+    public void testTransformConcurrentlyEmpty() {
+        List<Integer> numbers = Arrays.asList();
+        List<Integer> results = VirtualThreadUtils.transformConcurrently(
+            numbers,
+            num -> num * MULTIPLIER
+        );
+        assertThat(results).isEmpty();
+    }
+
+    /**
+     * Tests that createVirtualThread thread is properly created.
+     */
+    @Test
+    public void testCreateVirtualThreadExecution() throws InterruptedException {
+        var executed = new boolean[]{false};
+        var thread = VirtualThreadUtils.createVirtualThread("execution-test", () -> executed[0] = true);
+        thread.start();
+        thread.join();
+        assertThat(executed[0]).isTrue();
     }
 }
