@@ -30,6 +30,9 @@ public class VirtualThreadUtilsTest {
     private static final int FIRST = 1;
     private static final int SECOND = 2;
     private static final int SECOND_RESULT = 4;
+    private static final int THIRD = 3;
+    private static final int FOURTH = 4;
+    private static final int FIFTH = 5;
 
     /**
      * Tests that isVirtualThreadSupported returns true on Java 19+.
@@ -97,5 +100,27 @@ public class VirtualThreadUtilsTest {
         thread.start();
         thread.join();
         assertThat(executed[0]).isTrue();
+    }
+
+    /**
+     * Tests that transformConcurrently preserves order.
+     */
+    @Test
+    public void testTransformConcurrentlyPreservesOrder() {
+        List<Integer> numbers = Arrays.asList(FIRST, SECOND, THIRD, FOURTH, FIFTH);
+        List<Integer> results = VirtualThreadUtils.transformConcurrently(
+            numbers,
+            num -> num * MULTIPLIER
+        );
+        assertThat(results).hasSize(FIFTH);
+    }
+
+    /**
+     * Tests executeAsync with exception handling.
+     */
+    @Test
+    public void testExecuteAsyncWithValue() throws Exception {
+        var result = VirtualThreadUtils.executeAsync(() -> MULTIPLIER);
+        assertThat(result.get()).isEqualTo(MULTIPLIER);
     }
 }

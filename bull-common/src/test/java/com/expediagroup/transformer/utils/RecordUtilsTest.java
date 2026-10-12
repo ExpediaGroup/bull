@@ -112,4 +112,31 @@ public class RecordUtilsTest {
         long count = RecordUtils.streamComponents(TestRecord.class).count();
         assertThat(count).isEqualTo(3);
     }
+
+    /**
+     * Tests that getRecordComponentNames returns empty for non-record.
+     */
+    @Test
+    public void testGetRecordComponentNamesForNonRecord() {
+        List<String> names = RecordUtils.getRecordComponentNames(ImmutableToFoo.class);
+        assertThat(names).isEmpty();
+    }
+
+    /**
+     * Tests that getRecordComponentTypes returns empty for non-record.
+     */
+    @Test
+    public void testGetRecordComponentTypesForNonRecord() {
+        List<Class<?>> types = RecordUtils.getRecordComponentTypes(ImmutableToFoo.class);
+        assertThat(types).isEmpty();
+    }
+
+    /**
+     * Tests that streamComponents works for non-record.
+     */
+    @Test
+    public void testStreamComponentsForNonRecord() {
+        long count = RecordUtils.streamComponents(ImmutableToFoo.class).count();
+        assertThat(count).isEqualTo(0);
+    }
 }
