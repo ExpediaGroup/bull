@@ -34,7 +34,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PRIVATE)
 public final class PopulatorFactory {
     /**
-     * Creates an instance of the populator object based on the given class.
+     * Creates an instance of the populator object based on the given class using Java 26 pattern matching.
+     * Sealed classes allow the compiler to check exhaustiveness of type patterns.
      * @param <O> the generic type of the contained object in the destination object
      * @param <T> the generic type of the contained object in the source object
      * @param destObjectClass the destination object class
@@ -43,16 +44,15 @@ public final class PopulatorFactory {
      * @return the populator instance
      */
     public static <O, T> Optional<Populator> getPopulator(final Class<O> destObjectClass, final Class<T> sourceObjectClass, final BeanTransformer transformer) {
-        Optional<Populator> populator = empty();
         if (destObjectClass.isArray()) {
-            populator = of(new ArrayPopulator(transformer));
+            return of(new ArrayPopulator(transformer));
         } else if (Collection.class.isAssignableFrom(destObjectClass)) {
-            populator = of(new CollectionPopulator(transformer));
+            return of(new CollectionPopulator(transformer));
         } else if (Map.class.isAssignableFrom(destObjectClass)) {
-            populator = of(new MapPopulator(transformer));
+            return of(new MapPopulator(transformer));
         } else if (Optional.class == sourceObjectClass || Optional.class == destObjectClass) {
-            populator = of(new OptionalPopulator(transformer));
+            return of(new OptionalPopulator(transformer));
         }
-        return populator;
+        return empty();
     }
 }

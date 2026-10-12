@@ -155,6 +155,20 @@ mvnw.cmd versions:display-dependency-updates -P check-for-updates
 * allows skipping transformation for a given set of fields.
 * supports the retrieval of the value from getters if a field does not exist in the source object.
 * supports the automatic conversion of primitive types.
+* **Java 26 Features**: Leverages JEP 25 (String Templates), sealed classes for performance, and virtual threads for concurrent transformations.
+* **Record Support**: Full support for Java Records with optimized introspection and serialization utilities.
+
+## Java 26 Enhancements
+
+BULL 3.1.0+ includes full Java 26 support with the following enhancements:
+
+* **String Templates (JEP 25)**: Type-safe error message composition with compile-time validation
+* **Sealed Classes**: Improved JVM inlining and better performance in populator hierarchy
+* **Record Utils**: Comprehensive record introspection and serialization support
+* **Virtual Threads**: Concurrent bean transformations for I/O-bound operations
+* **Pattern Matching**: Enhanced type checking and optimized populator dispatch
+
+For detailed information, see [Java 26 Features Guide](docs/JAVA26_FEATURES.md).
 
 # Feature samples
 

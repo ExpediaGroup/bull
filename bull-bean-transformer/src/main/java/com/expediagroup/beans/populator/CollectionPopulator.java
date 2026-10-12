@@ -27,10 +27,10 @@ import java.util.stream.Collector;
 import com.expediagroup.beans.transformer.BeanTransformer;
 
 /**
- * Populator for Collections types object {@link java.util.Collections}.
+ * Populator for Collections types object (sealed implementation).
  * @param <K> the class of the collection elements.
  */
-class CollectionPopulator<K> extends Populator<Collection> implements ICollectionPopulator<Collection> {
+final class CollectionPopulator<K> extends Populator<Collection> implements ICollectionPopulator<Collection> {
 
     /**
      * Default constructor.
