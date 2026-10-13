@@ -16,7 +16,9 @@
 package com.expediagroup.transformer.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.RecordComponent;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -276,5 +278,42 @@ public class RecordUtilsTest {
     public void testStaticMethodsAccessible() {
         assertThat(RecordUtils.isRecord(TestRecord.class)).isNotNull();
         assertThat(RecordUtils.getRecordComponents(TestRecord.class)).isNotNull();
+    }
+
+    /**
+     * Tests that canonical constructor can be invoked to create instance.
+     */
+    @Test
+    public void testCanonicalConstructorCanCreateInstance() throws Exception {
+        var constructor = RecordUtils.getCanonicalConstructor(TestRecord.class);
+        assertThat(constructor).isNotNull();
+        var instance = constructor.newInstance("John", 30, "john@example.com");
+        assertThat(instance).isInstanceOf(TestRecord.class);
+    }
+
+    /**
+     * Tests that canonical constructor parameter types match component types.
+     */
+    @Test
+    public void testCanonicalConstructorParameterTypesMatchComponents() {
+        var constructor = RecordUtils.getCanonicalConstructor(TestRecord.class);
+        var parameterTypes = constructor.getParameterTypes();
+        var componentTypes = RecordUtils.getRecordComponentTypes(TestRecord.class);
+        assertThat(parameterTypes.length).isEqualTo(componentTypes.size());
+        for (int i = 0; i < parameterTypes.length; i++) {
+            assertThat(parameterTypes[i]).isEqualTo(componentTypes.get(i));
+        }
+    }
+
+    /**
+     * Tests getRecordComponentNames and Types work together.
+     */
+    @Test
+    public void testComponentNamesAndTypesCorrespond() {
+        List<String> names = RecordUtils.getRecordComponentNames(TestRecord.class);
+        List<Class<?>> types = RecordUtils.getRecordComponentTypes(TestRecord.class);
+        assertThat(names).hasSize(types.size());
+        assertThat(names.size()).isEqualTo(3);
+        assertThat(types.size()).isEqualTo(3);
     }
 }

@@ -268,4 +268,55 @@ public class VirtualThreadUtilsTest {
         assertThat(VirtualThreadUtils.isVirtualThreadSupported()).isNotNull();
         assertThat(VirtualThreadUtils.createVirtualThread("test", () -> { })).isNotNull();
     }
+
+    /**
+     * Tests transformConcurrently with various collection sizes.
+     */
+    @Test
+    public void testTransformConcurrentlyVariousSizes() {
+        for (int size = 1; size <= FIFTH; size++) {
+            List<Integer> numbers = new ArrayList<>();
+            for (int i = 1; i <= size; i++) {
+                numbers.add(i);
+            }
+            List<Integer> results = VirtualThreadUtils.transformConcurrently(numbers, num -> num * MULTIPLIER);
+            assertThat(results).hasSize(size);
+        }
+    }
+
+    /**
+     * Tests executeAsync with different result types.
+     */
+    @Test
+    public void testExecuteAsyncDifferentTypes() throws Exception {
+        var intResult = VirtualThreadUtils.executeAsync(() -> FIRST);
+        var stringResult = VirtualThreadUtils.executeAsync(() -> "test");
+        var boolResult = VirtualThreadUtils.executeAsync(() -> true);
+        assertThat(intResult.get()).isEqualTo(FIRST);
+        assertThat(stringResult.get()).isEqualTo("test");
+        assertThat(boolResult.get()).isEqualTo(true);
+    }
+
+    /**
+     * Tests createVirtualThread multiple creations.
+     */
+    @Test
+    public void testCreateMultipleVirtualThreadsSequentially() {
+        var threads = new java.util.ArrayList<Thread>();
+        for (int i = 0; i < THIRD; i++) {
+            threads.add(VirtualThreadUtils.createVirtualThread("thread-" + i, () -> { }));
+        }
+        assertThat(threads).hasSize(THIRD);
+        assertThat(threads.stream().allMatch(Thread::isVirtual)).isTrue();
+    }
+
+    /**
+     * Tests transformConcurrently result correctness with complex transformation.
+     */
+    @Test
+    public void testTransformConcurrentlyComplexTransformation() {
+        List<Integer> numbers = Arrays.asList(FIRST, SECOND, THIRD);
+        List<String> results = VirtualThreadUtils.transformConcurrently(numbers, num -> "num-" + num);
+        assertThat(results).containsExactly("num-1", "num-2", "num-3");
+    }
 }
