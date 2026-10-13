@@ -133,6 +133,21 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>jmh-compile-generated</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <compileSourceRoots>
+                                <compileSourceRoot>${project.build.directory}/generated-sources/jmh</compileSourceRoot>
+                            </compileSourceRoots>
+                            <annotationProcessorPaths />
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <!--
                 Step 1 (process-classes): scan compiled benchmark classes and emit the JMH
@@ -160,29 +175,6 @@
                                 <argument>${project.build.outputDirectory}</argument>
                                 <argument>default</argument>
                             </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--
-                Step 2 (prepare-package): compile the generated harness sources so the
-                *_jmhTest classes end up in target/classes before the shade plugin runs.
-            -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>jmh-compile-generated</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <configuration>
-                            <compileSourceRoots>
-                                <compileSourceRoot>${project.build.directory}/generated-sources/jmh</compileSourceRoot>
-                            </compileSourceRoots>
-                            <annotationProcessorPaths />
                         </configuration>
                     </execution>
                 </executions>
