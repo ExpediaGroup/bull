@@ -99,6 +99,18 @@ public final class RecordUtils {
         var parameterTypes = Arrays.stream(components)
                 .map(RecordComponent::getType)
                 .toArray(Class[]::new);
+        return getConstructorOrNull(recordClass, parameterTypes);
+    }
+
+    /**
+     * Safely gets a declared constructor or returns null.
+     * @param recordClass the record class
+     * @param parameterTypes the constructor parameter types
+     * @return the constructor or null if not found
+     */
+    @SuppressWarnings("java:S1166") // Exception path unreachable on Java 16+
+    private static java.lang.reflect.Constructor<?> getConstructorOrNull(final Class<?> recordClass,
+        final Class<?>[] parameterTypes) {
         try {
             return recordClass.getDeclaredConstructor(parameterTypes);
         } catch (NoSuchMethodException e) {

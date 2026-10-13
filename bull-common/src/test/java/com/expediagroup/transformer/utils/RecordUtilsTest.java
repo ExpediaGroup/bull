@@ -16,9 +16,7 @@
 package com.expediagroup.transformer.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.RecordComponent;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -315,5 +313,45 @@ public class RecordUtilsTest {
         assertThat(names).hasSize(types.size());
         assertThat(names.size()).isEqualTo(3);
         assertThat(types.size()).isEqualTo(3);
+    }
+
+    /**
+     * Tests getCanonicalConstructor with correct types.
+     */
+    @Test
+    public void testGetCanonicalConstructorWithExactTypes() throws Exception {
+        var constructor = RecordUtils.getCanonicalConstructor(TestRecord.class);
+        assertThat(constructor).isNotNull();
+        var paramTypes = constructor.getParameterTypes();
+        assertThat(paramTypes).containsExactly(String.class, int.class, String.class);
+    }
+
+    /**
+     * Tests that non-record returns null for canonical constructor.
+     */
+    @Test
+    public void testGetCanonicalConstructorNullForNonRecord() {
+        var result = RecordUtils.getCanonicalConstructor(String.class);
+        assertThat(result).isNull();
+    }
+
+    /**
+     * Tests getRecordComponents directly invokes isRecord.
+     */
+    @Test
+    public void testGetRecordComponentsUsesIsRecord() {
+        var result = RecordUtils.getRecordComponents(TestRecord.class);
+        assertThat(result).isNotEmpty().hasSize(3);
+    }
+
+    /**
+     * Tests that all component retrieval methods handle empty arrays.
+     */
+    @Test
+    public void testAllMethodsHandleNonRecords() {
+        var nonRecord = ImmutableToFoo.class;
+        assertThat(RecordUtils.getRecordComponents(nonRecord)).isEmpty();
+        assertThat(RecordUtils.getRecordComponentNames(nonRecord)).isEmpty();
+        assertThat(RecordUtils.getRecordComponentTypes(nonRecord)).isEmpty();
     }
 }

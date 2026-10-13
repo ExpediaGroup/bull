@@ -319,4 +319,52 @@ public class VirtualThreadUtilsTest {
         List<String> results = VirtualThreadUtils.transformConcurrently(numbers, num -> "num-" + num);
         assertThat(results).containsExactly("num-1", "num-2", "num-3");
     }
+
+    /**
+     * Tests that virtual thread check returns true.
+     */
+    @Test
+    public void testVirtualThreadSupportedReturnsTrue() {
+        assertThat(VirtualThreadUtils.isVirtualThreadSupported()).isTrue();
+    }
+
+    /**
+     * Tests transformConcurrently preserves exact order with transformation.
+     */
+    @Test
+    public void testTransformConcurrentlyExactOrder() {
+        List<Integer> numbers = Arrays.asList(FIRST, SECOND, THIRD, FOURTH, FIFTH);
+        List<Integer> results = VirtualThreadUtils.transformConcurrently(numbers, num -> num);
+        assertThat(results).containsExactly(FIRST, SECOND, THIRD, FOURTH, FIFTH);
+    }
+
+    /**
+     * Tests executeAsync completes successfully.
+     */
+    @Test
+    public void testExecuteAsyncCompletesSuccessfully() throws Exception {
+        var result = VirtualThreadUtils.executeAsync(() -> FIRST);
+        assertThat(result.isDone()).isFalse();
+        assertThat(result.get()).isEqualTo(FIRST);
+        assertThat(result.isDone()).isTrue();
+    }
+
+    /**
+     * Tests createVirtualThread is unstarted.
+     */
+    @Test
+    public void testCreateVirtualThreadIsUnstarted() {
+        var thread = VirtualThreadUtils.createVirtualThread("test", () -> { });
+        assertThat(thread.getState()).isEqualTo(Thread.State.NEW);
+    }
+
+    /**
+     * Tests transformConcurrently with identity transformation.
+     */
+    @Test
+    public void testTransformConcurrentlyIdentityTransformation() {
+        List<Integer> numbers = Arrays.asList(FIRST, SECOND, THIRD);
+        List<Integer> results = VirtualThreadUtils.transformConcurrently(numbers, num -> num);
+        assertThat(results).isEqualTo(numbers);
+    }
 }
