@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.RecordComponent;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.testng.annotations.Test;
 
@@ -138,5 +139,142 @@ public class RecordUtilsTest {
     public void testStreamComponentsForNonRecord() {
         long count = RecordUtils.streamComponents(ImmutableToFoo.class).count();
         assertThat(count).isEqualTo(0);
+    }
+
+    /**
+     * Tests that record components names match expected.
+     */
+    @Test
+    public void testRecordComponentNamesMatch() {
+        List<String> names = RecordUtils.getRecordComponentNames(TestRecord.class);
+        assertThat(names).containsExactly("name", "age", "email");
+        assertThat(names.get(0)).isEqualTo("name");
+        assertThat(names.get(1)).isEqualTo("age");
+        assertThat(names.get(2)).isEqualTo("email");
+    }
+
+    /**
+     * Tests that record component types are correct classes.
+     */
+    @Test
+    public void testRecordComponentTypesAreCorrect() {
+        List<Class<?>> types = RecordUtils.getRecordComponentTypes(TestRecord.class);
+        assertThat(types.get(0)).isEqualTo(String.class);
+        assertThat(types.get(1).isPrimitive()).isTrue();
+        assertThat(types.get(2)).isEqualTo(String.class);
+    }
+
+    /**
+     * Tests that streamComponents collects all components.
+     */
+    @Test
+    public void testStreamComponentsCollect() {
+        List<RecordComponent> components = RecordUtils.streamComponents(TestRecord.class).collect(Collectors.toList());
+        assertThat(components).hasSize(3);
+        assertThat(components.get(0).getName()).isEqualTo("name");
+        assertThat(components.get(1).getName()).isEqualTo("age");
+        assertThat(components.get(2).getName()).isEqualTo("email");
+    }
+
+    /**
+     * Tests that getCanonicalConstructor is not null for record.
+     */
+    @Test
+    public void testGetCanonicalConstructorNotNull() {
+        var constructor = RecordUtils.getCanonicalConstructor(TestRecord.class);
+        assertThat(constructor).isNotNull();
+        assertThat(constructor.getParameterCount()).isEqualTo(3);
+    }
+
+    /**
+     * Tests that canonical constructor has correct parameter count.
+     */
+    @Test
+    public void testCanonicalConstructorParameterCount() {
+        var constructor = RecordUtils.getCanonicalConstructor(TestRecord.class);
+        assertThat(constructor.getParameterCount()).isEqualTo(3);
+    }
+
+    /**
+     * Tests that getRecordComponents has correct size.
+     */
+    @Test
+    public void testRecordComponentsSize() {
+        RecordComponent[] components = RecordUtils.getRecordComponents(TestRecord.class);
+        assertThat(components.length).isEqualTo(3);
+    }
+
+    /**
+     * Tests that isRecord correctly identifies records.
+     */
+    @Test
+    public void testIsRecordIdentification() {
+        assertThat(RecordUtils.isRecord(TestRecord.class)).isTrue();
+        assertThat(RecordUtils.isRecord(ImmutableToFoo.class)).isFalse();
+    }
+
+    /**
+     * Tests that non-record types return empty components.
+     */
+    @Test
+    public void testNonRecordEmptyComponents() {
+        RecordComponent[] components = RecordUtils.getRecordComponents(ImmutableToFoo.class);
+        assertThat(components).isEmpty();
+        assertThat(components.length).isEqualTo(0);
+    }
+
+    /**
+     * Tests that stream operations work on record components.
+     */
+    @Test
+    public void testStreamOperationsOnRecord() {
+        long nameCount = RecordUtils.streamComponents(TestRecord.class).filter(rc -> rc.getName().equals("name"))
+            .count();
+        assertThat(nameCount).isEqualTo(1);
+    }
+
+    /**
+     * Tests that getRecordComponentNames preserves order.
+     */
+    @Test
+    public void testComponentNamesPreserveOrder() {
+        List<String> names = RecordUtils.getRecordComponentNames(TestRecord.class);
+        assertThat(names).containsExactly("name", "age", "email");
+        assertThat(names).isSortedAccordingTo((a, b) -> {
+            if (a.equals("name")) return -1;
+            if (a.equals("age")) return -1;
+            return 1;
+        });
+    }
+
+    /**
+     * Tests that component names are retrieved correctly for each position.
+     */
+    @Test
+    public void testRecordComponentIndividualNames() {
+        RecordComponent[] components = RecordUtils.getRecordComponents(TestRecord.class);
+        assertThat(components[0].getName()).isEqualTo("name");
+        assertThat(components[1].getName()).isEqualTo("age");
+        assertThat(components[2].getName()).isEqualTo("email");
+    }
+
+    /**
+     * Tests that component types are individual correct classes.
+     */
+    @Test
+    public void testRecordComponentIndividualTypes() {
+        RecordComponent[] components = RecordUtils.getRecordComponents(TestRecord.class);
+        assertThat(components[0].getType()).isEqualTo(String.class);
+        assertThat(components[1].getType()).isEqualTo(int.class);
+        assertThat(components[2].getType()).isEqualTo(String.class);
+    }
+
+    /**
+     * Tests that all static methods are accessible.
+     */
+    @Test
+    public void testStaticMethodsAccessible() {
+        assertThat(RecordUtils.isRecord(TestRecord.class)).isNotNull();
+        assertThat(RecordUtils.getRecordComponents(TestRecord.class)).isNotNull();
     }
 }
