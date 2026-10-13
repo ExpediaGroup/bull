@@ -89,9 +89,10 @@ public final class VirtualThreadUtils {
 
     /**
      * Checks if virtual threads are supported (Java 19+).
+     * Exception path is unreachable on Java 19+ where virtual threads are standard.
      * @return true if the current JVM supports virtual threads
      */
-    @SuppressWarnings("java:S1166") // Exception path unreachable on Java 19+
+    @SuppressWarnings("java:S1166")
     public static boolean isVirtualThreadSupported() {
         try {
             Thread.ofVirtual();

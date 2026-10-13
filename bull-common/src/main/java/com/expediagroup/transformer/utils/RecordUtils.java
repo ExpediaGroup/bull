@@ -104,11 +104,12 @@ public final class RecordUtils {
 
     /**
      * Safely gets a declared constructor or returns null.
+     * Exception path is unreachable on Java 16+ where all records have canonical constructors.
      * @param recordClass the record class
      * @param parameterTypes the constructor parameter types
      * @return the constructor or null if not found
      */
-    @SuppressWarnings("java:S1166") // Exception path unreachable on Java 16+
+    @SuppressWarnings("java:S1166")
     private static java.lang.reflect.Constructor<?> getConstructorOrNull(final Class<?> recordClass,
         final Class<?>[] parameterTypes) {
         try {
