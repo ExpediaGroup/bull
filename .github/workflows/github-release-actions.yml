@@ -31,7 +31,7 @@ jobs:
       - name: "JDK set-up"
         uses: actions/setup-java@v6
         with:
-          java-version: '26'
+          java-version: '21'
           distribution: 'temurin'
           server-id: central # Value of the distributionManagement/repository/id field of the pom.xml
           server-username: SONATYPE_USERNAME # env variable for Central Portal token username

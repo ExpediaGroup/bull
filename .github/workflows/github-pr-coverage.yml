@@ -28,7 +28,7 @@ jobs:
       - name: "JDK set-up"
         uses: actions/setup-java@v6
         with:
-          java-version: '26'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: "Build and Test"

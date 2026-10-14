@@ -1,6 +1,6 @@
-# BULL Java 26 Guide
+# BULL Java 21 Guide
 
-BULL 4.0.0+ requires JDK 26. Use the 3.x releases if you need an older JDK.
+BULL 4.0.0+ requires JDK 21. Use the 3.x releases if you need an older JDK.
 
 ## 1. Records
 
@@ -62,7 +62,7 @@ For CPU-bound transformations virtual threads bring no benefit; measure before a
 
 ```xml
 <properties>
-    <jdk.version>26</jdk.version>
+    <jdk.version>21</jdk.version>
 </properties>
 ```
 

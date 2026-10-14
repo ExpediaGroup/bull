@@ -24,7 +24,7 @@ jobs:
       - name: "JDK set-up"
         uses: actions/setup-java@v6
         with:
-          java-version: '26'
+          java-version: '21'
           distribution: 'temurin'
       - name: "Build"
         run: |
@@ -47,7 +47,7 @@ jobs:
       - name: "JDK set-up"
         uses: actions/setup-java@v6
         with:
-          java-version: '26'
+          java-version: '21'
           distribution: 'temurin'
       - name: "Test and Quality check"
         uses: nick-invision/retry@v4
@@ -90,7 +90,7 @@ jobs:
       - name: "JDK set-up"
         uses: actions/setup-java@v6
         with:
-          java-version: '26'
+          java-version: '21'
           distribution: 'temurin'
       - name: "Checkout repository"
         uses: actions/checkout@v7

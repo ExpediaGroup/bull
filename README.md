@@ -61,13 +61,13 @@ It contains all the modules available in the project
 ```
 
 **The project provides multiple builds**, one compatible with `jdk 8` (or above),
-one with `jdk 11`, one with `jdk 17` (3.x), and one requiring `jdk 26` (4.0.0 and above).
+one with `jdk 11`, one with `jdk 17` (3.x), and one requiring `jdk 21` (4.0.0 and above).
 
 In case you need to integrate it in a:
 * `jdk 8` please refer to [CHANGELOG-JDK8](CHANGELOG-JDK8.md)
 * `jdk 11` please refer to [CHANGELOG-JDK11](CHANGELOG-JDK11.md)
 * `jdk 17` please use the 3.x releases
-* `jdk 26` [CHANGELOG](CHANGELOG.md)
+* `jdk 21` [CHANGELOG](CHANGELOG.md)
 
 * #### Suggestions
 
@@ -158,14 +158,14 @@ mvnw.cmd versions:display-dependency-updates -P check-for-updates
 * supports the automatic conversion of primitive types.
 * supports Java Records, which are handled as immutable objects.
 
-## Java 26 Utilities
+## Java 21 Utilities
 
-BULL 4.0.0+ requires JDK 26 and ships two opt-in utilities:
+BULL 4.0.0+ requires JDK 21 and ships two opt-in utilities:
 
 * **`RecordUtils`**: Java Record introspection (components, names, types, canonical constructor)
 * **`VirtualThreadUtils`**: concurrent transformations on virtual threads
 
-For detailed information, see [Java 26 Features Guide](docs/JAVA26_FEATURES.md).
+For detailed information, see [Java 21 Guide](docs/JAVA21_FEATURES.md).
 
 # Feature samples
 
