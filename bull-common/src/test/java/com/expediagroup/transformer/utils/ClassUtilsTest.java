@@ -71,6 +71,7 @@ import com.expediagroup.beans.sample.mutable.MutableToFoo;
 import com.expediagroup.beans.sample.mutable.MutableToFooSubClass;
 import com.expediagroup.beans.sample.mutable.MutableToFooWithBuilder;
 import com.expediagroup.beans.sample.mutable.MutableToFooWithWrongBuilder;
+import com.expediagroup.beans.sample.record.TestRecord;
 import com.expediagroup.transformer.annotation.ConstructorArg;
 import com.expediagroup.transformer.constant.ClassType;
 import com.expediagroup.transformer.error.InstanceCreationException;
@@ -817,7 +818,8 @@ public class ClassUtilsTest {
                 {"Tests that the method returns immutable if the given class is immutable", ImmutableToFoo.class, ClassType.IMMUTABLE},
                 {"Tests that the method returns mutable if the given class is mutable", MutableToFoo.class, ClassType.MUTABLE},
                 {"Tests that the method returns mixed if the given class contains both final and not fields", MixedToFoo.class, ClassType.MIXED},
-                {"Tests that static non-final fields are ignored when determining IMMUTABLE class type", ImmutableToFooWithStaticField.class, ClassType.IMMUTABLE}
+                {"Tests that static non-final fields are ignored when determining IMMUTABLE class type", ImmutableToFooWithStaticField.class, ClassType.IMMUTABLE},
+                {"Tests that Java Records are recognized as IMMUTABLE", TestRecord.class, ClassType.IMMUTABLE}
         };
     }
 

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [4.0.0] 2026.10.14
+* **BREAKING**: the minimum required JDK is now 21 (previously 17), required by virtual threads. Use the 3.x line for older JDKs
+* Add `RecordUtils`, an opt-in utility for Java Record introspection (components, names, types, canonical constructor)
+* Add `VirtualThreadUtils`, an opt-in utility for running transformations concurrently on virtual threads
+* Add test coverage for Java Records being classified as `IMMUTABLE`
+* Update GitHub Actions workflows to use Java 21
+
 ### [3.0.4] 2026.04.27
 * Replaces 12-branch if-else chains in `ConversionProcessorFactory` and `ConversionAnalyzer` with switch expressions and cached processor singletons, eliminating per-call object allocation in the type conversion hot path
 * Removes `AtomicReference` allocation in `ReflectionUtils.getRealTarget` using instanceof pattern matching; eliminates redundant `isAnnotationPresent` check before `getAnnotation`

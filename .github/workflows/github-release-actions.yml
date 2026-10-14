@@ -31,11 +31,11 @@ jobs:
       - name: "JDK set-up"
         uses: actions/setup-java@v6
         with:
-          java-version: '17'
+          java-version: '26'
           distribution: 'temurin'
           server-id: central # Value of the distributionManagement/repository/id field of the pom.xml
-          server-username: SONATYPE_USERNAME # env variable for Central Portal token username
-          server-password: SONATYPE_PASSWORD # env variable for Central Portal token password
+          server-username-env-var: SONATYPE_USERNAME # env variable for Central Portal token username
+          server-password-env-var: SONATYPE_PASSWORD # env variable for Central Portal token password
           # only signed artifacts will be released to maven central. this sets up things for the maven-gpg-plugin
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
           gpg-passphrase: GPG_PASSPHRASE # env variable for GPG private key passphrase
@@ -69,7 +69,9 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
         run: |
-          mvn deploy --settings $GITHUB_WORKSPACE/settings.xml -B -U -P release -DskipTests=true
+          # Use the Maven wrapper (3.8.4) on purpose: Maven 3.10+ (resolver 2.x) adds maven-metadata-local.xml and
+          # _remote.repositories files to the Central bundle, which Central rejects ("content that does NOT have a .pom file").
+          ./mvnw deploy --settings $GITHUB_WORKSPACE/settings.xml -B -U -P release -DskipTests=true
       - name: "Send Slack Notification"
         uses: rtCamp/action-slack-notify@v2
         env:
