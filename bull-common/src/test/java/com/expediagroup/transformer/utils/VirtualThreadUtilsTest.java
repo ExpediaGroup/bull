@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
 import org.testng.annotations.Test;
@@ -52,9 +53,18 @@ public class VirtualThreadUtilsTest {
      */
     @Test
     public void testTransformConcurrentlyRestoresInterruptFlag() {
+        // the task blocks until cancelled, so Future.get() always has to wait and therefore checks the interrupt flag
+        final var neverReleased = new CountDownLatch(1);
         try {
             Thread.currentThread().interrupt();
-            assertThatThrownBy(() -> VirtualThreadUtils.transformConcurrently(List.of(FIRST), num -> num))
+            assertThatThrownBy(() -> VirtualThreadUtils.transformConcurrently(List.of(FIRST), num -> {
+                try {
+                    neverReleased.await();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                return num;
+            }))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("concurrent transformation")
                 .hasCauseInstanceOf(InterruptedException.class);
