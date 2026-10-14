@@ -8,7 +8,6 @@ All notable changes to this project will be documented in this file.
 * Add `VirtualThreadUtils`, an opt-in utility for running transformations concurrently on virtual threads
 * Add test coverage for Java Records being classified as `IMMUTABLE`
 * Update GitHub Actions workflows to use Java 21
-* Add Java 21 documentation in `docs/JAVA21_FEATURES.md`
 
 ### [3.0.4] 2026.04.27
 * Replaces 12-branch if-else chains in `ConversionProcessorFactory` and `ConversionAnalyzer` with switch expressions and cached processor singletons, eliminating per-call object allocation in the type conversion hot path

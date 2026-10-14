@@ -165,8 +165,6 @@ BULL 4.0.0+ requires JDK 21 and ships two opt-in utilities:
 * **`RecordUtils`**: Java Record introspection (components, names, types, canonical constructor)
 * **`VirtualThreadUtils`**: concurrent transformations on virtual threads
 
-For detailed information, see [Java 21 Guide](docs/JAVA21_FEATURES.md).
-
 # Feature samples
 
 * [Bean Transformation](https://github.com/ExpediaGroup/bull#bean-transformation-samples)
