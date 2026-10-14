@@ -43,7 +43,7 @@ jobs:
       - name: "Extract build information"
         id: build_info
         run: |
-          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
+          echo "SOURCE_BRANCH=${GITHUB_REF#refs/heads/}" >> "$GITHUB_OUTPUT"
       - name: "JDK set-up"
         uses: actions/setup-java@v6
         with:

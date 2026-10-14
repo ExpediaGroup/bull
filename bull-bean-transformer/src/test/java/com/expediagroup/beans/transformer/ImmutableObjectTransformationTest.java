@@ -233,7 +233,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      * Creates the parameters to be used for testing the exception raised in case of error during the constructor invocation.
      * @return parameters to be used for testing the transformation with composite field name mapping.
      */
-    @DataProvider(parallel = true)
+    @DataProvider
     private Object[][] dataConstructorErrorTesting() {
         FromFoo actual = new FromFoo(NAME, ID, null, null, null);
         return new Object[][] {
@@ -322,7 +322,7 @@ public class ImmutableObjectTransformationTest extends AbstractBeanTransformerTe
      * @return parameters to be used for testing the transformation of advanced type fields.
      * @throws CloneNotSupportedException if the clone fails
      */
-    @DataProvider(parallel = true)
+    @DataProvider
     private Object[][] dataAdvancedFieldsCopyTesting() throws CloneNotSupportedException {
         FromFooAdvFields emptyOptionalSourceObject = fromFooAdvFields.clone();
         emptyOptionalSourceObject.setName(Optional.empty());

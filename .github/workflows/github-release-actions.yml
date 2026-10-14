@@ -20,9 +20,9 @@ jobs:
       - name: "Extract build information"
         id: build_info
         run: |
-          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
-          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
-          echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+          echo "SOURCE_NAME=${GITHUB_REF#refs/*/}" >> "$GITHUB_OUTPUT"
+          echo "SOURCE_BRANCH=${GITHUB_REF#refs/heads/}" >> "$GITHUB_OUTPUT"
+          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
       - name: "Project version set"
         env:
           TAG_NAME: ${{ steps.build_info.outputs.TAG_NAME }}

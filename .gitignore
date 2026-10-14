@@ -78,6 +78,9 @@ hs_err_pid*
 log/
 logs/
 
+# Claude Code local files
+.claude/
+
 #---------------------------------------#
 # Sublime Text                          #
 #---------------------------------------#

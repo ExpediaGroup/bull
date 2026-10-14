@@ -624,8 +624,6 @@ public class ClassUtilsTest {
      */
     private Constructor createMockedConstructor() {
         Parameter parameter = mock(Parameter.class);
-        final ReflectionUtils reflectionUtils = new ReflectionUtils();
-        reflectionUtils.setFieldValue(parameter, "name", "paramName");
         when(parameter.isNamePresent()).thenReturn(false);
         Constructor constructor = mock(Constructor.class);
         when(constructor.getDeclaringClass()).thenReturn(ImmutableToFoo.class);
