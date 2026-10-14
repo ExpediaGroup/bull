@@ -24,11 +24,10 @@ import com.expediagroup.transformer.utils.ClassUtils;
 import com.expediagroup.transformer.utils.ReflectionUtils;
 
 /**
- * Sealed abstract class for collection or map object population.
- * Java 26 sealed classes allow better performance through improved type narrowing and inlining.
+ * Populator for collection or map objects.
  * @param <O> the type of the object to get populated.
  */
-public abstract sealed class Populator<O> permits ArrayPopulator, CollectionPopulator, MapPopulator, OptionalPopulator {
+public abstract class Populator<O> {
     /**
      * Shared singleton — ReflectionUtils is stateless (all cache state lives in static fields),
      * so a single instance is safe to reuse across all Populator instances and threads.

@@ -21,7 +21,7 @@
     <groupId>com.expediagroup.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/ExpediaGroup/bull</url>
-    <version>3.1.0-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -475,7 +475,6 @@
                         <release>${jdk.version}</release>
                         <parameters>true</parameters>
                         <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                        <enablePreview>true</enablePreview>
                         <annotationProcessorPaths>
                             <path>
                                 <groupId>org.projectlombok</groupId>
@@ -549,7 +548,7 @@
                     <version>${maven.surefire.plugin.version}</version>
                     <configuration>
                         <parallelMavenExecution>false</parallelMavenExecution>
-                        <argLine>--add-opens java.base/java.lang.reflect=ALL-UNNAMED --enable-preview @{argLine}</argLine>
+                        <argLine>--add-opens java.base/java.lang.reflect=ALL-UNNAMED @{argLine}</argLine>
                     </configuration>
                 </plugin>
                 <!-- jacoco plugin configuration -->

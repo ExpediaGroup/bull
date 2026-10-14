@@ -23,9 +23,9 @@ import java.util.Optional;
 import com.expediagroup.beans.transformer.BeanTransformer;
 
 /**
- * Populator for {@link Optional} type (sealed implementation).
+ * Populator for {@link Optional} type.
  */
-final class OptionalPopulator extends Populator<Object> {
+class OptionalPopulator extends Populator<Object> {
 
     /**
      * Default constructor.

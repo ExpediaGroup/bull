@@ -48,29 +48,20 @@ public class VirtualThreadUtilsTest {
     private static final String TRANSFORMATION_FAILED = "transformation failed";
 
     /**
-     * Tests that isVirtualThreadSupported returns true on Java 19+.
+     * Tests that transformConcurrently restores the interrupt flag and fails when the calling thread is interrupted.
      */
     @Test
-    public void testIsVirtualThreadSupported() {
-        assertThat(VirtualThreadUtils.isVirtualThreadSupported()).isTrue();
-    }
-
-    /**
-     * Tests that isSupported returns false when the probe throws NoSuchMethodError.
-     */
-    @Test
-    public void testIsSupportedReturnsFalseOnNoSuchMethodError() {
-        assertThat(VirtualThreadUtils.isSupported(() -> {
-            throw new NoSuchMethodError("ofVirtual");
-        })).isFalse();
-    }
-
-    /**
-     * Tests that isSupported returns true when the probe succeeds.
-     */
-    @Test
-    public void testIsSupportedReturnsTrueWhenProbeSucceeds() {
-        assertThat(VirtualThreadUtils.isSupported(() -> { })).isTrue();
+    public void testTransformConcurrentlyRestoresInterruptFlag() {
+        try {
+            Thread.currentThread().interrupt();
+            assertThatThrownBy(() -> VirtualThreadUtils.transformConcurrently(List.of(FIRST), num -> num))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("concurrent transformation")
+                .hasCauseInstanceOf(InterruptedException.class);
+            assertThat(Thread.currentThread().isInterrupted()).isTrue();
+        } finally {
+            Thread.interrupted();
+        }
     }
 
     /**
@@ -289,15 +280,6 @@ public class VirtualThreadUtilsTest {
     }
 
     /**
-     * Tests that all static methods are accessible.
-     */
-    @Test
-    public void testStaticMethodsAccessible() {
-        assertThat(VirtualThreadUtils.isVirtualThreadSupported()).isNotNull();
-        assertThat(VirtualThreadUtils.createVirtualThread("test", () -> { })).isNotNull();
-    }
-
-    /**
      * Tests transformConcurrently with various collection sizes.
      */
     @Test
@@ -349,14 +331,6 @@ public class VirtualThreadUtilsTest {
     }
 
     /**
-     * Tests that virtual thread check returns true.
-     */
-    @Test
-    public void testVirtualThreadSupportedReturnsTrue() {
-        assertThat(VirtualThreadUtils.isVirtualThreadSupported()).isTrue();
-    }
-
-    /**
      * Tests transformConcurrently preserves exact order with transformation.
      */
     @Test
@@ -372,7 +346,6 @@ public class VirtualThreadUtilsTest {
     @Test
     public void testExecuteAsyncCompletesSuccessfully() throws Exception {
         var result = VirtualThreadUtils.executeAsync(() -> FIRST);
-        assertThat(result.isDone()).isFalse();
         assertThat(result.get()).isEqualTo(FIRST);
         assertThat(result.isDone()).isTrue();
     }

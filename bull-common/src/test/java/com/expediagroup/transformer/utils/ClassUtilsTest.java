@@ -792,36 +792,6 @@ public class ClassUtilsTest {
     }
 
     /**
-     * Tests that the method {@code isRecord} works as expected.
-     * @param testCaseDescription the test case description
-     * @param testClass the class to test
-     * @param expectedResult the expected result
-     */
-    @Test(dataProvider = "dataIsRecordTesting")
-    public void testIsRecordWorksAsExpected(final String testCaseDescription, final Class<?> testClass, final boolean expectedResult) {
-        // GIVEN
-
-        // WHEN
-        final boolean actual = underTest.isRecord(testClass);
-
-        // THEN
-        assertThat(actual).isEqualTo(expectedResult);
-    }
-
-    /**
-     * Creates the parameters to be used for testing the method {@code isRecord}.
-     * @return parameters to be used for testing the method {@code isRecord}.
-     */
-    @DataProvider
-    private Object[][] dataIsRecordTesting() {
-        return new Object[][] {
-                {"Tests that the method returns true for a Java Record", TestRecord.class, true},
-                {"Tests that the method returns false for a regular immutable class", ImmutableToFoo.class, false},
-                {"Tests that the method returns false for a mutable class", MutableToFoo.class, false}
-        };
-    }
-
-    /**
      * Tests that the method {@code getClassType} works as expected.
      * @param testCaseDescription the test case description
      * @param testClass the class to test

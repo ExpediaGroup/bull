@@ -22,9 +22,9 @@ import java.lang.reflect.Field;
 import com.expediagroup.beans.transformer.BeanTransformer;
 
 /**
- * Populator for primitive types array (sealed implementation).
+ * Populator for primitive types array.
  */
-final class ArrayPopulator extends Populator<Object> implements ICollectionPopulator<Object> {
+class ArrayPopulator extends Populator<Object> implements ICollectionPopulator<Object> {
 
     /**
      * Default constructor.

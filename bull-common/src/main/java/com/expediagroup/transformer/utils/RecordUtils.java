@@ -77,9 +77,9 @@ public final class RecordUtils {
     }
 
     /**
-     * Checks if a class is a sealed record (records are always sealed).
-     * @param recordClass the record class
-     * @return true if the class is a record (all records are sealed)
+     * Checks if a class is a record.
+     * @param recordClass the class to check
+     * @return true if the class is a record
      */
     public static boolean isRecord(final Class<?> recordClass) {
         return recordClass.isRecord();

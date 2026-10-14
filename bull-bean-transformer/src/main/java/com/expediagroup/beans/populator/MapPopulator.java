@@ -25,9 +25,9 @@ import com.expediagroup.transformer.model.MapElemType;
 import com.expediagroup.transformer.model.MapType;
 
 /**
- * Populator for Map types object (sealed implementation).
+ * Populator for Map types object {@link Map}.
  */
-final class MapPopulator extends Populator<Map<?, ?>> {
+class MapPopulator extends Populator<Map<?, ?>> {
 
     /**
      * Default constructor.

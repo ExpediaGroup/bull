@@ -18,6 +18,7 @@ package com.expediagroup.transformer.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -33,6 +34,10 @@ public final class VirtualThreadUtils {
      * Virtual threads have minimal overhead and are suitable for high-concurrency scenarios.
      */
     private static final ExecutorService VIRTUAL_THREAD_EXECUTOR = Executors.newVirtualThreadPerTaskExecutor();
+    /**
+     * Error message used when a concurrent transformation fails.
+     */
+    private static final String TRANSFORMATION_ERROR = "Error during concurrent transformation";
 
     /**
      * Private constructor to prevent instantiation.
@@ -50,18 +55,22 @@ public final class VirtualThreadUtils {
      * @return list of transformed items in the same order
      */
     public static <T, R> List<R> transformConcurrently(final Collection<T> items, final Function<T, R> transformer) {
+        final var futures = items.stream()
+                .map(item -> VIRTUAL_THREAD_EXECUTOR.submit(() -> transformer.apply(item)))
+                .toList();
+        final var results = new ArrayList<R>(items.size());
         try {
-            var futures = items.stream()
-                    .map(item -> VIRTUAL_THREAD_EXECUTOR.submit(() -> transformer.apply(item)))
-                    .toList();
-
-            var results = new ArrayList<R>(items.size());
             for (var future : futures) {
                 results.add(future.get());
             }
             return results;
-        } catch (Exception e) {
-            throw new RuntimeException("Error during concurrent transformation", e);
+        } catch (InterruptedException e) {
+            futures.forEach(future -> future.cancel(true));
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(TRANSFORMATION_ERROR, e);
+        } catch (ExecutionException e) {
+            futures.forEach(future -> future.cancel(true));
+            throw new IllegalStateException(TRANSFORMATION_ERROR, e);
         }
     }
 
@@ -85,29 +94,5 @@ public final class VirtualThreadUtils {
         return Thread.ofVirtual()
                 .name(name)
                 .unstarted(runnable);
-    }
-
-    /**
-     * Checks if virtual threads are supported (Java 19+).
-     * @return true if the current JVM supports virtual threads
-     */
-    public static boolean isVirtualThreadSupported() {
-        return isSupported(Thread::ofVirtual);
-    }
-
-    /**
-     * Runs the given probe and reports whether it completes without a {@link NoSuchMethodError}.
-     * Package-private to allow testing the unsupported path, which is unreachable on Java 19+.
-     * @param probe the call that requires the feature under test
-     * @return true if the probe ran, false if the feature is missing
-     */
-    @SuppressWarnings("java:S1166")
-    static boolean isSupported(final Runnable probe) {
-        try {
-            probe.run();
-            return true;
-        } catch (NoSuchMethodError e) {
-            return false;
-        }
     }
 }

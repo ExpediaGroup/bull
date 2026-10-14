@@ -2,21 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-### [3.1.0] (Unreleased)
-* Upgrade minimum JDK requirement to Java 26 with full support for JEP 25 (String Templates - Second Preview)
-* Add explicit record detection and optimization via new `ClassUtils.isRecord()` method
-* Enhance `getClassType()` to recognize Java Records as IMMUTABLE with improved performance
-* Add comprehensive support for Java 25+ record objects with optimized constructor parameter resolution
-* Implement String Templates (JEP 25) for cleaner, type-safe error messages
-* Make `Populator` hierarchy sealed for better JVM inlining and compiler checks
-* Add `RecordUtils` for comprehensive Java Record serialization and introspection
-* Add `VirtualThreadUtils` for concurrent bean transformations using Java 19+ virtual threads
-* Refactor `PopulatorFactory` with enhanced pattern matching for sealed class dispatch
-* Enable compiler preview features for String Templates support
-* Add comprehensive Java 26 features documentation in `docs/JAVA26_FEATURES.md`
+### [4.0.0] (Unreleased)
+* **BREAKING**: the minimum required JDK is now 26 (previously 17). Use the 3.x line for older JDKs
+* Add `RecordUtils`, an opt-in utility for Java Record introspection (components, names, types, canonical constructor)
+* Add `VirtualThreadUtils`, an opt-in utility for running transformations concurrently on virtual threads
+* Add test coverage for Java Records being classified as `IMMUTABLE`
 * Update GitHub Actions workflows to use Java 26
-* Records are now explicitly detected and processed with fast-path optimization
-* Sealed class hierarchy enables 10-15% faster method dispatch and better CPU branch prediction
+* Add Java 26 documentation in `docs/JAVA26_FEATURES.md`
 
 ### [3.0.4] 2026.04.27
 * Replaces 12-branch if-else chains in `ConversionProcessorFactory` and `ConversionAnalyzer` with switch expressions and cached processor singletons, eliminating per-call object allocation in the type conversion hot path

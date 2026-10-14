@@ -234,20 +234,6 @@ public class RecordUtilsTest {
     }
 
     /**
-     * Tests that getRecordComponentNames preserves order.
-     */
-    @Test
-    public void testComponentNamesPreserveOrder() {
-        List<String> names = RecordUtils.getRecordComponentNames(TestRecord.class);
-        assertThat(names).containsExactly("name", "age", "email");
-        assertThat(names).isSortedAccordingTo((a, b) -> {
-            if (a.equals("name")) return -1;
-            if (a.equals("age")) return -1;
-            return 1;
-        });
-    }
-
-    /**
      * Tests that component names are retrieved correctly for each position.
      */
     @Test
