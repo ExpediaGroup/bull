@@ -34,8 +34,8 @@ jobs:
           java-version: '26'
           distribution: 'temurin'
           server-id: central # Value of the distributionManagement/repository/id field of the pom.xml
-          server-username: SONATYPE_USERNAME # env variable for Central Portal token username
-          server-password: SONATYPE_PASSWORD # env variable for Central Portal token password
+          server-username-env-var: SONATYPE_USERNAME # env variable for Central Portal token username
+          server-password-env-var: SONATYPE_PASSWORD # env variable for Central Portal token password
           # only signed artifacts will be released to maven central. this sets up things for the maven-gpg-plugin
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
           gpg-passphrase: GPG_PASSPHRASE # env variable for GPG private key passphrase
