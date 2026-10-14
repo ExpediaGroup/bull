@@ -21,7 +21,7 @@
     <groupId>com.expediagroup.beans</groupId>
     <artifactId>bean-utils-library-parent</artifactId>
     <url>https://github.com/ExpediaGroup/bull</url>
-    <version>3.0.5-SNAPSHOT</version>
+    <version>4.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2019</inceptionYear>
     <description>
@@ -48,7 +48,7 @@
     </modules>
 
     <properties>
-        <jdk.version>17</jdk.version>
+        <jdk.version>21</jdk.version>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
         <lombok.version>1.18.48</lombok.version>
