@@ -774,6 +774,21 @@ public class ReflectionUtilsTest {
         assertThat(mutableToFoo).hasFieldOrPropertyWithValue(ID_FIELD_NAME, ONE);
     }
 
+    /**
+     * Tests that the method {@code setFieldValue} sets the value of the field identified by its name.
+     */
+    @Test
+    public void testSetFieldValueByFieldNameWorksProperly() {
+        // GIVEN
+        MutableToFooSimple mutableToFoo = new MutableToFooSimple();
+
+        // WHEN
+        underTest.setFieldValue(mutableToFoo, ID_FIELD_NAME, ONE);
+
+        // THEN
+        assertThat(mutableToFoo).hasFieldOrPropertyWithValue(ID_FIELD_NAME, ONE);
+    }
+
     @Test
     public void testSetFieldValueInvokesTheSetterMethodInCaseAnExceptionIsRaised() {
         // GIVEN
