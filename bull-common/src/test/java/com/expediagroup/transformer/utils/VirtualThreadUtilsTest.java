@@ -56,6 +56,34 @@ public class VirtualThreadUtilsTest {
     }
 
     /**
+     * Tests that isSupported returns false when the probe throws NoSuchMethodError.
+     */
+    @Test
+    public void testIsSupportedReturnsFalseOnNoSuchMethodError() {
+        assertThat(VirtualThreadUtils.isSupported(() -> {
+            throw new NoSuchMethodError("ofVirtual");
+        })).isFalse();
+    }
+
+    /**
+     * Tests that isSupported returns true when the probe succeeds.
+     */
+    @Test
+    public void testIsSupportedReturnsTrueWhenProbeSucceeds() {
+        assertThat(VirtualThreadUtils.isSupported(() -> { })).isTrue();
+    }
+
+    /**
+     * Tests that the private constructor can be invoked via reflection.
+     */
+    @Test
+    public void testPrivateConstructor() throws Exception {
+        var constructor = VirtualThreadUtils.class.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        assertThat(constructor.newInstance()).isNotNull();
+    }
+
+    /**
      * Tests that createVirtualThread creates a virtual thread.
      */
     @Test

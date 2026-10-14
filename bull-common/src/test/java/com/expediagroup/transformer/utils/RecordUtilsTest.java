@@ -345,6 +345,35 @@ public class RecordUtilsTest {
     }
 
     /**
+     * Tests that getConstructorOrNull returns null when no matching constructor exists.
+     */
+    @Test
+    public void testGetConstructorOrNullReturnsNullWhenNotFound() {
+        var result = RecordUtils.getConstructorOrNull(TestRecord.class, new Class<?>[] {Long.class});
+        assertThat(result).isNull();
+    }
+
+    /**
+     * Tests that getConstructorOrNull returns the constructor when it exists.
+     */
+    @Test
+    public void testGetConstructorOrNullReturnsConstructorWhenFound() {
+        var result = RecordUtils.getConstructorOrNull(TestRecord.class,
+            new Class<?>[] {String.class, int.class, String.class});
+        assertThat(result).isNotNull();
+    }
+
+    /**
+     * Tests that the private constructor can be invoked via reflection.
+     */
+    @Test
+    public void testPrivateConstructor() throws Exception {
+        var constructor = RecordUtils.class.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        assertThat(constructor.newInstance()).isNotNull();
+    }
+
+    /**
      * Tests that all component retrieval methods handle empty arrays.
      */
     @Test

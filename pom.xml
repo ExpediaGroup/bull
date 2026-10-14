@@ -591,9 +591,6 @@
                                     <exclude>**/constant/*</exclude>
                                     <exclude>**/error/*</exclude>
                                     <exclude>**/annotation/*</exclude>
-                                    <!-- Exclude version-specific exception handlers that are unreachable on Java 26 -->
-                                    <exclude>**/RecordUtils.*</exclude>
-                                    <exclude>**/VirtualThreadUtils.*</exclude>
                                 </excludes>
                                 <rules>
                                     <rule>

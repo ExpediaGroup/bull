@@ -89,13 +89,22 @@ public final class VirtualThreadUtils {
 
     /**
      * Checks if virtual threads are supported (Java 19+).
-     * Exception path is unreachable on Java 19+ where virtual threads are standard.
      * @return true if the current JVM supports virtual threads
      */
-    @SuppressWarnings("java:S1166")
     public static boolean isVirtualThreadSupported() {
+        return isSupported(Thread::ofVirtual);
+    }
+
+    /**
+     * Runs the given probe and reports whether it completes without a {@link NoSuchMethodError}.
+     * Package-private to allow testing the unsupported path, which is unreachable on Java 19+.
+     * @param probe the call that requires the feature under test
+     * @return true if the probe ran, false if the feature is missing
+     */
+    @SuppressWarnings("java:S1166")
+    static boolean isSupported(final Runnable probe) {
         try {
-            Thread.ofVirtual();
+            probe.run();
             return true;
         } catch (NoSuchMethodError e) {
             return false;
