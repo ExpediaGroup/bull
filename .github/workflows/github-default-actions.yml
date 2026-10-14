@@ -18,7 +18,7 @@ jobs:
       - name: "Cache Maven repository"
         uses: actions/cache@v6.1.0
         with:
-          path: ~/.m2
+          path: $HOME/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: "JDK set-up"
@@ -37,7 +37,7 @@ jobs:
       - name: "Cache Maven repository"
         uses: actions/cache@v6.1.0
         with:
-          path: ~/.m2
+          path: $HOME/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: "Extract build information"
@@ -55,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SOURCE_BRANCH: ${{ steps.build_info.outputs.SOURCE_BRANCH }}
         with:
-          max_attempts: 3
+          max_attempts: 10
           timeout_minutes: 15
           retry_on: error
           command: |
@@ -84,7 +84,7 @@ jobs:
       - name: "Cache Maven repository"
         uses: actions/cache@v6.1.0
         with:
-          path: ~/.m2
+          path: $HOME/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: "JDK set-up"
