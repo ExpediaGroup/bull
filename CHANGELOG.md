@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [4.0.0] (Unreleased)
+### [4.0.0] 2026.10.14
 * **BREAKING**: the minimum required JDK is now 21 (previously 17), required by virtual threads. Use the 3.x line for older JDKs
 * Add `RecordUtils`, an opt-in utility for Java Record introspection (components, names, types, canonical constructor)
 * Add `VirtualThreadUtils`, an opt-in utility for running transformations concurrently on virtual threads
