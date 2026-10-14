@@ -666,7 +666,7 @@ public class BeanTransformerTest extends AbstractBeanTransformerTest {
         ClassUtils classUtils = mock(ClassUtils.class);
         when(classUtils.areParameterNamesAvailable(any(Constructor.class))).thenReturn(false);
         when(classUtils.getConstructorParameters(any())).thenReturn(new Parameter[] {});
-        when(classUtils.getInstance(any(), any())).thenReturn(new MutableToFoo());
+        when(classUtils.getInstance(any(), any(Object[].class))).thenReturn(new MutableToFoo());
         reflectionUtils.setFieldValue(underTest, CLASS_UTILS_FIELD_NAME, classUtils);
 
         Method handleInjectionExceptionMethod = underTest.getClass().getDeclaredMethod(HANDLE_INJECTION_EXCEPTION_METHOD_NAME, Object.class,
