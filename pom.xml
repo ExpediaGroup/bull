@@ -55,7 +55,7 @@
         <mockito-core.version>5.24.0</mockito-core.version>
         <testng.version>7.12.0</testng.version>
         <assertj-core.version>3.27.7</assertj-core.version>
-        <joda-time.version>2.15.0</joda-time.version>
+        <joda-time.version>2.15.1</joda-time.version>
         <kotlin.version>2.4.21</kotlin.version>
         <!-- validation dependencies -->
         <hibernate-validator.version>9.0.0.Final</hibernate-validator.version>
