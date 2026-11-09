@@ -831,8 +831,6 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
                     <skip>${checkstyle.check.skip}</skip>
-                    <configLocation>config/checkstyle/rules.xml</configLocation>
-                    <suppressionsLocation>config/checkstyle/suppression.xml</suppressionsLocation>
                 </configuration>
                 <reportSets>
                     <reportSet>
