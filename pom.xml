@@ -50,7 +50,7 @@
     <properties>
         <jdk.version>21</jdk.version>
         <lombok.version>1.18.48</lombok.version>
-        <apache.commons-lang3.version>3.21.0</apache.commons-lang3.version>
+        <apache.commons-lang3.version>3.22.0</apache.commons-lang3.version>
         <!-- testing dependencies -->
         <mockito-core.version>5.24.0</mockito-core.version>
         <testng.version>7.12.0</testng.version>
